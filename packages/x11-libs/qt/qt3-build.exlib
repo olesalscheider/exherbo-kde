@@ -1,0 +1,134 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qt4-build.eclass' copyrighted to Gentoo Foundation.
+#
+# Original authors:
+#   Caleb Tennis <ctennis@gentoo.org>
+#   Bo Ørsted Andresen <zlin@gentoo.org>
+#   Ingmar Vanhassel <ingmar@gentoo.org>
+
+require multilib flag-o-matic toolchain-funcs 
+
+SRC_TYPE="free"
+SRC_URI="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
+
+S="${WORKDIR}/${PN}-x11-${SRC_TYPE}-${PV}"
+
+export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
+    src_compile src_install pkg_preinst
+
+set_platform() {
+    CXX=$(tc-getCXX)
+
+    case ${CXX} in
+        *g++*) platform_cxx="g++" ;;
+        *icpc*) platform_cxx="icc" ;;
+        *) die 'Unknown or unsupported compiler.' ;;
+    esac
+
+    case ${CHOST} in
+        *-linux-*|*-linux) platform_name="linux" ;;
+        *) die 'Unknown or unsupported platform/OS.' ;;
+    esac
+
+    platform="${platform_name}-${platform_cxx}"
+}
+
+qt3-build_pkg_pretend() {
+    set_platform
+}
+
+qt3-build_pkg_setup() {
+    set_platform
+    libdir=$(get_libdir)
+
+    QTPREFIX="/usr"
+    QTBASEDIR="${QTPREFIX}/qt/3"
+    QTBINDIR="${QTBASEDIR}/bin"
+    QTLIBDIR="${QTBASEDIR}/${libdir}"
+    QTDOCDIR="${QTPREFIX}/share/doc/${PF}"
+    QTHEADERDIR="${QTBASEDIR}/include"
+    QTPLUGINDIR="${QTBASEDIR}/plugins"
+    QTDATADIR="${QTPREFIX}/share/qt3"
+    QTTRANSLATIONDIR="${QTBASEDIR}/translations"
+    QTSYSCONFDIR="${QTBASEDIR}/etc/settings"
+}
+
+qt3-build_src_prepare() {
+    default_src_prepare
+
+    # rpath?
+    # toolchain?
+
+    sed -e "s:/lib$:/${libdir}:" \
+        -i mkspecs/${platform}*/qmake.conf || die 'Sed for libdir failed'
+
+    sed -e "s:__FIXME__::" \
+        -i mkspecs/${platform}*/qmake.conf || die 'Sed for user-defined {C,CXX}FLAGS failed'
+
+    sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
+        -i configure || die 'Sed for license acceptance failed'
+}
+
+myoption() {
+    local flag=${1} feature=${2:-${1}} enablevalue=${3}
+    [[ -n ${enablevalue} ]] && enablevalue+="-"
+    if option ${flag}; then
+        echo "-${enablevalue}${feature}"
+    else   
+        echo "-no-${feature}"
+    fi
+}
+
+qt3-build_src_configure() {
+    # append-flags -fno-strict-aliasing
+
+    # -no-pch gif png zlib
+    STATIC_CONFIGURE_PARAMS="-dlopen-opengl -fast -largefile -shared -sm -stl -tablet -thread -verbose"
+    STATIC_CONFIGURE_PARAMS+=" -xcursor -xft -xkb -xrandr -xrender -no-sql-ibase -no-sql-odbc"
+    STATIC_CONFIGURE_PARAMS+=" -system-libjpeg -system-libmng -system-libpng -system-zlib"
+    STATIC_CONFIGURE_PARAMS+=" -qt-gif -qt-imgfmt-jpeg -qt-imgfmt-mng -qt-imgfmt-png"
+
+    # -platform=host, -xplatform=target
+    PLATFORM_CONFIGURE_PARAMS="-platform ${platform} -xplatform ${platform}"
+    PLATFORM_CONFIGURE_PARAMS+=" -prefix ${QTBASEDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}"
+    PLATFORM_CONFIGURE_PARAMS+=" -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}"
+    PLATFORM_CONFIGURE_PARAMS+=" -plugindir ${QTPLUGINDIR} -datadir ${QTDATADIR}"
+    PLATFORM_CONFIGURE_PARAMS+=" -translationdir ${QTTRANSLATIONDIR} -sysconfdir ${QTSYSCONFDIR}"
+    PLATFORM_CONFIGURE_PARAMS+=" -L/usr/${libdir}"
+
+    CONFIGURE_OPTIONS="$(option debug && echo '-debug' || echo '-release -no-g++-exceptions')"
+    CONFIGURE_OPTIONS+=" $(option opengl && echo '-enable-module=opengl' || echo '-disable-opengl')"
+    CONFIGURE_OPTIONS+=" $(myoption cups)"
+    CONFIGURE_OPTIONS+=" $(myoption ipv6)"
+    CONFIGURE_OPTIONS+=" $(myoption xinerama)"
+    CONFIGURE_OPTIONS+=" $(myoption mysql sql-mysql plugin)" # -I,-L
+    CONFIGURE_OPTIONS+=" $(myoption postgres sql-psql plugin)" # -I,-L
+    CONFIGURE_OPTIONS+=" $(myoption sqlite sql-sqlite plugin)"
+
+    echo "./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS}"
+    ./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS} \
+        || die './configure failed'
+}
+
+qt3-build_src_compile() {
+    emake src-qmake src-moc sub-src
+
+    export DYLD_LIBRARY_PATH="${S}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
+    export LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
+
+    emake sub-tools
+    option examples && emake sub-tutorial sub-examples
+    # msg2qm,qembed
+}
+
+qt3-build_src_install() {
+    default_src_install
+    # env.d
+}
+
+qt3-build_pkg_preinst() {
+    find "${D}"
+    die "Now poke Ingmar to finish this exheres."
+}
+

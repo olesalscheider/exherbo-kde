@@ -1,0 +1,57 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt3-build
+
+DESCRIPTION="The Qt toolkit is a comprehensive C++ application development
+framework."
+HOMEPAGE="http://www.trolltech.com/"
+
+LICENSE="|| ( QPL-1.0 GPL-2 )"
+SLOT="3"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="cups debug doc examples glib ipv6 mysql opengl postgres ssl sqlite xinerama"
+
+DEPENDENCIES="
+build:
+    dev-util/pkg-config
+    x11-proto/inputproto
+    x11-proto/xextproto
+    xinerama? ( x11-proto/xineramaproto )
+build+run:
+    media-libs/freetype
+    media-libs/jpeg
+    media-libs/libmng
+    media-libs/libpng
+    sys-libs/zlib
+    x11-libs/libXcursor
+    x11-libs/libXft
+    x11-libs/libXi
+    x11-libs/libXrandr
+    x11-libs/libSM
+    cups? ( fixme/cups )
+    glib? ( dev-libs/glib:2 )
+    mysql? ( fixme/mysql )
+    opengl? ( fixme/eroyf-fails-at-dri )
+    postgres? ( fixme/postgres )
+    ssl? ( dev-libs/openssl )
+    xinerama? ( x11-libs/libXinerama )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+"${FILESDIR}/${P}-uic-fix.patch" #document
+"${FILESDIR}/${P}-mysql-unload-crash.patch" #document
+"${FILESDIR}/${P}-0001-dnd_optimization.patch"
+"${FILESDIR}/${P}-0002-dnd_active_window_fix.patch"
+"${FILESDIR}/${P}-0038-dragobject-dont-prefer-unknown.patch"
+"${FILESDIR}/${P}-0044-qscrollview-windowactivate-fix.diff"
+"${FILESDIR}/${P}-0047-fix-kmenu-widget.diff"
+"${FILESDIR}/${P}-0048-qclipboard_hack_80072.patch"
+"${FILESDIR}/${P}-0081-format-string-fixes.diff"
+"${FILESDIR}/${P}-unicode-off-by-one.patch" #document
+"${FILESDIR}/${P}-seli-xinerama.patch" #document
+"${FILESDIR}/${P}-utf8-bug-qt3.diff" #document
+"${FILESDIR}/${P}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
+"${FILESDIR}/${P}-mips.patch" #document
+)
+
