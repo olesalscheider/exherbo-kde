@@ -57,13 +57,19 @@ qt3-build_pkg_setup() {
 qt3-build_src_prepare() {
     default_src_prepare
 
-    # rpath?
-    # toolchain?
+    # Use rpath?
 
     sed -e "s:/lib$:/${libdir}:" \
         -i mkspecs/${platform}*/qmake.conf || die 'Sed for libdir failed'
 
-    sed -e "s:__FIXME__::" \
+    sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 $(tc-getCC):" \
+        -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+        -e "s:\(^QMAKE_LINK[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+        -e "s:\(^QMAKE_LINK_SHLIB[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+        -e "s:\(^QMAKE_CFLAGS[[:space:]]*=\).*:\1:" \
+        -e "s:\(^QMAKE_CFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CFLAGS}:" \
+        -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
+        -e "s:\(^QMAKE_LFLAGS_RELEASE[[:space:]]*=\).*:\1 ${LDFLAGS}:" \
         -i mkspecs/${platform}*/qmake.conf || die 'Sed for user-defined {C,CXX}FLAGS failed'
 
     sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
