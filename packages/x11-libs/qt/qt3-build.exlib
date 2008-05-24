@@ -130,7 +130,9 @@ qt3-build_src_compile() {
 qt3-build_src_install() {
     export INSTALL_ROOT="${D}"
     default_src_install
-    # env.d
+
+    # Unneeded & broken symlink to ${WORKDIR}
+    rm "${D}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
 }
 
 #qt3-build_pkg_preinst() {
