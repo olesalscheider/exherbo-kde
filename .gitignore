@@ -1,2 +1,6 @@
-.project
 *~
+.*~
+.*swp
+#*#
+.cache
+.project
