@@ -1,0 +1,240 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation
+
+require multilib toolchain-funcs
+
+SRC_TYPE=opensource-src
+MY_P=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
+DESCRIPTION="Qt Cross-platform application framework for desktop and embedded development"
+HOMEPAGE="http://www.trolltech.com/products/qt/"
+SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
+S=${WORKDIR}/${MY_P}
+
+LICENSE="|| ( QPL-1.0 GPL-2 GPL-3 )"
+SLOT=${PV:0:1}
+
+MYOPTIONS_PARTS="demos doc examples"
+# PARTS="demos docs examples libs tools" # libs is mandatory
+MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
+qt3support sqlite ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}"
+# MYOPTIONS+=" firebird mysql odbc postgres"
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+        xinerama? ( x11-proto/xineramaproto )
+    build+run:
+        media-libs/freetype
+        sys-libs/zlib
+        x11-libs/libX11
+        x11-libs/libXext
+        X? ( media-libs/fontconfig
+             x11-libs/libSM
+             x11-libs/libXcursor
+             x11-libs/libXfixes
+             >=x11-libs/libXrandr-1.1
+             >=x11-libs/libXrender-0.6 )
+        cups? ( fixme/cups )
+        dbus? ( >=sys-apps/dbus-1.0.2 )
+        glib? ( dev-libs/glib:2 )
+        jpeg? ( media-libs/jpeg )
+        mng? ( media-libs/libmng )
+        opengl? ( x11-dri/mesa-lib [[ note = [ needs gl.h, glu.h, libGL and libGLU ] ]] )
+        png? ( media-libs/libpng )
+        sqlite? ( dev-db/sqlite:3 )
+        ssl? ( dev-libs/openssl )
+        tiff? ( media-libs/tiff )
+        xinerama? ( x11-libs/libXinerama )
+"
+
+export_exlib_phases pkg_pretend src_prepare src_configure src_install
+
+pkg_pretend() {
+    if option opengl || option xinerama && option !X ; then
+        die "The following options require the X option to be enabled: opengl xinerama"
+    fi
+}
+
+qt4_mkspecs_dir() {
+     # Allows us to define which mkspecs dir we want to use.
+    local spec
+
+    spec="linux"
+    CXX=$(tc-getCXX)
+    if [[ ${CXX} == *g++* ]]; then
+        spec+="-g++"
+    else
+        die "Unknown compiler ${CXX}."
+    fi
+
+    echo "${spec}"
+}
+
+qt4_enable() {
+    local flag="${1}" feature="${2:-${1}}"
+    local prefix="${3:+-}${3}" postfix="${4:+-}${4}"
+    (( ${#} >= 4 )) && shift 4 || shift ${#}
+
+    if option "${flag}"; then
+        echo "${prefix}-${feature}${postfix}" "${@}"
+    else
+        echo "-no-${feature}"
+    fi
+}
+
+qconf4() {
+    local myconf libdir=$(get_libdir)
+
+    # paths
+    myconf="-prefix /usr
+            -bindir /usr/bin
+            -libdir /usr/${libdir}/qt4
+            -docdir /usr/share/doc/${PF}
+            -headerdir /usr/include/qt4
+            -plugindir /usr/${libdir}/qt4/plugins
+            -datadir /usr/share/qt4
+            -translationdir /usr/share/qt4/translations
+            -sysconfdir /etc/qt4
+            -examplesdir /usr/share/qt4/examples
+            -demosdir /usr/share/qt4/demos"
+
+    # arch
+    case "${ARCH}" in
+        amd64)                          myconf+=" -arch x86_64" ;;
+        ppc|ppc64)                      myconf+=" -arch powerpc" ;;
+        x86|x86-*)                      myconf+=" -arch i386" ;;
+        alpha|arm|ia64|mips|s390|sparc) myconf+=" -arch ${ARCH}" ;;
+        hppa|sh)                        myconf+=" -arch generic" ;;
+        *) die_unless_nonfatal "${ARCH} is unsupported by this eclass. Please file a bug." || return 1 ;;
+    esac
+
+    echo ./configure ${myconf} "$@" ${EXTRA_ECONF} 1>&2
+    ./configure ${myconf} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
+}
+
+qt4-build_src_prepare() {
+    # Set {C,CXX,LD}FLAGS. Don't prestrip. Do not link with -rpath (Gentoo bug #75181).
+    # Don't put libraries in X11R6/.
+
+    sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+        -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+        -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+        -e "/CONFIG/s:$: nostrip:" \
+        -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
+        -e "s:X11R6/::" \
+        -i "${S}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf || die "sed on qmake.conf failed"
+
+    sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CPPFLAGS} ${CFLAGS} ${ASFLAGS}:" \
+        -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS}:" \
+        -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+        -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
+        -i "${S}"/mkspecs/common/g++.conf || die "sed on g++.conf failed"
+
+    sed -i -e "s:X11R6/::" "${S}"/mkspecs/common/linux.conf || die "sed on linux.conf failed"
+
+    sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
+        -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
+        -i "${S}"/qmake/Makefile.unix || die "sed on Makefile.unix failed"
+}
+
+qt4-build_src_configure() {
+    local myconf
+    myconf="-confirm-license
+            -fast
+            -largefile
+            -no-rpath
+            -no-separate-debug-info
+            -pch
+            -reduce-relocations
+            -release
+            -silent
+            -stl
+            -verbose"
+
+    myconf+=" -iconv
+              -no-nas-sound
+              -no-nis
+              -no-tablet
+              -system-zlib
+              -xmlpatterns
+              $(qt4_enable accessibility)
+              $(qt4_enable cups)
+              $(qt4_enable dbus "" "" linked)
+              $(qt4_enable glib)
+              $(qt4_enable opengl)
+              $(qt4_enable qt3support)
+              $(qt4_enable phonon)
+              $(qt4_enable ssl openssl)
+              $(qt4_enable webkit)
+              $(qt4_enable xinerama)"
+
+    # CPU flags
+    # 3dnow, mmx, sse, sse2
+
+    # X
+    local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
+    if option !X; then
+        prefix="-no"
+    fi
+    for o in ${X_options}; do
+        myconf+=" ${prefix}-${o}"
+    done
+
+    # database plugins
+    #myconf+=" $(qt4_enable firebird sql-ibase plugin "" -I/opt/firebird/include)"
+    #          $(qt4_enable mysql sql-mysql plugin "" -I/usr/include/mysql -L/usr/$(get_libdir)/mysql)
+    #          $(qt4_enable odbc sql-odbc plugin)
+    #          $(qt4_enable postgres sql-psql plugin "" -I/usr/include/postgresql/pgsql)"
+    myconf+=" -no-sql-ibase
+              -no-sql-mysql
+              -no-sql-odbc
+              -no-sql-psql
+              $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
+              -no-sql-sqlite2"
+
+    # media formats
+    myconf+=" $(qt4_enable gif gif qt)
+              $(qt4_enable jpeg libjpeg system)
+              $(qt4_enable mng libmng system)
+              $(qt4_enable png libpng system)
+              $(qt4_enable svg)
+              $(qt4_enable tiff libtiff system)"
+
+    # optional parts
+    if option !demos; then
+        myconf+=" -nomake demos"
+    fi
+    if option !doc; then
+        myconf+=" -nomake docs"
+    fi
+    if option !examples; then
+        myconf+=" -nomake examples"
+    fi
+
+    qconf4 ${myconf}
+}
+
+qt4-build_src_install() {
+    emake INSTALL_ROOT="${D}" install
+
+    local lib libdir=$(get_libdir) libdirs
+    # remove build dir from libraries
+    sed -i -e "s:${S}/lib:/usr/${libdir}/qt4:g" "${D}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc} \
+        || die "Failed to remove build dir from libraries"
+
+    # move pkgconfig files out of qt4/ dir
+    mv "${D}"/usr/${libdir}/qt4/pkgconfig "${D}"/usr/${libdir}/ || die "Failed to move pkgconfig dir"
+
+    keepdir /etc/qt4
+
+    # list all the multilib libdirs in LDPATH in an env file
+    for lib in $(get_all_libdirs); do
+        libdirs="${libdirs}:/usr/${lib}/qt4"
+    done
+    cat <<-EOF > "${T}"/44qt4
+    LDPATH=${libdirs:1}
+EOF
+    doenvd "${T}"/44qt4
+}
+
