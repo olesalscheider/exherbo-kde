@@ -1,4 +1,5 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'qt4-build.eclass' copyrighted to Gentoo Foundation.
 #
@@ -15,7 +16,8 @@ SRC_URI="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz
 S="${WORKDIR}/${PN}-x11-${SRC_TYPE}-${PV}"
 
 export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
-    src_compile src_install pkg_preinst
+    src_compile src_install 
+# pkg_preinst
 
 set_platform() {
     CXX=$(tc-getCXX)
@@ -73,6 +75,20 @@ qt3-build_src_prepare() {
 
     sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
         -i configure || die 'Sed for license acceptance failed'
+
+    for qtlib in $(get_all_libdirs); do
+        qtlibdirs="${qtlibdirs}:${QTBASEDIR}/${qtlib}"
+    done
+
+    cat <<-EOF > "${T}"/45qt3
+PATH=${QTBASEDIR}/bin
+ROOTPATH=${QTBASEDIR}/bin
+LDPATH=${qtlibdirs}
+QMAKESPEC=${platform}
+MANPATH=${QTBASEDIR}/doc/man
+PKG_CONFIG_PATH=${QTBASEDIR}/$(get_libdir)/pkgconfig
+EOF
+ 
 }
 
 myoption() {
@@ -130,6 +146,9 @@ qt3-build_src_compile() {
 qt3-build_src_install() {
     export INSTALL_ROOT="${D}"
     default_src_install
+
+    dodir /etc/env.d
+    doenvd "${T}"/45qt3
 
     # Unneeded & broken symlink to ${WORKDIR}
     rm "${D}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
