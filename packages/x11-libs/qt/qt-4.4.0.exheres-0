@@ -3,4 +3,4 @@
 
 require qt4-build
 
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
