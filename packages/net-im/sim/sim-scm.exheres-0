@@ -34,7 +34,7 @@ DEPENDENCIES="
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS="TODO.CMake AUTHORS.sim jisp-resources.txt"
 
-pkg_setup() {
+pkg_pretend() {
     if ! option jabber && ! option livejournal && ! option msn \
 		&& ! option oscar && ! option yahoo; then
 		die "No instant messaging protocol activated."
