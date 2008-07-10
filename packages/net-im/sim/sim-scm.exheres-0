@@ -36,37 +36,34 @@ DEFAULT_SRC_INSTALL_EXTRA_DOCS="TODO.CMake AUTHORS.sim jisp-resources.txt"
 
 pkg_pretend() {
     if ! option jabber && ! option livejournal && ! option msn \
-		&& ! option oscar && ! option yahoo; then
-		die "No instant messaging protocol activated."
-	fi
+        && ! option oscar && ! option yahoo; then
+        die "No instant messaging protocol activated."
+    fi
 }
 
 src_configure() {
     # there is no kdelibs:3 at the moment, reenable when there is
-    DEFAULT_SRC_CONFIGURE_PARAMS+="
-        -DENABLE_KDE3=Off
-		-DENABLE_PLUGIN_UPDATE:BOOL=Off
-		-DENABLE_PLUGIN_WINDOCK:BOOL=Off
-		$(cmake_enable debug PLUGIN_LOGGER)
-		$(cmake_enable floatings PLUGIN_FLOATY)
-		$(cmake_enable gpg PLUGIN_GPG)
-		$(cmake_enable jabber PLUGIN_JABBER)
-		$(cmake_enable livejournal PLUGIN_LIVEJOURNAL)
-		$(cmake_enable msn PLUGIN_MSN)
-		$(cmake_enable netmonitor PLUGIN_NETMONITOR)
-		$(cmake_enable oscar PLUGIN_ICQ)
-		$(cmake_enable osd PLUGIN_OSD)
-		$(cmake_enable proxy PLUGIN_PROXY)
-		$(cmake_enable remote PLUGIN_REMOTE)
-		$(cmake_enable sms PLUGIN_SMS)
-		$(cmake_enable sound PLUGIN_SOUND)
-		$(cmake_enable spell PLUGIN_SPELL)
-		$(cmake_enable trayicon PLUGIN_DOCK)
-		$(cmake_enable weather PLUGIN_WEATHER)
-		$(cmake_enable yahoo PLUGIN_YAHOO)
-		$(cmake_enable zodiak PLUGIN_ZODIAK)
-        "
-
-    cmake_src_configure
+    ecmake \
+        -DENABLE_KDE3=Off \
+        -DENABLE_PLUGIN_UPDATE:BOOL=Off \
+        -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
+        $(cmake_enable debug PLUGIN_LOGGER) \
+        $(cmake_enable floatings PLUGIN_FLOATY) \
+        $(cmake_enable gpg PLUGIN_GPG) \
+        $(cmake_enable jabber PLUGIN_JABBER) \
+        $(cmake_enable livejournal PLUGIN_LIVEJOURNAL) \
+        $(cmake_enable msn PLUGIN_MSN) \
+        $(cmake_enable netmonitor PLUGIN_NETMONITOR) \
+        $(cmake_enable oscar PLUGIN_ICQ) \
+        $(cmake_enable osd PLUGIN_OSD) \
+        $(cmake_enable proxy PLUGIN_PROXY) \
+        $(cmake_enable remote PLUGIN_REMOTE) \
+        $(cmake_enable sms PLUGIN_SMS) \
+        $(cmake_enable sound PLUGIN_SOUND) \
+        $(cmake_enable spell PLUGIN_SPELL) \
+        $(cmake_enable trayicon PLUGIN_DOCK) \
+        $(cmake_enable weather PLUGIN_WEATHER) \
+        $(cmake_enable yahoo PLUGIN_YAHOO) \
+        $(cmake_enable zodiak PLUGIN_ZODIAK)
 }
 
