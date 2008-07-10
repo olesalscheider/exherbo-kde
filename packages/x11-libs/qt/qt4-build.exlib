@@ -148,7 +148,6 @@ qt4-build_src_configure() {
             -pch
             -reduce-relocations
             -release
-            -silent
             -stl
             -verbose"
 
