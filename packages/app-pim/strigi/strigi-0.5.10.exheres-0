@@ -1,0 +1,54 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+require cmake
+
+DESCRIPTION="Fast crawling desktop search engine with Qt4 GUI"
+HOMEPAGE="http://www.vandenoever.info/software/strigi"
+SRC_URI="http://www.vandenoever.info/software/${PN}/${P}.tar.bz2"
+
+LICENSE="LGPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="debug exiv2 fam inotify qt4"
+# log sqlite
+
+# There are other backends too, but only the clucene backend works well and fast
+# enough, so we hard enable it and disable: hyperestraier, sqlite
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+    build+run:
+        dev-libs/libxml2
+        >=dev-cpp/clucene-0.9.19
+        exiv2? ( media-gfx/exiv2 )
+        fam? ( virtual/fam )
+        qt4? ( sys-apps/dbus 
+            x11-libs/qt:4[dbus][X] )
+    "
+#        virtual/libiconv
+
+src_compile() {
+    # Strigi needs either expat or libxml2.
+    # However libxml2 seems to be required in both cases, linking to 2 xml parsers
+    # is just silly, so we forcefully disable linking to expat.
+    # Enabled: POLLING (only reliable way to check for files changed.)
+
+    mycmakeargs+=" -DENABLE_EXPAT=OFF -DENABLE_POLLING=ON
+        -DFORCE_DEPS=ON
+        -DENABLE_REGENERATEXSD=OFF
+        -DENABLE_HYPERESTRAIER=OFF
+        -DENABLE_SQLITE=Off
+        -DENABLE_CLUCENE=On
+        -DENALBE_CPPUNIT=On
+        $(cmake_option_enable exiv2 EXIV2)
+        $(cmake_option_enable fam FAM)
+        $(cmake_option_enable inotify INOTIFY)
+        $(cmake_option_enable qt4 DBUS)
+        $(cmake_option_enable qt4 QT4)"
+#        $(cmake_option_enable log LOG4CXX)
+    cmake_src_compile
+}
+
