@@ -30,25 +30,24 @@ DEPENDENCIES="
     "
 #        virtual/libiconv
 
-src_compile() {
+src_configure() {
     # Strigi needs either expat or libxml2.
     # However libxml2 seems to be required in both cases, linking to 2 xml parsers
     # is just silly, so we forcefully disable linking to expat.
     # Enabled: POLLING (only reliable way to check for files changed.)
 
-    mycmakeargs+=" -DENABLE_EXPAT=OFF -DENABLE_POLLING=ON
-        -DFORCE_DEPS=ON
-        -DENABLE_REGENERATEXSD=OFF
-        -DENABLE_HYPERESTRAIER=OFF
-        -DENABLE_SQLITE=Off
-        -DENABLE_CLUCENE=On
-        -DENALBE_CPPUNIT=On
-        $(cmake_option_enable exiv2 EXIV2)
-        $(cmake_option_enable fam FAM)
-        $(cmake_option_enable inotify INOTIFY)
-        $(cmake_option_enable qt4 DBUS)
-        $(cmake_option_enable qt4 QT4)"
-#        $(cmake_option_enable log LOG4CXX)
-    cmake_src_compile
+    ecmake -DENABLE_EXPAT=OFF -DENABLE_POLLING=ON \
+        -DFORCE_DEPS=ON \
+        -DENABLE_REGENERATEXSD=OFF \
+        -DENABLE_HYPERESTRAIER=OFF \
+        -DENABLE_SQLITE=Off \
+        -DENABLE_CLUCENE=On \
+        -DENABLE_CPPUNIT=On \
+        $(cmake_enable exiv2 EXIV2) \
+        $(cmake_enable fam FAM) \
+        $(cmake_enable inotify INOTIFY) \
+        $(cmake_enable qt4 DBUS) \
+        $(cmake_enable qt4 QT4)
+#        $(cmake_enable log LOG4CXX)
 }
 
