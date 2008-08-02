@@ -1,0 +1,19 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+DESCRIPTION="KDE Meta Object Compiler"
+HOMEPAGE="http://www.kde.org"
+SRC_URI="mirror://kde/unstable/${PN}/${PV}/${P}.tar.bz2"
+
+LICENSE="as-is"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        >=sys-devel/cmake-2.4.5
+        x11-libs/qt:4"
+
