@@ -5,13 +5,11 @@
 # Based in part upon the respective ebuild in Gentoo which is: 
 # Copyright 1999-2008 Gentoo Foundation
 
-MY_P=${P/-server}
-
 require cmake
 
 SUMMARY="The server part of Akonadi"
 HOMEPAGE="http://pim.kde.org/akonadi/"
-SRC_URI="http://akonadi.omat.nl/${P/-server}.tar.bz2"
+SRC_URI="http://download.akonadi-project.org/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -25,9 +23,7 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[dbus][sqlite]
         >=x11-misc/shared-mime-info-0.20
-	    mysql? ( dev-db/mysql )
-    "
-S="${WORKDIR}"/${MY_P}
+        mysql? ( dev-db/mysql )"
 
 src_prepare() {
 	# Don't check for mysql, avoid an automagic dep.
