@@ -1,0 +1,39 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'akonadi-server-scm.kdebuild-1' from Genkdesvn, which is:
+# Copyright 2007-2008 by the individual contributors of the genkdesvn project
+# Based in part upon the respective ebuild in Gentoo which is: 
+# Copyright 1999-2008 Gentoo Foundation
+
+MY_P=${P/-server}
+
+require cmake
+
+SUMMARY="The server part of Akonadi"
+HOMEPAGE="http://pim.kde.org/akonadi/"
+SRC_URI="http://akonadi.omat.nl/${P/-server}.tar.bz2"
+
+LICENSE="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="mysql"
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt
+        kde/automoc4
+    build+run:
+        x11-libs/qt:4[dbus][sqlite]
+        >=x11-misc/shared-mime-info-0.20
+	    mysql? ( dev-db/mysql )
+    "
+S="${WORKDIR}"/${MY_P}
+
+src_prepare() {
+	# Don't check for mysql, avoid an automagic dep.
+	if ! option mysql; then
+		sed -e '/mysqld/s/find_program/#DONOTWANT &/' \
+			-i "${S}"/server/CMakeLists.txt || die 'Sed failed.'
+	fi
+}
+
