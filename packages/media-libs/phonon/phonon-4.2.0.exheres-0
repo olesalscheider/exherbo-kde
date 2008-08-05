@@ -9,7 +9,7 @@ require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-SRC_URI="ftp://ftp.kde.org/pub/kde/stable/${PN}/${PV}/${P}.tar.bz2"
+SRC_URI="mirror://kde/stable/${PN}/${PV}/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -21,8 +21,10 @@ DEPENDENCIES="
         >=kde/automoc4-0.9.84
     build+run:
         >=x11-libs/qt-4.4.0:4[dbus]"
-# gstreamer? ( media-libs/gstreamer
-#    media-libs/gst-plugins-base )"
+#       gstreamer? (
+#           media-libs/gstreamer
+#           media-libs/gst-plugins-base
+#       )"
 
 # Restrict for now
 RESTRICT="test"
@@ -34,3 +36,4 @@ src_configure() {
         -DGStreamer=Off \
         -DGStreamerPlugins=Off
 }
+
