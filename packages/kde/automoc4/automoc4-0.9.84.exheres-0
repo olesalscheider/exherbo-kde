@@ -3,7 +3,7 @@
 
 require cmake
 
-DESCRIPTION="KDE Meta Object Compiler"
+SUMMARY="KDE Meta Object Compiler"
 HOMEPAGE="http://www.kde.org"
 SRC_URI="mirror://kde/unstable/${PN}/${PV}/${P}.tar.bz2"
 

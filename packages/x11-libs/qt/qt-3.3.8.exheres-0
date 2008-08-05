@@ -3,7 +3,7 @@
 
 require qt3-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development
+SUMMARY="The Qt toolkit is a comprehensive C++ application development
 framework."
 HOMEPAGE="http://www.trolltech.com/"
 

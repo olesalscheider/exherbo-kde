@@ -6,7 +6,7 @@ require cmake subversion
 ESVN_REPO_URI="svn://svn.berlios.de/sim-im/trunk"
 ESVN_PROJECT="sim-im"
 
-DESCRIPTION="Sim-IM is a multiple protocol instant messenger."
+SUMMARY="Sim-IM is a multiple protocol instant messenger."
 HOMEPAGE="http://sim-im.org/"
 
 LICENSE="GPL-2"

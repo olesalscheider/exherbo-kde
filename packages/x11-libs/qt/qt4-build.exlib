@@ -7,7 +7,7 @@ require multilib toolchain-funcs
 
 SRC_TYPE=opensource-src
 MY_P=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
-DESCRIPTION="Qt Cross-platform application framework for desktop and embedded development"
+SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
 SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
 S=${WORKDIR}/${MY_P}
