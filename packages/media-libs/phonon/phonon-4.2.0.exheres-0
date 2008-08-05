@@ -1,0 +1,36 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'phonon-4.2-scm.kdebuild-1' from Genkdesvn, which is:
+# Copyright 2007-2008 by the individual contributors of the genkdesvn project
+# Based in part upon the respective ebuild in Gentoo which is: 
+# Copyright 1999-2008 Gentoo Foundation
+
+require cmake
+
+SUMMARY="KDE multimedia API"
+HOMEPAGE="http://phonon.kde.org"
+SRC_URI="ftp://ftp.kde.org/pub/kde/stable/${PN}/${PV}/${P}.tar.bz2"
+
+LICENSE="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        >=kde/automoc4-0.9.84
+    build+run:
+        >=x11-libs/qt-4.4.0:4[dbus]"
+# gstreamer? ( media-libs/gstreamer
+#    media-libs/gst-plugins-base )"
+
+# Restrict for now
+RESTRICT="test"
+
+src_configure() {
+    # $(cmake_with GStreamer)
+    # $(cmake_with gstreamer GStreamerPlugins)
+    ecmake \
+        -DGStreamer=Off \
+        -DGStreamerPlugins=Off
+}
