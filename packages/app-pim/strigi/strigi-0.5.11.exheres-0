@@ -24,12 +24,11 @@ DEPENDENCIES="
         dev-libs/libxml2
         >=dev-cpp/clucene-0.9.19
         exiv2? ( media-gfx/exiv2 )
-        fam? ( virtual/fam )
+        fam? ( app-admin/gamin )
         qt4? (
             sys-apps/dbus 
             x11-libs/qt:4[dbus][X]
         )"
-#       virtual/libiconv
 
 src_configure() {
     # Strigi needs either expat or libxml2.
