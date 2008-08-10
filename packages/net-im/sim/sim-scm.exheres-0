@@ -34,7 +34,7 @@ DEPENDENCIES="
         x11-libs/libXScrnSaver
     "
 
-DEFAULT_SRC_INSTALL_EXTRA_DOCS="TODO.CMake AUTHORS.sim jisp-resources.txt"
+DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake AUTHORS.sim jisp-resources.txt )
 
 pkg_pretend() {
     if ! option jabber && ! option livejournal && ! option msn \
