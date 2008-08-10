@@ -25,12 +25,12 @@ set_platform() {
     case ${CXX} in
         *g++*) platform_cxx="g++" ;;
         *icpc*) platform_cxx="icc" ;;
-        *) die 'Unknown or unsupported compiler.' ;;
+        *) die 'Unknown or unsupported compiler' ;;
     esac
 
     case ${CHOST} in
         *-linux-*|*-linux) platform_name="linux" ;;
-        *) die 'Unknown or unsupported platform/OS.' ;;
+        *) die 'Unknown or unsupported platform/OS' ;;
     esac
 
     platform="${platform_name}-${platform_cxx}"
@@ -60,7 +60,7 @@ qt3-build_src_prepare() {
     default_src_prepare
 
     sed -e "s:/lib$:/${libdir}:" \
-        -i mkspecs/${platform}*/qmake.conf || die 'Sed for libdir failed'
+        -i mkspecs/${platform}*/qmake.conf || die 'sed for libdir failed'
 
     sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 $(tc-getCC):" \
         -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 $(tc-getCXX):" \
@@ -71,10 +71,10 @@ qt3-build_src_prepare() {
         -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
         -e "s:\(^QMAKE_LFLAGS_RELEASE[[:space:]]*=\).*:\1 ${LDFLAGS}:" \
         -e "s:\(^QMAKE_RPATH[[:space:]]*=\).*:\1:" \
-        -i mkspecs/${platform}*/qmake.conf || die 'Sed for user-defined {C,CXX}FLAGS failed'
+        -i mkspecs/${platform}*/qmake.conf || die 'sed for user-defined {C,CXX}FLAGS failed'
 
     sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
-        -i configure || die 'Sed for license acceptance failed'
+        -i configure || die 'sed for license acceptance failed'
 
     for qtlib in $(get_all_libdirs); do
         qtlibdirs="${qtlibdirs}:${QTBASEDIR}/${qtlib}"

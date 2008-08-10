@@ -65,7 +65,7 @@ qt4_mkspecs_dir() {
     if [[ ${CXX} == *g++* ]]; then
         spec+="-g++"
     else
-        die "Unknown compiler ${CXX}."
+        die "Unknown compiler ${CXX}"
     fi
 
     echo "${spec}"
@@ -106,7 +106,7 @@ qconf4() {
         x86|x86-*)                      myconf+=" -arch i386" ;;
         alpha|arm|ia64|mips|s390|sparc) myconf+=" -arch ${ARCH}" ;;
         hppa|sh)                        myconf+=" -arch generic" ;;
-        *) die_unless_nonfatal "${ARCH} is unsupported by this eclass. Please file a bug." || return 1 ;;
+        *) die_unless_nonfatal "${ARCH} is unsupported by this eclass. Please file a bug" || return 1 ;;
     esac
 
     echo ./configure ${myconf} "$@" ${EXTRA_ECONF} 1>&2

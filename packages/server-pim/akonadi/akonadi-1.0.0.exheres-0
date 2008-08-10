@@ -29,7 +29,7 @@ src_prepare() {
 	# Don't check for mysql, avoid an automagic dep.
 	if ! option mysql; then
 		sed -e '/mysqld/s/find_program/#DONOTWANT &/' \
-			-i "${S}"/server/CMakeLists.txt || die 'Sed failed.'
+			-i "${S}"/server/CMakeLists.txt || die 'sed failed'
 	fi
 }
 
