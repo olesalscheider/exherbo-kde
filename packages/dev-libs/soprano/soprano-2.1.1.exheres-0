@@ -1,0 +1,38 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'soprano-2.0.2.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+require cmake
+
+SUMMARY="Soprano is a library which provides a nice Qt interface to RDF storage solutions."
+HOMEPAGE="http://sourceforge.net/projects/soprano"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+
+LICENSE="GPL-2 LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        >=dev-cpp/clucene-0.9.19
+        >=dev-libs/rasqal-0.9.15
+        >=dev-libs/redland-1.0.6[berkdb]
+        >=media-libs/raptor-1.4.16
+        x11-libs/qt:4"
+
+# Tests load soprano libraries from /, restricted until that's fixed.
+RESTRICT=test
+
+src_prepare() {
+    if option !doc; then
+        sed -e '/find_package(Doxygen)/s/^/#DONOTFIND /' \
+            -i "${S}"/CMakeLists.txt || die 'Doxygen sed failed.'
+    fi
+    sed -e '/find_package(JNI)/s/^/#DONOTFIND /' \
+        -i "${S}"/CMakeLists.txt || die 'Java/Sesame2 sed failed.'
+}
+
