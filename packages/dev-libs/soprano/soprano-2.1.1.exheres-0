@@ -6,6 +6,13 @@
 require cmake
 
 SUMMARY="Soprano is a library which provides a nice Qt interface to RDF storage solutions."
+DESCRIPTION='
+Soprano (formerly known as QRDF) is a library which provides a highly usable
+object-oriented C++/QT4 framework for RDF data. It uses different RDF storage
+solutions as backends through a simple plugin system. Soprano is targetted at
+desktop applications that need a RDF data storage solution. It has been
+optimized for easy usage and simplicity.
+'
 HOMEPAGE="http://sourceforge.net/projects/soprano"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
