@@ -1,0 +1,29 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDEPIM libraries"
+LICENSE="GPL-2 LGPL-2.1"
+DESCRIPTION="
+"
+MYOPTIONS="sasl" # ldap
+
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        dev-util/pkg-config
+    build+run:
+        app-crypt/gpgme
+        dev-libs/boost
+        dev-libs/libgpg-error
+        kde/kdelibs:${SLOT}
+        server-pim/akonadi
+        sasl? ( dev-libs/cyrus-sasl )"
+
+src_configure() {
+    kdecmake \
+        -DWITH_Ldap=OFF \
+        $(cmake_with sasl Sasl2)
+}
+
