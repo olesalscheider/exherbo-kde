@@ -21,9 +21,6 @@ DEPENDENCIES="
         server-pim/akonadi
         sasl? ( dev-libs/cyrus-sasl )"
 
-src_configure() {
-    kdecmake \
-        -DWITH_Ldap=OFF \
-        $(cmake_with sasl Sasl2)
-}
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )
 

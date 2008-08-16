@@ -17,7 +17,7 @@
 
 
 require multilib kde4 cmake
-export_exlib_phases src_configure pkg_postinst pkg_postrm
+export_exlib_phases pkg_postinst pkg_postrm
 
 
 ### Metadata
@@ -47,39 +47,16 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 
-kdecmake() {
-    local kdecmakeargs=(
-        -DKDE4_ENABLE_HTMLHANDBOOK=ON
-        -DKDE4_BUILD_TESTS=ON
-        -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE # XXX
-        -DCMAKE_INSTALL_PREFIX="${KDE_INSTALL_PREFIX}"
-        # - Enable for next release: this should provide less unnecessary linking, currently it causes undefined references
-        #   -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT=ON
-        # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH=/usr/kde/${SLOT}/$(get_libdir)
-        # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL=ON'
-    )
-
-    ecmake \
-        ${kdecmakeargs[@]} \
-        "${@}"
-}
-
-kde.org-4_src_configure() {
-    kdecmake \
-        ${CMAKE_SRC_CONFIGURE_PARAMS[@]} \
-        $(for s in ${CMAKE_SRC_CONFIGURE_OPTION_ENABLES[@]} ; do
-            cmake_enable "${s}"
-        done ) \
-        $(for s in ${CMAKE_SRC_CONFIGURE_OPTION_HAVES[@]} ; do
-            cmake_have "${s}"
-        done ) \
-        $(for s in ${CMAKE_SRC_CONFIGURE_OPTION_WANTS[@]} ; do
-            cmake_want "${s}"
-        done ) \
-        $(for s in ${CMAKE_SRC_CONFIGURE_OPTION_WITHS[@]} ; do
-            cmake_with "${s}"
-        done )
-}
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DKDE4_ENABLE_HTMLHANDBOOK=ON
+    -DKDE4_BUILD_TESTS=ON
+    -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE # XXX
+    -DCMAKE_INSTALL_PREFIX="${KDE_INSTALL_PREFIX}"
+    # - Enable for next release: this should provide less unnecessary linking, currently it causes undefined references
+    #   -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT=ON
+    # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH=/usr/kde/${SLOT}/$(get_libdir)
+    # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL=ON'
+)
 
 kde.org-4_pkg_postinst() {
     buildsycoca4

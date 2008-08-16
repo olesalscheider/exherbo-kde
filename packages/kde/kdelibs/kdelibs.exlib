@@ -58,32 +58,31 @@ DEPENDENCIES="
         x11-apps/iceauth
         x11-apps/rgb"
 
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Libintl
+    -DKDE_DEFAULT_HOME=.kde4
+    -DKDE_DISTRIBUTION_TEXT="Exherbo Linux"
+    -DWITH_ACL=OFF
+    -DWITH_Avahi=OFF -DWITH_DNSSD=OFF
+    -DWITH_BZip2=ON
+    -DWITH_GSSAPI=OFF
+    -DWITH_HSPELL=OFF
+    -DWITH_Jasper=OFF
+    -DWITH_OpenEXR=OFF
+    -DWITH_Soprano=ON
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    fam
+    'opengl OpenGL'
+    'spell ASPELL'
+    'spell ENCHANT'
+    'ssl OpenSSL'
+)
 
 src_prepare() {
     default
     # Kate tests need a tarball from SVN
     sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' -i kate/CMakeLists.txt || die 'FAIL'
-}
-
-
-src_configure() {
-    # Libintl
-    kdecmake \
-        -DKDE_DEFAULT_HOME=.kde4 \
-        -DKDE_DISTRIBUTION_TEXT="Exherbo Linux" \
-        -DWITH_ACL=OFF \
-        -DWITH_Avahi=OFF -DWITH_DNSSD=OFF \
-        -DWITH_BZip2=ON \
-        -DWITH_GSSAPI=OFF \
-        -DWITH_HSPELL=OFF \
-        -DWITH_Jasper=OFF \
-        -DWITH_OpenEXR=OFF \
-        -DWITH_Soprano=ON \
-        $(cmake_with fam) \
-        $(cmake_with opengl OpenGL) \
-        $(cmake_with spell ASPELL) \
-        $(cmake_with spell ENCHANT) \
-        $(cmake_with ssl OpenSSL)
 }
 
 src_compile() {
