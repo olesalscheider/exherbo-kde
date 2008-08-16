@@ -9,10 +9,10 @@ SRC_TYPE=opensource-src
 MY_P=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
-SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
+SOURCES="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
 S=${WORKDIR}/${MY_P}
 
-LICENSE="|| ( QPL-1.0 GPL-2 GPL-3 )"
+LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
 SLOT=${PV:0:1}
 
 MYOPTIONS_PARTS="demos doc examples"

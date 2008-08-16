@@ -14,9 +14,9 @@ desktop applications that need a RDF data storage solution. It has been
 optimized for easy usage and simplicity.
 '
 HOMEPAGE="http://sourceforge.net/projects/soprano"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SOURCES="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
-LICENSE="GPL-2 LGPL-2.1"
+LICENCES="GPL-2 LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="doc"

@@ -9,9 +9,9 @@ require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-SRC_URI="mirror://kde/stable/${PN}/${PV}/${P}.tar.bz2"
+SOURCES="mirror://kde/stable/${PN}/${PV}/${P}.tar.bz2"
 
-LICENSE="LGPL-2.1"
+LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""

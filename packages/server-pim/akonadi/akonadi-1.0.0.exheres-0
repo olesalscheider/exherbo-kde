@@ -9,9 +9,9 @@ require cmake
 
 SUMMARY="The server part of Akonadi"
 HOMEPAGE="http://pim.kde.org/akonadi/"
-SRC_URI="http://download.akonadi-project.org/${P}.tar.bz2"
+SOURCES="http://download.akonadi-project.org/${P}.tar.bz2"
 
-LICENSE="LGPL-2.1"
+LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="mysql"

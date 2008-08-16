@@ -7,7 +7,7 @@ SUMMARY="The Qt toolkit is a comprehensive C++ application development
 framework."
 HOMEPAGE="http://www.trolltech.com/"
 
-LICENSE="|| ( QPL-1.0 GPL-2 )"
+LICENCES="|| ( QPL-1.0 GPL-2 )"
 SLOT="3"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="cups debug doc examples glib ipv6 mysql opengl postgres ssl sqlite xinerama"
