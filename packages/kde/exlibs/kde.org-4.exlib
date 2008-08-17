@@ -38,9 +38,9 @@ KDE_INSTALL_PREFIX="/usr"
 
 case ${PV} in
     4.1.0)
-        SRC_URI="${SRC_URI:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+        SOURCES="${SOURCES:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     *)
-        SRC_URI="${SRC_URI:-"mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+        SOURCES="${SOURCES:-"mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
 esac
 
 DEPENDENCIES="
