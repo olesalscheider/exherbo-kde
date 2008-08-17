@@ -29,11 +29,11 @@ build+run:
     x11-libs/libXi
     x11-libs/libXrandr
     x11-libs/libSM
-    cups? ( fixme/cups )
+    cups? ( net-print/cups )
     glib? ( dev-libs/glib:2 )
-    mysql? ( fixme/mysql )
-    opengl? ( fixme/eroyf-fails-at-dri )
-    postgres? ( fixme/postgres )
+    mysql? ( dev-db/mysql )
+    opengl? ( x11-dri/mesa-lib )
+    postgres? ( dev-db/postgres )
     ssl? ( dev-libs/openssl )
     xinerama? ( x11-libs/libXinerama )
 "
