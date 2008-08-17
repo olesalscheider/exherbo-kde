@@ -81,6 +81,7 @@ qt3-build_src_prepare() {
     done
 
     cat <<-EOF > "${T}"/45qt3
+QTDIR=${QTBASEDIR}
 PATH=${QTBASEDIR}/bin
 ROOTPATH=${QTBASEDIR}/bin
 LDPATH=${qtlibdirs}
@@ -88,7 +89,6 @@ QMAKESPEC=${platform}
 MANPATH=${QTBASEDIR}/doc/man
 PKG_CONFIG_PATH=${QTBASEDIR}/$(get_libdir)/pkgconfig
 EOF
- 
 }
 
 myoption() {
