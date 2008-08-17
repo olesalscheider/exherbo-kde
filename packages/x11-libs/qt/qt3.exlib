@@ -132,6 +132,8 @@ qt3_src_configure() {
 }
 
 qt3_src_compile() {
+    export SYSCONF="${D}"${QTBASE}/etc/settings
+
     emake src-qmake src-moc sub-src
 
     export DYLD_LIBRARY_PATH="${S}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
