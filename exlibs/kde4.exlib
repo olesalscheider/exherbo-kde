@@ -10,6 +10,11 @@ buildsycoca4() {
         echo "adress='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
         
         # unset KDEHOME HOME
+        export KDEDIR="/usr"
+        local k x
+        for k in ${!KDE*}; do echo "${k}='${!k}'"; done
+        for x in ${!XDG*}; do echo "${x}='${!x}'"; done
+
         ebegin "/usr/bin/kbuildsycoca4 --global --noincremental"
         /usr/bin/kbuildsycoca4 --global --noincremental
         eend $?
