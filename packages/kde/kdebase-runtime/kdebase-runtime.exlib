@@ -1,0 +1,49 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Runtime libraries & files"
+LICENCES="GPL-2 LGPL-2.1"
+DESCRIPTION="
+"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        dev-util/pkg-config
+    build+run:
+        app-pim/strigi
+        dev-cpp/clucene
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        media-libs/phonon
+        media-libs/xine-lib[xcb]
+        sys-apps/hal
+        sys-devel/gdb [[ description = [ DrKonqi ] ]]
+        x11-libs/libxcb
+"
+
+# khelpcenter: run: www-misc/htdig
+# kioslaves: cyrus-sasl, libXcursor
+# nepomuk: kdelibs w soprano (kdelibs[semantic-desktop])
+# -- Found BZip2: /lib64/libbz2.a
+# kio_help4(23446) KLocalePrivate::initEncoding: Cannot resolve system encoding, defaulting to ISO 8859-1.
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DOpenEXR=ON
+    -DSamba=ON
+)
+
+src_install() {
+    cmake_src_install
+
+    # Keepdir some empty directories for icons.
+    local d
+    for d in $(find "${D}" -type d -empty | sed -e "s:^${D}::"); do
+        echo keepdir ${d}
+        keepdir ${d}
+    done
+}
+
