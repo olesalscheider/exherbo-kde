@@ -1,0 +1,39 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE base"
+LICENCES="GPL-2 LGPL-2.1"
+DESCRIPTION="
+"
+MYOPTIONS="ieee1394 opengl"
+
+# nepomuk, soprano, kdelibs[semantic-desktop]
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        dev-util/pkg-config
+        x11-apps/bdftopcf
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        kde/kdebase-runtime:${SLOT}
+        kde/kdebase-workspace:${SLOT}
+        >=kde/qimageblitz-0.0.4
+        sys-apps/pciutils
+        sys-apps/usbutils
+        x11-libs/qt:4[glib][opengl?]
+        ieee1394? ( sys-libs/libraw1394 )
+    post,suggested:
+        sys-apps/eject"
+        # konsole
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'ieee1394 RAW1394'
+    'opengl OpenGL'
+)
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DWITH_Nepomuk=ON
+)
+
