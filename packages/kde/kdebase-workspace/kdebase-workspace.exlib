@@ -1,0 +1,82 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Workspace"
+LICENCES="GPL-2 LGPL-2.1"
+DESCRIPTION="
+"
+MYOPTIONS="bluetooth usb lm_sensors networkmanager opengl
+ppc_cpu_options:altivec x86_cpu_options:3dnow x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
+# captury; media-libs/libcaptury
+# cpu_options: ksplash
+# kerberos
+
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        dev-util/pkg-config
+    build+run:
+        dev-libs/glib:2
+        media-libs/fontconfig
+        media-libs/freetype
+        media-libs/libpng
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        kde/kdebase-runtime:${SLOT}
+        >=kde/qimageblitz-0.0.4
+        sys-libs/pam
+        x11-libs/libxklavier
+        x11-libs/qt:4[opengl?]
+        bluetooth? ( net-wireless/bluez-libs )
+        lm_sensors? ( sys-apps/lm_sensors )
+        networkmanager? ( net-misc/networkmanager )
+        usb? ( dev-libs/libusb )
+    run:
+        x11-apps/setxkbmap
+        x11-apps/xinit [[ note = kdm ]]
+        x11-apps/xkeyboard-config
+        x11-apps/xmessage
+        x11-apps/xsetroot
+        x11-apps/xset
+        x11-apps/xrandr
+        x11-apps/mkfontdir
+        x11-apps/xprop"
+
+# usb: libusb
+
+CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
+    # CMake options are different from kde/qimageblitz!
+    'ppc_cpu_options:altivec PPC_ALTIVEC'
+    'x86_cpu_options:3dnow X86_3DNOW'
+    'x86_cpu_options:mmx X86_MMX'
+    'x86_cpu_options:sse X86_SSE'
+    'x86_cpu_options:sse2 X86_SSE2'
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'bluetooth BlueZ'
+    'opengl OpenGL'
+    'lm_sensors Sensors'
+    'networkmanager NetworkManager'
+    usb
+)
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
+    -DWITH_GLIB2=ON -DWITH_GObject=ON
+    -DWITH_PAM=ON # Automagic, hard-enabled
+    -DKDE4_KRB5AUTH=OFF
+    -DWITH_Xmms=OFF
+)
+
+
+src_install() {
+    cmake_src_install
+
+    # fixify
+    keepdir /usr/share/config/kdm/sessions
+
+    # kdebase-startkde:
+    # agent-startup.sh, agent-shutdown.sh, xdg.sh
+}
+
