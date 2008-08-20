@@ -28,7 +28,7 @@ DEPENDENCIES="
         >=kde/qimageblitz-0.0.4
         sys-libs/pam
         x11-libs/libxklavier
-        x11-libs/qt:4[opengl?]
+        x11-libs/qt:4[opengl?][webkit]
         bluetooth? ( net-wireless/bluez-libs )
         lm_sensors? ( sys-apps/lm_sensors )
         networkmanager? ( net-misc/networkmanager )
