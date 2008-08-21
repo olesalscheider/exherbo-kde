@@ -20,7 +20,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         media-libs/fontconfig
-        media-libs/freetype
+        media-libs/freetype:2
         media-libs/libpng
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}

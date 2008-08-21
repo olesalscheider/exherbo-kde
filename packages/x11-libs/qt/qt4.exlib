@@ -25,7 +25,7 @@ DEPENDENCIES="
         dev-util/pkg-config
         xinerama? ( x11-proto/xineramaproto )
     build+run:
-        media-libs/freetype
+        media-libs/freetype:2
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/libXext

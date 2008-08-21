@@ -27,7 +27,7 @@ DEPENDENCIES="
         dev-libs/soprano [[ note = [ Need soprano's clucene support enabled ] ]]
         >=sys-sound/alsa-lib-1.0.14a
         media-libs/fontconfig
-        media-libs/freetype
+        media-libs/freetype:2
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng

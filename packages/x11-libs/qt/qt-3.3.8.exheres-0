@@ -19,7 +19,7 @@ build:
     x11-proto/xextproto
     xinerama? ( x11-proto/xineramaproto )
 build+run:
-    media-libs/freetype
+    media-libs/freetype:2
     media-libs/jpeg
     media-libs/libmng
     media-libs/libpng
