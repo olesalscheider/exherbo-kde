@@ -1,0 +1,45 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+MYOPTIONS="pdf ps chm djvu tiff dvi epub odf"
+
+# Need gphoto for kamera
+# Need sane for libksane and ksaneplugin
+# Need kipi for kipi support in gwenview
+DEPENDENCIES="
+    build+run:
+        app-pim/strigi
+        dev-libs/expat
+        >=graphics/exiv2-0.13
+        kde/qimageblitz
+        kde/kdelibs:${SLOT}
+        media-libs/jpeg
+        media-libs/lcms
+        x11-libs/libXxf86vm
+        chm? ( fixme/chm )
+        djvu? ( fixme/dejavulibre )
+        dvi? ( media-libs/freetype:2 )
+        epub? ( fixme/libepub )
+        odf? ( app-crypt/qca:2 )
+        pdf? ( app-text/poppler[qt4] )
+        ps? ( app-text/libspectre )
+        tiff? ( media-libs/tiff )
+"
+
+# Hard deactivate kamera and sane
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DBUILD_kamera=Off
+    -DBUILD_ksaneplugin=Off
+    -DWITH_Sane=Off
+    -DWITH_Kipi=Off
+    -DWITH_Gphoto2=Off
+    -DGWENVIEW_METADATA_BACKEND=Nepomuk
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    CHM EPub TIFF "djvu DjVuLibre" 
+    "dvi Freetype" "odf QCA2" "pdf Poppler" "ps LibSpectre"
+)
+
