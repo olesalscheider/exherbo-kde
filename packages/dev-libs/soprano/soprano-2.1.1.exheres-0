@@ -31,7 +31,13 @@ DEPENDENCIES="
         >=media-libs/raptor-1.4.16
         x11-libs/qt:4"
 
-# Tests load soprano libraries from /, restricted until that's fixed.
+# Tests fail for out-of-source build
+ECMAKE_BUILD_TYPE="in-source"
+# Tests failing because Sesame2 can't properly be disabled in the CMake buildsystem:
+# FIXME: Send patch upstream
+#   redlandmultithreadtest indexmodelmultithreadingtest localsocketmultithreadtest sopranodbusmultithreadtest
+# Real test failures:
+#   sopranodclienttest sopranodsocketclienttest sopranodbusclienttest
 RESTRICT=test
 
 src_prepare() {
