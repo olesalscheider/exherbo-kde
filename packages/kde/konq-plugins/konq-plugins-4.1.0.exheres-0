@@ -10,7 +10,7 @@ HOMEPAGE=""
 SOURCES="mirror://kde/stable/${PV}/src/extragear/${P}.tar.bz2"
 
 LICENCES="GPL-2"
-SLOT="0"
+SLOT="4"
 PLATFORMS="~amd64"
 MYOPTIONS="" #webkit
 
