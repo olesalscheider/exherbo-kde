@@ -8,7 +8,6 @@ DESCRIPTION="
 "
 
 LICENCES="GPL-2"
-SLOT="4"
 PLATFORMS="~amd64"
 MYOPTIONS="opengl"
 
