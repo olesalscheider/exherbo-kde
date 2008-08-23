@@ -103,8 +103,8 @@ src_install() {
 
     if option doc; then
         pushd "${S}/doc/api"
-        docinto /usr/share/doc/${PF}/html/en/${PN}-apidox
-        doins -r ${P}-apidox
+        insinto /usr/share/doc/${PF}/apidocs
+        doins -r ${P}-apidocs/*
         popd
     fi
 
