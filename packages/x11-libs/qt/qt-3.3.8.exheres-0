@@ -39,19 +39,19 @@ build+run:
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-"${FILESDIR}/${P}-uic-fix.patch" #document
-"${FILESDIR}/${P}-mysql-unload-crash.patch" #document
-"${FILESDIR}/${P}-0001-dnd_optimization.patch"
-"${FILESDIR}/${P}-0002-dnd_active_window_fix.patch"
-"${FILESDIR}/${P}-0038-dragobject-dont-prefer-unknown.patch"
-"${FILESDIR}/${P}-0044-qscrollview-windowactivate-fix.diff"
-"${FILESDIR}/${P}-0047-fix-kmenu-widget.diff"
-"${FILESDIR}/${P}-0048-qclipboard_hack_80072.patch"
-"${FILESDIR}/${P}-0081-format-string-fixes.diff"
-"${FILESDIR}/${P}-unicode-off-by-one.patch" #document
-"${FILESDIR}/${P}-seli-xinerama.patch" #document
-"${FILESDIR}/${P}-utf8-bug-qt3.diff" #document
-"${FILESDIR}/${P}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
-"${FILESDIR}/${P}-mips.patch" #document
+"${FILES}/${PNV}-uic-fix.patch" #document
+"${FILES}/${PNV}-mysql-unload-crash.patch" #document
+"${FILES}/${PNV}-0001-dnd_optimization.patch"
+"${FILES}/${PNV}-0002-dnd_active_window_fix.patch"
+"${FILES}/${PNV}-0038-dragobject-dont-prefer-unknown.patch"
+"${FILES}/${PNV}-0044-qscrollview-windowactivate-fix.diff"
+"${FILES}/${PNV}-0047-fix-kmenu-widget.diff"
+"${FILES}/${PNV}-0048-qclipboard_hack_80072.patch"
+"${FILES}/${PNV}-0081-format-string-fixes.diff"
+"${FILES}/${PNV}-unicode-off-by-one.patch" #document
+"${FILES}/${PNV}-seli-xinerama.patch" #document
+"${FILES}/${PNV}-utf8-bug-qt3.diff" #document
+"${FILES}/${PNV}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
+"${FILES}/${PNV}-mips.patch" #document
 )
 

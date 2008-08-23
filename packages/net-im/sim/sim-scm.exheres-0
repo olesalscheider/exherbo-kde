@@ -5,7 +5,7 @@ require cmake
 
 SUMMARY="Sim-IM is a multiple protocol instant messenger."
 HOMEPAGE="http://sim-im.org/"
-SOURCES=""
+DOWNLOADS=""
 
 SCM_TYPE="svn"
 SCM_REPOSITORY="svn://svn.berlios.de/sim-im"

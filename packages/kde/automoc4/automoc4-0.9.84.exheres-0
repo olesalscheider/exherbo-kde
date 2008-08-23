@@ -5,7 +5,7 @@ require cmake
 
 SUMMARY="KDE Meta Object Compiler"
 HOMEPAGE="http://www.kde.org"
-SOURCES="mirror://kde/unstable/${PN}/${PV}/${P}.tar.bz2"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="as-is"
 SLOT="0"

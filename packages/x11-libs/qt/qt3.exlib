@@ -11,9 +11,9 @@
 require multilib flag-o-matic toolchain-funcs 
 
 SRC_TYPE="free"
-SOURCES="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
+DOWNLOADS="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
 
-S="${WORKDIR}/${PN}-x11-${SRC_TYPE}-${PV}"
+WORK="${WORKBASE}/${PN}-x11-${SRC_TYPE}-${PV}"
 
 export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
     src_compile src_install 
@@ -47,7 +47,7 @@ qt3_pkg_setup() {
     QTBASEDIR="${QTPREFIX}/qt/3"
     QTBINDIR="${QTBASEDIR}/bin"
     QTLIBDIR="${QTBASEDIR}/${libdir}"
-    QTDOCDIR="${QTPREFIX}/share/doc/${PF}"
+    QTDOCDIR="${QTPREFIX}/share/doc/${PNVR}"
     QTHEADERDIR="${QTBASEDIR}/include"
     QTPLUGINDIR="${QTBASEDIR}/plugins"
     QTDATADIR="${QTPREFIX}/share/qt3"
@@ -79,7 +79,7 @@ qt3_src_prepare() {
         qtlibdirs="${qtlibdirs}:${QTBASEDIR}/${qtlib}"
     done
 
-    cat <<-EOF > "${T}"/45qt3
+    cat <<-EOF > "${TEMP}"/45qt3
 QTDIR=${QTBASEDIR}
 PATH=${QTBASEDIR}/bin
 ROOTPATH=${QTBASEDIR}/bin
@@ -132,12 +132,12 @@ qt3_src_configure() {
 }
 
 qt3_src_compile() {
-    export SYSCONF="${D}"${QTBASE}/etc/settings
+    export SYSCONF="${IMAGE}"${QTBASE}/etc/settings
 
     emake src-qmake src-moc sub-src
 
-    export DYLD_LIBRARY_PATH="${S}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
-    export LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
+    export DYLD_LIBRARY_PATH="${WORK}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
+    export LD_LIBRARY_PATH="${WORK}/lib:${LD_LIBRARY_PATH}"
 
     emake sub-tools
     option examples && emake sub-tutorial sub-examples
@@ -145,13 +145,13 @@ qt3_src_compile() {
 }
 
 qt3_src_install() {
-    export INSTALL_ROOT="${D}"
+    export INSTALL_ROOT="${IMAGE}"
     default_src_install
 
     dodir /etc/env.d
-    doenvd "${T}"/45qt3
+    doenvd "${TEMP}"/45qt3
 
-    # Unneeded & broken symlink to ${WORKDIR}
-    rm "${D}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
+    # Unneeded & broken symlink to ${WORKBASE}
+    rm "${IMAGE}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
 }
 

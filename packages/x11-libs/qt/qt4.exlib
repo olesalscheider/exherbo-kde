@@ -6,11 +6,11 @@
 require multilib toolchain-funcs
 
 SRC_TYPE=opensource-src
-MY_P=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
+MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
-SOURCES="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
-S=${WORKDIR}/${MY_P}
+DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+WORK=${WORKBASE}/${MY_PNV}
 
 LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
 SLOT=${PV:0:1}
@@ -90,7 +90,7 @@ qconf4() {
     myconf="-prefix /usr
             -bindir /usr/bin
             -libdir /usr/${libdir}/qt4
-            -docdir /usr/share/doc/${PF}
+            -docdir /usr/share/doc/${PNVR}
             -headerdir /usr/include/qt4
             -plugindir /usr/${libdir}/qt4/plugins
             -datadir /usr/share/qt4
@@ -123,19 +123,19 @@ qt4_src_prepare() {
         -e "/CONFIG/s:$: nostrip:" \
         -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
         -e "s:X11R6/::" \
-        -i "${S}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf || die "sed on qmake.conf failed"
+        -i "${WORK}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf || die "sed on qmake.conf failed"
 
     sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CPPFLAGS} ${CFLAGS} ${ASFLAGS}:" \
         -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS}:" \
         -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
         -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
-        -i "${S}"/mkspecs/common/g++.conf || die "sed on g++.conf failed"
+        -i "${WORK}"/mkspecs/common/g++.conf || die "sed on g++.conf failed"
 
-    sed -i -e "s:X11R6/::" "${S}"/mkspecs/common/linux.conf || die "sed on linux.conf failed"
+    sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf || die "sed on linux.conf failed"
 
     sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
         -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
-        -i "${S}"/qmake/Makefile.unix || die "sed on Makefile.unix failed"
+        -i "${WORK}"/qmake/Makefile.unix || die "sed on Makefile.unix failed"
 }
 
 qt4_src_configure() {
@@ -215,15 +215,15 @@ qt4_src_configure() {
 }
 
 qt4_src_install() {
-    emake INSTALL_ROOT="${D}" install
+    emake INSTALL_ROOT="${IMAGE}" install
 
     local lib libdir=$(get_libdir) libdirs
     # remove build dir from libraries
-    sed -i -e "s:${S}/lib:/usr/${libdir}/qt4:g" "${D}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc} \
+    sed -i -e "s:${WORK}/lib:/usr/${libdir}/qt4:g" "${IMAGE}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc} \
         || die "Failed to remove build dir from libraries"
 
     # move pkgconfig files out of qt4/ dir
-    mv "${D}"/usr/${libdir}/qt4/pkgconfig "${D}"/usr/${libdir}/ || die "Failed to move pkgconfig dir"
+    mv "${IMAGE}"/usr/${libdir}/qt4/pkgconfig "${IMAGE}"/usr/${libdir}/ || die "Failed to move pkgconfig dir"
 
     keepdir /etc/qt4
 
@@ -231,9 +231,9 @@ qt4_src_install() {
     for lib in $(get_all_libdirs); do
         libdirs="${libdirs}:/usr/${lib}/qt4"
     done
-    cat <<EOF > "${T}"/44qt4
+    cat <<EOF > "${TEMP}"/44qt4
 LDPATH=${libdirs:1}
 EOF
-    doenvd "${T}"/44qt4
+    doenvd "${TEMP}"/44qt4
 }
 

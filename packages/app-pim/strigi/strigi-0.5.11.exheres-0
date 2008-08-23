@@ -7,7 +7,7 @@ require cmake
 
 SUMMARY="Fast crawling desktop search engine with Qt4 GUI"
 HOMEPAGE="http://www.vandenoever.info/software/strigi"
-SOURCES="http://www.vandenoever.info/software/${PN}/${P}.tar.bz2"
+DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"

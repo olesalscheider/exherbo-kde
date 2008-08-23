@@ -9,7 +9,7 @@ require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-SOURCES="mirror://kde/stable/${PN}/${PV}/${P}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
