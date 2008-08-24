@@ -5,7 +5,7 @@ require cmake kde4
 
 SUMMARY="Amarok!"
 HOMEPAGE="http://amarok.kde.org"
-SOURCES="mirror://kde/unstable/${PN}/${PV}/src/${P}.tar.bz2"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"

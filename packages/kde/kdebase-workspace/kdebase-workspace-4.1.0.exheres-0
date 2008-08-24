@@ -6,6 +6,6 @@ require ${PN}
 PLATFORMS="~amd64"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILESDIR}/${P}-systray-qt-4.4.1-fix.patch" # systray patch
+    "${FILES}/${PNV}-systray-qt-4.4.1-fix.patch" # systray patch
 )
 

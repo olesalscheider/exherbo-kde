@@ -7,7 +7,7 @@ SUMMARY="Plugins for Konqueror, the KDE file/web/doc browser"
 DESCRIPTION="
 "
 HOMEPAGE=""
-SOURCES="mirror://kde/stable/${PV}/src/extragear/${P}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PV}/src/extragear/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="4"

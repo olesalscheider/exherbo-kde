@@ -6,6 +6,6 @@ require ${PN}
 PLATFORMS="~amd64"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    ${FILESDIR}/${P}-terminate-processes.patch
+    ${FILES}/${PNV}-terminate-processes.patch
 )
 
