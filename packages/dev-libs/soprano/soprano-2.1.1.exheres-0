@@ -29,7 +29,7 @@ DEPENDENCIES="
         >=dev-libs/rasqal-0.9.15
         >=dev-libs/redland-1.0.6[berkdb]
         >=media-libs/raptor-1.4.16
-        x11-libs/qt:4"
+        x11-libs/qt:4[dbus]"
 
 # Tests fail for out-of-source build
 ECMAKE_BUILD_TYPE="in-source"
