@@ -16,6 +16,7 @@ DEPENDENCIES="
     build+run:
         app-pim/strigi
         dev-cpp/clucene
+        >=dev-libs/soprano-2.0.98
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon

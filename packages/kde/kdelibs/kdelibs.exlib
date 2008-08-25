@@ -25,8 +25,7 @@ DEPENDENCIES="
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
-        dev-libs/soprano [[ note = [ Need soprano's clucene support enabled ] ]]
-        >=sys-sound/alsa-lib-1.0.14a
+        >=dev-libs/soprano-2.0.98 [[ note = [ Need soprano's clucene support enabled ] ]]
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/giflib
@@ -34,6 +33,7 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/phonon
         sys-apps/dbus [[ note = [ Need dbus with X support ] ]]
+        >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
