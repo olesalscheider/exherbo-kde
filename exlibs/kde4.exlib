@@ -1,6 +1,8 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+export_exlib_phases pkg_postinst pkg_postrm
+
 buildsycoca4() {
     if [[ ${ROOT} == '/' ]] && [[ -x /usr/bin/kbuildsycoca4 ]]; then
         [[ -n "${DBUS_SESSION_BUS_ADDRESS}" ]] \
@@ -24,5 +26,13 @@ buildsycoca4() {
     else
         echo "kbuildsycoca4: Update skipped: \${ROOT}=${ROOT}"
     fi
+}
+
+kde4_pkg_postinst() {
+    buildsycoca4
+}
+
+kde4_pkg_postrm() {
+    buildsycoca4
 }
 

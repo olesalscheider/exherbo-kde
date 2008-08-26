@@ -17,8 +17,6 @@
 
 
 require multilib kde4 cmake
-export_exlib_phases pkg_postinst pkg_postrm
-
 
 ### Metadata
 # TODO Tests load ${PN} libraries from /, restricted until that's fixed.
@@ -57,12 +55,4 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH=/usr/kde/${SLOT}/$(get_libdir)
     # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL=ON'
 )
-
-kde.org-4_pkg_postinst() {
-    buildsycoca4
-}
-
-kde.org-4_pkg_postrm() {
-    buildsycoca4
-}
 

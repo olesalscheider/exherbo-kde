@@ -126,11 +126,11 @@ pkg_postinst() {
     export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:${KDE_INSTALL_PREFIX}/share}"
     export KDEDIRS="${KDEDIRS:-/usr/local:${KDE_INSTALL_PREFIX}}"
 
-    kde.org-4_pkg_postinst
+    kde4_pkg_postinst
 }
 
 pkg_postrm() {
-    # Don't run /usr/bin/kbuildsycoca4, we just uninstalled it
-    :
+    # Don't run /usr/bin/kbuildsycoca4, if we just uninstalled it
+    has_version ${CATEGORY}/${PN}:${SLOT} && kde4_pkg_postrm
 }
 
