@@ -9,13 +9,13 @@ DESCRIPTION="
 "
 MYOPTIONS="ieee1394 opengl"
 
-# nepomuk, soprano, kdelibs[semantic-desktop]
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
         dev-util/pkg-config
         x11-apps/bdftopcf
     build+run:
+        >=dev-libs/soprano-2.0.98
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
@@ -27,7 +27,6 @@ DEPENDENCIES="
         ieee1394? ( sys-libs/libraw1394 )
     post,suggested:
         sys-apps/eject"
-        # konsole
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'ieee1394 RAW1394'

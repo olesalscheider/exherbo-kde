@@ -24,11 +24,11 @@ DEPENDENCIES="
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
+        x11-libs/libXcursor
 "
 
-# khelpcenter: run: www-misc/htdig
-# kioslaves: cyrus-sasl, libXcursor
-# nepomuk: kdelibs w soprano (kdelibs[semantic-desktop])
+# khelpcenter: run: www-misc/htdig, or post,suggested:
+# kioslaves: cyrus-sasl
 # -- Found BZip2: /lib64/libbz2.a
 # kio_help4(23446) KLocalePrivate::initEncoding: Cannot resolve system encoding, defaulting to ISO 8859-1.
 

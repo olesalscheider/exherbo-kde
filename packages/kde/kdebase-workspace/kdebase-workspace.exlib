@@ -19,6 +19,7 @@ DEPENDENCIES="
         dev-util/pkg-config
     build+run:
         dev-libs/glib:2
+        dev-libs/libusb
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/libpng
@@ -43,8 +44,6 @@ DEPENDENCIES="
         x11-apps/xrandr
         x11-apps/mkfontdir
         x11-apps/xprop"
-
-# usb: libusb
 
 CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
     # CMake options are different from kde/qimageblitz!
