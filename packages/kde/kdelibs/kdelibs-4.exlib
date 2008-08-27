@@ -60,7 +60,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Libintl
     -DKDE_DEFAULT_HOME=.kde4
-    -DKDE_DISTRIBUTION_TEXT="Exherbo Linux"
+    -DKDE_DISTRIBUTION_TEXT="Exherbo"
     -DWITH_ACL=OFF
     -DWITH_Avahi=OFF -DWITH_DNSSD=OFF
     -DWITH_BZip2=ON
@@ -81,7 +81,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 src_prepare() {
     default
     # Kate tests need a tarball from SVN
-    sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' -i kate/CMakeLists.txt || die 'FAIL'
+    sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' -i kate/CMakeLists.txt \
+        || die 'sed failed'
 }
 
 src_compile() {
