@@ -13,7 +13,7 @@ DOWNLOADS="mirror://kde/stable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="

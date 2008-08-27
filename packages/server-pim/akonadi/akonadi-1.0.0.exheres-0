@@ -13,7 +13,7 @@ DOWNLOADS="http://download.akonadi-project.org/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="mysql"
 
 DEPENDENCIES="

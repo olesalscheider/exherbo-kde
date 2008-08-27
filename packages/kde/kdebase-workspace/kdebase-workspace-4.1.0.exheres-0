@@ -3,7 +3,7 @@
 
 require "${PN}-4"
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-systray-qt-4.4.1-fix.patch" # systray patch
