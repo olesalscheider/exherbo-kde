@@ -41,7 +41,7 @@ src_install() {
 
     # Keepdir some empty directories for icons.
     local d
-    for d in $(find "${IMAGE}" -type d -empty | sed -e "s:^${IMAGE}::"); do
+    for d in $(cd "${IMAGE}" && find . -type d -empty); do
         echo keepdir "${d}"
         keepdir "${d}"
     done
