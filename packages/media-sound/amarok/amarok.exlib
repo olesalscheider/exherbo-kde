@@ -37,6 +37,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DUSE_SYSTEM_SQLITE=ON
     -DWITH_Nepomuk=ON -DWITH_Soprano=ON
+    # MySQL removed past 1.90
     -DWITH_{Gdk,Ifp,Ipod,Libvisual,Loudmouth,Mp4v2,MySQL,Njb}=OFF
 )
 
