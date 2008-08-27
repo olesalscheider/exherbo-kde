@@ -1,0 +1,64 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
+#   Copyright 2007-2008 by the individual contributors of the genkdesvn project
+#   Based in part upon the respective ebuild in Gentoo which is:
+#   Copyright 1999-2008 Gentoo Foundation
+#   Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Network"
+DESCRIPTION="
+"
+
+LICENCES="GPL-2"
+# Only plugins with external dependencies are optional
+# KOPETE_PLUGINS=()
+# KOPETE_PROTOCOLS=()
+MYOPTIONS="groupwise statistics xmpp"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/boost
+        dev-libs/libpcre
+        dev-libs/libxml2
+        dev-libs/libxslt
+        dev-libs/openssl
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        groupwise? ( app-crypt/qca:2 )
+        statistics? (
+            dev-db/sqlite:3 [[ note = [ Statistics plugin ] ]]
+        )
+        xmpp? (
+            app-crypt/qca:2
+            app-crypt/qca-ossl:2
+            net-dns/libidn
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_messenger=OFF -DWITH_telepathy=OFF -DWITH_Xmms=OFF
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'groupwise' 'groupwise QCA2'
+    'statistics Sqlite'
+    'xmpp IDN' 'xmpp QCA2'
+)
+
+# FIXME
+# Do? decibel
+# Disable: libvncserver mDNS libtor
+# Warning: kppp use setuid
+
+src_prepare() {
+    default
+
+    # Disabled because it uses an internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
+    # No guarantees that it will compile with newer ktorrent versions.
+    sed -e '/bittorrent/s:^:#DONOTCOMPILE :' \
+        -i kget/transfer-plugins/CMakeLists.txt \
+        || die "Failed to disable KGet bittorent support."
+}
+
