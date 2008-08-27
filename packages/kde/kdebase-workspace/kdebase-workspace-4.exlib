@@ -10,7 +10,7 @@ DESCRIPTION="
 MYOPTIONS="bluetooth usb lm_sensors networkmanager opengl
 ppc_cpu_options:altivec x86_cpu_options:3dnow x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
 # captury; media-libs/libcaptury
-# cpu_options: ksplash
+# cpu_options: for ksplash
 # kerberos
 
 DEPENDENCIES="
@@ -71,7 +71,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 src_install() {
     cmake_src_install
 
-    # fixify
+    # FIXME
     keepdir /usr/share/config/kdm/sessions
 
     # kdebase-startkde:

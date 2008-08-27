@@ -17,6 +17,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:4[opengl=]
         kde/kdebase-workspace:4[opengl=]
+        x11-libs/qt:4[opengl?]
         opengl? ( x11-dri/mesa-lib )"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'opengl OpenGL' )

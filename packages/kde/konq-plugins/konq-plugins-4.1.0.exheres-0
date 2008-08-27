@@ -12,7 +12,7 @@ DOWNLOADS="mirror://kde/stable/${PV}/src/extragear/${PNV}.tar.bz2"
 LICENCES="GPL-2"
 SLOT="4"
 PLATFORMS="~amd64"
-MYOPTIONS="" #webkit
+MYOPTIONS="" # FIXME webkit
 
 DEPENDENCIES="
     build+run:

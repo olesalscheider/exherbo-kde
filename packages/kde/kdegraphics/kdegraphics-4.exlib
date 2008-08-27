@@ -5,6 +5,7 @@ require kde.org-4
 
 MYOPTIONS="pdf ps chm djvu tiff dvi epub odf"
 
+# FIXME
 # Need gphoto for kamera
 # Need sane for libksane and ksaneplugin
 # Need kipi for kipi support in gwenview

@@ -7,7 +7,7 @@ SUMMARY="KDEPIM libraries"
 LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
 "
-MYOPTIONS="sasl" # ldap
+MYOPTIONS="sasl" # FIXME ldap
 
 DEPENDENCIES="
     build:
