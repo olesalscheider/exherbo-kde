@@ -40,7 +40,7 @@ DEPENDENCIES="
         glib? ( dev-libs/glib:2 )
         jpeg? ( media-libs/jpeg )
         mng? ( media-libs/libmng )
-        opengl? ( x11-dri/mesa-lib [[ note = [ needs gl.h, glu.h, libGL and libGLU ] ]] )
+        opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) [[ note = [ needs gl.h, glu.h, libGL and libGLU ] ]] )
         png? ( media-libs/libpng )
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )

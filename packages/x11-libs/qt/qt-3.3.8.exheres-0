@@ -32,7 +32,7 @@ build+run:
     cups? ( net-print/cups )
     glib? ( dev-libs/glib:2 )
     mysql? ( dev-db/mysql )
-    opengl? ( x11-dri/mesa-lib )
+    opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
     postgres? ( dev-db/postgres )
     ssl? ( dev-libs/openssl )
     xinerama? ( x11-libs/libXinerama )
