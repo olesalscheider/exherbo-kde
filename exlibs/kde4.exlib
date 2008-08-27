@@ -5,23 +5,13 @@ export_exlib_phases pkg_postinst pkg_postrm
 
 buildsycoca4() {
     if [[ ${ROOT} == '/' ]] && [[ -x /usr/bin/kbuildsycoca4 ]]; then
-        [[ -n "${DBUS_SESSION_BUS_ADDRESS}" ]] \
-            && ewarn "Found existing dbus session: ${DBUS_SESSION_BUS_ADDRESS}, pid ${DBUS_SESSION_BUS_PID}"
         echo -n "Starting dbus session for kbuildsycoca4, "
-        eval `dbus-launch --sh-syntax --exit-with-session`
+        eval $(dbus-launch --sh-syntax --exit-with-session)
         echo "adress='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
         
-        # unset KDEHOME HOME
-        export KDEDIR="/usr"
-        local k x
-        for k in ${!KDE*}; do echo "${k}='${!k}'"; done
-        for x in ${!XDG*}; do echo "${x}='${!x}'"; done
+        echo "/usr/bin/kbuildsycoca4 --global --noincremental"
+        /usr/bin/kbuildsycoca4 --global --noincremental || eerror "kbuildsycoca4: returned exit status: ${?}"
 
-        ebegin "/usr/bin/kbuildsycoca4 --global --noincremental"
-        /usr/bin/kbuildsycoca4 --global --noincremental
-        eend $?
-
-        unset XDG_DATA_DIRS
         kill ${DBUS_SESSION_BUS_PID}
     else
         echo "kbuildsycoca4: Update skipped: \${ROOT}=${ROOT}"

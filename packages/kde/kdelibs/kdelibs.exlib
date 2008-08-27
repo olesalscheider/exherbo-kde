@@ -97,7 +97,9 @@ src_compile() {
 }
 
 src_install() {
-    keepdir ${KDE_INSTALL_PREFIX}/share/services
+    keepdir ${KDE_INSTALL_PREFIX}/share/kde4/services
+    touch ${IMAGE}/${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
+    fperms 755 ${KDE_INSTALL_PREFIX}/share/kde4/services/{,ksycoca4}
 
     cmake_src_install
 
@@ -130,7 +132,10 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-    # Don't run /usr/bin/kbuildsycoca4, if we just uninstalled it
-    has_version ${CATEGORY}/${PN}:${SLOT} && kde4_pkg_postrm
+    kde4_pkg_postrm
+
+    # Cleanup ksycoca4 database if we just uninstalled.
+    # It's part of contents, but it's modified in pkg_post{inst,rm} phase of a KDE package.
+    has_version ${CATEGORY}/${PN}:${SLOT} || rm ${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
 }
 
