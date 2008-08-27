@@ -15,7 +15,6 @@ MYOPTIONS="doc fam opengl spell"
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        dev-util/pkg-config
         kde/automoc4
         x11-proto/xf86vidmodeproto
         doc? ( app-doc/doxygen )

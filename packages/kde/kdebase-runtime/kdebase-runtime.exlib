@@ -12,7 +12,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        dev-util/pkg-config
     build+run:
         app-pim/strigi
         dev-cpp/clucene

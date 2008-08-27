@@ -42,6 +42,8 @@ case ${PV} in
 esac
 
 DEPENDENCIES="
+    build:
+        dev-util/pkg-config
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 

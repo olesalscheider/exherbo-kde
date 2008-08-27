@@ -16,7 +16,6 @@ ppc_cpu_options:altivec x86_cpu_options:3dnow x86_cpu_options:mmx x86_cpu_option
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        dev-util/pkg-config
     build+run:
         dev-libs/glib:2
         dev-libs/libusb

@@ -12,7 +12,6 @@ MYOPTIONS="sasl" # ldap
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        dev-util/pkg-config
     build+run:
         app-crypt/gpgme
         dev-libs/boost

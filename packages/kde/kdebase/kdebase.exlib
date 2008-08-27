@@ -12,7 +12,6 @@ MYOPTIONS="ieee1394 opengl"
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        dev-util/pkg-config
         x11-apps/bdftopcf
     build+run:
         >=dev-libs/soprano-2.0.98
