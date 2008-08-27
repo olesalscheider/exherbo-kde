@@ -9,7 +9,7 @@ DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="opengl"
+MYOPTIONS="" #opengl
 
 DEPENDENCIES="
     build:
@@ -20,21 +20,22 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libxml2
         >=dev-libs/soprano-2.1.0
-        >=kde/kdelibs-4.1.0:4
+        >=kde/kdelibs-4.1.0:4[opengl]
         >=kde/kdepimlibs-4.1.0:4
-        kde/kdebase-workspace:4[opengl?]
+        kde/kdebase-workspace:4[opengl]
         media-libs/taglib
         net-misc/curl
-        x11-libs/qt:4[glib][opengl?][qt3support]
+        x11-libs/qt:4[glib][opengl][qt3support]
 "
 #      kde-base/kdemultimedia:4 [[ description = [ Support for playing Audio CDs ] ]]
 #      = kcddb, kcompactdisc
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    'opengl OpenGL'
+    # 'opengl OpenGL'
     # 'mysql MySQL'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_OpenGL=ON # FIXME
     -DUSE_SYSTEM_SQLITE=ON
     -DWITH_Nepomuk=ON -DWITH_Soprano=ON
     # MySQL removed past 1.90
