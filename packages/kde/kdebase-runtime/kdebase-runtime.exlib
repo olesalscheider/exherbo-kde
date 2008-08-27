@@ -31,7 +31,7 @@ DEPENDENCIES="
 # -- Found BZip2: /lib64/libbz2.a
 # kio_help4(23446) KLocalePrivate::initEncoding: Cannot resolve system encoding, defaulting to ISO 8859-1.
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DOpenEXR=ON
     -DSamba=ON
 )

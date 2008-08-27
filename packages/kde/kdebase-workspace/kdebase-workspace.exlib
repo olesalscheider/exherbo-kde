@@ -59,7 +59,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'networkmanager NetworkManager'
     usb
 )
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
     -DWITH_GLIB2=ON -DWITH_GObject=ON
     -DWITH_PAM=ON # Automagic, hard-enabled

@@ -29,7 +29,7 @@ DEPENDENCIES="
 "
 
 # Hard deactivate kamera and sane
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kamera=Off
     -DBUILD_ksaneplugin=Off
     -DWITH_Sane=Off

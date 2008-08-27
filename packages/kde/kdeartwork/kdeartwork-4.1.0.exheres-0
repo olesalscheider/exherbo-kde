@@ -19,7 +19,7 @@ DEPENDENCIES="
         opengl? ( x11-dri/mesa-lib )"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'opengl OpenGL' )
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Xscreensaver=OFF -DWITH_xscreensaver=OFF 
     # KDE4_SOUND_SUPPORT
 )

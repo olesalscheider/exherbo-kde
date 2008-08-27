@@ -34,7 +34,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'opengl OpenGL'
     # 'mysql MySQL'
 )
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk=ON -DWITH_Soprano=ON
     -DWITH_{Gdk,Ifp,Ipod,Libvisual,Loudmouth,Mp4v2,MySQL,Njb}=OFF
 )

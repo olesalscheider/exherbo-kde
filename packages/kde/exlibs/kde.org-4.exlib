@@ -47,7 +47,7 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_ENABLE_HTMLHANDBOOK=ON
     -DKDE4_BUILD_TESTS=ON
     -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE # XXX
