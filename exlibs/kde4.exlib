@@ -23,6 +23,7 @@ kde4_pkg_postinst() {
 }
 
 kde4_pkg_postrm() {
-    buildsycoca4
+    # If this is not an uninstall, buildsycoca4 will be run in pkg_postinst().
+    has_version ${CATEGORY}/${PN}:${SLOT} || buildsycoca4
 }
 
