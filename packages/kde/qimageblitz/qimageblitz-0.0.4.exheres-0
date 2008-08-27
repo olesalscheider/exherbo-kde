@@ -19,11 +19,10 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[X]"
 
-src_configure() {
-    ecmake \
-        $(cmake_enable ppc_cpu_options:altivec ALTIVEC) \
-        $(cmake_enable x86_cpu_options:3dnow 3DNOW) \
-        $(cmake_enable x86_cpu_options:mmx MMX) \
-        $(cmake_enable x86_cpu_options:sse SSE) \
-        $(cmake_enable x86_cpu_options:sse2 SSE2)
-}
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+    'ppc_cpu_options:altivec ALTIVEC'
+    'x86_cpu_options:3dnow 3DNOW'
+    'x86_cpu_options:mmx MMX'
+    'x86_cpu_options:sse SSE'
+    'x86_cpu_options:sse2 SSE2'
+)
