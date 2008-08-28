@@ -6,6 +6,7 @@ require "${PN}-4"
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    ${FILES}/${PNV}-terminate-processes.patch
+    "${FILES}/${PNV}-terminate-processes.patch"
+    "${FILES}/${PNV}-Add-Exherbo-ExherboDebug-build-types.patch"
 )
 
