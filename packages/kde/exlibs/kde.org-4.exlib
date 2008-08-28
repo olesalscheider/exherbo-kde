@@ -18,6 +18,8 @@
 
 require multilib kde4 cmake
 
+export_exlib_phases src_configure
+
 ### Metadata
 # TODO Tests load ${PN} libraries from /, restricted until that's fixed.
 RESTRICT=test
@@ -25,7 +27,7 @@ RESTRICT=test
 KDEMODULE=${KDEMODULE:-${PN}}
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 SLOT="4"
-MYOPTIONS=""
+MYOPTIONS="debug"
 
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
@@ -47,15 +49,20 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DCMAKE_BUILD_TYPE=Exherbo
-    -DKDE4_ENABLE_HTMLHANDBOOK=ON
-    -DKDE4_BUILD_TESTS=ON
-    -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE # XXX
-    -DCMAKE_INSTALL_PREFIX="${KDE_INSTALL_PREFIX}"
-    # - Enable for next release: this should provide less unnecessary linking, currently it causes undefined references
-    #   -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT=ON
-    # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH=/usr/kde/${SLOT}/$(get_libdir)
-    # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL=ON'
-)
+kde.org-4_src_configure() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DCMAKE_BUILD_TYPE=Exherbo$(option debug && echo 'Debug')
+        -DKDE4_ENABLE_HTMLHANDBOOK=ON
+        -DKDE4_BUILD_TESTS=ON
+        -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE # XXX
+        -DCMAKE_INSTALL_PREFIX="${KDE_INSTALL_PREFIX}"
+        # - Enable for next release:
+        #   This should provide less unnecessary linking, currently it causes undefined references
+        #   -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT=ON
+        # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH=/usr/kde/${SLOT}/$(get_libdir)
+        # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL=ON'
+    )
+
+    cmake_src_configure
+}
 
