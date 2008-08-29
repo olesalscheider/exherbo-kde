@@ -1,0 +1,76 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Personal Information Management"
+LICENCES="GPL-2 LGPL-2"
+DESCRIPTION="
+kaddressbook: The KDE addressbook application.
+kmail: the KDE mail client
+kmailcvt: tool for importing mail related data from other programs
+kmobiletools: an application specially designed to manage mobile phones
+knode: news client
+korganizer: a calendar-of-events and todo-list manager
+kalarm: gui for setting up personal alarm messages, emails and commands
+kalarmd: alarm monitoring daemon, shared by korganizer and kalarm.
+kontact: Integrated PIM application
+ktimetracker: Time tracker.
+kfile-plugins: vCard KFIleItem plugin.
+knotes: yellow notes application
+konsolekalendar: Command line tool for accessing calendar files.
+akregator: Feed reader
+kjots: manager for several \"books\" with a subject and notes
+"
+
+MYOPTIONS="kjots nepomuk" # gnokii kitchensync
+# option(KDE4_KDEPIM_NEW_DISTRLISTS "Whether to use new distribution lists,
+#        which stores them like normal contacts; useful for Kolab")
+
+DEPENDENCIES="
+build+run:
+    app-crypt/gpgme
+    app-pim/strigi[qt4] [[ note = [ also needs dbus support which is hard-enabled in strigi ] ]]
+    dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
+    dev-libs/libassuan [[ note = [ required by kleopatra ] ]]
+    dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
+    >=server-pim/akonadi-0.80
+    x11-libs/libXScrnSaver [[ note = [ needed for KTimeTracker ] ]]
+    x11-libs/qt:4[dbus][sqlite] [[ note = [ akonadi needs any sql implementation in qt ] ]]
+    >=x11-misc/shared-mime-info-0.20
+    nepomuk? (
+        >=dev-libs/soprano-1.99
+        >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ does disabling this work properly? ] ]]
+    )
+"
+#    kitchensync? ( dev-libs/glib:2 x11-libs/qt:4[glib] >=fixme/opensync-0.30 )
+
+# macro_log_feature(GNOKII_FOUND "gnokii" "Gnokii Development Libraries"
+# "http://www.gnokii.org" FALSE "" "Needed to provide the ability to import and
+# export KDE addressbook entries to/from mobile phones that are accessible via
+# gnokii")
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_GNOKII=OFF # FIXME: Make optional when we have gnokii
+    -DWITH_OpenChange=OFF # Make optional with 'exchange OpenChange' when we have libmapi
+    -DWITH_Opensync=OFF
+    -DWITH_QGpgme=ON
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    kjots
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'nepomuk Nepomuk' 'nepomuk Soprano'
+    # 'kitchensync GLIB2' 'kitchensync Opensync' # FIXME: Enable when we have opensync
+)
+
+src_configure() {
+    # when we disable kjots we also need to disable the corresponding kontact plugin
+    option kjots || sed -i -e '/add_subdirectory[[:space:]]*([[:space:]]*kjots[[:space:]]*)/s/^/#DONOTCOMPILE /' \
+        "${WORK}"/kontact/plugins/CMakeLists.txt || die "Failed to disable kjots"
+
+    kde.org-4_src_configure
+}
+
