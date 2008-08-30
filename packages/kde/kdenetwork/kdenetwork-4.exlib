@@ -16,7 +16,7 @@ LICENCES="GPL-2"
 # Only plugins with external dependencies are optional
 # KOPETE_PLUGINS=()
 # KOPETE_PROTOCOLS=()
-MYOPTIONS="groupwise statistics xmpp"
+MYOPTIONS="groupwise otr statistics xmpp"
 
 DEPENDENCIES="
     build+run:
@@ -28,6 +28,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         groupwise? ( app-crypt/qca:2 )
+        otr? ( >=net-libs/libotr-3.1.0 )
         statistics? (
             dev-db/sqlite:3 [[ note = [ Statistics plugin ] ]]
         )
@@ -43,6 +44,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'groupwise' 'groupwise QCA2'
+    'otr LibOTR'
     'statistics Sqlite'
     'xmpp IDN' 'xmpp QCA2'
 )
