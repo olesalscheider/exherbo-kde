@@ -23,7 +23,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/libxml2
         >=dev-cpp/clucene-0.9.19
-        exif? ( media-gfx/exiv2 )
+        exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
         qt4? (
             sys-apps/dbus 
