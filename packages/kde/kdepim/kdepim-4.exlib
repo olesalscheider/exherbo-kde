@@ -65,12 +65,3 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'nepomuk Nepomuk' 'nepomuk Soprano'
     # 'kitchensync GLIB2' 'kitchensync Opensync' # FIXME: Enable when we have opensync
 )
-
-src_configure() {
-    # when we disable kjots we also need to disable the corresponding kontact plugin
-    option kjots || sed -i -e '/add_subdirectory[[:space:]]*([[:space:]]*kjots[[:space:]]*)/s/^/#DONOTCOMPILE /' \
-        "${WORK}"/kontact/plugins/CMakeLists.txt || die "Failed to disable kjots"
-
-    kde.org-4_src_configure
-}
-

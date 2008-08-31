@@ -3,5 +3,7 @@
 
 require "${PN}-4"
 
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-optional-kontact-plugins.patch )
 
