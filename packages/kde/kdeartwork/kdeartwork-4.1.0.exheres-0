@@ -16,7 +16,9 @@ DEPENDENCIES="
         kde/automoc4
     build+run:
         kde/kdelibs:4[opengl=]
-        opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )"
+        opengl? (
+            || ( x11-dri/mesa x11-dri/mesa-lib )
+        )"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'opengl OpenGL' )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
