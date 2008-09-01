@@ -1,0 +1,59 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Utilities"
+LICENCES="GPL-2 LGPL-2"
+DESCRIPTION="
+ark: Archiving tool
+cmake: CMake modules needed to build parts of KDE Utils.
+doc: XML based documentation for the programs.
+kcalc: scientific calculator
+kcharselect: select special characters from any fonts and put them into the clipboard
+kdessh: front end to ssh
+kdf: like 'df', a graphical free disk space viewer
+kfloppy: format a floppy disks with this program
+kgpg: graphical GPG frontend
+ktimer: execute programs after some time
+kwallet: KDE wallet management tool
+okteta: binary file editor
+printer-applet: a system tray utility that shows current print jobs, shows printer
+                warnings and errors and shows when printers that have been plugged
+                in for the first time are being auto-configured
+superkaramba: version of Karamba with python scripting
+sweeper: cleans unwanted traces the user leaves on the system
+"
+
+MYOPTIONS="archive kcalc plasma python zip" # cups (needs kdebindings and more)
+
+DEPENDENCIES="
+build+run:
+    kde/kdelibs:${SLOT}
+    kde/kdepimlibs:${SLOT}
+    kde/qimageblitz [[ note = [ required for superkaramba ] ]]
+    archive? ( app-arch/libarchive )
+    kcalc? ( dev-libs/gmp [[ note = [ required for kcalc ] ]] )
+    python? ( dev-lang/python:= )
+    plasma? ( kde/kdebase-workspace:${SLOT} )
+    zip? ( dev-arch/libzip )
+"
+#    cups? ( dev-lang/python:= dev-python/SIP
+#               kde/kdebindings[qt4][kde][cups] = PyQt4, PyKDE
+#               PyCups SystemConfigPrinter
+#               hal-cups-utils ?? )
+#    http://www.riverbankcomputing.co.uk/{pyqt,pykde}/
+#    http://cyberelk.net/tim/software/{pycups,system-config-printer}/
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_printer-applet:BOOL=FALSE )
+#CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'cups printer-applet' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'archive LibArchive'
+    'kcalc GMP'
+    Plasma
+    # 'cups PythonLibrary' 'cups SIP'
+    'python PythonLibs'
+    'zip LibZip'
+)
+
+# potential kparts = ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet okteta printer-applet superkaramba sweeper
