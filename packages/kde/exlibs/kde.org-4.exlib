@@ -49,6 +49,14 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 
+kde4_reduced_linking() {
+    has '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE' "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" && return
+    if ! ever at_least '4.1.1'; then
+        echo '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE' && return
+    fi
+    echo '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=TRUE'
+}
+
 kde.org-4_src_configure() {
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')"
@@ -56,11 +64,8 @@ kde.org-4_src_configure() {
         -DKDE4_BUILD_TESTS:BOOL=TRUE
         -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE
         -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}"
-        # - Enable for next release:
-        #   This should provide less unnecessary linking, currently it causes undefined references
-        #   -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=TRUE
-        # - If we'd ever SLOT libraries: -DLIBRARY_OUTPUT_PATH:PATH="/usr/kde/${SLOT}/$(get_libdir)"
-        # - Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL:BOOL=TRUE'
+        $(kde4_reduced_linking)
+        # Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL:BOOL=TRUE'
     )
 
     cmake_src_configure
