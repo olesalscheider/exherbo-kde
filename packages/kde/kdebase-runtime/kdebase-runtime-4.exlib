@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon
-        media-libs/xine-lib[xcb]
+        >=media-libs/xine-lib-1.1[xcb]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
