@@ -1,0 +1,27 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Artwork"
+DESCRIPTION="
+"
+
+LICENCES="GPL-2"
+MYOPTIONS="opengl"
+
+DEPENDENCIES="
+    build:
+        kde/automoc4
+    build+run:
+        kde/kdelibs:4[opengl=]
+        opengl? (
+            || ( x11-dri/mesa x11-dri/mesa-lib )
+        )"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'opengl OpenGL' )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Xscreensaver=OFF -DWITH_xscreensaver=OFF 
+    # KDE4_SOUND_SUPPORT
+)
+
