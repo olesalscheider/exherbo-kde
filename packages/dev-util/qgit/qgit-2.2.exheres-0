@@ -1,0 +1,14 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4 common_metadata
+
+PLATFORMS="~amd64"
+
+WORK="${WORKBASE}/${PN}"
+
+src_install() {
+    newbin bin/qgit qgit4
+    dodoc README
+}
+
