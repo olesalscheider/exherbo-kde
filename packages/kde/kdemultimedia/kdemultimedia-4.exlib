@@ -1,0 +1,37 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Multimedia"
+DESCRIPTION="
+* Dragonplayer: Dragon Player is a simple video player for KDE 4
+* Juk: An audio jukebox that supports collections of MP3, Ogg Vorbis and FLAC files
+* KDE Multimedia KIO-slaves
+* KMix: An application to allow you to change the volume of your sound card
+* KsCD: A small, fast, CDDB enabled audio CD player
+* libkcddb: Fetch and submit audio CD information over the internet
+* libkcompactdisc: Library for playing & ripping CDs
+"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+SLOT="4"
+MYOPTIONS="cdparanoia flac musicbrainz taglib tunepimp vorbis"
+
+DEPENDENCIES="
+    build:
+        kde/automoc4
+    build+run:
+        kde/kdebase:4
+        >=media-libs/xine-lib-1.1[xcb]
+        sys-sound/alsa-lib
+        cdparanoia? ( app-cdr/cdparanoia )
+        flac? ( >=media-libs/flac-1.1.2 )
+        musicbrainz? ( media-libs/musicbrainz )
+        taglib? ( >=media-libs/taglib-1.4 )
+        tunepimp? ( media-libs/tunepimp )
+        vorbis? ( media-libs/libvorbis )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Cdparanoia FLAC MusicBrainz Taglib TunePimp 'vorbis OggVorbis' )
+
