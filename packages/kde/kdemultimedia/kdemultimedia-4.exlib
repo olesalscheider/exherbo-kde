@@ -19,8 +19,6 @@ SLOT="4"
 MYOPTIONS="cdparanoia flac musicbrainz taglib tunepimp vorbis"
 
 DEPENDENCIES="
-    build:
-        kde/automoc4
     build+run:
         kde/kdebase:${SLOT}
         >=media-libs/xine-lib-1.1[xcb]

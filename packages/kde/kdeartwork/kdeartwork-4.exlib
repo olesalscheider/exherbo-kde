@@ -11,8 +11,6 @@ LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
 MYOPTIONS="opengl"
 
 DEPENDENCIES="
-    build:
-        kde/automoc4
     build+run:
         kde/kdelibs:${SLOT}[opengl=]
         opengl? (

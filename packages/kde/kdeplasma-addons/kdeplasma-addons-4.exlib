@@ -11,8 +11,6 @@ LICENCES="GPL-2"
 MYOPTIONS="opengl"
 
 DEPENDENCIES="
-    build:
-        kde/automoc4
     build+run:
         dev-libs/boost
         kde/kdelibs:${SLOT}[opengl=]

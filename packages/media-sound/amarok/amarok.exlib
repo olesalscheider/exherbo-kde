@@ -12,8 +12,6 @@ SLOT="0"
 MYOPTIONS="" #opengl
 
 DEPENDENCIES="
-    build:
-        kde/automoc4
     build+run:
         app-pim/strigi
         dev-db/sqlite:3

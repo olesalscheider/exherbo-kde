@@ -46,6 +46,7 @@ esac
 DEPENDENCIES="
     build:
         dev-util/pkg-config
+        >=kde/automoc4-0.9.84
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 

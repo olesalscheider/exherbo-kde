@@ -16,7 +16,6 @@ ppc_cpu_options:altivec x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
-        kde/automoc4
         x11-proto/xf86vidmodeproto
         doc? ( app-doc/doxygen )
     build+run:
