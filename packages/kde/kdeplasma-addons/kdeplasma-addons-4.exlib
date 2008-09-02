@@ -14,8 +14,9 @@ DEPENDENCIES="
     build:
         kde/automoc4
     build+run:
-        kde/kdelibs:4[opengl=]
-        kde/kdebase-workspace:4[opengl=]
+        dev-libs/boost
+        kde/kdelibs:${SLOT}[opengl=]
+        kde/kdebase-workspace:${SLOT}[opengl=]
         x11-libs/qt:4[opengl?]
         opengl? (
             || ( x11-dri/mesa x11-dri/mesa-lib )
