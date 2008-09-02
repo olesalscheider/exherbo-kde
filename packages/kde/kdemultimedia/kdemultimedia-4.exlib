@@ -22,7 +22,7 @@ DEPENDENCIES="
     build:
         kde/automoc4
     build+run:
-        kde/kdebase:4
+        kde/kdebase:${SLOT}
         >=media-libs/xine-lib-1.1[xcb]
         sys-sound/alsa-lib
         cdparanoia? ( app-cdr/cdparanoia )
