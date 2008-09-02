@@ -15,6 +15,7 @@ DEPENDENCIES="
         x11-apps/bdftopcf
     build+run:
         >=dev-libs/soprano-2.0.98
+        dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
