@@ -25,7 +25,7 @@ DEPENDENCIES="
         kde/kdebase:${SLOT}
         >=media-libs/xine-lib-1.1[xcb]
         sys-sound/alsa-lib
-        cdparanoia? ( app-cdr/cdparanoia )
+        cdparanoia? ( media/cdparanoia )
         flac? ( >=media-libs/flac-1.1.2 )
         musicbrainz? ( media-libs/musicbrainz )
         taglib? ( >=media-libs/taglib-1.4 )
