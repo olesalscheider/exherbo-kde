@@ -4,7 +4,7 @@
 require kde.org-4
 
 SUMMARY="KDE Utilities"
-LICENCES="GPL-2 LGPL-2"
+LICENCES="GPL-2 LGPL-2 FDL-2.1"
 DESCRIPTION="
 ark: Archiving tool
 cmake: CMake modules needed to build parts of KDE Utils.

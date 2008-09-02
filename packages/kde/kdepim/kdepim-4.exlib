@@ -4,7 +4,7 @@
 require kde.org-4
 
 SUMMARY="KDE Personal Information Management"
-LICENCES="GPL-2 LGPL-2"
+LICENCES="GPL-2 LGPL-2 FDL-2.1"
 DESCRIPTION="
 kaddressbook: The KDE addressbook application.
 kmail: the KDE mail client

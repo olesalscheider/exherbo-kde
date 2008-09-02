@@ -4,7 +4,7 @@
 require kde.org-4
 
 SUMMARY="KDE Workspace"
-LICENCES="GPL-2 LGPL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
 DESCRIPTION="
 "
 MYOPTIONS="bluetooth lm_sensors networkmanager opengl
