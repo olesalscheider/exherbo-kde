@@ -1,0 +1,55 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE Software Development Kit"
+LICENCES="GPL-2 LGPL-2"
+DESCRIPTION="
+cervisia: CVS client part
+kapptemplate: shell script to easy the beginning of new apps
+kate: A fast and advanced text editor, extensible with nice plugins.
+kbugbuster: a graphical frontend for the KDE bug reporting system
+kcachegrind: A Profiling Visualisation Tool.
+kdepalettes: palettes matching KDE's style for Gimp and XPaint
+kmtrace: converts glibc's mtrace log into a full backtrace
+kompare: A program to view the differences between files.
+kspy: displays all used QObjects in an application
+kuiviewer: A KPart that lets you view .ui files.
+poxml: auxillary programs for documentation translation
+scripts: various helper scripts (see scripts/README)
+scheck: An interface style to highlight accel and style guide conflicts
+umbrello: A UML modeller.
+"
+
+MYOPTIONS="cervisia kate kbugbuster kcachegrind kmtrace kompare plasma svn umbrello"
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
+    build+run:
+        app-pim/strigi
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        kate? ( plasma? ( kde/kdebase-workspace:${SLOT} ) )
+        svn? ( >=dev-scm/subversion-1.4 )
+        umbrello? (
+            >=dev-libs/boost-1.33.1
+            dev-libs/libxslt
+            dev-libs/libxml2
+        )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    cervisia
+    kate
+    kbugbuster
+    kcachegrind
+    kmtrace
+    kompare
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    SVN
+    'umbrello Boost' 'umbrello LibXslt' 'umbrello LibXml2'
+)
