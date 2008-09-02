@@ -28,15 +28,15 @@ sweeper: cleans unwanted traces the user leaves on the system
 MYOPTIONS="archive kcalc plasma python zip" # cups (needs kdebindings and more)
 
 DEPENDENCIES="
-build+run:
-    kde/kdelibs:${SLOT}
-    kde/kdepimlibs:${SLOT}
-    kde/qimageblitz [[ note = [ required for superkaramba ] ]]
-    archive? ( app-arch/libarchive )
-    kcalc? ( dev-libs/gmp [[ note = [ required for kcalc ] ]] )
-    python? ( dev-lang/python:= )
-    plasma? ( kde/kdebase-workspace:${SLOT} )
-    zip? ( dev-arch/libzip )
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+        kde/qimageblitz [[ note = [ required for superkaramba ] ]]
+        archive? ( app-arch/libarchive )
+        kcalc? ( dev-libs/gmp [[ note = [ required for kcalc ] ]] )
+        python? ( dev-lang/python:= )
+        plasma? ( kde/kdebase-workspace:${SLOT} )
+        zip? ( dev-arch/libzip )
 "
 #    cups? ( dev-lang/python:= dev-python/SIP
 #               kde/kdebindings[qt4][kde][cups] = PyQt4, PyKDE
