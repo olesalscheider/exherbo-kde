@@ -3,23 +3,5 @@
 
 require kdegraphics-4
 
-SUMMARY="Graphical tools for KDE4"
-DESCRIPTION="
-gwenview: Image viewer
-kcolorchooser: Pick colours from your screen.
-kolourpaint: An easy-to-use paint program designed for everyday tasks like drawing
-             simple diagrams/logos/icons and editing screenshots.
-ksaneplugin: 
-strigi-analyzer:
-kamera: Digital camera io_slave for Konqueror. Together gPhoto this allows you
-        to access your camera's picture with the URL kamera:/
-kgamma: kcm to regulate the screens gamma correction.
-kruler: A ruler in inch, centimeter and pixel to check distances on the screen.
-ksnapshot: Make snapshots of the screen contents.
-okular: Document viewer; support different kinds of documents.
-svgpart: Kpart for svg support.
-"
-
 PLATFORMS="~amd64"
-LICENCES="GPL-2 kolourpaint FDL-1.2 LGPL-2.1"
 
