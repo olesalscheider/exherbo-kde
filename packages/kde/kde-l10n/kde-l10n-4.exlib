@@ -1,0 +1,62 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+[[ -z ${LINGUAS} ]] && die 'LINGUAS is unset, broken exheres.'
+require kde.org-4
+
+set_kde_l10n_downloads() {
+    local kde_l10n_base_url="${DOWNLOADS}" localisation=
+    for localisation in ${LINGUAS}; do
+        echo -n "linguas:${localisation}? ( ${kde_l10n_base_url/${PV}.tar.bz2/${localisation}-${PV}.tar.bz2} ) "
+    done
+}
+
+set_kde_l10n_options() {
+    local localisation=
+    for localisation in ${LINGUAS}; do
+        echo -n "linguas:${localisation} "
+    done
+}
+
+SUMMARY="KDE internationalization package"
+DOWNLOADS="$(set_kde_l10n_downloads)"
+
+LICENCES="GPL-2"
+SLOT="4"
+MYOPTIONS="$(set_kde_l10n_options)"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext"
+
+
+pkg_pretend() {
+    local lingua
+
+    for lingua in ${LINGUAS}; do
+        option linguas:${lingua} && return 0
+    done
+
+    die 'You need to enable at least one lingua.'
+}
+
+for_all_enabled_linguas_run() {
+    local lingua= ECMAKE_BUILD_DIR= WORK=
+
+    for lingua in "${WORKBASE}"/${PN}-*; do
+        # The relevant directories for this lingua for ecmake()
+        ECMAKE_BUILD_DIR="${lingua//-${PV}/_build}"
+        WORK=${lingua}
+        CMAKE_SRC_CONFIGURE_PARAMS=()
+
+        pushd "${lingua}"
+            einfo "${@}: Running in ${lingua}"
+            "${@}"
+        popd
+    done
+}
+
+src_configure() { for_all_enabled_linguas_run kde.org-4_src_configure ; }
+src_compile()   { for_all_enabled_linguas_run cmake_src_compile ; }
+src_install()   { for_all_enabled_linguas_run cmake_src_install ; }
+
