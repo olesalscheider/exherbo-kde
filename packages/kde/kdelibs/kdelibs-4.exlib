@@ -7,8 +7,9 @@ SUMMARY="KDE libraries"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="FIXME
 "
-# XXX Add cpu flags, acl alsa(?) jpeg2k kerberos openexr zeroconf
-MYOPTIONS="doc fam opengl spell"
+# XXX Add acl alsa(?) jpeg2k kerberos openexr zeroconf
+MYOPTIONS="doc fam opengl spell
+ppc_cpu_options:altivec x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
 
 # XXX   build: x11-proto/*
 #       sys-devel/gettext?
@@ -69,7 +70,13 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Jasper=OFF
     -DWITH_OpenEXR=OFF
     -DWITH_OpenSSL=ON
-    -DWITH_Soprano=ON
+)
+CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
+    # Used in solid
+    'ppc_cpu_options:altivec PPC_ALTIVEC'
+    'x86_cpu_options:mmx X86_MMX'
+    'x86_cpu_options:sse X86_SSE'
+    'x86_cpu_options:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     fam
