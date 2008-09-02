@@ -45,6 +45,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
     # CMake options are different from kde/qimageblitz!
+    # These are for KSplash
     'ppc_cpu_options:altivec PPC_ALTIVEC'
     'x86_cpu_options:3dnow X86_3DNOW'
     'x86_cpu_options:mmx X86_MMX'
