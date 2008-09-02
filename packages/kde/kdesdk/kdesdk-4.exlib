@@ -38,6 +38,8 @@ DEPENDENCIES="
             dev-libs/libxslt
             dev-libs/libxml2
         )
+    run:
+        cervisia? ( dev-scm/cvs )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
