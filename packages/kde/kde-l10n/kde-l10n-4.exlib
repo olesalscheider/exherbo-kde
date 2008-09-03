@@ -56,7 +56,16 @@ for_all_enabled_linguas_run() {
     done
 }
 
-src_configure() { for_all_enabled_linguas_run kde.org-4_src_configure ; }
-src_compile()   { for_all_enabled_linguas_run cmake_src_compile ; }
-src_install()   { for_all_enabled_linguas_run cmake_src_install ; find "${IMAGE}" -depth -type d -empty -print0 | xargs -0 --no-run-if-empty rmdir ; }
+src_configure() {
+    for_all_enabled_linguas_run kde.org-4_src_configure 
+}
+
+src_compile() {
+    for_all_enabled_linguas_run cmake_src_compile
+}
+
+src_install() {
+    for_all_enabled_linguas_run cmake_src_install
+    find "${IMAGE}" -type d -empty -delete || die "Failed to delete empty directories"
+}
 
