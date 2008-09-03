@@ -1,0 +1,25 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="Simple Toys for KDE4"
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
+DESCRIPTION="
+amor: Amusing Misuse Of Resources put's comic figures above your windows
+kteatime: system tray applet that makes sure your tea doesn't get too strong
+ktux: Tux-in-a-Spaceship screen saver
+kweather: kicker applet that will display the current weather outside
+"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-pim/strigi
+        kde/kdebase-workspace:${SLOT} [[
+            description = [ Needs Plasma (kteatime) and Kscreensaver (ktux) ]
+        ]]
+        kde/kdelibs:${SLOT}
+"
+
