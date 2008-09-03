@@ -37,7 +37,7 @@ UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/"
 KDE_INSTALL_PREFIX="/usr"
 
 case ${PV} in
-    4.1.0)
+    4.1.0|4.1.1)
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     *)
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
