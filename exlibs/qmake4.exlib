@@ -11,6 +11,8 @@ export_exlib_phases src_configure
 
 DEPENDENCIES="build: x11-libs/qt:4 [[ note = [ Qt-Core, for qmake ] ]]"
 
+DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
+
 eqmake4() {
     [[ -f ${EQMAKE4_SOURCE:-${PN}.pro} ]] || die "eqmake4: .pro file \"${EQMAKE4_SOURCE:-${PN}.pro}\" doesn't exist."
 
