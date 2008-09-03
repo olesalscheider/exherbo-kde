@@ -1,0 +1,47 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="Collection of educational programs for KDE4"
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
+# Some parts have been disabled
+DESCRIPTION="
+* blinken:     the KDE version of the well-known game Simon Says
+* kalgebra:    mathematics: editor and plotting (disabled)
+* kalzium:     periodic table of elements (disabled)
+* kanagram:    an anagram game
+* kbruch:      fraction excercise trainer
+* kgeography:  geography learning program
+* khangman:    hangman game. The child should guess a word letter by letter.
+* kig:         interactive geometry (disabled)
+* kiten:       japanese reference tool
+* klettres:    helps child to learn the alphabet and to read some syllables
+* kmplot:      mathematical function plotter
+* kpercentage: math application to improve skills in calculating percentages
+* kstars:      desktop planetarium (disabled)
+* ktouch:      program for learning touch typing
+* kturtle:     educational programming environment
+* kwordquiz:   a powerful way to master new vocabularies
+* marble:      a virtual globe (disalbed)
+* parley:      vocabulary trainer
+* step:        a physics simulator (disabled)
+"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdebase-workspace:${SLOT}
+        kde/kdelibs:${SLOT}
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DBUILD_kalgebra=Off
+    -DBUILD_kalzium=Off
+    -DBUILD_kig=Off
+    -DBUILD_kstars=Off
+    -DBUILD_marble=Off
+    -DBUILD_step=Off
+)
+
