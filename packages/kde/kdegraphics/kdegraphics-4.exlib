@@ -57,7 +57,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DGWENVIEW_METADATA_BACKEND=Nepomuk
 )
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     CHM EPub TIFF "djvu DjVuLibre" 
     "dvi Freetype" "odf QCA2" "pdf Poppler" "ps LibSpectre"
 )
