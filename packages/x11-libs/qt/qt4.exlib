@@ -10,10 +10,12 @@ MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
 DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
-WORK=${WORKBASE}/${MY_PNV}
+BUGS_TO="kde@exherbo.org"
 
 LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
 SLOT=${PV:0:1}
+
+WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples"
 # PARTS="demos docs examples libs tools" # libs is mandatory

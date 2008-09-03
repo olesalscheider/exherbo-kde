@@ -12,6 +12,7 @@ require multilib flag-o-matic toolchain-funcs
 
 SRC_TYPE="free"
 DOWNLOADS="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
+BUGS_TO="kde@exherbo.org"
 
 WORK="${WORKBASE}/${PN}-x11-${SRC_TYPE}-${PV}"
 
