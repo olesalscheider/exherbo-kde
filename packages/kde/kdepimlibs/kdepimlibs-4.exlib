@@ -18,7 +18,7 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}
         server-pim/akonadi
-        sasl? ( dev-libs/cyrus-sasl )"
+        sasl? ( net-libs/cyrus-sasl )"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )
