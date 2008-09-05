@@ -5,6 +5,8 @@
 
 require multilib toolchain-funcs
 
+export_exlib_phases pkg_pretend src_prepare src_configure src_install
+
 SRC_TYPE=opensource-src
 MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 
@@ -51,11 +53,14 @@ DEPENDENCIES="
         xinerama? ( x11-libs/libXinerama )
 "
 
-export_exlib_phases pkg_pretend src_prepare src_configure src_install
+DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
-pkg_pretend() {
+qt-4_pkg_pretend() {
     if option opengl || option xinerama && option !X ; then
         die "The following options require the X option to be enabled: opengl xinerama"
+    fi
+    if option webkit && option !ssl; then
+        die "The 'webkit' option needs the 'ssl' option enabled."
     fi
 }
 
@@ -116,7 +121,7 @@ qconf4() {
     ./configure ${myconf} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
 }
 
-qt4_src_prepare() {
+qt-4_src_prepare() {
     # Set {C,CXX,LD}FLAGS. Don't prestrip. Do not link with -rpath (Gentoo bug #75181).
     # Don't put libraries in X11R6/.
 
@@ -141,7 +146,7 @@ qt4_src_prepare() {
         -i "${WORK}"/qmake/Makefile.unix || die "sed on Makefile.unix failed"
 }
 
-qt4_src_configure() {
+qt-4_src_configure() {
     local myconf
     myconf="-confirm-license
             -fast
@@ -217,8 +222,7 @@ qt4_src_configure() {
     qconf4 ${myconf}
 }
 
-qt4_src_install() {
-    emake INSTALL_ROOT="${IMAGE}" install
+qt-4_src_install() {
 
     local lib libdir=$(get_libdir) libdirs
     # remove build dir from libraries

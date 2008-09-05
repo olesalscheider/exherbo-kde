@@ -36,11 +36,11 @@ set_platform() {
     platform="${platform_name}-${platform_cxx}"
 }
 
-qt3_pkg_pretend() {
+qt-3_pkg_pretend() {
     set_platform
 }
 
-qt3_pkg_setup() {
+qt-3_pkg_setup() {
     set_platform
     libdir=$(get_libdir)
 
@@ -56,7 +56,7 @@ qt3_pkg_setup() {
     QTSYSCONFDIR="${QTBASEDIR}/etc/settings"
 }
 
-qt3_src_prepare() {
+qt-3_src_prepare() {
     default_src_prepare
 
     sed -e "s:/lib$:/${libdir}:" \
@@ -101,7 +101,7 @@ myoption() {
     fi
 }
 
-qt3_src_configure() {
+qt-3_src_configure() {
     # append-flags -fno-strict-aliasing
 
     # -no-pch gif png zlib
@@ -132,7 +132,7 @@ qt3_src_configure() {
         || die './configure failed'
 }
 
-qt3_src_compile() {
+qt-3_src_compile() {
     export SYSCONF="${IMAGE}"${QTBASE}/etc/settings
 
     emake src-qmake src-moc sub-src
@@ -145,7 +145,7 @@ qt3_src_compile() {
     # msg2qm,qembed
 }
 
-qt3_src_install() {
+qt-3_src_install() {
     export INSTALL_ROOT="${IMAGE}"
     default_src_install
 
