@@ -1,0 +1,150 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdelibs-3.5.9-r4.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+require kde.org-3
+
+SUMMARY="KDE libraries needed by all KDE programs."
+DESCRIPTION="
+"
+HOMEPAGE="http://www.kde.org/"
+LICENCES="GPL-2 LGPL-2 BSD FDL-1.2 artistic"
+SLOT="3"
+MYOPTIONS="acl alsa cups doc fam jpeg2k kerberos
+    lua openexr spell sudo tiff utempter zeroconf"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+        x11-proto/xextproto
+        doc? ( app-doc/doxygen )
+    build+run:
+        app-arch/bzip2
+        >=dev-libs/libpcre-6.6
+        >=dev-libs/libxml2-2.4.8
+        >=dev-libs/libxslt-1.0.7
+        >=dev-libs/openssl-0.9.7d
+        >=gnome-platform/libart_lgpl-2.3.8
+        media-libs/fontconfig
+        media-libs/freetype:2
+        >=media-libs/jpeg-6b
+        net-dns/libidn
+        x11-libs/libX11
+        x11-libs/libXext
+        x11-libs/libXft
+        x11-libs/libXrender
+        x11-libs/qt:3
+        acl? ( fixme/acl 
+            fixme/attr )
+        alsa? ( sys-sound/alsa-lib )
+        cups? ( >=fixme/cups-1.1.9 )
+        fam? ( app-admin/gamin )
+        jpeg2k? ( fixme/jasper )
+        kerberos? ( fixme/krb5 )
+        lua? ( dev-lang/lua )
+        openexr? ( >=media-libs/openexr-1.2.2-r2 )
+        spell? ( >=app-text/aspell-0.60.5 >=app-dicts/aspell-en-6.0.0 )
+        sudo? ( app-admin/sudo )
+        tiff? ( media-libs/tiff )
+        utempter? ( sys-libs/libutempter )
+        zeroconf? ( >=fixme/mDNSResponder-85 )
+    run:
+        x11-apps/iceauth
+        x11-apps/rgb
+"
+#        !zeroconf? ( fixme/kdnssd-avahi )
+
+# FIXME:
+RESTRICT="test"
+
+DEFAULT_SRC_CONFIGURE_ENABLES+=( cups "fam libfam" "zeroconf dnssd" )
+DEFAULT_SRC_CONFIGURE_WITHS+=( 
+    acl
+    alsa
+    "jpeg2k jasper"
+    "kerberos gssapi"
+    lua
+    openexr
+    utempter
+    "spell aspell"
+    tiff
+    "sudo sudo-kdesu-backend"
+)
+DEFAULT_SRC_CONFIGURE_PARAMS+=(
+    --with-distribution=Exherbo
+    --enable-pcre
+    --enable-dnotify
+    --enable-sendfile
+    --with-libart
+    --with-libidn
+    --with-ssl
+    --without-arts
+    --without-hspell
+    --with-rgbfile=/usr/share/X11/rgb.txt
+)
+
+pkg_setup() {
+    if ! option utempter ; then
+        echo
+        elog "On some setups, which rely on the correct update of utmp records, not using"
+        elog "utempter might not update them correctly. If you experience unexpected"
+        elog "behaviour, try to rebuild kde-base/kdelibs with utempter option enabled."
+        echo
+    fi
+}
+
+src_compile() {
+    default
+
+    if option doc; then
+        emake apidox 
+    fi
+}
+
+src_install() {
+    default
+
+    if option doc; then
+        emake DESTDIR="${IMAGE}" install-apidox
+    fi
+
+    if [[ ${SYMLINK_LIB} == "yes" ]]; then
+        dosym $(get_abi_LIBDIR "${DEFAULT_ABI}") ${KDE_INSTALL_PREFIX}/lib
+    fi
+
+    # Get rid of the disabled version of the kdnsd libraries
+    if !option zeroconf; then
+        rm -rf "${IMAGE}"/${KDE_INSTALL_PREFIX}/$(get_libdir)/libkdnssd.*
+    fi
+
+    dodir /etc/env.d
+
+    # List all the multilib libdirs
+    local libdirs
+    for libdir in $(get_all_libdirs); do
+        libdirs="${libdirs}:${KDE_INSTALL_PREFIX}/${libdir}"
+    done
+
+    # Please note that the KDE install path has to be the last value in KDEDIRS.
+    cat <<EOF > "${IMAGE}"/etc/env.d/45kdepaths-${SLOT} # number goes down with version upgrade
+PATH=${KDE_INSTALL_PREFIX}/bin
+ROOTPATH=${KDE_INSTALL_PREFIX}/sbin:${KDE_INSTALL_PREFIX}/bin
+LDPATH=${libdirs:1}
+MANPATH=${KDE_INSTALL_PREFIX}/share/man
+CONFIG_PROTECT="${KDE_INSTALL_PREFIX}/share/config ${KDE_INSTALL_PREFIX}/env ${KDE_INSTALL_PREFIX}/shutdown /usr/share/config"
+KDEDIRS="/usr:/usr/local:${KDE_INSTALL_PREFIX}"
+#KDE_IS_PRELINKED=1
+XDG_DATA_DIRS="/usr/share:${KDE_INSTALL_PREFIX}/share:/usr/local/share"
+COLON_SEPARATED="XDG_DATA_DIRS"
+EOF
+
+    # Don't install empty dirs.
+    find "${IMAGE}"/${KDE_INSTALL_PREFIX}/share/doc/HTML/en/kdelibs-apidocs/ -type d -empty -delete
+}
+
+pkg_postrm() {
+    # Don't run buildsyscoca on remove
+    :
+}
+
