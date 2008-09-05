@@ -21,7 +21,7 @@ MYOPTIONS="groupwise otr statistics xmpp"
 DEPENDENCIES="
     build+run:
         dev-libs/boost
-        dev-libs/libpcre
+        dev-libs/pcre
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl

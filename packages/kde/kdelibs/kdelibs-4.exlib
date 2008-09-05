@@ -20,7 +20,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         >=app-pim/strigi-0.5.11
-        dev-libs/libpcre
+        dev-libs/pcre
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
