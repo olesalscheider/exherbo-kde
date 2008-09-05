@@ -1,0 +1,56 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+#
+# Based in part upon 'kde-functions.eclass' and 'kde.eclass'  from 
+# Gentoo, which is: Copyright 1999-2008 Gentoo Foundation.
+# Original Authors:
+#       Dan Armak <danarmak@gentoo.org>
+#       Caleb Tennis <caleb@gentoo.org>
+# Based in part upon 'kde.org-4.exlib' which is:
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+#
+# Based in part upon 'kde4-base.eclass', 'kde4-functions.eclass', 'kde4-meta.eclass'
+#     from Gentoo, which is: Copyright 1999-2008 Gentoo Foundation.
+# Original authors:
+#       Bo Andresen <zlin@exherbo.org>
+#       Emanuele A. Bagnaschi <zephyrus@mirach.it>
+#       Wulf Krueger <philantrop@exherbo.org>
+#       Bernd Steinhauser <berniyh@exherbo.org>
+#       Ingmar Vanhassel <ingmar@exherbo.org>
+
+require kde3
+
+KDEMODULE=${KDEMODULE:-${PN}}
+HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
+SLOT="3"
+MYOPTIONS=""
+
+BUGS_TO="kde@exherbo.org"
+REMOTE_IDS="freshmeat:kde"
+UPSTREAM_CHANGELOG="${UPSTREAM_CHANGELOG:-http://websvn.kde.org/branches/KDE/3.5/${KDEMODULE}}"
+UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/"
+
+KDE_INSTALL_PREFIX="/usr/kde/3"
+
+case ${PV} in
+    3.5.10)
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+esac
+
+DEPENDENCIES="
+    build:
+        dev-lang/perl
+        dev-util/pkg-config
+        sys-devel/make
+        x11-proto/xf86vidmodeproto
+    run:
+        x11-libs/libXt"
+
+DEFAULT_SRC_CONFIGURE_PARAMS+=(
+    --prefix=${KDE_INSTALL_PREFIX}
+    --mandir=${KDE_INSTALL_PREFIX}/share/man
+    --infodir=${KDE_INSTALL_PREFIX}/share/info
+    --datadir=${KDE_INSTALL_PREFIX}/share
+    --sysconfdir=${KDE_INSTALL_PREFIX}/etc
+)
+
