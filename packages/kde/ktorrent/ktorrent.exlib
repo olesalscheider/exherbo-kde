@@ -1,0 +1,47 @@
+# Copyright 2008 Daniel Mierswa <impulze@impulze.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+# FIXME Add linguas
+
+SUMMARY="KTorrent - The KDE BitTorrent client."
+HOMEPAGE="http://ktorrent.org"
+DOWNLOADS="http://ktorrent.org/downloads/${PV}/${PNV}.tar.bz2"
+DESCRIPTION="A rich featured BitTorrent client for KDE"
+BUGS_TO="kde@exherbo.org"
+
+LICENCES="GPL-2"
+MYOPTIONS="bwscheduler infowidget ipfilter logviewer scanfolder search stats upnp webinterface zeroconf"
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+        dev-libs/gmp
+        kde/kdelibs:${SLOT}
+        net-libs/GeoIP
+        infowidget? ( net-libs/GeoIP )
+    run:
+        zeroconf? ( kde/kdenetwork:${SLOT} )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_DHT_SUPPORT=ON
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+    'bwscheduler BWSCHEDULER_PLUGIN'
+    'infowidget INFOWIDGET_PLUGIN'
+    'ipfilter IPFILTER_PLUGIN'
+    'logviewer LOGVIEWER_PLUGIN'
+    'scanfolder SCANFOLDER_PLUGIN'
+    'search SEARCH_PLUGIN'
+    'stats STATS_PLUGIN'
+    'upnp UPNP_PLUGIN'
+    'webinterface WEBINTERFACE_PLUGIN'
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'infowidget SYSTEM_GEOIP'
+)
+
