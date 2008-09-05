@@ -223,6 +223,7 @@ qt-4_src_configure() {
 }
 
 qt-4_src_install() {
+    default
 
     local lib libdir=$(get_libdir) libdirs
     # remove build dir from libraries
