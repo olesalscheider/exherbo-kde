@@ -1,0 +1,37 @@
+# Copyright 2008 Daniel Mierswa <impulze@impulze.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake kde4
+
+SUMMARY="QtCurve - Qt4/KDE4/KDE3/GTK+2 widget styles"
+DESCRIPTION="This is a set of widget styles for Qt4/KDE4, KDE3 and Gtk2 based apps."
+HOMEPAGE="http://www.kde-look.org/content/show.php?content=40492"
+DOWNLOADS="http://home.freeuk.com/cpdrummond/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="kde"
+
+DEPENDENCIES="
+    build+run:
+        kde? ( kde/kdelibs:4 )
+    run:
+        kde? ( kde/kdebase:4 )
+"
+
+src_prepare() {
+    option kde || sed -i -e "s#find_package(KDE4)##g" "${WORK}/CMakeLists.txt"
+}
+
+CMAKE_SRC_CONFIGURE_OPTIONS+=(
+    '!kde QTC_NO_KDE4_LINKING'
+    '!kde QTC_DISABLE_KDEFILEDIALOG_CALLS'
+)
+
+pkg_postinst() {
+    option kde && kde4_pkg_postinst
+}
+
+pkg_postrm() {
+    option kde && kde4_pkg_postrm
+}
