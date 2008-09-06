@@ -155,6 +155,8 @@ qt-3_src_install() {
     dodir ${QTSYSCONFDIR}
     keepdir ${QTSYSCONFDIR}
 
+    doman doc/man/man1/*
+
     # Unneeded & broken symlink to ${WORKBASE}
     rm "${IMAGE}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
 }
