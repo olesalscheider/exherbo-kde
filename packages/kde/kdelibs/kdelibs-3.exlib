@@ -12,7 +12,7 @@ HOMEPAGE="http://www.kde.org/"
 LICENCES="GPL-2 LGPL-2 BSD FDL-1.2 artistic"
 SLOT="3"
 MYOPTIONS="acl alsa cups doc fam jpeg2k kerberos
-    lua openexr spell sudo tiff utempter zeroconf"
+    lua openexr spell sudo tiff zeroconf"
 
 DEPENDENCIES="
     build:
@@ -21,7 +21,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         app-arch/bzip2
-        >=dev-libs/libpcre-6.6
+        >=dev-libs/pcre-6.6
         >=dev-libs/libxml2-2.4.8
         >=dev-libs/libxslt-1.0.7
         >=dev-libs/openssl-0.9.7d
@@ -47,18 +47,15 @@ DEPENDENCIES="
         spell? ( >=app-text/aspell-0.60.5 >=app-dicts/aspell-en-6.0.0 )
         sudo? ( app-admin/sudo )
         tiff? ( media-libs/tiff )
-        utempter? ( sys-libs/libutempter )
-        zeroconf? ( >=fixme/mDNSResponder-85 )
     run:
         x11-apps/iceauth
         x11-apps/rgb
 "
-#        !zeroconf? ( fixme/kdnssd-avahi )
 
 # FIXME:
 RESTRICT="test"
 
-DEFAULT_SRC_CONFIGURE_ENABLES+=( cups "fam libfam" "zeroconf dnssd" )
+DEFAULT_SRC_CONFIGURE_ENABLES+=( cups "fam libfam" )
 DEFAULT_SRC_CONFIGURE_WITHS+=( 
     acl
     alsa
@@ -66,7 +63,6 @@ DEFAULT_SRC_CONFIGURE_WITHS+=(
     "kerberos gssapi"
     lua
     openexr
-    utempter
     "spell aspell"
     tiff
     "sudo sudo-kdesu-backend"
@@ -76,23 +72,15 @@ DEFAULT_SRC_CONFIGURE_PARAMS+=(
     --enable-pcre
     --enable-dnotify
     --enable-sendfile
+    --disable-dnssd
     --with-libart
     --with-libidn
     --with-ssl
     --without-arts
     --without-hspell
+    --without-utempter
     --with-rgbfile=/usr/share/X11/rgb.txt
 )
-
-pkg_setup() {
-    if ! option utempter ; then
-        echo
-        elog "On some setups, which rely on the correct update of utmp records, not using"
-        elog "utempter might not update them correctly. If you experience unexpected"
-        elog "behaviour, try to rebuild kde-base/kdelibs with utempter option enabled."
-        echo
-    fi
-}
 
 src_compile() {
     default
@@ -111,11 +99,6 @@ src_install() {
 
     if [[ ${SYMLINK_LIB} == "yes" ]]; then
         dosym $(get_abi_LIBDIR "${DEFAULT_ABI}") ${KDE_INSTALL_PREFIX}/lib
-    fi
-
-    # Get rid of the disabled version of the kdnsd libraries
-    if !option zeroconf; then
-        rm -rf "${IMAGE}"/${KDE_INSTALL_PREFIX}/$(get_libdir)/libkdnssd.*
     fi
 
     dodir /etc/env.d
