@@ -76,15 +76,11 @@ qt-3_src_prepare() {
     sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
         -i configure || die 'sed for license acceptance failed'
 
-    for qtlib in $(get_all_libdirs); do
-        qtlibdirs="${qtlibdirs}:${QTBASEDIR}/${qtlib}"
-    done
-
     cat <<-EOF > "${TEMP}"/45qt3
 QTDIR=${QTBASEDIR}
 PATH=${QTBASEDIR}/bin
 ROOTPATH=${QTBASEDIR}/bin
-LDPATH=${qtlibdirs}
+LDPATH=${QTBASEDIR}/$(get_libdir)
 QMAKESPEC=${platform}
 MANPATH=${QTBASEDIR}/doc/man
 PKG_CONFIG_PATH=${QTBASEDIR}/$(get_libdir)/pkgconfig
@@ -127,6 +123,10 @@ qt-3_src_configure() {
     CONFIGURE_OPTIONS+=" $(myoption postgres sql-psql plugin)" # -I,-L
     CONFIGURE_OPTIONS+=" $(myoption sqlite sql-sqlite plugin)"
 
+    if option !doc; then
+        echo "INSTALLS -= htmldocs" >> ./src/qt_install.pri || die "Disabling apidocs failed"
+    fi
+
     echo "./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS}"
     ./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS} \
         || die './configure failed'
@@ -137,7 +137,7 @@ qt-3_src_compile() {
 
     emake src-qmake src-moc sub-src
 
-    export DYLD_LIBRARY_PATH="${WORK}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
+    export DYLD_LIBRARY_PATH="${WORK}/lib:${DYLD_LIBRARY_PATH}"
     export LD_LIBRARY_PATH="${WORK}/lib:${LD_LIBRARY_PATH}"
 
     emake sub-tools
@@ -146,11 +146,14 @@ qt-3_src_compile() {
 }
 
 qt-3_src_install() {
-    export INSTALL_ROOT="${IMAGE}"
-    default_src_install
+    DEFAULT_SRC_INSTALL_PARAMS+=( INSTALL_ROOT="${IMAGE}" )
+    default
 
     dodir /etc/env.d
     doenvd "${TEMP}"/45qt3
+
+    dodir ${QTSYSCONFDIR}
+    keepdir ${QTSYSCONFDIR}
 
     # Unneeded & broken symlink to ${WORKBASE}
     rm "${IMAGE}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
