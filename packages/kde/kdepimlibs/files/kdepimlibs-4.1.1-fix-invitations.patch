@@ -1,0 +1,25 @@
+Source: Upstream
+Upstream: Yes
+Reason:
+
+The release of kdepimlibs 4.1.1 has a regression in it: It causes KMail to
+crash on every mail that has an invitation attached.
+See http://bugs.kde.org/show_bug.cgi?id=170203.
+This has been introduced in revision 853473, shortly before KDE 4.1.1 was
+tagged, so we didn't notice it earlier.
+
+This has already been fixed in revision 856768 of the 4.1 branch, see
+http://websvn.kde.org/?view=rev&revision=856768.
+
+--- branches/KDE/4.1/kdepimlibs/kcal/incidenceformatter.cpp	2008/09/03 18:28:53	856767
++++ branches/KDE/4.1/kdepimlibs/kcal/incidenceformatter.cpp	2008/09/03 18:33:54	856768
+@@ -1132,6 +1132,9 @@
+     IncidenceCompareVisitor() : mExistingIncidence( 0 ) {}
+     bool act( IncidenceBase *incidence, Incidence *existingIncidence )
+     {
++      if (!existingIncidence) {
++        return false;
++      }
+       Incidence *inc = dynamic_cast<Incidence *>( incidence );
+       if ( inc && inc->revision() <= existingIncidence->revision() ) {
+         return false;
