@@ -52,5 +52,6 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 "${FILES}/${PNV}-utf8-bug-qt3.diff" #document
 "${FILES}/${PNV}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
 "${FILES}/${PNV}-mips.patch" #document
+"${FILES}/${PNV}-build-key.patch"
 )
 

@@ -1,0 +1,29 @@
+Source: Bo Ørsted Andresen based on http://bugs.gentoo.org/236793
+Upstream: No.
+Reason: '*3.*' matches GCC 4.3.1 which results in a different build key than
+	when using e.g. GCC 4.3. This has the undesired effect that programs
+	compiled with gcc 4.3 are not compatible with those compiled by 4.3.1.
+	Use -dumpversion to allow tightening the conditions.
+
+--- qt-x11-free-3.3.8/configure	2008-09-07 01:08:24.000000000 +0000
++++ qt-x11-free-3.3.8/configure	2008-09-07 01:08:14.000000000 +0000
+@@ -3079,15 +3079,15 @@
+ g++*)
+     # GNU C++
+     QMAKE_CONF_COMPILER=`grep "QMAKE_CXX[^_A-Z0-9a-z]" $QMAKESPEC/qmake.conf | sed "s,.* *= *\(.*\)$,\1,"`
+-    COMPILER_VERSION=`${QMAKE_CONF_COMPILER} --version 2>/dev/null`
++    COMPILER_VERSION=`${QMAKE_CONF_COMPILER} -dumpversion 2>/dev/null`
+     case "$COMPILER_VERSION" in
+-    *2.95.*)
++    2.95.*)
+ 	COMPILER_VERSION="2.95.*"
+ 	;;
+-    *3.*)
++    3.*)
+ 	COMPILER_VERSION="3.*"
+ 	;;
+-    *4.*)
++    4.*)
+ 	COMPILER_VERSION="4"
+ 	;;
+     *)
