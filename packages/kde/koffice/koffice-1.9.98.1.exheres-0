@@ -1,0 +1,8 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require ${PN}
+
+PLATFORMS="~amd64"
+
+# kbuildsycoca4(5476)/kdecore (KService) KServicePrivate::init: The desktop entry file  "/usr/share/applications/kde4/koffice.desktop"  has Type= "Application"  but no Exec line
