@@ -25,10 +25,10 @@ DEPENDENCIES="
         mysql? ( dev-db/mysql )"
 
 src_prepare() {
-	# Don't check for mysql, avoid an automagic dep.
-	if ! option mysql; then
-		sed -e '/mysqld/s/find_program/#DONOTWANT &/' \
-			-i "${WORK}"/server/CMakeLists.txt || die 'sed failed'
-	fi
+    # Don't check for mysql, avoid an automagic dep.
+    if ! option mysql; then
+        sed -e '/mysqld/s/find_program/#DONOTWANT &/' \
+            -i "${WORK}"/server/CMakeLists.txt || die 'sed failed'
+    fi
 }
 
