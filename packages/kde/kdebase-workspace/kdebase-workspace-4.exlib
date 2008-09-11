@@ -25,8 +25,9 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
+        kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         >=kde/qimageblitz-0.0.4
-        sys-libs/pam
+        sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         x11-libs/libxklavier
         x11-libs/qt:4[opengl?][webkit]
         bluetooth? ( net-wireless/bluez-libs )
