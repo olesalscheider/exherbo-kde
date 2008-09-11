@@ -1,0 +1,25 @@
+# Copyright 2008 Wulf C. Krueger
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdebase-pam-7.ebuild' from Gentoo, which is:
+#     Copyright 1999-2007 Gentoo Foundation
+
+require pam
+
+SUMMARY="pam.d files used by several KDE components."
+HOMEPAGE="http://www.kde.org"
+LICENCES="as-is"
+BUGS_TO="philantrop@exherbo.org"
+
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    run:
+        sys-libs/pam
+"
+
+src_install() {
+    newpamd "${FILES}/kde.pam-${PV}" kde
+    newpamd "${FILES}/kde-np.pam-${PV}" kde-np
+}
