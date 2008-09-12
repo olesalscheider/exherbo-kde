@@ -1,0 +1,27 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require ${PN}
+
+SCM_TYPE="svn"
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="extragear/multimedia/${PN}"
+
+SCM_SECONDARY_REPOSITORIES="libplasma animators popupdropper"
+for svn_external in ${SCM_SECONDARY_REPOSITORIES}; do
+    export -n "SCM_${svn_external}_TYPE=svn"
+    export -n "SCM_${svn_external}_BRANCH=KDE/4.1"
+    export -n "SCM_${svn_external}_REPOSITORY=${SCM_REPOSITORY}"
+    export -n "SCM_${svn_external}_UNPACK_TO=${WORK}/src/context/${svn_external/lib}"
+done
+
+SCM_libplasma_SUBPATH="kdebase/workspace/libs/plasma"
+SCM_animators_SUBPATH="kdebase/workspace/plasma/animators"
+SCM_popupdropper_SUBPATH="playground/libs/popupdropper/popupdropper"
+unset SCM_popupdropper_BRANCH
+
+require scm
+
+DOWNLOADS=""
+PLATFORMS="~amd64"
+
