@@ -3,40 +3,59 @@
 
 require cmake kde4
 
-SUMMARY="Amarok!"
+SUMMARY="Amarok - the audio player for KDE"
+DESCRIPTION="
+There are many media players around these days, true. What's missing from most
+players is a user interface that doesn't get in the way of the user. How many
+buttons do you have to press for simply adding some new tracks to the playlist?
+Amarok tries to be a little different, providing a simple drag and drop
+interface that really makes playlist handling easy.
+"
 HOMEPAGE="http://amarok.kde.org"
 DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="" #opengl
+MYOPTIONS="ipod mp3tunes mp4 mtp" #opengl mysql
 
 DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+        kde/automoc4
     build+run:
-        app-pim/strigi
+        >=app-pim/strigi-0.5.9
         dev-db/sqlite:3
-        dev-libs/glib:2
-        dev-libs/libxml2
+        dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
+        dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
         >=dev-libs/soprano-2.1.0
         >=kde/kdelibs-4.1.0:4[opengl]
         >=kde/kdepimlibs-4.1.0:4
-        kde/kdebase-workspace:4[opengl]
-        media-libs/taglib
-        net-misc/curl
-        x11-libs/qt:4[glib][opengl][qt3support]
+        >=kde/kdebase-workspace-4.1.0:4[opengl]
+        >=kde/kdemultimedia-4.1.0:4 [[ description = [ Support for playing Audio CDs ] ]]
+        net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
+        >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
+        || ( x11-dri/mesa x11-dri/mesa-lib ) [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
+        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][sqlite][svg][webkit]
+        ipod? ( >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
+                >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]] )
+        mp3tunes? ( >=net-im/loudmouth-1 [[ description = [ mp3tunes.com integration (including synchronisation) ] ]] )
+        mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] url = [ http://www.mpeg4ip.net/ ] ]] )
+        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] url = [ http://libmtp.sourceforge.net ] ]] )
 "
-#      kde-base/kdemultimedia:4 [[ description = [ Support for playing Audio CDs ] ]]
-#      = kcddb, kcompactdisc
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    # 'opengl OpenGL'
-    # 'mysql MySQL'
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'ipod Gdk' Ipod
+    'mp3tunes Loudmouth'
+    'mp4 Mp4v2'
+    Mtp
+    # OpenGL
+    # MySQL
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_{CURL,GLIB2,LibXml2}=ON # hard enabled by upstream. only needed for mp3tunes.com
+    -DWITH_{Soprano,Nepomuk}=ON # hard enabled by us
     -DWITH_OpenGL=ON # FIXME
     -DUSE_SYSTEM_SQLITE=ON
-    -DWITH_Nepomuk=ON -DWITH_Soprano=ON
-    # MySQL removed past 1.90
-    -DWITH_{Gdk,Ifp,Ipod,Libvisual,Loudmouth,Mp4v2,MySQL,Njb}=OFF
+    -DWITH_Libvisual=OFF
+    -DWITH_{Ifp,MySQL,Njb}=OFF # hard disabled by upstream
 )
-

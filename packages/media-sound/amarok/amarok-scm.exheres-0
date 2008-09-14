@@ -23,5 +23,6 @@ unset SCM_popupdropper_BRANCH
 require scm
 
 DOWNLOADS=""
-PLATFORMS="~amd64"
+DEPENDENCIES+=" || ( dev-libs/openssl dev-libs/libgcrypt ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]"
+PLATFORMS="~amd64 ~x86"
 
