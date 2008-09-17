@@ -46,6 +46,10 @@ DEPENDENCIES="
         jpeg? ( media-libs/jpeg )
         mng? ( media-libs/libmng )
         opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) [[ note = [ needs gl.h, glu.h, libGL and libGLU ] ]] )
+        phonon? (
+            media-libs/gstreamer
+            media-plugins/gst-plugins-base
+        )
         png? ( media-libs/libpng )
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )
