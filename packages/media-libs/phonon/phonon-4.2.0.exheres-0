@@ -14,24 +14,18 @@ DOWNLOADS="mirror://kde/stable/${PN}/${PV}/${PNV}.tar.bz2"
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+MYOPTIONS="gstreamer"
 
 DEPENDENCIES="
     build+run:
-        >=x11-libs/qt-4.4.0:4[dbus]"
-#       gstreamer? (
-#           media-libs/gstreamer
-#           media-libs/gst-plugins-base
-#       )"
+        >=x11-libs/qt-4.4.0:4[dbus]
+        gstreamer? (
+            media-libs/gstreamer
+            media-plugins/gst-plugins-base
+        )"
 
-# Restrict for now
+# Test executables not found
 RESTRICT="test"
 
-src_configure() {
-    # $(cmake_with GStreamer)
-    # $(cmake_with gstreamer GStreamerPlugins)
-    ecmake \
-        -DGStreamer=Off \
-        -DGStreamerPlugins=Off
-}
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( GStreamer 'gstreamer GStreamerPlugins' )
 
