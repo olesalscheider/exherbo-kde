@@ -11,7 +11,7 @@ LICENCES="as-is"
 BUGS_TO="philantrop@exherbo.org"
 
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="

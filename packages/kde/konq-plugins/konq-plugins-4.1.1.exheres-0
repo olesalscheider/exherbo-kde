@@ -3,5 +3,5 @@
 
 require cmake kde.org-4
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
