@@ -29,7 +29,7 @@ MYOPTIONS="pdf ps chm djvu tiff dvi epub odf"
 # Need kipi for kipi support in gwenview
 DEPENDENCIES="
     build+run:
-        app-pim/strigi
+        app-pim/strigi[qt4]
         dev-libs/expat
         >=graphics/exiv2-0.13
         kde/qimageblitz

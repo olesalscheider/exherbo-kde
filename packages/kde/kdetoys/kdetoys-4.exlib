@@ -16,7 +16,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        app-pim/strigi
+        app-pim/strigi[qt4]
         kde/kdebase-workspace:${SLOT} [[
             description = [ Needs Plasma (kteatime) and Kscreensaver (ktux) ]
         ]]

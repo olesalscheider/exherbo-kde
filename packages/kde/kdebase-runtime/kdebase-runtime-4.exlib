@@ -13,7 +13,7 @@ DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
-        app-pim/strigi
+        app-pim/strigi[qt4]
         dev-cpp/clucene
         >=dev-libs/soprano-2.0.98
         kde/kdelibs:${SLOT}

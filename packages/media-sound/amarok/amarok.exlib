@@ -23,7 +23,7 @@ DEPENDENCIES="
         dev-util/pkg-config
         kde/automoc4
     build+run:
-        >=app-pim/strigi-0.5.9
+        >=app-pim/strigi-0.5.9[qt4]
         dev-db/sqlite:3
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
