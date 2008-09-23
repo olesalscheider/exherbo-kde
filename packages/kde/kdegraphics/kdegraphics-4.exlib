@@ -38,7 +38,7 @@ DEPENDENCIES="
         media-libs/lcms
         x11-libs/libXxf86vm
         chm? ( fixme/chm )
-        djvu? ( fixme/dejavulibre )
+        djvu? ( app-text/djvu )
         dvi? ( media-libs/freetype:2 )
         epub? ( fixme/libepub )
         odf? ( app-crypt/qca:2 )
