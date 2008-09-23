@@ -1,7 +1,7 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require kde3 cmake
 
 SUMMARY="Sim-IM is a multiple protocol instant messenger."
 HOMEPAGE="http://sim-im.org/"
@@ -13,7 +13,7 @@ require scm-svn
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="debug floatings gpg jabber livejournal msn netmonitor oscar
+MYOPTIONS="debug floatings gpg jabber kde livejournal msn netmonitor oscar
     osd proxy remote sms sound spell trayicon weather yahoo zodiak"
 
 DEPENDENCIES="
@@ -27,7 +27,9 @@ DEPENDENCIES="
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/qt:3
-        spell? ( app-text/aspell )
+        kde? ( spell? ( kde/kdelibs:3[spell] )
+            !spell? ( kde/kdelibs:3[-spell] ) )
+        !kde? ( spell? ( app-text/aspell ) )
     run:
         app-arch/zip
         x11-libs/libXScrnSaver
@@ -45,13 +47,13 @@ pkg_pretend() {
 src_configure() {
     # there is no kdelibs:3 at the moment, reenable when there is
     ecmake \
-        -DENABLE_KDE3=Off \
         -DENABLE_PLUGIN_UPDATE:BOOL=Off \
         -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
         $(cmake_enable debug PLUGIN_LOGGER) \
         $(cmake_enable floatings PLUGIN_FLOATY) \
         $(cmake_enable gpg PLUGIN_GPG) \
         $(cmake_enable jabber PLUGIN_JABBER) \
+        $(cmake_enable kde ENABLE_KDE3)
         $(cmake_enable livejournal PLUGIN_LIVEJOURNAL) \
         $(cmake_enable msn PLUGIN_MSN) \
         $(cmake_enable netmonitor PLUGIN_NETMONITOR) \
