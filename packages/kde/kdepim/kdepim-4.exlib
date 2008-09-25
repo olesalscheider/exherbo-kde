@@ -36,7 +36,7 @@ build+run:
     dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
     >=server-pim/akonadi-0.80
     x11-libs/libXScrnSaver [[ note = [ needed for KTimeTracker ] ]]
-    x11-libs/qt:4[dbus][sqlite] [[ note = [ akonadi needs any sql implementation in qt ] ]]
+    x11-libs/qt:4[dbus][sql] [[ note = [ akonadi needs any Qt SQL plugin ] ]]
     >=x11-misc/shared-mime-info-0.20
     nepomuk? (
         >=dev-libs/soprano-1.99

@@ -20,7 +20,7 @@ DEPENDENCIES="
     build:
         dev-libs/libxslt
     build+run:
-        x11-libs/qt:4[dbus][sqlite]
+        x11-libs/qt:4[dbus][sql]
         >=x11-misc/shared-mime-info-0.20
         mysql? ( dev-db/mysql )"
 

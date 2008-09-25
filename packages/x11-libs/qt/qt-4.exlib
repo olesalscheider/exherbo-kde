@@ -24,9 +24,9 @@ WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples"
 # PARTS="demos docs examples libs tools" # libs is mandatory
-MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
-qt3support sqlite ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}"
-# MYOPTIONS+=" firebird mysql odbc postgres"
+MYOPTIONS="X accessibility dbus cups gif glib jpeg mng mysql opengl phonon png postgresql
+qt3support sql sqlite ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}"
+# MYOPTIONS+=" firebird odbc"
 DEPENDENCIES="
     build:
         dev-util/pkg-config
@@ -48,6 +48,7 @@ DEPENDENCIES="
         glib? ( dev-libs/glib:2 )
         jpeg? ( media-libs/jpeg )
         mng? ( media-libs/libmng )
+        mysql? ( dev-db/mysql )
         opengl? (
             || (
                 x11-dri/mesa
@@ -59,6 +60,7 @@ DEPENDENCIES="
             media-plugins/gst-plugins-base
         )
         png? ( media-libs/libpng )
+        postgresql? ( dev-db/postgresql )
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )
         tiff? ( media-libs/tiff )
@@ -67,8 +69,14 @@ DEPENDENCIES="
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
+# Packages that need QtSQL should depend on x11-libs/qt:4[sql]
+# option='sql' needs at least one SQL plugin, any-of mysql, postgresql, sqlite, (firebird, odbc)
 OPTION_DEPENDENCIES="
     opengl? ( X )
+    mysql? ( sql )
+    postgresql? ( sql )
+    sql? ( any-of: mysql postgresql sqlite )
+    sqlite? ( sql )
     webkit? ( ssl )
     xinerama? ( X )
 "
@@ -199,13 +207,13 @@ qt-4_src_configure() {
 
     # database plugins
     #myconf+=" $(qt4_enable firebird sql-ibase plugin "" -I/opt/firebird/include)"
-    #          $(qt4_enable mysql sql-mysql plugin "" -I/usr/include/mysql -L/usr/$(get_libdir)/mysql)
     #          $(qt4_enable odbc sql-odbc plugin)
-    #          $(qt4_enable postgres sql-psql plugin "" -I/usr/include/postgresql/pgsql)"
     myconf+=" -no-sql-ibase
-              -no-sql-mysql
               -no-sql-odbc
-              -no-sql-psql
+              $(qt4_enable mysql sql-mysql plugin "")
+              $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
+              $(qt4_enable postgresql sql-psql plugin "")
+              $(option postgresql && echo '-I/usr/include/postgresql/server/')
               $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
               -no-sql-sqlite2"
 
