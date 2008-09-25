@@ -30,7 +30,7 @@ DEPENDENCIES="
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         x11-libs/libxklavier
         x11-libs/qt:4[opengl?][webkit]
-        bluetooth? ( net-wireless/bluez-libs )
+        bluetooth? ( net-wireless/bluez )
         lm_sensors? ( sys-apps/lm_sensors )
         networkmanager? ( net-misc/networkmanager )
     run:
