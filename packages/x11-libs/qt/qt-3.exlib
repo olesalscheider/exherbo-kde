@@ -8,7 +8,7 @@
 #   Bo Ørsted Andresen <zlin@gentoo.org>
 #   Ingmar Vanhassel <ingmar@gentoo.org>
 
-require multilib flag-o-matic toolchain-funcs 
+require multilib flag-o-matic toolchain-funcs options
 
 SRC_TYPE="free"
 DOWNLOADS="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
@@ -18,6 +18,13 @@ WORK="${WORKBASE}/${PN}-x11-${SRC_TYPE}-${PV}"
 
 export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
     src_compile src_install 
+
+OPTION_DEPENDENCIES="
+    sql? ( any-of: mysql sqlite postgresql )
+    mysql? ( sql )
+    sqlite? ( sql )
+    postgresql? ( sql )
+"
 
 set_platform() {
     CXX=$(tc-getCXX)
@@ -37,6 +44,7 @@ set_platform() {
 }
 
 qt-3_pkg_pretend() {
+    options_pkg_pretend
     set_platform
 }
 
@@ -120,7 +128,9 @@ qt-3_src_configure() {
     CONFIGURE_OPTIONS+=" $(myoption ipv6)"
     CONFIGURE_OPTIONS+=" $(myoption xinerama)"
     CONFIGURE_OPTIONS+=" $(myoption mysql sql-mysql plugin)" # -I,-L
-    CONFIGURE_OPTIONS+=" $(myoption postgres sql-psql plugin)" # -I,-L
+    CONFIGURE_OPTIONS+=" $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')"
+    CONFIGURE_OPTIONS+=" $(myoption postgresql sql-psql plugin)"
+    CONFIGURE_OPTIONS+=" $(option postgresql && echo '-I/usr/include/postgresql/server/')"
     CONFIGURE_OPTIONS+=" $(myoption sqlite sql-sqlite plugin)"
 
     if option !doc; then

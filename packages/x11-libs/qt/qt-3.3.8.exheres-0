@@ -9,7 +9,7 @@ HOMEPAGE="http://www.trolltech.com/"
 LICENCES="|| ( QPL-1.0 GPL-2 )"
 SLOT="3"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="cups debug doc examples glib ipv6 mysql opengl postgres ssl sqlite xinerama"
+MYOPTIONS="cups debug doc examples glib ipv6 mysql opengl postgresql ssl sql sqlite xinerama"
 
 DEPENDENCIES="
 build:
@@ -31,8 +31,13 @@ build+run:
     cups? ( net-print/cups )
     glib? ( dev-libs/glib:2 )
     mysql? ( dev-db/mysql )
-    opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
-    postgres? ( dev-db/postgres )
+    opengl? (
+        || (
+            x11-dri/mesa
+            x11-dri/mesa-lib
+        )
+    )
+    postgresql? ( dev-db/postgresql )
     ssl? ( dev-libs/openssl )
     xinerama? ( x11-libs/libXinerama )
 "
