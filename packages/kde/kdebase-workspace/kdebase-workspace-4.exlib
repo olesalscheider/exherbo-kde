@@ -40,7 +40,7 @@ DEPENDENCIES="
         x11-libs/qt:4[opengl?][webkit]
         bluetooth? ( net-wireless/bluez )
         lm_sensors? ( sys-apps/lm_sensors )
-        networkmanager? ( net-misc/networkmanager )
+        networkmanager? ( net/NetworkManager )
     run:
         x11-apps/setxkbmap
         x11-apps/xinit [[ note = kdm ]]
