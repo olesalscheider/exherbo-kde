@@ -5,6 +5,7 @@ require kde.org-4
 
 SUMMARY="Addons for plasma"
 DESCRIPTION="
+KDE Plasmoids module is a collection of additional Plasma data engines and widgets (applets).
 "
 
 LICENCES="GPL-2"

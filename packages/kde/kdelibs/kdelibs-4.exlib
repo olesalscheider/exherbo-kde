@@ -5,7 +5,8 @@ require kde.org-4
 
 SUMMARY="KDE libraries"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-DESCRIPTION="FIXME
+DESCRIPTION="
+This package contains shared libraries and data files needed to run KDE 4 applications.
 "
 # XXX Add acl alsa(?) jpeg2k kerberos openexr zeroconf
 MYOPTIONS="doc fam opengl spell

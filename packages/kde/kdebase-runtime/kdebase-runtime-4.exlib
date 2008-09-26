@@ -6,6 +6,7 @@ require kde.org-4
 SUMMARY="KDE Runtime libraries & files"
 LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
+This package contains programs and data needed at runtime by KDE 4 applications.
 "
 MYOPTIONS=""
 

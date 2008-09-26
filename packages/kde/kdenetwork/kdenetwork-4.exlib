@@ -10,6 +10,11 @@ require kde.org-4
 
 SUMMARY="KDE Network"
 DESCRIPTION="
+Networking applications from the official KDE 4 release.
+kget: A download manager
+kopete: A multi-protocol chat client with various plugins for extra functionality
+krdc: KDE remote desktop connection (RDP and VNC) client
+kppp: A frontend to pppd
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
