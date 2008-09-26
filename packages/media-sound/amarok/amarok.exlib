@@ -16,7 +16,7 @@ DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="ipod mp3tunes mp4 mtp" #opengl mysql
+MYOPTIONS="ipod mp3tunes mp4 mtp" # XXX opengl
 
 DEPENDENCIES="
     build:
@@ -24,7 +24,6 @@ DEPENDENCIES="
         kde/automoc4
     build+run:
         >=app-pim/strigi-0.5.9[qt4]
-        dev-db/sqlite:3
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
         >=dev-libs/soprano-2.1.0
@@ -43,19 +42,23 @@ DEPENDENCIES="
         mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] url = [ http://libmtp.sourceforge.net ] ]] )
 "
 
+if ever at_least 1.92; then
+    DEPENDENCIES="build+run: dev-db/mysql[embedded]"
+else
+    DEPENDENCIES="build+run: dev-db/sqlite:3"
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DUSE_SYSTEM_SQLITE=ON )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'ipod Gdk' Ipod
     'mp3tunes Loudmouth'
     'mp4 Mp4v2'
     Mtp
-    # OpenGL
-    # MySQL
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_{CURL,GLIB2,LibXml2}=ON # hard enabled by upstream. only needed for mp3tunes.com
     -DWITH_{Soprano,Nepomuk}=ON # hard enabled by us
     -DWITH_OpenGL=ON # FIXME
-    -DUSE_SYSTEM_SQLITE=ON
     -DWITH_Libvisual=OFF
-    -DWITH_{Ifp,MySQL,Njb}=OFF # hard disabled by upstream
+    -DWITH_{Ifp,Njb}=OFF # hard disabled by upstream
 )
