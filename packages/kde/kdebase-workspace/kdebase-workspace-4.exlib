@@ -7,11 +7,11 @@ SUMMARY="KDE Workspace"
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
 DESCRIPTION="
 "
+# captury; media-libs/libcaptury
+# kerberos
 MYOPTIONS="bluetooth lm_sensors networkmanager opengl
 ppc_cpu_options:altivec x86_cpu_options:3dnow x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
-# captury; media-libs/libcaptury
-# cpu_options: for ksplash
-# kerberos
+# cpu_options are for ksplash
 
 DEPENDENCIES="
     build:
@@ -75,7 +75,10 @@ src_install() {
     # FIXME
     keepdir /usr/share/config/kdm/sessions
 
-    # kdebase-startkde:
-    # agent-startup.sh, agent-shutdown.sh, xdg.sh
+    insinto /usr/env
+    doins "${FILES}"/agent-startup.sh
+
+    insinto /usr/shutdown
+    doins "${FILES}"/agent-shutdown.sh
 }
 
