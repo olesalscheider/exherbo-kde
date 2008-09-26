@@ -55,3 +55,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     SVN
     'umbrello Boost' 'umbrello LibXslt' 'umbrello LibXml2'
 )
+
