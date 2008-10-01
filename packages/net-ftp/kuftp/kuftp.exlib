@@ -1,0 +1,23 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde3
+
+SUMMARY="KuFTP is a graphical FTP client for the K Desktop Environment."
+DESCRIPTION="KuFTP is a graphical FTP client for the K Desktop Environment,
+based on KDE 3.5.
+It supports Tab Sessions like Konqueror or Firefox, bookmark manager,
+queue manager, multi charsets, proxy support, speed limit and other things.
+"
+HOMEPAGE="http://kuftp.sourceforge.net/"
+DOWNLOADS="http://superb-east.dl.sourceforge.net/sourceforge/${PN}/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:3
+"
+
