@@ -7,7 +7,7 @@ require kde.org-4
 set_kde_l10n_downloads() {
     local kde_l10n_base_url="${DOWNLOADS}" localisation=
     for localisation in ${LINGUAS}; do
-        echo -n "linguas:${localisation}? ( ${kde_l10n_base_url/${PV}.tar.bz2/${localisation}-${PV}.tar.bz2} ) "
+        echo -n "linguas:${localisation}? ( ${kde_l10n_base_url/-${PV}.tar.bz2//${PN}-${localisation}-${PV}.tar.bz2} ) "
     done
 }
 
