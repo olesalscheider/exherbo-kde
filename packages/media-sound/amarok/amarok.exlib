@@ -43,9 +43,11 @@ DEPENDENCIES="
 "
 
 if ever at_least 1.92; then
-    DEPENDENCIES="build+run: dev-db/mysql[embedded]"
+    DEPENDENCIES+="
+        build+run: dev-db/mysql[embedded]"
 else
-    DEPENDENCIES="build+run: dev-db/sqlite:3"
+    DEPENDENCIES+="
+        build+run: dev-db/sqlite:3"
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DUSE_SYSTEM_SQLITE=ON )
 fi
 
