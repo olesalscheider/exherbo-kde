@@ -54,3 +54,83 @@ index d00d0ed..335df51 100644
 -- 
 1.6.0.2
 
+From 6ebbdff3bb67d48f3e2e96149000bf10d687c134 Mon Sep 17 00:00:00 2001
+From: abizjak <abizjak@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 2 Oct 2008 09:41:29 +0000
+Subject: [PATCH] My previous commit 866718 broke writability checks, as they failed if the config's containing dir did not exist.
+ Fix it by also checking if the deepest existing dir is writable.
+
+ git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs@866908 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+
+From 61c17baa8debaddfccd317668815dbba1bd3d826 Mon Sep 17 00:00:00 2001
+From: abizjak <abizjak@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 2 Oct 2008 09:42:13 +0000
+Subject: [PATCH] backport revision 866908
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.1/kdelibs@866909 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kdecore/config/kconfig.cpp    |    7 ++-----
+ kdecore/config/kconfigini.cpp |   22 +++++++++++++++++++---
+ 2 files changed, 21 insertions(+), 8 deletions(-)
+
+diff --git a/kdecore/config/kconfig.cpp b/kdecore/config/kconfig.cpp
+index 335df51..68444c1 100644
+--- a/kdecore/config/kconfig.cpp
++++ b/kdecore/config/kconfig.cpp
+@@ -296,11 +296,8 @@ void KConfig::sync()
+     if (d->bDirty && d->mBackend) {
+         const QByteArray utf8Locale(locale().toUtf8());
+ 
+-        // Check if we can write to the local file.
+-        if (!d->mBackend->isWritable()) {
+-            // Create the containing dir, maybe it wasn't there
+-            d->mBackend->createEnclosing();
+-        }
++        // Create the containing dir, maybe it wasn't there
++        d->mBackend->createEnclosing();
+ 
+         // lock the local file
+         if (d->configState == ReadWrite && !d->lockLocal()) {
+diff --git a/kdecore/config/kconfigini.cpp b/kdecore/config/kconfigini.cpp
+index 4db0360..f51f324 100644
+--- a/kdecore/config/kconfigini.cpp
++++ b/kdecore/config/kconfigini.cpp
+@@ -485,8 +485,24 @@ bool KConfigIniBackend::writeConfig(const QByteArray& locale, KEntryMap& entryMa
+ 
+ bool KConfigIniBackend::isWritable() const
+ {
+-    if (!filePath().isEmpty())
+-        return KStandardDirs::checkAccess(filePath(), W_OK);
++    if (!filePath().isEmpty()) {
++        if (KStandardDirs::checkAccess(filePath(), W_OK)) {
++            return true;
++        }
++        // The check might have failed because any of the containing dirs
++        // did not exist. If the file does not exist, check if the deepest
++        // existing dir is writable.
++        if (!QFileInfo(filePath()).exists()) {
++            QDir dir = QFileInfo(filePath()).absolutePath();
++            while (!dir.exists()) {
++                if (!dir.cdUp()) {
++                    return false;
++                }
++            }
++            return QFileInfo(dir.absolutePath()).isWritable();
++        }
++    }
++
+     return false;
+ }
+ 
+@@ -532,7 +548,7 @@ KConfigBase::AccessMode KConfigIniBackend::accessMode() const
+     if (filePath().isEmpty())
+         return KConfigBase::NoAccess;
+ 
+-    if (KStandardDirs::checkAccess(filePath(), W_OK))
++    if (isWritable())
+         return KConfigBase::ReadWrite;
+ 
+     return KConfigBase::ReadOnly;
+-- 
+1.6.0.2
+
