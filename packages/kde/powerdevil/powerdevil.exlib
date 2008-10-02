@@ -5,6 +5,7 @@ require kde.org-4
 
 DEPENDENCIES="
     build+run:
+        x11-libs/libXext
         kde/kdebase-runtime:${SLOT}
 "
 
