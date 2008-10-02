@@ -1,0 +1,56 @@
+Source: Upstream
+Upstream: Yes
+Reason:
+
+commit 5b769c508c5939e483f57df330c7d406eb7c43ac
+Author: abizjak <abizjak@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date:   Wed Oct 1 19:04:55 2008 +0000
+
+    Don't create path components of the local config path in
+    changeFileName. They will be created by the config backend if
+    the config is saved.
+    This prevents the creation of unneeded empty local directory trees
+    (e.g. $KDEHOME/share/kde4/...).
+    More importantly, it prevents "kbuildsycoca4 --global" from creating
+    these directories in system locations (KDEHOME is invalid there so it
+    will use the first entry in KDEDIRS).
+
+
+    git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs@866718 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+
+
+From dd702c5485cde422416404c53aec76407bd39134 Mon Sep 17 00:00:00 2001
+From: abizjak <abizjak@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 1 Oct 2008 19:06:12 +0000
+Subject: [PATCH] backport revision 866718
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.1/kdelibs@866719 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kdecore/config/kconfig.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kdecore/config/kconfig.cpp b/kdecore/config/kconfig.cpp
+index d00d0ed..335df51 100644
+--- a/kdecore/config/kconfig.cpp
++++ b/kdecore/config/kconfig.cpp
+@@ -409,7 +409,7 @@ void KConfigPrivate::changeFileName(const QString& name, const char* type)
+                 fileName = appName + QLatin1String("rc");
+                 if (type && *type)
+                     resourceType = type; // only change it if it's not empty
+-                file = KStandardDirs::locateLocal(resourceType, fileName, componentData);
++                file = KStandardDirs::locateLocal(resourceType, fileName, false, componentData);
+             }
+         } else if (wantGlobals()) { // accessing "kdeglobals"
+             resourceType = "config";
+@@ -421,7 +421,7 @@ void KConfigPrivate::changeFileName(const QString& name, const char* type)
+     else {
+         if (type && *type)
+             resourceType = type; // only change it if it's not empty
+-        file = KStandardDirs::locateLocal(resourceType, fileName, componentData);
++        file = KStandardDirs::locateLocal(resourceType, fileName, false, componentData);
+ 
+         if (fileName == QLatin1String("kdeglobals"))
+             openFlags |= KConfig::IncludeGlobals;
+-- 
+1.6.0.2
+
