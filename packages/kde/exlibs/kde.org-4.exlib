@@ -16,7 +16,7 @@
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
 
-require multilib kde4 cmake
+require multilib versionator kde4 cmake
 
 export_exlib_phases src_configure
 
@@ -36,8 +36,8 @@ UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/"
 
 KDE_INSTALL_PREFIX="/usr"
 
-case ${PV} in
-    here-goes-a-snapshot)
+case ${PN} in
+    4.@(1|2).@(6|7|8|9)*) 
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     *)
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
