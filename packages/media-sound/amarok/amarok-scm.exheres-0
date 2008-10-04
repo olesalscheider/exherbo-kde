@@ -10,16 +10,14 @@ SCM_SUBPATH="extragear/multimedia/${PN}"
 SCM_SECONDARY_REPOSITORIES="libplasma animators popupdropper"
 for SCM_THIS in ${SCM_SECONDARY_REPOSITORIES}; do
     scm_set_var REPOSITORY "${SCM_REPOSITORY}"
-    scm_set_var BRANCH     KDE/4.1
     scm_set_var UNPACK_TO  "${WORK}/src/context/${SCM_THIS/lib}"
     SCM_SVN_EXTERNALS+=" src/context/${SCM_THIS/lib}:${SCM_THIS}"
 done
 
 SCM_libplasma_SUBPATH="kdebase/workspace/libs/plasma"
 SCM_animators_SUBPATH="kdebase/workspace/plasma/animators"
+SCM_animators_BRANCH="KDE/4.1"
 SCM_popupdropper_SUBPATH="playground/libs/popupdropper/popupdropper"
-
-unset SCM_popupdropper_BRANCH
 SCM_popupdropper_REVISION=850023
 
 scm_finalise
