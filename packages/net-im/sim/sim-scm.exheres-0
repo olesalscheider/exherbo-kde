@@ -27,13 +27,14 @@ DEPENDENCIES="
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/qt:3
-        kde? ( spell? ( kde/kdelibs:3[spell] )
-            !spell? ( kde/kdelibs:3[-spell] ) )
-        !kde? ( spell? ( app-text/aspell ) )
+        kde? ( kde/kdelibs:3[spell=] )
+        !kde? (
+            spell? ( app-spell/aspell )
+        )
     run:
         app-arch/zip
         x11-libs/libXScrnSaver
-    "
+"
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake AUTHORS.sim jisp-resources.txt )
 
