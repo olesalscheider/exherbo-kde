@@ -51,8 +51,8 @@ DEPENDENCIES="
         x11-misc/shared-mime-info
         fam? ( app-admin/gamin )
         spell? (
-            app-text/aspell
-            app-text/enchant
+            app-spell/aspell
+            app-spell/enchant
         )
     run:
         x11-apps/iceauth

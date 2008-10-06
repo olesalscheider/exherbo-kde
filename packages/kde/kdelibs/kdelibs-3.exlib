@@ -44,7 +44,10 @@ DEPENDENCIES="
         kerberos? ( fixme/krb5 )
         lua? ( dev-lang/lua )
         openexr? ( >=media-libs/openexr-1.2.2-r2 )
-        spell? ( >=app-text/aspell-0.60.5 >=app-dicts/aspell-en-6.0.0 )
+        spell? (
+            >=app-spell/aspell-0.60.5
+            >=app-dicts/aspell-en-6.0.0
+        )
         sudo? ( app-admin/sudo )
         tiff? ( media-libs/tiff )
     run:
