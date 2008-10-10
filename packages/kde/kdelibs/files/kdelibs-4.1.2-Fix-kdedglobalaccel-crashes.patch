@@ -1,0 +1,52 @@
+From 77c342b317df5de9ff6629897ac27757bb5887fc Mon Sep 17 00:00:00 2001
+From: mjansen <mjansen@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 1 Oct 2008 19:37:47 +0000
+Subject: [PATCH] Fix those kdedglobalaccel crashes. It's not safe to assume the config file
+ has a correct content. Somehow it get's messed up sometimes and contains
+ something like this:
+
+  next=Meta+B,Meta+B,
+  nextTrack=Meta+B,Meta+B,
+
+BUG:171870
+CCBUG:171206
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs@866736 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kdeui/shortcuts/kdedglobalaccel.cpp |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/kdeui/shortcuts/kdedglobalaccel.cpp b/kdeui/shortcuts/kdedglobalaccel.cpp
+index 3eb834b..f9f7f4c 100644
+--- a/kdeui/shortcuts/kdedglobalaccel.cpp
++++ b/kdeui/shortcuts/kdedglobalaccel.cpp
+@@ -394,8 +394,9 @@ void KdedGlobalAccel::doRegister(const QStringList &actionId)
+ 
+ void KdedGlobalAccel::unRegister(const QStringList &actionId)
+ {
+-    Q_ASSERT(actionId.size()==4);
++    kDebug(125) << actionId;
+ 
++    Q_ASSERT(actionId.size()==4);
+     if (actionId.size() < 4) {
+         return;
+     }
+@@ -661,7 +662,14 @@ void KdedGlobalAccel::loadSettings()
+ 
+             foreach (int key, ad->keys) {
+                 if (key != 0) {
+-                    d->keyToAction.insert(key, ad);
++                    if (d->keyToAction.contains(key)) {
++                        // The shortcut is already used. The config file is
++                        // broken. Ignore the request.
++                        ad->keys.removeAll(key);
++                        kWarning() << "Shortcut found twice in kglobalshortcutsrc.";
++                    } else {
++                        d->keyToAction.insert(key, ad);
++                    }
+                 }
+             }
+         }
+-- 
+1.6.0.2
+
