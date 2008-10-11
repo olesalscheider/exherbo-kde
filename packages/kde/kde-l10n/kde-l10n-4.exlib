@@ -27,6 +27,7 @@ MYOPTIONS="$(set_kde_l10n_options)"
 
 DEPENDENCIES="
     build:
+        kde/kdelibs:4
         sys-devel/gettext"
 
 
