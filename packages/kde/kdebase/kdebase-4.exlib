@@ -3,14 +3,20 @@
 
 require kde.org-4
 
-SUMMARY="KDE base"
+SUMMARY="This package provides core applications for the KDE 4 desktop"
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
 DESCRIPTION="
-This package provides core applications for the KDE 4 desktop.
 dolphin: Easy to use file manager
+kappfinder: Searches for non-KDE applications to add to the menu
+kdepasswd: frontend to the Unix passwd command
+kdialog: display dialog boxes from shell scripts
+keditbookmarks: Edit browser bookmarks
+kfind: File find utility
+kinfocenter: Information Center
 konqueror: Web browser and file manager
 konsole: Terminal
 kwrite: Simple editor
+nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 MYOPTIONS="ieee1394 opengl"
 
@@ -19,17 +25,22 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
+        >=app-pim/strigi-0.5.9
         >=dev-libs/soprano-2.0.98
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
-        >=kde/qimageblitz-0.0.4
+        >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
         sys-apps/pciutils
         sys-apps/usbutils
+        x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
+        x11-libs/libXrender
+        x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
+        x11-libs/libXtst
         x11-libs/qt:4[glib][opengl?]
-        ieee1394? ( sys-libs/libraw1394 )
+        ieee1394? ( media-libs/libraw1394 )
     post,suggested:
         sys-apps/eject"
 
@@ -40,4 +51,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk=ON
 )
+# the konqueror kttsdplugin has an optional dependency upon webkitkde. but it doesn't work atm.
+# CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webkitkde DEPEND_PACKAGE_WebKitKde' )
 
