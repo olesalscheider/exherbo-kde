@@ -54,3 +54,5 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 # the konqueror kttsdplugin has an optional dependency upon webkitkde. but it doesn't work atm.
 # CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webkitkde DEPEND_PACKAGE_WebKitKde' )
 
+KDE_APPS_PREFIX="apps"
+

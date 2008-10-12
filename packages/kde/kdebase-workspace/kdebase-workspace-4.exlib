@@ -78,9 +78,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Xmms=OFF
 )
 
-
 src_install() {
-    cmake_src_install
+    kde.org-4_src_install
 
     # FIXME
     keepdir /usr/share/config/kdm/sessions

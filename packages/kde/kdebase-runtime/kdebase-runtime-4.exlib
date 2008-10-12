@@ -60,7 +60,14 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_install() {
-    cmake_src_install
+    kde.org-4_src_install
+
+    local f d
+    for f in "${WORK}"/kioslave/*/README; do
+        [[ -s ${f} ]] || continue
+        d=$(dirname "${f}")
+        newdoc "${f}" "README.kioslave.${d##*/}"
+    done
 
     # Get rid of empty icons directories
     find "${IMAGE}" -type d -empty -delete
