@@ -1,23 +1,32 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
 
-SUMMARY="KDE Workspace"
+SUMMARY="This package provides a basic KDE 4 desktop installation"
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
 DESCRIPTION="
-This package provides a basic KDE 4 desktop installation.
-kdm: The KDE display manager
+kcheckpass: Authentication program
+kdm: Display manager
+khotkeys: Bind actions to triggers and conditions
 klipper: X clipboard taskbar applet
+kmenuedit: Menu editor
 krunner: Quick launch applet
+kscreensaver: Screensaver system
+ksmserver: Session Manager
+ksplash: Splash screen
 ksysguard: Task manager & system monitor
-kwin: KDE window manager
-plasma: KDE desktop framework
-systemsettings: KDE settings utility
+ksystraycmd: Run any command in the system tray
+kwin: Window manager
+plasma: Desktop framework
+solid: Seamless Hardware Interaction
+systemsettings: Settings utility
 "
-# captury; media-libs/libcaptury
-# kerberos
-MYOPTIONS="bluetooth lm_sensors networkmanager opengl
+# afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
+# captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
+# kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
+MYOPTIONS="bluetooth lm_sensors networkmanager opengl xinerama
 ppc_cpu_features: altivec
 x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -25,24 +34,42 @@ x86_cpu_features: 3dnow mmx sse sse2"
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
+        dev-lang/perl:* [[ note = kdm ]]
     build+run:
+      >=app-pim/strigi-0.5.9[qt4]
         dev-libs/glib:2
         dev-libs/libusb
-        media-libs/fontconfig
-        media-libs/freetype:2
-        media-libs/libpng
+      >=dev-libs/soprano-2.0.98 [[ note = [ plasma engine explorer ] ]]
+        media-libs/fontconfig [[ note = kcontrol ]]
+        media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
+        media-libs/libpng [[ note = ksplash ]]
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-        >=kde/qimageblitz-0.0.4
+      >=kde/qimageblitz-0.0.4
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-        x11-libs/libXcomposite
-        x11-libs/libxklavier
+        x11-libs/libICE [[ note = ksmserver ]]
+        x11-libs/libX11 [[ note = [ kdm, kxkb/kcontrol ] ]]
+        x11-libs/libXau [[ note = kdm ]]
+        x11-libs/libXcomposite [[ note = kwin ]]
+        x11-libs/libXcursor [[ note = kcontrol ]]
+        x11-libs/libXdamage [[ note = kwin ]]
+        x11-libs/libXext [[ note = ksysguardd ]]
+        x11-libs/libXdmcp [[ note = kdm ]]
+        x11-libs/libXfixes [[ note = kcontrol ]]
+        x11-libs/libXft [[ note = kcontrol ]]
+        x11-libs/libXrender [[ note = kwin ]]
+        x11-libs/libXres [[ note = ksysguardd ]]
+        x11-libs/libXScrnSaver [[ note = krunner ]]
+        x11-libs/libXtst [[ note = kcontrol ]]
+        x11-libs/libXxf86misc [[ note = krunner ]]
+      >=x11-libs/libxklavier-3.0 [[ note = kcontrol/kxkb ]]
         x11-libs/qt:4[opengl?][webkit]
         bluetooth? ( net-wireless/bluez )
-        lm_sensors? ( sys-apps/lm_sensors )
-        networkmanager? ( net/NetworkManager )
+        lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
+        networkmanager? ( >=net/NetworkManager-0.6.5 )
+        xinerama? ( x11-libs/libXinerama )
     run:
         x11-apps/setxkbmap
         x11-apps/xinit [[ note = kdm ]]
@@ -50,11 +77,11 @@ DEPENDENCIES="
         x11-apps/xmessage
         x11-apps/xsetroot
         x11-apps/xset
-        x11-apps/xrandr
+      >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb ]]
         x11-apps/mkfontdir
         x11-apps/xprop"
 
-CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
+CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
     'ppc_cpu_features:altivec PPC_ALTIVEC'
@@ -63,18 +90,20 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
     'x86_cpu_features:sse X86_SSE'
     'x86_cpu_features:sse2 X86_SSE2'
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'bluetooth BlueZ'
-    'opengl OpenGL'
+    OpenGL
     'lm_sensors Sensors'
-    'networkmanager NetworkManager'
+    NetworkManager
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
+    -DWITH_Fontconfig=ON -DWITH_Freetype=ON
     -DWITH_GLIB2=ON -DWITH_GObject=ON
     -DWITH_PAM=ON # Automagic, hard-enabled
     -DWITH_USB=ON # Dependency of hal, which isn't optional
     -DKDE4_KRB5AUTH=OFF
+    -DKDE4_XDMCP=ON
     -DWITH_Xmms=OFF
 )
 
