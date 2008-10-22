@@ -17,3 +17,5 @@ DEPENDENCIES="
         x11-libs/cairo
         x11-libs/gtk+:2
 "
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( '-DQTC_NEW_MOZILLA=true' )
