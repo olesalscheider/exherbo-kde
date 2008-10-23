@@ -1,7 +1,8 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require options kde.org-4
 
 SUMMARY="Graphical tools for KDE4"
 LICENCES="GPL-2 kolourpaint FDL-1.2 LGPL-2.1"
@@ -10,8 +11,8 @@ gwenview: Image viewer
 kcolorchooser: Pick colours from your screen.
 kolourpaint: An easy-to-use paint program designed for everyday tasks like drawing
              simple diagrams/logos/icons and editing screenshots.
-ksaneplugin: 
-strigi-analyzer:
+ksaneplugin: Scanner Service
+strigi-analyzer: Strigi plugin to index various graphics files
 kamera: Digital camera io_slave for Konqueror. Together gPhoto this allows you
         to access your camera's picture with the URL kamera:/
 kgamma: kcm to regulate the screens gamma correction.
@@ -21,44 +22,99 @@ okular: Document viewer; support different kinds of documents.
 svgpart: Kpart for svg support.
 "
 
-MYOPTIONS="pdf ps chm djvu tiff dvi epub odf"
+KDE_PARTS_LIST="gwenview kamera kcolorchooser kgamma kolourpaint kruler
+ksaneplugin ksnapshot okular strigi-analyzer svgpart"
+MYOPTIONS="chm [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
+           djvu [[ description = [ Support for DjVu formatted files in Okular ] ]]
+           epub [[ description = [ Support for EPub documents in Okular ] ]]
+           odf [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
+           pdf [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
+           ps [[ description = [ Support for PS (PostScript) files in Okular ] ]]
+           tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular ] ]]
+kde_parts: ${KDE_PARTS_LIST}"
 
-# FIXME
-# Need gphoto for kamera
-# Need sane for libksane and ksaneplugin
-# Need kipi for kipi support in gwenview
 DEPENDENCIES="
+    build:
+        kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )
     build+run:
         app-pim/strigi[qt4]
-        dev-libs/expat
-        >=graphics/exiv2-0.13
-        kde/qimageblitz
         kde/kdelibs:${SLOT}
-        media-libs/jpeg
-        media-libs/lcms
-        x11-libs/libXxf86vm
-        chm? ( fixme/chm )
-        djvu? ( app-text/djvu )
-        dvi? ( media-libs/freetype:2 )
-        epub? ( fixme/libepub )
-        odf? ( app-crypt/qca:2 )
-        pdf? ( app-text/poppler[qt4] )
-        ps? ( app-text/libspectre )
-        tiff? ( media-libs/tiff )
+        >=media-libs/jpeg-6b
+        >=media-libs/lcms-1.14
+        >=x11-libs/qt-4.2:4
+        kde_parts:gwenview? (
+            dev-libs/soprano
+            >=graphics/exiv2-0.17 [[ note = [ strictly speaking only 0.13 is required, but 0.17 is recommended by upstream ] ]]
+        )
+        kde_parts:kamera? ( media-libs/libgphoto2 )
+        kde_parts:kgamma? (
+            x11-libs/libICE
+            x11-libs/libSM
+            x11-libs/libX11
+            x11-libs/libXau
+            x11-libs/libXdmcp
+            x11-libs/libXext
+            x11-libs/libXft
+            x11-libs/libXpm
+            x11-libs/libXxf86vm
+            x11-libs/libXxf86vm
+        )
+        kde_parts:kolourpaint? ( kde/qimageblitz )
+        kde_parts:ksaneplugin? ( media-gfx/sane-backends )
+        kde_parts:ksnapshot? ( x11-libs/libX11 )
+        kde_parts:okular? (
+            kde/qimageblitz
+            media-libs/phonon
+            chm? ( media-libs/chmlib )
+            djvu? ( >=app-text/djvu-3.5.17 )
+            epub? ( app-text/ebook-tools )
+            odf? ( app-crypt/qca:2 )
+            ps? ( >=app-text/libspectre-0.2 )
+            pdf? ( >=app-text/poppler-0.6[qt4] )
+            tiff? ( media-libs/tiff )
+        )
+"
+OPTION_DEPENDENCIES="
+    chm? ( kde_parts:okular )
+    djvu? ( kde_parts:okular )
+    epub? ( kde_parts:okular )
+    odf? ( kde_parts:okular )
+    ps? ( kde_parts:okular )
+    pdf? ( kde_parts:okular )
+    tiff? ( kde_parts:okular )
 "
 
-# Hard deactivate kamera and sane
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DBUILD_kamera=Off
-    -DBUILD_ksaneplugin=Off
-    -DWITH_Sane=Off
-    -DWITH_Kipi=Off
-    -DWITH_Gphoto2=Off
-    -DGWENVIEW_METADATA_BACKEND=Nepomuk
-)
+# further check sane
+src_configure() {
+    local p cmakeparams
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    CHM EPub TIFF "djvu DjVuLibre" 
-    "dvi Freetype" "odf QCA2" "pdf Poppler" "ps LibSpectre"
-)
+    if option kde_parts:kolourpaint || option kde_parts:okular; then
+        cmakeparams+=" -DWITH_Blitz=ON"
+    else
+        cmakeparams+=" -DWITH_Blitz=OFF"
+    fi
+
+    for p in ${KDE_PARTS_LIST}; do
+        cmakeparams+=" $(cmake_build kde_parts:${p})"
+    done
+
+    ecmake \
+        $(kde4_shared_cmake_params) \
+        ${cmakeparams} \
+        -DWITH_Freetype=ON \
+        -DWITH_JPEG=ON \
+        -DWITH_ZLIB=ON \
+        -DGWENVIEW_METADATA_BACKEND=Nepomuk \
+        $(cmake_with CHM) \
+        $(cmake_with djvu DjVuLibre) \
+        $(cmake_with EPub) \
+        $(cmake_with kde_parts:gwenview Exiv2) \
+        $(cmake_with kde_parts:kamera Gphoto2) \
+        $(cmake_with kde_parts:ksaneplugin Sane) \
+        $(cmake_with kde_parts:gwenview Kipi) \
+        $(cmake_with ps LibSpectre) \
+        $(cmake_with pdf Poppler) \
+        $(cmake_with odf QCA2) \
+        $(cmake_with TIFF)
+}
 
