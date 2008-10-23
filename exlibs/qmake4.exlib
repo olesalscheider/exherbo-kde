@@ -27,7 +27,7 @@ eqmake4() {
         QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS}" \
         QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
         "$@" \
-        || paludis_die_unless_nonfatal "eqmake4: returned exit status: $?"
+        || die_unless_nonfatal "eqmake4: returned exit status: $?"
 }
 
 qmake4_src_configure() {
