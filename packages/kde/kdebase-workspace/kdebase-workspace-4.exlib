@@ -18,7 +18,8 @@ systemsettings: KDE settings utility
 # captury; media-libs/libcaptury
 # kerberos
 MYOPTIONS="bluetooth lm_sensors networkmanager opengl
-ppc_cpu_options:altivec x86_cpu_options:3dnow x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
+ppc_cpu_options: altivec
+x86_cpu_options: 3dnow mmx sse sse2"
 # cpu_options are for ksplash
 
 DEPENDENCIES="

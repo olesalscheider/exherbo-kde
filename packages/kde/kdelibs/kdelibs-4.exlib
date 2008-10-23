@@ -10,7 +10,8 @@ This package contains shared libraries and data files needed to run KDE 4 applic
 "
 # XXX Add acl alsa(?) jpeg2k kerberos openexr zeroconf
 MYOPTIONS="doc fam opengl spell
-ppc_cpu_options:altivec x86_cpu_options:mmx x86_cpu_options:sse x86_cpu_options:sse2"
+ppc_cpu_options: altivec
+x86_cpu_options: mmx sse sse2"
 
 # XXX   build: x11-proto/*
 #       sys-devel/gettext?
