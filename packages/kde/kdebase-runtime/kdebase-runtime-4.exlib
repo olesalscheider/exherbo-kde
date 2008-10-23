@@ -3,48 +3,65 @@
 
 require kde.org-4
 
-SUMMARY="KDE Runtime libraries & files"
+SUMMARY="Programs and data needed at runtime by KDE 4 applications."
 LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
-This package contains programs and data needed at runtime by KDE 4 applications.
+kcmshell: KDE Control Modules loader
+kfile: Utility for reading and writing file metadata
+khelpcenter: KDE Help Center
+kiconfinder: Icon finder
+kioslaves: Various KIO slaves
+kmimetypefinder: Utility to find mimetype of a given file
+knewstuff: Utility for downloading KDE addons
+knotify: Notification daemon
+kquitapp: Close a KDE application using D-Bus
+kreadconfig: Read/write configuration files from a script
+kstart: Start application s with special window properties
+kstyles: Styles for KDE widgets
+ktraderclient: Query KDE trader system
+kuiserver: Display progress information
+nepomuk: Core services and service registry daemon for nepomuk
+phonon: Multimedia support
+solid-hardware: Query your hardware from the command line
+renamedlgplugins: Plugins for Konqueror's rename dialog
 "
-MYOPTIONS=""
+MYOPTIONS="openexr samba"
 
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
-        app-pim/strigi[qt4]
-        dev-cpp/clucene
+        >=app-pim/strigi-0.5.9[qt4]
+        >=dev-cpp/clucene-0.9.19
         >=dev-libs/soprano-2.0.98
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon
-        >=media-libs/xine-lib-1.1[xcb]
+        >=media-libs/xine-lib-1.1.9[xcb]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
+        >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libxcb
-        x11-libs/libXcursor
+        x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
+        openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
+        samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
 "
-
-# khelpcenter: run: www-misc/htdig, or post,suggested:
-# kioslaves: cyrus-sasl
-# -- Found BZip2: /lib64/libbz2.a
-# kio_help4(23446) KLocalePrivate::initEncoding: Cannot resolve system encoding, defaulting to ISO 8859-1.
+#   post+suggested:
+#       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DOpenEXR=ON
-    -DSamba=ON
+    -DWITH_Clucene=ON
+    -DWITH_Soprano=ON
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    OpenEXR
+    Samba
 )
 
 src_install() {
     cmake_src_install
 
-    # Keepdir some empty directories for icons.
-    local d
-    for d in $(cd "${IMAGE}" && find . -type d -empty); do
-        echo keepdir "${d}"
-        keepdir "${d}"
-    done
+    # Get rid of empty icons directories
+    find "${IMAGE}" -type d -empty -delete
 }
 
