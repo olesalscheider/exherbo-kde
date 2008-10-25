@@ -83,16 +83,6 @@ qt-3_src_prepare() {
 
     sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
         -i configure || die 'sed for license acceptance failed'
-
-    cat <<-EOF > "${TEMP}"/45qt3
-QTDIR=${QTBASEDIR}
-PATH=${QTBASEDIR}/bin
-ROOTPATH=${QTBASEDIR}/bin
-LDPATH=${QTBASEDIR}/$(get_libdir)
-QMAKESPEC=${platform}
-MANPATH=${QTBASEDIR}/doc/man
-PKG_CONFIG_PATH=${QTBASEDIR}/$(get_libdir)/pkgconfig
-EOF
 }
 
 myoption() {
@@ -159,8 +149,15 @@ qt-3_src_install() {
     DEFAULT_SRC_INSTALL_PARAMS+=( INSTALL_ROOT="${IMAGE}" )
     default
 
-    dodir /etc/env.d
-    doenvd "${TEMP}"/45qt3
+    hereenvd 45qt3 <<-EOF
+QTDIR=${QTBASEDIR}
+PATH=${QTBASEDIR}/bin
+ROOTPATH=${QTBASEDIR}/bin
+LDPATH=${QTBASEDIR}/$(get_libdir)
+QMAKESPEC=${platform}
+MANPATH=${QTBASEDIR}/doc/man
+PKG_CONFIG_PATH=${QTBASEDIR}/$(get_libdir)/pkgconfig
+EOF
 
     dodir ${QTSYSCONFDIR}
     keepdir ${QTSYSCONFDIR}

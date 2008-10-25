@@ -113,7 +113,8 @@ src_install() {
     done
 
     # Please note that the KDE install path has to be the last value in KDEDIRS.
-    cat <<EOF > "${IMAGE}"/etc/env.d/45kdepaths-${SLOT} # number goes down with version upgrade
+    # number goes down with version upgrade
+    hereenvd 45kde-${SLOT} <<EOF
 PATH=${KDE_INSTALL_PREFIX}/bin
 ROOTPATH=${KDE_INSTALL_PREFIX}/sbin:${KDE_INSTALL_PREFIX}/bin
 LDPATH=${libdirs:1}

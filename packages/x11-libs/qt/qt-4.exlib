@@ -261,9 +261,8 @@ qt-4_src_install() {
     for lib in $(get_all_libdirs); do
         libdirs="${libdirs}:/usr/${lib}/qt4"
     done
-    cat <<EOF > "${TEMP}"/44qt4
+    hereenvd 44qt4 <<EOF
 LDPATH=${libdirs:1}
 EOF
-    doenvd "${TEMP}"/44qt4
 }
 

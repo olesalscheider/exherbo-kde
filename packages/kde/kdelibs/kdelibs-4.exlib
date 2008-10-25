@@ -121,13 +121,13 @@ src_install() {
     fi
 
     # Update when KDE_INSTALL_PREFIX != '/usr'
-    cat <<EOF > "${TEMP}"/44kde-${SLOT} # Number goes _down_ for a new KDE major version
+    # Number goes _down_ for a new KDE major version
+    hereenvd 44kde-${SLOT} <<EOF
 CONFIG_PROTECT="${KDE_INSTALL_PREFIX}/share/config ${KDE_INSTALL_PREFIX}/shutdown"
 KDEDIRS="/usr/local:${KDE_INSTALL_PREFIX}"
 XDG_DATA_DIRS="/usr/local/share:${KDE_INSTALL_PREFIX}/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
-    doenvd "${TEMP}"/44kde-${SLOT}
 }
 
 pkg_postinst() {
