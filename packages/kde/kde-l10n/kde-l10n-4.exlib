@@ -1,20 +1,13 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-[[ -z ${LINGUAS} ]] && die 'LINGUAS is unset, broken exheres.'
+[[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres.'
 require kde.org-4
 
 set_kde_l10n_downloads() {
     local kde_l10n_base_url="${DOWNLOADS}" localisation=
-    for localisation in ${LINGUAS}; do
+    for localisation in ${LANGS}; do
         echo -n "linguas:${localisation}? ( ${kde_l10n_base_url/-${PV}.tar.bz2//${PN}-${localisation}-${PV}.tar.bz2} ) "
-    done
-}
-
-set_kde_l10n_options() {
-    local localisation=
-    for localisation in ${LINGUAS}; do
-        echo -n "linguas:${localisation} "
     done
 }
 
@@ -23,7 +16,7 @@ DOWNLOADS="$(set_kde_l10n_downloads)"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="$(set_kde_l10n_options)"
+MYOPTIONS="linguas: ${LANGS}"
 
 DEPENDENCIES="
     build:
@@ -34,7 +27,7 @@ DEPENDENCIES="
 pkg_pretend() {
     local lingua
 
-    for lingua in ${LINGUAS}; do
+    for lingua in ${LANGS}; do
         option linguas:${lingua} && return 0
     done
 
