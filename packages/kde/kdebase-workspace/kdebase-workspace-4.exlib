@@ -18,9 +18,9 @@ systemsettings: KDE settings utility
 # captury; media-libs/libcaptury
 # kerberos
 MYOPTIONS="bluetooth lm_sensors networkmanager opengl
-ppc_cpu_options: altivec
-x86_cpu_options: 3dnow mmx sse sse2"
-# cpu_options are for ksplash
+ppc_cpu_features: altivec
+x86_cpu_features: 3dnow mmx sse sse2"
+# cpu_features are for ksplash
 
 DEPENDENCIES="
     build:
@@ -57,11 +57,11 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_OPTION_HAVES=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
-    'ppc_cpu_options:altivec PPC_ALTIVEC'
-    'x86_cpu_options:3dnow X86_3DNOW'
-    'x86_cpu_options:mmx X86_MMX'
-    'x86_cpu_options:sse X86_SSE'
-    'x86_cpu_options:sse2 X86_SSE2'
+    'ppc_cpu_features:altivec PPC_ALTIVEC'
+    'x86_cpu_features:3dnow X86_3DNOW'
+    'x86_cpu_features:mmx X86_MMX'
+    'x86_cpu_features:sse X86_SSE'
+    'x86_cpu_features:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'bluetooth BlueZ'

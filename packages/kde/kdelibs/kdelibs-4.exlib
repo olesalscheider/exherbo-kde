@@ -10,8 +10,8 @@ This package contains shared libraries and data files needed to run KDE 4 applic
 "
 # XXX Add acl alsa(?) jpeg2k kerberos openexr zeroconf
 MYOPTIONS="doc fam opengl spell
-ppc_cpu_options: altivec
-x86_cpu_options: mmx sse sse2"
+ppc_cpu_features: altivec
+x86_cpu_features: mmx sse sse2"
 
 # XXX   build: x11-proto/*
 #       sys-devel/gettext?
@@ -74,10 +74,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # Used in solid
-    'ppc_cpu_options:altivec PPC_ALTIVEC'
-    'x86_cpu_options:mmx X86_MMX'
-    'x86_cpu_options:sse X86_SSE'
-    'x86_cpu_options:sse2 X86_SSE2'
+    'ppc_cpu_features:altivec PPC_ALTIVEC'
+    'x86_cpu_features:mmx X86_MMX'
+    'x86_cpu_features:sse X86_SSE'
+    'x86_cpu_features:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     fam
