@@ -117,7 +117,7 @@ src_install() {
     # Fixed with kdelibs-4.1.2-root-owned-empty-directories.patch
     if ! ever at_least 4.1.2; then
         keepdir ${KDE_INSTALL_PREFIX}/share/kde4/services
-        touch ${IMAGE}/${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
+        touch "${IMAGE}"/${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
         fperms 755 ${KDE_INSTALL_PREFIX}/share/kde4/services/{,ksycoca4}
     fi
 

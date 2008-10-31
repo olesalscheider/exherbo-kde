@@ -39,7 +39,7 @@ for_all_enabled_linguas_run() {
 
     for lingua in "${WORKBASE}"/${PN}-*; do
         # The relevant directories for this lingua for ecmake()
-        ECMAKE_BUILD_DIR="${lingua//-${PV}/_build}"
+        ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
         WORK=${lingua}
         CMAKE_SRC_CONFIGURE_PARAMS=()
 
