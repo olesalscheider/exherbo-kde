@@ -1,7 +1,8 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require options kde.org-4
 
 SUMMARY="KDE Multimedia"
 DESCRIPTION="
@@ -16,20 +17,48 @@ DESCRIPTION="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
-MYOPTIONS="cdparanoia flac musicbrainz taglib tunepimp vorbis"
+KDE_PARTS_LIST="dragonplayer juk kioslave kmix kscd"
+MYOPTIONS="
+    flac [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
+    musicbrainz [[ description = [ Music metadata lookup for KDE multimedia applications ] ]]
+    tunepimp [[ description = [ Provides MusicBrainz support in Juk ] ]]
+    vorbis [[ description = [ Support Ogg Vorbis in the AudioCD kioslave ] ]]
+    kde_parts: ${KDE_PARTS_LIST}"
 
 DEPENDENCIES="
     build+run:
         kde/kdebase:${SLOT}
-        >=media-libs/xine-lib-1.1[xcb]
-        sys-sound/alsa-lib
-        cdparanoia? ( media/cdparanoia )
-        flac? ( >=media-libs/flac-1.1.2 )
-        musicbrainz? ( media-libs/musicbrainz )
-        taglib? ( >=media-libs/taglib-1.4 )
-        tunepimp? ( media-libs/tunepimp )
-        vorbis? ( media-libs/libvorbis )
+        media-libs/phonon
+        sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
+        kde_parts:dragonplayer? ( >=media-libs/xine-lib-1.1[xcb] )
+        kde_parts:juk? (
+            >=media-libs/taglib-1.4
+            tunepimp? ( media-libs/tunepimp )
+        )
+        kde_parts:kioslave? (
+            media/cdparanoia
+            flac? ( >=media-libs/flac-1.1.2 )
+            vorbis? ( media-libs/libogg
+                media-libs/libvorbis )
+        )
+        kde_parts:kmix? ( kde/kdebase-workspace:${SLOT} )
+        musicbrainz? ( media-libs/libmusicbrainz )
+"
+OPTION_DEPENDENCIES="
+    flac? ( kde_parts:kioslave )
+    tunepimp? ( kde_parts:juk )
+    vorbis? ( kde_parts:kioslave )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Cdparanoia FLAC MusicBrainz Taglib TunePimp 'vorbis OggVorbis' )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    $(option_expand kde_parts ${KDE_PARTS_LIST})
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:kioslave Cdparanoia'
+    Flac
+    MusicBrainz
+    'kde_parts:juk Taglib'
+    TunePimp
+    'vorbis OggVorbis'
+)
 
