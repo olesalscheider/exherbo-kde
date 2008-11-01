@@ -4,22 +4,22 @@
 require kde.org-4
 
 SUMMARY="KDE Artwork"
-DESCRIPTION="
-"
+DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
-MYOPTIONS="opengl"
+MYOPTIONS="opengl xscreensaver"
 
 DEPENDENCIES="
     build+run:
+        app-pim/strigi
         kde/kdelibs:${SLOT}[opengl=]
-        opengl? (
-            || ( x11-dri/mesa x11-dri/mesa-lib )
-        )"
+        kde/kdebase-workspace:${SLOT}
+        x11-libs/libX11
+        opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
+        xscreensaver? ( x11-apps/xscreensaver )
+"
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'opengl OpenGL' )
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Xscreensaver=OFF -DWITH_xscreensaver=OFF 
-    # KDE4_SOUND_SUPPORT
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    OpenGL
+    xscreensaver Xscreensaver
 )
-
