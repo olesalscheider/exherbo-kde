@@ -5,3 +5,5 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PN}-kig-boost-python-2.6.patch )
+

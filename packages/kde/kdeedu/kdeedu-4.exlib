@@ -1,47 +1,124 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require options kde.org-4
 
 SUMMARY="Collection of educational programs for KDE4"
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
-# Some parts have been disabled
 DESCRIPTION="
 * blinken:     the KDE version of the well-known game Simon Says
-* kalgebra:    mathematics: editor and plotting (disabled)
-* kalzium:     periodic table of elements (disabled)
+* kalgebra:    mathematics: editor and plotting
+* kalzium:     periodic table of elements
 * kanagram:    an anagram game
 * kbruch:      fraction excercise trainer
 * kgeography:  geography learning program
 * khangman:    hangman game. The child should guess a word letter by letter.
-* kig:         interactive geometry (disabled)
+* kig:         interactive geometry
 * kiten:       japanese reference tool
 * klettres:    helps child to learn the alphabet and to read some syllables
 * kmplot:      mathematical function plotter
 * kpercentage: math application to improve skills in calculating percentages
-* kstars:      desktop planetarium (disabled)
+* kstars:      desktop planetarium
 * ktouch:      program for learning touch typing
 * kturtle:     educational programming environment
 * kwordquiz:   a powerful way to master new vocabularies
-* marble:      a virtual globe (disalbed)
+* marble:      a virtual globe
 * parley:      vocabulary trainer
 * step:        a physics simulator (disabled)
 "
 
-MYOPTIONS=""
+KDE_PARTS_LIST="blinken kalgebra kalzium kanagram kbruch kgeography khangman
+kig kiten klettres kmplot kpercentage kstars ktouch kturtle kwordquiz marble
+parley"
+MYOPTIONS="
+    3dgraphs [[ description = [ Provides 3d graphs in KAlgebra ] ]]
+    3dviewer [[ description = [ Compound Viewer for Kalzium ] ]]
+    kig-scripting [[ description = [ Provides Python Scripting in Kig ] ]]
+    readline [[ description = [ Console interface for KAlgebra ] ]]
+    solver [[ description = [ Equation solver for Kalzium ] ]]
+    kde_parts: ${KDE_PARTS_LIST}
+"
 
 DEPENDENCIES="
     build+run:
-        kde/kdebase-workspace:${SLOT}
         kde/kdelibs:${SLOT}
+
+        kde_parts:blinken? ( media-libs/phonon )
+        kde_parts:kalgebra? (
+            kde/kdebase-workspace:${SLOT}
+            3dgraphs? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
+            readline? ( sys-libs/readline )
+        )
+        kde_parts:kalzium? (
+            3dviewer? (
+                >=sci-libs/eigen-1.0.5
+                >=sci-chemistry/openbabel-2.2
+                || ( x11-dri/mesa x11-dri/mesa-lib )
+            )
+            solver? ( dev-lang/ocaml
+                      dev-ml/facile )
+        )
+        kde_parts:kanagram? ( media-libs/phonon )
+        kde_parts:khangman? ( media-libs/phonon )
+        kde_parts:kig? (
+            kig-scripting? ( >=dev-libs/boost-1.31 )
+        )
+        kde_parts:kiten? ( kde/kdebase-workspace:${SLOT} )
+        kde_parts:klettres? ( media-libs/phonon )
+        kde_parts:kstars? ( kde/kdebase-workspace:${SLOT} )
+        kde_parts:ktouch? ( media-libs/phonon )
+        kde_parts:marble? ( kde/kdebase-workspace:${SLOT} )
+        kde_parts:parley? (
+            dev-libs/libxml2
+            dev-libs/libxslt
+            kde/kdebase-workspace:${SLOT}
+            media-libs/phonon
+        )
+    run:
+        kde/kdebase-runtime:${SLOT}
+"
+OPTION_DEPENDENCIES="
+    3dgraphs? ( kde_parts:kalgebra )
+    3dviewer? ( kde_parts:kalzium )
+    kig-scripting? ( kde_parts:kig )
+    readline? ( kde_parts:kalgebra )
+    solver? ( kde_parts:kalzium )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DBUILD_kalgebra=Off
-    -DBUILD_kalzium=Off
-    -DBUILD_kig=Off
-    -DBUILD_kstars=Off
-    -DBUILD_marble=Off
-    -DBUILD_step=Off
+    -DBUILD_step=Off # requires -DWITH_GMM
+    -DHAVE_LIBGPS=OFF # for marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/
+    -DWITH_CFitsio=OFF # for kstars, requires sci-libs/cfitsio - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
+    -DWITH_GMM=OFF # for step, requires sci-mathematics/gmm - http://www-gmm.insa-toulouse.fr/getfem/
+    -DWITH_GSL=OFF # for step, requires sci-libs/gsl - http://www.gnu.org/software/gsl/
+    -DWITH_Nova=OFF # for kstars, requires sci-libs/libnova - http://libnova.sourceforge.net/
+    -DWITH_Qalculate=OFF # for step, requires sci-libs/libqalculate - http://qalculate.sourceforge.net/
+    -DWITH_Plasma=ON # from kdebase-workspace for kalgebra, kiten, kstars, marble and/or parley
+    -DWITH_SBIG=OFF # for kstars, requires sci-libs/indilib - http://indi.sourceforge.net/index.php/Main_Page
+    -DWITH_USB=OFF # for kstars, requires dev-libs/libusb and -DWITH_SBIG=ON
+    -DENABLE_TESTS=OFF # because tests are restricted anyway
 )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    $(option_expand kde_parts ${KDE_PARTS_LIST})
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    '3dviewer Eigen' '3dviewer OpenBabel2'
+    'kde_parts:marble DESIGNER_PLUGIN'
+    'kde_parts:parley LibXslt' # required to build HTML export
+    'kde_parts:parley LibXml2' # required to build HTML export
+    'kig-scripting BoostPython'
+    Readline
+    'solver OCaml' 'solver Libfacile'
+)
+
+src_configure() {
+    if option 3dviewer || option 3dgraphs; then
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
+    else
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
+    fi
+
+    cmake_src_configure
+}
 
