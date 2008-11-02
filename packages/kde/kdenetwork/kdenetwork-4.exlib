@@ -1,4 +1,5 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
 #   Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -6,66 +7,175 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require options kde.org-4
 
-SUMMARY="KDE Network"
+SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
-Networking applications from the official KDE 4 release.
-kget: A download manager
-kopete: A multi-protocol chat client with various plugins for extra functionality
-krdc: KDE remote desktop connection (RDP and VNC) client
+filesharing: Network file sharing
+kdnssd: Zeroconf (disabled)
+kget: Download manager
+knewsticker: RDF Newsticker Plasma applet
+kopete: Multi-protocol instant messaging client with various plugins for extra functionality
 kppp: A frontend to pppd
+krdc: KDE remote desktop connection (RDP and VNC) client
+krfb: Desktop sharing server, allow others to access your desktop via VNC
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
-# Only plugins with external dependencies are optional
-# KOPETE_PLUGINS=()
-# KOPETE_PROTOCOLS=()
-MYOPTIONS="groupwise otr statistics xmpp"
+# Only plugins and protocols with external dependencies are made optional
+KDE_PARTS_LIST="filesharing kget knewsticker kopete kppp krdc krfb"
+#kdnssd
+MYOPTIONS="
+    bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
+    gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
+    groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
+    jpeg [[ description = [ Support for JPEG images in Krdc ] ]]
+    otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
+    sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
+    statistics [[ description = [ Statistics plugin for Kopete ] ]]
+    vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
+    webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
+    xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
+    kde_parts: ${KDE_PARTS_LIST}"
+#   zeroconf [[ description = [ Enable service discovery in Krfb and Krdc ] ]]
 
 DEPENDENCIES="
     build+run:
         dev-libs/boost
-        dev-libs/pcre
-        dev-libs/libxml2
-        dev-libs/libxslt
-        dev-libs/openssl
         kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}
-        groupwise? ( app-crypt/qca:2 )
-        otr? ( >=net-libs/libotr-3.1.0 )
-        statistics? (
-            dev-db/sqlite:3 [[ note = [ Statistics plugin ] ]]
+
+        kde_parts:kget? (
+            dev-libs/soprano
+            kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
+            kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
+            bittorrent? ( kde/ktorrent )
+            sqlite? ( dev-db/sqlite:3 )
         )
-        xmpp? (
-            app-crypt/qca:2
-            app-crypt/qca-ossl:2
-            net-dns/libidn
+        kde_parts:knewsticker? (
+            kde/kdepimlibs:${SLOT}
+            kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
+        )
+        kde_parts:kopete? (
+            kde/qimageblitz
+            kde/kdepimlibs:${SLOT}
+            x11-libs/libICE
+            x11-libs/libSM
+            x11-libs/libX11
+            x11-libs/libXau
+            x11-libs/libXdmcp
+            x11-libs/libXext
+            x11-libs/libXft
+            x11-libs/libXpm
+            x11-libs/libXScrnSaver
+            gadu? ( dev-libs/openssl )
+            groupwise? ( app-crypt/qca:2 )
+            otr? ( >=net-libs/libotr-3.1.0 )
+            statistics? ( dev-db/sqlite:3 )
+            webpresence? ( dev-libs/libxml2
+                           dev-libs/libxslt )
+            xmpp? ( app-crypt/qca:2
+                    net-dns/libidn )
+        )
+        kde_parts:krdc? (
+            jpeg? ( media-libs/jpeg )
+            vnc? ( >=net-libs/libvncserver-0.9 )
+        )
+        kde_parts:krfb? (
+            >=net-libs/libvncserver-0.9
         )
 "
+#       kde_parts:kdnssd? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) )
+#       kde_parts:krfb? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
+#       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_messenger=OFF -DWITH_telepathy=OFF -DWITH_Xmms=OFF
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    'groupwise' 'groupwise QCA2'
-    'otr LibOTR'
-    'statistics Sqlite'
-    'xmpp IDN' 'xmpp QCA2'
-)
+OPTION_DEPENDENCIES="
+    bittorrent? ( kde_parts:kget )
+    gadu? ( kde_parts:kopete )
+    groupwise? ( kde_parts:kopete )
+    jpeg? ( kde_parts:krdc )
+    otr? ( kde_parts:kopete )
+    sqlite? ( kde_parts:kget )
+    statistics? ( kde_parts:kopete )
+    vnc? ( kde_parts:krdc )
+    webpresence? ( kde_parts:kopete )
+    xmpp? ( kde_parts:kopete )
+    ( any-of: $(option_expand kde_parts ${KDE_PARTS_LIST}) )
+"
+
+src_configure() {
+    local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF"
+
+    # kopete plugins with no extra dependencies
+    kopete_plugins="-DWITH_addbookmarks=ON -DWITH_alias=ON
+        -DWITH_autoreplace=ON -DWITH_contactnotes=ON -DWITH_highlight=ON
+        -DWITH_history=ON -DWITH_latex=ON -DWITH_nowlistening=ON
+        -DWITH_pipes=ON -DWITH_privacy=ON -DWITH_texteffect=ON
+        -DWITH_translator=ON -DWITH_urlpicpreview=ON"
+    # kopete protocols with no extra dependencies
+    kopete_protocols="-DWITH_messenger=ON -DWITH_msn=ON -DWITH_oscar=ON
+        -DWITH_qq=ON -DWITH_sms=ON -DWITH_testbed=ON -DWITH_winpopup=ON
+        -DWITH_yahoo=ON"
+    cmakeparams+=" ${kopete_plugins} ${kopete_protocols}"
+
+    # does not work
+    cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
+
+    for x in ${KDE_PARTS_LIST}; do
+        cmakeparams+=" $(cmake_build kde_parts:${x})"
+    done
+
+    if option kde_parts:kget || option kde_parts:knewsticker; then
+        cmakeparams+=" -DWITH_Plasma=ON"
+    else
+        cmakeparams+=" -DWITH_Plasma=OFF"
+    fi
+
+    if option sqlite || option statistics; then
+        cmakeparams+=" -DWITH_Sqlite=ON"
+    else
+        cmakeparams+=" -DWITH_Sqlite=OFF"
+    fi
+
+    if option groupwise || option xmpp; then
+        cmakeparams+=" -DWITH_QCA2=ON"
+    else
+        cmakeparams+=" -DWITH_QCA2=OFF"
+    fi
+
+    if option kde_parts:krfb || option vnc; then
+        cmakeparams+=" -DWITH_LibVNCServer=ON"
+    else
+        cmakeparams+=" -DWITH_LibVNCServer=OFF"
+    fi
+
+    #if option kde_parts:krdc || option kde_parts:krfb && option zeroconf || option kde_parts:kdnssd; then
+    #    cmakeparams+=" -DWITH_DNSSD=ON"
+    #else
+        cmakeparams+=" -DWITH_DNSSD=OFF"
+    #fi
+
+    ecmake \
+        $(kde4_shared_cmake_params) \
+        ${cmakeparams} \
+        $(cmake_with kde_parts:kget Nepomuk) \
+        $(cmake_with kde_parts:kget Soprano) \
+        $(cmake_with gadu) \
+        $(cmake_with gadu OpenSSL) \
+        $(cmake_with groupwise) \
+        $(cmake_with otr) \
+        $(cmake_with otr LibOTR) \
+        $(cmake_with webpresence) \
+        $(cmake_with webpresence LibXml2) \
+        $(cmake_with webpresence LibXslt) \
+        $(cmake_with xmpp jabber) \
+        $(cmake_with xmpp IDN) \
+        $(cmake_with xmpp jabber) \
+        $(cmake_with JPEG) \
+        $(cmake_enable !bittorrent EMBEDDED_TORRENT_SUPPORT) \
+        -DWITH_GMP=OFF
+        # Disable internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
+}
 
 # FIXME
 # Do? decibel
-# Disable: libvncserver mDNS libtor
 # Warning: kppp use setuid
-
-src_prepare() {
-    default
-
-    # Disabled because it uses an internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
-    # No guarantees that it will compile with newer ktorrent versions.
-    sed -e '/bittorrent/s:^:#DONOTCOMPILE :' \
-        -i kget/transfer-plugins/CMakeLists.txt \
-        || die "Failed to disable KGet bittorent support."
-}
-
