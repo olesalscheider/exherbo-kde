@@ -67,16 +67,19 @@ kde4_reduced_linking() {
     echo '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=TRUE'
 }
 
-kde.org-4_src_configure() {
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')"
-        -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE
-        -DKDE4_BUILD_TESTS:BOOL=TRUE
-        -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE
-        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}"
+kde4_shared_cmake_params() {
+    echo \
+        -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')" \
+        -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
+        -DKDE4_BUILD_TESTS:BOOL=TRUE \
+        -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE \
+        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
         $(kde4_reduced_linking)
         # Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL:BOOL=TRUE'
-    )
+}
+
+kde.org-4_src_configure() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( $(kde4_shared_cmake_params) )
 
     cmake_src_configure
 }
