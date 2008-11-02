@@ -46,9 +46,18 @@ esac
 DEPENDENCIES="
     build:
         dev-util/pkg-config
-        >=kde/automoc4-0.9.84
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
+
+if ever at_least 4.1.60; then
+    DEPENDENCIES+="
+        build:
+            >=kde/automoc4-0.9.87"
+else
+    DEPENDENCIES+="
+        build:
+            >=kde/automoc4-0.9.84"
+fi
 
 kde4_reduced_linking() {
     has '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE' "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" && return
