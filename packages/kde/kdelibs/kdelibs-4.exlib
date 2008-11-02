@@ -32,7 +32,6 @@ DEPENDENCIES="
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
-        media-libs/phonon
         sys-apps/dbus [[ note = [ Need dbus with X support ] ]]
         >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libICE
@@ -58,6 +57,16 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb"
+
+if ever at_least 4.1.60; then
+    DEPENDENCIES="
+        build+run:
+            >=media-libs/phonon-4.3.0"
+else
+    DEPENDENCIES="
+        build+run:
+            >=media-libs/phonon-4.2.0"
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Libintl
