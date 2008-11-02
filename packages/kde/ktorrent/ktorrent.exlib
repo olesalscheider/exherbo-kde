@@ -12,17 +12,18 @@ DESCRIPTION="A rich featured BitTorrent client for KDE"
 BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
-MYOPTIONS="bwscheduler infowidget ipfilter logviewer scanfolder search stats upnp webinterface zeroconf"
+MYOPTIONS="bwscheduler infowidget ipfilter logviewer scanfolder search stats upnp webinterface" # zeroconf
 
 DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         dev-libs/gmp
         kde/kdelibs:${SLOT}
+        media-libs/phonon
         infowidget? ( net-libs/GeoIP )
-    run:
-        zeroconf? ( kde/kdenetwork:${SLOT} )
 "
+#    run:
+#        zeroconf? ( kde/kdenetwork:${SLOT} )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_DHT_SUPPORT=ON
