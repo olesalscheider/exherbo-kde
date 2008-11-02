@@ -12,10 +12,14 @@ LICENCES="GPL-2"
 MYOPTIONS="opengl"
 
 DEPENDENCIES="
+    build:
+        dev-lang/python:*
     build+run:
         dev-libs/boost
         kde/kdelibs:${SLOT}[opengl=]
+        kde/kdepimlibs:${SLOT}
         kde/kdebase-workspace:${SLOT}[opengl=]
+        x11-libs/libX11
         x11-libs/qt:4[opengl?]
         opengl? (
             || ( x11-dri/mesa x11-dri/mesa-lib )
