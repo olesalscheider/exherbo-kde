@@ -121,7 +121,7 @@ src_install() {
         fperms 755 ${KDE_INSTALL_PREFIX}/share/kde4/services/{,ksycoca4}
     fi
 
-    cmake_src_install
+    kde.org-4_src_install
 
     if option doc; then
         pushd "${WORK}/doc/api"
