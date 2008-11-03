@@ -11,7 +11,7 @@ It provides quick access to applications, places, documents, contacts and system
 HOMEPAGE="http://lancelot.fomentgroup.org/"
 DOWNLOADS="mirror://sourceforge/${PN}-menu/${PNV}.tar.bz2"
 
-LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 PLATFORMS="~amd64"
 MYOPTIONS=""

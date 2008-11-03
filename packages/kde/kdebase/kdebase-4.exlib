@@ -4,7 +4,7 @@
 require kde.org-4
 
 SUMMARY="This package provides core applications for the KDE 4 desktop"
-LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 dolphin: Easy to use file manager
 kappfinder: Searches for non-KDE applications to add to the menu

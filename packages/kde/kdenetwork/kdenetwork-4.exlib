@@ -21,7 +21,7 @@ krdc: KDE remote desktop connection (RDP and VNC) client
 krfb: Desktop sharing server, allow others to access your desktop via VNC
 "
 
-LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
 KDE_PARTS_LIST="filesharing kget knewsticker kopete kppp krdc krfb"
 #kdnssd

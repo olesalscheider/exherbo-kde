@@ -6,7 +6,7 @@ require kde.org-4
 SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
-LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="opengl xscreensaver"
 
 DEPENDENCIES="

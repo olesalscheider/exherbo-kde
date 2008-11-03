@@ -17,7 +17,7 @@ BUGS_TO="kde@exherbo.org"
 WORK="${WORKBASE}/${PN}-x11-${SRC_TYPE}-${PV}"
 
 export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
-    src_compile src_install 
+    src_compile src_install
 
 OPTION_DEPENDENCIES="
     sql? ( any-of: mysql sqlite postgresql )
@@ -90,7 +90,7 @@ myoption() {
     [[ -n ${enablevalue} ]] && enablevalue+="-"
     if option ${flag}; then
         echo "-${enablevalue}${feature}"
-    else   
+    else
         echo "-no-${feature}"
     fi
 }

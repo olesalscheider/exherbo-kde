@@ -8,7 +8,7 @@ DESCRIPTION="
 "
 DOWNLOADS="mirror://kde/stable/${PV}/src/extragear/${PNV}.tar.bz2"
 
-LICENCES="LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MYOPTIONS=""
 

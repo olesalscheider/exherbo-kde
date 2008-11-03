@@ -4,7 +4,7 @@
 require options kde.org-4
 
 SUMMARY="KDE Utilities"
-LICENCES="GPL-2 LGPL-2 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 ark: Archiving tool
 kcalc: scientific calculator
