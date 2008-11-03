@@ -17,13 +17,13 @@ DESCRIPTION="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
-KDE_PARTS_LIST="dragonplayer juk kioslave kmix kscd"
+MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd"
 MYOPTIONS="
     flac [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
     musicbrainz [[ description = [ Music metadata lookup for KDE multimedia applications ] ]]
     tunepimp [[ description = [ Provides MusicBrainz support in Juk ] ]]
     vorbis [[ description = [ Support Ogg Vorbis in the AudioCD kioslave ] ]]
-    kde_parts: ${KDE_PARTS_LIST}"
+    kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build+run:
@@ -50,9 +50,6 @@ OPTION_DEPENDENCIES="
     vorbis? ( kde_parts:kioslave )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    $(option_expand kde_parts ${KDE_PARTS_LIST})
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave Cdparanoia'
     Flac

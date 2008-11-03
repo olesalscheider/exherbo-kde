@@ -23,13 +23,13 @@ superkaramba: version of Karamba with python scripting
 sweeper: cleans unwanted traces the user leaves on the system
 "
 
-KDE_PARTS_LIST="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
+MY_KDE_PARTS="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
 okteta superkaramba sweeper" # printer-applet (needs kdebindings and more)
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
     python [[ description = [ Python bindings for SuperKaramba ] ]]
     zip [[ description = [ Zip support for Ark ] ]]
-    kde_parts: ${KDE_PARTS_LIST}"
+    kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build+run:
@@ -70,9 +70,6 @@ OPTION_DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_printer-applet:BOOL=FALSE
-)
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    $(option_expand kde_parts ${KDE_PARTS_LIST})
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'archive LibArchive'

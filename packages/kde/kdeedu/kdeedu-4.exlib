@@ -28,7 +28,7 @@ DESCRIPTION="
 * step:        a physics simulator (disabled)
 "
 
-KDE_PARTS_LIST="blinken kalgebra kalzium kanagram kbruch kgeography khangman
+MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kpercentage kstars ktouch kturtle kwordquiz marble
 parley"
 MYOPTIONS="
@@ -36,7 +36,7 @@ MYOPTIONS="
     3dviewer [[ description = [ Compound Viewer for Kalzium ] ]]
     kig-scripting [[ description = [ Provides Python Scripting in Kig ] ]]
     solver [[ description = [ Equation solver for Kalzium ] ]]
-    kde_parts: ${KDE_PARTS_LIST}
+    kde_parts: ${MY_KDE_PARTS}
 "
 
 DEPENDENCIES="
@@ -97,9 +97,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_SBIG=OFF # for kstars, requires sci-libs/indilib - http://indi.sourceforge.net/index.php/Main_Page
     -DWITH_USB=OFF # for kstars, requires dev-libs/libusb and -DWITH_SBIG=ON
     -DENABLE_TESTS=OFF # because tests are restricted anyway
-)
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    $(option_expand kde_parts ${KDE_PARTS_LIST})
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     '3dviewer Eigen' '3dviewer OpenBabel2'

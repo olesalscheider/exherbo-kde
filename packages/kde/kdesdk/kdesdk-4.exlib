@@ -21,11 +21,11 @@ scheck: An interface style to highlight accel and style guide conflicts
 umbrello: A UML modeller.
 "
 
-KDE_PARTS_LIST="cervisia kapptemplate kate kbugbuster kcachegrind
+MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kioslave kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
 MYOPTIONS="plasma [[ description = [ A Kate Plasmoid ] ]]
-           kde_parts: ${KDE_PARTS_LIST}"
+           kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build:
@@ -51,9 +51,6 @@ OPTION_DEPENDENCIES="
     plasma? ( kde_parts:kate )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    $(option_expand kde_parts ${KDE_PARTS_LIST})
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Plasma
     'kde_parts:kioslave SVN'

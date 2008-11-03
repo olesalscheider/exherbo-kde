@@ -2,7 +2,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="Simple Toys for KDE4"
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
@@ -13,8 +13,8 @@ ktux: Tux-in-a-Spaceship screen saver
 kweather: kicker applet that will display the current weather outside
 "
 
-KDE_PARTS_LIST="amor kteatime ktux kweather"
-MYOPTIONS="kde_parts: ${KDE_PARTS_LIST}"
+MY_KDE_PARTS="amor kteatime ktux kweather"
+MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build+run:
@@ -25,6 +25,3 @@ DEPENDENCIES="
         kde_parts:kweather? ( kde/kdebase-workspace:${SLOT} [[ note = Plasma ]] )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    $(option_expand kde_parts ${KDE_PARTS_LIST})
-)

@@ -23,7 +23,7 @@ krfb: Desktop sharing server, allow others to access your desktop via VNC
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
-KDE_PARTS_LIST="filesharing kget knewsticker kopete kppp krdc krfb"
+MY_KDE_PARTS="filesharing kget knewsticker kopete kppp krdc krfb"
 #kdnssd
 MYOPTIONS="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
@@ -36,7 +36,7 @@ MYOPTIONS="
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
     xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
-    kde_parts: ${KDE_PARTS_LIST}"
+    kde_parts: ${MY_KDE_PARTS}"
 #   zeroconf [[ description = [ Enable service discovery in Krfb and Krdc ] ]]
 
 DEPENDENCIES="
@@ -99,7 +99,7 @@ OPTION_DEPENDENCIES="
     vnc? ( kde_parts:krdc )
     webpresence? ( kde_parts:kopete )
     xmpp? ( kde_parts:kopete )
-    ( any-of: $(option_expand kde_parts ${KDE_PARTS_LIST}) )
+    ( any-of: $(option_expand kde_parts ${MY_KDE_PARTS}) )
 "
 
 src_configure() {
@@ -120,7 +120,7 @@ src_configure() {
     # does not work
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
 
-    for x in ${KDE_PARTS_LIST}; do
+    for x in ${MY_KDE_PARTS}; do
         cmakeparams+=" $(cmake_build kde_parts:${x})"
     done
 

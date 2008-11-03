@@ -22,7 +22,7 @@ okular: Document viewer; support different kinds of documents.
 svgpart: Kpart for svg support.
 "
 
-KDE_PARTS_LIST="gwenview kamera kcolorchooser kgamma kolourpaint kruler
+MY_KDE_PARTS="gwenview kamera kcolorchooser kgamma kolourpaint kruler
 ksaneplugin ksnapshot okular strigi-analyzer svgpart"
 MYOPTIONS="chm [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
            djvu [[ description = [ Support for DjVu formatted files in Okular ] ]]
@@ -31,7 +31,7 @@ MYOPTIONS="chm [[ description = [ Support for Microsoft Compiled HTML Help forma
            pdf [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
            ps [[ description = [ Support for PS (PostScript) files in Okular ] ]]
            tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular ] ]]
-kde_parts: ${KDE_PARTS_LIST}"
+kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build:
@@ -94,7 +94,7 @@ src_configure() {
         cmakeparams+=" -DWITH_Blitz=OFF"
     fi
 
-    for p in ${KDE_PARTS_LIST}; do
+    for p in ${MY_KDE_PARTS}; do
         cmakeparams+=" $(cmake_build kde_parts:${p})"
     done
 
