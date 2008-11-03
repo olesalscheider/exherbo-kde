@@ -1,7 +1,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require options kde.org-4
 
 SUMMARY="KDE Personal Information Management"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
@@ -9,7 +9,6 @@ DESCRIPTION="
 kaddressbook: The KDE addressbook application.
 kmail: the KDE mail client
 kmailcvt: tool for importing mail related data from other programs
-kmobiletools: an application specially designed to manage mobile phones
 knode: news client
 korganizer: a calendar-of-events and todo-list manager
 kalarm: gui for setting up personal alarm messages, emails and commands
@@ -23,45 +22,54 @@ akregator: Feed reader
 kjots: manager for several \"books\" with a subject and notes
 "
 
-MYOPTIONS="kjots nepomuk" # gnokii kitchensync
+MY_KDE_PARTS="akregator console kalarm kitchensync kjots kleopatra
+knode knotes kontact korganizer ktimetracker ktnef strigi-analyzer"
+# akonadi kaddressbook, required by kresources which is not optional
+# kmail kmailcvt, kmail is required by plugins/kmail/ which is enabled automagically when gpgme is available. kmailcvt is required at runtime by kmail
+MYOPTIONS="
+    gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
+    nepomuk [[ description = [ Desktop-wide taggin support for Akonadi and Kmail ] ]]
+    kde_parts: ${MY_KDE_PARTS}"
 # option(KDE4_KDEPIM_NEW_DISTRLISTS "Whether to use new distribution lists,
 #        which stores them like normal contacts; useful for Kolab")
 
 DEPENDENCIES="
+build:
+    dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
 build+run:
     app-crypt/gpgme
     app-pim/strigi[qt4] [[ note = [ also needs dbus support which is hard-enabled in strigi ] ]]
     dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
-    dev-libs/libassuan [[ note = [ required by kleopatra ] ]]
-    dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
+    dev-libs/libgpg-error
+    kde/kdelibs:${SLOT}
+    kde/kdepimlibs:${SLOT}
     >=server-pim/akonadi-0.80
-    x11-libs/libXScrnSaver [[ note = [ needed for KTimeTracker ] ]]
     x11-libs/qt:4[dbus][sql] [[ note = [ akonadi needs any Qt SQL plugin ] ]]
-    >=x11-misc/shared-mime-info-0.20
+    >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
+
+    gnokii? ( mobilephone/gnokii )
+    kde_parts:kitchensync? (
+        dev-libs/glib:2
+        >=pda/libopensync-0.30
+        x11-libs/qt:4[glib]
+    )
+    kde_parts:kleopatra? ( >=dev-libs/libassuan-1.0.4 )
+    kde_parts:knotes? ( x11-libs/libX11 )
+    kde_parts:ktimetracker? ( x11-libs/libX11
+                              x11-libs/libXScrnSaver )
     nepomuk? (
         >=dev-libs/soprano-1.99
-        >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ does disabling this work properly? ] ]]
+        >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
     )
 "
-#    kitchensync? ( dev-libs/glib:2 x11-libs/qt:4[glib] >=fixme/opensync-0.30 )
-
-# macro_log_feature(GNOKII_FOUND "gnokii" "Gnokii Development Libraries"
-# "http://www.gnokii.org" FALSE "" "Needed to provide the ability to import and
-# export KDE addressbook entries to/from mobile phones that are accessible via
-# gnokii")
-
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_GNOKII=OFF # FIXME: Make optional when we have gnokii
-    -DWITH_OpenChange=OFF # Make optional with 'exchange OpenChange' when we have libmapi
-    -DWITH_Opensync=OFF
-    -DWITH_QGpgme=ON
-)
-
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-    kjots
-)
+OPTION_DEPENDENCIES="
+    kde_parts:kontact? ( kde_parts:korganizer )
+"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    GNOKII
     'nepomuk Nepomuk' 'nepomuk Soprano'
-    # 'kitchensync GLIB2' 'kitchensync Opensync' # FIXME: Enable when we have opensync
+    'kde_parts:kitchensync GLIB2' 'kde_parts:kitchensync Opensync'
+    'kde_parts:kleopatra Assuan'
 )
+
