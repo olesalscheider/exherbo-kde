@@ -48,11 +48,9 @@ DEPENDENCIES="
 #   post+suggested:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-# We don't have PulseAudio atm. It needs libpulse.
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Clucene=ON
     -DWITH_Soprano=ON
-    -DWITH_PulseAudio=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenEXR
