@@ -11,7 +11,7 @@ SCM_SUBPATH="kdesupport/phonon"
 
 require scm
 
-require cmake
+require cmake options
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -33,6 +33,9 @@ DEPENDENCIES="
         )
         xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
 "
+
+OPTION_DEPENDENCIES="( any-of: gstreamer xine )"
+        
 
 # Test executables not found
 RESTRICT="test"
