@@ -21,11 +21,11 @@ DEPENDENCIES="
         >=x11-libs/qt-4.4.0:4[dbus]
         gstreamer? (
             media-libs/gstreamer
-            media-plugins/gst-plugins-base
+            media-plugins/gst-plugins-base[alsa]
         )"
 
 # Test executables not found
 RESTRICT="test"
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( GStreamer 'gstreamer GStreamerPlugins' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( GStreamer 'gstreamer GStreamerPlugins' 'gstreamer Alsa' )
 
