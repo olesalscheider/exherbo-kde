@@ -59,11 +59,11 @@ DEPENDENCIES="
         x11-apps/rgb"
 
 if ever at_least 4.1.60; then
-    DEPENDENCIES="
+    DEPENDENCIES+="
         build+run:
             >=media-libs/phonon-4.3.0"
 else
-    DEPENDENCIES="
+    DEPENDENCIES+="
         build+run:
             >=media-libs/phonon-4.2.0"
 fi
