@@ -13,9 +13,10 @@ SLOT="4"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        sys-devel/gettext
     build+run:
         kde/kdebase:${SLOT}
-        sys-devel/gettext
 "
 # FIXME webkit? ( kde/webkitkde )
 
