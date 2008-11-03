@@ -37,7 +37,6 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon
-        >=media-libs/xine-lib-1.1.9[xcb]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         >=sys-sound/alsa-lib-1.0.14a
