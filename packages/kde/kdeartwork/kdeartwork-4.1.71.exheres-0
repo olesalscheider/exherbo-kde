@@ -1,0 +1,16 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require "${PN}-4"
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        xscreensaver? (
+            sci-libs/eigen [[
+                note = [ Automagic at the moment, should be fixed in later snapshots ]
+            ]]
+        )
+"
+
