@@ -12,7 +12,7 @@ require scm-svn
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug floatings gpg jabber kde livejournal msn netmonitor oscar
     osd proxy remote sms sound spell trayicon weather yahoo zodiak"
 
@@ -69,5 +69,17 @@ src_configure() {
         $(cmake_enable weather PLUGIN_WEATHER) \
         $(cmake_enable yahoo PLUGIN_YAHOO) \
         $(cmake_enable zodiak PLUGIN_ZODIAK)
+}
+
+pkg_postinst() {
+    if option kde; then
+        kde3_pkg_postinst
+    fi
+}
+
+pkg_postrm() {
+    if option kde; then
+        kde3_pkg_postrm
+    fi
 }
 
