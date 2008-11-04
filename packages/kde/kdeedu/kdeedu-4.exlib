@@ -114,6 +114,6 @@ src_configure() {
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
     fi
 
-    cmake_src_configure
+    kde.org-4_src_configure
 }
 
