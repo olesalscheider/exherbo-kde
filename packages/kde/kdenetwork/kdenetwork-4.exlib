@@ -7,7 +7,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
@@ -36,7 +36,13 @@ MYOPTIONS="
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
     xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
-    kde_parts: ${MY_KDE_PARTS}"
+
+    ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
+    ( gadu groupwise otr statistics webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
+    ( jpeg vnc ) [[ requires = [ kde_parts: krdc ] ]]
+
+    kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
+"
 #   zeroconf [[ description = [ Enable service discovery in Krfb and Krdc ] ]]
 
 DEPENDENCIES="
@@ -87,20 +93,6 @@ DEPENDENCIES="
 #       kde_parts:kdnssd? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) )
 #       kde_parts:krfb? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 #       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
-
-OPTION_DEPENDENCIES="
-    bittorrent? ( kde_parts:kget )
-    gadu? ( kde_parts:kopete )
-    groupwise? ( kde_parts:kopete )
-    jpeg? ( kde_parts:krdc )
-    otr? ( kde_parts:kopete )
-    sqlite? ( kde_parts:kget )
-    statistics? ( kde_parts:kopete )
-    vnc? ( kde_parts:krdc )
-    webpresence? ( kde_parts:kopete )
-    xmpp? ( kde_parts:kopete )
-    ( any-of: $(option_expand kde_parts ${MY_KDE_PARTS}) )
-"
 
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF"

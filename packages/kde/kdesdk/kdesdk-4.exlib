@@ -1,7 +1,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="KDE Software Development Kit"
 LICENCES="GPL-2 LGPL-2"
@@ -24,7 +24,7 @@ umbrello: A UML modeller.
 MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kioslave kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
-MYOPTIONS="plasma [[ description = [ A Kate Plasmoid ] ]]
+MYOPTIONS="plasma [[ description = [ A Kate Plasmoid ] requires = [ kde_parts: kate ] ]]
            kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
@@ -46,9 +46,6 @@ DEPENDENCIES="
         )
     run:
         kde_parts:cervisia? ( dev-scm/cvs )
-"
-OPTION_DEPENDENCIES="
-    plasma? ( kde_parts:kate )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

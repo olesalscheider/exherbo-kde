@@ -9,7 +9,12 @@ HOMEPAGE="http://www.trolltech.com/"
 LICENCES="|| ( QPL-1.0 GPL-2 )"
 SLOT="3"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="cups debug doc examples glib ipv6 mysql opengl postgresql ssl sql sqlite xinerama"
+SQL_BACKENDS="mysql postgresql sqlite"
+MYOPTIONS="cups debug doc examples glib ipv6 opengl ssl sql xinerama
+    ( ${SQL_BACKENDS} ) [[ requires = sql ]]
+    sql? (
+        ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
+    )"
 
 DEPENDENCIES="
 build:
@@ -37,6 +42,7 @@ build+run:
             x11-dri/mesa-lib
         )
     )
+    sqlite? ( dev-db/sqlite:3 )
     postgresql? ( dev-db/postgresql )
     ssl? ( dev-libs/openssl )
     xinerama? ( x11-libs/libXinerama )

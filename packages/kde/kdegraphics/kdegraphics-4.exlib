@@ -2,7 +2,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="Graphical tools for KDE4"
 LICENCES="GPL-2 kolourpaint FDL-1.2 LGPL-2.1"
@@ -24,13 +24,14 @@ svgpart: Kpart for svg support.
 
 MY_KDE_PARTS="gwenview kamera kcolorchooser kgamma kolourpaint kruler
 ksaneplugin ksnapshot okular strigi-analyzer svgpart"
-MYOPTIONS="chm [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
+MYOPTIONS="chm  [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
            djvu [[ description = [ Support for DjVu formatted files in Okular ] ]]
            epub [[ description = [ Support for EPub documents in Okular ] ]]
-           odf [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
-           pdf [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
-           ps [[ description = [ Support for PS (PostScript) files in Okular ] ]]
+           odf  [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
+           pdf  [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
+           ps   [[ description = [ Support for PS (PostScript) files in Okular ] ]]
            tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular ] ]]
+           ( chm djvu epub odf ps pdf tiff ) [[ requires = [ kde_parts: okular ] ]]
 kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
@@ -73,15 +74,6 @@ DEPENDENCIES="
             pdf? ( >=app-text/poppler-0.6[qt4] )
             tiff? ( media-libs/tiff )
         )
-"
-OPTION_DEPENDENCIES="
-    chm? ( kde_parts:okular )
-    djvu? ( kde_parts:okular )
-    epub? ( kde_parts:okular )
-    odf? ( kde_parts:okular )
-    ps? ( kde_parts:okular )
-    pdf? ( kde_parts:okular )
-    tiff? ( kde_parts:okular )
 "
 
 # further check sane

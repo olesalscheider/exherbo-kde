@@ -2,7 +2,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="Collection of educational programs for KDE4"
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
@@ -32,10 +32,10 @@ MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kpercentage kstars ktouch kturtle kwordquiz marble
 parley"
 MYOPTIONS="
-    3dgraphs [[ description = [ Provides 3d graphs in KAlgebra ] ]]
-    3dviewer [[ description = [ Compound Viewer for Kalzium ] ]]
-    kig-scripting [[ description = [ Provides Python Scripting in Kig ] ]]
-    solver [[ description = [ Equation solver for Kalzium ] ]]
+    3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra ] ]]
+    3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium  ] ]]
+    kig-scripting [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig      ] ]]
+    solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium  ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
 
@@ -76,12 +76,6 @@ DEPENDENCIES="
         )
     run:
         kde/kdebase-runtime:${SLOT}
-"
-OPTION_DEPENDENCIES="
-    3dgraphs? ( kde_parts:kalgebra )
-    3dviewer? ( kde_parts:kalzium )
-    kig-scripting? ( kde_parts:kig )
-    solver? ( kde_parts:kalzium )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

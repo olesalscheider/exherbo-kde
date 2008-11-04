@@ -1,7 +1,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require options kde.org-4
+require kde.org-4
 
 SUMMARY="KDE Personal Information Management"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
@@ -29,7 +29,9 @@ knode knotes kontact korganizer ktimetracker ktnef strigi-analyzer"
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
     nepomuk [[ description = [ Desktop-wide taggin support for Akonadi and Kmail ] ]]
-    kde_parts: ${MY_KDE_PARTS}"
+    kde_parts: ${MY_KDE_PARTS}
+
+    kontact [[ requires = [ kde_parts: korganizer ] ]]"
 # option(KDE4_KDEPIM_NEW_DISTRLISTS "Whether to use new distribution lists,
 #        which stores them like normal contacts; useful for Kolab")
 
@@ -61,9 +63,6 @@ build+run:
         >=dev-libs/soprano-1.99
         >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
     )
-"
-OPTION_DEPENDENCIES="
-    kde_parts:kontact? ( kde_parts:korganizer )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

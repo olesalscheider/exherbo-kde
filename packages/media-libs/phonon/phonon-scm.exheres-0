@@ -9,9 +9,7 @@ SCM_TYPE="svn"
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="kdesupport/phonon"
 
-require scm
-
-require cmake options
+require scm cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -20,7 +18,7 @@ DOWNLOADS=""
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="gstreamer xine"
+MYOPTIONS="( gstreamer xine ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
@@ -33,9 +31,6 @@ DEPENDENCIES="
         )
         xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
 "
-
-OPTION_DEPENDENCIES="( any-of: gstreamer xine )"
-        
 
 # Test executables not found
 RESTRICT="test"
