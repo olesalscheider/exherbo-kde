@@ -14,7 +14,8 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug floatings gpg jabber kde livejournal msn netmonitor oscar
-    osd proxy remote sms sound spell trayicon weather yahoo zodiak"
+    osd proxy remote sms sound spell trayicon weather yahoo zodiak
+    ( jabber livejournal msn oscar yahoo ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
@@ -37,13 +38,6 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake AUTHORS.sim jisp-resources.txt )
-
-pkg_pretend() {
-    if ! option jabber && ! option livejournal && ! option msn \
-        && ! option oscar && ! option yahoo; then
-        die "No instant messaging protocol activated"
-    fi
-}
 
 src_configure() {
     # there is no kdelibs:3 at the moment, reenable when there is

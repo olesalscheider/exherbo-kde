@@ -16,23 +16,12 @@ DOWNLOADS="$(set_kde_l10n_downloads)"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="linguas: ${LANGS}"
+MYOPTIONS="linguas: ( ${LANGS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
         kde/kdelibs:4
         sys-devel/gettext"
-
-
-pkg_pretend() {
-    local lingua
-
-    for lingua in ${LANGS}; do
-        option linguas:${lingua} && return 0
-    done
-
-    die 'You need to enable at least one lingua.'
-}
 
 for_all_enabled_linguas_run() {
     local lingua= ECMAKE_BUILD_DIR= WORK=
