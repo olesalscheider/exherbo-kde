@@ -13,9 +13,27 @@ require scm-svn
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="debug floatings gpg jabber kde livejournal msn netmonitor oscar
-    osd proxy remote sms sound spell trayicon weather yahoo zodiak
-    ( jabber livejournal msn oscar yahoo ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="debug proxy sound
+    floatings [[ description = [ Enable support for floating contacts ] ]]
+    gpg [[ description = [ Enable support for gpg-encrypted messages ] ]]
+    kde [[ description = [ Enable KDE3 integration ] ]]
+    netmonitor [[ description = [ Monitor SIM network activity ] ]]
+    osd [[ description = [ Enable on-screen notifications plugin ] ]]
+    remote [[ description = [ Remote control support ] ]]
+    sms [[ description = [ Enable plugin to send SMS to mobile phones ] ]]
+    spell [[ description = [ Enable spell support (note when enabling the option
+        \"kde\", the spell support of KDE will be used ] ]]
+    trayicon [[ description = [ Enable minimizing to Systray ] ]]
+    weather [[ description = [ Enable plugin to fetch weather information ] ]]
+    zodiak [[ description = [ Enable plugin to fetch horoscope information ] ]]
+    im_protocols: 
+        (
+            jabber [[ description = [ Support the Jabber protocol ] ]]
+            livejournal [[ description = [ Support the Livejournal protocol ] ]]
+            msn [[ description = [ Support the MSN protocol ] ]]
+            oscar [[ description = [ Support the AOL and the ICQ protocol ] ]]
+            yahoo [[ description = [ Support the yahoo protocol ] ]]
+        ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
@@ -40,19 +58,19 @@ DEPENDENCIES="
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake AUTHORS.sim jisp-resources.txt )
 
 src_configure() {
-    # there is no kdelibs:3 at the moment, reenable when there is
     ecmake \
         -DENABLE_PLUGIN_UPDATE:BOOL=Off \
         -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
         $(cmake_enable debug PLUGIN_LOGGER) \
         $(cmake_enable floatings PLUGIN_FLOATY) \
         $(cmake_enable gpg PLUGIN_GPG) \
-        $(cmake_enable jabber PLUGIN_JABBER) \
+        $(cmake_enable im_protocols:jabber PLUGIN_JABBER) \
+        $(cmake_enable im_protocols:livejournal PLUGIN_LIVEJOURNAL) \
+        $(cmake_enable im_protocols:msn PLUGIN_MSN) \
+        $(cmake_enable im_protocols:oscar PLUGIN_ICQ) \
+        $(cmake_enable im_protocols:yahoo PLUGIN_YAHOO) \
         $(cmake_enable kde ENABLE_KDE3)
-        $(cmake_enable livejournal PLUGIN_LIVEJOURNAL) \
-        $(cmake_enable msn PLUGIN_MSN) \
         $(cmake_enable netmonitor PLUGIN_NETMONITOR) \
-        $(cmake_enable oscar PLUGIN_ICQ) \
         $(cmake_enable osd PLUGIN_OSD) \
         $(cmake_enable proxy PLUGIN_PROXY) \
         $(cmake_enable remote PLUGIN_REMOTE) \
@@ -61,7 +79,6 @@ src_configure() {
         $(cmake_enable spell PLUGIN_SPELL) \
         $(cmake_enable trayicon PLUGIN_DOCK) \
         $(cmake_enable weather PLUGIN_WEATHER) \
-        $(cmake_enable yahoo PLUGIN_YAHOO) \
         $(cmake_enable zodiak PLUGIN_ZODIAK)
 }
 
