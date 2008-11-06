@@ -5,3 +5,5 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( -p4 "${FILES}"/${PNV}-kmail-imap-mail-duplication-fix.patch )
+

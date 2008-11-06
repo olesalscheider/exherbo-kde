@@ -1,0 +1,42 @@
+Source: kde-packager@kde.org, Message-id: 200811060225.02611.mueller@kde.org
+Upstream: Yes. Included after 4.1.3 was released.
+Reason: Fix bug that causes mails to be duplicated randomly.
+
+Subject: branches/KDE/4.1/kdepim/kmail
+Date: Thursday 30 October 2008
+From: Thomas McGuire <mcguire@kde.org>
+To: kde-commits@kde.org
+
+SVN commit 877938 by tmcguire:
+
+Backport r877936 by tmcguire from trunk to the 4.1 branch:
+
+Merged revisions 877930 via svnmerge from
+svn+ssh://tmcguire@svn.kde.org/home/kde/branches/kdepim/enterprise4/kdepim
+
+.......
+  r877930 | tilladam | 2008-10-30 19:06:09 +0100 (Thu, 30 Oct 2008) | 1 line
+
+  Small thing, big consequences. This missing trimmed() led to ' 35' being
+parsed to 0, by QString::toULong, which lost the UID in the index, which
+caused it to be treated as changed, uploaded, not found locally under the old
+UID, but not explicitely deleted and thus re-downloaded for safety reasons, in
+other words, random mail duplication. Epecially on index regeneration. And who
+knows where else. Should actually have been visible with the old index backend
+as well...
+.......
+
+
+
+ M  +1 -0      kmfoldermaildir.cpp
+
+
+--- branches/KDE/4.1/kdepim/kmail/kmfoldermaildir.cpp #877937:877938
+@@ -717,6 +717,7 @@
+       dateStr = dateStr.trimmed();
+       if (!dateStr.isEmpty())
+         mi->setDate(dateStr.constData());
++      uidStr = uidStr.trimmed();
+       if ( !uidStr.isEmpty() )
+          mi->setUID( uidStr.toULong() );
+       mi->setDirty(false);
