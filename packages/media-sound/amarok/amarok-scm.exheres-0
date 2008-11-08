@@ -15,9 +15,9 @@ for SCM_THIS in ${SCM_SECONDARY_REPOSITORIES}; do
 done
 
 SCM_libplasma_SUBPATH="KDE/kdebase/workspace/libs/plasma"
-SCM_libplasma_REVISION=870260
+SCM_libplasma_REVISION=879630
 SCM_animators_SUBPATH="KDE/kdebase/workspace/plasma/animators"
-SCM_animators_REVISION=870260
+SCM_animators_REVISION=879630
 SCM_popupdropper_SUBPATH="playground/libs/popupdropper/popupdropper"
 SCM_popupdropper_REVISION=868247
 
