@@ -24,6 +24,7 @@ MYOPTIONS="
     tunepimp [[ description = [ Provides MusicBrainz support in Juk ] requires = [ kde_parts: juk ] ]]
     vorbis [[ description = [ Support Ogg Vorbis in the AudioCD kioslave ] ]]
     ( flac vorbis ) [[ requires = [ kde_parts: kioslave ] ]]
+    kde_parts: kscd [[ requires = [ musicbrainz ] ]]
     kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
@@ -43,7 +44,7 @@ DEPENDENCIES="
                 media-libs/libvorbis )
         )
         kde_parts:kmix? ( kde/kdebase-workspace:${SLOT} )
-        musicbrainz? ( media-libs/libmusicbrainz )
+        musicbrainz? ( media-libs/libmusicbrainz:2 )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
