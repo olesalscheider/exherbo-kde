@@ -5,8 +5,3 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES="
-    build+run:
-        kde_parts:kweather? ( kde/kdebase-workspace:${SLOT} [[ note = Plasma ]] )
-"
-
