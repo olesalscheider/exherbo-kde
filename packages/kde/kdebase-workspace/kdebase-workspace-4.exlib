@@ -26,7 +26,8 @@ systemsettings: Settings utility
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager opengl xinerama
+MYOPTIONS="bluetooth lm_sensors networkmanager xinerama
+opengl [[ description = [ Support for OpenGl compositing and OpenGl screensavers ] ]]
 ppc_cpu_features: altivec
 x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -43,7 +44,7 @@ DEPENDENCIES="
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
-        kde/kdelibs:${SLOT}
+        kde/kdelibs:${SLOT} [[ note = [ Needs Nepomuk ] ]]
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
