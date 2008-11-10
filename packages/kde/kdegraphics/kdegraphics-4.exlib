@@ -13,7 +13,7 @@ kolourpaint: An easy-to-use paint program designed for everyday tasks like drawi
              simple diagrams/logos/icons and editing screenshots.
 ksaneplugin: Scanner Service
 strigi-analyzer: Strigi plugin to index various graphics files
-kamera: Digital camera io_slave for Konqueror. Together gPhoto this allows you
+kamera: Digital camera io_slave for Konqueror. Together with gPhoto this allows you
         to access your camera's picture with the URL kamera:/
 kgamma: kcm to regulate the screens gamma correction.
 kruler: A ruler in inch, centimeter and pixel to check distances on the screen.
