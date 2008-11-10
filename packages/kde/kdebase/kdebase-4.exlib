@@ -34,7 +34,9 @@ DEPENDENCIES="
         kde/kdebase-workspace:${SLOT}
         >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
         sys-apps/pciutils
-        sys-apps/usbutils
+        sys-apps/usbutils-data [[
+            note = [ required to display USB information in kinfocenter ]
+        ]]
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
@@ -50,9 +52,13 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk=ON
+    -DKDE_USBIDS_DIR="/usr/share/misc"
+    -DDISABLE_USBIDS_INSTALL=ON
 )
 # the konqueror kttsdplugin has an optional dependency upon webkitkde. but it doesn't work atm.
 # CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webkitkde DEPEND_PACKAGE_WebKitKde' )
 
 KDE_APPS_PREFIX="apps"
+
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}/${PN}-usbids.patch" )
 
