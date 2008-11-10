@@ -5,6 +5,10 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
+MYOPTIONS="
+    kde_parts: kscd [[ requires = [ musicbrainz ] ]]
+"
+
 DEPENDENCIES="
     build+run:
         kde_parts:dragonplayer? ( >=media-libs/phonon-4.3.0[xine] )
