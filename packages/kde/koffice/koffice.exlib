@@ -1,4 +1,5 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -8,73 +9,166 @@ DESCRIPTION="
 * KWord: A frame-based word processor
 * KSpread: A powerful spreadsheet application
 * KPresenter: A full-featured presentation program
-* Kexi: An integrated environment for creating databases and database applications
-* Kivio: A Visio®-style flowcharting application
 * Karbon14: A vector drawing application
 * Krita: A layered pixel image manipulation application
 * KPlato: An integrated project management and planning tool
 * KChart: An integrated graph and chart drawing tool
-* KFormula: A powerful formula editor
 * Kugar: A powerful formula editor tool for generating business quality reports
 "
+#* Kexi: An integrated environment for creating databases and database applications
+#* KFormula: A powerful formula editor
+#* Kivio: A Visio®-style flowcharting application
 HOMEPAGE="http://www.koffice.org/"
-UPSTREAM_CHANGELOG="${HOMEPAGE}/announcements/changelog-2.0-alpha10.php"
 REMOTE_IDS="freshmeat:${PN}"
 DOWNLOADS="mirror://kde/unstable/${PNV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MYOPTIONS="opengl"
-BUILD="doc karbon kchart kdgantt kexi kformula kivio kounavail kplato kpresenter krita kword musicshape"
-# XXX Interal SQLite copy
+MY_KDE_PARTS="karbon kchart kplato kpresenter krita kspread kword"
+MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kformula kivio"
+MYOPTIONS="eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
+    glew [[ description = [ Shader filter plugin for Krita ] requires = opengl ]]
+    graphicsmagick [[ description = [ Support for various file formats (including PSD, XCF) through GraphicsMagick in Krita ] ]]
+    msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
+    odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
+    openexr [[ description = [ Support for OpenEXR formatted images in Krita ] ]]
+    opengl [[ description = [ Hardware accelerated rendering for Krita ] ]]
+    panorama [[ description = [ Panorama plugin for Krita ] ]]
+    pdf  [[ description = [ Support for PDF (Portable Document Format) files in Krita ] ]]
+    raw  [[ description = [ Support for the RAW filter in Krita ] ]]
+    solver [[ description = [ Solver plugin for KSpread ] requires = [ kde_parts: kspread ] ]]
+    spacenavigator [[ description = [ Space navigator device plugin ] ]]
+    tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
+    wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
+
+    ( graphicsmagick openexr opengl panorama pdf raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+
+    kde_parts: ${MY_KDE_PARTS}
+
+    wordperfect? ( ( karbon kword ) [[ number-selected = at-least-one ]] )"
+
 # XXX CPU flags
 
+#    build: kde_parts:kexi? ( app-arch/bzip2 )
 DEPENDENCIES="
     build+run:
-        app-crypt/qca:2 [[ note = [ ODF support ] ]]
-        app-text/poppler[qt4]
-        dev-libs/boost [[ note = [ KPresenter ] ]]
-        dev-libs/libxml2
-        dev-libs/libxslt
-        kde/kdelibs:4
-        kde/kdepimlibs:4
-        kde/kdebase-runtime:4 [[ note = [ Verify whether kde/kdebase{,-workspace} are needed ] ]]
-        kde/qimageblitz [[ note = Krita ]]
-        media-libs/jpeg
-        >=media-libs/lcms-1.15
+        dev-lang/perl:*
+        dev-libs/libxml2 [[ note = [ xsltfilter ] ]]
+        dev-libs/libxslt [[ note = [ xsltfilter ] ]]
+      >=kde/kdelibs-4.1.0:4
+      >=kde/kdepimlibs-4.1.0:4
+      >=kde/kdebase-runtime-4.1.0:4 [[ note = [ Verify whether kde/kdebase{,-workspace} are needed ] ]]
+      >=media-libs/lcms-1.15
         media-libs/libpng
-        media-libs/tiff
-        office-libs/libwpd [[ note = [ KWord ] ]]
-        sci-libs/eigen:2 [[ note = [ KSpread, Krita ] ]]
+        sys-libs/zlib
         x11-libs/qt:4[dbus][opengl?]
         x11-libs/libX11
-        x11-misc/shared-mime-info
-        opengl? (
-            || ( x11-dri/mesa x11-dri/mesa-lib )
+        kde_parts:karbon? (
+            media-libs/fontconfig
+            media-libs/freetype:2
+            eps? ( media-gfx/pstoedit )
+            wordperfect? ( office-libs/libwpg )
         )
+        kde_parts:kpresenter? ( dev-libs/boost )
+        kde_parts:krita? (
+          >=graphics/exiv2-0.16
+            kde/qimageblitz
+            media-libs/jpeg
+            sci-libs/eigen:2
+            x11-libs/libICE
+            x11-libs/libSM
+            x11-libs/libXau
+            x11-libs/libXdmcp
+            x11-libs/libXext
+            x11-libs/libXft
+            x11-libs/libXpm
+            graphicsmagick? ( =media-gfx/GraphicsMagick-1.1* )
+            openexr? (
+                media-libs/openctl
+                media-libs/openexr
+            )
+            opengl? (
+                || ( x11-dri/mesa x11-dri/mesa-lib )
+                glew? ( media-libs/glew )
+            )
+            panorama? ( sci-mathematics/gmm )
+            pdf? ( app-text/poppler[qt4] )
+            raw? ( >=kde/kdegraphics-4.1.0:4 )
+            tiff? ( media-libs/tiff )
+        )
+        kde_parts:kspread? (
+            sci-libs/eigen:2
+            solver? ( >=sci-libs/gsl-1.7 )
+        )
+        kde_parts:kword? (
+            msword? ( office-libs/wv2 )
+            wordperfect? ( office-libs/libwpd )
+        )
+        odf? ( app-crypt/qca:2 )
+        spacenavigator? ( sci-libs/libspnav )
 "
+
 # Optional dependencies:
-# CreateResources
-# Krita: GraphicsMagick http://www.graphicsmagick.org
 # media-libs/libexif
-# media-libs/freetype:2 [[ note = Karbon ]]
-# media-libs/fontconfig [[ note = Karbon ]]
-# OpenEXR
-# OpenCTL http://www.openctl.org [[ note = Krita ]]
-# GMM
-# GLEW http://glew.sourceforge.net [[ note = [ Krita OpenGL shaders ] ]]
 # powf
 # KWord: TeX support pending porting
 # KWord: PDF import filter, pending poppler[qt4] port
-# KWord: libwpg-0.1
 # Ruby/Python scripting for Kexi/Krita: --disable-scripting
-# kde/kdegraphics:4 libkdcraw release >= 0.2.0
 # Kexi: FreeTDS, XBase, MySQL, PostgreSQL (libpqxx which needs libpq)
-# Karbon: pstoedit http://www.pstoedit.net/ [[ note = [ Karbon eps import filter ] ]]
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    --disable-scripting
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=()
+src_configure() {
+    local p cmakeparams
 
+    if option kde_parts:krita || option kde_parts:kspread; then
+        cmakeparams+=" -DWITH_Eigen2=ON"
+    else
+        cmakeparams+=" -DWITH_Eigen2=OFF"
+    fi
+
+    if option kde_parts:karbon || option kde_parts:kplato; then
+        cmakeparams+=" -DBUILD_kdgantt=ON"
+    else
+        cmakeparams+=" -DBUILD_kdgantt=OFF"
+    fi
+
+    if option wordperfect; then
+        cmakeparams+="
+           $(cmake_with kde_parts:karbon WPG)
+           $(cmake_with kde_parts:kword WPD)"
+    else
+        cmakeparams+=" -DWITH_WPD=OFF -DWITH_WPG=OFF"
+    fi
+
+    for p in ${MY_KDE_PARTS}; do
+        cmakeparams+=" $(cmake_build kde_parts:${p})"
+    done
+
+    ecmake \
+        $(kde4_shared_cmake_params) \
+        ${cmakeparams} \
+        -DWITH_Exif=OFF \
+        -DWITH_LibXml2=ON \
+        -DWITH_LibXslt=ON \
+        -DWITH_PNG=ON \
+        $(cmake_with eps Pstoedit) \
+        $(cmake_with GLEW) \
+        $(cmake_with GraphicsMagick) \
+        $(cmake_with kde_parts:karbon Fontconfig) \
+        $(cmake_with kde_parts:karbon Freetype) \
+        $(cmake_with kde_parts:krita Blitz) \
+        $(cmake_with kde_parts:krita Exiv2) \
+        $(cmake_with kde_parts:krita JPEG) \
+        $(cmake_with kde_parts:kpresenter Boost) \
+        $(cmake_with msword WV2) \
+        $(cmake_with odf QCA2) \
+        $(cmake_with openexr OpenCTL) \
+        $(cmake_with OpenEXR) \
+        $(cmake_with OpenGL) \
+        $(cmake_with panorama GMM) \
+        $(cmake_with pdf Poppler) \
+        $(cmake_with raw Kdcraw) \
+        $(cmake_with solver GSL) \
+        $(cmake_with spacenavigator Spnav) \
+        $(cmake_with TIFF)
+}
 
