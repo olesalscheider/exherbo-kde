@@ -7,17 +7,13 @@ SCM_TYPE="svn"
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="extragear/multimedia/${PN}"
 
-SCM_SECONDARY_REPOSITORIES="libplasma animators popupdropper"
+SCM_SECONDARY_REPOSITORIES="popupdropper"
 for SCM_THIS in ${SCM_SECONDARY_REPOSITORIES}; do
     scm_set_var REPOSITORY "${SCM_REPOSITORY}"
     scm_set_var UNPACK_TO  "${WORK}/src/context/${SCM_THIS/lib}"
     SCM_SVN_EXTERNALS+=" src/context/${SCM_THIS/lib}:${SCM_THIS}"
 done
 
-SCM_libplasma_SUBPATH="KDE/kdebase/workspace/libs/plasma"
-SCM_libplasma_REVISION=879630
-SCM_animators_SUBPATH="KDE/kdebase/workspace/plasma/animators"
-SCM_animators_REVISION=879630
 SCM_popupdropper_SUBPATH="playground/libs/popupdropper/popupdropper"
 SCM_popupdropper_REVISION=868247
 
