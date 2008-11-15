@@ -52,7 +52,8 @@ DEPENDENCIES="
 if ever at_least 4.1.60; then
     DEPENDENCIES+="
         build:
-            >=kde/automoc4-0.9.87"
+            >=kde/automoc4-0.9.87
+            >=sys-devel/cmake-2.6.2"
 else
     DEPENDENCIES+="
         build:
