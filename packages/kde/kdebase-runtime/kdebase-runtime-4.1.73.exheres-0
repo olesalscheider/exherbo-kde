@@ -1,0 +1,40 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require "${PN}-4"
+
+PLATFORMS="~amd64 ~x86"
+
+DESCRIPTION="
+kcmshell: KDE Control Modules loader
+kdedglobalaccel:
+kfile: Utility for reading and writing file metadata
+khelpcenter: KDE Help Center
+kiconfinder: Icon finder
+kioslaves: Various KIO slaves
+kmimetypefinder: Utility to find mimetype of a given file
+knewstuff: Utility for downloading KDE addons
+knotify: Notification daemon
+kquitapp: Close a KDE application using D-Bus
+kreadconfig: Read/write configuration files from a script
+kstart: Start application s with special window properties
+kstyles: Styles for KDE widgets
+ktraderclient: Query KDE trader system
+kuiserver: Display progress information
+kwalletd: Password storage service
+nepomuk: Core services and service registry daemon for nepomuk
+phonon: Multimedia support
+solid-hardware: Query your hardware from the command line
+renamedlgplugins: Plugins for Konqueror's rename dialog
+"
+
+DEPENDENCIES="
+    build+run:
+        >=media-libs/phonon-4.3.0 [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
+"
+
+# We don't have PulseAudio atm. It needs libpulse.
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_PulseAudio=OFF
+)
+
