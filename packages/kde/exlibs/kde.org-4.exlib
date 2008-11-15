@@ -38,7 +38,7 @@ KDE_INSTALL_PREFIX="/usr"
 
 case ${PV} in
     4.@(1|2).@(6|7|8|9)*) 
-        DOWNLOADS="${DOWNLOADS:-"listed-only: ftp://ftp.kde.org/pub/kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     *)
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
 esac
