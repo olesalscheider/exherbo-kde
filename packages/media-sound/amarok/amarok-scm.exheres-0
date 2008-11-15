@@ -1,23 +1,11 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require ${PN} scm
-
 SCM_TYPE="svn"
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="extragear/multimedia/${PN}"
 
-SCM_SECONDARY_REPOSITORIES="popupdropper"
-for SCM_THIS in ${SCM_SECONDARY_REPOSITORIES}; do
-    scm_set_var REPOSITORY "${SCM_REPOSITORY}"
-    scm_set_var UNPACK_TO  "${WORK}/src/context/${SCM_THIS/lib}"
-    SCM_SVN_EXTERNALS+=" src/context/${SCM_THIS/lib}:${SCM_THIS}"
-done
-
-SCM_popupdropper_SUBPATH="playground/libs/popupdropper/popupdropper"
-SCM_popupdropper_REVISION=868247
-
-scm_finalise
+require ${PN} scm
 
 DOWNLOADS=""
 DEPENDENCIES+=" || ( dev-libs/openssl dev-libs/libgcrypt ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]"
