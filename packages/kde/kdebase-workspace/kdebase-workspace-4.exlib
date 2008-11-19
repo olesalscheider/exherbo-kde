@@ -37,7 +37,6 @@ DEPENDENCIES="
         dev-cpp/cppunit
         dev-lang/perl:* [[ note = kdm ]]
     build+run:
-      >=app-pim/strigi-0.5.9[qt4]
         dev-libs/glib:2
         dev-libs/libusb
       >=dev-libs/soprano-2.0.98 [[ note = [ plasma engine explorer ] ]]

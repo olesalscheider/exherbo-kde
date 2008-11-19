@@ -33,7 +33,6 @@ DEPENDENCIES="
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
         )
     build+run:
-        app-pim/strigi[qt4]
         kde/kdelibs:${SLOT}
         kde_parts:kate? ( plasma? ( kde/kdebase-workspace:${SLOT} ) )
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )

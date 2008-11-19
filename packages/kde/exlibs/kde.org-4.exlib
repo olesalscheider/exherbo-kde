@@ -53,11 +53,17 @@ if ever at_least 4.1.60; then
     DEPENDENCIES+="
         build:
             >=kde/automoc4-0.9.87
-            >=sys-devel/cmake-2.6.2"
+            >=sys-devel/cmake-2.6.2
+        build+run:
+            >=app-pim/strigi-0.6.0[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
+    "
 else
     DEPENDENCIES+="
         build:
-            >=kde/automoc4-0.9.84"
+            >=kde/automoc4-0.9.84
+        build+run:
+            >=app-pim/strigi-0.5.11[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
+    "
 fi
 
 kde4_reduced_linking() {

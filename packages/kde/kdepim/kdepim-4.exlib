@@ -40,7 +40,6 @@ build:
     dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
 build+run:
     app-crypt/gpgme
-    app-pim/strigi[qt4] [[ note = [ also needs dbus support which is hard-enabled in strigi ] ]]
     dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
     dev-libs/libgpg-error
     kde/kdelibs:${SLOT}
