@@ -5,3 +5,7 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE # 4.1.80 fails when this is enabled
+)
+

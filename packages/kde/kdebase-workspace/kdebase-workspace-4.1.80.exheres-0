@@ -49,5 +49,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PyQt4=Off
     -DWITH_Nepomuk=On # Hard-enable unless we decide to make it optional
     -DWITH_CkConnector=Off # Hard-disable it for now, unless someone insist on optionally enabling it
+    -DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE # 4.1.80 fails when this is enabled
 )
 
