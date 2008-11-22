@@ -136,6 +136,8 @@ qconf4() {
 }
 
 qt-4_src_prepare() {
+    default
+
     # Set {C,CXX,LD}FLAGS. Don't prestrip. Do not link with -rpath (Gentoo bug #75181).
     # Don't put libraries in X11R6/.
 
