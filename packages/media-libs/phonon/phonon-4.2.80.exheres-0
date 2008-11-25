@@ -5,15 +5,11 @@
 # Based in part upon the respective ebuild in Gentoo which is: 
 # Copyright 1999-2008 Gentoo Foundation
 
-SCM_TYPE="svn"
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="kdesupport/phonon"
-
-require scm cmake
+require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-DOWNLOADS=""
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -35,6 +31,7 @@ DEPENDENCIES="
 # Test executables not found
 RESTRICT="test"
 
+#CMAKE_SRC_CONFIGURE_PARAMS=( -DPHONON_BUILD_TESTS:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     GStreamer
     'gstreamer GStreamerPlugins'
