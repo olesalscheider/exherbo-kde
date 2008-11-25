@@ -30,7 +30,7 @@ renamedlgplugins: Plugins for Konqueror's rename dialog
 
 DEPENDENCIES="
     build+run:
-        >=media-libs/phonon-4.3.0 [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
+        >=media-libs/phonon-4.2.80 [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
 "
 
 # We don't have PulseAudio atm. It needs libpulse.

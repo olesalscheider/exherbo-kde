@@ -60,7 +60,7 @@ DEPENDENCIES="
 if ever at_least 4.1.60; then
     DEPENDENCIES+="
         build+run:
-            >=media-libs/phonon-4.3.0"
+            >=media-libs/phonon-4.2.80"
 else
     DEPENDENCIES+="
         build+run:
