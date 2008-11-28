@@ -23,7 +23,7 @@ DEPENDENCIES="
         >=x11-libs/qt-4.4.0:4[dbus]
         gstreamer? (
             media-libs/gstreamer
-            media-plugins/gst-plugins-base[alsa]
+            media-plugins/gst-plugins-base[gstreamer_plugins:alsa]
         )
         xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
 "

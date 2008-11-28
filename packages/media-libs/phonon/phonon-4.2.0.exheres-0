@@ -21,7 +21,7 @@ DEPENDENCIES="
         >=x11-libs/qt-4.4.0:4[dbus]
         gstreamer? (
             media-libs/gstreamer
-            media-plugins/gst-plugins-base[alsa]
+            media-plugins/gst-plugins-base[gstreamer_plugins:alsa]
         )"
 
 # Test executables not found
