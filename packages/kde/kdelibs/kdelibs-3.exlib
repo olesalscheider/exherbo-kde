@@ -38,7 +38,7 @@ DEPENDENCIES="
         acl? ( fixme/acl 
             fixme/attr )
         alsa? ( sys-sound/alsa-lib )
-        cups? ( >=fixme/cups-1.1.9 )
+        cups? ( >=net-print/cups-1.1.9 )
         fam? ( app-admin/gamin )
         jpeg2k? ( fixme/jasper )
         kerberos? ( fixme/krb5 )
