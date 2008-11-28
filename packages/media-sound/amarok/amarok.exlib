@@ -12,39 +12,60 @@ Amarok tries to be a little different, providing a simple drag and drop
 interface that really makes playlist handling easy.
 "
 HOMEPAGE="http://amarok.kde.org"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
+case ${PV} in
+    scm) DOWNLOADS=""
+         UPSTREAM_RELEASE_NOTES="" ;;
+    2.0|2.0.1)
+         DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+         UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
+    *)
+         DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
+esac
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="ipod mp3tunes mp4 mtp" # XXX opengl
+# XXX opengl, not optional currently
+MYOPTIONS="ipod mp3tunes mp4 mtp
+    mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
+    mp4         [[ description = [ Build the Taglib plugin for writing tags in mp4 container files (.m4a).
+                                   This makes your package non-redistributable, as libmp4v2 has a GPL-incompatible licence ]
+                ]]
+"
 
 DEPENDENCIES="
     build:
         dev-util/pkg-config
         kde/automoc4
     build+run:
-        >=app-pim/strigi-0.5.9[qt4]
+      >=app-pim/strigi-0.5.9[qt4]
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
-        >=dev-libs/soprano-2.1.0
-        >=kde/kdelibs-4.1.0:4[opengl]
-        >=kde/kdepimlibs-4.1.0:4
-        >=kde/kdebase-workspace-4.1.0:4[opengl]
-        >=kde/kdemultimedia-4.1.0:4 [[ description = [ Support for playing Audio CDs ] ]]
+      >=dev-libs/soprano-2.1.0
+      >=kde/kdelibs-4.1.0:4[opengl]
+      >=kde/kdepimlibs-4.1.0:4
+      >=kde/kdebase-workspace-4.1.0:4[opengl]
+      >=kde/kdemultimedia-4.1.0:4 [[ description = [ Support for playing Audio CDs ] ]]
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
-        >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
+      >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
-        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][sql][svg][webkit]
-        ipod? ( >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
-                >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]] )
+        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][svg][webkit]
+        ipod? (
+          >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
+          >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]]
+        )
         mp3tunes? ( >=net-im/loudmouth-1 [[ description = [ mp3tunes.com integration (including synchronisation) ] ]] )
-        mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] url = [ http://www.mpeg4ip.net/ ] ]] )
-        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] url = [ http://libmtp.sourceforge.net ] ]] )
+        mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] ]] )
+        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
 "
 
 if ever at_least 1.92; then
     DEPENDENCIES+="
-        build+run: dev-db/mysql[embedded]"
+    build+run:
+        dev-db/mysql[embedded-server]
+        || (
+            dev-libs/openssl
+            dev-libs/libgcrypt
+        ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]"
 else
     DEPENDENCIES+="
         build+run: dev-db/sqlite:3"
@@ -52,15 +73,20 @@ else
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'ipod Gdk' Ipod
+    # Gdk: Artwork for ipod, via GdkPixbuf
+    'ipod Gdk' 'ipod GLIB2' Ipod
     'mp3tunes Loudmouth'
     'mp4 Mp4v2'
     Mtp
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_{CURL,GLIB2,LibXml2}=ON # hard enabled by upstream. only needed for mp3tunes.com
-    -DWITH_{Soprano,Nepomuk}=ON # hard enabled by us
+    # Hard enabled by upstream. Only needed for mp3tunes.com
+    -DWITH_{CURL,GLIB2,LibXml2}=ON
+    # Hard enabled by us
+    -DWITH_{Soprano,Nepomuk}=ON
     -DWITH_OpenGL=ON # FIXME
     -DWITH_Libvisual=OFF
-    -DWITH_{Ifp,Njb}=OFF # hard disabled by upstream
+    # Options are currently commented out
+    # -DWITH_{Ifp,LibLastFm,Njb}=OFF
 )
+

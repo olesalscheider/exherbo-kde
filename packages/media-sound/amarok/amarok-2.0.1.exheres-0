@@ -1,10 +1,7 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="extragear/multimedia/${PN}"
-
-require ${PN} scm-svn
+require ${PN}
 
 PLATFORMS="~x86"
 
