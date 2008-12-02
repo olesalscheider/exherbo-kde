@@ -18,6 +18,7 @@ DEPENDENCIES="
         >=app-crypt/qca-${QCA_MAJVER}:2"
 
 WORK="${WORKBASE}/${MY_PNV}"
+DEFAULT_SRC_PREPARE_PATCHES=( -p3 "${FILES}/${PNV}-remove-whirlpool.patch" )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
 src_configure() {
