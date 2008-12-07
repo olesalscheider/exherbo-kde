@@ -47,7 +47,7 @@ DEPENDENCIES="
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}
             sys-libs/readline
-            3dgraphs? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
+            3dgraphs? ( x11-dri/mesa )
         )
         kde_parts:kalzium? (
             3dviewer? (

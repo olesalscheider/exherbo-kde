@@ -55,12 +55,7 @@ DEPENDENCIES="
         jpeg? ( media-libs/jpeg )
         mng? ( media-libs/libmng )
         mysql? ( dev-db/mysql )
-        opengl? (
-            || (
-                x11-dri/mesa
-                x11-dri/mesa-lib
-            )
-        )
+        opengl? ( x11-dri/mesa )
         phonon? (
             media-libs/gstreamer
             media-plugins/gst-plugins-base

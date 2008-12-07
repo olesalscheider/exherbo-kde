@@ -36,12 +36,7 @@ build+run:
     cups? ( net-print/cups )
     glib? ( dev-libs/glib:2 )
     mysql? ( dev-db/mysql )
-    opengl? (
-        || (
-            x11-dri/mesa
-            x11-dri/mesa-lib
-        )
-    )
+    opengl? ( x11-dri/mesa )
     sqlite? ( dev-db/sqlite:3 )
     postgresql? ( dev-db/postgresql )
     ssl? ( dev-libs/openssl )

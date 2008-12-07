@@ -88,7 +88,7 @@ DEPENDENCIES="
                 media-libs/openexr
             )
             opengl? (
-                || ( x11-dri/mesa x11-dri/mesa-lib )
+                x11-dri/mesa
                 glew? ( media-libs/glew )
             )
             panorama? ( sci-mathematics/gmm )

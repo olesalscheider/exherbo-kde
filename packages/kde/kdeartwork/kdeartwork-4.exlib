@@ -14,7 +14,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[opengl=]
         kde/kdebase-workspace:${SLOT}
         x11-libs/libX11
-        opengl? ( || ( x11-dri/mesa x11-dri/mesa-lib ) )
+        opengl? ( x11-dri/mesa )
         xscreensaver? ( x11-apps/xscreensaver )
 "
 
