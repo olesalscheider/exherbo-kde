@@ -5,7 +5,8 @@ require ${PN}
 
 PLATFORMS="~amd64 ~x86"
 
-UPSTREAM_CHANGELOG="${HOMEPAGE}announcements/changelog-2.0-beta3.php"
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}releases/2.0beta3-release.php"
+MY_PV="2.0-beta4"
+UPSTREAM_CHANGELOG="${HOMEPAGE}announcements/changelog-${MY_PV}.php"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}releases/${MY_PV/-}-release.php"
 
 # kbuildsycoca4(5476)/kdecore (KService) KServicePrivate::init: The desktop entry file  "/usr/share/applications/kde4/koffice.desktop"  has Type= "Application"  but no Exec line
