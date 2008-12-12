@@ -1,0 +1,84 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="extragear/multimedia/${PN}"
+
+require scm-svn kde4
+
+SUMMARY="KDE CD Writing Software"
+DESCRIPTION="
+K3b is a CD and DVD burning application for Linux systems optimized for KDE. It
+provides a comfortable user interface to perform most CD/DVD burning tasks,
+such as creating an audio CD from a set of audio files or copying a CD. While
+the experienced user can influence all steps of the burning process, the
+beginner may find comfort in the automatic settings and the reasonable defaults
+which allow a quick start. The actual burning is done by the command line
+utilities cdrecord, cdrdao, and growisofs.
+"
+HOMEPAGE="http://www.k3b.org"
+DOWNLOADS=""
+
+LICENCES="GPL-2 FDL-1.2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="debug ffmpeg flac lame mp3 musepack musicbrainz vorbis
+    lame [[ description = [ Add support for encoding audio as mp3 files ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4
+        kde/kdemultimedia:4
+      >=media-libs/libdvdread-1.0
+        media-libs/libsamplerate
+        media-libs/libsndfile
+      >=media-libs/taglib-1.4.0
+        x11-libs/qt:4[X][qt3support]
+        ffmpeg? ( media/ffmpeg )
+        flac? ( media-libs/flac [[ note = [ Flac C++ bindings ] ]] )
+        lame? ( media-sound/lame )
+        mp3? ( media-libs/libmad )
+        musepack? ( media-libs/muse )
+        musicbrainz? ( >=media-libs/libmusicbrainz-1.1 )
+        vorbis? (
+            media-libs/libogg
+            media-libs/libvorbis
+        )
+
+    run:
+        || (
+            app-cdr/cdrtools
+            app-cdr/cdrkit
+            app-cdr/libburn
+        )
+        app-cdr/cdrdao
+      >=app-cdr/dvd+rw-tools-5.10
+        sys-apps/hal
+
+    post,suggested:
+        media-sound/normalize   [[ description = [ Normalize audio volume ] ]]
+        media-sound/sox         [[ description = [ Support for encoding audio to various files formats ] ]]
+        media-video/transcode   [[ description = [ Support for transcoding video between different container formats ] ]]
+"
+#   post,suggested: media-video/emovix media-video/vcdimager
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Hard-enabled, the other option is to use the internal copy.
+    -DWITH_Samplerate:BOOL=TRUE
+    # Note optional for libsamplerate, which is a hard dependency. Support for burning audio CDs.
+    -DWITH_Sndfile:BOOL=TRUE
+    # This should be disabled.
+    -DK3BSETUP_BUILD:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS=( 'debug ADD_K3B_DEBUG' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'FFmpeg'
+    'Flac' 'flac Flac++'
+    'Lame'
+    'mp3 Mad'
+    'musepack Muse'
+    'MusicBrainz'
+    'vorbis OggVorbis'
+)
+
