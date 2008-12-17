@@ -7,7 +7,8 @@ SUMMARY="QMPDClient is an easy to use MPD client written in Qt 4"
 DESCRIPTION="
 "
 HOMEPAGE="http://havtknut.tihlde.org/qmpdclient"
-DOWNLOADS="http://havtknut.tihlde.org/${PN}/files/${PNV}.tar.gz"
+DOWNLOADS="http://havtknut.tihlde.org/${PN}/files/${PNV}.tar.gz
+    http://havtknut.tihlde.org/qmpdclient/files/iconsets/oxygen.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -28,5 +29,12 @@ src_prepare() {
         -e '/^PREFIX/ c PREFIX = /usr' \
         -i "${WORK}"/${PN}.pro \
         || die "Changing prefix failed."
+}
+
+src_install() {
+    default
+
+    insinto /usr/share/QMPDClient/iconsets
+    doins -r "${WORKBASE}"/oxygen
 }
 
