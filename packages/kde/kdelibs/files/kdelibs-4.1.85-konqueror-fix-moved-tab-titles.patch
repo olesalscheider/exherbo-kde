@@ -1,0 +1,87 @@
+Source: Upstream
+Upstream: Yes
+Reason: See below
+
+From 2de6e2894ca76dc57582dacd7ca37b818c0f60e1 Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 18 Dec 2008 11:29:38 +0000
+Subject: [PATCH] Apply patch from Drew Fisher and unit test from Tommi Tervo, to fix the tab title mess-up when moving a tab.
+ I love it when bug reports contain patch + unit test... perfect ;-)
+ BUG: 177036
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs@898491 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kdeui/tests/ktabwidget_unittest.cpp |   26 ++++++++++++++++++++++++++
+ kdeui/widgets/ktabwidget.cpp        |   11 +++--------
+ 2 files changed, 29 insertions(+), 8 deletions(-)
+
+diff --git a/kdeui/tests/ktabwidget_unittest.cpp b/kdeui/tests/ktabwidget_unittest.cpp
+index 88b49d1..2aaf3f2 100644
+--- a/kdeui/tests/ktabwidget_unittest.cpp
++++ b/kdeui/tests/ktabwidget_unittest.cpp
+@@ -67,6 +67,32 @@ private Q_SLOTS:
+             QCOMPARE(w.tabText(i), prefix+QString::number(i+2));
+         }
+     }
++    void testMoveTab()
++    {
++        // Test inspired by #170470 and #177036
++        KTabWidget w;
++        w.setAutomaticResizeTabs(true);
++        w.resize(300, 400);
++        QResizeEvent e(w.size(), QSize());
++        QApplication::sendEvent(&w, &e);
++        QString prefix = "This is a long prefix for the tab title. ";
++        for (int i = 0; i < 4; ++i) {
++            w.insertTab(i, new QWidget, prefix+QString::number(i));
++        //kDebug() << i << w.tabText(i);
++        }
++        w.moveTab(0,3);
++        //for (int i = 0; i < 4; ++i)
++            //kDebug() << i << w.tabText(i);
++        QCOMPARE(w.tabText(0), prefix+QString::number(1));
++        QCOMPARE(w.tabText(1), prefix+QString::number(2));
++        QCOMPARE(w.tabText(2), prefix+QString::number(3));
++        QCOMPARE(w.tabText(3), prefix+QString::number(0));
++        w.moveTab(3,0);
++        for (int i = 0; i < 4; ++i) {
++            //kDebug() << i << w.tabText(i);
++            QCOMPARE(w.tabText(i), prefix+QString::number(i));
++        }
++     }
+ 
+ private Q_SLOTS:
+     void slotCurrentChanged(int index)
+diff --git a/kdeui/widgets/ktabwidget.cpp b/kdeui/widgets/ktabwidget.cpp
+index 67f5de1..cec19ca 100644
+--- a/kdeui/widgets/ktabwidget.cpp
++++ b/kdeui/widgets/ktabwidget.cpp
+@@ -491,15 +491,7 @@ void KTabWidget::moveTab( int from, int to )
+ 
+   bool blocked = blockSignals( true );
+   removeTab( from );
+-
+-  // Work-around kmdi brain damage which calls showPage() in insertTab()
+   insertTab( to, w, tablabel );
+-  if ( d->m_automaticResizeTabs ) {
+-    if ( to < 0 || to >= count() )
+-      d->m_tabNames.append( QString() );
+-    else
+-      d->m_tabNames.insert( to, QString() );
+-  }
+ 
+   setTabIcon( to, tabiconset );
+   setTabText( to, tablabel );
+@@ -508,6 +500,9 @@ void KTabWidget::moveTab( int from, int to )
+   if ( current )
+     setCurrentIndex( to );
+   setTabEnabled( to, enabled );
++  if ( d->m_automaticResizeTabs ) {
++    d->resizeTabs( to );
++  }
+   blockSignals( blocked );
+ 
+   setUpdatesEnabled(true);
+-- 
+1.6.0.5
+
