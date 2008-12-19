@@ -1,0 +1,11 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require "${PN}-4"
+
+PLATFORMS="~amd64 ~x86"
+
+UPSTREAM_CHANGELOG="http://trolltech.com/about/news/${PNV}-released"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-Fix-deletion-of-a-qgraphicsproxywidget-if-it-is-in-a.patch" )
+
