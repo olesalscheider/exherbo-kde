@@ -39,7 +39,7 @@ esac
 
 DEPENDENCIES="
     build:
-        dev-lang/perl
+        dev-lang/perl:*
         dev-util/pkg-config
         sys-devel/make
         x11-proto/xf86vidmodeproto
