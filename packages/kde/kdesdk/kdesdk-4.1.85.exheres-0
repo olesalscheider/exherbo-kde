@@ -1,0 +1,14 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require "${PN}-4"
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+      >=dev-lang/perl-5.8:* [[ note = [ :* I think FIXME ] ]]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE ) # Kioslave to browse perldoc
+

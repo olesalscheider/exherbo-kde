@@ -5,3 +5,12 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
+MYOPTIONS="plasma [[ description = [ A Kate Plasmoid ] requires = [ kde_parts: kate ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde_parts:kate? ( plasma? ( kde/kdebase-workspace:${SLOT} ) )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Plasma:BOOL=TRUE )
+

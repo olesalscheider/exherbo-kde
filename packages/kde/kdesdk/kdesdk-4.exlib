@@ -4,7 +4,7 @@
 require kde.org-4
 
 SUMMARY="KDE Software Development Kit"
-LICENCES="GPL-2 LGPL-2"
+LICENCES="GPL-2 LGPL-2 FDL-1.2"
 DESCRIPTION="
 cervisia: CVS client part
 kapptemplate: shell script to easy the beginning of new apps
@@ -15,6 +15,7 @@ kmtrace: converts glibc's mtrace log into a full backtrace
 kompare: A program to view the differences between files.
 kspy: displays all used QObjects in an application
 kuiviewer: A KPart that lets you view .ui files.
+lokalize: A computer-aided translation system
 poxml: auxillary programs for documentation translation
 scripts: various helper scripts (see scripts/README)
 scheck: An interface style to highlight accel and style guide conflicts
@@ -22,11 +23,11 @@ umbrello: A UML modeller.
 "
 
 MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
-kdeaccounts-plugin kioslave kmtrace kompare kstartperf kuiviewer lokalize poxml
+kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
-MYOPTIONS="plasma [[ description = [ A Kate Plasmoid ] requires = [ kde_parts: kate ] ]]
-           kde_parts: ${MY_KDE_PARTS}"
+MYOPTIONS="kde_parts: ${MY_KDE_PARTS} kioslave"
 
+# lokalize/PACKAGING: Wants gettext, recommends krosspython
 DEPENDENCIES="
     build:
         kde_parts:kapptemplate? (
@@ -34,12 +35,11 @@ DEPENDENCIES="
         )
     build+run:
         kde/kdelibs:${SLOT}
-        kde_parts:kate? ( plasma? ( kde/kdebase-workspace:${SLOT} ) )
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kioslave? ( >=dev-scm/subversion-1.4 )
         kde_parts:umbrello? (
-            >=dev-libs/boost-1.33.1
+          >=dev-libs/boost-1.33.1
             dev-libs/libxslt
             dev-libs/libxml2
         )
@@ -48,7 +48,7 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    Plasma
     'kde_parts:kioslave SVN'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
 )
+
