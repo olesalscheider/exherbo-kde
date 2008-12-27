@@ -19,6 +19,7 @@ MYOPTIONS="mysql"
 DEPENDENCIES="
     build:
         dev-libs/libxslt
+      >=kde/automoc4-0.9.87
     build+run:
         dev-libs/boost
         x11-libs/qt:4[dbus][sql]
