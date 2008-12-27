@@ -39,7 +39,7 @@ DEPENDENCIES="
         kde/qimageblitz [[ note = [ required for superkaramba ] ]]
         kde_parts:ark? (
             archive? ( app-arch/libarchive )
-            zip? ( dev-arch/libzip )
+            zip? ( app-arch/libzip )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
         kde_parts:superkaramba? (
