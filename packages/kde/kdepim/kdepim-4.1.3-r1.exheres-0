@@ -7,3 +7,5 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES+=( -p4 "${FILES}"/${PNV}-kmail-imap-mail-duplication-fix.patch )
 
+CMAKE_SRC_CONFIGURE_BUILDS=( -DBUILD_ktnef:BOOL=FALSE )
+

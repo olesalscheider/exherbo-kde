@@ -23,7 +23,7 @@ kjots: manager for several \"books\" with a subject and notes
 "
 
 MY_KDE_PARTS="akregator console kalarm kitchensync kjots kleopatra
-knode knotes kontact korganizer ktimetracker ktnef strigi-analyzer"
+knode knotes kontact korganizer ktimetracker strigi-analyzer"
 # akonadi kaddressbook, required by kresources which is not optional
 # kmail kmailcvt, kmail is required by plugins/kmail/ which is enabled automagically when gpgme is available. kmailcvt is required at runtime by kmail
 MYOPTIONS="
