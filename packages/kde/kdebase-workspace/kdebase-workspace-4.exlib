@@ -5,7 +5,7 @@
 require kde.org-4
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
-LICENCES="GPL-2 LGPL-2.1 FDL-2.1"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 kcheckpass: Authentication program
 kdm: Display manager
