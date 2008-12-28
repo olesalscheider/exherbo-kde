@@ -3,7 +3,7 @@
 # Based in part upon 'qca-2.0.0.ebuild', which is:
 #   Copyright 1999-2008 Gentoo Foundation
 
-require eutils multilib
+require multilib
 
 SUMMARY="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="http://delta.affinix.com/qca/"
