@@ -236,7 +236,7 @@ qt-4_src_configure() {
 qt-4_src_install() {
     default
 
-    local lib libdir=$(get_libdir) libdirs
+    local lib libdir=$(get_libdir)
     # remove build dir from libraries
     sed -i -e "s:${WORK}/lib:/usr/${libdir}/qt4:g" "${IMAGE}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc} \
         || die "Failed to remove build dir from libraries"
@@ -251,12 +251,8 @@ qt-4_src_install() {
 
     keepdir /etc/qt4
 
-    # list all the multilib libdirs in LDPATH in an env file
-    for lib in $(get_all_libdirs); do
-        libdirs="${libdirs}:/usr/${lib}/qt4"
-    done
     hereenvd 44qt4 <<EOF
-LDPATH=${libdirs:1}
+LDPATH=/usr/$(get_libdir)/qt4
 EOF
 }
 
