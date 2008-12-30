@@ -22,7 +22,7 @@ DEPENDENCIES="
         media/mplayer[srt][png]
 "
 
-EQMAKE4_SOURCE="src/${PN}.pro"
+EQMAKE4_SOURCES=( src/${PN}.pro )
 QMAKE4_SRC_CONFIGURE_PARAMS=( -o src/Makefile )
 DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr CONF_PATH="/etc/${PN}" DOC_PATH="/usr/share/doc/${PNVR}" )
 
