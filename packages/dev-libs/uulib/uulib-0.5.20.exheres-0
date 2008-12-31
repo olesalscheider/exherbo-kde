@@ -1,0 +1,42 @@
+# Copyright 2008 Wulf C. Krueger <philantrop@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'uulib-0.5.20.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation
+
+require toolchain-funcs
+
+MY_P=uudeview-${PV}
+
+SUMMARY="The uulib library from UUDeview. Supports Base64 (MIME), uuencode, xxencode and binhex coding"
+DESCRIPTION="
+This package is only interesting if you are a developer and are interested in
+writing applications with decoding support or if another package depends on it.
+"
+HOMEPAGE="http://www.fpx.de/fp/Software/UUDeview"
+DOWNLOADS="http://www.fpx.de/fp/Software/UUDeview/download/${MY_P}.tar.gz"
+
+BUGS_TO="philantrop@exherbo.org"
+REMOTE_IDS="freshmeat:uudeview"
+
+UPSTREAM_CHANGELOG="${HOMEPAGE}/HISTORY.txt"
+UPSTREAM_DOCUMENTATION="${HOMEPAGE}/download/library.pdf [[ lang = en ]]"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+WORK="${WORKBASE}"/${MY_P}/${PN}
+
+src_configure() {
+    tc-export CC
+    default
+}
+
+src_install() {
+    dolib.a libuu.a
+    insinto /usr/include
+    doins uudeview.h
+}
