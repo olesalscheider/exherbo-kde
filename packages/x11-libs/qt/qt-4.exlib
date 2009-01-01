@@ -15,16 +15,15 @@ HOMEPAGE="http://www.trolltech.com/products/qt/"
 DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_RELEASE_NOTES="http://trolltech.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
 
 LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
 SLOT=${PV:0:1}
 
 WORK=${WORKBASE}/${MY_PNV}
 
-MYOPTIONS_PARTS="demos doc examples"
+MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
-# PARTS="demos docs examples libs tools" # libs is mandatory
 MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
     qt3support sql ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}
     ( opengl xinerama ) [[ requires = X ]]
