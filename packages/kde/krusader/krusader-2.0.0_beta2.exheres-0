@@ -1,0 +1,32 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="An advanced twin panel (commander style) file manager"
+DESCRIPTION="
+Krusader is an advanced twin-panel (commander-style) file-manager for KDE,
+but with many extras. It provides all the file-management features you could
+possibly want. It also features extensive archive handling, mounted filesystem
+support, FTP, an advanced search module, a text viewer/editor, directory
+synchronization, support for file content comparisons, powerful batch renaming,
+and much more. It supports the following archive formats: tar, zip, bzip2,
+gzip, rar, ace, arj, and rpm. It can also handle other KIOSlaves such as smb://
+or fish://."
+HOMEPAGE="http://www.krusader.org"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV/_beta/-beta}.tar.gz"
+
+REMOTE_IDS="freshmeat:${PN} sourceforge:${PN}"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+"
+
+WORK="${WORKBASE}/${PNV/_beta/-beta}"
+
