@@ -14,24 +14,16 @@ DOWNLOADS="http://download.akonadi-project.org/${PNV}.tar.bz2"
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="mysql"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
         dev-libs/libxslt
       >=kde/automoc4-0.9.87
     build+run:
+        dev-db/mysql
         dev-libs/boost
-        x11-libs/qt:4[dbus][mysql?][sql]
+        x11-libs/qt:4[dbus][mysql][sql]
       >=x11-misc/shared-mime-info-0.20
-        mysql? ( dev-db/mysql )
 "
-
-src_prepare() {
-    # Don't check for mysql, avoid an automagic dep.
-    if ! option mysql; then
-        sed -e '/mysqld/s/find_program/#DONOTWANT &/' \
-            -i "${WORK}"/server/CMakeLists.txt || die 'sed failed'
-    fi
-}
 
