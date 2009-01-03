@@ -22,9 +22,14 @@ korganizer: a calendar-of-events and todo-list manager
 ktimetracker: Time tracker
 "
 
-MY_KDE_PARTS="akregator console kalarm kitchensync kjots kleopatra
-knode knotes kontact korganizer ktimetracker strigi-analyzer"
-# akonadi kaddressbook, required by kresources which is not optional
+# kitchensync will be re-enabled for 4.3
+MY_KDE_PARTS="akregator console kalarm kjots kleopatra
+knode knotes kontact korganizer ktimetracker strigi-analyzer" # kitchensync
+
+if ever at_least 4.1.85; then
+    MY_KDE_PARTS+=" kpilot"
+fi
+
 # kmail kmailcvt, kmail is required by plugins/kmail/ which is enabled automagically when gpgme is available. kmailcvt is required at runtime by kmail
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
@@ -41,21 +46,20 @@ DEPENDENCIES="
         dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
     build+run:
         app-crypt/gpgme
-        dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
+      >=dev-libs/boost-1.33.1 [[ note = [ required by akonadi and kleopatra ] ]]
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
-      >=server-pim/akonadi-0.80
-        x11-libs/qt:4[dbus][sql] [[ note = [ akonadi needs any Qt SQL plugin ] ]]
+      >=server-pim/akonadi-0.80 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
+        x11-libs/qt:4[dbus][sql]
       >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
 
         gnokii? ( mobilephone/gnokii )
-        kde_parts:kitchensync? (
-            dev-libs/glib:2
-          >=pda/libopensync-0.30
-            x11-libs/qt:4[glib]
+        ( build:
+            kde_parts:kleopatra? (
+                >=dev-libs/libassuan-1.0.4 [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
+            )
         )
-        kde_parts:kleopatra? ( >=dev-libs/libassuan-1.0.4 )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -66,11 +70,27 @@ DEPENDENCIES="
           >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "
+#        kde_parts:kitchensync? (
+#            dev-libs/glib:2
+#          >=pda/libopensync-0.38
+#            x11-libs/qt:4[glib]
+#        )
+
+if ever at_least 4.1.85; then
+    DEPENDENCIES+="
+        kde_parts:kpilot? (
+            app-crypt/qca:2
+          >=pda/libmal-0.40
+          >=pda/pilot-link-0.12
+        )
+"
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
     'nepomuk Nepomuk' 'nepomuk Soprano'
-    'kde_parts:kitchensync GLIB2' 'kde_parts:kitchensync Opensync'
+#   'kde_parts:kitchensync GLIB2' 'kde_parts:kitchensync Opensync'
     'kde_parts:kleopatra Assuan'
+    'kde_parts:kpilot QCA2' 'kde_parts:kpilot Mal' 'kde_parts:kpilot Pilotlink'
 )
 
