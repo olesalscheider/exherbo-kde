@@ -97,19 +97,18 @@ DEPENDENCIES="
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF"
 
-    # kopete plugins with no extra dependencies
-    kopete_plugins="-DWITH_addbookmarks=ON -DWITH_alias=ON
-        -DWITH_autoreplace=ON -DWITH_contactnotes=ON -DWITH_highlight=ON
-        -DWITH_history=ON -DWITH_latex=ON -DWITH_nowlistening=ON
-        -DWITH_pipes=ON -DWITH_privacy=ON -DWITH_texteffect=ON
-        -DWITH_translator=ON -DWITH_urlpicpreview=ON"
-    # kopete protocols with no extra dependencies
-    kopete_protocols="-DWITH_messenger=ON -DWITH_msn=ON -DWITH_oscar=ON
-        -DWITH_qq=ON -DWITH_sms=ON -DWITH_testbed=ON -DWITH_winpopup=ON
-        -DWITH_yahoo=ON"
-    cmakeparams+=" ${kopete_plugins} ${kopete_protocols}"
+    # Kopete plugins with no extra dependencies
+    my_kopete_plugins=(
+        addbookmarks alias autoreplace contactnotes highlight history latex nowlistening
+        pipes privacy texteffect translator urlpicpreview
+    )
+    # Kopete protocols with no extra dependencies
+    my_kopete_protocols=( messenger msn oscar qq sms testbed winpopup yahoo )
 
-    # does not work
+    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE")
+        $(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE")"
+
+    # These do not work
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
 
     for x in ${MY_KDE_PARTS}; do
@@ -170,4 +169,5 @@ src_configure() {
 
 # FIXME
 # Do? decibel
-# Warning: kppp use setuid
+# Warning: kppp uses setuid
+
