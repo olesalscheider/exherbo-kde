@@ -18,8 +18,15 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}
-        server-pim/akonadi
         sasl? ( net-libs/cyrus-sasl )"
+
+if ever at_least 4.1.85; then
+    DEPENDENCIES+="
+      >=server-pim/akonadi-1.1.0"
+else
+    DEPENDENCIES+="
+       =server-pim/akonadi-1.0*"
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )

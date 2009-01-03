@@ -50,7 +50,6 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
-      >=server-pim/akonadi-0.80 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
         x11-libs/qt:4[dbus][sql]
       >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
 
@@ -83,7 +82,10 @@ if ever at_least 4.1.85; then
           >=pda/libmal-0.40
           >=pda/pilot-link-0.12
         )
-"
+      >=server-pim/akonadi-1.1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]"
+else
+    DEPENDENCIES+="
+       =server-pim/akonadi-1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
