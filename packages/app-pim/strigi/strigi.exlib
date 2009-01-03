@@ -25,7 +25,7 @@ DEPENDENCIES="
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
         qt4? (
-            sys-apps/dbus 
+            sys-apps/dbus
             x11-libs/qt:4[dbus][X]
         )"
 
