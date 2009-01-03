@@ -6,20 +6,20 @@ require kde.org-4
 SUMMARY="KDE Personal Information Management"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
-kaddressbook: The KDE addressbook application.
+akregator: Feed reader
+kaddressbook: The KDE addressbook application
+kalarm: gui for setting up personal alarm messages, emails and commands
+kalarmd: alarm monitoring daemon, shared by korganizer and kalarm
+kfile-plugins: vCard KFIleItem plugin
+kjots: manager for several \"books\" with a subject and notes
 kmail: the KDE mail client
 kmailcvt: tool for importing mail related data from other programs
 knode: news client
-korganizer: a calendar-of-events and todo-list manager
-kalarm: gui for setting up personal alarm messages, emails and commands
-kalarmd: alarm monitoring daemon, shared by korganizer and kalarm.
-kontact: Integrated PIM application
-ktimetracker: Time tracker.
-kfile-plugins: vCard KFIleItem plugin.
 knotes: yellow notes application
-konsolekalendar: Command line tool for accessing calendar files.
-akregator: Feed reader
-kjots: manager for several \"books\" with a subject and notes
+konsolekalendar: Command line tool for accessing calendar files
+kontact: Integrated PIM application
+korganizer: a calendar-of-events and todo-list manager
+ktimetracker: Time tracker
 "
 
 MY_KDE_PARTS="akregator console kalarm kitchensync kjots kleopatra
@@ -29,39 +29,42 @@ knode knotes kontact korganizer ktimetracker strigi-analyzer"
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
     nepomuk [[ description = [ Desktop-wide taggin support for Akonadi and Kmail ] ]]
-    kde_parts: ${MY_KDE_PARTS}
-
-    kontact [[ requires = [ kde_parts: korganizer ] ]]"
+    kde_parts:
+        ${MY_KDE_PARTS}
+        kontact [[ requires = [ kde_parts: korganizer ] ]]
+"
 # option(KDE4_KDEPIM_NEW_DISTRLISTS "Whether to use new distribution lists,
 #        which stores them like normal contacts; useful for Kolab")
 
 DEPENDENCIES="
-build:
-    dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
-build+run:
-    app-crypt/gpgme
-    dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
-    dev-libs/libgpg-error
-    kde/kdelibs:${SLOT}
-    kde/kdepimlibs:${SLOT}
-    >=server-pim/akonadi-0.80
-    x11-libs/qt:4[dbus][sql] [[ note = [ akonadi needs any Qt SQL plugin ] ]]
-    >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
+    build:
+        dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
+    build+run:
+        app-crypt/gpgme
+        dev-libs/boost [[ note = [ required by akonadi and kleopatra ] ]]
+        dev-libs/libgpg-error
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+      >=server-pim/akonadi-0.80
+        x11-libs/qt:4[dbus][sql] [[ note = [ akonadi needs any Qt SQL plugin ] ]]
+      >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
 
-    gnokii? ( mobilephone/gnokii )
-    kde_parts:kitchensync? (
-        dev-libs/glib:2
-        >=pda/libopensync-0.30
-        x11-libs/qt:4[glib]
-    )
-    kde_parts:kleopatra? ( >=dev-libs/libassuan-1.0.4 )
-    kde_parts:knotes? ( x11-libs/libX11 )
-    kde_parts:ktimetracker? ( x11-libs/libX11
-                              x11-libs/libXScrnSaver )
-    nepomuk? (
-        >=dev-libs/soprano-1.99
-        >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
-    )
+        gnokii? ( mobilephone/gnokii )
+        kde_parts:kitchensync? (
+            dev-libs/glib:2
+          >=pda/libopensync-0.30
+            x11-libs/qt:4[glib]
+        )
+        kde_parts:kleopatra? ( >=dev-libs/libassuan-1.0.4 )
+        kde_parts:knotes? ( x11-libs/libX11 )
+        kde_parts:ktimetracker? (
+            x11-libs/libX11
+            x11-libs/libXScrnSaver
+        )
+        nepomuk? (
+          >=dev-libs/soprano-1.99
+          >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
+        )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
