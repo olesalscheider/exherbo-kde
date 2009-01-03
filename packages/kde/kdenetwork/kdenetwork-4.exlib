@@ -23,31 +23,38 @@ krfb: Desktop sharing server, allow others to access your desktop via VNC
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
-MY_KDE_PARTS="filesharing kget knewsticker kopete kppp krdc krfb"
+MY_KDE_PARTS+="filesharing kget knewsticker kopete kppp krdc krfb"
 #kdnssd
+MY_KOPETE_PLUGINS+="
+    otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
+    statistics [[ description = [ Statistics plugin for Kopete ] ]]
+    webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
+"
 MYOPTIONS="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
-    gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
-    groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
     jpeg [[ description = [ Support for JPEG images in Krdc ] ]]
-    otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
-    statistics [[ description = [ Statistics plugin for Kopete ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
-    webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
-    xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
 
     ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
-    ( gadu groupwise otr statistics webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
     ( jpeg vnc ) [[ requires = [ kde_parts: krdc ] ]]
 
-    kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
+    im_protocols:
+        gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
+        groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
+        wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
+        xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
+        ( gadu groupwise statistics webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
+    kde_parts:
+        ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
+    kopete_plugins:
+        ( ${MY_KOPETE_PLUGINS} ) [[ requires = [ kde_parts: kopete ] ]]
 "
 #   zeroconf [[ description = [ Enable service discovery in Krfb and Krdc ] ]]
 
 DEPENDENCIES="
     build+run:
-        dev-libs/boost
+        dev-libs/openssl
         kde/kdelibs:${SLOT}
 
         kde_parts:kget? (
@@ -73,14 +80,18 @@ DEPENDENCIES="
             x11-libs/libXft
             x11-libs/libXpm
             x11-libs/libXScrnSaver
-            gadu? ( dev-libs/openssl )
-            groupwise? ( app-crypt/qca:2 )
-            otr? ( >=net-libs/libotr-3.1.0 )
-            statistics? ( dev-db/sqlite:3 )
-            webpresence? ( dev-libs/libxml2
-                           dev-libs/libxslt )
-            xmpp? ( app-crypt/qca:2
-                    net-dns/libidn )
+            im_protocols:groupwise? ( app-crypt/qca:2 )
+            im_protocols:wlm? ( >=net-libs/libmsn-4.0_beta2 )
+            im_protocols:xmpp? (
+                app-crypt/qca:2
+                net-dns/libidn
+            )
+            kopete_plugins:otr? ( >=net-libs/libotr-3.1.0 )
+            kopete_plugins:statistics? ( dev-db/sqlite:3 )
+            kopete_plugins:webpresence? (
+                dev-libs/libxml2
+                dev-libs/libxslt
+            )
         )
         kde_parts:krdc? (
             jpeg? ( media-libs/jpeg )
@@ -103,10 +114,15 @@ src_configure() {
         pipes privacy texteffect translator urlpicpreview
     )
     # Kopete protocols with no extra dependencies
-    my_kopete_protocols=( messenger msn oscar qq sms testbed winpopup yahoo )
+    my_kopete_protocols=( oscar qq sms testbed winpopup yahoo )
+    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo -- "-DWITH_${p}:BOOL=TRUE"; done)"
+    cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo -- "-DWITH_${p}:BOOL=TRUE"; done)"
 
-    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE")
-        $(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE")"
+    # These have to be disabled for im_protocols:wlm to work
+    cmakeparams+=" -DWITH_msn=FALSE -DWITH_messenger=FALSE"
+
+    # This isn't optional for kdelibs:4
+    cmakeparams+=" -DWITH_OpenSSL=TRUE"
 
     # These do not work
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
@@ -121,13 +137,13 @@ src_configure() {
         cmakeparams+=" -DWITH_Plasma=OFF"
     fi
 
-    if option sqlite || option statistics; then
+    if option sqlite || option kopete_plugins:statistics; then
         cmakeparams+=" -DWITH_Sqlite=ON"
     else
         cmakeparams+=" -DWITH_Sqlite=OFF"
     fi
 
-    if option groupwise || option xmpp; then
+    if option im_protocols:groupwise || option im_protocols:xmpp; then
         cmakeparams+=" -DWITH_QCA2=ON"
     else
         cmakeparams+=" -DWITH_QCA2=OFF"
@@ -150,17 +166,15 @@ src_configure() {
         ${cmakeparams} \
         $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget Soprano) \
-        $(cmake_with gadu) \
-        $(cmake_with gadu OpenSSL) \
-        $(cmake_with groupwise) \
-        $(cmake_with otr) \
-        $(cmake_with otr LibOTR) \
-        $(cmake_with webpresence) \
-        $(cmake_with webpresence LibXml2) \
-        $(cmake_with webpresence LibXslt) \
-        $(cmake_with xmpp jabber) \
-        $(cmake_with xmpp IDN) \
-        $(cmake_with xmpp jabber) \
+        $(cmake_with im_protocols:gadu) \
+        $(cmake_with im_protocols:groupwise) \
+        $(cmake_with kopete_plugins:otr) \
+        $(cmake_with kopete_plugins:otr LibOTR) \
+        $(cmake_with kopete_plugins:webpresence) \
+        $(cmake_with kopete_plugins:webpresence LibXml2) \
+        $(cmake_with kopete_plugins:webpresence LibXslt) \
+        $(cmake_with im_protocols:xmpp IDN) \
+        $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_with JPEG) \
         $(cmake_enable !bittorrent EMBEDDED_TORRENT_SUPPORT) \
         -DWITH_GMP=OFF
