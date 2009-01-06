@@ -12,7 +12,11 @@ MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
-DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+if [[ ${MY_PV} == *snapshot* ]]; then
+    DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
+else
+    DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+fi
 BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
@@ -57,8 +61,8 @@ DEPENDENCIES="
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
         phonon? (
-            media-libs/gstreamer
-            media-plugins/gst-plugins-base
+          >=media-libs/gstreamer-0.10
+          >=media-plugins/gst-plugins-base-0.10
         )
         png? ( media-libs/libpng )
         postgresql? ( dev-db/postgresql )
@@ -185,6 +189,7 @@ qt-4_src_configure() {
         $(qt4_enable cups)
         $(qt4_enable dbus "" "" linked)
         $(qt4_enable glib)
+        $(ever at_least '4.5.0_pre20090101' && echo "$(qt4_enable gtk gtkstyle)")
         $(qt4_enable opengl)
         $(qt4_enable qt3support)
         $(qt4_enable phonon)
