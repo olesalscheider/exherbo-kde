@@ -15,9 +15,9 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-crypt/gpgme
-        dev-libs/boost
+      >=dev-libs/boost-1.33.1
         dev-libs/libgpg-error
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         sasl? ( net-libs/cyrus-sasl )"
 
 if ever at_least 4.1.85; then
