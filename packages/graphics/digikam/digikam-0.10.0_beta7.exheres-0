@@ -12,7 +12,7 @@ BUGS_TO="kde@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="gphoto2"
+MYOPTIONS="gphoto2 jasper"
 
 # MarbleWidget: marble? ( >=kde/kdeedu-4.1.85 )
 # LensFun:      lensfun? ( media-libs/lensfun ) [[ url = http://lensfun.berlios.de/ ]]
