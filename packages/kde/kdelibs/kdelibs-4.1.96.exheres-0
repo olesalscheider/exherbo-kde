@@ -7,6 +7,5 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-Add-Exherbo-ExherboDebug-build-types.patch"
-    "${FILES}/${PNV}-konqueror-fix-moved-tab-titles.patch"
 )
 

@@ -13,7 +13,6 @@ MYOPTIONS="doc fam opengl spell
 ppc_cpu_features: altivec
 x86_cpu_features: mmx sse sse2"
 
-# XXX   build: x11-proto/*
 #       sys-devel/gettext?
 DEPENDENCIES="
     build:
@@ -97,8 +96,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 src_prepare() {
     default
     # Kate tests need a tarball from SVN
-    sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' -i kate/CMakeLists.txt \
-        || die 'sed failed'
+    sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
+        -i kate/CMakeLists.txt || die 'sed failed'
 }
 
 src_compile() {
