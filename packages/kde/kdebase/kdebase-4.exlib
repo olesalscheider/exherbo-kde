@@ -25,13 +25,13 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
-        >=dev-libs/soprano-2.0.98
+      >=dev-libs/soprano-2.0.98
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
-        >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
+      >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
         sys-apps/pciutils
         sys-apps/usbutils-data [[
             note = [ required to display USB information in kinfocenter ]
@@ -39,7 +39,6 @@ DEPENDENCIES="
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
-        x11-libs/libXtst
         x11-libs/qt:4[glib][opengl?]
         ieee1394? ( media-libs/libraw1394 )
     post,suggested:
