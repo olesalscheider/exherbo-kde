@@ -1,0 +1,22 @@
+From 86cc8c3e7eb8947d3dce18d12a530c2ad285c47a Mon Sep 17 00:00:00 2001
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Date: Wed, 7 Jan 2009 18:40:57 +0100
+Subject: [PATCH] Don't search for Xine if -DWITH_Xine:BOOL=FALSE is passed to CMake.
+
+---
+ runtime/phonon/kcm/xine/CMakeLists.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/runtime/phonon/kcm/xine/CMakeLists.txt b/runtime/phonon/kcm/xine/CMakeLists.txt
+index f4c68cf..15ac6bd 100644
+--- a/runtime/phonon/kcm/xine/CMakeLists.txt
++++ b/runtime/phonon/kcm/xine/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-find_package(Xine)
++macro_optional_find_package(Xine)
+ 
+ if(XINE_FOUND)
+    set(kcmphononxine_SRCS xineoptions.cpp)
+-- 
+1.6.1
+

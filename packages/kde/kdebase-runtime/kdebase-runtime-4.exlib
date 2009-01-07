@@ -31,20 +31,20 @@ DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
-        >=dev-cpp/clucene-0.9.19
-        >=dev-libs/soprano-2.0.98
+      >=dev-cpp/clucene-0.9.19
+      >=dev-libs/soprano-2.0.98
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
-        >=sys-sound/alsa-lib-1.0.14a
+      >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
 "
-#   post+suggested:
+#   post,suggested:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

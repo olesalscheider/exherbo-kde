@@ -28,16 +28,20 @@ solid-hardware: Query your hardware from the command line
 renamedlgplugins: Plugins for Konqueror's rename dialog
 "
 
-MYOPTIONS+="pulseaudio"
+MYOPTIONS+="pulseaudio
+    xine [[ description = [ Install the phonon-xine KControl Module ] ]]"
 
 DEPENDENCIES="
     build+run:
-        >=media-libs/phonon-4.2.80 [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
+        xine? ( media-libs/xine-lib )
+      >=media-libs/phonon-4.2.80[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
         pulseaudio? ( media-sound/pulseaudio )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PNV}-optional-xine.patch" )
 # We don't have PulseAudio atm. It needs libpulse.
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     PulseAudio
+    Xine
 )
 
