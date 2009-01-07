@@ -1,0 +1,73 @@
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require multilib
+
+SUMMARY="A high-performance object-relational SQL database"
+DESCRIPTION="
+Virtuoso is a scalable cross-platform server that combines SQL/RDF/XML
+Data Management with Web Application Server and Web Services Platform
+functionality.
+"
+HOMEPAGE="http://www.openlinksw.com/borislav/wiki/Main/VOSMake http://virtuoso.sf.net/"
+REMOTE_IDS="sourceforge:virtuoso"
+DOWNLOADS="mirror://sourceforge/virtuoso/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+# build: htmldoc for pdf docs
+DEPENDENCIES="
+    build+run:
+        dev-db/libiodbc
+        dev-libs/libxml2[>=2.4.0]
+        dev-libs/openssl
+        media-gfx/ImageMagick
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --with-layout=Gentoo
+    --localstatedir=/var
+
+    --enable-shared
+
+    # Prevent collisions
+    --program-transform-name="s/$/-virtuoso/"
+
+    --enable-imagemagick
+    --enable-openssl
+    --with-readline
+
+    # upstream enables these by default
+    --disable-hslookup
+    --disable-wbxml2
+
+    # If disabled, an internal copy of some iodbc headers is used
+    --with-iodbc
+
+    # we don't immediately need these
+    --disable-krb
+    --disable-openldap
+    --disable-rendezvous
+    # hosting
+    --disable-{mono,php4,php5,perl,python,ruby}
+    --without-jdk{1,2,3,4}
+)
+
+src_compile() {
+    # FIXME Some calls to 'gmake' instead of 'make'
+    # FIXME Hack around parallel make bug (in binsrc/samples/demo ?), without the slowness of -j1
+    if ! nonfatal emake ; then
+        einfo "Parallel make failed, retrying with 'emake -j1'"
+        nonfatal emake -j1 || die "emake -j1 failed"
+    fi
+}
+
+src_install() {
+    default
+
+    rm -r "${IMAGE}"/usr/$(get_libdir)/{jdbc-*,jena,sesame}/{*.jar,} || die "One man no jars!"
+}
+
