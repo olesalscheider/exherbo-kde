@@ -1,0 +1,63 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="KIPI (KDE Image Plugin Interface) is an effort to develop a common plugin structure for Digikam, KPhotoAlbum, Showimg and GwenView"
+HOMEPAGE="http://www.kipi-plugins.org"
+DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV/_beta/-beta}.tar.bz2"
+
+BUGS_TO="kde@exherbo.org"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+kipi_plugins:
+    ipodexport    [[ description = [ A plugin to export images to an iPod ] ]]
+    removeredeyes [[ description = [ A plugin for removal of red eyes ] ]]
+    sane          [[ description = [ A plugin to acquire images from a scanner ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/expat   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
+        dev-libs/libxml2 [[ description = [ Htmlexport ] ]]
+        dev-libs/libxslt [[ description = [ Htmlexport ] ]]
+        kde/kdelibs:4
+      >=kde/kdegraphics-4.1.85:4[kde_parts:gwenview] [[
+            note = [ We need LibKExiv2, a wrapper around the Exiv2 library ]
+        ]]
+        kde/kdepimlibs:4
+        media-libs/jpeg
+      >=media-libs/libpng-1.2.7
+        media-libs/tiff
+        x11-dri/mesa     [[ description = [ For Slideshow and ImageViewer ] ]]
+        x11-libs/libX11
+        x11-libs/libXrandr
+        x11-libs/qt:4[X]
+        kipi_plugins:ipodexport? (
+            dev-libs/glib:2
+            media-libs/libgpod
+            x11-libs/gtk+:2
+        )
+        kipi_plugins:removeredeyes? ( media-libs/opencv )
+        kipi_plugins:sane? (
+          >=kde/kdegraphics-4.1.85:4[kde_parts:ksaneplugin]
+            media-gfx/sane-backends
+        )
+"
+
+WORK=${WORKBASE}/${PNV/_beta/-beta}
+
+src_configure() {
+    ecmake \
+        -DWITH_X11:BOOL=TRUE \
+        $(cmake_with kipi_plugins:ipodexport Gpod) \
+        $(cmake_with kipi_plugins:ipodexport GLIB2)  \
+        $(cmake_with kipi_plugins:ipodexport GObject) \
+        $(cmake_with kipi_plugins:removeredeyes OpenCV) \
+        $(cmake_with kipi_plugins:sane KSane) \
+        $(cmake_with kipi_plugins:sane Sane)
+}
+
