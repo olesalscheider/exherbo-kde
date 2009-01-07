@@ -37,17 +37,19 @@ systemsettings: Settings utility
 # Needed to build plasma scriptengine for edje files
 # + Python: KDE Python support <http://techbase.kde.org/Development/Languages/Python>
 # Needed to build plasma scriptengine for Python
+#   >=dev-python/PyQt4-4.4.0
+#   >=dev-python/sip-4.7.1
 # + Captury framework library, 0.3.0: Realtime video capturing framework e.g. screen casts <http://ninchens.de/projects/captury>
 # Provides for video recording desktop effects.
-# Sip: >=4.7.1
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Not optional in Exherbo
+    -DWITH_Nepomuk=On
+    # Extra plasma functionality
     -DWITH_Googlegadgets=Off
+    -DWITH_PyKDE4=Off -DWITH_SIP=Off -DWITH_PythonLibrary=Off -DWITH_PyQt4=Off
     -DWITH_QEdje=Off
-    -DWITH_PyKDE4=Off
-    -DWITH_PythonLibrary=Off
-    -DWITH_SIP=Off
-    -DWITH_PyQt4=Off
-    -DWITH_Nepomuk=On # Hard-enable unless we decide to make it optional
-    -DWITH_CkConnector=Off # Hard-disable it for now, unless someone insist on optionally enabling it
+    # Hard-disable it for now, unless someone insist on optionally enabling it
+    # Option seems gone with 4.1.96
+    # -DWITH_CkConnector=Off
 )
 

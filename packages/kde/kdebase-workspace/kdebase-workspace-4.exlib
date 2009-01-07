@@ -65,6 +65,7 @@ DEPENDENCIES="
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
       >=x11-libs/libxklavier-3.0 [[ note = kcontrol/kxkb ]]
+        x11-libs/libxkbfile [[ note = kcontrol/kxkb ]]
         x11-libs/qt:4[opengl?][webkit]
         bluetooth? ( net-wireless/bluez )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
