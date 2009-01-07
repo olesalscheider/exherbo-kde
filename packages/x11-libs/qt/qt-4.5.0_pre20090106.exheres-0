@@ -1,0 +1,38 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PV="${PV/_pre/-snapshot-}"
+
+require "${PN}-4"
+
+PLATFORMS="~amd64 ~x86"
+
+UPSTREAM_CHANGELOG=""
+UPSTREAM_RELEASE_NOTES="http://trolltech.com/about/news/qt-4.5-beta-previews-64-bit-on-mac"
+
+MYOPTIONS="
+    gtk [[
+        requires = glib
+        description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
+    ]]"
+DEPENDENCIES="
+    build+run:
+        gtk? (
+          >=x11-libs/gtk+-2.10:2
+            dev-libs/atk
+        )
+"
+
+# -opengl auto
+# -phonon -no-phonon + -no-phonon-backend: gstreamer-plugins-base-0.10
+# -scripttools (auto)
+# -mitshm: (auto) xextproto
+# -xrandr: runtime (?) (yes|no|runtime)
+# XXX
+# -optimized-qmake
+# pkg-config! <- Now if I could remember why I added that... :-)
+# -ptmalloc
+# -translations are built by default
+
+# ^ Diff between 4.4.3 & 4.5.0-pre1 -> 4.5.0_pre20090101
+

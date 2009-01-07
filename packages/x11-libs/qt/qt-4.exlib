@@ -12,22 +12,26 @@ MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.trolltech.com/products/qt/"
-DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+if [[ ${MY_PV} == *snapshot* ]]; then
+    DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
+else
+    DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+fi
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_RELEASE_NOTES="http://trolltech.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
 
 LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
 SLOT=${PV:0:1}
 
 WORK=${WORKBASE}/${MY_PNV}
 
-MYOPTIONS_PARTS="demos doc examples"
+MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
-# PARTS="demos docs examples libs tools" # libs is mandatory
 MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
     qt3support sql ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}
     ( opengl xinerama ) [[ requires = X ]]
+    phonon [[ requires = glib ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
@@ -57,8 +61,8 @@ DEPENDENCIES="
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
         phonon? (
-            media-libs/gstreamer
-            media-plugins/gst-plugins-base
+          >=media-libs/gstreamer-0.10
+          >=media-plugins/gst-plugins-base-0.10
         )
         png? ( media-libs/libpng )
         postgresql? ( dev-db/postgresql )
@@ -101,33 +105,35 @@ qt4_enable() {
 }
 
 qconf4() {
-    local myconf libdir=$(get_libdir)
+    local myconf=() libdir=$(get_libdir)
 
     # paths
-    myconf="-prefix /usr
-            -bindir /usr/bin
-            -libdir /usr/${libdir}/qt4
-            -docdir /usr/share/doc/${PNVR}
-            -headerdir /usr/include/qt4
-            -plugindir /usr/${libdir}/qt4/plugins
-            -datadir /usr/share/qt4
-            -translationdir /usr/share/qt4/translations
-            -sysconfdir /etc/qt4
-            -examplesdir /usr/share/qt4/examples
-            -demosdir /usr/share/qt4/demos"
+    myconf=(
+        -prefix /usr
+        -bindir /usr/bin
+        -docdir /usr/share/doc/${PNVR}
+        -headerdir /usr/include/qt4
+        -libdir /usr/${libdir}/qt4
+        -plugindir /usr/${libdir}/qt4/plugins
+        -datadir /usr/share/qt4
+        -translationdir /usr/share/qt4/translations
+        -sysconfdir /etc/qt4
+        -examplesdir /usr/share/qt4/examples
+        -demosdir /usr/share/qt4/demos
+    )
 
     # arch
     case "${ARCH}" in
-        amd64)                          myconf+=" -arch x86_64" ;;
-        ppc|ppc64)                      myconf+=" -arch powerpc" ;;
-        x86|x86-*)                      myconf+=" -arch i386" ;;
-        alpha|arm|ia64|mips|s390|sparc) myconf+=" -arch ${ARCH}" ;;
-        hppa|sh)                        myconf+=" -arch generic" ;;
+        amd64)                          myconf+=( -arch x86_64 ) ;;
+        ppc|ppc64)                      myconf+=( -arch powerpc ) ;;
+        x86|x86-*)                      myconf+=( -arch i386 ) ;;
+        alpha|arm|ia64|mips|s390|sparc) myconf+=( -arch ${ARCH} ) ;;
+        hppa|sh)                        myconf+=( -arch generic ) ;;
         *) die "${ARCH} is unsupported by this eclass. Please file a bug" ;;
     esac
 
-    echo ./configure ${myconf} "$@" ${EXTRA_ECONF} 1>&2
-    ./configure ${myconf} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
+    echo ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} 1>&2
+    ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
 }
 
 qt-4_src_prepare() {
@@ -158,36 +164,41 @@ qt-4_src_prepare() {
 }
 
 qt-4_src_configure() {
-    local myconf
-    myconf="-confirm-license
-            -fast
-            -largefile
-            -no-rpath
-            -no-separate-debug-info
-            -pch
-            -reduce-relocations
-            -release
-            -stl
-            -verbose"
+    local myconf=()
+    myconf=(
+        -confirm-license
+        -fast
+        -largefile
+        -no-rpath
+        -no-separate-debug-info
+        -pch
+        -reduce-relocations
+        -release
+        -stl
+        -verbose
+    )
 
-    myconf+=" -iconv
-              -no-nas-sound
-              -no-nis
-              -no-tablet
-              -system-zlib
-              -xmlpatterns
-              $(qt4_enable accessibility)
-              $(qt4_enable cups)
-              $(qt4_enable dbus "" "" linked)
-              $(qt4_enable glib)
-              $(qt4_enable opengl)
-              $(qt4_enable qt3support)
-              $(qt4_enable phonon)
-              $(qt4_enable ssl openssl)
-              $(qt4_enable webkit)
-              $(qt4_enable xinerama)"
+    myconf+=(
+        -iconv
+        -no-nas-sound
+        -no-nis
+        -no-tablet
+        -system-zlib
+        -xmlpatterns
+        $(qt4_enable accessibility)
+        $(qt4_enable cups)
+        $(qt4_enable dbus "" "" linked)
+        $(qt4_enable glib)
+        $(ever at_least '4.5.0_pre20090101' && echo "$(qt4_enable gtk gtkstyle)")
+        $(qt4_enable opengl)
+        $(qt4_enable qt3support)
+        $(qt4_enable phonon)
+        $(qt4_enable ssl openssl)
+        $(qt4_enable webkit)
+        $(qt4_enable xinerama)
+    )
 
-    # CPU flags
+    # CPU flags: XXX
     # 3dnow, mmx, sse, sse2
 
     # X
@@ -202,35 +213,39 @@ qt-4_src_configure() {
     # database plugins
     #myconf+=" $(qt4_enable firebird sql-ibase plugin "" -I/opt/firebird/include)"
     #          $(qt4_enable odbc sql-odbc plugin)
-    myconf+=" -no-sql-ibase
-              -no-sql-odbc
-              $(qt4_enable mysql sql-mysql plugin "")
-              $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
-              $(qt4_enable postgresql sql-psql plugin "")
-              $(option postgresql && echo '-I/usr/include/postgresql/server/')
-              $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
-              -no-sql-sqlite2"
+    myconf+=(
+        -no-sql-ibase
+        -no-sql-odbc
+        $(qt4_enable mysql sql-mysql plugin "")
+        $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
+        $(qt4_enable postgresql sql-psql plugin "")
+        $(option postgresql && echo '-I/usr/include/postgresql/server/')
+        $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
+        -no-sql-sqlite2
+    )
 
     # media formats
-    myconf+=" $(qt4_enable gif gif qt)
-              $(qt4_enable jpeg libjpeg system)
-              $(qt4_enable mng libmng system)
-              $(qt4_enable png libpng system)
-              $(qt4_enable svg)
-              $(qt4_enable tiff libtiff system)"
+    myconf+=(
+        $(qt4_enable gif gif qt)
+        $(qt4_enable jpeg libjpeg system)
+        $(qt4_enable mng libmng system)
+        $(qt4_enable png libpng system)
+        $(qt4_enable svg)
+        $(qt4_enable tiff libtiff system)
+    )
 
     # optional parts
     if option !demos; then
-        myconf+=" -nomake demos"
+        myconf+=( -nomake demos )
     fi
     if option !doc; then
-        myconf+=" -nomake docs"
+        myconf+=( -nomake docs )
     fi
     if option !examples; then
-        myconf+=" -nomake examples"
+        myconf+=( -nomake examples )
     fi
 
-    qconf4 ${myconf}
+    qconf4 ${myconf[@]}
 }
 
 qt-4_src_install() {
