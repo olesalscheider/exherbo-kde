@@ -1,0 +1,46 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="An advanced digital photo management application"
+HOMEPAGE="http://www.digikam.org/"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV/_beta/-beta}.tar.bz2"
+
+BUGS_TO="kde@exherbo.org"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="gphoto2"
+
+# MarbleWidget: marble? ( >=kde/kdeedu-4.1.85 )
+# LensFun:      lensfun? ( media-libs/lensfun ) [[ url = http://lensfun.berlios.de/ ]]
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        kde/kdelibs:4
+        kde/kdepimlibs:4
+      >=kde/kdegraphics-4.1.85:4[kde_parts:gwenview] [[
+            note = [ We need LibKExiv2, a wrapper around the Exiv2 library ]
+        ]]
+        media-libs/jpeg
+        media-libs/lcms
+      >=media-libs/libpng-1.2.7
+        media-libs/tiff
+        x11-libs/qt:4[X][sql][sqlite]
+        gphoto2? ( >=media-libs/libgphoto2-2.4.0 )
+        jasper? ( >=media-libs/jasper-1.7.0 )
+"
+
+WORK=${WORKBASE}/${PNV/_beta/-beta}
+
+CMAKE_SRC_CONFIGURE_ENABLES=( GHOTO2 )
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DWITH_LensFun:BOOL=FALSE
+    -DWITH_MarbleWidget:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_WITHS=( Gphoto2 Jasper )
+
