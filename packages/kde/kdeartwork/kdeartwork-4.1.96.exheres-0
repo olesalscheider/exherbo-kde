@@ -6,11 +6,11 @@ require "${PN}-4"
 PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
-    build+run:
+    build:
         xscreensaver? (
-            sci-libs/eigen [[
-                note = [ Automagic at the moment, should be fixed in later snapshots ]
-            ]]
+            sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
         )
 "
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'xscreensaver Eigen2' )
 
