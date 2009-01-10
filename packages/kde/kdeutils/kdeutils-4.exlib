@@ -36,13 +36,14 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
-        kde/qimageblitz [[ note = [ required for superkaramba ] ]]
         kde_parts:ark? (
             archive? ( app-arch/libarchive )
             zip? ( app-arch/libzip )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
         kde_parts:superkaramba? (
+            kde/kdebase-workspace:${SLOT}
+            kde/qimageblitz
             x11-libs/libICE
             x11-libs/libSM
             x11-libs/libX11
@@ -52,7 +53,6 @@ DEPENDENCIES="
             x11-libs/libXft
             x11-libs/libXpm
             x11-libs/libXrender
-            kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
             python? ( dev-lang/python:= )
         )
 "
