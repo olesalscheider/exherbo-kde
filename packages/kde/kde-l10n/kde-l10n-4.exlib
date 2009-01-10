@@ -1,7 +1,7 @@
 # Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-[[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres.'
+[[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres!'
 require kde.org-4
 
 set_kde_l10n_downloads() {
@@ -21,7 +21,7 @@ MYOPTIONS="linguas: ( ${LANGS} ) [[ number-selected = at-least-one ]]"
 DEPENDENCIES="
     build:
         kde/kdelibs:4
-        sys-devel/gettext"
+      >=sys-devel/gettext-0.17"
 
 for_all_enabled_linguas_run() {
     local lingua= ECMAKE_BUILD_DIR= WORK=
