@@ -88,39 +88,43 @@ myoption() {
 }
 
 qt-3_src_configure() {
-    # append-flags -fno-strict-aliasing
-
     # -no-pch gif png zlib
-    STATIC_CONFIGURE_PARAMS="-dlopen-opengl -fast -largefile -shared -sm -stl -tablet -thread -verbose"
-    STATIC_CONFIGURE_PARAMS+=" -xcursor -xft -xkb -xrandr -xrender -no-sql-ibase -no-sql-odbc"
-    STATIC_CONFIGURE_PARAMS+=" -system-libjpeg -system-libmng -system-libpng -system-zlib"
-    STATIC_CONFIGURE_PARAMS+=" -qt-gif -qt-imgfmt-jpeg -qt-imgfmt-mng -qt-imgfmt-png"
+    STATIC_CONFIGURE_PARAMS=(
+        -dlopen-opengl -fast -largefile -shared -sm -stl -tablet -thread -verbose
+        -xcursor -xft -xkb -xrandr -xrender -no-sql-ibase -no-sql-odbc
+        -system-libjpeg -system-libmng -system-libpng -system-zlib
+        -qt-gif -qt-imgfmt-jpeg -qt-imgfmt-mng -qt-imgfmt-png
+    )
 
     # -platform=host, -xplatform=target
-    PLATFORM_CONFIGURE_PARAMS="-platform ${platform} -xplatform ${platform}"
-    PLATFORM_CONFIGURE_PARAMS+=" -prefix ${QTBASEDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}"
-    PLATFORM_CONFIGURE_PARAMS+=" -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}"
-    PLATFORM_CONFIGURE_PARAMS+=" -plugindir ${QTPLUGINDIR} -datadir ${QTDATADIR}"
-    PLATFORM_CONFIGURE_PARAMS+=" -translationdir ${QTTRANSLATIONDIR} -sysconfdir ${QTSYSCONFDIR}"
-    PLATFORM_CONFIGURE_PARAMS+=" -L/usr/${libdir}"
+    PLATFORM_CONFIGURE_PARAMS=(
+        -platform ${platform} -xplatform ${platform}
+        -prefix ${QTBASEDIR} -bindir ${QTBINDIR}
+        -libdir ${QTLIBDIR} -L/usr/${libdir}
+        -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
+        -plugindir ${QTPLUGINDIR} -datadir ${QTDATADIR}
+        -translationdir ${QTTRANSLATIONDIR} -sysconfdir ${QTSYSCONFDIR}
+    )
 
-    CONFIGURE_OPTIONS="$(option debug && echo '-debug' || echo '-release')"
-    CONFIGURE_OPTIONS+=" $(option opengl && echo '-enable-module=opengl' || echo '-disable-opengl')"
-    CONFIGURE_OPTIONS+=" $(myoption cups)"
-    CONFIGURE_OPTIONS+=" $(myoption ipv6)"
-    CONFIGURE_OPTIONS+=" $(myoption xinerama)"
-    CONFIGURE_OPTIONS+=" $(myoption mysql sql-mysql plugin)" # -I,-L
-    CONFIGURE_OPTIONS+=" $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')"
-    CONFIGURE_OPTIONS+=" $(myoption postgresql sql-psql plugin)"
-    CONFIGURE_OPTIONS+=" $(option postgresql && echo '-I/usr/include/postgresql/server/')"
-    CONFIGURE_OPTIONS+=" $(myoption sqlite sql-sqlite plugin)"
+    CONFIGURE_OPTIONS=(
+        $(option debug && echo '-debug' || echo '-release')
+        $(option opengl && echo '-enable-module=opengl' || echo '-disable-opengl')
+        $(myoption cups)
+        $(myoption ipv6)
+        $(myoption xinerama)
+        $(myoption mysql sql-mysql plugin)
+        $(option mysql && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
+        $(myoption postgresql sql-psql plugin)
+        $(option postgresql && echo '-I/usr/include/postgresql/server/')
+        $(myoption sqlite sql-sqlite plugin)
+    )
 
     if option !doc; then
         echo "INSTALLS -= htmldocs" >> ./src/qt_install.pri || die "Disabling apidocs failed"
     fi
 
-    echo "./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS}"
-    ./configure ${STATIC_CONFIGURE_PARAMS} ${PLATFORM_CONFIGURE_PARAMS} ${CONFIGURE_OPTIONS} \
+    echo "./configure ${STATIC_CONFIGURE_PARAMS[@]} ${PLATFORM_CONFIGURE_PARAMS[@]} ${CONFIGURE_OPTIONS[@]}"
+    ./configure ${STATIC_CONFIGURE_PARAMS[@]} ${PLATFORM_CONFIGURE_PARAMS[@]} ${CONFIGURE_OPTIONS[@]} \
         || die './configure failed'
 }
 
