@@ -104,7 +104,7 @@ qt-3_src_configure() {
     PLATFORM_CONFIGURE_PARAMS+=" -translationdir ${QTTRANSLATIONDIR} -sysconfdir ${QTSYSCONFDIR}"
     PLATFORM_CONFIGURE_PARAMS+=" -L/usr/${libdir}"
 
-    CONFIGURE_OPTIONS="$(option debug && echo '-debug' || echo '-release -no-g++-exceptions')"
+    CONFIGURE_OPTIONS="$(option debug && echo '-debug' || echo '-release')"
     CONFIGURE_OPTIONS+=" $(option opengl && echo '-enable-module=opengl' || echo '-disable-opengl')"
     CONFIGURE_OPTIONS+=" $(myoption cups)"
     CONFIGURE_OPTIONS+=" $(myoption ipv6)"
