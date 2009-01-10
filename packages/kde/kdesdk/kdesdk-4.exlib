@@ -27,7 +27,7 @@ kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
 MYOPTIONS="kde_parts: ${MY_KDE_PARTS} kioslave"
 
-# lokalize/PACKAGING: Wants gettext, recommends krosspython
+# FIXME: Read lokalize/PACKAGING: Wants gettext, recommends krosspython
 DEPENDENCIES="
     build:
         kde_parts:kapptemplate? (
