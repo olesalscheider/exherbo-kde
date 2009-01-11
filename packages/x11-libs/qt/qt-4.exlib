@@ -28,10 +28,9 @@ WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
-MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
+MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl png
     qt3support sql ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}
     ( opengl xinerama ) [[ requires = X ]]
-    phonon [[ requires = glib ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
@@ -66,10 +65,6 @@ DEPENDENCIES="
         mng? ( media-libs/libmng )
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
-        phonon? (
-          >=media-libs/gstreamer-0.10
-          >=media-plugins/gst-plugins-base-0.10
-        )
         png? ( media-libs/libpng )
         postgresql? ( dev-db/postgresql )
         sqlite? ( dev-db/sqlite:3 )
@@ -198,7 +193,7 @@ qt-4_src_configure() {
         $(ever at_least '4.5.0_pre20090101' && echo "$(qt4_enable gtk gtkstyle)")
         $(qt4_enable opengl)
         $(qt4_enable qt3support)
-        $(qt4_enable phonon)
+        -no-phonon # We follow KDEs phonon releases, which ships the gstreamer plugin too, and doesn't break newer KDE releases
         $(qt4_enable ssl openssl)
         $(qt4_enable webkit)
         $(qt4_enable xinerama)

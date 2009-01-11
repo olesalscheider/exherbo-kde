@@ -24,7 +24,6 @@ DEPENDENCIES="
 "
 
 # -opengl auto
-# -phonon -no-phonon + -no-phonon-backend: gstreamer-plugins-base-0.10
 # -scripttools (auto)
 # -mitshm: (auto) xextproto
 # -xrandr: runtime (?) (yes|no|runtime)
