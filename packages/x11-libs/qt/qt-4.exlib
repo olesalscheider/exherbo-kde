@@ -36,7 +36,13 @@ MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl phonon png
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
     )
-    webkit [[ requires = ssl ]]"
+    demos       [[ description = [ Compile demo-programs that show off Qt's widgets & functionality ] ]]
+    glib        [[ description = [ Add support for the glib eventloop ] ]]
+    qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
+    sql         [[ description = [ Build the SQL plugins ] ]]
+    webkit      [[ requires = ssl
+                   description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
+"
 DEPENDENCIES="
     build:
         dev-util/pkg-config

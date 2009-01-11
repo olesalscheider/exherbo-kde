@@ -14,50 +14,53 @@ MYOPTIONS="cups debug doc examples glib ipv6 opengl ssl sql xinerama
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
-    )"
+    )
+    glib    [[ description = [ Add support for the glib eventloop ] ]]
+    sql     [[ description = [ Build the SQL plugins ] ]]
+"
 
 DEPENDENCIES="
-build:
-    dev-util/pkg-config
-    x11-proto/inputproto
-    x11-proto/xextproto
-    xinerama? ( x11-proto/xineramaproto )
-build+run:
-    media-libs/freetype:2
-    media-libs/jpeg
-    media-libs/libmng
-    media-libs/libpng
-    sys-libs/zlib
-    x11-libs/libXcursor
-    x11-libs/libXft
-    x11-libs/libXi
-    x11-libs/libXrandr
-    x11-libs/libSM
-    cups? ( net-print/cups )
-    glib? ( dev-libs/glib:2 )
-    mysql? ( dev-db/mysql )
-    opengl? ( x11-dri/mesa )
-    sqlite? ( dev-db/sqlite:3 )
-    postgresql? ( dev-db/postgresql )
-    ssl? ( dev-libs/openssl )
-    xinerama? ( x11-libs/libXinerama )
+    build:
+        dev-util/pkg-config
+        x11-proto/inputproto
+        x11-proto/xextproto
+        xinerama? ( x11-proto/xineramaproto )
+    build+run:
+        media-libs/freetype:2
+        media-libs/jpeg
+        media-libs/libmng
+        media-libs/libpng
+        sys-libs/zlib
+        x11-libs/libXcursor
+        x11-libs/libXft
+        x11-libs/libXi
+        x11-libs/libXrandr
+        x11-libs/libSM
+        cups? ( net-print/cups )
+        glib? ( dev-libs/glib:2 )
+        mysql? ( dev-db/mysql )
+        opengl? ( x11-dri/mesa )
+        sqlite? ( dev-db/sqlite:3 )
+        postgresql? ( dev-db/postgresql )
+        ssl? ( dev-libs/openssl )
+        xinerama? ( x11-libs/libXinerama )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-"${FILES}/${PNV}-uic-fix.patch" #document
-"${FILES}/${PNV}-mysql-unload-crash.patch" #document
-"${FILES}/${PNV}-0001-dnd_optimization.patch"
-"${FILES}/${PNV}-0002-dnd_active_window_fix.patch"
-"${FILES}/${PNV}-0038-dragobject-dont-prefer-unknown.patch"
-"${FILES}/${PNV}-0044-qscrollview-windowactivate-fix.diff"
-"${FILES}/${PNV}-0047-fix-kmenu-widget.diff"
-"${FILES}/${PNV}-0048-qclipboard_hack_80072.patch"
-"${FILES}/${PNV}-0081-format-string-fixes.diff"
-"${FILES}/${PNV}-unicode-off-by-one.patch" #document
-"${FILES}/${PNV}-seli-xinerama.patch" #document
-"${FILES}/${PNV}-utf8-bug-qt3.diff" #document
-"${FILES}/${PNV}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
-"${FILES}/${PNV}-mips.patch" #document
-"${FILES}/${PNV}-build-key.patch"
+    "${FILES}/${PNV}-uic-fix.patch" #document
+    "${FILES}/${PNV}-mysql-unload-crash.patch" #document
+    "${FILES}/${PNV}-0001-dnd_optimization.patch"
+    "${FILES}/${PNV}-0002-dnd_active_window_fix.patch"
+    "${FILES}/${PNV}-0038-dragobject-dont-prefer-unknown.patch"
+    "${FILES}/${PNV}-0044-qscrollview-windowactivate-fix.diff"
+    "${FILES}/${PNV}-0047-fix-kmenu-widget.diff"
+    "${FILES}/${PNV}-0048-qclipboard_hack_80072.patch"
+    "${FILES}/${PNV}-0081-format-string-fixes.diff"
+    "${FILES}/${PNV}-unicode-off-by-one.patch" #document
+    "${FILES}/${PNV}-seli-xinerama.patch" #document
+    "${FILES}/${PNV}-utf8-bug-qt3.diff" #document
+    "${FILES}/${PNV}-visibility.patch" #document ## Probably not <gcc-4.1/icc safe
+    "${FILES}/${PNV}-mips.patch" #document
+    "${FILES}/${PNV}-build-key.patch"
 )
 
