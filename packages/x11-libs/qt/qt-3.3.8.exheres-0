@@ -14,7 +14,10 @@ MYOPTIONS="cups debug doc examples glib ipv6 opengl ssl sql xinerama
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
-    )"
+    )
+    glib    [[ description = [ Add support for the glib eventloop ] ]]
+    sql     [[ description = [ Build the SQL plugins ] ]]
+"
 
 DEPENDENCIES="
     build:
