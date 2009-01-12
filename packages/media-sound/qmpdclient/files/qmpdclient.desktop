@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+Name=Qmpdclient
+GenericName=Qmpdclient
+Icon=qmpdclient
+Exec=qmpdclient
+Terminal=false
+Categories=Qt;KDE;AudioVideo;Audio;
+
