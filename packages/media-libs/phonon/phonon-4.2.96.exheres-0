@@ -14,7 +14,7 @@ DOWNLOADS="mirror://kde/unstable/${PV}/src/${PNV}.tar.bz2"
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="examples ( gstreamer xine ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="( gstreamer xine ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
@@ -36,7 +36,6 @@ DEPENDENCIES="
 
 src_configure() {
     ecmake \
-        -DPHONON_BUILD_EXAMPLES:BOOL=$(option examples && echo 'TRUE' || echo 'FALSE') \
         $(cmake_with GStreamer) \
         $(cmake_with gstreamer GStreamerPlugins) \
         $(cmake_with Xine) \
