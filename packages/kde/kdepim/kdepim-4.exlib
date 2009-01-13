@@ -19,6 +19,7 @@ knotes: yellow notes application
 konsolekalendar: Command line tool for accessing calendar files
 kontact: Integrated PIM application
 korganizer: a calendar-of-events and todo-list manager
+kpilot: Software for syncing PalmOS based handhelds
 ktimetracker: Time tracker
 "
 
@@ -40,6 +41,11 @@ MYOPTIONS="
 "
 # option(KDE4_KDEPIM_NEW_DISTRLISTS "Whether to use new distribution lists,
 #        which stores them like normal contacts; useful for Kolab")
+# Akonadi has opensync support, akonadi/CMakeLists.txt:
+# if ( OPENSYNC_FOUND )
+# add_subdirectory(opensync)
+# endif ( OPENSYNC_FOUND )
+
 
 DEPENDENCIES="
     build:
