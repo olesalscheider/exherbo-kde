@@ -44,7 +44,7 @@ MYOPTIONS="
         groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
         wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
         xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
-        ( gadu groupwise statistics webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
+        ( gadu groupwise webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
     kde_parts:
         ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
     kopete_plugins:
@@ -115,8 +115,8 @@ src_configure() {
     )
     # Kopete protocols with no extra dependencies
     my_kopete_protocols=( oscar qq sms testbed winpopup yahoo )
-    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo -- "-DWITH_${p}:BOOL=TRUE"; done)"
-    cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo -- "-DWITH_${p}:BOOL=TRUE"; done)"
+    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
+    cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
 
     # These have to be disabled for im_protocols:wlm to work
     cmakeparams+=" -DWITH_msn=FALSE -DWITH_messenger=FALSE"
