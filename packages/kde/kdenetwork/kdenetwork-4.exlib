@@ -32,12 +32,11 @@ MY_KOPETE_PLUGINS+="
 "
 MYOPTIONS="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
-    jpeg [[ description = [ Support for JPEG images in Krdc ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
     ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
-    ( jpeg vnc ) [[ requires = [ kde_parts: krdc ] ]]
+    vnc [[ requires = [ kde_parts: krdc ] ]]
 
     im_protocols:
         gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
@@ -94,7 +93,6 @@ DEPENDENCIES="
             )
         )
         kde_parts:krdc? (
-            jpeg? ( media-libs/jpeg )
             vnc? ( >=net-libs/libvncserver-0.9 )
         )
         kde_parts:krfb? (
@@ -122,7 +120,7 @@ src_configure() {
     cmakeparams+=" -DWITH_msn=FALSE -DWITH_messenger=FALSE"
 
     # This isn't optional for kdelibs:4
-    cmakeparams+=" -DWITH_OpenSSL=TRUE"
+    cmakeparams+=" -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE"
 
     # These do not work
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
@@ -175,7 +173,6 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
-        $(cmake_with JPEG) \
         $(cmake_enable !bittorrent EMBEDDED_TORRENT_SUPPORT) \
         -DWITH_GMP=OFF
         # Disable internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
