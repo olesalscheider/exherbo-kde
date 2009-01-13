@@ -9,34 +9,37 @@ require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-DOWNLOADS="mirror://kde/unstable/4.1.80/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/unstable/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="( gstreamer xine ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="examples ( gstreamer xine ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
-        >=kde/automoc4-0.9.86
+      >=kde/automoc4-0.9.86
     build+run:
-        >=x11-libs/qt-4.4.0:4[dbus]
+      >=x11-libs/qt-4.4.0:4[dbus]
         gstreamer? (
+            dev-libs/glib:2
             media-libs/gstreamer
             media-plugins/gst-plugins-base[gstreamer_plugins:alsa]
+          >=x11-libs/qt-4.4.0:4[dbus][glib]
         )
         xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
 "
 
-# Test executables not found
-RESTRICT="test"
+# Test executables not found, regardless of ECMAKE_BUILD_TYPE
+# RESTRICT="test"
+# -DPHONON_BUILD_TESTS:BOOL=TRUE \
 
-#CMAKE_SRC_CONFIGURE_PARAMS=( -DPHONON_BUILD_TESTS:BOOL=TRUE )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    GStreamer
-    'gstreamer GStreamerPlugins'
-    'gstreamer Alsa'
-    Xine
-    'xine XCB'
-)
+src_configure() {
+    ecmake \
+        -DPHONON_BUILD_EXAMPLES:BOOL=$(option examples && echo 'TRUE' || echo 'FALSE') \
+        $(cmake_with GStreamer) \
+        $(cmake_with gstreamer GStreamerPlugins) \
+        $(cmake_with Xine) \
+        $(cmake_with xine XCB)
+}
 
