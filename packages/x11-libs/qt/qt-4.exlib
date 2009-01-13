@@ -218,7 +218,7 @@ qt-4_src_configure() {
         -no-sql-ibase
         -no-sql-odbc
         $(qt4_enable mysql sql-mysql plugin "")
-        $(option mysql      && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
+        $(option mysql      && echo "-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/")
         $(qt4_enable postgresql sql-psql plugin "")
         $(option postgresql && echo '-I/usr/include/postgresql/server/')
         $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)

@@ -19,7 +19,7 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4
     post,suggested:
-        media-sound/mpd
+        media-sound/mpd [[ description = [ Ncmpc connects to an mpd daemon, either locally or on a remote host ] ]]
 "
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( INSTALL THANKSTO )
@@ -36,5 +36,10 @@ src_install() {
 
     insinto /usr/share/QMPDClient/iconsets
     doins -r "${WORKBASE}"/oxygen
+
+    insinto /usr/share/pixmaps
+    newins icons/qmpdclient64.png ${PN}.png
+    insinto /usr/share/applications
+    doins "${FILES}"/${PN}.desktop
 }
 
