@@ -31,8 +31,11 @@ MYOPTIONS="debug"
 
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
-#UPSTREAM_CHANGELOG=""
-UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/"
+
+case ${PV} in
+    4.1.96) UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/announce-4.2-rc.php" ;;
+    *) UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
+esac
 
 KDE_INSTALL_PREFIX="/usr"
 
