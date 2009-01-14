@@ -91,7 +91,7 @@ kde.org-4_src_configure() {
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         $(kde4_shared_cmake_params)
         # This only has effect when you use CMake 2.6.3
-        $(ever at_least 4.1.96 && echo -- '-DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR=YesPlease')
+        $(ever at_least 4.1.96 && echo '-DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR=YesPlease')
     )
 
     local p
