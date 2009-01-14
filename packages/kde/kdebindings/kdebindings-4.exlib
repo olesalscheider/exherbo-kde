@@ -1,0 +1,114 @@
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4 python
+
+export_exlib_phases src_configure src_install pkg_postinst pkg_postrm
+
+SUMMARY="KDE Language Bindings"
+DESCRIPTION="
+* kalyptus: A header parser and bindings generator for Qt/KDE
+* smoke: Language independent library for Qt and KDE bindings
+* qtruby: Qt bindings for Ruby
+* korundum: KDE bindings for ruby
+* PyKDE: KDE bindings for python
+* KrossPython: The Python plugin for the Kross scripting framework
+* KrossRuby: The Ruby plugin for the Kross scripting framework
+
+kdebindings has optional components, that we currently disable:
+Qyoto & Kimono (C# bindings), KrossJava, KrossFalcon
+"
+# Broken: xparts; Obsolete: Everything else
+HOMEPAGE+=" http://techbase.kde.org/Development/Languages"
+
+UPSTREAM_DOCUMENTATION="
+http://techbase.kde.org/Development/Languages/Python [[ lang = en description = [ PyKDE4 documentation ] ]]
+http://techbase.kde.org/Development/Languages/Ruby [[ lang = en description = [ QtRuby, Korundum documentation ] ]]
+http://kross.dipe.org/solution.html [[ lang = en descripton = [ Using Kross, the scripting framework ] ]]
+"
+
+LICENCES="GPL-2 LGPL-2.1"
+SLOT="4"
+MYOPTIONS="
+    ( python ruby ) [[ number-selected = at-least-one ]]
+    webkit [[ requires = ruby description = [ QtRuby bindings for QtWebKit ] ]]
+"
+# FIXME: rbuic4 not found, ruby-clock will not created
+# rbuic4 is installed by this package, so it should be looking for the rbuic4 from the build directory.
+
+DEPENDENCIES="
+    build+run:
+      >=dev-libs/soprano-2.0.0
+      >=media-libs/phonon-4.2.96
+      >=server-pim/akonadi-1.1.0
+        python? (
+            dev-lang/python:=
+          >=dev-python/sip-4.7.8
+          >=dev-python/PyQt4-4.4.4
+        )
+        ruby? (
+            dev-lang/ruby:=
+            webkit? ( x11-libs/qt:4[webkit] )
+        )
+"
+
+kdebindings-4_src_configure() {
+    # Note: ABI support for python & ruby should use:
+    # -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/
+    # -DRUBY_LIBRARY=/usr/lib/libruby1.8.so
+    # -DPYTHON_INCLUDE_PATH=/usr/include/python2.5
+    # -DPYTHON_LIBRARIES=/usr/lib/python2.5/config/libpython2.5.so
+
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # We don't have kde/kdevplatform, so don't compile bindings for it
+        -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
+        # Optional bindings to unwritten packages
+        -DWITH_QScintilla:BOOL=FALSE
+        -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
+        # Don't think anything currently uses okular bindings, could be made optional
+        -DWITH_Okular:BOOL=FALSE
+        # We don't currently ship these
+        -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+        'python KROSSPYTHON'
+        'ruby KROSSRUBY'
+        'webkit QTWEBKIT_RUBY' 'webkit QTWEBKIT_SMOKE'
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+        python
+        ruby
+        # Smoke is needed to build the language bindings for Ruby, C# & perl, python doesn't need smoke
+        # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
+        'ruby smoke'
+    )
+
+    kde.org-4_src_configure
+}
+
+# (maybe) FIXME PyKDE4 installs /usr/share/apps/pykde4/{kde4.py,pykdeuic4.py}
+# - The latter should be in PATH I think (used by some playground/plasma and/or kdeplasma-addons things.
+# - The former wherever the latter can find it.
+kdebindings-4_src_install() {
+    kde.org-4_src_install
+
+    if option python; then
+        cd "${IMAGE}" || die "Couldn't enter ${IMAGE}"
+        # byte-compiled python modules shouldn't be in contents.
+        find . -type f -name '*.pyc' -delete || die "Removing *.pyc files failed with error '$?'"
+
+        # Fix up PyKDE4 examples destination, see python/pykde4/examples/CMakeLists.txt
+        dodir /usr/share/doc/${PNVR}/examples
+        mv ./usr/share/apps/pykde4/examples ./usr/share/doc/${PNVR}/examples/pykde4 ||
+            die "Moving examples in the correct place failed"
+    fi
+}
+
+kdebindings-4_pkg_postinst() {
+    option python && python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
+}
+
+kdebindings-4_pkg_postrm() {
+    option python && python_mod_cleanup
+}
+
