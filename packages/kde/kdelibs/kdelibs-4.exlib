@@ -102,7 +102,7 @@ src_prepare() {
 
 src_compile() {
     cmake_src_compile
-    
+
     if option doc; then
         pushd "${WORK}/doc/api"
         echo ./doxygen.sh "${WORK}"
