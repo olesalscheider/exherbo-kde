@@ -34,7 +34,7 @@ MYOPTIONS+="pulseaudio
 DEPENDENCIES="
     build+run:
         xine? ( media-libs/xine-lib )
-      >=media-libs/phonon-4.2.80[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
+      >=media-libs/phonon-4.2.96[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
         pulseaudio? ( media-sound/pulseaudio )
 "
 
