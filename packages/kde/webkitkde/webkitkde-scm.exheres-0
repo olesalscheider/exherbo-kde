@@ -5,9 +5,11 @@ require kde.org-4
 
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="playground/libs/${PN}"
+
 require scm-svn
 
 SUMMARY="KDE WebKit KPart"
+HOMEPAGE="http://techbase.kde.org/Projects/WebKit"
 DOWNLOADS=""
 
 LICENCES="LGPL-2"
