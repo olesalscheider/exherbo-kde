@@ -52,12 +52,12 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
 
-if ever at_least 4.1.60; then
+if ever at_least 4.1.96; then
     DEPENDENCIES+="
         build:
             >=kde/automoc4-0.9.87
         build+run:
-            >=app-pim/strigi-0.6.0[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
+            >=app-pim/strigi-0.6.3[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
     "
 else
     DEPENDENCIES+="
