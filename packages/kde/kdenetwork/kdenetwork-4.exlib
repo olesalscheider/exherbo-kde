@@ -43,7 +43,7 @@ MYOPTIONS="
         groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
         wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
         xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
-        ( gadu groupwise webpresence xmpp ) [[ requires = [ kde_parts: kopete ] ]]
+        ( gadu groupwise wlm xmpp ) [[ requires = [ kde_parts: kopete ] ]]
     kde_parts:
         ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
     kopete_plugins:
