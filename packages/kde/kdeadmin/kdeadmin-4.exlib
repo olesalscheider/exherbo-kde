@@ -1,0 +1,63 @@
+# Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE administration tools"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+DESCRIPTION="
+* kcron: Editor for the cron command scheduler (requires vixie-cron)
+* ksystemlog: System log viewer tool
+* kuser: User and group manager
+* strigi-analyzer: Strigi plugin for rpm files
+* system-config-printer-kde: Port of Red Hat's Gnome system-config-printer to KDE
+Other, currently disabled parts include kdat, knetworkconf, kpackage, ksysv & lilo-config.
+"
+
+MY_KDE_PARTS="kcron ksystemlog kuser strigi-analyzer system-config-printer-kde"
+MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde_parts:kuser? (
+            kde/kdepimlibs:${SLOT}
+        )
+    run:
+        kde_parts:kcron? (
+            sys-process/vixie-cron [[ note = [ Any cron that provides proper crontabs will probably work but we only have vixie-cron ] ]]
+        )
+        kde_parts:system-config-printer-kde? (
+            app-admin/system-config-printer
+            dev-lang/python:*
+            dev-python/pycups
+            dev-python/PyQt4[dbus]
+            dev-python/sip
+            kde/kdebindings:${SLOT}[python] [[ note = PyKDE ]]
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Tape backup tool, disabled upstream
+    -DBUILD_kdat:BOOL=FALSE
+    # KDE control Center Module to configure Network settings
+    # Needs GNOME system tools, http://www.gnome.org/projects/gst/
+    -DBUILD_knetworkconf:BOOL=FALSE
+    # Manager for software packages on Debian or RPM based systems
+    # Needs the SMART package manager, but ours is smarter
+    -DBUILD_kpackage:BOOL=FALSE
+    # Editor for System V startup schemes
+    # Disabled upstream, probably not compatible with our init scripts
+    -DBUILD_ksysv:BOOL=FALSE
+    # KDE control Center Module for configuring the LILO boot loader
+    -DBUILD_lilo-config:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:system-config-printer-kde PyCups'
+    'kde_parts:system-config-printer-kde PyKDE'
+    'kde_parts:system-config-printer-kde PyQt4'
+    'kde_parts:system-config-printer-kde PythonLibrary'
+    'kde_parts:system-config-printer-kde SIP'
+    'kde_parts:system-config-printer-kde SystemConfigPrinter'
+)
+
