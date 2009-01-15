@@ -54,6 +54,8 @@ qt-3_pkg_setup() {
     QTDATADIR="${QTPREFIX}/share/qt3"
     QTTRANSLATIONDIR="${QTBASEDIR}/translations"
     QTSYSCONFDIR="${QTBASEDIR}/etc/settings"
+
+    addpredict ${QTSYSCONFDIR}
 }
 
 qt-3_src_prepare() {
