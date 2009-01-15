@@ -1,0 +1,181 @@
+From 36967aba317dffbe5925d4f8433b045b06fb3bfa Mon Sep 17 00:00:00 2001
+From: tpatzig <tpatzig@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 14 Jan 2009 20:21:53 +0000
+Subject: [PATCH] bluez4 adaptations
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebase@911093 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ workspace/solid/bluez/bluez-bluetoothinterface.cpp |   46 ++++++++++++++------
+ workspace/solid/bluez/bluez-bluetoothinterface.h   |    6 ++-
+ .../solid/bluez/bluez-bluetoothremotedevice.cpp    |    3 +-
+ 3 files changed, 38 insertions(+), 17 deletions(-)
+
+diff --git a/workspace/solid/bluez/bluez-bluetoothinterface.cpp b/workspace/solid/bluez/bluez-bluetoothinterface.cpp
+index 592c11a..067ca65 100644
+--- a/workspace/solid/bluez/bluez-bluetoothinterface.cpp
++++ b/workspace/solid/bluez/bluez-bluetoothinterface.cpp
+@@ -25,6 +25,7 @@
+ #include <solid/control/bluetoothinterface.h>
+ 
+ #include "bluez-bluetoothremotedevice.h"
++#include "bluez-bluetoothinputdevice.h"
+ #include <KDebug>
+ 
+ 
+@@ -43,6 +44,7 @@ public:
+     QString objectPath;
+ 
+     QMap<QString, BluezBluetoothRemoteDevice *> devices;
++    QMap<QString, BluezBluetoothInputDevice *> inputDevices;
+ };
+ 
+ 
+@@ -98,21 +100,15 @@ void BluezBluetoothInterface::cancelDeviceCreation(const QString &addr)
+     d->iface.call("CancelDeviceCreation",addr);
+ }
+ 
+-QString BluezBluetoothInterface::createDevice(const QString &addr) const
++//QString BluezBluetoothInterface::createDevice(const QString &addr) const
++void BluezBluetoothInterface::createDevice(const QString &addr) const
+ {
+-    QDBusObjectPath path = objectReply("CreateDevice",addr);
+-    return path.path();
++    d->iface.call("CreateDevice",addr);
+ }
+ 
+ QString BluezBluetoothInterface::createPairedDevice(const QString &addr, const QString &agentUBI, const QString &capab) const
+ {
+-    QDBusReply< QDBusObjectPath > reply;
+-    reply = d->iface.call("CreatePairedDevice",addr,agentUBI,capab);
+-
+-    if (!reply.isValid()) {
+-        return QString();
+-    }
+-    return reply.value().path();
++    d->iface.call("CreatePairedDevice",addr,qVariantFromValue(QDBusObjectPath(agentUBI)),capab);
+ }
+ 
+ QString BluezBluetoothInterface::findDevice(const QString &addr) const
+@@ -147,7 +143,7 @@ QStringList BluezBluetoothInterface::listDevices() const
+ 
+ void BluezBluetoothInterface::registerAgent(const QString &agentUBI, const QString &capab)
+ {
+-    d->iface.call("RegisterAgent",agentUBI,capab);
++    d->iface.call("RegisterAgent",qVariantFromValue(QDBusObjectPath(agentUBI)),capab);
+ }
+ 
+ void BluezBluetoothInterface::releaseSession()
+@@ -157,7 +153,7 @@ void BluezBluetoothInterface::releaseSession()
+ 
+ void BluezBluetoothInterface::removeDevice(const QString &deviceUBI )
+ {
+-    d->iface.call("RemoveDevice",deviceUBI);
++    d->iface.call("RemoveDevice",qVariantFromValue(QDBusObjectPath(deviceUBI)));
+ }
+ 
+ void BluezBluetoothInterface::requestSession()
+@@ -183,7 +179,7 @@ void BluezBluetoothInterface::stopDiscovery()
+ 
+ void BluezBluetoothInterface::unregisterAgent(const QString &agentUBI)
+ {
+-    d->iface.call("UnregisterAgent",agentUBI);
++    d->iface.call("UnregisterAgent",qVariantFromValue(QDBusObjectPath(agentUBI)));
+ }
+ 
+ 
+@@ -482,6 +478,12 @@ void BluezBluetoothInterface::slotBondingRemoved(const QString &address)
+ void BluezBluetoothInterface::slotDeviceCreated(const QDBusObjectPath &path)
+ {
+     kDebug() << "device created";
++
++    if (!d->devices.contains(path.path())) {
++        BluezBluetoothRemoteDevice* bluetoothRemoteDev = new BluezBluetoothRemoteDevice(path.path());
++        d->devices.insert(path.path(), bluetoothRemoteDev);
++    }
++
+     emit deviceCreated(path.path());
+ }
+ 
+@@ -523,6 +525,19 @@ QObject *BluezBluetoothInterface::createBluetoothRemoteDevice(const QString &ubi
+     return bluetoothInterface;
+ }
+ 
++QObject *BluezBluetoothInterface::createBluetoothInputDevice(const QString &ubi)
++{
++    BluezBluetoothInputDevice *bluetoothInputDev;
++    if (d->inputDevices.contains(ubi)) {
++        bluetoothInputDev = d->inputDevices[ubi];
++    } else {
++        bluetoothInputDev = new BluezBluetoothInputDevice(ubi);
++        d->inputDevices.insert(ubi, bluetoothInputDev);
++    }
++    return bluetoothInputDev;
++}
++
++
+ 
+ /******************* DBus Calls *******************************/
+ 
+@@ -574,10 +589,13 @@ QDBusObjectPath BluezBluetoothInterface::objectReply(const QString &method, cons
+ 
+     if (param.isEmpty())
+ 	    reply = d->iface.call(method);
+-    else
++    else {
++            qDebug() << "ObjectReply calling: " << method << " " << param;
+ 	    reply = d->iface.call(method, param);
++    }
+ 	    	
+     if (reply.isValid()) {
++        qDebug() << "ObjectReply Valid? "<<  reply.value().path();
+         return reply.value();
+     }
+ 
+diff --git a/workspace/solid/bluez/bluez-bluetoothinterface.h b/workspace/solid/bluez/bluez-bluetoothinterface.h
+index ed61be9..8bae416 100644
+--- a/workspace/solid/bluez/bluez-bluetoothinterface.h
++++ b/workspace/solid/bluez/bluez-bluetoothinterface.h
+@@ -27,6 +27,7 @@
+ #include <QtDBus>
+ #include <QDBusVariant>
+ #include <QDBusObjectPath>
++#include <QString>
+ 
+ #include <solid/control/ifaces/bluetoothinterface.h>
+ 
+@@ -67,8 +68,9 @@ public:
+ 
+ */    
+     QObject *createBluetoothRemoteDevice(const QString &);
+-
+-    QString createDevice(const QString &) const;
++    QObject *createBluetoothInputDevice(const QString &);
++    //QString createDevice(const QString &) const;
++    void createDevice(const QString &) const;
+     QString createPairedDevice(const QString &,const QString &,const QString &) const;
+     QString findDevice(const QString &) const;
+     QMap< QString, QVariant > getProperties() const;
+diff --git a/workspace/solid/bluez/bluez-bluetoothremotedevice.cpp b/workspace/solid/bluez/bluez-bluetoothremotedevice.cpp
+index b4378aa..a1d9084 100644
+--- a/workspace/solid/bluez/bluez-bluetoothremotedevice.cpp
++++ b/workspace/solid/bluez/bluez-bluetoothremotedevice.cpp
+@@ -42,6 +42,7 @@ BluezBluetoothRemoteDevice::BluezBluetoothRemoteDevice(const QString &objectPath
+ 	m_adapter = m_objectPath.left(objectPath.size() - 18);
+ 	m_address = m_objectPath.right(17);
+ 
++        kdDebug() << "Connecting to ObjectPath: " << objectPath;
+ 
+ 	device = new QDBusInterface("org.bluez", objectPath,
+ 				    "org.bluez.Device", QDBusConnection::systemBus());
+@@ -79,7 +80,7 @@ QMap<QString,QVariant> BluezBluetoothRemoteDevice::getProperties() const
+ 
+ void BluezBluetoothRemoteDevice::setProperty(const QString &name, const QVariant &value)
+ {
+-    device->call("SetProperty",name,value);
++    device->call("SetProperty",name,qVariantFromValue(QDBusVariant(value)));
+ }
+ 
+ void BluezBluetoothRemoteDevice::discoverServices(const QString& pattern) const
+-- 
+1.6.1
+
