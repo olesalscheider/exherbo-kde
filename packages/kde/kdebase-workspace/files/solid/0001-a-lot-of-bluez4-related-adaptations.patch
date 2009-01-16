@@ -1,3 +1,7 @@
+Reason: solid in KDE 4.2 doesn't work with bluez-4
+Source: Upstream
+Upstream: Yes, in trunk (>=4.3)
+
 From dedbe37c7f0ede7b513edb0dc2861ba175cdcdfa Mon Sep 17 00:00:00 2001
 From: tpatzig <tpatzig@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
 Date: Wed, 14 Jan 2009 20:20:46 +0000
