@@ -12,18 +12,18 @@
 
 #if [ -x /usr/bin/gpg-agent ]; then
 #  eval "$(/usr/bin/gpg-agent --daemon)"
-#fi 
+#fi
 
 #if [ -x /usr/bin/ssh-agent ]; then
 #  eval "$(/usr/bin/ssh-agent -s)"
 #fi
 
 # Uncomment the following lines to start rxvt-unicode which has the ability to
-# run multiple terminals in one single process, thus starting up faster and 
+# run multiple terminals in one single process, thus starting up faster and
 # saving resources.
 # The --opendisplay ensures that the daemon quits when the X server terminates,
 # therefore we don't need matching lines in agent-shutdown.sh.
 
 #if [ -x /usr/bin/urxvtd ]; then
-#	/usr/bin/urxvtd --opendisplay --fork --quiet
+#  /usr/bin/urxvtd --opendisplay --fork --quiet
 #fi
