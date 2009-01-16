@@ -1,0 +1,26 @@
+From 9be3cbd233e3586fe2685124a6c0bf5ea1e72c28 Mon Sep 17 00:00:00 2001
+From: tpatzig <tpatzig@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 15 Jan 2009 17:12:06 +0000
+Subject: [PATCH] -delete the right part of the Map
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebase@911566 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ workspace/libs/solid/control/bluetoothmanager.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/workspace/libs/solid/control/bluetoothmanager.cpp b/workspace/libs/solid/control/bluetoothmanager.cpp
+index c788e6e..7a4c114 100644
+--- a/workspace/libs/solid/control/bluetoothmanager.cpp
++++ b/workspace/libs/solid/control/bluetoothmanager.cpp
+@@ -95,7 +95,7 @@ Solid::Control::BluetoothManager::~BluetoothManager()
+     typedef QPair<BluetoothInterface *, Ifaces::BluetoothInterface *> BluetoothInterfaceIfacePair;
+ 
+     // Delete all the devices, they are now outdated
+-    foreach (const BluetoothInterfaceIfacePair &pair, d->bluetoothInterfaceMap) {
++    foreach (const BluetoothInterfaceIfacePair &pair, d->bluetoothInterfaceMap.values()) {
+         delete pair.first;
+         delete pair.second;
+     }
+-- 
+1.6.1
+

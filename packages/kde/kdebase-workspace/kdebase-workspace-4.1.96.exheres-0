@@ -54,7 +54,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    -p2 "${FILES}"/0001-a-lot-of-bluez4-related-adaptations.patch
-    -p2 "${FILES}"/0002-bluez4-adaptations.patch
+    -p2 "${FILES}"/solid
 )
 
