@@ -1,16 +1,7 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
-
-DEPENDENCIES="
-    build:
-        xscreensaver? (
-            sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
-        )
-"
-
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'xscreensaver Eigen2' )
 

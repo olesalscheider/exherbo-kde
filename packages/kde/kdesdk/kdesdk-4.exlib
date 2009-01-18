@@ -34,6 +34,7 @@ DEPENDENCIES="
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
         )
     build+run:
+      >=dev-lang/perl-5.8:* [[ description = [ For kio_perldoc ] ]]
         kde/kdelibs:${SLOT}
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT} )
@@ -50,5 +51,10 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Kioslave to browse perldoc
+    -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE
 )
 

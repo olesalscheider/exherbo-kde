@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -18,15 +18,10 @@ DEPENDENCIES="
       >=dev-libs/boost-1.33.1
         dev-libs/libgpg-error
       >=kde/kdelibs-${PV}:${SLOT}
-        sasl? ( net-libs/cyrus-sasl )"
-
-if ever at_least 4.1.85; then
-    DEPENDENCIES+="
-      >=server-pim/akonadi-1.1.0"
-else
-    DEPENDENCIES+="
-       =server-pim/akonadi-1.0*"
-fi
+      >=office-libs/libical-0.33 [[ note = [ Might be possible to make this optional ] ]]
+      >=server-pim/akonadi-1.1.0
+        sasl? ( net-libs/cyrus-sasl )
+"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )

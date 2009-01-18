@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -10,6 +10,10 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="opengl xscreensaver"
 
 DEPENDENCIES="
+    build:
+        xscreensaver? (
+            sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
+        )
     build+run:
         kde/kdelibs:${SLOT}[opengl=]
         kde/kdebase-workspace:${SLOT}
@@ -18,8 +22,9 @@ DEPENDENCIES="
         xscreensaver? ( x11-apps/xscreensaver )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenGL
-    xscreensaver Xscreensaver
+    'xscreensaver Xscreensaver'
+    'xscreensaver Eigen2'
 )
 

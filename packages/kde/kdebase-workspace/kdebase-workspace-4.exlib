@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -7,6 +7,7 @@ require kde.org-4
 SUMMARY="This package provides a basic KDE 4 desktop installation"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
+cursors: Custom cursors for KDE
 kcheckpass: Authentication program
 kdm: Display manager
 khotkeys: Bind actions to triggers and conditions
@@ -19,7 +20,9 @@ ksplash: Splash screen
 ksysguard: Task manager & system monitor
 ksystraycmd: Run any command in the system tray
 kwin: Window manager
+kwrited:
 plasma: Desktop framework
+powerdevil:
 solid: Seamless Hardware Interaction
 systemsettings: Settings utility
 "
@@ -106,7 +109,28 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_KRB5AUTH=OFF
     -DKDE4_XDMCP=ON
     -DWITH_Xmms=OFF
+    # Not optional in Exherbo
+    -DWITH_Nepomuk=On
+    # Extra plasma functionality
+    -DWITH_Googlegadgets=Off
+    -DWITH_PyKDE4=Off -DWITH_SIP=Off -DWITH_PythonLibrary=Off -DWITH_PyQt4=Off
+    -DWITH_QEdje=Off
+    # Hard-disable it for now, unless someone insist on optionally enabling it
+    # Option seems gone with 4.1.96
+    # -DWITH_CkConnector=Off
 )
+
+# kwrited has an automagic dep on utempter which we don't have atm
+# + GoogleGadgets: Google Gadgets library <http://code.google.com/p/google-gadgets-for-linux/>
+# Needed to build plasma scriptengine for google gadgets
+# + QEdje: QEdje library <http://dev.openbossa.org/trac/qedje/>
+# Needed to build plasma scriptengine for edje files
+# + Python: KDE Python support <http://techbase.kde.org/Development/Languages/Python>
+# Needed to build plasma scriptengine for Python
+#   >=dev-python/PyQt4-4.4.0
+#   >=dev-python/sip-4.7.1
+# + Captury framework library, 0.3.0: Realtime video capturing framework e.g. screen casts <http://ninchens.de/projects/captury>
+# Provides for video recording desktop effects.
 
 src_install() {
     kde.org-4_src_install

@@ -5,13 +5,3 @@ require "${PN}-4"
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES="
-    build+run:
-      >=dev-lang/perl-5.8:* [[ description = [ For kio_perldoc ] ]]
-"
-
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Kioslave to browse perldoc
-    -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE
-)
-
