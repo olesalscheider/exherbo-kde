@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 #
 # Based in part upon 'kde4-base.eclass', 'kde4-functions.eclass', 'kde4-meta.eclass'
@@ -20,8 +20,7 @@ require multilib versionator kde4 cmake
 
 export_exlib_phases src_configure src_install
 
-### Metadata
-# TODO Tests load ${PN} libraries from /, restricted until that's fixed.
+# TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
 
 KDEMODULE=${KDEMODULE:-${PN}}
@@ -49,40 +48,16 @@ esac
 DEPENDENCIES="
     build:
         dev-util/pkg-config
+      >=kde/automoc4-0.9.87
     build+run:
+      >=app-pim/strigi-0.6.3[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
         x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
-
-if ever at_least 4.1.96; then
-    DEPENDENCIES+="
-        build:
-            >=kde/automoc4-0.9.87
-        build+run:
-            >=app-pim/strigi-0.6.3[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build:
-            >=kde/automoc4-0.9.84
-        build+run:
-            >=app-pim/strigi-0.5.11[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
-    "
-fi
-
-kde4_reduced_linking() {
-    has '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE' "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" && return
-    if ! ever at_least '4.1.1'; then
-        echo '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=FALSE' && return
-    fi
-    echo '-DKDE4_ENABLE_EXPERIMENTAL_LIB_EXPORT:BOOL=TRUE'
-}
 
 kde4_shared_cmake_params() {
     echo \
         -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')" \
         -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
-        -DKDE4_USE_ALWAYS_FULL_RPATH:BOOL=TRUE \
-        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
-        $(kde4_reduced_linking)
+        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}"
         # Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL:BOOL=TRUE'
 }
 
