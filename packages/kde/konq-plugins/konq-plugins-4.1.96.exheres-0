@@ -1,0 +1,15 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require ${PN}-4
+
+DOWNLOADS="${DOWNLOADS/stable/unstable}"
+
+PLATFORMS="~amd64 ~x86"
+
+src_prepare() {
+    # Really ugly hack, the konq-plugins tarball contains PolicyKitKDE too, for some reason
+    sed -n '1,21p' -i CMakeLists.txt || die "Ugly sed hack failed"
+    default
+}
+

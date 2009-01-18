@@ -1,24 +1,48 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake kde.org-4
 
 SUMMARY="Plugins for Konqueror, the KDE file/web/doc browser"
 DESCRIPTION="
+This package contains the following plugins:
+* akregator: Allows you to add feeds directly to akregator, from konqueror
+* autorefresh: Refresh a given page automatically after a specific period
+* babelfish: Uses AltaVista's BabelFish site to translate the current page to whatever language you want
+* dirfilter: Filter the current directory in a variety of ways
+* domtreeviewer: Display the document object model (DOM) in a dialox box
+* fsview: Graphical Disk Usage viewer plugin
+* khtmlsettingsplugin: Enable/Disable HTML settings quickly
+* kimgalleryplugin: Creates a HTML page with thumbnails of all the images in the current directory
+* minitools: Adds bookmarklets support (little Javascript programs that can be saved as normal bookmarks)
+* sidebar: A small embedded mediaplayer
+* smbmounter: Mount and unmount samba shares
+* uachanger: User Agent changer
+* validators: CSS/HTML validator plugins
+Also included are adblock, autorefresh, crashes, imagerotation, microformat rellinks, searchbar, webarchive plugins.
 "
 DOWNLOADS="mirror://kde/stable/${PV}/src/extragear/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
-MYOPTIONS=""
+MYOPTIONS="
+tidy    [[ description = [ Build the CSS & HTML validator plugins ] ]]
+webkit  [[ description = [ Build support for the WebKit browser backend ] ]]
+"
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
         kde/kdebase:${SLOT}
+        tidy? ( app-text/tidy )
+        webkit? ( kde/webkitkde )
 "
-# FIXME webkit? ( kde/webkitkde )
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DWebKitKde=OFF )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'tidy LibTidy'
+    'webkit KdeWebKit'
+    'webkit WebKitPart'
+)
+
 
