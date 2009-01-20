@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 [[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres!'
@@ -40,7 +40,7 @@ for_all_enabled_linguas_run() {
 }
 
 src_configure() {
-    for_all_enabled_linguas_run kde.org-4_src_configure 
+    for_all_enabled_linguas_run kde4_src_configure
 }
 
 src_compile() {
@@ -48,7 +48,7 @@ src_compile() {
 }
 
 src_install() {
-    for_all_enabled_linguas_run cmake_src_install
+    for_all_enabled_linguas_run kde.org-4_src_install
     find "${IMAGE}" -type d -empty -delete || die "Failed to delete empty directories"
 }
 

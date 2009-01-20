@@ -83,7 +83,7 @@ kdebindings-4_src_configure() {
         'ruby smoke'
     )
 
-    kde.org-4_src_configure
+    kde4_src_configure
 }
 
 # (maybe) FIXME PyKDE4 installs /usr/share/apps/pykde4/{kde4.py,pykdeuic4.py}
