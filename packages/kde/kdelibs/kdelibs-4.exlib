@@ -8,10 +8,11 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 This package contains shared libraries and data files needed to run KDE 4 applications.
 "
-# XXX Add acl jpeg2k kerberos openexr zeroconf
-MYOPTIONS="doc fam opengl spell
-ppc_cpu_features: altivec
-x86_cpu_features: mmx sse sse2"
+
+MYOPTIONS="acl doc fam jasper openexr opengl spell
+    ppc_cpu_features: altivec
+    x86_cpu_features: mmx sse sse2
+"
 
 #       sys-devel/gettext?
 DEPENDENCIES="
@@ -48,27 +49,35 @@ DEPENDENCIES="
         x11-libs/libXtst
         x11-libs/qt:4[opengl?]
         x11-misc/shared-mime-info
+        acl? (
+            sys-apps/acl
+            sys-apps/attr
+        )
         fam? ( app-admin/gamin )
+        jasper? ( media-libs/jasper )
+        openexr? (
+            media-libs/ilmbase
+            media-libs/openexr
+        )
         spell? (
             app-spell/aspell
             app-spell/enchant
         )
     run:
         x11-apps/iceauth
-        x11-apps/rgb"
+        x11-apps/rgb
+"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Libintl
-    -DKDE_DEFAULT_HOME=.kde4
+    -DKDE_DEFAULT_HOME=".kde4"
     -DKDE_DISTRIBUTION_TEXT="Exherbo"
-    -DWITH_ACL=OFF
-    -DWITH_Avahi=OFF -DWITH_DNSSD=OFF
     -DWITH_BZip2=ON
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
-    -DWITH_Jasper=OFF
-    -DWITH_OpenEXR=OFF
     -DWITH_OpenSSL=ON
+    # Zeroconf support
+    -DWITH_Avahi=OFF -DWITH_DNSSD=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # Used in solid
@@ -78,8 +87,11 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     'x86_cpu_features:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    ACL
     fam
+    Jasper
     'opengl OpenGL'
+    OpenEXR
     'spell ASPELL'
     'spell ENCHANT'
 )
