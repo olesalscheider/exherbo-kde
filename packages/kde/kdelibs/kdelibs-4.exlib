@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -8,7 +8,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 This package contains shared libraries and data files needed to run KDE 4 applications.
 "
-# XXX Add acl alsa(?) jpeg2k kerberos openexr zeroconf
+# XXX Add acl jpeg2k kerberos openexr zeroconf
 MYOPTIONS="doc fam opengl spell
 ppc_cpu_features: altivec
 x86_cpu_features: mmx sse sse2"
@@ -24,14 +24,15 @@ DEPENDENCIES="
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
-        >=dev-libs/soprano-2.0.98 [[ note = [ Need soprano's clucene support enabled ] ]]
+      >=dev-libs/soprano-2.0.98 [[ note = [ Need soprano's clucene support enabled ] ]]
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
+      >=media-libs/phonon-4.2.80
         sys-apps/dbus [[ note = [ Need dbus with X support ] ]]
-        >=sys-sound/alsa-lib-1.0.14a
+      >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
@@ -55,16 +56,6 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb"
-
-if ever at_least 4.1.60; then
-    DEPENDENCIES+="
-        build+run:
-            >=media-libs/phonon-4.2.80"
-else
-    DEPENDENCIES+="
-        build+run:
-            >=media-libs/phonon-4.2.0"
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Libintl
@@ -112,13 +103,6 @@ src_compile() {
 }
 
 src_install() {
-    # Fixed with kdelibs-4.1.2-root-owned-empty-directories.patch
-    if ! ever at_least 4.1.2; then
-        keepdir ${KDE_INSTALL_PREFIX}/share/kde4/services
-        touch "${IMAGE}"/${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
-        fperms 755 ${KDE_INSTALL_PREFIX}/share/kde4/services/{,ksycoca4}
-    fi
-
     kde.org-4_src_install
 
     if option doc; then

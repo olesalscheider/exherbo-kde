@@ -24,12 +24,8 @@ ktimetracker: Time tracker
 "
 
 # kitchensync will be re-enabled for 4.3
-MY_KDE_PARTS="akregator console kalarm kjots kleopatra
-knode knotes kontact korganizer ktimetracker strigi-analyzer" # kitchensync
-
-if ever at_least 4.1.85; then
-    MY_KDE_PARTS+=" kpilot"
-fi
+MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
+korganizer kpilot ktimetracker strigi-analyzer" # kitchensync
 
 # kmail kmailcvt, kmail is required by plugins/kmail/ which is enabled automagically when gpgme is available. kmailcvt is required at runtime by kmail
 MYOPTIONS="
@@ -56,9 +52,9 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
+      >=server-pim/akonadi-1.1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
         x11-libs/qt:4[dbus][sql]
       >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
-
         gnokii? ( mobilephone/gnokii )
         ( build:
             kde_parts:kleopatra? (
@@ -70,6 +66,11 @@ DEPENDENCIES="
             x11-libs/libX11
             x11-libs/libXScrnSaver
         )
+        kde_parts:kpilot? (
+            app-crypt/qca:2
+          >=pda/libmal-0.40
+          >=pda/pilot-link-0.12
+        )
         nepomuk? (
           >=dev-libs/soprano-1.99
           >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
@@ -80,19 +81,6 @@ DEPENDENCIES="
 #          >=pda/libopensync-0.38
 #            x11-libs/qt:4[glib]
 #        )
-
-if ever at_least 4.1.85; then
-    DEPENDENCIES+="
-        kde_parts:kpilot? (
-            app-crypt/qca:2
-          >=pda/libmal-0.40
-          >=pda/pilot-link-0.12
-        )
-      >=server-pim/akonadi-1.1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]"
-else
-    DEPENDENCIES+="
-       =server-pim/akonadi-1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]"
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
