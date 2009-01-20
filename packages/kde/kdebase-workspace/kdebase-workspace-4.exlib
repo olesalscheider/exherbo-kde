@@ -30,7 +30,6 @@ systemsettings: Settings utility
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
 MYOPTIONS="bluetooth lm_sensors networkmanager xinerama
-opengl [[ description = [ Support for OpenGl compositing and OpenGl screensavers ] ]]
 ppc_cpu_features: altivec
 x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -52,6 +51,7 @@ DEPENDENCIES="
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
       >=kde/qimageblitz-0.0.4
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+        x11-dri/mesa
         x11-libs/libICE [[ note = ksmserver ]]
         x11-libs/libX11 [[ note = [ kdm, kxkb/kcontrol ] ]]
         x11-libs/libXau [[ note = kdm ]]
@@ -69,7 +69,7 @@ DEPENDENCIES="
         x11-libs/libXxf86misc [[ note = krunner ]]
       >=x11-libs/libxklavier-3.0 [[ note = kcontrol/kxkb ]]
         x11-libs/libxkbfile [[ note = kcontrol/kxkb ]]
-        x11-libs/qt:4[opengl?][webkit]
+        x11-libs/qt:4[opengl][webkit]
         bluetooth? ( net-wireless/bluez )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( >=net-apps/NetworkManager-0.6.5 )

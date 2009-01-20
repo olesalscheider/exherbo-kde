@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake kde4
@@ -24,7 +24,7 @@ esac
 
 LICENCES="GPL-2"
 SLOT="0"
-# XXX opengl, not optional currently
+
 MYOPTIONS="ipod mp3tunes mp4 mtp
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
     mp4         [[ description = [ Build the Taglib plugin for writing tags in mp4 container files (.m4a).
@@ -84,7 +84,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_{CURL,GLIB2,LibXml2}=ON
     # Hard enabled by us
     -DWITH_{Soprano,Nepomuk}=ON
-    -DWITH_OpenGL=ON # FIXME
+    -DWITH_OpenGL=ON
     -DWITH_Libvisual=OFF
     # Options are currently commented out
     # -DWITH_{Ifp,LibLastFm,Njb}=OFF

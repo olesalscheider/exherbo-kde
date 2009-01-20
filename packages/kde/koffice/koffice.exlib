@@ -32,7 +32,6 @@ MYOPTIONS="eps [[ description = [ EPS (Encapsulated PostScript) import filter fo
     msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
     odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     openexr [[ description = [ Support for OpenEXR formatted images in Krita ] ]]
-    opengl [[ description = [ Hardware accelerated rendering for Krita ] ]]
     panorama [[ description = [ Panorama plugin for Krita ] ]]
     pdf  [[ description = [ Support for PDF (Portable Document Format) files in Krita ] ]]
     raw  [[ description = [ Support for the RAW filter in Krita ] ]]
@@ -41,7 +40,7 @@ MYOPTIONS="eps [[ description = [ EPS (Encapsulated PostScript) import filter fo
     tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
-    ( graphicsmagick openexr opengl panorama pdf raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( graphicsmagick openexr panorama pdf raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     kde_parts: ${MY_KDE_PARTS}
 
@@ -61,7 +60,7 @@ DEPENDENCIES="
       >=media-libs/lcms-1.15
         media-libs/libpng
         sys-libs/zlib
-        x11-libs/qt:4[dbus][opengl?]
+        x11-libs/qt:4[dbus][opengl]
         x11-libs/libX11
         kde_parts:karbon? (
             media-libs/fontconfig
@@ -75,6 +74,7 @@ DEPENDENCIES="
             kde/qimageblitz
             media-libs/jpeg
             sci-libs/eigen:2
+            x11-dri/mesa
             x11-libs/libICE
             x11-libs/libSM
             x11-libs/libXau
@@ -82,14 +82,11 @@ DEPENDENCIES="
             x11-libs/libXext
             x11-libs/libXft
             x11-libs/libXpm
+            glew? ( media-libs/glew )
             graphicsmagick? ( >=media-gfx/GraphicsMagick-1.1 )
             openexr? (
                 media-libs/openctl
                 media-libs/openexr
-            )
-            opengl? (
-                x11-dri/mesa
-                glew? ( media-libs/glew )
             )
             panorama? ( sci-mathematics/gmm )
             pdf? ( app-text/poppler[qt4] )
@@ -147,6 +144,7 @@ src_configure() {
         ${cmakeparams} \
         -DWITH_LibXml2=ON \
         -DWITH_LibXslt=ON \
+        -DWITH_OpenGL=ON \
         -DWITH_PNG=ON \
         $(cmake_with eps Pstoedit) \
         $(cmake_with GLEW) \
@@ -161,7 +159,6 @@ src_configure() {
         $(cmake_with odf QCA2) \
         $(cmake_with openexr OpenCTL) \
         $(cmake_with OpenEXR) \
-        $(cmake_with OpenGL) \
         $(cmake_with panorama GMM) \
         $(cmake_with pdf Poppler) \
         $(cmake_with raw Kdcraw) \

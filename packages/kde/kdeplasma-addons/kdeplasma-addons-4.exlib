@@ -9,20 +9,20 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 "
 
 LICENCES="GPL-2"
-MYOPTIONS="opengl"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
         dev-lang/python:*
     build+run:
         dev-libs/boost
-        kde/kdelibs:${SLOT}[opengl=]
+        kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
-        kde/kdebase-workspace:${SLOT}[opengl=]
+        kde/kdebase-workspace:${SLOT}
+        x11-dri/mesa
         x11-libs/libX11
-        x11-libs/qt:4[opengl?][webkit] [[ note = [ Webkit dependency is automagic, hard-enable it ] ]]
-        opengl? ( x11-dri/mesa )
+        x11-libs/qt:4[opengl][webkit] [[ note = [ Webkit dependency is automagic, hard-enable it ] ]]
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'opengl OpenGL' )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 

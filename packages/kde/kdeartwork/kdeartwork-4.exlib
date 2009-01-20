@@ -7,7 +7,7 @@ SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="opengl xscreensaver"
+MYOPTIONS="xscreensaver"
 
 DEPENDENCIES="
     build:
@@ -15,15 +15,16 @@ DEPENDENCIES="
             sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
         )
     build+run:
-        kde/kdelibs:${SLOT}[opengl=]
+        kde/kdelibs:${SLOT}
         kde/kdebase-workspace:${SLOT}
+        x11-dri/mesa
         x11-libs/libX11
-        opengl? ( x11-dri/mesa )
+        x11-libs/qt:4[opengl]
         xscreensaver? ( x11-apps/xscreensaver )
 "
 
+CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_OpenGL:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    OpenGL
     'xscreensaver Xscreensaver'
     'xscreensaver Eigen2'
 )
