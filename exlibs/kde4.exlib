@@ -1,7 +1,47 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
+#
+# Use this exlib for packages that use KDE 4's CMake buildsystem
 
-export_exlib_phases pkg_postinst pkg_postrm
+require cmake
+
+export_exlib_phases src_configure pkg_postinst pkg_postrm
+
+MYOPTIONS="debug"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+      >=kde/automoc4-0.9.87
+"
+
+KDE_INSTALL_PREFIX="/usr"
+
+kde4_shared_cmake_params() {
+    echo \
+        -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')" \
+        -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
+        -DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR:BOOL=TRUE \
+        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
+        $(if has test ${RESTRICT}; then
+            echo '-DKDE4_BUILD_TESTS:BOOL=FALSE'
+          else
+            echo '-DKDE4_BUILD_TESTS:BOOL=TRUE'
+          fi)
+}
+
+kde4_src_configure() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        $(kde4_shared_cmake_params)
+    )
+
+    local p
+    for p in ${MY_KDE_PARTS}; do
+        CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( "kde_parts:${p}" )
+    done
+
+    cmake_src_configure
+}
 
 buildsycoca4() {
     if [[ ${ROOT} == '/' && -x /usr/bin/kbuildsycoca4 ]]; then
