@@ -106,9 +106,13 @@ kdebindings-4_src_install() {
 
 kdebindings-4_pkg_postinst() {
     option python && python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
+
+    kde4_pkg_postinst
 }
 
 kdebindings-4_pkg_postrm() {
     option python && python_mod_cleanup
+
+    kde4_pkg_postrm
 }
 
