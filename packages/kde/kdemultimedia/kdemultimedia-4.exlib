@@ -17,14 +17,16 @@ DESCRIPTION="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
-MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd [[ requires = [ musicbrainz ] ]]"
+MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd"
 MYOPTIONS="
     flac [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
     musicbrainz [[ description = [ Music metadata lookup for KDE multimedia applications ] ]]
     tunepimp [[ description = [ Provides MusicBrainz support in Juk ] requires = [ kde_parts: juk ] ]]
     vorbis [[ description = [ Support Ogg Vorbis in the AudioCD kioslave ] ]]
     ( flac vorbis ) [[ requires = [ kde_parts: kioslave ] ]]
-    kde_parts: ${MY_KDE_PARTS}
+    kde_parts:
+        ${MY_KDE_PARTS}
+        kscd [[ requires = [ musicbrainz ] ]]
 "
 
 DEPENDENCIES="
