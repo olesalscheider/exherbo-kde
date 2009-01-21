@@ -16,7 +16,7 @@ REMOTE_IDS="freshmeat:${PN} sourceforge:${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     id3         [[ description = [ Support for ID3v1 and ID3v2 tags ] ]]
     tunepimp    [[ description = [ Provides MusicBrainz support ] ]]
