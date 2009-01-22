@@ -12,7 +12,7 @@ MYOPTIONS="debug"
 DEPENDENCIES="
     build:
         dev-util/pkg-config
-      >=kde/automoc4-0.9.87
+      >=kde/automoc4-0.9.88
 "
 
 KDE_INSTALL_PREFIX="/usr"
