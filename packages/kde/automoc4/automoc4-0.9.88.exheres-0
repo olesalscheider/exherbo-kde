@@ -1,11 +1,11 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake
 
 SUMMARY="KDE Meta Object Compiler"
 HOMEPAGE="http://www.kde.org"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="as-is"
 SLOT="0"
