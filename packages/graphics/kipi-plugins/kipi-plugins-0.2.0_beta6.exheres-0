@@ -9,7 +9,7 @@ DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV/_beta/-beta}.tar.bz2"
 
 BUGS_TO="kde@exherbo.org"
 
-LICENCES="GPL-2"
+LICENCES="ADOBE-DNG GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
