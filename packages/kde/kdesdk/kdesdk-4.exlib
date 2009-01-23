@@ -25,9 +25,10 @@ umbrello: A UML modeller.
 MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
-MYOPTIONS="kde_parts: ${MY_KDE_PARTS} kioslave"
+MYOPTIONS="
+    kde_parts: ${MY_KDE_PARTS} kioslave"
 
-# FIXME: Read lokalize/PACKAGING: Wants gettext, recommends krosspython
+# - bash & zsh completion in scripts/completions, but nothing really worth having (KDE 3 things)
 DEPENDENCIES="
     build:
         kde_parts:kapptemplate? (
@@ -39,6 +40,9 @@ DEPENDENCIES="
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kioslave? ( >=dev-scm/subversion-1.4 )
+        kde_parts:lokalize? (
+            x11-libs/qt:4[sql][sqlite]
+        )
         kde_parts:umbrello? (
           >=dev-libs/boost-1.33.1
             dev-libs/libxslt
@@ -46,6 +50,11 @@ DEPENDENCIES="
         )
     run:
         kde_parts:cervisia? ( dev-scm/cvs )
+    post,suggested:
+        kde_parts:lokalize? (
+            dev-python/dbus-python
+            kde/kdebindings:${SLOT}[python]
+        )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
