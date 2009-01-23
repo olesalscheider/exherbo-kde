@@ -20,8 +20,8 @@ MYOPTIONS="linguas: ( ${LANGS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
-        kde/kdelibs:4
-      >=sys-devel/gettext-0.17"
+      >=sys-devel/gettext-0.17
+"
 
 for_all_enabled_linguas_run() {
     local lingua= ECMAKE_BUILD_DIR= WORK=
