@@ -21,7 +21,7 @@ DEPENDENCIES="
         kde/kdebase-workspace:${SLOT}
         x11-dri/mesa
         x11-libs/libX11
-        x11-libs/qt:4[opengl][webkit] [[ note = [ Webkit dependency is automagic, hard-enable it ] ]]
+        x11-libs/qt:4[opengl][webkit]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
