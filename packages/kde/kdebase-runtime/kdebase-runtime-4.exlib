@@ -36,7 +36,7 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
       >=dev-cpp/clucene-0.9.19
-      >=dev-libs/soprano-2.0.98
+      >=dev-libs/soprano-2.1.67
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
         media-libs/phonon

@@ -25,7 +25,7 @@ DEPENDENCIES="
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
-      >=dev-libs/soprano-2.1.0 [[ note = [ Need soprano's clucene support enabled ] ]]
+      >=dev-libs/soprano-2.1.67 [[ note = [ Need soprano's clucene support enabled ] ]]
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/giflib

@@ -38,7 +38,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-      >=dev-libs/soprano-2.0.0
+      >=dev-libs/soprano-2.1.67
       >=media-libs/phonon-4.3.0
       >=server-pim/akonadi-1.1.0
         python? (

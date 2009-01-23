@@ -41,7 +41,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         dev-libs/libusb:0.1
-      >=dev-libs/soprano-2.0.98 [[ note = [ plasma engine explorer ] ]]
+      >=dev-libs/soprano-2.1.67 [[ note = [ plasma engine explorer ] ]]
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
