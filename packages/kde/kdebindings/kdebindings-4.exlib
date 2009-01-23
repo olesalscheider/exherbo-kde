@@ -33,8 +33,6 @@ MYOPTIONS="
     ( python ruby ) [[ number-selected = at-least-one ]]
     webkit [[ requires = ruby description = [ QtRuby bindings for QtWebKit ] ]]
 "
-# FIXME: rbuic4 not found, ruby-clock will not created
-# rbuic4 is installed by this package, so it should be looking for the rbuic4 from the build directory.
 
 DEPENDENCIES="
     build+run:
