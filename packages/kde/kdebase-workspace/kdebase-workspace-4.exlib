@@ -89,7 +89,10 @@ DEPENDENCIES="
         x11-apps/xset
       >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb ]]
         x11-apps/mkfontdir
-        x11-apps/xprop"
+        x11-apps/xprop
+    post:
+        python? ( kde/kdebindings:4[python] )
+"
 
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
