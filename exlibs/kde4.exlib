@@ -19,7 +19,6 @@ KDE_INSTALL_PREFIX="/usr"
 
 kde4_shared_cmake_params() {
     echo \
-        -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')" \
         -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
         -DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR:BOOL=TRUE \
         -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
