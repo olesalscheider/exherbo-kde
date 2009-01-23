@@ -3,9 +3,9 @@
 #
 # Use this exlib for packages that use KDE 4's CMake buildsystem
 
-require cmake
+require flag-o-matic cmake
 
-export_exlib_phases src_configure pkg_postinst pkg_postrm
+export_exlib_phases pkg_setup src_configure pkg_postinst pkg_postrm
 
 MYOPTIONS="debug"
 
@@ -27,6 +27,10 @@ kde4_shared_cmake_params() {
           else
             echo '-DKDE4_BUILD_TESTS:BOOL=TRUE'
           fi)
+}
+
+kde4_pkg_setup() {
+    option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
 }
 
 kde4_src_configure() {
