@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'soprano-2.0.2.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
@@ -33,10 +33,10 @@ DEPENDENCIES="
 
 # Tests fail for out-of-source build
 ECMAKE_BUILD_TYPE="in-source"
-# Tests failing because Sesame2 can't properly be disabled in the CMake buildsystem:
-# FIXME: Send patch upstream
+# FIXME:
+# - Tests failing because Sesame2 can't properly be disabled in the CMake buildsystem:
 #   redlandmultithreadtest indexmodelmultithreadingtest localsocketmultithreadtest sopranodbusmultithreadtest
-# Real test failures:
+# - Real test failures:
 #   sopranodclienttest sopranodsocketclienttest sopranodbusclienttest
 RESTRICT=test
 
