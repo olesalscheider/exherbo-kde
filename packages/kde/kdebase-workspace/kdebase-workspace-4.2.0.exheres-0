@@ -6,6 +6,7 @@ require "${PN}-4"
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    -p2 "${FILES}"/solid
+    # FIXME: Berniyh will update the patch
+    # -p2 "${FILES}"/solid
 )
 
