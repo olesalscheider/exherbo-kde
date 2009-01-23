@@ -1,7 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4 python
+require python kde.org-4
 
 export_exlib_phases src_configure src_install pkg_postinst pkg_postrm
 
@@ -106,13 +106,11 @@ kdebindings-4_src_install() {
 
 kdebindings-4_pkg_postrm() {
     option python && python_mod_cleanup
-
     kde4_pkg_postrm
 }
 
 kdebindings-4_pkg_postinst() {
     option python && python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
-
     kde4_pkg_postinst
 }
 
