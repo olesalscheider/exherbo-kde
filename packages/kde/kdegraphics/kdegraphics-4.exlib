@@ -27,12 +27,15 @@ ksaneplugin ksnapshot okular strigi-analyzer svgpart"
 MYOPTIONS="chm  [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
            djvu [[ description = [ Support for DjVu formatted files in Okular ] ]]
            epub [[ description = [ Support for EPub documents in Okular ] ]]
+           kipi [[ description = [ Enable KDE Image Plugin Interface (KIPI) support for Gwenview ]
+                   requires    = [ kde_parts: gwenview ] ]]
            odf  [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
            pdf  [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
            ps   [[ description = [ Support for PS (PostScript) files in Okular ] ]]
            tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular ] ]]
            ( chm djvu epub odf ps pdf tiff ) [[ requires = [ kde_parts: okular ] ]]
-kde_parts: ${MY_KDE_PARTS}"
+kde_parts: ${MY_KDE_PARTS}
+"
 
 DEPENDENCIES="
     build:
@@ -45,6 +48,7 @@ DEPENDENCIES="
         kde_parts:gwenview? (
             dev-libs/soprano
           >=graphics/exiv2-0.17 [[ note = [ strictly speaking only 0.13 is required, but 0.17 is recommended by upstream ] ]]
+            kipi? ( graphics/kipi-plugins )
         )
         kde_parts:kamera? ( media-libs/libgphoto2 )
         kde_parts:kgamma? (
@@ -80,9 +84,9 @@ src_configure() {
     local p cmakeparams
 
     if option kde_parts:kolourpaint || option kde_parts:okular; then
-        cmakeparams+=" -DWITH_Blitz=ON"
+        cmakeparams+=" -DWITH_QImageBlitz=ON"
     else
-        cmakeparams+=" -DWITH_Blitz=OFF"
+        cmakeparams+=" -DWITH_QImageBlitz=OFF"
     fi
 
     for p in ${MY_KDE_PARTS}; do
@@ -93,7 +97,6 @@ src_configure() {
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
         -DWITH_Freetype=ON \
-        -DWITH_JPEG=ON \
         -DWITH_ZLIB=ON \
         -DGWENVIEW_METADATA_BACKEND=Nepomuk \
         $(cmake_with CHM) \
@@ -103,6 +106,7 @@ src_configure() {
         $(cmake_with kde_parts:kamera Gphoto2) \
         $(cmake_with kde_parts:ksaneplugin Sane) \
         $(cmake_with kde_parts:gwenview Kipi) \
+        $(cmake_with Kipi)
         $(cmake_with ps LibSpectre) \
         $(cmake_with pdf Poppler) \
         $(cmake_with odf QCA2) \
