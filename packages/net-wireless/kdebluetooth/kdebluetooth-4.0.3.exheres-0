@@ -1,10 +1,9 @@
 # Copyright 2008 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="playground/network/kbluetooth4"
+MY_PNV=${PN}${PV%%.*}-${PV#*.}
 
-require scm-svn cmake
+require cmake
 
 SUMMARY="A collection of Bluetooth utilities and modules for KDE based on BlueZ"
 DESCRIPTION="The KDE Bluetooth Framework is a set of tools built on top of
@@ -12,7 +11,7 @@ Linux' Bluetooth stack BlueZ. Our goal is to provide easy access to the most
 common Bluetooth profiles and to make data exchange with Bluetooth enabled
 phones and PDAs as straightforward as possible."
 HOMEPAGE="http://bluetooth.kmobiletools.org/"
-DOWNLOADS=""
+DOWNLOADS="mirror://sourceforge/kde-bluetooth/${MY_PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -28,4 +27,6 @@ DEPENDENCIES="
       >=net-wireless/bluez-4
         net-wireless/obex-data-server
 "
+
+WORK="${WORKBASE}"/${MY_PNV}
 
