@@ -20,7 +20,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdebase-workspace:4[bluetooth]
+        >=kde/kdebase-workspace-4.2.0:4[bluetooth]
         kde/kdelibs:4
         x11-libs/qt:4[qt3support]
     run:
