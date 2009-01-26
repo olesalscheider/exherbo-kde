@@ -1,7 +1,7 @@
 # Copyright 2008 Daniel Mierswa <impulze@impulze.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require kde4
 
 # FIXME Add linguas
 
@@ -12,6 +12,7 @@ DESCRIPTION="A rich featured BitTorrent client for KDE"
 BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
+SLOT="4"
 MYOPTIONS="bwscheduler infowidget ipfilter logviewer scanfolder search stats upnp webinterface" # zeroconf
 
 DEPENDENCIES="
@@ -23,7 +24,7 @@ DEPENDENCIES="
         infowidget? ( net-libs/GeoIP )
 "
 #    run:
-#        zeroconf? ( kde/kdenetwork:${SLOT} )
+#        zeroconf? ( kde/kdenetwork:${SLOT}[zeroconf] )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_DHT_SUPPORT=ON
