@@ -10,15 +10,14 @@
 #       Bernd Steinhauser <berniyh@exherbo.org>
 #       Ingmar Vanhassel <ingmar@exherbo.org>
 
-# Exlib _just_ for KDE 4 things: No fugly NEED_KDE crap.
+# Exlib for KDE 4 things
 # Seperate exlib for packages with _optional_ KDE support
 # Canonical KDE packages go in packages/kde/${PN}
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
+require kde4
 
-require multilib versionator kde4 cmake
-
-export_exlib_phases src_configure src_install
+export_exlib_phases src_install
 
 # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
@@ -26,17 +25,16 @@ RESTRICT=test
 KDEMODULE=${KDEMODULE:-${PN}}
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 SLOT="4"
-MYOPTIONS="debug"
 
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
 
 case ${PV} in
-    4.1.96) UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/announce-4.2-rc.php" ;;
-    *) UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
+    4.1.96)
+        UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/announce-4.2-rc.php" ;;
+    *)
+        UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
 esac
-
-KDE_INSTALL_PREFIX="/usr"
 
 case ${PV} in
     4.@(1|2).@(6|7|8|9)*) 
@@ -46,40 +44,10 @@ case ${PV} in
 esac
 
 DEPENDENCIES="
-    build:
-        dev-util/pkg-config
-      >=kde/automoc4-0.9.87
     build+run:
       >=app-pim/strigi-0.6.3[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
-        x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]"
-
-kde4_shared_cmake_params() {
-    echo \
-        -DCMAKE_BUILD_TYPE:STRING="Exherbo$(option debug && echo 'Debug')" \
-        -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
-        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}"
-        # Use EXTRA_ECONF if you want to enable '-DKDE4_ENABLE_FINAL:BOOL=TRUE'
-}
-
-kde.org-4_src_configure() {
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        $(kde4_shared_cmake_params)
-        # This only has effect when you use CMake 2.6.3
-        $(ever at_least 4.1.96 && echo '-DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR=YesPlease')
-        $(if has test ${RESTRICT}; then
-            echo '-DKDE4_BUILD_TESTS:BOOL=FALSE'
-          else
-            echo '-DKDE4_BUILD_TESTS:BOOL=TRUE'
-          fi)
-    )
-
-    local p
-    for p in ${MY_KDE_PARTS}; do
-        CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( "kde_parts:${p}" )
-    done
-
-    cmake_src_configure
-}
+        x11-libs/qt:4[accessibility][dbus][gif][jpeg][png][qt3support][ssl][svg][X]
+"
 
 kde.org-4_src_install() {
     cmake_src_install

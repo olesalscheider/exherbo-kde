@@ -4,7 +4,7 @@
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde"
 SCM_SUBPATH="extragear/base/${PN}"
 
-require kde.org-4 scm-svn
+require kde4 scm-svn
 
 SUMMARY="PolicyKit Authentication Agent for KDE"
 HOMEPAGE="http://www.kde.org" ## Couldn't find anything more appropriate

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'akonadi-server-scm.kdebuild-1' from Genkdesvn, which is:
 # Copyright 2007-2008 by the individual contributors of the genkdesvn project
-# Based in part upon the respective ebuild in Gentoo which is: 
+# Based in part upon the respective ebuild in Gentoo which is:
 # Copyright 1999-2008 Gentoo Foundation
 
 require cmake
@@ -24,6 +24,6 @@ DEPENDENCIES="
         dev-db/mysql
         dev-libs/boost
         x11-libs/qt:4[dbus][mysql][sql]
-      >=x11-misc/shared-mime-info-0.20
+      >=x11-misc/shared-mime-info-0.23
 "
 

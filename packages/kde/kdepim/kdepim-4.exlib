@@ -72,7 +72,7 @@ DEPENDENCIES="
           >=pda/pilot-link-0.12
         )
         nepomuk? (
-          >=dev-libs/soprano-1.99
+          >=dev-libs/soprano-2.1.67
           >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "

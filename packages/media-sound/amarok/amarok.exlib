@@ -40,10 +40,10 @@ DEPENDENCIES="
       >=app-pim/strigi-0.5.9[qt4]
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
-      >=dev-libs/soprano-2.1.0
-      >=kde/kdelibs-4.1.0:4[opengl]
+      >=dev-libs/soprano-2.1.67
+      >=kde/kdelibs-4.1.0:4
       >=kde/kdepimlibs-4.1.0:4
-      >=kde/kdebase-workspace-4.1.0:4[opengl]
+      >=kde/kdebase-workspace-4.1.0:4
       >=kde/kdemultimedia-4.1.0:4 [[ description = [ Support for playing Audio CDs ] ]]
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
       >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]

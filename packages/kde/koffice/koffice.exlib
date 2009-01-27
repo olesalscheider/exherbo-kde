@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -27,7 +27,7 @@ SLOT="2"
 MY_KDE_PARTS="karbon kchart kplato kpresenter krita kspread kword"
 MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kformula kivio"
 MYOPTIONS="eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
-    glew [[ description = [ Shader filter plugin for Krita ] requires = opengl ]]
+    glew [[ description = [ Shader filter plugin for Krita ] ]]
     graphicsmagick [[ description = [ Support for various file formats (including PSD, XCF) through GraphicsMagick in Krita ] ]]
     msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
     odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]

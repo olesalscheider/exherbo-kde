@@ -5,8 +5,3 @@ require "${PN}-4"
 
 PLATFORMS="~amd64"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Smoke w/ Akonadi doesn't compile, should be fixed for 4.2.0.
-    -DWITH_Akonadi:BOOL=FALSE
-)
-

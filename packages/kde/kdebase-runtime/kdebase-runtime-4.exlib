@@ -36,10 +36,10 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
       >=dev-cpp/clucene-0.9.19
-      >=dev-libs/soprano-2.0.98
+      >=dev-libs/soprano-2.1.67
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
-        media-libs/phonon
+      >=media-libs/phonon-4.3.0[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
       >=sys-sound/alsa-lib-1.0.14a
@@ -49,7 +49,6 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         xine? ( media-libs/xine-lib )
-      >=media-libs/phonon-4.2.96[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
 "
 #   post,suggested:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
@@ -61,7 +60,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenEXR
     Samba
-    # We don't have PulseAudio atm. It needs libpulse.
     PulseAudio
     Xine
 )

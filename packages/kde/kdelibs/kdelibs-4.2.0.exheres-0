@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require "${PN}-4"
@@ -6,7 +6,6 @@ require "${PN}-4"
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-Add-Exherbo-ExherboDebug-build-types.patch"
     "${FILES}/${PNV}-FindRUBY.cmake.patch"
 )
 

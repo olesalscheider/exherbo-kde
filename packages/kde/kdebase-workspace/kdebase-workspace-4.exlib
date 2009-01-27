@@ -2,7 +2,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require python kde.org-4
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
@@ -29,9 +29,9 @@ systemsettings: Settings utility
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager xinerama
-ppc_cpu_features: altivec
-x86_cpu_features: 3dnow mmx sse sse2"
+MYOPTIONS="bluetooth lm_sensors networkmanager python xinerama
+    ppc_cpu_features: altivec
+    x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
 
 DEPENDENCIES="
@@ -39,9 +39,10 @@ DEPENDENCIES="
         dev-cpp/cppunit
         dev-lang/perl:* [[ note = kdm ]]
     build+run:
+        dev-libs/boost
         dev-libs/glib:2
         dev-libs/libusb:0.1
-      >=dev-libs/soprano-2.0.98 [[ note = [ plasma engine explorer ] ]]
+      >=dev-libs/soprano-2.1.67 [[ note = [ plasma engine explorer ] ]]
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
@@ -73,6 +74,11 @@ DEPENDENCIES="
         bluetooth? ( net-wireless/bluez )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( >=net-apps/NetworkManager-0.6.5 )
+        python? (
+            dev-lang/python:=
+          >=dev-python/sip-4.7.1
+          >=dev-python/PyQt4-4.4.0
+        )
         xinerama? ( x11-libs/libXinerama )
     run:
         x11-apps/setxkbmap
@@ -83,7 +89,10 @@ DEPENDENCIES="
         x11-apps/xset
       >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb ]]
         x11-apps/mkfontdir
-        x11-apps/xprop"
+        x11-apps/xprop
+    post:
+        python? ( kde/kdebindings:4[python] )
+"
 
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
@@ -96,16 +105,19 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'bluetooth BlueZ'
-    OpenGL
     'lm_sensors Sensors'
     NetworkManager
+    'python PythonLibrary'
+    'python PyKDE4'
+    'python PyQt4'
+    'python SIP'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
-    -DWITH_Fontconfig=ON -DWITH_Freetype=ON
+    -DWITH_Fontconfig=ON
     -DWITH_GLIB2=ON -DWITH_GObject=ON
+    -DWITH_OpenGL=ON
     -DWITH_PAM=ON # Automagic, hard-enabled
-    -DWITH_USB=ON # Dependency of hal, which isn't optional
     -DKDE4_KRB5AUTH=OFF
     -DKDE4_XDMCP=ON
     -DWITH_Xmms=OFF
@@ -113,29 +125,29 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk=On
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
-    -DWITH_PyKDE4=Off -DWITH_SIP=Off -DWITH_PythonLibrary=Off -DWITH_PyQt4=Off
     -DWITH_QEdje=Off
     # Hard-disable it for now, unless someone insist on optionally enabling it
     # Option seems gone with 4.1.96
-    # -DWITH_CkConnector=Off
+    # FIXME -DWITH_CkConnector=Off
 )
 
 # kwrited has an automagic dep on utempter which we don't have atm
-# + GoogleGadgets: Google Gadgets library <http://code.google.com/p/google-gadgets-for-linux/>
-# Needed to build plasma scriptengine for google gadgets
-# + QEdje: QEdje library <http://dev.openbossa.org/trac/qedje/>
-# Needed to build plasma scriptengine for edje files
-# + Python: KDE Python support <http://techbase.kde.org/Development/Languages/Python>
-# Needed to build plasma scriptengine for Python
-#   >=dev-python/PyQt4-4.4.0
-#   >=dev-python/sip-4.7.1
 # + Captury framework library, 0.3.0: Realtime video capturing framework e.g. screen casts <http://ninchens.de/projects/captury>
 # Provides for video recording desktop effects.
+
+src_prepare() {
+    default
+
+    # We sed out the CMake check for PyKDE4, to avoid a circular dependency on kde/kdebindings:4, which provides PyKDE4
+    sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
+        -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
+        -i CMakeLists.txt  ||
+        die "Disabling PyKDE4 check failed"
+}
 
 src_install() {
     kde.org-4_src_install
 
-    # FIXME
     keepdir /usr/share/config/kdm/sessions
 
     insinto /usr/env
@@ -143,5 +155,19 @@ src_install() {
 
     insinto /usr/shutdown
     doins "${FILES}"/agent-shutdown.sh
+
+    if option python; then
+        find "${IMAGE}" -type f -name '*.pyc' -delete || die "Removing *.pyc files failed with error '$?'"
+    fi
+}
+
+pkg_postrm() {
+    option python && python_mod_cleanup
+    kde4_pkg_postrm
+}
+
+pkg_postinst() {
+    option python && python_mod_compile /usr/share/apps/plasma_scriptengine_python/*.py $(python_get_sitedir)/PyKDE4/*.py
+    kde4_pkg_postinst
 }
 

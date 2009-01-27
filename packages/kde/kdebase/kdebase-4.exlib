@@ -18,14 +18,14 @@ konsole: Terminal
 kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
-MYOPTIONS="ieee1394"
+MYOPTIONS="ieee1394 webkit"
 
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
-      >=dev-libs/soprano-2.0.98
+      >=dev-libs/soprano-2.1.67
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}
         kde/kdepimlibs:${SLOT}
@@ -41,13 +41,17 @@ DEPENDENCIES="
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
         ieee1394? ( media-libs/libraw1394 )
+        webkit? ( kde/webkitkde )
     post,suggested:
         sys-apps/eject"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'ieee1394 RAW1394'
+    'webkit KdeWebKit'
+    'webkit WebKitPart'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
     -DWITH_Nepomuk=ON
     -DKDE_USBIDS_DIR="/usr/share/misc"
