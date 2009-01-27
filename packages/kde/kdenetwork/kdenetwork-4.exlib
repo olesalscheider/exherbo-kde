@@ -1,5 +1,5 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008-2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
 #   Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -14,7 +14,6 @@ DESCRIPTION="
 filesharing: Network file sharing
 kdnssd: Zeroconf (disabled)
 kget: Download manager
-knewsticker: RDF Newsticker Plasma applet
 kopete: Multi-protocol instant messaging client with various plugins for extra functionality
 kppp: A frontend to pppd
 krdc: KDE remote desktop connection (RDP and VNC) client
@@ -23,8 +22,15 @@ krfb: Desktop sharing server, allow others to access your desktop via VNC
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
-MY_KDE_PARTS+="filesharing kget knewsticker kopete kppp krdc krfb"
-#kdnssd
+MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb" #kdnssd
+MY_IM_PROTOCOLS+="
+    groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
+    jingle [[ description = [ Voice calls over Jabber ] requires = [ im_protocols: xmpp ] ]]
+    wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
+    xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
+"
+#   gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
+#   meanwhile [[ description = [ Enable Sametime protocol ] ]]
 MY_KOPETE_PLUGINS+="
     otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
     statistics [[ description = [ Statistics plugin for Kopete ] ]]
@@ -34,18 +40,16 @@ MYOPTIONS="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
+    webkit [[ description = [ Build support for the WebKit browser backend ] ]]
 
-    ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
+    ( bittorrent sqlite webkit ) [[ requires = [ kde_parts: kget ] ]]
     vnc [[ requires = [ kde_parts: krdc ] ]]
 
-    im_protocols:
-        gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
-        groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
-        wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
-        xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
-        ( gadu groupwise wlm xmpp ) [[ requires = [ kde_parts: kopete ] ]]
     kde_parts:
         ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
+
+    im_protocols:
+        ( ${MY_IM_PROTOCOLS} ) [[ requires = [ kde_parts: kopete ] ]]
     kopete_plugins:
         ( ${MY_KOPETE_PLUGINS} ) [[ requires = [ kde_parts: kopete ] ]]
 "
@@ -55,21 +59,19 @@ DEPENDENCIES="
     build+run:
         dev-libs/openssl
         kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
 
         kde_parts:kget? (
             dev-libs/soprano
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
+            kde/kdebase:${SLOT} [[ note = Konqueror ]]
             bittorrent? ( kde/ktorrent )
             sqlite? ( dev-db/sqlite:3 )
-        )
-        kde_parts:knewsticker? (
-            kde/kdepimlibs:${SLOT}
-            kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
+            webkit? ( kde/webkitkde )
         )
         kde_parts:kopete? (
             kde/qimageblitz
-            kde/kdepimlibs:${SLOT}
             x11-libs/libICE
             x11-libs/libSM
             x11-libs/libX11
@@ -84,8 +86,13 @@ DEPENDENCIES="
             im_protocols:xmpp? (
                 app-crypt/qca:2
                 net-dns/libidn
+                im_protocols:jingle? (
+                    media-libs/speex
+                  >=net-libs/ortp-0.13
+                    sys-sound/alsa-lib
+                )
             )
-            kopete_plugins:otr? ( >=net-libs/libotr-3.1.0 )
+            kopete_plugins:otr? ( >=net-libs/libotr-3.2.0 )
             kopete_plugins:statistics? ( dev-db/sqlite:3 )
             kopete_plugins:webpresence? (
                 dev-libs/libxml2
@@ -96,9 +103,12 @@ DEPENDENCIES="
             vnc? ( >=net-libs/libvncserver-0.9 )
         )
         kde_parts:krfb? (
+            x11-libs/libXtst
             >=net-libs/libvncserver-0.9
         )
 "
+#       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
+# FIXME: Is this still valid? Is zeroconf now automagic?
 #       kde_parts:kdnssd? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) )
 #       kde_parts:krfb? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 #       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
@@ -112,7 +122,7 @@ src_configure() {
         pipes privacy texteffect translator urlpicpreview
     )
     # Kopete protocols with no extra dependencies
-    my_kopete_protocols=( oscar qq sms testbed winpopup yahoo )
+    my_kopete_protocols=( bonjour irc oscar qq sms testbed winpopup yahoo )
     cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
     cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
 
@@ -125,15 +135,14 @@ src_configure() {
     # These do not work
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
 
+    # These are missing required dependencies
+    cmakeparams+=" -DBUILD_kdnssd=OFF" # needs avahi[mdnsresponder-compat] or mDNSResponder
+    cmakeparams+=" -DWITH_gadu=OFF" # >=net-libs/libgadu-1.8.0, http://toxygen.net/libgadu/
+    cmakeparams+=" -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF" # net-libs/meanwhile, http://meanwhile.sf.net
+
     for x in ${MY_KDE_PARTS}; do
         cmakeparams+=" $(cmake_build kde_parts:${x})"
     done
-
-    if option kde_parts:kget || option kde_parts:knewsticker; then
-        cmakeparams+=" -DWITH_Plasma=ON"
-    else
-        cmakeparams+=" -DWITH_Plasma=OFF"
-    fi
 
     if option sqlite || option kopete_plugins:statistics; then
         cmakeparams+=" -DWITH_Sqlite=ON"
@@ -153,19 +162,21 @@ src_configure() {
         cmakeparams+=" -DWITH_LibVNCServer=OFF"
     fi
 
-    #if option kde_parts:krdc || option kde_parts:krfb && option zeroconf || option kde_parts:kdnssd; then
-    #    cmakeparams+=" -DWITH_DNSSD=ON"
-    #else
-        cmakeparams+=" -DWITH_DNSSD=OFF"
-    #fi
-
+    #   $(cmake_with im_protocols:gadu) \
+    #   $(cmake_with im_protocols:meanwhile) \
+    #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
         $(cmake_with kde_parts:kget Nepomuk) \
+        $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
-        $(cmake_with im_protocols:gadu) \
+        $(cmake_with webkit KdeWebKit) \
+        $(cmake_with webkit WebKitPart) \
         $(cmake_with im_protocols:groupwise) \
+        $(cmake_option !im_protocols:jingle NO_JINGLE) \
+        $(cmake_with im_protocols:wlm) \
+        $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with kopete_plugins:otr) \
         $(cmake_with kopete_plugins:otr LibOTR) \
         $(cmake_with kopete_plugins:webpresence) \
