@@ -58,8 +58,8 @@ DEPENDENCIES="
 # FIXME:
 RESTRICT="test"
 
-DEFAULT_SRC_CONFIGURE_ENABLES+=( cups "fam libfam" )
-DEFAULT_SRC_CONFIGURE_WITHS+=( 
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES+=( cups "fam libfam" )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS+=(
     acl
     alsa
     "jpeg2k jasper"
