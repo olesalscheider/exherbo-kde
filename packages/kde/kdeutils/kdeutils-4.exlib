@@ -18,13 +18,13 @@ kwallet: KDE wallet management tool
 okteta: binary file editor
 printer-applet: a system tray utility that shows current print jobs, shows printer
                 warnings and errors and shows when printers that have been plugged
-                in for the first time are being auto-configured (disabled)
+                in for the first time are being auto-configured
 superkaramba: version of Karamba with python scripting
 sweeper: cleans unwanted traces the user leaves on the system
 "
 
 MY_KDE_PARTS="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
-okteta superkaramba sweeper" # printer-applet (needs kdebindings and more)
+okteta printer-applet superkaramba sweeper"
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
@@ -41,6 +41,15 @@ DEPENDENCIES="
             zip? ( app-arch/libzip )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
+        kde_parts:printer-applet? (
+            app-admin/system-config-printer
+             dev-lang/python:*
+             dev-python/pycups
+             dev-python/PyQt4[dbus]
+             dev-python/sip
+             kde/kdebindings:${SLOT}[python] [[ note = PyKDE4 ]]
+             net-print/hal-cups-utils
+        )
         kde_parts:superkaramba? (
             kde/kdebase-workspace:${SLOT}
             kde/qimageblitz
@@ -61,21 +70,11 @@ DEPENDENCIES="
             app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
         )
 "
-#    kde_parts:printer-applet? (
-#               dev-lang/python:= dev-python/SIP
-#               kde/kdebindings[qt4][kde][cups] = PyQt4, PyKDE
-#               PyCups SystemConfigPrinter
-#               hal-cups-utils ?? )
-#    http://www.riverbankcomputing.co.uk/{pyqt,pykde}/
-#    http://cyberelk.net/tim/software/{pycups,system-config-printer}/
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DBUILD_printer-applet:BOOL=FALSE
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'archive LibArchive'
     'kde_parts:kcalc GMP'
-    # 'kde_parts:printer-applet PythonLibrary' 'kde_parts:printer-applet SIP'
+    'kde_parts:printer-applet PythonLibrary' 'kde_parts:printer-applet SIP'
     'python PythonLibs'
     'zip LibZip'
 )
