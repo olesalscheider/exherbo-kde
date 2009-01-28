@@ -1,20 +1,21 @@
 # Copyright 2008 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require kde4
 
 SUMMARY="Yakuake - Quake style terminal emulator"
-LICENCES="GPL-2"
+DESCRIPTION="Yakuake is a drop-down terminal emulator based on KDE Konsole technology."
 HOMEPAGE="http://yakuake.kde.org/"
 DOWNLOADS="mirror://berlios/${PN}/${PNV}.tar.bz2"
-DESCRIPTION="Yakuake is a drop-down terminal emulator based on KDE Konsole technology."
+
+LICENCES="GPL-2"
+SLOT="4"
+MYOPTIONS=""
 
 BUGS_TO="kimrhh@exherbo.org"
 UPSTREAM_CHANGELOG="http://websvn.kde.org/trunk/extragear/utils/yakuake/ChangeLog?view=markup"
 REMOTE_IDS="freshmeat:yakuake"
 UPSTREAM_RELEASE_NOTES="http://developer.berlios.de/project/shownotes.php?group_id=7376&release_id=14724"
-
-MYOPTIONS=""
 
 DEPENDENCIES="
     build:
@@ -24,3 +25,4 @@ DEPENDENCIES="
     run:
         kde/kdebase:${SLOT}
 "
+
