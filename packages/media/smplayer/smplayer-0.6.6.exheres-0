@@ -28,5 +28,6 @@ DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr CONF_PATH="/etc/${PN}" DOC_PATH="/usr/s
 
 src_prepare() {
     echo '#define SVN_REVISION "SVN-r1661"' >> src/svn_revision.h
+    sed -e '/MimeType/s/$/;/' -i ${PN}.desktop || die "Fixing .desktop file failed"
 }
 
