@@ -10,3 +10,8 @@ DEPENDENCIES="
       >=kde/kdegraphics-${PV} [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
 "
 
+src_prepare() {
+    # Apply upstream revision 917030 via an sed. It was committed both to trunk and branch.
+    sed -i -e '/^MimeType/ s/$/;/' applets/previewer/preview.desktop || die "sed failed"
+}
+
