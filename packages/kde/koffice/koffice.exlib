@@ -112,6 +112,9 @@ DEPENDENCIES="
 # Ruby/Python scripting for Kexi/Krita: --disable-scripting
 # Kexi: FreeTDS, XBase, MySQL, PostgreSQL (libpqxx which needs libpq)
 
+# Tests need X, need to work on making only those tests that can run, run.
+RESTRICT="test"
+
 src_configure() {
     local p cmakeparams
 
