@@ -1,0 +1,10 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+LANGS="ar bg ca cy da de el en_GB es et eu fa fi fr fy ga gl hi hu it ja kk ms
+nb nds ne nl pl pt pt_BR ru sk sl sv ta tr uk zh_CN zh_TW"
+
+require ${PN}
+
+PLATFORMS="~amd64 ~x86"
+
