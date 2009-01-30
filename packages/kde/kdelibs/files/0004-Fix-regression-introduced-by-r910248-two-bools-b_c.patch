@@ -1,0 +1,109 @@
+From 87c24dc051c6053f88ea8ded49d02201b8f8589f Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Fri, 30 Jan 2009 20:28:25 +0000
+Subject: [PATCH] Fix regression introduced by r910248; two bools (b_checkUpdates and bCheckUpdates) for the same thing,
+ and b_checkUpdates was always false, so the directories were never watched, and people had to run
+ kbuildsycoca4 by hand after installing new desktop files.
+ BUG: 182472
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.2/kdelibs@918838 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kded/kded.cpp |   17 ++++++++---------
+ kded/kded.h   |    4 +---
+ 2 files changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/kded/kded.cpp b/kded/kded.cpp
+index c9dd797..a02715c 100644
+--- a/kded/kded.cpp
++++ b/kded/kded.cpp
+@@ -115,9 +115,8 @@ static void runDontChangeHostname(const QByteArray &oldName, const QByteArray &n
+    KToolInvocation::kdeinitExecWait( "kdontchangethehostname", args );
+ }
+ 
+-Kded::Kded(bool checkUpdates)
+-  : b_checkUpdates(checkUpdates),
+-    m_needDelayedCheck(false)
++Kded::Kded()
++  : m_needDelayedCheck(false)
+ {
+   _self = this;
+ 
+@@ -280,7 +279,7 @@ void Kded::setModuleAutoloading(const QString &obj, bool autoload)
+     KSharedConfig::Ptr config = KGlobal::config();
+     // Ensure the service exists.
+     KService::Ptr service = KService::serviceByDesktopPath("kded/"+obj+".desktop");
+-    if (!service) 
++    if (!service)
+         return;
+     KConfigGroup cg(config, QString("Module-%1").arg(service->desktopEntryName()));
+     cg.writeEntry("autoload", autoload);
+@@ -290,7 +289,7 @@ void Kded::setModuleAutoloading(const QString &obj, bool autoload)
+ bool Kded::isModuleAutoloaded(const QString &obj) const
+ {
+     KService::Ptr s = KService::serviceByDesktopPath("kded/"+obj+".desktop");
+-    if (!s) 
++    if (!s)
+         return false;
+     return isModuleAutoloaded(s);
+ }
+@@ -307,7 +306,7 @@ bool Kded::isModuleAutoloaded(const KService::Ptr &module) const
+ bool Kded::isModuleLoadedOnDemand(const QString &obj) const
+ {
+     KService::Ptr s = KService::serviceByDesktopPath("kded/"+obj+".desktop");
+-    if (!s) 
++    if (!s)
+         return false;
+     return isModuleLoadedOnDemand(s);
+ }
+@@ -446,7 +445,7 @@ void Kded::slotApplicationRemoved(const QString &name, const QString &oldOwner,
+ 
+ void Kded::updateDirWatch()
+ {
+-  if (!b_checkUpdates) return;
++  if (!bCheckUpdates) return;
+ 
+   delete m_pDirWatch;
+   m_pDirWatch = new KDirWatch;
+@@ -471,7 +470,7 @@ void Kded::updateResourceList()
+ {
+   delete KSycoca::self();
+ 
+-  if (!b_checkUpdates) return;
++  if (!bCheckUpdates) return;
+ 
+   if (delayedCheck) return;
+ 
+@@ -921,7 +920,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
+      checkStamps = cg.readEntry("CheckFileStamps", true);
+      delayedCheck = cg.readEntry("DelayedCheck", false);
+ 
+-     Kded *kded = new Kded(false); // Build data base
++     Kded *kded = new Kded(); // Build data base
+ 
+      KDE_signal(SIGTERM, sighandler);
+      KDE_signal(SIGHUP, sighandler);
+diff --git a/kded/kded.h b/kded/kded.h
+index abc8437..406cd31 100644
+--- a/kded/kded.h
++++ b/kded/kded.h
+@@ -41,7 +41,7 @@ class Kded : public QObject
+ {
+   Q_OBJECT
+ public:
+-   Kded(bool checkUpdates);
++   Kded();
+    virtual ~Kded();
+ 
+    static Kded *self() { return _self;}
+@@ -186,8 +186,6 @@ protected:
+     */
+    KDirWatch* m_pDirWatch;
+ 
+-   bool b_checkUpdates;
+-
+    /**
+     * When a desktop file is updated, a timer is started (5 sec)
+     * before rebuilding the binary - so that multiple updates result
+-- 
+1.6.1.2
+
