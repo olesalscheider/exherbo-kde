@@ -1,0 +1,148 @@
+From 062571d8a0837b0b93f722ac57bfa90036b2a616 Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Fri, 30 Jan 2009 12:46:15 +0000
+Subject: [PATCH 1/3] Repair klauncher support for unique-applications like konsole.
+   (adding org.kde.konsole in konsole.desktop was just a workaround, org.kde is still assumed when not present)
+ Brown paper bag for me - now expecting tons of new klauncher error reports from 4.2.0... :(
+ Fix will be in 4.2.1.
+ CCBUG: 162729
+ CCBUG: 75492
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.2/kdelibs@918654 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kinit/klauncher.cpp |   60 +++++++++++++++++++++++++++++++++++---------------
+ kinit/klauncher.h   |    1 +
+ 2 files changed, 43 insertions(+), 18 deletions(-)
+
+diff --git a/kinit/klauncher.cpp b/kinit/klauncher.cpp
+index bc92df5..e3d9d93 100644
+--- a/kinit/klauncher.cpp
++++ b/kinit/klauncher.cpp
+@@ -58,6 +58,9 @@
+ 
+ // #define KLAUNCHER_VERBOSE_OUTPUT
+ 
++static const char* const s_DBusStartupTypeToString[] =
++    { "DBusNone", "DBusUnique", "DBusMulti", "DBusWait", "ERROR" };
++
+ using namespace KIO;
+ 
+ IdleSlave::IdleSlave(QObject *parent)
+@@ -391,15 +394,19 @@ KLauncher::processDied(pid_t pid, long exitStatus)
+       if (request->pid == pid)
+       {
+          if (request->dbus_startup_type == KService::DBusWait)
+-            request->status = KLaunchRequest::Done;
++             request->status = KLaunchRequest::Done;
+          else if ((request->dbus_startup_type == KService::DBusUnique)
+-                  && QDBusConnection::sessionBus().interface()->isServiceRegistered(request->dbus_name))
+-            request->status = KLaunchRequest::Running;
+-         else
+-            request->status = KLaunchRequest::Error;
++                  && QDBusConnection::sessionBus().interface()->isServiceRegistered(request->dbus_name)) {
++             request->status = KLaunchRequest::Running;
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++             kDebug(7016) << pid << "running as a unique app";
++#endif
++         } else {
++             request->status = KLaunchRequest::Error;
+ #ifdef KLAUNCHER_VERBOSE_OUTPUT
+-         kDebug(7016) << pid << "died, requestDone. status=" << request->status;
++             kDebug(7016) << pid << "died, requestDone. status=" << request->status;
+ #endif
++         }
+          requestDone(request);
+          return;
+       }
+@@ -444,19 +451,29 @@ KLauncher::slotNameOwnerChanged(const QString &appId, const QString &oldOwner,
+       if (request->status != KLaunchRequest::Launching)
+          continue;
+ 
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++      kDebug(7016) << "had pending request" << request->name << s_DBusStartupTypeToString[request->dbus_startup_type] << "dbus_name" << request->dbus_name << request->tolerant_dbus_name;
++#endif
+       // For unique services check the requested service name first
+-      if ((request->dbus_startup_type == KService::DBusUnique) &&
+-          ((appId == request->dbus_name) ||
+-           QDBusConnection::sessionBus().interface()->isServiceRegistered(request->dbus_name)))
+-      {
+-         request->status = KLaunchRequest::Running;
+-         requestDone(request);
+-         continue;
++      if (request->dbus_startup_type == KService::DBusUnique) {
++          if ((appId == request->dbus_name) || // just started
++              QDBusConnection::sessionBus().interface()->isServiceRegistered(request->dbus_name)) { // was already running
++              request->status = KLaunchRequest::Running;
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++              kDebug(7016) << "OK, unique app" << request->dbus_name << "is running";
++#endif
++              requestDone(request);
++              continue;
++          } else {
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++              kDebug(7016) << "unique app" << request->dbus_name << "not running yet";
++#endif
++          }
+       }
+ 
+-      const QString rAppId = request->dbus_name;
++      const QString rAppId = !request->tolerant_dbus_name.isEmpty() ? request->tolerant_dbus_name : request->dbus_name;
+ #ifdef KLAUNCHER_VERBOSE_OUTPUT
+-      kDebug(7016) << "had pending request" << rAppId;
++      //kDebug(7016) << "using" << rAppId << "for matching";
+ #endif
+       if (rAppId.isEmpty())
+           continue;
+@@ -812,11 +829,18 @@ KLauncher::start_service(KService::Ptr service, const QStringList &_urls,
+                request->dbus_name = v.toString().toUtf8();
+            }
+            if (request->dbus_name.isEmpty()) {
+-               request->dbus_name = "*." + QFile::encodeName(KRun::binaryName(service->exec(), true));
++               const QString binName = KRun::binaryName(service->exec(), true);
++               request->dbus_name = "org.kde." + binName;
++               request->tolerant_dbus_name = "*." + binName;
+            }
+        }
+    }
+ 
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++   kDebug(7016) << "name=" << request->name << "dbus_name=" << request->dbus_name
++                << "startup type=" << s_DBusStartupTypeToString[request->dbus_startup_type];
++#endif
++
+    request->pid = 0;
+    request->envs = envs;
+    send_service_startup_info( request, service, startup_id, envs );
+@@ -932,7 +956,7 @@ KLauncher::kdeinit_exec(const QString &app, const QStringList &args,
+        request->arg_list.append(arg.toLocal8Bit());
+    }
+ 
+-   request->name = app.toLocal8Bit();
++   request->name = app;
+ 
+    if (wait)
+       request->dbus_startup_type = KService::DBusWait;
+@@ -1107,7 +1131,7 @@ KLauncher::requestSlave(const QString &protocol,
+     }
+     if (mSlaveValgrind == arg1)
+     {
+-       arg_list.prepend(QFile::encodeName(KLibLoader::findLibrary(name.toLocal8Bit())));
++       arg_list.prepend(QFile::encodeName(KLibLoader::findLibrary(name)));
+        arg_list.prepend(QFile::encodeName(KStandardDirs::locate("exe", "kioslave")));
+        name = "valgrind";
+        if (!mSlaveValgrindSkin.isEmpty()) {
+diff --git a/kinit/klauncher.h b/kinit/klauncher.h
+index 8c4bc2f..914d608 100644
+--- a/kinit/klauncher.h
++++ b/kinit/klauncher.h
+@@ -87,6 +87,7 @@ public:
+    QString name;
+    QStringList arg_list;
+    QString dbus_name;
++   QString tolerant_dbus_name;
+    enum status_t { Init = 0, Launching, Running, Error, Done };
+    pid_t pid;
+    status_t status;
+-- 
+1.6.1.2
+

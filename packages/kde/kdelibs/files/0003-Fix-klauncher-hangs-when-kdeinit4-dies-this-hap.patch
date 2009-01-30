@@ -1,0 +1,102 @@
+From a4f40b992b9792de52ed158173a84502ea6d518b Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 29 Jan 2009 22:17:29 +0000
+Subject: [PATCH 3/3] Fix "klauncher hangs when kdeinit4 dies" -- this happened because klauncher was doing a blocking read forever.
+ Doing a select() before each read() makes klauncher abort 30s after kdenit4 dies than block forever.
+ Of course the real bug is whatever makes kdeinit4 crash, but at least this makes KDE useable again when this happens.
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.2/kdelibs@918403 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kinit/klauncher.cpp |   46 ++++++++++++++++++++++++++--------------------
+ 1 files changed, 26 insertions(+), 20 deletions(-)
+
+diff --git a/kinit/klauncher.cpp b/kinit/klauncher.cpp
+index e3d9d93..bf62566 100644
+--- a/kinit/klauncher.cpp
++++ b/kinit/klauncher.cpp
+@@ -170,7 +170,7 @@ static KLauncher* g_klauncher_self;
+ 
+ KLauncher::KLauncher(int _kdeinitSocket)
+   : QObject(0),
+-    kdeinitSocket(_kdeinitSocket), dontBlockReading(false)
++    kdeinitSocket(_kdeinitSocket)
+ {
+ #ifdef Q_WS_X11
+    mCached_dpy = NULL;
+@@ -279,8 +279,24 @@ read_socket(int sock, char *buffer, int len)
+ {
+   ssize_t result;
+   int bytes_left = len;
+-  while ( bytes_left > 0)
+-  {
++    while (bytes_left > 0) {
++        // in case we get a request to start an application and data arrive
++        // to kdeinitSocket at the same time, requestStart() will already
++        // call slotKDEInitData(), so we must check there's still something
++        // to read, otherwise this would block
++
++        // Same thing if kdeinit dies without warning.
++
++        fd_set in;
++        timeval tm = { 30, 0 }; // 30 seconds timeout, so we're not stuck in case kdeinit dies on us
++        FD_ZERO ( &in );
++        FD_SET( sock, &in );
++        select( sock + 1, &in, 0, 0, &tm );
++        if( !FD_ISSET( sock, &in )) {
++            kDebug(7016) << "read_socket" << sock << "nothing to read, kdeinit4 must be dead";
++            return -1;
++        }
++
+      result = read(sock, buffer, bytes_left);
+      if (result > 0)
+      {
+@@ -301,21 +317,7 @@ KLauncher::slotKDEInitData(int)
+ {
+    klauncher_header request_header;
+    QByteArray requestData;
+-   if( dontBlockReading )
+-   {
+-   // in case we get a request to start an application and data arrive
+-   // to kdeinitSocket at the same time, requestStart() will already
+-   // call slotKDEInitData(), so we must check there's still something
+-   // to read, otherwise this would block
+-      fd_set in;
+-      timeval tm = { 0, 0 };
+-      FD_ZERO ( &in );
+-      FD_SET( kdeinitSocket, &in );
+-      select( kdeinitSocket + 1, &in, 0, 0, &tm );
+-      if( !FD_ISSET( kdeinitSocket, &in ))
+-         return;
+-   }
+-   dontBlockReading = false;
++
+    int result = read_socket(kdeinitSocket, (char *) &request_header,
+                             sizeof( request_header));
+    if (result == -1)
+@@ -664,17 +666,21 @@ KLauncher::requestStart(KLaunchRequest *request)
+    request_header.cmd = LAUNCHER_EXEC_NEW;
+ #endif
+    request_header.arg_length = requestData.length();
++
++#ifdef KLAUNCHER_VERBOSE_OUTPUT
++   kDebug(7016) << "Asking kdeinit to start" << request->name << request->arg_list
++                << "cmd=" << commandToString(request_header.cmd);
++#endif
++
+    write(kdeinitSocket, &request_header, sizeof(request_header));
+    write(kdeinitSocket, requestData.data(), requestData.length());
+ 
+    // Wait for pid to return.
+    lastRequest = request;
+-   dontBlockReading = false;
+    do {
+       slotKDEInitData( kdeinitSocket );
+    }
+    while (lastRequest != 0);
+-   dontBlockReading = true;
+ #endif
+ }
+ 
+-- 
+1.6.1.2
+
