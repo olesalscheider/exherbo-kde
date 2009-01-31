@@ -23,15 +23,8 @@ DEPENDENCIES="
         )
 "
 
-# -opengl auto
-# -scripttools (auto)
-# -mitshm: (auto) xextproto
-# -xrandr: runtime (?) (yes|no|runtime)
 # XXX
+# -xrandr: runtime (?) (yes|no|runtime)
 # -optimized-qmake
-# pkg-config! <- Now if I could remember why I added that... :-)
-# -ptmalloc
 # -translations are built by default
-
-# ^ Diff between 4.4.3 & 4.5.0-pre1 -> 4.5.0_pre20090101
 
