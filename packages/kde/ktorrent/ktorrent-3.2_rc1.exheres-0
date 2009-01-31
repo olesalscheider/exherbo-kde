@@ -3,8 +3,6 @@
 
 require ${PN}
 
-# They re-rolled the tarball a few times
-DOWNLOADS="http://ktorrent.org/downloads/${PV}/${PNV}-4.tar.bz2"
-
 PLATFORMS="~amd64 ~x86"
 
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}?q=node/28"

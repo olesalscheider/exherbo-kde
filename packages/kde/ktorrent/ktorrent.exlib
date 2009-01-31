@@ -6,44 +6,54 @@ require kde4
 # FIXME Add linguas
 
 SUMMARY="KTorrent - The KDE BitTorrent client."
-HOMEPAGE="http://ktorrent.org"
-DOWNLOADS="http://ktorrent.org/downloads/${PV}/${PNV}.tar.bz2"
+HOMEPAGE="http://ktorrent.org/"
+DOWNLOADS="${HOMEPAGE}downloads/${PV/_}/${PNV/_}.tar.bz2"
 DESCRIPTION="A rich featured BitTorrent client for KDE"
 BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="bwscheduler infowidget ipfilter logviewer mediaplayer scanfolder search stats upnp webinterface" # zeroconf
+MYOPTIONS="infowidget mediaplayer syndication" # zeroconf
 
 DEPENDENCIES="
+    build:
+        app-pim/strigi
+        sys-devel/gettext
+        syndication? ( dev-libs/boost )
     build+run:
         app-crypt/qca:2
         dev-libs/gmp
-        kde/kdelibs:${SLOT}
-        media-libs/phonon
+      >=kde/kdelibs-4.1.83:${SLOT}
+        kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         infowidget? ( net-libs/GeoIP )
+        mediaplayer? ( media-libs/phonon )
+        syndication? ( kde/kdepimlibs:${SLOT} )
 "
 #    run:
 #        zeroconf? ( kde/kdenetwork:${SLOT}[zeroconf] )
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DENABLE_DHT_SUPPORT=ON
-)
+WORK="${WORKBASE}/${PNV/_}"
 
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_BWSCHEDULER_PLUGIN=ON
+    -DENABLE_DHT_SUPPORT=ON
+    -DENABLE_DOWNLOADORDER_PLUGIN=ON
+    -DENABLE_IPFILTER_PLUGIN=ON
+    -DENABLE_LOGVIEWER_PLUGIN=ON
+    -DENABLE_SCANFOLDER_PLUGIN=ON
+    -DENABLE_SCRIPTING_PLUGIN=ON
+    -DENABLE_SEARCH_PLUGIN=ON
+    -DENABLE_STATS_PLUGIN=ON
+    -DENABLE_UPNP_PLUGIN=ON
+    -DENABLE_WEBINTERFACE_PLUGIN=ON
+    -DENABLE_ZEROCONF_PLUGIN=OFF
+)
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
-    'bwscheduler BWSCHEDULER_PLUGIN'
     'infowidget INFOWIDGET_PLUGIN'
-    'ipfilter IPFILTER_PLUGIN'
-    'logviewer LOGVIEWER_PLUGIN'
     'mediaplayer MEDIAPLAYER_PLUGIN'
-    'scanfolder SCANFOLDER_PLUGIN'
-    'search SEARCH_PLUGIN'
-    'stats STATS_PLUGIN'
-    'upnp UPNP_PLUGIN'
-    'webinterface WEBINTERFACE_PLUGIN'
+    'syndication SYNDICATION_PLUGIN'
     # 'zeroconf ZEROCONF_PLUGIN'
 )
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'infowidget SYSTEM_GEOIP'
 )
