@@ -13,7 +13,7 @@ BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="bwscheduler infowidget ipfilter logviewer scanfolder search stats upnp webinterface" # zeroconf
+MYOPTIONS="bwscheduler infowidget ipfilter logviewer mediaplayer scanfolder search stats upnp webinterface" # zeroconf
 
 DEPENDENCIES="
     build+run:
@@ -35,11 +35,13 @@ CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'infowidget INFOWIDGET_PLUGIN'
     'ipfilter IPFILTER_PLUGIN'
     'logviewer LOGVIEWER_PLUGIN'
+    'mediaplayer MEDIAPLAYER_PLUGIN'
     'scanfolder SCANFOLDER_PLUGIN'
     'search SEARCH_PLUGIN'
     'stats STATS_PLUGIN'
     'upnp UPNP_PLUGIN'
     'webinterface WEBINTERFACE_PLUGIN'
+    # 'zeroconf ZEROCONF_PLUGIN'
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
