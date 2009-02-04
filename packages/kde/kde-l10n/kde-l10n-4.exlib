@@ -1,54 +1,10 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-[[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres!'
-require kde.org-4
+L10N_BASE_URI="${L10N_BASE_URI:-mirror://kde/stable/${PV}/src/${PN}}"
+require kde.org-4 l10n
 
-set_kde_l10n_downloads() {
-    local kde_l10n_base_url="${DOWNLOADS}" localisation=
-    for localisation in ${LANGS}; do
-        echo -n "linguas:${localisation}? ( ${kde_l10n_base_url/-${PV}.tar.bz2//${PN}-${localisation}-${PV}.tar.bz2} ) "
-    done
-}
-
-SUMMARY="KDE internationalization package"
-DOWNLOADS="$(set_kde_l10n_downloads)"
-
+SUMMARY="KDE localisation package"
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="linguas: ( ${LANGS} ) [[ number-selected = at-least-one ]]"
-
-DEPENDENCIES="
-    build:
-      >=sys-devel/gettext-0.17
-"
-
-for_all_enabled_linguas_run() {
-    local lingua= ECMAKE_BUILD_DIR= WORK=
-
-    for lingua in "${WORKBASE}"/${PN}-*; do
-        # The relevant directories for this lingua for ecmake()
-        ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
-        WORK=${lingua}
-        CMAKE_SRC_CONFIGURE_PARAMS=()
-
-        pushd "${lingua}"
-            einfo "${@}: Running in ${lingua}"
-            "${@}"
-        popd
-    done
-}
-
-src_configure() {
-    for_all_enabled_linguas_run kde4_src_configure
-}
-
-src_compile() {
-    for_all_enabled_linguas_run cmake_src_compile
-}
-
-src_install() {
-    for_all_enabled_linguas_run kde.org-4_src_install
-    find "${IMAGE}" -type d -empty -delete || die "Failed to delete empty directories"
-}
 
