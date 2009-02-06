@@ -8,7 +8,10 @@ require "${PN}-4"
 PLATFORMS="~amd64 ~x86"
 
 UPSTREAM_CHANGELOG=""
-UPSTREAM_RELEASE_NOTES="http://trolltech.com/about/news/qt-4.5-beta-previews-64-bit-on-mac"
+UPSTREAM_RELEASE_NOTES="
+http://www.qtsoftware.com/about/news/qt-4.5-release-candidate-available/
+http://labs.trolltech.com/blogs/2009/02/05/onwards-and-upwards/
+"
 
 MYOPTIONS="
     gtk [[

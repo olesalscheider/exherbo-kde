@@ -12,7 +12,7 @@ SRC_TYPE=opensource-src
 MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
-HOMEPAGE="http://www.trolltech.com/products/qt/"
+HOMEPAGE="http://www.qtsoftware.com/"
 if [[ ${MY_PV} == *snapshot* ]]; then
     DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
 else
