@@ -1,8 +1,11 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-L10N_BASE_URI="${L10N_BASE_URI:-mirror://kde/stable/${PV}/src/${PN}}"
-require kde.org-4 l10n
+myexparam langs
+myexparam base_uri="mirror://kde/stable/${PV}/src/${PN}"
+
+require kde.org-4 l10n [ base_uri="$(exparam base_uri)" \
+                         langs="$(exparam langs)" ]
 
 SUMMARY="KDE localisation package"
 LICENCES="GPL-2"

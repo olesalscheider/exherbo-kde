@@ -4,18 +4,18 @@
 
 export_exlib_phases src_configure src_compile src_install
 
-[[ -z ${LANGS} ]] && die 'LANGS is unset, broken exheres.'
-[[ -z ${L10N_BASE_URI} ]] && die 'L10N_BASE_URI is unset, broken exheres.'
+myexparam langs
+myexparam base_uri
 
 set_kde_l10n_downloads() {
-    local localisation
-    for localisation in ${LANGS}; do
-        echo -n "linguas:${localisation}? ( ${L10N_BASE_URI}/${PN}-${localisation}-${PV}.tar.bz2 ) "
+    local localisation base_uri=$(exparam base_uri)
+    for localisation in $(exparam langs); do
+        echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.tar.bz2 ) "
     done
 }
 
 DOWNLOADS="$(set_kde_l10n_downloads)"
-MYOPTIONS="linguas: ( ${LANGS} ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="linguas: ( $(exparam langs) ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:

@@ -1,8 +1,10 @@
 # Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-L10N_BASE_URI="${L10N_BASE_URI:-mirror://kde/unstable/${PN%-l10n}-${PV}/src/${PN}}"
-require kde4 l10n
+myexparam langs
+myexparam base_uri="mirror://kde/unstable/${PN%-l10n}-${PV}/src/${PN}"
+
+require kde4 l10n [ langs="$(exparam langs)" base_uri="$(exparam base_uri)" ]
 
 SUMMARY="Koffice localisation package"
 HOMEPAGE="http://www.koffice.org/"
