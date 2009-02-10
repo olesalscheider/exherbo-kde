@@ -9,7 +9,7 @@ DESCRIPTION="
 This package contains shared libraries and data files needed to run KDE 4 applications.
 "
 
-MYOPTIONS="acl doc fam jasper openexr spell
+MYOPTIONS="acl doc fam jpeg2000 openexr spell
     ppc_cpu_features: altivec
     x86_cpu_features: mmx sse sse2
 "
@@ -54,7 +54,7 @@ DEPENDENCIES="
             sys-apps/attr
         )
         fam? ( app-admin/gamin )
-        jasper? ( media-libs/jasper )
+        jpeg2000? ( media-libs/jasper )
         openexr? (
             media-libs/ilmbase
             media-libs/openexr
