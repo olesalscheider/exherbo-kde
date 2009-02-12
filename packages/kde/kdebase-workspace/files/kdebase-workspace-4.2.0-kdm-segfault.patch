@@ -1,0 +1,61 @@
+Source: Upstream
+Upstream: Yes
+Reason: Fix kdm_great segfault with Qt 4.5
+
+From 174ed3bee19740e9cc26dc9c55fa1dcb76b3db96 Mon Sep 17 00:00:00 2001
+From: ossi <ossi@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Sat, 7 Feb 2009 15:49:49 +0000
+Subject: [PATCH] fix crash with qt 4.5.
+ argc is passed to qapp by ref and needs to outlive the ctor.
+ patch by George Kiagiadakis
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebase@922803 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ workspace/kdm/kfrontend/kgapp.cpp |    5 +++--
+ workspace/kdm/kfrontend/kgapp.h   |    2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/workspace/kdm/kfrontend/kgapp.cpp b/workspace/kdm/kfrontend/kgapp.cpp
+index 93dfec3..a371c32 100644
+--- a/workspace/kdm/kfrontend/kgapp.cpp
++++ b/workspace/kdm/kfrontend/kgapp.cpp
+@@ -70,7 +70,7 @@ sigAlarm( int )
+ 
+ }
+ 
+-GreeterApp::GreeterApp( int argc, char **argv ) :
++GreeterApp::GreeterApp( int &argc, char **argv ) :
+ 	inherited( argc, argv ),
+ 	regrabPtr( false ), regrabKbd( false ),
+ 	dragWidget( 0 )
+@@ -296,13 +296,14 @@ main( int argc ATTR_UNUSED, char **argv )
+ 	}
+ 
+ 	static char *fakeArgv[] = { (char *)"kdmgreet", 0 };
++	static int fakeArgc = as(fakeArgv) - 1;
+ 
+ 	KCrash::setFlags( KCrash::KeepFDs | KCrash::SaferDialog | KCrash::AlwaysDirectly );
+ 	KCrash::setApplicationName( QLatin1String( fakeArgv[0] ) );
+ 	KCrash::setCrashHandler( KCrash::defaultCrashHandler );
+ 	XSetIOErrorHandler( xIOErr );
+ 	KComponentData inst( fakeArgv[0] );
+-	GreeterApp app( as(fakeArgv) - 1, fakeArgv );
++	GreeterApp app( fakeArgc, fakeArgv );
+ 	foreach (const QString &dir, KGlobal::dirs()->resourceDirs( "qtplugins" ))
+ 		app.addLibraryPath( dir );
+ 	initQAppConfig();
+diff --git a/workspace/kdm/kfrontend/kgapp.h b/workspace/kdm/kfrontend/kgapp.h
+index 94e0876..e35d90e 100644
+--- a/workspace/kdm/kfrontend/kgapp.h
++++ b/workspace/kdm/kfrontend/kgapp.h
+@@ -35,7 +35,7 @@ class GreeterApp : public QApplication {
+ 	typedef QApplication inherited;
+ 
+   public:
+-	GreeterApp(int argc, char **argv);
++	GreeterApp(int &argc, char **argv);
+ 	virtual bool x11EventFilter( XEvent * );
+ 
+   protected:
+-- 
+1.6.1.3
