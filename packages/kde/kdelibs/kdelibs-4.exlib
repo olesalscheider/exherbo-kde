@@ -90,7 +90,7 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     ACL # automagic
     fam
-    Jasper
+    'jpeg2000 Jasper'
     OpenEXR
     'spell ASPELL'
     'spell ENCHANT'
