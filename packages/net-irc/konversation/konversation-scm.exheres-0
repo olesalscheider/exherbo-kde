@@ -1,0 +1,24 @@
+# Copyright 2008-2009 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde"
+SCM_BRANCH="work"
+SCM_SUBPATH="konvi-kde4"
+require kde4 scm-svn
+
+SUMMARY="Konversation is a graphical Internet Relay Chat client for KDE"
+HOMEPAGE="http://konversation.kde.org/"
+DOWNLOADS=""
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    kde/kdelibs:4
+    kde/kdepimlibs:4
+    x11-libs/libX11
+    x11-libs/libXScrnSaver
+"
+
