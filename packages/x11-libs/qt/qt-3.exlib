@@ -115,7 +115,7 @@ qt-3_src_configure() {
         $(myoption ipv6)
         $(myoption xinerama)
         $(myoption mysql sql-mysql plugin)
-        $(option mysql && echo '-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/')
+        $(option mysql && echo "-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/")
         $(myoption postgresql sql-psql plugin)
         $(option postgresql && echo '-I/usr/include/postgresql/server/')
         $(myoption sqlite sql-sqlite plugin)
