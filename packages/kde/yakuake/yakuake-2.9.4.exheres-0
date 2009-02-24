@@ -1,7 +1,7 @@
 # Copyright 2008 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require ${PN}
+require yakuake
 
 PLATFORMS="~amd64 ~x86"
 

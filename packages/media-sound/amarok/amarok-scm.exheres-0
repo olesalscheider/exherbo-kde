@@ -4,7 +4,7 @@
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="extragear/multimedia/${PN}"
 
-require ${PN} scm-svn
+require amarok scm-svn
 
 PLATFORMS="~x86"
 

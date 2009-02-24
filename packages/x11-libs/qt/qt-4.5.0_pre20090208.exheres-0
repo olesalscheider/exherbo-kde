@@ -3,7 +3,7 @@
 
 MY_PV="${PV/_pre/-snapshot-}"
 
-require "${PN}-4"
+require qt-4
 
 PLATFORMS="~amd64 ~x86"
 

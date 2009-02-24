@@ -3,7 +3,7 @@
 # Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require ${PN}
+require strigi
 
 PLATFORMS="~amd64 ~x86"
 
