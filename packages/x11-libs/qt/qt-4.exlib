@@ -8,12 +8,16 @@ require multilib toolchain-funcs
 
 export_exlib_phases src_prepare src_configure src_install
 
+myexparam pn=${MY_PN:-${PN}}
+myexparam pv=${MY_PV:-${PV}}
+myexparam pnv=${MY_PNV:-$(exparam pn)-$(exparam pv)}
+
 SRC_TYPE=opensource-src
-MY_PNV=qt-x11-${SRC_TYPE}-${MY_PV:-${PV}}
+MY_PNV=qt-x11-${SRC_TYPE}-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.qtsoftware.com/"
-if [[ ${MY_PV} == *snapshot* ]]; then
+if [[ $(exparam pv) == *snapshot* ]]; then
     DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
 else
     DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"

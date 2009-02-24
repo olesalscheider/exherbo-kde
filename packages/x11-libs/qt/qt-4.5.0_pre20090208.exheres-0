@@ -1,9 +1,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-MY_PV="${PV/_pre/-snapshot-}"
-
-require qt-4
+require qt-4 [ pv=${PV/_pre/-snapshot-} ]
 
 PLATFORMS="~amd64 ~x86"
 
