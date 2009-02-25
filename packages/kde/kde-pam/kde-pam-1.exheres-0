@@ -19,6 +19,8 @@ DEPENDENCIES="
         sys-libs/pam
 "
 
+WORK="${WORKBASE}"
+
 src_install() {
     newpamd "${FILES}/kde.pam-${PV}" kde
     newpamd "${FILES}/kde-np.pam-${PV}" kde-np
