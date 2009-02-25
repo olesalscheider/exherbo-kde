@@ -17,7 +17,6 @@ MYOPTIONS="infowidget mediaplayer syndication" # zeroconf
 
 DEPENDENCIES="
     build:
-        app-pim/strigi
         sys-devel/gettext
         syndication? ( dev-libs/boost )
     build+run:
