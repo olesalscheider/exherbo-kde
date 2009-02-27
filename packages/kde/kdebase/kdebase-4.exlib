@@ -54,9 +54,13 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
     -DWITH_Nepomuk=ON
+    -DWITH_Soprano=ON
+    -DWITH_PCIUTILS=ON
     -DKDE_USBIDS_DIR="/usr/share/misc"
     -DDISABLE_USBIDS_INSTALL=ON
+    -DWITH_XKB=ON
 )
+
 # the konqueror kttsdplugin has an optional dependency upon webkitkde. but it doesn't work atm.
 # CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webkitkde DEPEND_PACKAGE_WebKitKde' )
 
