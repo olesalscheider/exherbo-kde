@@ -152,8 +152,7 @@ src_configure() {
         $(cmake_with eps Pstoedit) \
         $(cmake_with GLEW) \
         $(cmake_with GraphicsMagick) \
-        $(cmake_with kde_parts:karbon Fontconfig) \
-        $(cmake_with kde_parts:karbon Freetype) \
+        $(cmake_with kde_parts:karbon) \
         $(cmake_with kde_parts:krita Blitz) \
         $(cmake_with kde_parts:krita Exiv2) \
         $(cmake_with kde_parts:krita JPEG) \
