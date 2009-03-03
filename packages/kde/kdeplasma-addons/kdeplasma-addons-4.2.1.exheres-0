@@ -1,0 +1,12 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeplasma-addons-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+      >=kde/kdegraphics-${PV} [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
+"
+
