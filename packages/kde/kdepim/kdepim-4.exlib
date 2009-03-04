@@ -27,10 +27,9 @@ ktimetracker: Time tracker
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
 korganizer kpilot ktimetracker strigi-analyzer" # kitchensync
 
-# kmail kmailcvt, kmail is required by plugins/kmail/ which is enabled automagically when gpgme is available. kmailcvt is required at runtime by kmail
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
-    nepomuk [[ description = [ Desktop-wide taggin support for Akonadi and Kmail ] ]]
+    nepomuk [[ description = [ Desktop-wide tagging support for Akonadi and Kmail ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -42,10 +41,12 @@ MYOPTIONS="
 # add_subdirectory(opensync)
 # endif ( OPENSYNC_FOUND )
 
-
 DEPENDENCIES="
     build:
         dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
+        kde_parts:kleopatra? (
+            >=dev-libs/libassuan-1.0.4 [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
+        )
     build+run:
         app-crypt/gpgme
       >=dev-libs/boost-1.33.1 [[ note = [ required by akonadi and kleopatra ] ]]
@@ -56,11 +57,6 @@ DEPENDENCIES="
         x11-libs/qt:4[dbus][sql]
       >=x11-misc/shared-mime-info-0.20 [[ note = akonadi ]]
         gnokii? ( mobilephone/gnokii )
-        ( build:
-            kde_parts:kleopatra? (
-                >=dev-libs/libassuan-1.0.4 [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
-            )
-        )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -82,6 +78,8 @@ DEPENDENCIES="
 #            x11-libs/qt:4[glib]
 #        )
 
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_kmailcvt=ON -DBUILD_ksendemail=ON )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
     'nepomuk Nepomuk' 'nepomuk Soprano'
