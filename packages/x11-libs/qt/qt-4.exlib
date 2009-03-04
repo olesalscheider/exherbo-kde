@@ -18,13 +18,13 @@ MY_PNV=qt-x11-${SRC_TYPE}-$(exparam pv)
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.qtsoftware.com/"
 if [[ $(exparam pv) == *snapshot* ]]; then
-    DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
+    DOWNLOADS="http://download.qtsoftware.com/qt/snapshots/${MY_PNV}.tar.gz"
 else
-    DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+    DOWNLOADS="http://download.qtsoftware.com/qt/source/${MY_PNV}.tar.bz2"
 fi
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
 
 if ever at least 4.5.0 ; then
     LICENCES="|| ( LGPL-2.1 GPL-3 )"
