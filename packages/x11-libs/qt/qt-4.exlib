@@ -26,7 +26,12 @@ BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
 
-LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
+if ever at least 4.5.0 ; then
+    LICENCES="|| ( LGPL-2.1 GPL-3 )"
+else
+    LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
+fi
+
 SLOT=${PV:0:1}
 
 WORK=${WORKBASE}/${MY_PNV}
