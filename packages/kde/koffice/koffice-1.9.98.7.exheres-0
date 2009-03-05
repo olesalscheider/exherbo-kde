@@ -5,10 +5,11 @@ require koffice
 
 PLATFORMS="~amd64 ~x86"
 
-MY_PV="2.0-beta6"
+MY_PV="2.0-beta7"
 UPSTREAM_CHANGELOG="${HOMEPAGE}announcements/changelog-${MY_PV}.php"
 UPSTREAM_RELEASE_NOTES="${HOMEPAGE}releases/${MY_PV/-}-release.php"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-exiv-0.18.patch" )
+# kbuildsycoca4(5476)/kdecore (KService) KServicePrivate::init: The desktop
+# entry file  "/usr/share/applications/kde4/koffice.desktop"  has Type=
+# "Application"  but no Exec line
 
-# kbuildsycoca4(5476)/kdecore (KService) KServicePrivate::init: The desktop entry file  "/usr/share/applications/kde4/koffice.desktop"  has Type= "Application"  but no Exec line
