@@ -31,21 +31,16 @@ DEPENDENCIES="
       >=media-libs/raptor-1.4.16
         x11-libs/qt:4[dbus]"
 
-# Tests fail for out-of-source build
 ECMAKE_BUILD_TYPE="in-source"
-# FIXME:
-# - Tests failing because Sesame2 can't properly be disabled in the CMake buildsystem:
-#   redlandmultithreadtest indexmodelmultithreadingtest localsocketmultithreadtest sopranodbusmultithreadtest
-# - Real test failures:
-#   sopranodclienttest sopranodsocketclienttest sopranodbusclienttest
+# FIXME: Test failures:
+#   sopranodclienttest localsocketmultithreadtest sopranodsocketclienttest sopranodbusclienttest sopranodbusmultithreadtest
 RESTRICT=test
 
-src_prepare() {
-    if option !doc; then
-        sed -e '/find_package(Doxygen)/s/^/#DONOTFIND /' \
-            -i "${WORK}"/CMakeLists.txt || die 'Doxygen sed failed.'
-    fi
-    sed -e '/find_package(JNI)/s/^/#DONOTFIND /' \
-        -i "${WORK}"/CMakeLists.txt || die 'Java/Sesame2 sed failed.'
-}
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DSOPRANO_DISABLE_SESAME2_BACKEND:BOOL=TRUE
+    -DSOPRANO_BUILD_TESTS:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    'doc SOPRANO_BUILD_API_DOCS'
+)
 
