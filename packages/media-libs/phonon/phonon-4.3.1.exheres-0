@@ -6,7 +6,7 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require cmake
+require multilib cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -21,15 +21,8 @@ DEPENDENCIES="
     build:
       >=kde/automoc4-0.9.86
     build+run:
-      >=x11-libs/qt-4.4.0:4[dbus]
-        gstreamer? (
-            dev-libs/glib:2
-            dev-libs/libxml2
-          >=media-libs/gstreamer-0.10
-          >=media-plugins/gst-plugins-base-0.10[gstreamer_plugins:alsa]
-            x11-dri/mesa
-          >=x11-libs/qt-4.4.0:4[dbus][glib]
-        )
+      >=x11-libs/qt-4.5.0:4[dbus][phonon]
+        gstreamer? ( >=x11-libs/qt-4.5.0:4[glib][gstreamer] )
         xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
 "
 
@@ -37,15 +30,23 @@ DEPENDENCIES="
 # RESTRICT="test"
 # Renable building tests when unrestricting
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DPHONON_BUILD_TESTS:BOOL=FALSE )
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Tests are restricted
+    -DPHONON_BUILD_TESTS:BOOL=FALSE
+
+    # The gstreamer backend comes from Qt4
+    -DWITH_{GStreamer,GStreamerPlugins,GLIB2,GObject,LibXml2}:BOOL=FALSE
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    GStreamer
-    'gstreamer GStreamerPlugins'
-    'gstreamer GLIB2'
-    'gstreamer GObject'
-    'gstreamer LibXml2'
-    'gstreamer OpenGL'
     Xine
     'xine XCB'
 )
+
+src_install() {
+    cmake_src_install
+
+    # This still duplicates some files with qt:4[phonon], like headers, ... but it'll do for now.
+    rm -rf "${IMAGE}"/usr/$(get_libdir)/libphonon.so* ||
+        die "Couldn't remove libphonon"
+}
 
