@@ -30,6 +30,7 @@ DEPENDENCIES="
 # RESTRICT="test"
 # Renable building tests when unrestricting
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Fix-version-for-4.3.1-release.patch" )
 CMAKE_SRC_CONFIGURE_PARAMS=(
     # Tests are restricted
     -DPHONON_BUILD_TESTS:BOOL=FALSE
