@@ -1,5 +1,5 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -64,10 +64,11 @@ DEPENDENCIES="
             x11-libs/libXxf86vm
         )
         kde_parts:kolourpaint? ( kde/qimageblitz )
-        kde_parts:ksaneplugin? ( media-gfx/sane-backends )
+        kde_parts:ksaneplugin? ( media-gfx/sane-backends [[ note = [ libksane could be compiled without ksaneplugin but I don't see the point ] ]] )
         kde_parts:ksnapshot? ( x11-libs/libX11 )
         kde_parts:okular? (
             kde/qimageblitz
+            media-libs/freetype:2
             media-libs/phonon
             chm? ( media-libs/chmlib )
             djvu? ( >=app-text/djvu-3.5.17 )
@@ -79,7 +80,6 @@ DEPENDENCIES="
         )
 "
 
-# further check sane
 src_configure() {
     local p cmakeparams
 
@@ -96,16 +96,17 @@ src_configure() {
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
-        -DWITH_Freetype=ON \
-        -DWITH_ZLIB=ON \
+        -DWITH_JPEG=ON
         -DGWENVIEW_METADATA_BACKEND=Nepomuk \
         $(cmake_with CHM) \
         $(cmake_with djvu DjVuLibre) \
         $(cmake_with EPub) \
         $(cmake_with kde_parts:gwenview Exiv2) \
+        $(cmake_with kde_parts:gwenview Soprano) \
         $(cmake_with kde_parts:kamera Gphoto2) \
         $(cmake_with kde_parts:ksaneplugin Sane) \
-        $(cmake_with kde_parts:gwenview Kipi) \
+        $(cmake_with kde_parts:okular Freetype) \
+        $(cmake_with kde_parts:okular ZLIB) \
         $(cmake_with Kipi)
         $(cmake_with ps LibSpectre) \
         $(cmake_with pdf Poppler) \

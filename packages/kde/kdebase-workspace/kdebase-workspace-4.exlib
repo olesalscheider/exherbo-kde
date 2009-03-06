@@ -52,6 +52,7 @@ DEPENDENCIES="
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
       >=kde/qimageblitz-0.0.4
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+      >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb/solidcontrol ]]
         x11-dri/mesa
         x11-libs/libICE [[ note = ksmserver ]]
         x11-libs/libX11 [[ note = [ kdm, kxkb/kcontrol ] ]]
@@ -87,7 +88,6 @@ DEPENDENCIES="
         x11-apps/xmessage
         x11-apps/xsetroot
         x11-apps/xset
-      >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb ]]
         x11-apps/mkfontdir
         x11-apps/xprop
     post:
@@ -115,20 +115,24 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
     -DWITH_Fontconfig=ON
+    -DWITH_Freetype=ON
     -DWITH_GLIB2=ON -DWITH_GObject=ON
     -DWITH_OpenGL=ON
     -DWITH_PAM=ON # Automagic, hard-enabled
+    -DWITH_USB=ON # logitech USB mouse support in kcontrol
+    -DWITH_XKB=ON # kxkb, kdm
     -DKDE4_KRB5AUTH=OFF
     -DKDE4_XDMCP=ON
     -DWITH_Xmms=OFF
     # Not optional in Exherbo
     -DWITH_Nepomuk=On
+    -DWITH_Soprano=ON
+    -DWITH_KdepimLibs=ON # for plasma RSS data engine
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
     -DWITH_QEdje=Off
     # Hard-disable it for now, unless someone insist on optionally enabling it
-    # Option seems gone with 4.1.96
-    # FIXME -DWITH_CkConnector=Off
+    -DWITH_CkConnector=Off # Provides ConsoleKit integration in KDM
 )
 
 # kwrited has an automagic dep on utempter which we don't have atm

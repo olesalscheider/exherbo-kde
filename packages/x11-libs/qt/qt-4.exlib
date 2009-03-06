@@ -18,65 +18,83 @@ MY_PNV=qt-x11-${SRC_TYPE}-$(exparam pv)
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.qtsoftware.com/"
 if [[ $(exparam pv) == *snapshot* ]]; then
-    DOWNLOADS="ftp://ftp.trolltech.com/qt/snapshots/${MY_PNV}.tar.gz"
+    DOWNLOADS="http://download.qtsoftware.com/qt/snapshots/${MY_PNV}.tar.gz"
 else
-    DOWNLOADS="ftp://ftp.trolltech.com/qt/source/${MY_PNV}.tar.bz2"
+    DOWNLOADS="http://download.qtsoftware.com/qt/source/${MY_PNV}.tar.bz2"
 fi
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_CHANGELOG="http://trolltech.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
 
-LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
+if ever at_least 4.5.0 ; then
+    LICENCES="|| ( LGPL-2.1 GPL-3 )"
+else
+    LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
+fi
+
 SLOT=${PV:0:1}
 
 WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
-MYOPTIONS="X accessibility dbus cups gif glib jpeg mng opengl png
-    qt3support sql ssl svg tiff webkit xinerama ${MYOPTIONS_PARTS}
-    ( opengl xinerama ) [[ requires = X ]]
+# option=X enables: accessibility gif jpeg mng png svg tiff
+# TODO -X builds QtCore only, conflicts with other flags
+MYOPTIONS="X dbus cups glib gstreamer opengl phonon
+    qt3support sql ssl webkit xinerama ${MYOPTIONS_PARTS}
+    ( opengl webkit xinerama ) [[ requires = X ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
     )
     demos       [[ description = [ Compile demo-programs that show off Qt's widgets & functionality ] ]]
     glib        [[ description = [ Add support for the glib eventloop ] ]]
+    gstreamer   [[ description = [ Build the gstreamer backend for phonon ]
+                   requires    = [ glib phonon ] ]]
+    phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
     qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the SQL plugins ] ]]
-    webkit      [[ requires = ssl
+    webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
 "
+
 DEPENDENCIES="
     build:
         dev-util/pkg-config
         x11-proto/inputproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
-        media-libs/freetype:2
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/libXext
-        X? ( media-libs/fontconfig
-             x11-libs/libSM
-             x11-libs/libXcursor
-             x11-libs/libXfixes
-             x11-libs/libXi
-             >=x11-libs/libXrandr-1.1
-             >=x11-libs/libXrender-0.6
+        X? (
+            media-libs/fontconfig
+            media-libs/freetype:2
+            media-libs/jpeg
+            media-libs/libmng
+            media-libs/libpng
+            media-libs/tiff
+            x11-libs/libSM
+            x11-libs/libXcursor
+            x11-libs/libXfixes
+            x11-libs/libXi
+          >=x11-libs/libXrandr-1.1
+          >=x11-libs/libXrender-0.6
         )
         cups? ( net-print/cups )
         dbus? ( >=sys-apps/dbus-1.0.2 )
         glib? ( dev-libs/glib:2 )
-        jpeg? ( media-libs/jpeg )
-        mng? ( media-libs/libmng )
+        gstreamer? (
+            dev-libs/libxml2
+          >=media-libs/gstreamer-0.10
+          >=media-plugins/gst-plugins-base-0.10[gstreamer_plugins:alsa]
+          >=media-plugins/gst-plugins-good-0.10     [[ description = [ Needed for Phonon video functionality ] ]]
+        )
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
-        png? ( media-libs/libpng )
         postgresql? ( dev-db/postgresql )
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )
-        tiff? ( media-libs/tiff )
         xinerama? ( x11-libs/libXinerama )
 "
 
@@ -190,7 +208,7 @@ qt-4_src_configure() {
         -iconv
         -no-nas-sound
         -no-nis
-        $(if ever at_least 4.5.0_pre; then
+        $(if ever at_least 4.5.0_pre ; then
             # This also enables tablet support
             echo "-xinput"
           else
@@ -198,14 +216,15 @@ qt-4_src_configure() {
           fi)
         -system-zlib
         -xmlpatterns
-        $(qt4_enable accessibility)
+        $(qt4_enable X accessibility)
         $(qt4_enable cups)
         $(qt4_enable dbus "" "" linked)
         $(qt4_enable glib)
+        $(qt4_enable gstreamer phonon-backend)
         $(ever at_least '4.5.0_pre20090101' && echo "$(qt4_enable gtk gtkstyle)")
         $(qt4_enable opengl)
         $(qt4_enable qt3support)
-        -no-phonon # We follow KDEs phonon releases, which ships the gstreamer plugin too, and doesn't break newer KDE releases
+        $(qt4_enable phonon)
         $(qt4_enable ssl openssl)
         $(qt4_enable webkit)
         $(qt4_enable xinerama)
@@ -239,12 +258,12 @@ qt-4_src_configure() {
 
     # media formats
     myconf+=(
-        $(qt4_enable gif gif qt)
-        $(qt4_enable jpeg libjpeg system)
-        $(qt4_enable mng libmng system)
-        $(qt4_enable png libpng system)
-        $(qt4_enable svg)
-        $(qt4_enable tiff libtiff system)
+        $(qt4_enable X gif qt)
+        $(qt4_enable X libjpeg system)
+        $(qt4_enable X libmng system)
+        $(qt4_enable X libpng system)
+        $(qt4_enable X svg)
+        $(qt4_enable X libtiff system)
     )
 
     # optional parts

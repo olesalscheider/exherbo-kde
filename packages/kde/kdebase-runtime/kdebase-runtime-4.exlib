@@ -46,7 +46,7 @@ DEPENDENCIES="
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
-        pulseaudio? ( media-sound/pulseaudio )
+        pulseaudio? ( >=media-sound/pulseaudio-0.9.9 )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         xine? ( media-libs/xine-lib )
 "
