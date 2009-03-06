@@ -150,9 +150,11 @@ src_prepare() {
 }
 
 src_install() {
-    kde.org-4_src_install
+    GENKDMCONF_FLAGS="--no-old --no-backup" kde.org-4_src_install
 
     keepdir /usr/share/config/kdm/sessions
+    sed -e '/SessionsDirs=/ s:$:,/usr/share/xsessions:' \
+        -i "${IMAGE}"/usr/share/config/kdm/kdmrc || die "sed failed"
 
     insinto /usr/env
     doins "${FILES}"/agent-startup.sh
