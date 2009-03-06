@@ -39,6 +39,12 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DWITH_{GStreamer,GStreamerPlugins,GLIB2,GObject,LibXml2}:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    GStreamer
+    'gstreamer GStreamerPlugins'
+    'gstreamer GLIB2'
+    'gstreamer GObject'
+    'gstreamer LibXml2'
+    'gstreamer OpenGL'
     Xine
     'xine XCB'
 )
@@ -50,6 +56,12 @@ src_install() {
     rm -rf "${IMAGE}"/usr/$(get_libdir)/libphonon.so* \
         "${IMAGE}"/usr/include/phonon ||
         die "Couldn't remove libphonon & headers"
+
+    # Need gstreamer.desktop
+    if option gstreamer; then
+        rm -rf "${IMAGE}"/usr/$(get_libdir)/plugins/phonon_backend/libphonon_gstreamer.so ||
+        die "Couldn't remove libphonon_gstreamer.so"
+    fi
 
     # Lots of applications rely on including Phonon/Header rather than the lowercased versions, so we need to install these
     dodir /usr/include/qt4
