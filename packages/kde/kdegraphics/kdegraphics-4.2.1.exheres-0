@@ -5,3 +5,5 @@ require kdegraphics-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Bumped-version-number-and-copyright-year.-Updated-em.patch" )
+

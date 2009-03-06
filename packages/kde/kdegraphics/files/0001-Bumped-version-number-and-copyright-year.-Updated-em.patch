@@ -1,0 +1,47 @@
+Source: Upstream, Arélien Gateau
+Upstream: Yes
+Reason: Fix version number, so gwenview users report bugs against the correct version
+
+From 320adca58a2f6cd27879cb29b4be7b5ad5f768cb Mon Sep 17 00:00:00 2001
+From: gateau <gateau@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 5 Mar 2009 16:14:29 +0000
+Subject: [PATCH] Bumped version number and copyright year. Updated email address.
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.2/kdegraphics@935557 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ gwenview/app/main.cpp |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gwenview/app/main.cpp b/gwenview/app/main.cpp
+index e5c2a40..22c3f91 100644
+--- a/gwenview/app/main.cpp
++++ b/gwenview/app/main.cpp
+@@ -1,6 +1,6 @@
+ /*
+ Gwenview: an image viewer
+-Copyright 2007-2008 Aurélien Gâteau <aurelien.gateau@free.fr>
++Copyright 2007-2009 Aurélien Gâteau <aurelien.gateau@free.fr>
+ 
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+@@ -39,14 +39,14 @@ int main(int argc, char *argv[]) {
+ 		"gwenview",        /* appname */
+ 		0,                 /* catalogName */
+ 		ki18n("Gwenview"), /* programName */
+-		"2.2.0");          /* version */
++		"2.2.2");          /* version */
+ 	aboutData.setShortDescription(ki18n("An Image Viewer"));
+ 	aboutData.setLicense(KAboutData::License_GPL);
+-	aboutData.setCopyrightStatement(ki18n("Copyright 2000-2008 Aurélien Gâteau"));
++	aboutData.setCopyrightStatement(ki18n("Copyright 2000-2009 Aurélien Gâteau"));
+ 	aboutData.addAuthor(
+ 		ki18n("Aurélien Gâteau"),
+ 		ki18n("Main developer"),
+-		"aurelien.gateau@free.fr");
++		"agateau@kde.org");
+ 
+ 	KCmdLineArgs::init( argc, argv, &aboutData );
+ 
+-- 
+1.6.2
+
