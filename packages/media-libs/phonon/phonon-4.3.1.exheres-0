@@ -52,15 +52,16 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 src_install() {
     cmake_src_install
 
-    # This still duplicates some files with qt:4[phonon], like headers, ... but it'll do for now.
-    rm -rf "${IMAGE}"/usr/$(get_libdir)/libphonon.so* \
+    # This is crude ... but it'll do for now
+    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig/phonon.pc} \
         "${IMAGE}"/usr/include/phonon ||
         die "Couldn't remove libphonon & headers"
 
     # Need gstreamer.desktop
     if option gstreamer; then
-        rm -rf "${IMAGE}"/usr/$(get_libdir)/plugins/phonon_backend/libphonon_gstreamer.so ||
-        die "Couldn't remove libphonon_gstreamer.so"
+        rm "${IMAGE}"/usr/$(get_libdir)/kde4/plugins/phonon_backend/phonon_gstreamer.so ||
+            die "Couldn't remove libphonon_gstreamer.so"
+        find "${IMAGE}"/usr/$(get_libdir)/ -type d -empty -delete || die "Removing empty dirs failed"
     fi
 
     # Lots of applications rely on including Phonon/Header rather than the lowercased versions, so we need to install these
