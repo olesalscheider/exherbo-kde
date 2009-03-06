@@ -47,7 +47,12 @@ src_install() {
     cmake_src_install
 
     # This still duplicates some files with qt:4[phonon], like headers, ... but it'll do for now.
-    rm -rf "${IMAGE}"/usr/$(get_libdir)/libphonon.so* ||
-        die "Couldn't remove libphonon"
+    rm -rf "${IMAGE}"/usr/$(get_libdir)/libphonon.so* \
+        "${IMAGE}"/usr/include/phonon ||
+        die "Couldn't remove libphonon & headers"
+
+    # Lots of applications rely on including Phonon/Header rather than the lowercased versions, so we need to install these
+    dodir /usr/include/qt4
+    mv "${IMAGE}"/usr/include/{KDE,qt4/KDE} || die "Couldn't fix up includes"
 }
 
