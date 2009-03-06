@@ -85,8 +85,10 @@ DEPENDENCIES="
         dbus? ( >=sys-apps/dbus-1.0.2 )
         glib? ( dev-libs/glib:2 )
         gstreamer? (
+            dev-libs/libxml2
           >=media-libs/gstreamer-0.10
           >=media-plugins/gst-plugins-base-0.10[gstreamer_plugins:alsa]
+          >=media-plugins/gst-plugins-good-0.10     [[ description = [ Needed for Phonon video functionality ] ]]
         )
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
