@@ -169,3 +169,11 @@ src_configure() {
         $(cmake_with TIFF)
 }
 
+src_install() {
+    cmake_src_install
+
+    # FIXME should be fixed properly upstream
+    rm "${IMAGE}"/usr/share/applications/kde4/koffice.desktop ||
+        die "Couldn't remove bad .desktop file"
+}
+
