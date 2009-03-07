@@ -53,7 +53,7 @@ src_install() {
     cmake_src_install
 
     # This is crude ... but it'll do for now
-    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig/phonon.pc} \
+    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig} \
         "${IMAGE}"/usr/include/phonon ||
         die "Couldn't remove libphonon & headers"
 
