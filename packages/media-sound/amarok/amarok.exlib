@@ -48,7 +48,7 @@ DEPENDENCIES="
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
       >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
-        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][svg][webkit]
+        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][svg(+)][webkit]
         ipod? (
           >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
           >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]]
