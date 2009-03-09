@@ -1,9 +1,0 @@
-# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-# Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
-#     Copyright 1999-2008 Gentoo Foundation.
-
-require strigi
-
-PLATFORMS="~amd64 ~x86"
-
