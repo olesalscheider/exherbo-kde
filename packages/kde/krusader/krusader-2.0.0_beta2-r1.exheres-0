@@ -28,5 +28,6 @@ DEPENDENCIES="
         sys-devel/gettext
 "
 
-WORK="${WORKBASE}/${PNV/_beta/-beta}"
+DEFAULT_SRC_PREPARE_PATCHES=( -p0 "${FILES}"/${PNV}-qt45.patch )
 
+WORK="${WORKBASE}/${PNV/_beta/-beta}"
