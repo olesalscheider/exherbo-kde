@@ -1,0 +1,27 @@
+# Copyright 2008 Arne Janbu <arnej@ampheus.de>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="Games for KDE4"
+LICENCES="GPL-2"
+
+MY_KDE_PARTS="bomber bovo kapman katomic kbattleship kblackbox kblocks kbounce
+kbreakout kdiamond kfourinline kgoldrunner killbots kiriki kjumpingcube klines
+kmahjongg kmines knetwalk kolf kollision konquest kpat kreversi ksame kshisen
+ksirk kspaceduel ksquares ksudoku ktuberling kubrick lskat"
+
+MYOPTIONS="
+kde_parts: ${MY_KDE_PARTS}
+"
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+        kde/kdelibs:${SLOT}
+      >=x11-libs/qt-4.2:4[opengl][phonon]
+"
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_OpenGL
+    -DWITH_QCA2
+)
+
