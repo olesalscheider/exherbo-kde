@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake
@@ -49,6 +49,8 @@ DEPENDENCIES="
 "
 
 WORK=${WORKBASE}/${PNV/_rc/-rc}
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Add-patch-from-184332-to-allow-to-compile-it.patch" )
 
 src_configure() {
     ecmake \

@@ -1,0 +1,56 @@
+Source: Upstream, r930363
+Upstream: Yes
+Reason: Compile with Qt 4.5.0
+
+From 8ec50ba486300e1bc0d13de3aea7251c2d9e775a Mon Sep 17 00:00:00 2001
+From: mlaurent <mlaurent@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Mon, 23 Feb 2009 08:25:31 +0000
+Subject: [PATCH] Add patch from #184332  to allow to compile it
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/extragear/graphics/kipi-plugins@930363 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ advancedslideshow/playbackwidget.ui |    6 +++---
+ advancedslideshow/volslider.h       |    6 ++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+ create mode 100644 advancedslideshow/volslider.h
+
+diff --git a/advancedslideshow/playbackwidget.ui b/advancedslideshow/playbackwidget.ui
+index a44ec22..f911d29 100644
+--- a/advancedslideshow/playbackwidget.ui
++++ b/advancedslideshow/playbackwidget.ui
+@@ -107,7 +107,7 @@
+       </layout>
+      </item>
+      <item>
+-      <widget class="Phonon::VolumeSlider" native="1" name="m_volumeSlider" >
++      <widget class="VolSlider" native="1" name="m_volumeSlider" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+@@ -132,9 +132,9 @@
+  </widget>
+  <customwidgets>
+   <customwidget>
+-   <class>Phonon::VolumeSlider</class>
++   <class>VolSlider</class>
+    <extends>QWidget</extends>
+-   <header location="global" >Phonon/VolumeSlider</header>
++   <header>volslider.h</header>
+    <container>1</container>
+   </customwidget>
+  </customwidgets>
+diff --git a/advancedslideshow/volslider.h b/advancedslideshow/volslider.h
+new file mode 100644
+index 0000000..c98729c
+--- /dev/null
++++ b/advancedslideshow/volslider.h
+@@ -0,0 +1,6 @@
++#include <Phonon/VolumeSlider>
++
++typedef class Phonon::VolumeSlider VolSlider;
++#include <Phonon/VolumeSlider>
++
++typedef class Phonon::VolumeSlider VolSlider;
+-- 
+1.6.2
+
