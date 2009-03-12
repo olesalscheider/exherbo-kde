@@ -25,6 +25,7 @@ DEPENDENCIES="
 
 EQMAKE4_SOURCES=( src/${PN}.pro )
 QMAKE4_SRC_CONFIGURE_PARAMS=( -o src/Makefile )
+DEFAULT_SRC_COMPILE_PARAMS=( PREFIX=/usr )
 DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr CONF_PATH="/etc/${PN}" DOC_PATH="/usr/share/doc/${PNVR}" )
 
 smplayer_src_prepare() {
