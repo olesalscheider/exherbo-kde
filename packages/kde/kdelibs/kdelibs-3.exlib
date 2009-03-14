@@ -35,12 +35,12 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXrender
         x11-libs/qt:3
-        acl? ( fixme/acl 
-            fixme/attr )
+        acl? ( sys-apps/acl 
+            sys-apps/attr )
         alsa? ( sys-sound/alsa-lib )
         cups? ( >=net-print/cups-1.1.9 )
         fam? ( app-admin/gamin )
-        jpeg2000? ( fixme/jasper )
+        jpeg2000? ( media-libs/jasper )
         kerberos? ( fixme/krb5 )
         lua? ( dev-lang/lua )
         openexr? ( >=media-libs/openexr-1.2.2-r2 )
