@@ -35,7 +35,7 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXrender
         x11-libs/qt:3
-        acl? ( sys-apps/acl 
+        acl? ( sys-apps/acl
             sys-apps/attr )
         alsa? ( sys-sound/alsa-lib )
         cups? ( >=net-print/cups-1.1.9 )
@@ -58,6 +58,7 @@ DEPENDENCIES="
 # FIXME:
 RESTRICT="test"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-inotify.patch )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES+=( cups "fam libfam" )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS+=(
     acl
@@ -89,7 +90,7 @@ src_compile() {
     default
 
     if option doc; then
-        emake apidox 
+        emake apidox
     fi
 }
 
