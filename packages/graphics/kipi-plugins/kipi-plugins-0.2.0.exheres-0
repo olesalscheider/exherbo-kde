@@ -5,7 +5,7 @@ require cmake
 
 SUMMARY="KIPI (KDE Image Plugin Interface) is an effort to develop a common plugin structure for Digikam, KPhotoAlbum, Showimg and GwenView"
 HOMEPAGE="http://www.kipi-plugins.org"
-DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV/_rc/-rc}.tar.bz2"
+DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV}.tar.bz2"
 
 BUGS_TO="kde@exherbo.org"
 
@@ -47,10 +47,6 @@ DEPENDENCIES="
             media-gfx/sane-backends
         )
 "
-
-WORK=${WORKBASE}/${PNV/_rc/-rc}
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Add-patch-from-184332-to-allow-to-compile-it.patch" )
 
 src_configure() {
     ecmake \
