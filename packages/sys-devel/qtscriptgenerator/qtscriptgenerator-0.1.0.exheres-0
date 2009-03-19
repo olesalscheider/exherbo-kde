@@ -1,0 +1,66 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4
+
+SUMMARY="Qt Script Generator is a tool that generates Qt bindings for Qt Script"
+DESCRIPTION="
+Qt Script Generator is a tool that generates Qt bindings for Qt Script. With
+the generated bindings you get access to substantial portions of the Qt API
+from within Qt Script. Qt is a cross-platform application framework for
+desktop and embedded development. It includes an intuitive API and a rich C++
+class library, integrated tools for GUI development and internationalization,
+and support for Java™ and C++ development.
+"
+HOMEPAGE="http://code.google.com/p/${PN}
+    http://labs.trolltech.com/page/Projects/QtScript/Generator"
+DOWNLOADS="http://${PN}.googlecode.com/files/${PN}-src-${PV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+"
+
+WORK="${WORKBASE}/${PN}-src-${PV}"
+
+src_configure() {
+    for subdir in generator qtbindings ; do
+        cd "${WORK}/${subdir}" || die "Couldn't enter ${WORK}/${subdir}"
+        eqmake4 ${subdir}.pro
+    done
+}
+
+src_compile() {
+    cd "${WORK}/generator" || die "Couldn't enter ${WORK}/generator/"
+    default
+
+    # The qtbindings plugins use these, so we have to generate them
+    ./generator --include-paths=/usr/include/qt4 || die "./generator returned exit status $?"
+
+    cd "${WORK}/qtbindings" || die "Couldn't enter ${WORK}/qtbindings/"
+    default
+}
+
+src_install() {
+    # qmake doesn't generate a usable 'make install' target
+    dobin "${WORK}/generator/generator"
+
+    # doexe & co dereference symlinks, so only doexe the actual .so's, and put the symlinks in place manually
+    exeinto /usr/$(get_libdir)/qt4/plugins/script/
+    doexe plugins/script/*.so.?.?.?
+
+    for plugin in plugins/script/*.so.?.?.? ; do
+        plugin=${plugin##*/}
+        symlink=${plugin}
+        for (( i=0; i<=2; i++ )); do
+            symlink=${symlink%%.?}
+            dosym ${plugin} /usr/$(get_libdir)/qt4/plugins/script/${symlink}
+        done
+    done
+}
+
