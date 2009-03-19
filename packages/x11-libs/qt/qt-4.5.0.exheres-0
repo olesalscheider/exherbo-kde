@@ -3,7 +3,7 @@
 
 require qt-4 [ pv=${PV/_pre/-snapshot-} ]
 
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64 ~ppc64 ~x86"
 
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
@@ -23,6 +23,8 @@ DEPENDENCIES="
             dev-libs/atk
         )
 "
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-ppc64.patch" )
 
 # XXX
 # -xrandr: runtime (?) (yes|no|runtime)
