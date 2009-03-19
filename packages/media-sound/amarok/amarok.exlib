@@ -38,17 +38,22 @@ DEPENDENCIES="
         kde/automoc4
     build+run:
       >=app-pim/strigi-0.5.9[qt4]
+        dev-db/mysql[embedded-server]
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
       >=dev-libs/soprano-2.1.67
-      >=kde/kdelibs-4.1.0:4
-      >=kde/kdepimlibs-4.1.0:4
-      >=kde/kdebase-workspace-4.1.0:4
-      >=kde/kdemultimedia-4.1.0:4 [[ description = [ Support for playing Audio CDs ] ]]
+      >=kde/kdelibs-4.2.0:4
+      >=kde/kdepimlibs-4.2.0:4
+      >=kde/kdebase-workspace-4.2.0:4
+      >=kde/kdemultimedia-4.2.0:4 [[ description = [ Support for playing Audio CDs ] ]]
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
       >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[X][dbus][glib][opengl][qt3support][svg(+)][webkit]
+        || (
+            dev-libs/openssl
+            dev-libs/libgcrypt
+        ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
         ipod? (
           >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
           >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]]
@@ -57,20 +62,6 @@ DEPENDENCIES="
         mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] ]] )
         mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
 "
-
-if ever at_least 1.92; then
-    DEPENDENCIES+="
-    build+run:
-        dev-db/mysql[embedded-server]
-        || (
-            dev-libs/openssl
-            dev-libs/libgcrypt
-        ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]"
-else
-    DEPENDENCIES+="
-        build+run: dev-db/sqlite:3"
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DUSE_SYSTEM_SQLITE=ON )
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
