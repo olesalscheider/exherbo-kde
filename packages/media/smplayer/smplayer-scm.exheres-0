@@ -6,5 +6,5 @@ SCM_REPOSITORY="https://smplayer.svn.sourceforge.net/svnroot/${PN}/${PN}"
 require scm-svn smplayer
 
 DOWNLOADS=""
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
