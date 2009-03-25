@@ -37,8 +37,9 @@ kde4_pkg_setup() {
 }
 
 kde4_src_configure() {
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
+    CMAKE_SRC_CONFIGURE_PARAMS=(
         $(kde4_shared_cmake_params)
+        "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
     )
 
     local p
