@@ -25,59 +25,86 @@ esac
 LICENCES="GPL-2"
 SLOT="0"
 
-MYOPTIONS="ipod mp3tunes mp4 mtp
+MYOPTIONS="ipod mp3tunes mtp
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
-    mp4         [[ description = [ Build the Taglib plugin for writing tags in mp4 container files (.m4a).
-                                   This makes your package non-redistributable, as libmp4v2 has a GPL-incompatible licence ]
-                ]]
 "
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
-        kde/automoc4
+        sys-devel/gettext
     build+run:
-      >=app-pim/strigi-0.5.9[qt4]
+      >=app-pim/strigi-0.5.9[qt4] [[ note = [ Optional in trunk ] ]]
         dev-db/mysql[embedded-server]
-        dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
-        dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
       >=dev-libs/soprano-2.1.67
       >=kde/kdelibs-4.2.0:4
+      >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
+        sys-devel/qtscriptgenerator
+        x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
+        x11-libs/qt:4[X][dbus][opengl][qt3support][svg(+)][webkit]
+        ipod? (
+            dev-libs/glib:2
+          >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
+        )
+        mp3tunes? (
+          >=net-im/loudmouth-1 [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
+        )
+        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
+"
+if ever at_least scm; then
+    DEPENDENCIES+="
+      >=media-plugins/taglib-extras-0.1
+        ipod? (
+          >=media-libs/libgpod-0.7.0 [[ description = [ iPod support ] ]]
+        )
+        mp3tunes? (
+            dev-libs/glib:2
+            dev-libs/libxml2
+            dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
+            net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
+            x11-libs/qt:4[glib]
+        )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( MP3TUNES )
+else
+    MYOPTIONS+=" mp4 [[ description = [ Build the Taglib plugin for writing tags in mp4 container files (.m4a).
+                                        This makes your package non-redistributable, as libmp4v2 has a GPL-incompatible licence ] ]]"
+    DEPENDENCIES+="
+        dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
+        dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
+        dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
       >=kde/kdepimlibs-4.2.0:4
       >=kde/kdebase-workspace-4.2.0:4
       >=kde/kdemultimedia-4.2.0:4 [[ description = [ Support for playing Audio CDs ] ]]
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
-      >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
-        x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
-        x11-libs/qt:4[X][dbus][glib][opengl][qt3support][svg(+)][webkit]
-        || (
-            dev-libs/openssl
-            dev-libs/libgcrypt
-        ) [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
+        x11-libs/qt:4[glib]
         ipod? (
-          >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
-          >=media-libs/libgpod-0.4.2 [[ description = [ iPod support ] ]]
+          >=media-libs/libgpod-0.6.0 [[ description = [ iPod support ] ]]
         )
-        mp3tunes? ( >=net-im/loudmouth-1 [[ description = [ mp3tunes.com integration (including synchronisation) ] ]] )
         mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] ]] )
-        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
-"
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'mp3tunes Loudmouth' 'mp4 Mp4v2' )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # Hard enabled by upstream. Only needed for mp3tunes.com
+        -DWITH_{CURL,GLIB2,LibXml2}=ON
+        # Hard enabled by us
+        -DWITH_{Soprano,Nepomuk}=ON
+    )
+fi
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    # Gdk: Artwork for ipod, via GdkPixbuf
-    'ipod Gdk' 'ipod GLIB2' Ipod
-    'mp3tunes Loudmouth'
-    'mp4 Mp4v2'
-    Mtp
-)
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Hard enabled by upstream. Only needed for mp3tunes.com
-    -DWITH_{CURL,GLIB2,LibXml2}=ON
+    -DWITH_PLAYER=ON # disabling that disables everything except utilities
+    -DWITH_UTILITIES=ON # small and no new deps
     # Hard enabled by us
-    -DWITH_{Soprano,Nepomuk}=ON
     -DWITH_OpenGL=ON
+    -DWITH_OpenSSL=ON -DWITH_Libgcrypt=OFF
+    -DWITH_Strigi=ON
     -DWITH_Libvisual=OFF
     # Options are currently commented out
-    # -DWITH_{Ifp,LibLastFm,Njb}=OFF
+    # -DWITH_LibLastFm=OFF
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    # Gdk: Artwork for ipod, via GdkPixbuf
+    'ipod Gdk' Ipod
+    Mtp
 )
 
