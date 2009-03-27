@@ -5,5 +5,5 @@ require kdelibs-4
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-4.2.0-FindRUBY.cmake.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-FindRUBY.cmake.patch" )
 

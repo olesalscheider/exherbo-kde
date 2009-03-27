@@ -1,9 +1,0 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-require kdebase-runtime-4
-
-PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PNV}-optional-xine.patch" )
-
