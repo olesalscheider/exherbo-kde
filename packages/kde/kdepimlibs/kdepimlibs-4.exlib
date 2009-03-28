@@ -18,7 +18,7 @@ DEPENDENCIES="
       >=dev-libs/boost-1.33.1
         dev-libs/libgpg-error
       >=kde/kdelibs-${PV}:${SLOT}
-      >=office-libs/libical-0.33 [[ note = [ Might be possible to make this optional ] ]]
+      >=office-libs/libical-0.33
       >=server-pim/akonadi-1.1.0
         sasl? ( net-libs/cyrus-sasl )
 "
