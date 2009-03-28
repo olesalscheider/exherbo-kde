@@ -27,8 +27,8 @@ DEPENDENCIES="
     build+run:
       >=dev-libs/soprano-2.1.67
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-        kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
+      >=kde/kdepimlibs-${PV}:${SLOT}
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
       >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
