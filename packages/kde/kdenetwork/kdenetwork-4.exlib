@@ -127,6 +127,7 @@ src_configure() {
     cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
 
     # These have to be disabled for im_protocols:wlm to work
+    # REMOVEME 4.2.1: WITH_msn removed in KDE 4.2.2
     cmakeparams+=" -DWITH_msn=FALSE -DWITH_messenger=FALSE"
 
     # This isn't optional for kdelibs:4
