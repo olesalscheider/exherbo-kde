@@ -37,8 +37,8 @@ DEPENDENCIES="
     build+run:
       >=dev-cpp/clucene-0.9.19
       >=dev-libs/soprano-2.1.67
-        kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
+      >=kde/kdepimlibs-${PV}:${SLOT}
       >=media-libs/phonon-4.3.0[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
