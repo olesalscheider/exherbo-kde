@@ -23,9 +23,8 @@ kpilot: Software for syncing PalmOS based handhelds
 ktimetracker: Time tracker
 "
 
-# kitchensync will be re-enabled for 4.3
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
-korganizer kpilot ktimetracker strigi-analyzer" # kitchensync
+korganizer kpilot ktimetracker strigi-analyzer"
 
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
@@ -72,18 +71,12 @@ DEPENDENCIES="
           >=kde/kdebase-runtime-${PV}:${SLOT} [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "
-#        kde_parts:kitchensync? (
-#            dev-libs/glib:2
-#          >=pda/libopensync-0.38
-#            x11-libs/qt:4[glib]
-#        )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_kmailcvt=ON -DBUILD_ksendemail=ON )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
     'nepomuk Nepomuk' 'nepomuk Soprano'
-#   'kde_parts:kitchensync GLIB2' 'kde_parts:kitchensync Opensync'
     'kde_parts:kleopatra Assuan'
     'kde_parts:kpilot QCA2' 'kde_parts:kpilot Mal' 'kde_parts:kpilot Pilotlink'
 )
