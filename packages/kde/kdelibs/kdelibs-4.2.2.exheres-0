@@ -5,5 +5,8 @@ require kdelibs-4
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-4.2.1-FindRUBY.cmake.patch" "${FILES}/${PN}-4.2.2-Make_ACL_optional.cmake.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PNV}-FindRUBY.cmake.patch"
+    "${FILES}/${PNV}-Make_ACL_optional.cmake.patch"
+)
 
