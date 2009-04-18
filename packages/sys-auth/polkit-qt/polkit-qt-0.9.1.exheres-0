@@ -9,7 +9,7 @@ DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="examples"
 
 DEPENDENCIES="

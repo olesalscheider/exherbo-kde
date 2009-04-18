@@ -34,6 +34,7 @@ DEPENDENCIES="
         media-libs/libsamplerate
         media-libs/libsndfile
       >=media-libs/taglib-1.4.0
+        sys-auth/polkit-qt
         x11-libs/qt:4[X][qt3support]
         ffmpeg? ( media/ffmpeg )
         flac? ( media-libs/flac [[ note = [ Flac C++ bindings ] ]] )
