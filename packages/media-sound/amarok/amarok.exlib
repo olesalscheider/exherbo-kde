@@ -108,3 +108,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Mtp
 )
 
+pkg_setup() {
+    export DISPLAY= DBUS_SESSION_BUS_ADDRESS=
+}
+
