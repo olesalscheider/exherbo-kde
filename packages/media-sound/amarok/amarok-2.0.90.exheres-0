@@ -1,0 +1,8 @@
+# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require amarok
+
+PLATFORMS="~x86"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/2.1/beta/1"
+

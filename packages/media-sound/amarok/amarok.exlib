@@ -50,7 +50,7 @@ DEPENDENCIES="
         )
         mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
 "
-if ever at_least scm; then
+if ever at_least 2.0.90; then
     DEPENDENCIES+="
       >=media-plugins/taglib-extras-0.1
         ipod? (
