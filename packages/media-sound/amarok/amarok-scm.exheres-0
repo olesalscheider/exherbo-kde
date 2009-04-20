@@ -6,6 +6,5 @@ SCM_SUBPATH="extragear/multimedia/${PN}"
 
 require amarok scm-svn
 
-RESTRICT="test"
 PLATFORMS="~x86"
 
