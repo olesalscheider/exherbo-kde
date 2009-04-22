@@ -21,7 +21,7 @@ DEPENDENCIES="
       >=x11-libs/qt-4.2:4[opengl][phonon]
 "
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_OpenGL
-    -DWITH_QCA2
+    -DWITH_OpenGL=ON
+    -DWITH_QCA2=ON
 )
 
