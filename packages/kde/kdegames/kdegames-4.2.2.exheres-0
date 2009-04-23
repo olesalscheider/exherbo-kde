@@ -3,4 +3,5 @@
 
 require kdegames-4
 
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
+
