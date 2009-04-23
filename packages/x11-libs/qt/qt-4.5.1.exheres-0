@@ -7,9 +7,6 @@ PLATFORMS="~amd64 ~ppc64 ~x86"
 
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
-http://www.qtsoftware.com/about/news/qt-4.5-release-candidate-available/
-http://labs.trolltech.com/blogs/2009/02/05/onwards-and-upwards/
+http://labs.trolltech.com/blogs/2009/04/23/qt-451-has-been-released/
 "
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-ppc64.patch" )
 

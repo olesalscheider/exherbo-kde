@@ -26,11 +26,7 @@ BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
 
-if ever at_least 4.5.0 ; then
-    LICENCES="|| ( LGPL-2.1 GPL-3 )"
-else
-    LICENCES="|| ( QPL-1.0 GPL-2 GPL-3 )"
-fi
+LICENCES="|| ( LGPL-2.1 GPL-3 )"
 
 SLOT=${PV:0:1}
 
@@ -51,6 +47,8 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
     glib        [[ description = [ Add support for the glib eventloop ] ]]
     gstreamer   [[ description = [ Build the gstreamer backend for phonon ]
                    requires    = [ glib phonon ] ]]
+    gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
+                   requires = glib ]]
     phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
     qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the SQL plugins ] ]]
@@ -89,6 +87,10 @@ DEPENDENCIES="
           >=media-libs/gstreamer-0.10
           >=media-plugins/gst-plugins-base-0.10[gstreamer_plugins:alsa]
           >=media-plugins/gst-plugins-good-0.10     [[ description = [ Needed for Phonon video functionality ] ]]
+        )
+        gtk? (
+          >=x11-libs/gtk+-2.10:2
+            dev-libs/atk
         )
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
@@ -193,6 +195,7 @@ qt-4_src_configure() {
     local myconf=()
     myconf=(
         -confirm-license
+        $(ever at_least 4.5.1 && echo -opensource)
         -fast
         -largefile
         -no-rpath
@@ -208,12 +211,8 @@ qt-4_src_configure() {
         -iconv
         -no-nas-sound
         -no-nis
-        $(if ever at_least 4.5.0_pre ; then
-            # This also enables tablet support
-            echo "-xinput"
-          else
-            echo "-no-tablet"
-          fi)
+        # This also enables tablet support
+        -xinput
         -system-zlib
         -xmlpatterns
         $(qt4_enable X accessibility)
@@ -221,7 +220,7 @@ qt-4_src_configure() {
         $(qt4_enable dbus "" "" linked)
         $(qt4_enable glib)
         $(qt4_enable gstreamer phonon-backend)
-        $(ever at_least '4.5.0_pre20090101' && echo "$(qt4_enable gtk gtkstyle)")
+        $(qt4_enable gtk gtkstyle)
         $(qt4_enable opengl)
         $(qt4_enable qt3support)
         $(qt4_enable phonon)
@@ -242,9 +241,6 @@ qt-4_src_configure() {
         myconf+=" ${prefix}-${o}"
     done
 
-    # database plugins
-    #myconf+=" $(qt4_enable firebird sql-ibase plugin "" -I/opt/firebird/include)"
-    #          $(qt4_enable odbc sql-odbc plugin)
     myconf+=(
         -no-sql-ibase
         -no-sql-odbc
