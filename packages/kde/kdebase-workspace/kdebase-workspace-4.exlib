@@ -30,6 +30,7 @@ systemsettings: Settings utility
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
 MYOPTIONS="bluetooth lm_sensors networkmanager python xinerama
+    consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -73,6 +74,7 @@ DEPENDENCIES="
         x11-libs/libxkbfile [[ note = kcontrol/kxkb ]]
         x11-libs/qt:4[opengl][webkit]
         bluetooth? ( net-wireless/bluez )
+        consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( >=net-apps/NetworkManager-0.6.5 )
         python? (
@@ -105,6 +107,7 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'bluetooth BlueZ'
+    'consolekit CkConnector'
     'lm_sensors Sensors'
     NetworkManager
     'python PythonLibrary'
@@ -131,8 +134,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
     -DWITH_QEdje=Off
-    # Hard-disable it for now, unless someone insist on optionally enabling it
-    -DWITH_CkConnector=Off # Provides ConsoleKit integration in KDM
 )
 
 # kwrited has an automagic dep on utempter which we don't have atm
