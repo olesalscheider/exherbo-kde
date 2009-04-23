@@ -1,0 +1,25 @@
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+SUMMARY="PolicyKit Authentication Agent for KDE"
+HOMEPAGE="http://www.kde.org"
+DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+        sys-devel/gettext
+    build+run:
+      >=sys-auth/PolicyKit-0.8
+      >=sys-auth/polkit-qt-0.9
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=( -p3 "${FILES}/${PNV}-build.patch" )
+

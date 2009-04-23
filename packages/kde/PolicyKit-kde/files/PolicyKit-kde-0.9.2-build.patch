@@ -1,0 +1,31 @@
+Source: KDE SVN r950485
+Upstream: Yes
+Reason: Fix build
+
+From 7e6c9cf60012ddfe7bcd4b824370457480768b9b Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Tue, 7 Apr 2009 11:13:59 +0000
+Subject: [PATCH] Fix compilation (why was this commented out? polkit_caller_new_from_pid can't be found otherwise, at least here)
+ CCMAIL: dantti85-kde@yahoo.com.br
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebase@950485 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ workspace/PolicyKit-kde/manager/policykitkde.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/workspace/PolicyKit-kde/manager/policykitkde.cpp b/workspace/PolicyKit-kde/manager/policykitkde.cpp
+index 6486a53..a6e36d2 100644
+--- a/workspace/PolicyKit-kde/manager/policykitkde.cpp
++++ b/workspace/PolicyKit-kde/manager/policykitkde.cpp
+@@ -35,7 +35,7 @@
+ #include <QSocketNotifier>
+ 
+ //policykit header
+-// #include <polkit-dbus/polkit-dbus.h>
++#include <polkit-dbus/polkit-dbus.h>
+ 
+ #include <Context>
+ 
+-- 
+1.6.2.4
+
