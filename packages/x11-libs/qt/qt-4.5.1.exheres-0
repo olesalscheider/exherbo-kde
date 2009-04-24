@@ -10,3 +10,5 @@ UPSTREAM_RELEASE_NOTES="
 http://labs.trolltech.com/blogs/2009/04/23/qt-451-has-been-released/
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( -p0 "${FILES}/${PNV}-0279-svg-rendering-regression.diff" )
+
