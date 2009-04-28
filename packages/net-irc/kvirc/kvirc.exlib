@@ -1,0 +1,102 @@
+# Copyright 2009 Wulf C. Krueger <philantrop@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kvirc-4.0_pre3154.ebuild' from Gentoo, which is:
+#     Copyright 1999-2009 Gentoo Foundation
+
+require cmake
+
+export_exlib_phases src_prepare src_install
+
+SUMMARY="A Qt-based IRC client with optional KDE integration"
+DESCRIPTION="
+KVirc is a Visual Internet Relay Chat Client based on the Qt library. Features
+include a MDI user interface, drag & drop, built-in scripting language (aliases,
+popups and events), customizable backgrounds and colours, DCC (chat, send with
+resume, voice), CTCP functions, mIRC colour support with preview, notify list,
+online help and configurable logging.
+"
+HOMEPAGE="http://www.${PN}.net"
+
+BUGS_TO="philantrop@exherbo.org"
+REMOTE_IDS="freshmeat:${PN}"
+
+UPSTREAM_REVISION=${PV#*_pre}
+UPSTREAM_CHANGELOG="https://svn.${PN}.de/${PN}/browser/trunk/${PN}/ChangeLog?rev=${UPSTREAM_REVISION}"
+UPSTREAM_DOCUMENTATION="${HOMEPAGE}/docu/ [[ lang = en ]]"
+LICENCES="kvirc"
+SLOT="4"
+
+MYOPTIONS="
+    audiofile [[ description = [ Enable the sound plugin (/snd) to play multiple audio formats instead of just the archaic au format ] ]]
+    crypt
+    dbus
+    dcc-voice [[ description = [ Enable support for DCC Voice connections ] ]]
+    debug
+    doc
+    gsm [[ description = [ Enable support for the gsm lossy speech compression for DCC Voice connections ] requires = [ dcc-voice ] ]]
+    ipc [[ description = [ Enable support for IPC between ${PN} processes ] ]]
+    ipv6
+    kde [[ description = [ Enable the KDE (K Desktop Enviroment; the one true Desktop Environment) integration ] ]]
+    nls
+    perl
+    phonon [[ description = [ Enable support for the Phonon, KDE4's multimedia API, for sound ] ]]
+    python
+    ssl
+    transparency [[ description = [ Enable support for pseudo transparency ] ]]
+    webkit [[ description = [ Enable support for the WebKit web browser framework ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        nls? ( sys-devel/gettext )
+        doc? (
+           app-doc/doxygen
+           dev-lang/perl
+        )
+    build+run:
+        >=x11-libs/qt-4.4.0
+        audiofile? ( >=media-libs/audiofile-0.2.6 )
+        dbus? ( x11-libs/qt:4[dbus] )
+        gsm? ( >=media-libs/gsm-1.0.13 )
+        kde? ( kde/kdelibs:4 )
+        perl? ( dev-lang/perl )
+        phonon? ( x11-libs/qt:4[phonon] )
+        python? ( >=dev-lang/python-2.6.1:= )
+        ssl? ( dev-libs/openssl )
+        webkit? ( x11-libs/qt:4[webkit] )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+        -DCOEXISTENCE=1
+        -DWANT_PIZZA=1
+        -DWANT_BEER=1
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
+        "audiofile AUDIOFILE"
+        "crypt CRYPT"
+        "dbus QTDBUS"
+        "dcc-voice DCC_VOICE"
+        "debug DEBUG"
+        "doc DOXYGEN"
+        "gsm GSM"
+        "ipc IPC"
+        "ipv6 IPV6"
+        "kde KDE4"
+        "nls GETTEXT"
+        "perl PERL"
+        "phonon PHONON"
+        "python PYTHON"
+        "ssl OPENSSL"
+        "transparency TRANSPARENCY"
+        "webkit QTWEBKIT"
+)
+
+kvirc_src_prepare() {
+    sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp || die "Failed to set revision number"
+}
+
+kvirc_src_install() {
+    cmake_src_install
+    mv "${IMAGE}"usr/share/man/man1/kvirc.1 "${IMAGE}"usr/share/man/man1/kvirc4.1 || die "mv kvirc.1 failed"
+}
