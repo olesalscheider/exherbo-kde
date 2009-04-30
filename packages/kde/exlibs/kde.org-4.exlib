@@ -40,7 +40,7 @@ esac
 case ${PV} in
     4.@(2|3).@(6|7|8|9)*)
         case ${PV} in
-            4.2.70) K_SVN_REV="954171" ;;
+            4.2.71) K_SVN_REV="961800" ;;
             *) die "Set K_SVN_REV for ${PV}" ;;
         esac
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.svn${K_SVN_REV}.tar.bz2"}" ;;
