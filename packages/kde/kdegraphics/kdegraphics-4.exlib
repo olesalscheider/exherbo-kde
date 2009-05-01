@@ -96,7 +96,7 @@ src_configure() {
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
-        -DWITH_JPEG=ON
+        -DWITH_JPEG=ON \
         -DGWENVIEW_METADATA_BACKEND=Nepomuk \
         $(cmake_with CHM) \
         $(cmake_with djvu DjVuLibre) \
@@ -107,7 +107,7 @@ src_configure() {
         $(cmake_with kde_parts:ksaneplugin Sane) \
         $(cmake_with kde_parts:okular Freetype) \
         $(cmake_with kde_parts:okular ZLIB) \
-        $(cmake_with Kipi)
+        $(cmake_with Kipi) \
         $(cmake_with ps LibSpectre) \
         $(cmake_with pdf Poppler) \
         $(cmake_with odf QCA2) \
