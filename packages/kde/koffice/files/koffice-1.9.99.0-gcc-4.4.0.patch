@@ -1,0 +1,27 @@
+Source: Upstream
+Upstream: Yes
+Reason: Build with GCC 4.4.0
+
+From 42bb105a2b62ff038211fa15deb604b7180e8f78 Mon Sep 17 00:00:00 2001
+From: berger <berger@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 8 Apr 2009 21:54:01 +0000
+Subject: [PATCH] compilation fix for gcc 4.4
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/koffice@951311 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ .../filters/imageenhancement/CMakeLists.txt        |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/krita/plugins/filters/imageenhancement/CMakeLists.txt b/krita/plugins/filters/imageenhancement/CMakeLists.txt
+index ccf938a..917d9e8 100644
+--- a/krita/plugins/filters/imageenhancement/CMakeLists.txt
++++ b/krita/plugins/filters/imageenhancement/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ 
++set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
+ 
+ set(kritaimageenhancement_PART_SRCS
+     imageenhancement.cpp
+-- 
+1.6.2.5
+
