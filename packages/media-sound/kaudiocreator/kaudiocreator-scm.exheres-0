@@ -11,13 +11,14 @@ HOMEPAGE="http://extragear.kde.org/"
 
 LICENCES="GPL-2 FDL-1.2"
 SLOT="4"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         kde/kdemultimedia:${SLOT}
+        media-libs/taglib
     post,suggested:
         media-libs/flac          [[ note = [ Encode flac files ] ]]
         media-sound/lame         [[ note = [ Encode mp3 files ] ]]

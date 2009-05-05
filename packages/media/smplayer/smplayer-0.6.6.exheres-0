@@ -3,7 +3,7 @@
 
 require smplayer
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 src_prepare() {
     echo '#define SVN_REVISION "SVN-r1661"' >> src/svn_revision.h
