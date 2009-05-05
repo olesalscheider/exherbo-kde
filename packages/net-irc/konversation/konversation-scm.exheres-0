@@ -16,9 +16,10 @@ PLATFORMS="~amd64"
 MYOPTIONS=""
 
 DEPENDENCIES="
-    kde/kdelibs:4
-    kde/kdepimlibs:4
-    x11-libs/libX11
-    x11-libs/libXScrnSaver
+    build+run:
+        kde/kdelibs:4
+        kde/kdepimlibs:4
+        x11-libs/libX11
+        x11-libs/libXScrnSaver
 "
 
