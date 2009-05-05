@@ -27,3 +27,6 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
 "
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-gcc-4.4.0.patch" )
+
