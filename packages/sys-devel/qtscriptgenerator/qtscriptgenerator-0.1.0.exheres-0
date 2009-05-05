@@ -28,6 +28,8 @@ DEPENDENCIES="
 
 WORK="${WORKBASE}/${PN}-src-${PV}"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-gcc-4.4.0.patch" )
+
 src_configure() {
     for subdir in generator qtbindings ; do
         cd "${WORK}/${subdir}" || die "Couldn't enter ${WORK}/${subdir}"

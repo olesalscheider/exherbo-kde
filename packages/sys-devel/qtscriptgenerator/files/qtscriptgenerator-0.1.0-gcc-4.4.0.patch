@@ -1,0 +1,15 @@
+Source: Martina Jansa, http://code.google.com/p/qtscriptgenerator/issues/detail?id=37
+Upstream: Submitted, not applied yet
+Reason: Build with GCC 4.4.0
+
+diff -uNr generator.orig/parser/rpp/pp.h generator/parser/rpp/pp.h
+--- a/generator/parser/rpp/pp.h	2008-12-05 11:01:44.000000000 +0100
++++ b/generator/parser/rpp/pp.h	2008-12-13 10:42:22.000000000 +0100
+@@ -30,6 +30,7 @@
+ #include <cctype>
+ 
+ #include <fcntl.h>
++#include <cstdio>
+ 
+ #ifdef HAVE_MMAP
+ #  include <sys/mman.h>
