@@ -1,4 +1,4 @@
-# Copyright 2008 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
@@ -6,5 +6,7 @@ SCM_SUBPATH="extragear/multimedia/${PN}"
 
 require amarok scm-svn
 
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch" )
 
