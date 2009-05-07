@@ -19,7 +19,6 @@ DEPENDENCIES="
         dev-libs/libgpg-error
       >=kde/kdelibs-${PV}:${SLOT}
       >=office-libs/libical-0.33
-      >=server-pim/akonadi-1.1.0
         sasl? ( net-libs/cyrus-sasl )
 "
 
