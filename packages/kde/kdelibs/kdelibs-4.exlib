@@ -33,7 +33,6 @@ DEPENDENCIES="
         media-libs/libpng
       >=media-libs/phonon-4.3.0
         sys-apps/dbus [[ note = [ Need dbus with X support ] ]]
-      >=sys-sound/alsa-lib-1.0.14a
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
