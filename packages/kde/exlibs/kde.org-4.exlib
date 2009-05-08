@@ -37,6 +37,7 @@ case ${PV} in
     *)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
 esac
 
+# NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
     4.2.85) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
