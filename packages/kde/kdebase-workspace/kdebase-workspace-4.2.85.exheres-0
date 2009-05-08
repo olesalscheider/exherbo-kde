@@ -1,0 +1,28 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdebase-workspace-4
+
+PLATFORMS="~amd64 ~x86"
+
+MYOPTIONS="policykit"
+
+DEPENDENCIES="
+    build+run:
+        !kde/PolicyKit-kde          [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
+        kde/kdelibs-experimental:1  [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
+        policykit? (
+          >=sys-auth/PolicyKit-0.8
+          >=sys-auth/polkit-qt-0.9
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # GPS support for geolocation" "http://gpsd.berlios.de/"
+    -DWITH_libgps:BOOL=FALSE
+    # Solid wicd support
+    -DWITH_wicd:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
+
