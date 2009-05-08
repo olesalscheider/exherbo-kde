@@ -1,0 +1,19 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="Experimental KDE libraries that will move into kdelibs proper, when their API has stabilised"
+DESCRIPTION="
+* libknotificationitem-1: A library for generating plasma-tray notications
+"
+LICENCES="|| ( GPL-2 GPL-3 )"
+
+# Unstable API, slot follows soname
+SLOT="1"
+
+DEPENDENCIES="
+    build+run:
+      >=kde/kdelibs-${PV}:4
+"
+
