@@ -5,3 +5,8 @@ require kdepim-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        server-pim/akonadi[>=1.1.0&<1.1.85] [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
+"
+
