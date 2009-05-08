@@ -1,0 +1,30 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdenetwork-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        kde_parts:kget? ( kde/kdelibs-experimental:1  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
+"
+
+# Should probably rewrite the exheres to not use the exlib, and move that into the exlib when it's properly tested
+# rewrite so we can do:
+# XXX CMAKE_SRC_CONFIGURE_WITHS+=( kde_parts:kget LibKNotificationItem-1' )
+
+# kde_parts:kopete? (
+# XXX Libgadu 1.8.0, needs OpenSSL
+# XXX libv4l2 Better webcam support for kopete, http://hansdegoede.livejournal.com/3636.html
+# option(WITH_skype "Enable Kopete Skype protocol" ON), -DMOZPLUGIN_INSTALL_DIR=/foo
+# messenger removed
+# )
+
+# vncserver removed
+# nxcl
+
+# FIXME braino in r4b6a313 CMakeLists.txt:
+# 37 find_package(Strigi)
+# 61 macro_optional_find_package(Strigi) (.torrent files)
+
