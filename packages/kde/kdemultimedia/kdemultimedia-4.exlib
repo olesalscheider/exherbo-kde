@@ -18,6 +18,7 @@ DESCRIPTION="
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd"
+ever at_least 4.2.85 && MY_KDE_PARTS+=" mplayerthumbs"
 MYOPTIONS="
     flac        [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
     musicbrainz [[ description = [ Music metadata lookup for KDE multimedia applications ] ]]

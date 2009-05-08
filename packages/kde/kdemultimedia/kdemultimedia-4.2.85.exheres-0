@@ -1,0 +1,26 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdemultimedia-4
+
+PLATFORMS="~amd64 ~x86"
+
+MYOPTIONS="pulseaudio [[ requires = [ kde_parts: kmix ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde_parts:kmix? (
+            pulseaudio? (
+                dev-libs/glib:2
+              >=media-sound/pulseaudio-0.9.12
+            )
+        )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}/${PNV}-mplayerthumbs-disable-phonon-api.patch" )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # mplayerthumbs' phonon support requires phonon-scm
+    -DENABLE_PHONON_SUPPORT:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( PulseAudio )
+
