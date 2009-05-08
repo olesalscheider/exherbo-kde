@@ -1,0 +1,26 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdegraphics-4
+
+PLATFORMS="~amd64 ~x86"
+
+#MYOPTIONS="openmp"
+
+#DEPENDENCIES="
+#    build:
+#        openmp? ( >=sys-devel/cmake-2.6.3 )
+#    build+run:
+#        sys-devel/gcc[openmp?(-)]
+#"
+
+# okular needs poppler-0.8
+
+# WITHS aren't used: CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( OpenMP )
+
+# FIXME WITHS Kdcraw, Kexiv2, but they're part of this module!
+# BUILDS thumbnailers
+# (?) libs/mobipocket
+# its strigi-analyzer needs SharedMimeInfo
+# thumbnails: raw? mobi ps?
+
