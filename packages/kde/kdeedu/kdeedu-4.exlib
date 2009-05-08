@@ -41,7 +41,6 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
       >=kde/kdelibs-${PV}:${SLOT}
-
         kde_parts:blinken? ( media-libs/phonon )
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}
@@ -50,11 +49,13 @@ DEPENDENCIES="
         )
         kde_parts:kalzium? (
             3dviewer? (
-                >=sci-chemistry/openbabel-2.2
-                  x11-dri/mesa
+              >=sci-chemistry/openbabel-2.2
+                x11-dri/mesa
             )
-            solver? ( dev-lang/ocaml
-                      dev-ml/facile )
+            solver? (
+                dev-lang/ocaml
+                dev-ml/facile
+            )
         )
         kde_parts:kanagram? ( media-libs/phonon )
         kde_parts:khangman? ( media-libs/phonon )

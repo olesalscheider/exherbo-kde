@@ -1,0 +1,18 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeedu-4
+
+PLATFORMS="~amd64 ~x86"
+
+# WITHS kde_parts:marble? ( python? ( PyQt4 ) )
+#       kde_parts:kstarts? ( Xplanet )
+
+# kde_parts:kalzium? ( glew )
+
+# Step require eigen-2.0.51:2, which is current -scm
+# FIXME Check whether other kde_parts:* that require eigen2 work if 2.0.1 is found
+
+# FIXME marble:CMakeLists.txt: pkg_check_modules(libgps libgps>=2.35)
+# marble/src/plugins/positionprovider/CMakeLists.txt: find_package(libgps)
+
