@@ -51,7 +51,7 @@ DEPENDENCIES="
         kde_parts:kalzium? (
             3dviewer? (
                 >=sci-chemistry/openbabel-2.2
-                || ( x11-dri/mesa x11-dri/mesa-lib )
+                  x11-dri/mesa
             )
             solver? ( dev-lang/ocaml
                       dev-ml/facile )
