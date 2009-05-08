@@ -8,7 +8,8 @@ LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
 This package contains Personal Information Management libraries and data files needed to run KDE 4 applications.
 "
-MYOPTIONS="sasl" # FIXME ldap
+# FIXME Ldap
+ever at_least 4.2.85 || MYOPTIONS="sasl"
 
 DEPENDENCIES="
     build:
@@ -19,9 +20,9 @@ DEPENDENCIES="
         dev-libs/libgpg-error
       >=kde/kdelibs-${PV}:${SLOT}
       >=office-libs/libical-0.33
-        sasl? ( net-libs/cyrus-sasl )
 "
+ever at_least 4.2.85 || DEPENDENCIES+="sasl? ( net-libs/cyrus-sasl )"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )
+ever at_least 4.2.85 || CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )
 
