@@ -1,0 +1,12 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdesdk-4
+
+PLATFORMS="~amd64 ~x86"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:kbugbuster KdepimLibs'
+    'kde_parts:kdeaccounts-plugin KdepimLibs'
+)
+
