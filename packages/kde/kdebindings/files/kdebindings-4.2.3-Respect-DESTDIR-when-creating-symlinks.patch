@@ -1,0 +1,29 @@
+Source: Ingmar/Bo
+Upstream: Will submit
+Reason: See below
+
+From 1758d69543375d2dcf84b250c6fc7e2e07e4438b Mon Sep 17 00:00:00 2001
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Date: Tue, 3 Mar 2009 20:15:30 +0100
+Subject: [PATCH] Respect DESTDIR when creating symlinks.
+
+---
+ ruby/qtruby/src/CMakeLists.txt |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ruby/qtruby/src/CMakeLists.txt b/ruby/qtruby/src/CMakeLists.txt
+index 1e90889..f3fae5f 100644
+--- a/ruby/qtruby/src/CMakeLists.txt
++++ b/ruby/qtruby/src/CMakeLists.txt
+@@ -44,7 +44,7 @@ install(TARGETS qtruby4 DESTINATION ${CUSTOM_RUBY_SITE_ARCH_DIR})
+ install(FILES qtruby.h marshall.h marshall_basetypes.h marshall_complex.h marshall_macros.h marshall_primitives.h marshall_types.h smokeruby.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/qtruby)
+ 
+ if (Q_WS_MAC)
+-    install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CUSTOM_RUBY_SITE_ARCH_DIR}/qtruby4.so\"  \"${CUSTOM_RUBY_SITE_ARCH_DIR}/qtruby4.bundle\" )" )
++    install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CUSTOM_RUBY_SITE_ARCH_DIR}/qtruby4.so\"  \"\$ENV{DESTDIR}${CUSTOM_RUBY_SITE_ARCH_DIR}/qtruby4.bundle\" )" )
+ endif (Q_WS_MAC)
+ 
+ ########### next target ###############
+-- 
+1.6.1.3
+

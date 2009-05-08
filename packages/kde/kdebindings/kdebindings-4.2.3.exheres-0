@@ -5,5 +5,5 @@ require kdebindings-4
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-4.2.2-Respect-DESTDIR-when-creating-symlinks.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-Respect-DESTDIR-when-creating-symlinks.patch" )
 
