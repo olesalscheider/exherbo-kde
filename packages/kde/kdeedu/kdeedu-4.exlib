@@ -40,7 +40,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
 
         kde_parts:blinken? ( media-libs/phonon )
         kde_parts:kalgebra? (

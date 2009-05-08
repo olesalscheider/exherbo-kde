@@ -19,7 +19,7 @@ MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde_parts:kuser? (
             kde/kdepimlibs:${SLOT}
         )

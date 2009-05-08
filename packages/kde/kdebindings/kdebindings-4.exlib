@@ -37,6 +37,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
       >=dev-libs/soprano-2.1.67
+      >=kde/kdelibs-${PV}:${SLOT}
       >=media-libs/phonon-4.3.0
       >=server-pim/akonadi-1.1.0
         python? (

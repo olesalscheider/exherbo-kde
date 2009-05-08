@@ -18,7 +18,7 @@ MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde_parts:amor? ( x11-libs/libX11 x11-libs/libXext )
         kde_parts:ktux? ( kde/kdebase-workspace:${SLOT} [[ note = KScreensaver ]] )
 "

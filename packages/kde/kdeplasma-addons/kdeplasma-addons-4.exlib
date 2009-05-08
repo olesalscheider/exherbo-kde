@@ -16,7 +16,7 @@ DEPENDENCIES="
         dev-lang/python:*
     build+run:
         dev-libs/boost
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde/kdebase-workspace:${SLOT}
       >=kde/kdegraphics-${PV} [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]

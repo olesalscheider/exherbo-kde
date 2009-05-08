@@ -58,7 +58,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         dev-libs/openssl
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kget? (

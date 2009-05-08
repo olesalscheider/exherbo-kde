@@ -34,7 +34,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde/kdepimlibs:${SLOT}
         kde_parts:ark? (
             archive? ( app-arch/libarchive )

@@ -50,7 +50,7 @@ DEPENDENCIES="
         app-crypt/gpgme
       >=dev-libs/boost-1.33.1 [[ note = [ required by akonadi and kleopatra ] ]]
         dev-libs/libgpg-error
-        kde/kdelibs:${SLOT}
+      >=kde/kdelibs-${PV}:${SLOT}
         kde/kdepimlibs:${SLOT}
       >=server-pim/akonadi-1.1.0 [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
         x11-libs/qt:4[dbus][sql]
