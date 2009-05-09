@@ -3,7 +3,7 @@
 
 require qmake4 common_metadata
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 WORK="${WORKBASE}/${PN}"
 
