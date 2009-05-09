@@ -22,9 +22,10 @@ KDE_INSTALL_PREFIX="/usr"
 
 kde4_shared_cmake_params() {
     echo \
+        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
         -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
         -DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR:BOOL=TRUE \
-        -DCMAKE_INSTALL_PREFIX:PATH="${KDE_INSTALL_PREFIX}" \
+        -DWITH_STRICT_DEPENDENCIES:BOOL=TRUE \
         $(if has test ${RESTRICT}; then
             echo '-DKDE4_BUILD_TESTS:BOOL=FALSE'
           else
