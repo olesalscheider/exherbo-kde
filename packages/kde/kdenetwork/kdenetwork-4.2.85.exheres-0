@@ -7,7 +7,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
-        kde_parts:kget? ( kde/kdelibs-experimental:1  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
+        kde_parts:kget? ( kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
 "
 
 # Should probably rewrite the exheres to not use the exlib, and move that into the exlib when it's properly tested
