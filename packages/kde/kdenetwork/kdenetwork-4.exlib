@@ -114,7 +114,7 @@ DEPENDENCIES="
 #       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 
 src_configure() {
-    local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF"
+    local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF -DWITH_XMMS_LIBRARIES=OFF -DWITH_XMMS_INCLUDE_DIRS=OFF"
 
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
