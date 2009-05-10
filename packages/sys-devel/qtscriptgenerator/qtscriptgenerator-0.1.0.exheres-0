@@ -23,7 +23,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4
+        x11-libs/qt:4[dbus][opengl][phonon]
 "
 
 WORK="${WORKBASE}/${PN}-src-${PV}"
