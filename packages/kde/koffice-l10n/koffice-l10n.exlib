@@ -13,6 +13,6 @@ SLOT="2"
 
 DEPENDENCIES="
     build:
-      >=kde/kdelibs-${PV}:${SLOT}
+        kde/kdelibs:4
 "
 
