@@ -11,5 +11,9 @@ DEPENDENCIES="
         kde/qimageblitz
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-4.2.3-Respect-DESTDIR-when-creating-symlinks.patch" )
-
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-4.2.3-Respect-DESTDIR-when-creating-symlinks.patch"
+    "${FILES}/${PNV}-backendcapabilities.patch"
+    "${FILES}/${PNV}-agentfilterproxymodel.patch"
+    "${FILES}/${PNV}-kdatetime.patch"
+)
