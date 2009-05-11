@@ -113,6 +113,9 @@ DEPENDENCIES="
 #       kde_parts:krfb? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 #       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 
+# FIXME
+# Warning: kppp uses setuid
+
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF -DWITH_XMMS_LIBRARIES=OFF -DWITH_XMMS_INCLUDE_DIRS=OFF"
 
@@ -125,10 +128,6 @@ src_configure() {
     my_kopete_protocols=( bonjour irc oscar qq sms testbed winpopup yahoo )
     cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
     cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
-
-    # These have to be disabled for im_protocols:wlm to work
-    # REMOVEME 4.2.1: WITH_msn removed in KDE 4.2.2
-    cmakeparams+=" -DWITH_msn=FALSE -DWITH_messenger=FALSE"
 
     # This isn't optional for kdelibs:4
     cmakeparams+=" -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE"
@@ -189,8 +188,4 @@ src_configure() {
         -DWITH_GMP=OFF
         # Disable internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
 }
-
-# FIXME
-# Do? decibel
-# Warning: kppp uses setuid
 
