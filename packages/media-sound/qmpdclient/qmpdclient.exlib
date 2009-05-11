@@ -1,0 +1,39 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4
+
+export_exlib_phases src_prepare src_install
+
+SUMMARY="QMPDClient is an easy to use MPD client written in Qt 4"
+HOMEPAGE="http://bitcheese.net/wiki/QMPDClient-ne   [[ description = [ New official homepage ] ]]
+    http://havtknut.tihlde.org/qmpdclient           [[ description = [ Old, official homepage ] ]]"
+DOWNLOADS="http://github.com/Voker57/${PN}-ne/tarball/${PV} -> ${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[dbus]
+    post,suggested:
+        media-sound/mpd [[ description = [ ${PN} connects to an mpd daemon, either locally or on a remote host ] ]]
+"
+
+DEFAULT_SRC_INSTALL_EXTRA_DOCS=( INSTALL THANKSTO )
+
+qmpdclient_src_prepare() {
+    sed -e '/^PREFIX/ c PREFIX = /usr' \
+        -i "${WORK}"/${PN}.pro ||
+        die "Changing prefix failed"
+}
+
+qmpdclient_src_install() {
+    default
+
+    insinto /usr/share/QMPDClient/iconsets
+    doins -r "${WORK}"/icons/oxygen
+}
+
