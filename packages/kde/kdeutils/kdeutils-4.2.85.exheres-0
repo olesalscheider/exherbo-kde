@@ -14,6 +14,7 @@ DEPENDENCIES="
         kde_parts:okteta? ( app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]] )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-xdg-compliance.patch" )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:ark ZLIB'
     'kde_parts:ark BZip2'
@@ -21,5 +22,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 # FIXME 5 new ark plugins in kdeutils.git/ark/plugins, check whether they have additional run dependencies
 # FIXME (Needs verification) All subdirs in doc/ are added & built regardless of whether the corresponding applications are built
-# FIXME List entry Actions in "ServiceMenus/ark_addtoservicemenu.desktop" is not compliant with XDG standard (missing trailing semicolon).
 

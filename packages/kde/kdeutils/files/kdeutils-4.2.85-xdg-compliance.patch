@@ -1,0 +1,29 @@
+Source: See below
+Upstream: No
+Reason: See below
+
+From d6b451fadb5c004ea3f3a23bd672fda2605776ae Mon Sep 17 00:00:00 2001
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Date: Mon, 11 May 2009 17:06:40 +0200
+Subject: [PATCH] XDG standard compliance
+
+---
+ ark/app/ark_addtoservicemenu.desktop |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ark/app/ark_addtoservicemenu.desktop b/ark/app/ark_addtoservicemenu.desktop
+index 5b2f9f7..98cf288 100644
+--- a/ark/app/ark_addtoservicemenu.desktop
++++ b/ark/app/ark_addtoservicemenu.desktop
+@@ -2,7 +2,7 @@
+ Type=Service
+ ServiceTypes=KonqPopupMenu/Plugin
+ MimeType=all/all;
+-Actions=compressHere;compressAsZip;compressAsRar;compressAsTar;compressTo
++Actions=compressHere;compressAsZip;compressAsRar;compressAsTar;compressTo;
+ X-KDE-Submenu=Compress
+ X-KDE-Submenu[bg]=Компресиране
+ X-KDE-Submenu[ca]=Compressió
+-- 
+1.6.3
+
