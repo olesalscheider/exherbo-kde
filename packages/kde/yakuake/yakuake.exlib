@@ -22,7 +22,6 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kdelibs:${SLOT}
-    run:
         kde/kdebase:${SLOT}
 "
 
