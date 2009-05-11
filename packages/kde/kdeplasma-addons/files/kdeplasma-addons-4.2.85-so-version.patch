@@ -1,0 +1,30 @@
+Source: Upstream, r966021
+Upstream: Yes
+Reason: Fix .so versioning
+
+From 34cbde13068469b432515c0f223a677cbd85903b Mon Sep 17 00:00:00 2001
+From: mueller <mueller@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Sun, 10 May 2009 11:52:16 +0000
+Subject: [PATCH] merge soversion fix
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/tags/KDE/4.2.85/kdeplasma-addons@966021 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ dataengines/ocs/lib/CMakeLists.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dataengines/ocs/lib/CMakeLists.txt b/dataengines/ocs/lib/CMakeLists.txt
+index f0bea5a..f562141 100644
+--- a/dataengines/ocs/lib/CMakeLists.txt
++++ b/dataengines/ocs/lib/CMakeLists.txt
+@@ -30,7 +30,7 @@ set(ocsclient_SRCS
+ 
+ 
+ kde4_add_library(ocsclient SHARED ${ocsclient_SRCS})
+-set_target_properties(ocsclient PROPERTIES VERSION ${KDE_GENERIC_LIB_VERSION} SOVERSION ${KDE_GENERIC_LIB_SOVERSION})
++set_target_properties(ocsclient PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+ 
+ target_link_libraries(ocsclient ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KABC_LIBS})
+ 
+-- 
+1.6.3
+

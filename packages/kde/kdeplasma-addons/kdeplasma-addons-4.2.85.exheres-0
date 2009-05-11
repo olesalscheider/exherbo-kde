@@ -10,6 +10,7 @@ DEPENDENCIES="
         sci-libs/eigen:2
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-so-version.patch" )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk:BOOL=TRUE
     # FIXME Should be optional
