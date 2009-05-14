@@ -87,7 +87,7 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     'x86_cpu_features:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    ACL # automagic
+    ACL
     FAM
     'jpeg2000 Jasper'
     OpenEXR
