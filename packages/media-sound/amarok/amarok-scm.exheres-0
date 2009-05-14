@@ -8,5 +8,8 @@ require amarok scm-svn
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-2.0.96-mysqle-link-to-amarok-executable.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-2.0.96-mysqle-link-to-amarok-executable.patch"
+    "${FILES}/${PN}-fix-with-ipod.patch"
+)
 
