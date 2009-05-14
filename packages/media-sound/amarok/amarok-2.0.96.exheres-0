@@ -4,7 +4,7 @@
 require amarok
 
 PLATFORMS="~amd64 ~x86"
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/2.1/beta/1"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/2.1/beta/2"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch" )
 
