@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde"
-SCM_BRANCH="work"
-SCM_SUBPATH="konvi-kde4"
+SCM_SUBPATH="extragear/network/konversation/"
+
 require kde4 scm-svn
 
 SUMMARY="Konversation is a graphical Internet Relay Chat client for KDE"
