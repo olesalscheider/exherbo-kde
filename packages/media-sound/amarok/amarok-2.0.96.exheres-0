@@ -8,6 +8,6 @@ UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/2.1/beta/2"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
-    "${FILES}/${PN}-fix-with-ipod.patch"
+    "${FILES}/${PNV}-fix-with-ipod.patch"
 )
 

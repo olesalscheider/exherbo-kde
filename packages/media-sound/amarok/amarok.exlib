@@ -104,7 +104,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
-    'ipod Gdk' Ipod
+    'ipod Gdk' IPOD
     Mtp
 )
 
