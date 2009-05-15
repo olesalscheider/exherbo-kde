@@ -31,7 +31,6 @@ LICENCES="GPL-2 LGPL-2.1"
 SLOT="4"
 MYOPTIONS="
     ( python ruby ) [[ number-selected = at-least-one ]]
-    webkit [[ requires = ruby description = [ QtRuby bindings for QtWebKit ] ]]
 "
 
 DEPENDENCIES="
@@ -47,7 +46,7 @@ DEPENDENCIES="
         )
         ruby? (
             dev-lang/ruby:=
-            webkit? ( x11-libs/qt:4[webkit] )
+            x11-libs/qt:4[webkit]
         )
 "
 
@@ -71,13 +70,13 @@ kdebindings-4_src_configure() {
     )
     CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
         'python KROSSPYTHON'
-        'ruby KROSSRUBY'
-        'webkit QTWEBKIT_RUBY' 'webkit QTWEBKIT_SMOKE'
+        'ruby KROSSRUBY' 'ruby QTWEBKIT_RUBY' 'ruby QTWEBKIT_SMOKE'
     )
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
         python
         ruby
-        # Smoke is needed to build the language bindings for Ruby, C# & perl, python doesn't need smoke
+        # Smoke is needed to build the language bindings for Ruby, C#, perl.
+        # Python doesn't need smoke
         # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
         'ruby smoke'
     )
