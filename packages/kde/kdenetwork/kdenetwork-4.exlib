@@ -175,6 +175,7 @@ src_configure() {
         $(cmake_with webkit WebKitPart) \
         $(cmake_with im_protocols:groupwise) \
         $(cmake_option !im_protocols:jingle NO_JINGLE) \
+        $(cmake_with im_protocols:jingle LiboRTP) \
         $(cmake_with im_protocols:wlm) \
         $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with kopete_plugins:otr) \
