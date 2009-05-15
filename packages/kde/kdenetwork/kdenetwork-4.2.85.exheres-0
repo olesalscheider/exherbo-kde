@@ -28,3 +28,5 @@ DEPENDENCIES="
 # 37 find_package(Strigi)
 # 61 macro_optional_find_package(Strigi) (.torrent files)
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-wlm-allow-self.patch" )
+
