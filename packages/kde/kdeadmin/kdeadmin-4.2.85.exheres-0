@@ -5,3 +5,7 @@ require kdeadmin-4
 
 PLATFORMS="~amd64 ~x86"
 
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:system-config-printer-kde PyKDE4'
+)
+
