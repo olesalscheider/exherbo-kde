@@ -21,32 +21,34 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         app-arch/bzip2
-        >=dev-libs/pcre-6.6
-        >=dev-libs/libxml2-2.4.8
-        >=dev-libs/libxslt-1.0.7
-        >=dev-libs/openssl-0.9.7d
-        >=gnome-platform/libart_lgpl-2.3.8
+        dev-libs/pcre[>=6.6]
+        dev-libs/libxml2[>=2.4.8]
+        dev-libs/libxslt[>=1.0.7]
+        dev-libs/openssl[>=0.9.7d]
+        gnome-platform/libart_lgpl[>=2.3.8]
         media-libs/fontconfig
         media-libs/freetype:2
-        >=media-libs/jpeg-6b
+        media-libs/jpeg[>=6b]
         net-dns/libidn
         x11-libs/libX11
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXrender
         x11-libs/qt:3
-        acl? ( sys-apps/acl
-            sys-apps/attr )
+        acl? (
+            sys-apps/acl
+            sys-apps/attr
+        )
         alsa? ( sys-sound/alsa-lib )
-        cups? ( >=net-print/cups-1.1.9 )
+        cups? ( net-print/cups[>=1.1.9] )
         fam? ( app-admin/gamin )
         jpeg2000? ( media-libs/jasper )
         kerberos? ( fixme/krb5 )
         lua? ( dev-lang/lua )
-        openexr? ( >=media-libs/openexr-1.2.2-r2 )
+        openexr? ( media-libs/openexr[>=1.2.2-r2] )
         spell? (
-            >=app-spell/aspell-0.60.5
-            >=app-dicts/aspell-en-6.0.0
+            app-spell/aspell[>=0.60.5]
+            app-dicts/aspell-en[>=6.0.0]
         )
         sudo? ( app-admin/sudo )
         tiff? ( media-libs/tiff )

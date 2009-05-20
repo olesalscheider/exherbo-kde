@@ -8,9 +8,9 @@ PLATFORMS="~amd64 ~x86"
 DEPENDENCIES="
     build+run:
         app-arch/xz
-      >=dev-libs/soprano-2.1.68
-      >=x11-libs/qt-4.5.0:4
-      >=x11-misc/shared-mime-info-0.30
+        dev-libs/soprano[>=2.1.68]
+        x11-libs/qt:4[>=4.5.0]
+        x11-misc/shared-mime-info[>=0.30]
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(

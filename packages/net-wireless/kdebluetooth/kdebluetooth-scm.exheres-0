@@ -21,12 +21,12 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-      >=kde/kdebase-workspace-4.2.0:4[bluetooth]
+        kde/kdebase-workspace:4[>=4.2.0][bluetooth]
         kde/kdelibs:4
         kde/kdelibs-experimental:4.3
         x11-libs/qt:4[qt3support]
     run:
-      >=net-wireless/bluez-4
+        net-wireless/bluez[>=4]
         net-wireless/obex-data-server
 "
 

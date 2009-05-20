@@ -12,8 +12,8 @@ DEPENDENCIES="
         !kde/PolicyKit-kde              [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
         kde/kdelibs-experimental:4.3    [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
         policykit? (
-          >=sys-auth/PolicyKit-0.8
-          >=sys-auth/polkit-qt-0.9
+            sys-auth/PolicyKit[>=0.8]
+            sys-auth/polkit-qt[>=0.9]
         )
 "
 

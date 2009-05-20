@@ -16,8 +16,8 @@ DEPENDENCIES="
     build:
         kde/automoc4
     build+run:
-      >=sys-auth/PolicyKit-0.8
-      >=x11-libs/qt-4.4.0:4
+        sys-auth/PolicyKit[>=0.8]
+        x11-libs/qt:4[>=4.4.0]
     post,suggested:
         kde/PolicyKit-kde [[ description = [ KDE GUI for PolicyKit ] ]]
 "

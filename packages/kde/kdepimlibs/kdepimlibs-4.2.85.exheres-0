@@ -8,7 +8,7 @@ PLATFORMS="~amd64 ~x86"
 DEPENDENCIES="
     build+run:
         net-libs/cyrus-sasl
-      >=office-libs/libical-0.42
-      >=server-pim/akonadi-1.1.85
+        office-libs/libical[>=0.42]
+        server-pim/akonadi[>=1.1.85]
 "
 

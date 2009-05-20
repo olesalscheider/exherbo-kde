@@ -55,7 +55,7 @@ esac
 
 DEPENDENCIES="
     build+run:
-      >=app-pim/strigi-0.6.3[qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
+        app-pim/strigi[>=0.6.3][qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
         x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X]
 "
 

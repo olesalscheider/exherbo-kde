@@ -7,7 +7,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
-      >=kde/kdepimlibs-${PV}:${SLOT}
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
 "
 

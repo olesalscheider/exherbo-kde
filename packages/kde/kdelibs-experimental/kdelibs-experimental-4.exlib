@@ -20,6 +20,6 @@ fi
 
 DEPENDENCIES="
     build+run:
-      >=kde/kdelibs-${PV}:4
+        kde/kdelibs:4[>=${PV}]
 "
 

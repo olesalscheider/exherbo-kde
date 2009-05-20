@@ -21,13 +21,14 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         dev-libs/libxml2
-        >=dev-cpp/clucene-0.9.19
+        dev-cpp/clucene[>=0.9.19]
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
         qt4? (
             sys-apps/dbus
             x11-libs/qt:4[dbus][X]
-        )"
+        )
+"
 
 src_configure() {
     # Strigi needs either expat or libxml2.

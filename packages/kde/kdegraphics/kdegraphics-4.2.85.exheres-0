@@ -9,7 +9,7 @@ PLATFORMS="~amd64 ~x86"
 
 #DEPENDENCIES="
 #    build:
-#        openmp? ( >=sys-devel/cmake-2.6.3 )
+#        openmp? ( sys-devel/cmake[>=2.6.3] )
 #    build+run:
 #        sys-devel/gcc[openmp?(-)]
 #"

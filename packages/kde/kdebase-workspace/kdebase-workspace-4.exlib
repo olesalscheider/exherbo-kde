@@ -43,17 +43,17 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/glib:2
         dev-libs/libusb:0.1
-      >=dev-libs/soprano-2.1.67 [[ note = [ plasma engine explorer ] ]]
+        dev-libs/soprano[>=2.1.67] [[ note = [ plasma engine explorer ] ]]
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
-      >=kde/kdelibs-${PV}:${SLOT} [[ note = [ Needs Nepomuk ] ]]
-      >=kde/kdepimlibs-${PV}:${SLOT}
+        kde/kdelibs:${SLOT}[>=${PV}] [[ note = [ Needs Nepomuk ] ]]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-      >=kde/qimageblitz-0.0.4
+        kde/qimageblitz[>=0.0.4]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-      >=x11-apps/xrandr-1.2 [[ note = kcontrol/kxkb/solidcontrol ]]
+        x11-apps/xrandr[>=1.2] [[ note = kcontrol/kxkb/solidcontrol ]]
         x11-dri/mesa
         x11-libs/libICE [[ note = ksmserver ]]
         x11-libs/libX11 [[ note = [ kdm, kxkb/kcontrol ] ]]
@@ -70,17 +70,17 @@ DEPENDENCIES="
         x11-libs/libXScrnSaver [[ note = krunner ]]
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
-      >=x11-libs/libxklavier-3.0 [[ note = kcontrol/kxkb ]]
+        x11-libs/libxklavier[>=3.0] [[ note = kcontrol/kxkb ]]
         x11-libs/libxkbfile [[ note = kcontrol/kxkb ]]
         x11-libs/qt:4[opengl][webkit]
         bluetooth? ( net-wireless/bluez )
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        networkmanager? ( >=net-apps/NetworkManager-0.6.5 )
+        networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
         python? (
             dev-lang/python:=
-          >=dev-python/sip-4.7.1
-          >=dev-python/PyQt4-4.4.0
+            dev-python/sip[>=4.7.1]
+            dev-python/PyQt4[>=4.4.0]
         )
         xinerama? ( x11-libs/libXinerama )
     run:

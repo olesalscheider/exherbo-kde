@@ -58,7 +58,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         dev-libs/openssl
-      >=kde/kdelibs-${PV}:${SLOT}
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kget? (
@@ -82,17 +82,17 @@ DEPENDENCIES="
             x11-libs/libXpm
             x11-libs/libXScrnSaver
             im_protocols:groupwise? ( app-crypt/qca:2 )
-            im_protocols:wlm? ( >=net-libs/libmsn-4.0_beta2 )
+            im_protocols:wlm? ( net-libs/libmsn[>=4.0_beta2] )
             im_protocols:xmpp? (
                 app-crypt/qca:2
                 net-dns/libidn
                 im_protocols:jingle? (
                     media-libs/speex
-                  >=net-libs/ortp-0.13
+                    net-libs/ortp[>=0.13]
                     sys-sound/alsa-lib
                 )
             )
-            kopete_plugins:otr? ( >=net-libs/libotr-3.2.0 )
+            kopete_plugins:otr? ( net-libs/libotr[>=3.2.0] )
             kopete_plugins:statistics? ( dev-db/sqlite:3 )
             kopete_plugins:webpresence? (
                 dev-libs/libxml2
@@ -100,11 +100,11 @@ DEPENDENCIES="
             )
         )
         kde_parts:krdc? (
-            vnc? ( >=net-libs/libvncserver-0.9 )
+            vnc? ( net-libs/libvncserver[>=0.9] )
         )
         kde_parts:krfb? (
+            net-libs/libvncserver[>=0.9]
             x11-libs/libXtst
-            >=net-libs/libvncserver-0.9
         )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )

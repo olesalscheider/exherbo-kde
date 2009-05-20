@@ -24,11 +24,11 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        >=sys-libs/db-4.1:=
-        >=dev-libs/uulib-0.5.20
-        ~media-libs/jpeg-6b
-        >=x11-libs/qt-3.3.8:3
-        >=kde/kdelibs-3.5.10:3
+        dev-libs/uulib[>=0.5.20]
+        kde/kdelibs:3[>=3.5.10]
+        media-libs/jpeg[~6b]
+        sys-libs/db:=[>=4.1]
+        x11-libs/qt:3[>=3.3.8]
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( -p1 "${FILES}"/${PNV}-gcc43.patch )

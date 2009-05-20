@@ -35,16 +35,16 @@ DEPENDENCIES="
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
         )
     build+run:
-      >=dev-lang/perl-5.8:* [[ description = [ For kio_perldoc ] ]]
-      >=kde/kdelibs-${PV}:${SLOT}
+        dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT} )
-        kde_parts:kioslave? ( >=dev-scm/subversion-1.4 )
+        kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
             x11-libs/qt:4[sql][sqlite]
         )
         kde_parts:umbrello? (
-          >=dev-libs/boost-1.33.1
+            dev-libs/boost[>=1.33.1]
             dev-libs/libxslt
             dev-libs/libxml2
         )

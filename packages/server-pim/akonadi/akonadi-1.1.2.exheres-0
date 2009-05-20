@@ -18,12 +18,12 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-      >=kde/automoc4-0.9.87
+        kde/automoc4[>=0.9.87]
     build+run:
         dev-db/mysql
         dev-libs/boost      [[ note = [ Akonadi uses the program_options library ] ]]
         dev-libs/libxslt
-      >=x11-libs/qt-4.4.0:4[dbus][mysql][sql]
-      >=x11-misc/shared-mime-info-0.23
+        x11-libs/qt:4[>=4.4.0][dbus][mysql][sql]
+        x11-misc/shared-mime-info[>=0.23]
 "
 

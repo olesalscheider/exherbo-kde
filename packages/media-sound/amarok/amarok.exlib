@@ -33,28 +33,28 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-      >=app-pim/strigi-0.5.9[qt4] [[ note = [ Optional in trunk ] ]]
+        app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
         dev-db/mysql[embedded-server]
-      >=dev-libs/soprano-2.1.67
-      >=kde/kdelibs-4.2.0:4
-      >=media-libs/taglib-1.5 [[ description = [ Read and write tags in audio files ] ]]
+        dev-libs/soprano[>=2.1.67]
+        kde/kdelibs:4[>=4.2.0]
+        media-libs/taglib[>=1.5] [[ description = [ Read and write tags in audio files ] ]]
         sys-devel/qtscriptgenerator
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[X][dbus][opengl][qt3support][svg(+)][webkit]
         ipod? (
             dev-libs/glib:2
-          >=x11-libs/gtk+-2.0:2 [[ description = [ Support for artwork on iPods ] ]]
+            x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]]
         )
         mp3tunes? (
-          >=net-im/loudmouth-1 [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
+            net-im/loudmouth[>=1] [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
         )
-        mtp? ( >=media-libs/libmtp-0.3.0 [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
+        mtp? (   media-libs/libmtp[>=0.3.0] [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
 "
 if ever at_least 2.0.90; then
     DEPENDENCIES+="
-      >=media-plugins/taglib-extras-0.1
+        media-plugins/taglib-extras[>=0.1]
         ipod? (
-          >=media-libs/libgpod-0.7.0 [[ description = [ iPod support ] ]]
+            media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
         )
         mp3tunes? (
             dev-libs/glib:2
@@ -72,13 +72,13 @@ else
         dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
         dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
         dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
-      >=kde/kdepimlibs-4.2.0:4
-      >=kde/kdebase-workspace-4.2.0:4
-      >=kde/kdemultimedia-4.2.0:4 [[ description = [ Support for playing Audio CDs ] ]]
+        kde/kdepimlibs:4[>=4.2.0]
+        kde/kdebase-workspace:4[>=4.2.0]
+        kde/kdemultimedia:4[>=4.2.0] [[ description = [ Support for playing Audio CDs ] ]]
         net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
         x11-libs/qt:4[glib]
         ipod? (
-          >=media-libs/libgpod-0.6.0 [[ description = [ iPod support ] ]]
+            media-libs/libgpod[>=0.6.0] [[ description = [ iPod support ] ]]
         )
         mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] ]] )
     "

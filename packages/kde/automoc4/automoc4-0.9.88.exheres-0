@@ -14,7 +14,6 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-      >=sys-devel/cmake-2.4.5
         x11-libs/qt:4
 "
 

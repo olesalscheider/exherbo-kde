@@ -35,18 +35,18 @@ DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
-      >=dev-cpp/clucene-0.9.19
-      >=dev-libs/soprano-2.1.67        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
-      >=kde/kdelibs-${PV}:${SLOT}
-      >=kde/kdepimlibs-${PV}:${SLOT}
-      >=media-libs/phonon-4.3.0[xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
+        dev-cpp/clucene[>=0.9.19]
+        dev-libs/soprano[>=2.1.67]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
+        media-libs/phonon[>=4.3.0][xine?] [[ note = [ the xine backend is now part of media-libs/phonon ] ]]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
-      >=sys-sound/alsa-lib-1.0.14a
+        sys-sound/alsa-lib[>=1.0.14a]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
-        pulseaudio? ( >=media-sound/pulseaudio-0.9.9 )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.9] )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         xine? ( media-libs/xine-lib )
 "

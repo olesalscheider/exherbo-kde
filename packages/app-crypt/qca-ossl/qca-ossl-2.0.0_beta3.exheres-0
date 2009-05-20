@@ -15,7 +15,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-libs/openssl
-        >=app-crypt/qca-${QCA_MAJVER}:2"
+        app-crypt/qca[>=${QCA_MAJVER}]
+"
 
 WORK="${WORKBASE}/${MY_PNV}"
 DEFAULT_SRC_PREPARE_PATCHES=( -p3 "${FILES}/${PNV}-remove-whirlpool.patch" )

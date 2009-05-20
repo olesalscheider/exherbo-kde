@@ -41,13 +41,13 @@ DEPENDENCIES="
     build:
         kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )
     build+run:
-      >=kde/kdelibs-${PV}:${SLOT}
-      >=media-libs/jpeg-6b
-      >=media-libs/lcms-1.14
-      >=x11-libs/qt-4.2:4
+        kde/kdelibs:${SLOT}[>=${PV}]
+        media-libs/jpeg[>=6b]
+        media-libs/lcms[>=1.14]
+        x11-libs/qt:4[>=4.2.0]
         kde_parts:gwenview? (
             dev-libs/soprano
-          >=graphics/exiv2-0.17 [[ note = [ strictly speaking only 0.13 is required, but 0.17 is recommended by upstream ] ]]
+            graphics/exiv2[>=0.17] [[ note = [ strictly speaking only 0.13 is required, but 0.17 is recommended by upstream ] ]]
             kipi? ( graphics/kipi-plugins )
         )
         kde_parts:kamera? ( media-libs/libgphoto2 )
@@ -71,11 +71,11 @@ DEPENDENCIES="
             media-libs/freetype:2
             media-libs/phonon
             chm? ( media-libs/chmlib )
-            djvu? ( >=app-text/djvu-3.5.17 )
+            djvu? ( app-text/djvu[>=3.5.17] )
             epub? ( app-text/ebook-tools )
             odf? ( app-crypt/qca:2 )
-            ps? ( >=app-text/libspectre-0.2 )
-            pdf? ( >=app-text/poppler-0.6[qt4] )
+            ps? ( app-text/libspectre[>=0.2] )
+            pdf? ( app-text/poppler[>=0.6][qt4] )
             tiff? ( media-libs/tiff )
         )
 "

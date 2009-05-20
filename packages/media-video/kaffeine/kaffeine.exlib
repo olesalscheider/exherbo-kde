@@ -13,8 +13,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-      >=kde/kdelibs-4.2.0:4
-      >=media-libs/phonon-4.3.0
-      >=x11-libs/qt-4.4.0:4
+        kde/kdelibs:4[>=4.2.0]
+        media-libs/phonon[>=4.3.0]
+        x11-libs/qt:4[>=4.4.0]
 "
 

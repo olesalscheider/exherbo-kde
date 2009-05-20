@@ -76,20 +76,20 @@ DEPENDENCIES="
             x11-libs/libXcursor
             x11-libs/libXfixes
             x11-libs/libXi
-          >=x11-libs/libXrandr-1.1
-          >=x11-libs/libXrender-0.6
+            x11-libs/libXrandr[>=1.1]
+            x11-libs/libXrender[>=0.6]
         )
         cups? ( net-print/cups )
-        dbus? ( >=sys-apps/dbus-1.0.2 )
+        dbus? ( sys-apps/dbus[>=1.0.2] )
         glib? ( dev-libs/glib:2 )
         gstreamer? (
             dev-libs/libxml2
-          >=media-libs/gstreamer-0.10
-          >=media-plugins/gst-plugins-base-0.10[gstreamer_plugins:alsa]
-          >=media-plugins/gst-plugins-good-0.10     [[ description = [ Needed for Phonon video functionality ] ]]
+            media-libs/gstreamer[>=0.10]
+            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:alsa]
+            media-plugins/gst-plugins-good[>=0.10]  [[ description = [ Needed for Phonon video functionality ] ]]
         )
         gtk? (
-          >=x11-libs/gtk+-2.10:2
+            x11-libs/gtk+:2[>=2.10]
             dev-libs/atk
         )
         mysql? ( dev-db/mysql )

@@ -25,13 +25,13 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
-      >=dev-libs/soprano-2.1.67
+        dev-libs/soprano[>=2.1.67]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-      >=kde/kdelibs-${PV}:${SLOT}
-      >=kde/kdepimlibs-${PV}:${SLOT}
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
-      >=kde/qimageblitz-0.0.4 [[ note = [ required by dolphin ] ]]
+        kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
         sys-apps/pciutils
         sys-apps/usbutils-data [[
             note = [ required to display USB information in kinfocenter ]
@@ -43,7 +43,8 @@ DEPENDENCIES="
         ieee1394? ( media-libs/libraw1394 )
         webkit? ( kde/webkitkde )
     post,suggested:
-        sys-apps/eject"
+        sys-apps/eject
+"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'ieee1394 RAW1394'

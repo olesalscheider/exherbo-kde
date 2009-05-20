@@ -19,11 +19,11 @@ MYOPTIONS="( gstreamer xine ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
-      >=kde/automoc4-0.9.86
+        kde/automoc4[>=0.9.86]
     build+run:
-      >=x11-libs/qt-4.5.0:4[dbus][phonon]
-        gstreamer? ( >=x11-libs/qt-4.5.0:4[glib][gstreamer] )
-        xine? ( >=media-libs/xine-lib-1.1.9[xcb] )
+        x11-libs/qt:4[>=4.5.0][dbus][phonon]
+        gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
+        xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
 "
 
 # FIXME Test executables not found, regardless of ECMAKE_BUILD_TYPE

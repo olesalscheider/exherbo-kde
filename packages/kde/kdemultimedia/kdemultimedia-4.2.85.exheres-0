@@ -12,7 +12,7 @@ DEPENDENCIES="
         kde_parts:kmix? (
             pulseaudio? (
                 dev-libs/glib:2
-              >=media-sound/pulseaudio-0.9.12
+                media-sound/pulseaudio[>=0.9.12]
             )
         )
 "

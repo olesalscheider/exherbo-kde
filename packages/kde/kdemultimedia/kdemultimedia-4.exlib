@@ -36,16 +36,16 @@ DEPENDENCIES="
         media-libs/phonon
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         kde_parts:dragonplayer? (
-          >=media-libs/phonon-4.3.0[xine]
-          >=media-libs/xine-lib-1.1[xcb]
+            media-libs/phonon[>=4.3.0][xine]
+            media-libs/xine-lib[>=1.1][xcb]
         )
         kde_parts:juk? (
-          >=media-libs/taglib-1.4
+            media-libs/taglib[>=1.4]
             tunepimp? ( media-libs/tunepimp )
         )
         kde_parts:kioslave? (
             media/cdparanoia
-            flac? ( >=media-libs/flac-1.1.2 )
+            flac? ( media-libs/flac[>=1.1.2] )
             vorbis? ( media-libs/libogg
                 media-libs/libvorbis )
         )

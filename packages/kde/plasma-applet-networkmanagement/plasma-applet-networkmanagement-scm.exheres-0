@@ -19,7 +19,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         kde/kdeutils:4[kde_parts:kwallet]
-      >=net-apps/NetworkManager-0.7
+        net-apps/NetworkManager[>=0.7]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(

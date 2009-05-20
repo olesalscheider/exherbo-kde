@@ -10,7 +10,7 @@ MYOPTIONS="slp [[ description = [ Provides SLP support in the network:/ kioslave
 DEPENDENCIES="
     build+run:
         kde/kdelibs-experimental:4.3    [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
-      >=x11-misc/shared-mime-info-0.40
+        x11-misc/shared-mime-info[>=0.40]
         slp? ( net-libs/openslp )
 
     run:

@@ -17,13 +17,15 @@ MYOPTIONS="nls"
 
 DEPENDENCIES="
     build:
-        nls? ( kde/kdesdk[kde_parts:scripts]
-               sys-devel/gettext   )
+        nls? (
+            kde/kdesdk[kde_parts:scripts]
+            sys-devel/gettext
+        )
     build+run:
         kde/kdebase:4 [[ note = [ Needs Nepomuk ] ]]
         media/ffmpeg
         media/mlt[ffmpeg][sdl][qt4][westley]
         media/mlt++
-      >=x11-misc/shared-mime-info-0.23
+        x11-misc/shared-mime-info[>=0.23]
 "
 
