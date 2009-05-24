@@ -9,7 +9,7 @@ SUMMARY="KDE libraries needed by all KDE programs."
 DESCRIPTION="
 "
 HOMEPAGE="http://www.kde.org/"
-LICENCES="GPL-2 LGPL-2 BSD FDL-1.2 Artistic"
+LICENCES="GPL-2 LGPL-2 BSD-3 FDL-1.2 Artistic"
 SLOT="3"
 MYOPTIONS="acl alsa cups doc fam jpeg2000 kerberos
     lua openexr spell sudo tiff zeroconf"
