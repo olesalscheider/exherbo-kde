@@ -1,0 +1,11 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require koffice
+
+PLATFORMS="~amd64 ~x86"
+
+MY_PV="2.0.0"
+UPSTREAM_CHANGELOG="${HOMEPAGE}/announcements/changelog-${MY_PV}.php"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/releases/${MY_PV}-release.php"
+
