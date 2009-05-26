@@ -31,10 +31,10 @@ MYOPTIONS="ipod mp3tunes mtp
 
 DEPENDENCIES="
     build:
+        dev-db/mysql[embedded-server]   [[ description = [ Linked statically, so a build dependency ] ]]
         sys-devel/gettext
     build+run:
         app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
-        dev-db/mysql[embedded-server]
         dev-libs/soprano[>=2.1.67]
         kde/kdelibs:4[>=4.2.0]
         media-libs/taglib[>=1.5] [[ description = [ Read and write tags in audio files ] ]]
