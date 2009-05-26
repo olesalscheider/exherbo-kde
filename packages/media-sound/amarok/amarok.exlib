@@ -71,9 +71,12 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
-    'ipod Gdk' IPOD
-    MP3TUNES
-    Mtp
+    'ipod Gdk' Mtp
+    $(if ever at_least 2.1 ; then
+        echo Ipod MP3Tunes
+      else
+        echo IPOD MP3TUNES
+      fi)
 )
 
 pkg_setup() {
