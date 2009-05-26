@@ -11,11 +11,11 @@ buttons do you have to press for simply adding some new tracks to the playlist?
 Amarok tries to be a little different, providing a simple drag and drop
 interface that really makes playlist handling easy.
 "
-HOMEPAGE="http://amarok.kde.org"
+HOMEPAGE="http://amarok.kde.org/"
 case ${PV} in
     scm) DOWNLOADS=""
          UPSTREAM_RELEASE_NOTES="" ;;
-    2.0|2.0.1|2.0.1.1|2.0.2)
+    2.1)
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
          UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
     *)
@@ -38,58 +38,25 @@ DEPENDENCIES="
         dev-libs/soprano[>=2.1.67]
         kde/kdelibs:4[>=4.2.0]
         media-libs/taglib[>=1.5] [[ description = [ Read and write tags in audio files ] ]]
+        media-plugins/taglib-extras[>=0.1]
         sys-devel/qtscriptgenerator
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[X][dbus][opengl][qt3support][svg(+)][webkit]
         ipod? (
             dev-libs/glib:2
-            x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]]
-        )
-        mp3tunes? (
-            net-im/loudmouth[>=1] [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
-        )
-        mtp? (   media-libs/libmtp[>=0.3.0] [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
-"
-if ever at_least 2.0.90; then
-    DEPENDENCIES+="
-        media-plugins/taglib-extras[>=0.1]
-        ipod? (
             media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
+            x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]]
         )
         mp3tunes? (
             dev-libs/glib:2
             dev-libs/libxml2
             dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
+            net-im/loudmouth[>=1] [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
             net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
             x11-libs/qt:4[glib]
         )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( MP3TUNES )
-else
-    MYOPTIONS+=" mp4 [[ description = [ Build the Taglib plugin for writing tags in mp4 container files (.m4a).
-                                        This makes your package non-redistributable, as libmp4v2 has a GPL-incompatible licence ] ]]"
-    DEPENDENCIES+="
-        dev-libs/glib:2 [[ description = [ Required by libgpod and mp3tunes ] ]]
-        dev-libs/libxml2 [[ description = [ LibXML2 is an XML parser required by mp3tunes ] ]]
-        dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
-        kde/kdepimlibs:4[>=4.2.0]
-        kde/kdebase-workspace:4[>=4.2.0]
-        kde/kdemultimedia:4[>=4.2.0] [[ description = [ Support for playing Audio CDs ] ]]
-        net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
-        x11-libs/qt:4[glib]
-        ipod? (
-            media-libs/libgpod[>=0.6.0] [[ description = [ iPod support ] ]]
-        )
-        mp4? ( media-libs/libmp4v2 [[ description = [ MP4 tag reading & writing ] ]] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'mp3tunes Loudmouth' 'mp4 Mp4v2' )
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # Hard enabled by upstream. Only needed for mp3tunes.com
-        -DWITH_{CURL,GLIB2,LibXml2}=ON
-        # Hard enabled by us
-        -DWITH_{Soprano,Nepomuk}=ON
-    )
-fi
+        mtp? (   media-libs/libmtp[>=0.3.0] [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
+"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
@@ -105,6 +72,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
     'ipod Gdk' IPOD
+    MP3TUNES
     Mtp
 )
 
