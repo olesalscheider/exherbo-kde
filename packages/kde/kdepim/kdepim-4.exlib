@@ -23,6 +23,8 @@ kpilot: Software for syncing PalmOS based handhelds
 ktimetracker: Time tracker
 "
 
+# Currently not optional: kmail kmailcvt ksendemail kaddressbook
+#   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
 korganizer kpilot ktimetracker strigi-analyzer"
 
@@ -51,7 +53,7 @@ DEPENDENCIES="
         dev-libs/boost[>=1.33.1] [[ note = [ required by akonadi and kleopatra ] ]]
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdepimlibs:${SLOT}
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         x11-libs/qt:4[dbus][sql]
         x11-misc/shared-mime-info[>=0.20] [[ note = akonadi ]]
         gnokii? ( mobilephone/gnokii )

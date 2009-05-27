@@ -86,7 +86,7 @@ DEPENDENCIES="
                 media-libs/openctl
                 media-libs/openexr
             )
-            panorama? ( sci-mathematics/gmm )
+            panorama? ( sci-libs/gmm )
             pdf? ( app-text/poppler[>=0.6][qt4] )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
             tiff? ( media-libs/tiff )
