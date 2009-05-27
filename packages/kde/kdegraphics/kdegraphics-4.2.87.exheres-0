@@ -18,3 +18,11 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 # OpenMP isn't optional for our GCC, so hard-enabled
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 
+src_prepare() {
+    default
+
+    # FIXME
+    sed -e '/raw/s/^/# Fails to link/' -i thumbnailers/CMakeLists.txt ||
+        die "couldn't disable broken thumbnailer"
+}
+
