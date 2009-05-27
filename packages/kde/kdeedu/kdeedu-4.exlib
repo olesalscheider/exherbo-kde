@@ -31,12 +31,15 @@ MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble
 parley step"
 MYOPTIONS="
-    3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra ] ]]
-    3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium  ] ]]
-    kig-scripting [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig      ] ]]
-    solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium  ] ]]
+    3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra        ] ]]
+    3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
+    kig-scripting [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
+    solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
+# Experimental Python bindings
+#   python        [[ description = [ Adds support for Python plugins in Marble ] requires = [ kde_parts: marble ] ]]
+
 
 DEPENDENCIES="
     build+run:
@@ -72,12 +75,27 @@ DEPENDENCIES="
             media-libs/phonon
         )
         kde_parts:step? (
-            sci-libs/gmm
-            sci-libs/gsl
+            sci-libs/gsl[>=1.8]
         )
     run:
         kde/kdebase-runtime:${SLOT}
 "
+
+if ever at_least 4.2.85 ; then
+DEPENDENCIES+="
+    build:
+        kde_parts:step? ( sci-libs/eigen:2[>=2.0.51] )
+        kde_parts:kalzium? (
+            3dviewer? ( sci-libs/eigen:2[>=2.0.51] )
+        )"
+else
+DEPENDENCIES+="
+    build:
+        kde_parts:step? ( sci-libs/gmm )"
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:step GMM'
+)
+fi
 
 # Someone should probably test this with Marble at some point
 # macro_log_feature(EXPERIMENTAL_PYTHON_BINDINGS "Experimental Python binding
@@ -87,20 +105,24 @@ DEPENDENCIES="
 #   "Experimental Python binding support for the Marble library. To activate it
 #   pass -DEXPERIMENTAL_PYTHON_BINDINGS=TRUE to cmake.")
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DHAVE_LIBGPS=OFF # for marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/
-    -DWITH_CFitsio=OFF # for kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
-    -DWITH_INDI=OFF # for kstars, requires sci-libs/indilib - http://indi.sf.net
-    -DWITH_Qalculate=OFF # for step, requires sci-libs/libqalculate - http://qalculate.sourceforge.net/
-    -DWITH_Readline=ON # for kalgebra, enables a console interface, calgebra. affects nothing when kalgebra is disabled
-    -DENABLE_TESTS=OFF # because tests are restricted anyway
+    # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/
+    -DHAVE_LIBGPS=OFF
+    # Kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
+    -DWITH_CFitsio=OFF
+    # Kstars, requires sci-libs/indilib - http://indi.sf.net/
+    -DWITH_INDI=OFF
+    # Kstars, requires xplanet - http://xplanet.sourceforge.net/
+    -DWITH_Xplanet=OFF
+    # Step, requires sci-libs/libqalculate - http://qalculate.sourceforge.net/
+    -DWITH_Qalculate=OFF
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     '3dviewer OpenBabel2'
+    'kde_parts:kalgebra Readline'
     'kde_parts:marble DESIGNER_PLUGIN'
     'kde_parts:parley LibXslt' # required to build HTML export
     'kde_parts:parley LibXml2' # required to build HTML export
-    'kde_parts:step GMM'
     'kde_parts:step GSL' # Optional, hard-enabled
     'kig-scripting BoostPython'
     'solver OCaml' 'solver Libfacile'
@@ -111,6 +133,14 @@ src_configure() {
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
+    fi
+
+    if ever at_least 4.2.85; then
+        if option 3dviewer || option kde_parts:step; then
+            CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
+        else
+            CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=OFF )
+        fi
     fi
 
     if option kde_parts:ktouch; then
