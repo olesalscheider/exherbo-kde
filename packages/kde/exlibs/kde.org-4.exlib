@@ -45,10 +45,11 @@ case ${PV} in
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     4.@(2|3).@(6|7|8|9)*) # Weekly SVN snapshots
         case ${PV} in
-            4.2.71) K_SVN_REV="961800" ;;
+            4.2.87) K_SVN_REV="969966" ;;
             *) die "Set K_SVN_REV for ${PV}" ;;
         esac
-        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.svn${K_SVN_REV}.tar.bz2"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.bz2"}"
+        WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
     *)  # Stable releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
 esac
