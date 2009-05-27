@@ -24,12 +24,12 @@ DESCRIPTION="
 * kwordquiz:   a powerful way to master new vocabularies
 * marble:      a virtual globe
 * parley:      vocabulary trainer
-* step:        a physics simulator (disabled)
+* step:        a physics simulator
 "
 
 MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble
-parley"
+parley step"
 MYOPTIONS="
     3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra ] ]]
     3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium  ] ]]
@@ -71,6 +71,10 @@ DEPENDENCIES="
             kde/kdebase-workspace:${SLOT}
             media-libs/phonon
         )
+        kde_parts:step? (
+            sci-libs/gmm
+            sci-libs/gsl
+        )
     run:
         kde/kdebase-runtime:${SLOT}
 "
@@ -83,11 +87,8 @@ DEPENDENCIES="
 #   "Experimental Python binding support for the Marble library. To activate it
 #   pass -DEXPERIMENTAL_PYTHON_BINDINGS=TRUE to cmake.")
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DBUILD_step=Off # requires -DWITH_GMM
     -DHAVE_LIBGPS=OFF # for marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/
     -DWITH_CFitsio=OFF # for kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
-    -DWITH_GMM=OFF # for step, requires sci-mathematics/gmm - http://www-gmm.insa-toulouse.fr/getfem/
-    -DWITH_GSL=OFF # for step, requires sci-libs/gsl - http://www.gnu.org/software/gsl/
     -DWITH_INDI=OFF # for kstars, requires sci-libs/indilib - http://indi.sf.net
     -DWITH_Qalculate=OFF # for step, requires sci-libs/libqalculate - http://qalculate.sourceforge.net/
     -DWITH_Readline=ON # for kalgebra, enables a console interface, calgebra. affects nothing when kalgebra is disabled
@@ -99,6 +100,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:marble DESIGNER_PLUGIN'
     'kde_parts:parley LibXslt' # required to build HTML export
     'kde_parts:parley LibXml2' # required to build HTML export
+    'kde_parts:step GMM'
+    'kde_parts:step GSL' # Optional, hard-enabled
     'kig-scripting BoostPython'
     'solver OCaml' 'solver Libfacile'
 )
