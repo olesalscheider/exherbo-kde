@@ -36,7 +36,7 @@ case ${PV} in
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-beta1.php" ;;
     4.@(2|3).@(6|7|8|9)*)
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
-    *)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
+    4.*)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
 esac
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
