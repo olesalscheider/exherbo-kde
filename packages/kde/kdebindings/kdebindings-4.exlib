@@ -50,6 +50,20 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.2.87 ; then
+    MYOPTIONS+=" policykit"
+    DEPENDENCIES+="
+        policykit? (
+            sys-auth/PolicyKit[>=0.8]
+            sys-auth/polkit-qt[>=0.9]
+        )
+        python? (
+            dev-python/sip[>=4.8.0_pre]
+            dev-python/PyQt4[>=4.5.0_pre]
+        )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+fi
+
 kdebindings-4_src_configure() {
     # Note: ABI support for python & ruby should use:
     # -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/
