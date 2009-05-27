@@ -5,3 +5,9 @@ require kdepim-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+        kde/kdelibs-experimental:4.3
+"
+
