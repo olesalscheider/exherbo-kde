@@ -29,14 +29,15 @@ MY_IM_PROTOCOLS+="
     wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
     xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
 "
-#   gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
+ever at_least 4.2.85 && MY_IM_PROTOCOLS+="gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]"
 #   meanwhile [[ description = [ Enable Sametime protocol ] ]]
 MY_KOPETE_PLUGINS+="
     otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
     statistics [[ description = [ Statistics plugin for Kopete ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
 "
-MYOPTIONS="
+ever at_least 4.2.85 && MYOPTIONS+="v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]"
+MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
@@ -116,12 +117,23 @@ DEPENDENCIES="
 # FIXME
 # Warning: kppp uses setuid
 
+if ever at_least 4.2.85 ; then
+DEPENDENCIES="
+    build+run:
+        kde_parts:kget? ( kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
+        kde_parts:kopete? (
+            im_protocols:gadu? ( net-libs/libgadu )
+            v4l? ( media-libs/libv4l )
+        )"
+fi
+
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF -DWITH_XMMS_LIBRARIES=OFF -DWITH_XMMS_INCLUDE_DIRS=OFF"
 
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
-        addbookmarks alias autoreplace contactnotes highlight history latex nowlistening
+        $(ever at_least 4.2.87 || echo alias)
+        addbookmarks autoreplace contactnotes highlight history latex nowlistening
         pipes privacy texteffect translator urlpicpreview
     )
     # Kopete protocols with no extra dependencies
@@ -162,7 +174,13 @@ src_configure() {
         cmakeparams+=" -DWITH_LibVNCServer=OFF"
     fi
 
-    #   $(cmake_with im_protocols:gadu) \
+    if ever at_least 4.2.85 ; then
+        cmakeparams+="
+            $(cmake_with im_protocols:gadu Libgadu)
+            $(cmake_with kde_parts:kget LibKNotificationItem-1)
+            $(cmake_with v4l LibV4L2)"
+    fi
+
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
     ecmake \
