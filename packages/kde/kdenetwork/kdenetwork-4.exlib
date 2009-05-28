@@ -7,7 +7,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require multilib kde.org-4
 
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
@@ -204,6 +204,7 @@ src_configure() {
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_enable !bittorrent EMBEDDED_TORRENT_SUPPORT) \
+        -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
         -DWITH_GMP=OFF
         # Disable internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
 }
