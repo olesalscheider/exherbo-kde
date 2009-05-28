@@ -20,7 +20,7 @@ DESCRIPTION="
 #* Kivio: A Visio®-style flowcharting application
 HOMEPAGE="http://www.koffice.org/"
 REMOTE_IDS="freshmeat:${PN}"
-DOWNLOADS="mirror://kde/unstable/${PNV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PNV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
@@ -57,7 +57,7 @@ DEPENDENCIES="
         media-libs/lcms[>=1.15]
         media-libs/libpng
         sys-libs/zlib
-        x11-libs/qt:4[>=4.5.0][dbus][opengl]
+        x11-libs/qt:4[>=4.5.0][dbus][opengl][qt3support]
         x11-libs/libX11
         kde_parts:karbon? (
             media-libs/fontconfig
@@ -86,7 +86,7 @@ DEPENDENCIES="
                 media-libs/openctl
                 media-libs/openexr
             )
-            panorama? ( sci-mathematics/gmm )
+            panorama? ( sci-libs/gmm )
             pdf? ( app-text/poppler[>=0.6][qt4] )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
             tiff? ( media-libs/tiff )
@@ -97,7 +97,10 @@ DEPENDENCIES="
         )
         kde_parts:kword? (
             msword? ( office-libs/wv2 )
-            wordperfect? ( office-libs/libwpd )
+            wordperfect? (
+                office-libs/libwpd
+                office-libs/libwpd
+            )
         )
         odf? ( app-crypt/qca:2 )
         spacenavigator? ( sci-libs/libspnav )
