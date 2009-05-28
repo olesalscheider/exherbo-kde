@@ -1,7 +1,7 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdelibs-experimental-4
+require kdeartwork-4
 
 PLATFORMS="~amd64 ~x86"
 

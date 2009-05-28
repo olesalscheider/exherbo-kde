@@ -18,7 +18,6 @@ DEPENDENCIES="
         )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}/${PNV}-mplayerthumbs-disable-phonon-api.patch" )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # mplayerthumbs' phonon support requires phonon-scm
     -DENABLE_PHONON_SUPPORT:BOOL=FALSE

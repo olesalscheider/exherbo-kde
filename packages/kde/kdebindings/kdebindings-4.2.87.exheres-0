@@ -1,0 +1,16 @@
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdebindings-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/qimageblitz
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-4.2.3-Respect-DESTDIR-when-creating-symlinks.patch"
+)

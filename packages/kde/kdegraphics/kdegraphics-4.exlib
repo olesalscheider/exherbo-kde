@@ -80,8 +80,17 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.2.85 ; then
+DEPENDENCIES+="
+    build+run:
+        graphics/exiv2[>=0.17]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
+        kde_parts:okular? (
+            pdf? ( app-text/poppler[>=0.6][qt4] )
+        )"
+fi
+
 src_configure() {
-    local p cmakeparams
+    local p cmakeparams="${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
 
     if option kde_parts:kolourpaint || option kde_parts:okular; then
         cmakeparams+=" -DWITH_QImageBlitz=ON"
@@ -101,7 +110,12 @@ src_configure() {
         $(cmake_with CHM) \
         $(cmake_with djvu DjVuLibre) \
         $(cmake_with EPub) \
-        $(cmake_with kde_parts:gwenview Exiv2) \
+        $(if ever at_least 4.2.85 ; then
+            # thumbnailers/raw/ needs Exiv2, so hard enabled
+            echo -DWITH_Exiv2:BOOL=TRUE
+          else
+            echo $(cmake_with kde_parts:gwenview Exiv2)
+          fi) \
         $(cmake_with kde_parts:gwenview Soprano) \
         $(cmake_with kde_parts:kamera Gphoto2) \
         $(cmake_with kde_parts:ksaneplugin Sane) \
