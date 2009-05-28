@@ -13,7 +13,7 @@ LICENCES="|| ( GPL-2 GPL-3 )"
 # KDE 4.2.85 -> 4.3
 # KDE 4.3.1 -> 4.3
 
-if [[ -z ${SLOT} ]]; then
+if [[ ${SLOT:-4} == 4 ]]; then
     if (( $(ever range 3) < 5 )); then
         SLOT="$(ever range 1-2)"
     else
