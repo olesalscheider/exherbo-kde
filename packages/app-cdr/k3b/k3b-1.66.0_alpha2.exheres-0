@@ -9,5 +9,3 @@ PLATFORMS="~amd64 ~x86"
 
 WORK="${WORKBASE}/${PNV%_alpha*}"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-polkit-qt-cmake-fix.patch" )
-

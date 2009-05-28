@@ -6,5 +6,7 @@ SCM_SUBPATH="extragear/multimedia/${PN}"
 
 require scm-svn k3b
 
+DOWNLOADS=""
+
 PLATFORMS="~amd64 ~x86"
 
