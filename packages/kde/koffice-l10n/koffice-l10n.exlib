@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 myexparam langs
-myexparam base_uri="mirror://kde/unstable/${PN%-l10n}-${PV}/src/${PN}"
+myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/src/${PN}"
 
 require kde4 l10n [ langs="$(exparam langs)" base_uri="$(exparam base_uri)" ]
 
