@@ -5,7 +5,5 @@ require koffice
 
 PLATFORMS="~amd64 ~x86"
 
-MY_PV="2.0.0"
-UPSTREAM_CHANGELOG="${HOMEPAGE}/announcements/changelog-${MY_PV}.php"
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/releases/${MY_PV}-release.php"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/wordpress/2009/05/koffice-200-released/"
 
