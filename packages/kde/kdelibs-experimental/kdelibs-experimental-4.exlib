@@ -12,10 +12,13 @@ LICENCES="|| ( GPL-2 GPL-3 )"
 # Unstable API, slot follows KDE major.minor version, no API/ABI breaks for patch releases
 # KDE 4.2.85 -> 4.3
 # KDE 4.3.1 -> 4.3
-if (( $(ever range 3) < 5 )); then
-    SLOT="$(ever range 1-2)"
-else
-    SLOT="$(ever range 1).$(( $(ever range 2) + 1 ))"
+
+if [[ -z ${SLOT} ]]; then
+    if (( $(ever range 3) < 5 )); then
+        SLOT="$(ever range 1-2)"
+    else
+        SLOT="$(ever range 1).$(( $(ever range 2) + 1 ))"
+    fi
 fi
 
 DEPENDENCIES="
