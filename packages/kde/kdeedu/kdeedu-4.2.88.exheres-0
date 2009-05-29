@@ -1,0 +1,13 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeedu-4
+
+PLATFORMS="~amd64 ~x86"
+
+# FIXME There's no FindGLEW call, yet kalzium/libavogadro-kalzium/src/CMakeLists.txt has 'if(GLEW_FOUND)'
+# kde_parts:kalzium? ( 3dviewer? ( glew ) )
+
+# FIXME marble:CMakeLists.txt: pkg_check_modules(libgps libgps>=2.35)
+# marble/src/plugins/positionprovider/CMakeLists.txt: find_package(libgps)
+
