@@ -1,0 +1,28 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdegraphics-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build:
+        sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
+"
+
+# Kdcraw, Kexiv2 are part of this module, so don't attempt to find them
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Kdcraw:BOOL=FALSE
+    -DWITH_Kexiv2:BOOL=FALSE
+)
+# OpenMP isn't optional for our GCC, so hard-enabled
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
+
+src_prepare() {
+    default
+
+    # FIXME Undefined references
+    sed -e '/raw/s/^/# Fails to link/' -i thumbnailers/CMakeLists.txt ||
+        die "couldn't disable broken thumbnailer"
+}
+
