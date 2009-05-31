@@ -10,5 +10,3 @@ DEPENDENCIES="
         server-pim/akonadi[>=1.1.0&<1.1.85] [[ note = [ Akonadi kaddressbook is required by kresources, which isn't optional ] ]]
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-4.2.3-reply-from-sent-mail.patch" )
-
