@@ -118,7 +118,7 @@ DEPENDENCIES="
 # Warning: kppp uses setuid
 
 if ever at_least 4.2.85 ; then
-DEPENDENCIES="
+DEPENDENCIES+="
     build+run:
         kde_parts:kget? ( kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
         kde_parts:kopete? (
