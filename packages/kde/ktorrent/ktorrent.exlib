@@ -3,8 +3,6 @@
 
 require kde4
 
-# FIXME Add linguas
-
 SUMMARY="KTorrent - The KDE BitTorrent client."
 HOMEPAGE="http://ktorrent.org/"
 DOWNLOADS="${HOMEPAGE}downloads/${PV/_}/${PNV/_}.tar.bz2"
