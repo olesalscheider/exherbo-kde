@@ -63,6 +63,10 @@ if ever at_least 4.2.87 ; then
         )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 fi
+if ever at_least 4.2.90 ; then
+    DEPENDENCIES+="
+        dev-libs/soprano[>=2.2.67]"
+fi
 
 kdebindings-4_src_configure() {
     # Note: ABI support for python & ruby should use:

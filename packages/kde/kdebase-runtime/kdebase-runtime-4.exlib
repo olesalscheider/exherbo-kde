@@ -64,6 +64,10 @@ if ever at_least 4.2.85 ; then
             kde/oxygen-icons"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( SLP )
 fi
+if ever at_least 4.2.90 ; then
+    DEPENDENCIES+="
+        dev-libs/soprano[>=2.2.67]"
+fi
 
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
