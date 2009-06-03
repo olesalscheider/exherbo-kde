@@ -5,5 +5,5 @@ require kdebase-runtime-4
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.3-optional-xine.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PNV}-optional-xine.patch" )
 

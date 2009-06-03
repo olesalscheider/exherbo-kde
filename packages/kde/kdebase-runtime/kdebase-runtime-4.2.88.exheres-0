@@ -17,6 +17,6 @@ DEPENDENCIES="
         kde/oxygen-icons
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.3-optional-xine.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.4-optional-xine.patch" )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( SLP )
 

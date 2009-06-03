@@ -14,7 +14,7 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-4.2.3-FindRUBY.cmake.patch"
+    "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
     "${FILES}/CMake-strict-dependencies.patch"
 )
 

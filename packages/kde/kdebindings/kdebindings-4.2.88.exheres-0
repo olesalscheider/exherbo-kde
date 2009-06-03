@@ -12,5 +12,5 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-4.2.3-Respect-DESTDIR-when-creating-symlinks.patch"
+    "${FILES}/${PN}-4.2.4-Respect-DESTDIR-when-creating-symlinks.patch"
 )
