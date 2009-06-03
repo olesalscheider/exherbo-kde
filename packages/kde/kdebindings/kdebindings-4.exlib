@@ -58,8 +58,8 @@ if ever at_least 4.2.87 ; then
             sys-auth/polkit-qt[>=0.9]
         )
         python? (
-            dev-python/sip[>=4.8.0_pre]
-            dev-python/PyQt4[>=4.5.0_pre]
+            dev-python/sip[>=4.8_pre]
+            dev-python/PyQt4[>=4.5_pre]
         )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 fi
