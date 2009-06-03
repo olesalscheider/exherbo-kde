@@ -97,7 +97,8 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.2.85 ; then
-    MYOPTIONS+="policykit"
+    MYOPTIONS="( ${MYOPTIONS} )
+        policykit"
 
     DEPENDENCIES+="
         build+run:

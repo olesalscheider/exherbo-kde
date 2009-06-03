@@ -54,7 +54,9 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.2.85 ; then
-    MYOPTIONS+="pulseaudio [[ requires = [ kde_parts: kmix ] ]]"
+    MYOPTIONS="
+        ( ${MYOPTIONS} )
+        pulseaudio [[ requires = [ kde_parts: kmix ] ]]"
 
     DEPENDENCIES+="
         build+run:
