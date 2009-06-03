@@ -81,12 +81,22 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.2.85 ; then
-DEPENDENCIES+="
-    build+run:
-        graphics/exiv2[>=0.17]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
-        kde_parts:okular? (
-            pdf? ( app-text/poppler[>=0.6][qt4] )
-        )"
+    DEPENDENCIES+="
+        build:
+            sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
+        build+run:
+            graphics/exiv2[>=0.17]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
+            kde_parts:okular? (
+                pdf? ( app-text/poppler[>=0.6][qt4] )
+            )"
+
+    # Kdcraw, Kexiv2 are part of this module, so don't attempt to find them
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_Kdcraw:BOOL=FALSE
+        -DWITH_Kexiv2:BOOL=FALSE
+    )
+    # OpenMP isn't optional for our GCC, so hard-enabled
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 fi
 
 src_configure() {
