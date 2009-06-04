@@ -9,9 +9,11 @@ DEPENDENCIES="
     build+run:
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
+        python? ( dev-libs/soprano[>=2.2.67] )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.2.4-Respect-DESTDIR-when-creating-symlinks.patch"
     "${FILES}/${PNV}-fixes-for-SIP-snapshots.patch"
+    "${FILES}/${PNV}-build-with-phonon-4.3.1.patch"
 )

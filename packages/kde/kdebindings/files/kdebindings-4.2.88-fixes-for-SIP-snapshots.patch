@@ -1,3 +1,7 @@
+Source: Upstream
+Upstream: Yes
+Reason: Work with sip 4.8-pre20090603
+
 From ac17fefceb5eb167b95c47ed0170c9e62423fa6a Mon Sep 17 00:00:00 2001
 From: sedwards <sedwards@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
 Date: Mon, 1 Jun 2009 19:03:03 +0000
