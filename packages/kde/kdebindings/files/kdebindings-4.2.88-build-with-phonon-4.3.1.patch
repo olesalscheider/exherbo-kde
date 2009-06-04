@@ -1,0 +1,68 @@
+Source: Upstream
+Upstream: Yes
+Reason: Don't require phonon trunk for KDE 4.3
+
+From 7f68d12da7ce874c3fc6e621039e905e06fc13e7 Mon Sep 17 00:00:00 2001
+From: sedwards <sedwards@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Mon, 1 Jun 2009 08:41:31 +0000
+Subject: [PATCH] Revert 968478 since it relies on a later version of phonon than what will be required by KDE 4.3.
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebindings@976184 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ python/pykde4/sip/phonon/videowidget.sip          |    1 -
+ python/pykde4/sip/phonon/videowidgetinterface.sip |   19 ++-----------------
+ 2 files changed, 2 insertions(+), 18 deletions(-)
+
+diff --git a/python/pykde4/sip/phonon/videowidget.sip b/python/pykde4/sip/phonon/videowidget.sip
+index df56739..92d72f8 100644
+--- a/python/pykde4/sip/phonon/videowidget.sip
++++ b/python/pykde4/sip/phonon/videowidget.sip
+@@ -51,7 +51,6 @@ public:
+     qreal                   contrast () const;
+     qreal                   hue () const;
+     qreal                   saturation () const;
+-    QImage                  snapshot () const;
+     void                    setFullScreen (bool fullscreen);
+     void                    exitFullScreen ();
+     void                    enterFullScreen ();
+diff --git a/python/pykde4/sip/phonon/videowidgetinterface.sip b/python/pykde4/sip/phonon/videowidgetinterface.sip
+index 61c476d..27236b3 100644
+--- a/python/pykde4/sip/phonon/videowidgetinterface.sip
++++ b/python/pykde4/sip/phonon/videowidgetinterface.sip
+@@ -21,7 +21,7 @@
+ namespace Phonon
+ {
+ 
+-class VideoWidgetInterface43
++class VideoWidgetInterface
+ {
+ %TypeHeaderCode
+ #include <phonon/videowidgetinterface.h>
+@@ -41,23 +41,8 @@ public:
+     virtual qreal           saturation () const = 0;
+     virtual void            setSaturation (qreal) = 0;
+     virtual QWidget*        widget () = 0;
+-};   // VideoWidgetInterface43
+-
+-
+-class VideoWidgetInterface44 : Phonon::VideoWidgetInterface43
+-{
+-%TypeHeaderCode
+-#include <phonon/videowidgetinterface.h>
+-%End
+-
+-public:
+-    virtual QImage          snapshot () const = 0;
+-};   // VideoWidgetInterface44
++};   // VideoWidgetInterface
+ 
+ };   // Phonon
+ 
+-namespace Phonon
+-{
+-typedef Phonon::VideoWidgetInterface43 VideoWidgetInterface;
+ 
+-};   // Phonon
+-- 
+1.6.3.1
+
