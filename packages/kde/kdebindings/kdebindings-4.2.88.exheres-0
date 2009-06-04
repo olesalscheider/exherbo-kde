@@ -9,6 +9,7 @@ DEPENDENCIES="
     build+run:
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
+        python? ( dev-libs/soprano[>=2.2.67] )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
