@@ -1,0 +1,15 @@
+Source: Kim Højgaard-Hansen <kimrhh@exherbo.org>
+Upstream: pending
+Reason: Look for Qt tools in /usr/bin
+
+--- qt-creator-1.1.0-src/doc/doc.pri_old 2009-06-07 18:41:54.000000000 +0200
++++ qt-creator-1.1.0-src/doc/doc.pri 2009-04-21 16:13:12.000000000 +0200
+@@ -1,6 +1,6 @@
+ unix {
+-    QDOC = SRCDIR=$$PWD OUTDIR=$$OUT_PWD/doc/html $$(QTDIR)/tools/qdoc3/qdoc3
+-    HELPGENERATOR = $$(QTDIR)/bin/qhelpgenerator
++    QDOC = SRCDIR=$$PWD OUTDIR=$$OUT_PWD/doc/html /usr/bin/qdoc3
++    HELPGENERATOR = /usr/bin/qhelpgenerator
+ } else {
+     QDOC = set SRCDIR=$$PWD&& set OUTDIR=$$OUT_PWD/doc/html&& $$(QTDIR)\tools\qdoc3\release\qdoc3.exe
+     HELPGENERATOR = $$(QTDIR)\bin\qhelpgenerator.exe

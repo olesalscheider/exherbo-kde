@@ -1,0 +1,34 @@
+# Copyright 2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4
+
+SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
+
+HOMEPAGE="http://www.qtsoftware.com/downloads/"
+DOWNLOADS="http://get.qtsoftware.com/qtcreator/${PNV}-src.zip"
+
+LICENCES="LGPL"
+SLOT="0"
+
+PLATFORMS="~amd64"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt[>=4.5][doc]
+"
+
+BUGS_TO="kimrhh@exherbo.org"
+
+WORK="${WORK}-src/"
+EQMAKE4_SOURCES="qtcreator.pro"
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/qt-tools.patch" )
+
+src_install() {
+    default
+    dobin bin/qtcreator.bin
+    dobin bin/qtcreator
+    dobin bin/qtcreator_process_stub
+}
