@@ -39,15 +39,13 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon[>=4.3.0]
         server-pim/akonadi[>=1.1.0]
+        x11-libs/qt:4[webkit]
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.7.8]
-            dev-python/PyQt4[>=4.4.4]
+            dev-python/PyQt4[>=4.4.4][opengl][sql][webkit]
         )
-        ruby? (
-            dev-lang/ruby:=
-            x11-libs/qt:4[webkit]
-        )
+        ruby? ( dev-lang/ruby:= )
 "
 
 if ever at_least 4.2.87 ; then
@@ -83,12 +81,12 @@ kdebindings-4_src_configure() {
         -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
         # Don't think anything currently uses okular bindings, could be made optional
         -DWITH_Okular:BOOL=FALSE
-        # We don't currently ship these
+        # We don't currently ship these languages
         -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
     )
     CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
         'python KROSSPYTHON'
-        'ruby KROSSRUBY' 'ruby QTWEBKIT_RUBY' 'ruby QTWEBKIT_SMOKE'
+        'ruby KROSSRUBY'
     )
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
         python
