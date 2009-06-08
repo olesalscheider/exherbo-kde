@@ -2,5 +2,8 @@
 .*~
 .*swp
 #*#
-.cache
 .project
+
+/.cache
+/metadata/cache
+
