@@ -22,5 +22,6 @@ DEPENDENCIES="
         kde/PolicyKit-kde [[ description = [ KDE GUI for PolicyKit ] ]]
 "
 
+CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( EXAMPLES )
 
