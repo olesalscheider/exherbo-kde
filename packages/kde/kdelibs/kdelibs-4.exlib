@@ -102,6 +102,13 @@ src_prepare() {
     # Kate tests need a tarball from SVN
     sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
         -i kate/CMakeLists.txt || die 'sed failed'
+
+    # Necessar since 2cd9bb1b
+    # lnusertemp isn't found in /usr/libexec/kde4, by kde4-config, yet it's needed for startkde to work
+    if ever at_least 4.2.90 ; then
+        sed -e '/lnusertemp/s/LIBEXEC_INSTALL_DIR/BIN_INSTALL_DIR/' \
+            -i kinit/CMakeLists.txt || die "Couldn't move lnusertemp to /usr/bin/"
+    fi
 }
 
 src_compile() {
