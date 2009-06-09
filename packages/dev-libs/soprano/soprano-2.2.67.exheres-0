@@ -1,0 +1,14 @@
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require soprano
+
+DOWNLOADS="mirror://kde/unstable/4.2.90/src/${PNV}.tar.bz2"
+
+PLATFORMS="~amd64 ~x86"
+
+# FIXME: Test failures:
+# redlandmemorymodeltest redlandpersistentmodeltest sopranodclienttest localsocketmultithreadtest
+# sopranodsocketclienttest sopranodbusclienttest sopranodbusmultithreadtest
+RESTRICT=test
+
