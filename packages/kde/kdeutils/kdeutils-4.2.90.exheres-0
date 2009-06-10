@@ -1,7 +1,9 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdesdk-4
+MY_KDE_PARTS+="kdelirc"
+
+require kdeutils-4
 
 PLATFORMS="~amd64 ~x86"
 

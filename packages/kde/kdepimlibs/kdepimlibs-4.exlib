@@ -26,7 +26,13 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.2.85 ; then
-    DEPENDENCIES+="ldap? ( net-directory/openldap )"
+    DEPENDENCIES+="
+        build+run:
+            net-libs/cyrus-sasl
+            office-libs/libical[>=0.42]
+            server-pim/akonadi[>=1.1.85]
+            ldap? ( net-directory/openldap )
+    "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2=OFF )
 else

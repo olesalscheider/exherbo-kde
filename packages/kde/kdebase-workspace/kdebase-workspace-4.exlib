@@ -96,6 +96,31 @@ DEPENDENCIES="
         python? ( kde/kdebindings:4[python] )
 "
 
+if ever at_least 4.2.85 ; then
+    MYOPTIONS="( ${MYOPTIONS} )
+        policykit"
+
+    DEPENDENCIES+="
+        build+run:
+           !kde/PolicyKit-kde               [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
+            kde/kdelibs-experimental:4.3    [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
+            server-pim/akonadi[>=1.1.85]
+            policykit? (
+                sys-auth/PolicyKit[>=0.8]
+                sys-auth/polkit-qt[>=0.9]
+            )
+    "
+
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # GPS support for geolocation" "http://gpsd.berlios.de/"
+        -DWITH_libgps:BOOL=FALSE
+        # Solid wicd support
+        -DWITH_wicd:BOOL=FALSE
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash

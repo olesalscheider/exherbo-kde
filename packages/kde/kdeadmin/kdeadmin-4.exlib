@@ -59,4 +59,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde SIP'
     'kde_parts:system-config-printer-kde SystemConfigPrinter'
 )
+if ever at_least 4.2.85 ; then
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:system-config-printer-kde PyKDE4' )
+fi
 

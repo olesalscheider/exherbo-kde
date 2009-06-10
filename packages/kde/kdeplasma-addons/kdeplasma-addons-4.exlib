@@ -25,5 +25,18 @@ DEPENDENCIES="
         x11-libs/qt:4[opengl][webkit]
 "
 
+if ever at_least 4.2.85 ; then
+    DEPENDENCIES+="
+        build:
+            sci-libs/eigen:2
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Nepomuk:BOOL=TRUE
+    # FIXME Should be optional
+    -DWITH_Marble:BOOL=FALSE
+)
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 

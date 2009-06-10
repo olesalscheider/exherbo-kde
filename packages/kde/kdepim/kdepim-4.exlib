@@ -73,6 +73,14 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.2.85 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+            kde/kdelibs-experimental:4.3
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_kmailcvt=ON -DBUILD_ksendemail=ON )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

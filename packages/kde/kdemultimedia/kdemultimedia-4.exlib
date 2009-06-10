@@ -53,6 +53,29 @@ DEPENDENCIES="
         musicbrainz? ( media-libs/libmusicbrainz:2 )
 "
 
+if ever at_least 4.2.85 ; then
+    MYOPTIONS="
+        ( ${MYOPTIONS} )
+        pulseaudio [[ requires = [ kde_parts: kmix ] ]]"
+
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 ] ]]
+            kde_parts:kmix? (
+                pulseaudio? (
+                    dev-libs/glib:2
+                    media-sound/pulseaudio[>=0.9.12]
+                )
+            )
+    "
+
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # mplayerthumbs' phonon support requires phonon-scm
+        -DENABLE_PHONON_SUPPORT:BOOL=FALSE
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( PulseAudio )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave Cdparanoia'
     Flac

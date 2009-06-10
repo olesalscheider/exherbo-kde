@@ -1,7 +1,7 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008 Arne Janbu <arnej@ampheus.de>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdemultimedia-4
+require kdegames-4
 
 PLATFORMS="~amd64 ~x86"
 

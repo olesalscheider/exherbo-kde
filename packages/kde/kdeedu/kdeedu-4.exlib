@@ -82,19 +82,17 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.2.85 ; then
-DEPENDENCIES+="
-    build:
-        kde_parts:step? ( sci-libs/eigen:2[>=2.0.51] )
-        kde_parts:kalzium? (
-            3dviewer? ( sci-libs/eigen:2[>=2.0.51] )
-        )"
-else
-DEPENDENCIES+="
-    build:
-        kde_parts:step? ( sci-libs/gmm )"
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kde_parts:step GMM'
-)
+    DEPENDENCIES+="
+        build:
+            kde_parts:step? ( sci-libs/eigen:2[>=2.0.51] )
+            kde_parts:kalzium? (
+                3dviewer? ( sci-libs/eigen:2[>=2.0.51] )
+            )"
+    else
+    DEPENDENCIES+="
+        build:
+            kde_parts:step? ( sci-libs/gmm )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:step GMM' )
 fi
 
 # Someone should probably test this with Marble at some point
