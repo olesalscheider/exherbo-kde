@@ -7,14 +7,14 @@ SUMMARY="Qt Creator is a new cross-platform integrated development environment f
 HOMEPAGE="http://www.qtsoftware.com/downloads/"
 DOWNLOADS="http://get.qtsoftware.com/qtcreator/${PNV}-src.zip"
 
-LICENCES="LGPL"
+LICENCES="LGPL-2.1"
 SLOT="0"
-
 PLATFORMS="~amd64 ~x86"
-
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        app-arch/unzip
     build+run:
         x11-libs/qt[>=4.5][doc]
 "
@@ -34,3 +34,4 @@ src_install() {
     dobin bin/qtcreator
     dobin bin/qtcreator_process_stub
 }
+
