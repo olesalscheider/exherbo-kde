@@ -10,7 +10,7 @@ DOWNLOADS="http://get.qtsoftware.com/qtcreator/${PNV}-src.zip"
 LICENCES="LGPL"
 SLOT="0"
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 MYOPTIONS=""
 
