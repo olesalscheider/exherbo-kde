@@ -77,7 +77,7 @@ if ever at_least 4.2.85 ; then
     DEPENDENCIES+="
         build+run:
             dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
-            kde/kdelibs-experimental:4.3
+            kde/kdelibs-experimental:4.3[>=${PV}]
     "
 fi
 

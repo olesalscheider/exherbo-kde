@@ -102,8 +102,8 @@ if ever at_least 4.2.85 ; then
 
     DEPENDENCIES+="
         build+run:
-           !kde/PolicyKit-kde               [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
-            kde/kdelibs-experimental:4.3    [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
+           !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
+            kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
             server-pim/akonadi[>=1.1.85]
             policykit? (
                 sys-auth/PolicyKit[>=0.8]

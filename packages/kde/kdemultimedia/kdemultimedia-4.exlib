@@ -60,7 +60,7 @@ if ever at_least 4.2.85 ; then
 
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 ] ]]
+            kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 ] ]]
             kde_parts:kmix? (
                 pulseaudio? (
                     dev-libs/glib:2

@@ -120,7 +120,7 @@ DEPENDENCIES="
 if ever at_least 4.2.85 ; then
     DEPENDENCIES+="
         build+run:
-            kde_parts:kget? ( kde/kdelibs-experimental:4.3  [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
+            kde_parts:kget? ( kde/kdelibs-experimental:4.3[>=${PV}] [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
             kde_parts:kopete? (
                 im_protocols:gadu? ( net-libs/libgadu )
                 v4l? ( media-libs/libv4l )
