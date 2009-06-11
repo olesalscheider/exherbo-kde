@@ -5,3 +5,5 @@ require kdelibs-3
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}/${PNV}-glibc-2.10.patch" )
+
