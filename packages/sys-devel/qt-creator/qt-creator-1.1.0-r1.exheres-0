@@ -16,7 +16,7 @@ DEPENDENCIES="
     build:
         app-arch/unzip
     build+run:
-        x11-libs/qt[>=4.5][doc]
+        x11-libs/qt:4[>=4.5][dbus][doc][sql][webkit]
 "
 
 BUGS_TO="kimrhh@exherbo.org"
