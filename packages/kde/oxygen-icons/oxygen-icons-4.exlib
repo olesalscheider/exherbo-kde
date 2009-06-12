@@ -1,7 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require kde4 [ debug=false ] kde.org-4
 
 SUMMARY="KDE Oxygen theme icons"
 HOMEPAGE="http://www.oxygen-icons.org/"

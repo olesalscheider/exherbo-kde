@@ -7,11 +7,13 @@ require flag-o-matic cmake
 
 export_exlib_phases pkg_setup src_configure pkg_postinst pkg_postrm
 
-myexparam no_dependencies=
+myexparam debug=true
+myexparam dependencies=true
 
+[[ $(exparam debug) == true ]] &&
 MYOPTIONS="debug"
 
-[[ -z $(exparam no_dependencies) ]] &&
+[[ $(exparam dependencies) == true ]] &&
 DEPENDENCIES="
     build:
         dev-util/pkg-config
@@ -32,7 +34,9 @@ kde4_shared_cmake_params() {
 }
 
 kde4_pkg_setup() {
-    option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
+    local debug
+    exparam -v debug debug
+    [[ ${debug} == true ]] && option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
 }
 
 kde4_src_configure() {
