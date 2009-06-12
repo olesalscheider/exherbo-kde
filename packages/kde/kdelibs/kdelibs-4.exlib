@@ -132,23 +132,22 @@ src_install() {
         popd
     fi
 
-    # Update when KDE_INSTALL_PREFIX != '/usr'
     # Number goes _down_ for a new KDE major version
     hereenvd 44kde-${SLOT} <<EOF
-CONFIG_PROTECT="${KDE_INSTALL_PREFIX}/share/config ${KDE_INSTALL_PREFIX}/shutdown ${KDE_INSTALL_PREFIX}/env"
-KDEDIRS="/usr/local:${KDE_INSTALL_PREFIX}"
-XDG_DATA_DIRS="/usr/local/share:${KDE_INSTALL_PREFIX}/share"
+CONFIG_PROTECT="/usr/share/config /usr/shutdown /usr/env"
+KDEDIRS="/usr/local:/usr"
+XDG_DATA_DIRS="/usr/local/share:/usr/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
 }
 
 pkg_postinst() {
     [[ -z ${XDG_DATA_DIRS} ]] \
-        && echo "XDG_DATA_DIRS is unset, defaulting to XDG_DATA_DIRS='/usr/local/share:${KDE_INSTALL_PREFIX}/share'"
+        && echo "XDG_DATA_DIRS is unset, defaulting to XDG_DATA_DIRS='/usr/local/share:/usr/share'"
     [[ -z ${KDEDIRS} ]] \
-        && echo "KDEDIRS is unset, defaulting to KDEDIRS='/usr/local:${KDE_INSTALL_PREFIX}'"
-    export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:${KDE_INSTALL_PREFIX}/share}"
-    export KDEDIRS="${KDEDIRS:-/usr/local:${KDE_INSTALL_PREFIX}}"
+        && echo "KDEDIRS is unset, defaulting to KDEDIRS='/usr/local:/usr'"
+    export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+    export KDEDIRS="${KDEDIRS:-/usr/local:/usr}"
 
     kde4_pkg_postinst
 }
@@ -158,6 +157,6 @@ pkg_postrm() {
 
     # Cleanup ksycoca4 database if we just uninstalled.
     # It's part of contents, but it's modified in pkg_post{inst,rm} phase of a KDE package.
-    has_version ${CATEGORY}/${PN}:${SLOT} || rm ${KDE_INSTALL_PREFIX}/share/kde4/services/ksycoca4
+    has_version ${CATEGORY}/${PN}:${SLOT} || rm /usr/share/kde4/services/ksycoca4
 }
 
