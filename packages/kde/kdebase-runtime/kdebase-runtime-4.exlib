@@ -53,10 +53,11 @@ DEPENDENCIES="
 #   post,suggested:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least 4.2.85 ; then
+if ever at_least 4.2.90 ; then
     MYOPTIONS+="slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]"
     DEPENDENCIES+="
         build+run:
+            dev-libs/soprano[>=2.2.67]
             kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
             x11-misc/shared-mime-info[>=0.40]
             slp? ( net-libs/openslp )
@@ -64,11 +65,6 @@ if ever at_least 4.2.85 ; then
             kde/oxygen-icons"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( SLP )
 fi
-if ever at_least 4.2.90 ; then
-    DEPENDENCIES+="
-        dev-libs/soprano[>=2.2.67]"
-fi
-
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Clucene=ON
