@@ -1,4 +1,4 @@
-# Copyright 2008 Wulf C. Krueger <philantrop@exherbo.org>
+# Copyright 2009 Wulf C. Krueger <philantrop@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde3
@@ -10,12 +10,15 @@ a multi-tabbed graphical interface to display the article list, .nzb (newzbin)
 files download, automatic joining/decoding of articles, multiple server support,
 multiple download threads per server, and management of the download queue.
 "
-HOMEPAGE="http://${PN}.sourceforge.net/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.gz"
+HOMEPAGE="http://gitorious.org/${PN}"
+# My dead grandmother is more lively than this old homepage: http://${PN}.sourceforge.net
+DOWNLOADS="http://dev.exherbo.org/~philantrop/distfiles/klibido-0.2.6_pre20090618.tar.bz2"
+
 BUGS_TO="philantrop@exherbo.org"
+
 REMOTE_IDS="freshmeat:${PN}"
-UPSTREAM_CHANGELOG="${HOMEPAGE}/ChangeLog"
-UPSTREAM_DOCUMENTATION="${HOMEPAGE}/README [[ lang = en ]]"
+#UPSTREAM_CHANGELOG="${HOMEPAGE}/ChangeLog"
+#UPSTREAM_DOCUMENTATION="${HOMEPAGE}/README [[ lang = en ]]"
 
 SLOT="0"
 LICENCES="GPL-2"
@@ -27,13 +30,20 @@ DEPENDENCIES="
         dev-libs/uulib[>=0.5.20]
         kde/kdelibs:3[>=3.5.10]
         media-libs/jpeg[~6b]
-        sys-libs/db:=[>=4.1]
+        sys-libs/db:=[>=4.6]
         x11-libs/qt:3[>=3.3.8]
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( -p1 "${FILES}"/${PNV}-gcc43.patch )
-
-src_compile() {
+src_configure() {
     addwrite "${QTDIR}"/etc/settings
     default
+}
+
+src_install() {
+    default
+
+    # Even KDE3 deprecated the legacy applnk directory in the end.
+    insinto /usr/share/applications
+    doins src/klibido.desktop
+    rm -rf "${IMAGE}"/usr/share/applnk || die "removing applnk failed"
 }
