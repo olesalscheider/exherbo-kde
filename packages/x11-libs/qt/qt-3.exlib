@@ -137,7 +137,6 @@ qt-3_src_compile() {
 
     emake src-qmake src-moc sub-src
 
-    export DYLD_LIBRARY_PATH="${WORK}/lib:${DYLD_LIBRARY_PATH}"
     export LD_LIBRARY_PATH="${WORK}/lib:${LD_LIBRARY_PATH}"
 
     emake sub-tools
