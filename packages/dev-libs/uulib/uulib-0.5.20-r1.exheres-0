@@ -30,13 +30,19 @@ DEPENDENCIES=""
 
 WORK="${WORKBASE}"/${MY_P}/${PN}
 
-src_configure() {
+DEFAULT_SRC_PREPARE_PATCHES=(
+    -p2 "${FILES}/${PNV}-Build-a-shared-libuu-Debian-216593.patch"
+    "${FILES}/${PNV}-Unsafe-temp-file-creation-Debian-320541.patch"
+    "${FILES}/${PNV}-Possible-symlink-attachs-Debian-480972.patch"
+)
+
+pkg_setup() {
     tc-export CC
-    default
 }
 
 src_install() {
-    dolib.a libuu.a
+    dolib.so libuu.so*
     insinto /usr/include
     doins uudeview.h
 }
+
