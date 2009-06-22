@@ -32,6 +32,7 @@ MYOPTIONS="
     ( archive zip ) [[ requires = [ kde_parts: ark ] ]]
     kde_parts: ${MY_KDE_PARTS}"
 
+# XXX >4.2.91 doesn't use libzip anymore, all those plugins are gone
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
