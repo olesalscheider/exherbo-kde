@@ -8,6 +8,8 @@ LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
 This package contains Personal Information Management libraries and data files needed to run KDE 4 applications.
 "
+HOMEPAGE="http://kdepim.kde.org/"
+
 if ever at_least 4.2.85; then
     MYOPTIONS="ldap"
 else

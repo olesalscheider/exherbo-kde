@@ -5,6 +5,7 @@ require kde.org-4
 
 SUMMARY="Games for KDE4"
 # FIXME DESCRIPTION, short summary about each game
+HOMEPAGE="http://games.kde.org/"
 LICENCES="GPL-2"
 
 MY_KDE_PARTS="bomber bovo kapman katomic kbattleship kblackbox kblocks kbounce

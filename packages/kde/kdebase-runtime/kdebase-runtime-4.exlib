@@ -27,6 +27,11 @@ phonon: Multimedia support
 solid-hardware: Query your hardware from the command line
 renamedlgplugins: Plugins for Konqueror's rename dialog
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://nepomuk.kde.org/
+"
+
 MYOPTIONS="openexr samba pulseaudio
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "

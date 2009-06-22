@@ -22,6 +22,11 @@ printer-applet: a system tray utility that shows current print jobs, shows print
 superkaramba: version of Karamba with python scripting
 sweeper: cleans unwanted traces the user leaves on the system
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://utils.kde.org/
+    http://netdragon.sourceforge.net/
+"
 
 MY_KDE_PARTS="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
 okteta printer-applet superkaramba sweeper"

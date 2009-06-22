@@ -26,6 +26,7 @@ DESCRIPTION="
 * parley:      vocabulary trainer
 * step:        a physics simulator
 "
+HOMEPAGE="http://edu.kde.org/"
 
 MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble

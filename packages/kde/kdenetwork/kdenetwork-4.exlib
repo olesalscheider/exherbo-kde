@@ -19,6 +19,10 @@ kppp: A frontend to pppd
 krdc: KDE remote desktop connection (RDP and VNC) client
 krfb: Desktop sharing server, allow others to access your desktop via VNC
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://kopete.kde.org/
+"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional

@@ -21,6 +21,10 @@ ksnapshot: Make snapshots of the screen contents.
 okular: Document viewer; support different kinds of documents.
 svgpart: Kpart for svg support.
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://gwenview.sourceforge.net/
+"
 
 MY_KDE_PARTS="gwenview kamera kcolorchooser kgamma kolourpaint kruler
 ksaneplugin ksnapshot okular strigi-analyzer svgpart"

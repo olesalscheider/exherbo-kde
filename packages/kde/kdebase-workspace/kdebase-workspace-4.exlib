@@ -26,6 +26,11 @@ powerdevil:
 solid: Seamless Hardware Interaction
 systemsettings: Settings utility
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://techbase.kde.org/Plasma
+"
+
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)

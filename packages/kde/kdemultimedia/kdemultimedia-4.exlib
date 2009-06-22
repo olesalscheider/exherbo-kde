@@ -14,6 +14,10 @@ DESCRIPTION="
 * libkcddb: Fetch and submit audio CD information over the internet
 * libkcompactdisc: Library for playing & ripping CDs
 "
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"

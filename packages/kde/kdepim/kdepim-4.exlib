@@ -22,6 +22,7 @@ korganizer: a calendar-of-events and todo-list manager
 kpilot: Software for syncing PalmOS based handhelds
 ktimetracker: Time tracker
 "
+HOMEPAGE="http://kdepim.kde.org/"
 
 # Currently not optional: kmail kmailcvt ksendemail kaddressbook
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
