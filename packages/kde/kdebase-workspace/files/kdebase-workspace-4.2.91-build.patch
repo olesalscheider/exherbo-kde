@@ -1,0 +1,31 @@
+Source: Upstream
+Upstream: Yes
+Reason: Build fix
+
+
+From 77a70af341fec4a624cf82946abad9d3b24e5d27 Mon Sep 17 00:00:00 2001
+From: whiting <whiting@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 17 Jun 2009 18:20:28 +0000
+Subject: [PATCH] make advanced settings page say "show ram name" instead of "show cpu name" by using the right ui file...
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdebase@983182 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ workspace/plasma/applets/system-monitor/ram.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/workspace/plasma/applets/system-monitor/ram.h b/workspace/plasma/applets/system-monitor/ram.h
+index 2af96e5..5a40494 100644
+--- a/workspace/plasma/applets/system-monitor/ram.h
++++ b/workspace/plasma/applets/system-monitor/ram.h
+@@ -20,7 +20,7 @@
+ #define RAM_HEADER
+ 
+ #include <ui_ram-config.h>
+-#include <ui_cpu-config-adv.h>
++#include <ui_ram-config-adv.h>
+ #include "applet.h"
+ #include <Plasma/DataEngine>
+ #include <QStandardItemModel>
+-- 
+1.6.3.2
+
