@@ -127,6 +127,15 @@ if ever at_least 4.2.85 ; then
             )"
 fi
 
+src_prepare() {
+    # Upstream CMakeLists only allows for
+    #   1. External btcore (from ktorrent)
+    #   2. Internal btcore
+    # We replace 2. by no torrent support instead, since we hate internal libraries
+    sed -e '/^add_subdirectory.*bittorrent/s:^:macro_optional_:' -i kget/transfer-plugins/CMakeLists.txt ||
+        die "Couldn't make bittorrent optional"
+}
+
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF -DWITH_XMMS_LIBRARIES=OFF -DWITH_XMMS_INCLUDE_DIRS=OFF"
 
@@ -190,6 +199,7 @@ src_configure() {
         $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
+        $(cmake_build bittorrent bittorrent) \
         $(cmake_with webkit KdeWebKit) \
         $(cmake_with webkit WebKitPart) \
         $(cmake_with im_protocols:groupwise) \
@@ -205,9 +215,8 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
-        $(cmake_enable !bittorrent EMBEDDED_TORRENT_SUPPORT) \
+        -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
         -DWITH_GMP=OFF
-        # Disable internal ktorrent library, see http://mail.kde.org/pipermail/kget/2008-May/001460.html
 }
 
