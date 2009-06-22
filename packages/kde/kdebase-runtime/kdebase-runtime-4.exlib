@@ -4,7 +4,6 @@
 require kde.org-4
 
 SUMMARY="Programs and data needed at runtime by KDE 4 applications."
-LICENCES="GPL-2 LGPL-2.1"
 DESCRIPTION="
 kcmshell: KDE Control Modules loader
 kdedglobalaccel:
@@ -32,6 +31,7 @@ HOMEPAGE="
     http://nepomuk.kde.org/
 "
 
+LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="openexr samba pulseaudio
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "

@@ -4,12 +4,12 @@
 require kde.org-4
 
 SUMMARY="KDE libraries"
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 This package contains shared libraries and data files needed to run KDE 4 applications.
 "
 HOMEPAGE="http://techbase.kde.org/Projects/kdelibs"
 
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="acl doc fam jpeg2000 openexr spell
     ppc_cpu_features: altivec
     x86_cpu_features: mmx sse sse2

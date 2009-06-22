@@ -4,7 +4,6 @@
 require kde.org-4
 
 SUMMARY="KDE Software Development Kit"
-LICENCES="GPL-2 LGPL-2 FDL-1.2"
 DESCRIPTION="
 cervisia: CVS client part
 kapptemplate: shell script to easy the beginning of new apps
@@ -22,6 +21,7 @@ scheck: An interface style to highlight accel and style guide conflicts
 umbrello: A UML modeller.
 "
 
+LICENCES="GPL-2 LGPL-2 FDL-1.2"
 MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"

@@ -5,7 +5,6 @@
 require python kde.org-4
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 cursors: Custom cursors for KDE
 kcheckpass: Authentication program
@@ -31,6 +30,7 @@ HOMEPAGE="
     http://techbase.kde.org/Plasma
 "
 
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)

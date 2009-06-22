@@ -5,7 +5,6 @@
 require kde.org-4
 
 SUMMARY="Collection of educational programs for KDE4"
-LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
 DESCRIPTION="
 * blinken:     the KDE version of the well-known game Simon Says
 * kalgebra:    mathematics: editor and plotting
@@ -28,6 +27,7 @@ DESCRIPTION="
 "
 HOMEPAGE="http://edu.kde.org/"
 
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
 MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble
 parley step"

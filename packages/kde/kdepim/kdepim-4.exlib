@@ -4,7 +4,6 @@
 require kde.org-4
 
 SUMMARY="KDE Personal Information Management"
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 DESCRIPTION="
 akregator: Feed reader
 kaddressbook: The KDE addressbook application
@@ -24,6 +23,7 @@ ktimetracker: Time tracker
 "
 HOMEPAGE="http://kdepim.kde.org/"
 
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Currently not optional: kmail kmailcvt ksendemail kaddressbook
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
