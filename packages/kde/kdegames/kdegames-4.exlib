@@ -1,10 +1,19 @@
 # Copyright 2008 Arne Janbu <arnej@ampheus.de>
+# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
 
 SUMMARY="Games for KDE4"
-# FIXME DESCRIPTION, short summary about each game
+DESCRIPTION="
+* Arcade games:     KBounce, KBreakout, KDiamond, KGoldrunner, KLines, Kolf, Kollision, KSame & KSpaceduel
+* Board games:      Bovo, KBattleship, KMahjongg, KReversi, KShisen & KFourInLine
+* Card games:       KPat & LsKat
+* Dice games:       Kiriki
+* Logic games:      Katomic, KBlackbox, KMines, KNetwalk, KSquares, KSudoku
+* Strategy games:   Konquest, KsirK, KJumpingcube
+* Toy games:        KTuberling
+"
 HOMEPAGE="http://games.kde.org/"
 LICENCES="GPL-2"
 
