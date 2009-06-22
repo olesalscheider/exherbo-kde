@@ -3,10 +3,7 @@
 
 require smplayer
 
-PLATFORMS="~amd64 ~x86"
+DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
 
-src_prepare() {
-    echo '#define SVN_REVISION "SVN-r1661"' >> src/svn_revision.h
-    smplayer_src_prepare
-}
+PLATFORMS="~amd64 ~x86"
 
