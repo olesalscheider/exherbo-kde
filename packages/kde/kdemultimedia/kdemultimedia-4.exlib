@@ -30,6 +30,7 @@ MYOPTIONS="
         kscd [[ requires = [ musicbrainz ] ]]
 "
 
+# XXX Xine is optional for dragonplayer
 DEPENDENCIES="
     build+run:
         kde/kdebase:${SLOT}
