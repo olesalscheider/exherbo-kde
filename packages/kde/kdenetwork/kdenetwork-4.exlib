@@ -132,6 +132,8 @@ if ever at_least 4.2.85 ; then
 fi
 
 src_prepare() {
+    default
+
     # Upstream CMakeLists only allows for
     #   1. External btcore (from ktorrent)
     #   2. Internal btcore
