@@ -1,0 +1,148 @@
+Upstream: No
+Source: Bernd Steinhauser <berniyh@exherbo.org>
+Reason: Fails to build
+
+From ffe44db621e759632963f33afb2155015f1f6f93 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Wed, 24 Jun 2009 20:41:11 +0000
+Subject: [PATCH] Revert "initial kde4 support - does not work yet"
+
+This reverts commit 5ebed1a746e8fee906d25301819860d4f283dc34.
+---
+ CMakeLists.txt       |   19 +++++++++----------
+ sim/fontedit.cpp     |    4 ++--
+ sim/plugins.cpp      |    1 -
+ sim/qcolorbutton.cpp |    9 ++++++++-
+ sim/qcolorbutton.h   |    8 +++++++-
+ 5 files changed, 26 insertions(+), 15 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fa8e873..3ad2b92 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -23,6 +23,12 @@ ELSE( APPLE )
+     SET( PROGNAME sim )
+ ENDIF( APPLE )
+ 
++#INCLUDE(MacroEnsureOutOfSourceBuild)
++
++#IF(NOT WIN32)
++#MACRO_ENSURE_OUT_OF_SOURCE_BUILD("SIM-IM requires an out of source build. Please create a separate build directory and run 'cmake path_to_sim_im [options]' there.")
++#ENDIF(NOT WIN32)
++
+ #SET(CMAKE_VERBOSE_MAKEFILE ON)
+ 
+ INCLUDE(Flex)
+@@ -35,6 +41,8 @@ INCLUDE(CheckCXXCompilerFlag)
+ 
+ OPTION(SIM_ENABLE_FPIE "Enable PIE linking")
+ 
++SIM_FIND_PLUGINS(${Sim-IM_SOURCE_DIR}/plugins)
++
+ FIND_PACKAGE(Qt4 REQUIRED)
+ IF(NOT QT_FOUND)
+     MESSAGE(FATAL_ERROR "Could not find Qt4 - cannot compile Sim-IM here")
+@@ -54,18 +62,10 @@ SET(QT_USE_QTUITOOLS 1)
+ SET(QT_USE_QTNETWORK 1)
+ SET(QT_USE_QT3SUPPORT 1)
+ INCLUDE(${QT_USE_FILE})
+-ADD_DEFINITIONS(-DQT3_SUPPORT_WARNINGS)
++add_definitions(-DQT3_SUPPORT_WARNINGS)
+ 
+ # optional packages
+ FIND_PACKAGE(ASPELL)
+-FIND_PACKAGE(KDE4)
+-IF(KDE4_FOUND)
+-  OPTION(ENABLE_KDE4 "Enable KDE4 support" ON)
+-  IF(ENABLE_KDE4)
+-    ADD_DEFINITIONS(${KDE4_DEFINITIONS} -DUSE_KDE4)
+-    INCLUDE_DIRECTORIES(${KDE4_INCLUDES})
+-  ENDIF(ENABLE_KDE4)
+-ENDIF(KDE4_FOUND)
+ 
+ IF(NOT WIN32 AND NOT APPLE)
+     INCLUDE(FindX11)
+@@ -182,7 +182,6 @@ endif(WIN32)
+ 	
+ # subdirectories
+ ADD_SUBDIRECTORY(sim)
+-SIM_FIND_PLUGINS(${Sim-IM_SOURCE_DIR}/plugins)
+ SIM_INCLUDE_PLUGINS()
+ 
+ # create config.h
+diff --git a/sim/fontedit.cpp b/sim/fontedit.cpp
+index 255bb8f..03b97b1 100644
+--- a/sim/fontedit.cpp
++++ b/sim/fontedit.cpp
+@@ -24,7 +24,7 @@
+ #include <QHBoxLayout>
+ #include <QFrame>
+ 
+-#ifdef USE_KDE4
++#ifdef USE_KDE
+ #include <kfontdialog.h>
+ #else
+ #include <qfontdialog.h>
+@@ -71,7 +71,7 @@ QString FontEdit::getFont()
+ 
+ void FontEdit::chooseFont()
+ {
+-#ifdef USE_KDE4
++#ifdef USE_KDE
+     QFont _f = f;
+     if (KFontDialog::getFont(_f, false, topLevelWidget()) == KFontDialog::Accepted)
+         setWinFont(_f);
+diff --git a/sim/plugins.cpp b/sim/plugins.cpp
+index fc34226..62f637b 100644
+--- a/sim/plugins.cpp
++++ b/sim/plugins.cpp
+@@ -29,7 +29,6 @@
+ #include <QProcess>
+ #include <Q3CString>
+ #include <QVector>
+-#include <memory>
+ 
+ #include "sockfactory.h"
+ #include "fetch.h"
+diff --git a/sim/qcolorbutton.cpp b/sim/qcolorbutton.cpp
+index 63bcfba..1c6f50f 100644
+--- a/sim/qcolorbutton.cpp
++++ b/sim/qcolorbutton.cpp
+@@ -19,7 +19,14 @@
+ */
+ 
+ #include "qcolorbutton.h"
+-#ifndef USE_KDE4
++#ifdef USE_KDE4
++
++QColorButton::QColorButton( QWidget *parent)
++        : KColorButton(parent)
++{
++}
++
++#else
+ 
+ #include <qpainter.h>
+ #include <qdrawutil.h>
+diff --git a/sim/qcolorbutton.h b/sim/qcolorbutton.h
+index cbcf773..224fa5b 100644
+--- a/sim/qcolorbutton.h
++++ b/sim/qcolorbutton.h
+@@ -55,7 +55,13 @@ private:
+ 
+ #else
+ #include <kcolorbutton.h>
+-typedef KColorButton QColorButton;
++
++class EXPORT QColorButton : public KColorButton
++{
++public:
++    QColorButton(QWidget *parent);
++};
++
+ #endif
+ 
+ #endif
+-- 
+1.6.3.3
+

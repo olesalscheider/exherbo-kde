@@ -1,13 +1,14 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde3 cmake
+require cmake
 
 SUMMARY="Sim-IM is a multiple protocol instant messenger."
 HOMEPAGE="http://sim-im.org/"
 DOWNLOADS=""
 
 SCM_REPOSITORY="svn://svn.berlios.de/sim-im"
+SCM_BRANCH="branch-playground"
 require scm-svn
 
 LICENCES="GPL-2"
@@ -16,7 +17,6 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug proxy sound
     floatings [[ description = [ Enable support for floating contacts ] ]]
     gpg [[ description = [ Enable support for gpg-encrypted messages ] ]]
-    kde [[ description = [ Enable KDE3 integration ] ]]
     netmonitor [[ description = [ Monitor SIM network activity ] ]]
     osd [[ description = [ Enable on-screen notifications plugin ] ]]
     remote [[ description = [ Remote control support ] ]]
@@ -38,38 +38,48 @@ MYOPTIONS="debug proxy sound
 DEPENDENCIES="
     build:
         sys-devel/flex
-        x11-proto/scrnsaverproto
     build+run:
+        dev-libs/glib:2
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
         sys-libs/zlib
         x11-libs/libX11
-        x11-libs/qt:3
-        kde? ( kde/kdelibs:3[spell=] )
-        !kde? (
-            spell? ( app-spell/aspell )
-        )
+        x11-libs/libICE
+        x11-libs/libSM
+        x11-libs/qt:4
+        spell? ( app-spell/aspell )
     run:
         app-arch/zip
-        x11-libs/libXScrnSaver
 "
+#        kde? ( kde/kdelibs:3[spell=] )
+#        !kde? (
+#            spell? ( app-spell/aspell )
+#        )
+#    kde [[ description = [ Enable KDE4 integration ] ]]
 
-DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake AUTHORS.sim jisp-resources.txt )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-disable-to-prevent-crashes.patch
+    "${FILES}"/0002-gcc-4.4.patch
+    "${FILES}"/0003-Revert-initial-kde4-support-does-not-work-yet.patch
+)
+DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake TODO.html AUTHORS.sim jisp-resources.txt )
 
 src_configure() {
     ecmake \
         -DENABLE_PLUGIN_UPDATE:BOOL=Off \
         -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
+        -DENABLE_KDE4:BOOL=Off \
         $(cmake_enable debug PLUGIN_LOGGER) \
+        $(cmake_enable debug DEV_BUILD) \
         $(cmake_enable floatings PLUGIN_FLOATY) \
+        $(cmake_enable floatings PLUGIN_TRANSPARENT) \
         $(cmake_enable gpg PLUGIN_GPG) \
         $(cmake_enable im_protocols:jabber PLUGIN_JABBER) \
         $(cmake_enable im_protocols:livejournal PLUGIN_LIVEJOURNAL) \
         $(cmake_enable im_protocols:msn PLUGIN_MSN) \
         $(cmake_enable im_protocols:oscar PLUGIN_ICQ) \
         $(cmake_enable im_protocols:yahoo PLUGIN_YAHOO) \
-        $(cmake_enable kde ENABLE_KDE3)
         $(cmake_enable netmonitor PLUGIN_NETMONITOR) \
         $(cmake_enable osd PLUGIN_OSD) \
         $(cmake_enable proxy PLUGIN_PROXY) \
@@ -80,17 +90,6 @@ src_configure() {
         $(cmake_enable trayicon PLUGIN_DOCK) \
         $(cmake_enable weather PLUGIN_WEATHER) \
         $(cmake_enable zodiak PLUGIN_ZODIAK)
-}
-
-pkg_postinst() {
-    if option kde; then
-        kde3_pkg_postinst
-    fi
-}
-
-pkg_postrm() {
-    if option kde; then
-        kde3_pkg_postrm
-    fi
+        #$(cmake_enable kde ENABLE_KDE4)
 }
 
