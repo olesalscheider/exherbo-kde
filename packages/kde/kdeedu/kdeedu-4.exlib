@@ -85,9 +85,9 @@ DEPENDENCIES="
 if ever at_least 4.2.85 ; then
     DEPENDENCIES+="
         build:
-            kde_parts:step? ( sci-libs/eigen:2[>=2.0.51] )
+            kde_parts:step? ( sci-libs/eigen:2[>=2.0.3] )
             kde_parts:kalzium? (
-                3dviewer? ( sci-libs/eigen:2[>=2.0.51] )
+                3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
             )"
     else
     DEPENDENCIES+="
