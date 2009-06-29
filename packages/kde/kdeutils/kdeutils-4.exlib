@@ -33,18 +33,15 @@ okteta printer-applet superkaramba sweeper"
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
-    zip [[ description = [ Zip support for Ark ] ]]
-    ( archive zip ) [[ requires = [ kde_parts: ark ] ]]
+    ( archive ) [[ requires = [ kde_parts: ark ] ]]
     kde_parts: ${MY_KDE_PARTS}"
 
-# XXX >4.2.91 doesn't use libzip anymore, all those plugins are gone
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
         kde_parts:ark? (
             archive? ( app-arch/libarchive )
-            zip? ( app-arch/libzip )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
         kde_parts:printer-applet? (
@@ -82,11 +79,9 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kcalc GMP'
     'kde_parts:printer-applet PythonLibrary' 'kde_parts:printer-applet SIP'
     'python PythonLibs'
-    'zip LibZip'
 )
 
 # FIXME 4 new ark plugins in kdeutils.git/ark/plugins, check whether they have additional run dependencies
-# FIXME Libzip temporarily(??) disabled
 # FIXME (Needs verification) All subdirs in doc/ are added & built regardless of whether the corresponding applications are built
 
 if ever at_least 4.2.85 ; then
