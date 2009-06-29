@@ -28,7 +28,7 @@ DEPENDENCIES="
 if ever at_least 4.2.85 ; then
     DEPENDENCIES+="
         build:
-            sci-libs/eigen:2
+            sci-libs/eigen:2[>=2.0.3]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
