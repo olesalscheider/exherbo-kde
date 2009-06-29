@@ -5,5 +5,5 @@ require koffice
 
 PLATFORMS="~amd64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/wordpress/2009/06/koffice-201-released/"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/2009/06/koffice-2-0-1-changelog/"
 
