@@ -34,8 +34,9 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager python xinerama
+MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
+    wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -97,6 +98,7 @@ DEPENDENCIES="
         x11-apps/xset
         x11-apps/mkfontdir
         x11-apps/xprop
+        wicd? ( net-misc/wicd )
     post:
         python? ( kde/kdebindings:4[python] )
 "
@@ -119,11 +121,9 @@ if ever at_least 4.2.85 ; then
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         # GPS support for geolocation" "http://gpsd.berlios.de/"
         -DWITH_libgps:BOOL=FALSE
-        # Solid wicd support
-        -DWITH_wicd:BOOL=FALSE
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' wicd )
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
