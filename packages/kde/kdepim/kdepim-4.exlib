@@ -45,18 +45,16 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=1.0.4] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
         )
     build+run:
         app-crypt/gpgme
-        dev-libs/boost[>=1.33.1] [[ note = [ required by akonadi and kleopatra ] ]]
+        dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         x11-libs/qt:4[dbus][sql]
-        x11-misc/shared-mime-info[>=0.20] [[ note = akonadi ]]
         gnokii? ( mobilephone/gnokii )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
@@ -74,11 +72,19 @@ DEPENDENCIES="
         )
 "
 
-if ever at_least 4.2.85 ; then
+# 4.2.95 split akonadi/ off into kdepim-runtime
+if ever at_least 4.2.95 ; then
     DEPENDENCIES+="
         build+run:
-            dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+            kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
             kde/kdelibs-experimental:4.3[>=${PV}]
+            dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+    "
+else
+    DEPENDENCIES+="
+        build:
+            dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
+            x11-misc/shared-mime-info[>=0.20] [[ note = akonadi ]]
     "
 fi
 
