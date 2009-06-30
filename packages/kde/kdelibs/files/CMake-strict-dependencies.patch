@@ -21,7 +21,7 @@ index 816cdb7..11571ac 100644
     OPTION(WITH_${_name} "Search for ${_name} package" ON)
     if (WITH_${_name})
 -      FIND_PACKAGE(${_name} ${ARGN})
-+      OPTION(WITH_STRICT_DEPENDENCIES "Handle optional dependencies more strictly" ON)
++      OPTION(WITH_STRICT_DEPENDENCIES "Handle optional dependencies more strictly" OFF)
 +      if (WITH_STRICT_DEPENDENCIES)
 +          FIND_PACKAGE(${_name} ${ARGN} REQUIRED)
 +      else (WITH_STRICT_DEPENDENCIES)
