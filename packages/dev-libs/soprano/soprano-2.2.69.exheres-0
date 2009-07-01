@@ -3,7 +3,7 @@
 
 require soprano
 
-DOWNLOADS="mirror://kde/unstable/4.2.90/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/unstable/4.2.95/src/support/${PNV}.tar.bz2"
 
 PLATFORMS="~amd64 ~x86"
 
