@@ -8,6 +8,6 @@ PLATFORMS="~amd64 ~x86"
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-FindRUBY.cmake.patch"
     "${FILES}/${PNV}-Make_ACL_optional.cmake.patch"
-    "${FILES}/${PN}-4.2.90-CVE-2009-1690.patch"
+    "${FILES}/${PN}-4.2.4-CVE-2009-1690.patch"
 )
 
