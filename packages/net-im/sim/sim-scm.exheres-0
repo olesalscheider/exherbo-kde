@@ -68,6 +68,7 @@ src_configure() {
     ecmake \
         -DENABLE_PLUGIN_UPDATE:BOOL=Off \
         -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
+        -DENABLE_PLUGIN_ABOUT:BOOL=Off \
         -DENABLE_KDE4:BOOL=Off \
         $(cmake_enable debug PLUGIN_LOGGER) \
         $(cmake_enable debug DEV_BUILD) \
