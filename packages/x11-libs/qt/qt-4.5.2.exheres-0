@@ -1,0 +1,16 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-4
+
+PLATFORMS="~amd64 ~ppc64 ~x86"
+
+UPSTREAM_CHANGELOG=""
+UPSTREAM_RELEASE_NOTES="
+http://labs.trolltech.com/blogs/2009/06/25/qt-452-has-been-released/
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PNV}-phonon-header-installation.patch"
+)
+
