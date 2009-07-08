@@ -52,10 +52,15 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 src_install() {
     cmake_src_install
 
+    # Symlink Phonon.Experimental headers where Qt4 puts its headers, so KDE packages that use them can find them
+    dodir /usr/include/qt4/phonon/Phonon/
+    dosym /usr/include/phonon/experimental /usr/include/qt4/phonon/experimental
+    dosym /usr/include/KDE/Phonon/Experimental /usr/include/qt4/phonon/Phonon/Experimental
+
     # This is crude ... but it'll do for now
-    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig} \
-        "${IMAGE}"/usr/include/phonon ||
-        die "Couldn't remove libphonon & headers"
+    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig} || die "Couldn't remove libphonon"
+    rm -r "${IMAGE}"/usr/include/phonon/*.h || die "Couldn't remove libphonon headers"
+    find "${IMAGE}"/usr/include/KDE/Phonon/ -maxdepth 1 -type f -delete || die "Couldn't remove KDE/Phonon headers"
 
     # Need gstreamer.desktop
     if option gstreamer; then
@@ -63,9 +68,5 @@ src_install() {
             die "Couldn't remove libphonon_gstreamer.so"
         find "${IMAGE}"/usr/$(get_libdir)/ -type d -empty -delete || die "Removing empty dirs failed"
     fi
-
-    # Lots of applications rely on including Phonon/Header rather than the lowercased versions, so we need to install these
-    dodir /usr/include/qt4
-    mv "${IMAGE}"/usr/include/{KDE,qt4/KDE} || die "Couldn't fix up includes"
 }
 
