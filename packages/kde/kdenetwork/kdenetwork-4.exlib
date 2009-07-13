@@ -111,6 +111,10 @@ DEPENDENCIES="
             net-libs/libvncserver[>=0.9]
             x11-libs/libXtst
         )
+    post,suggested:
+        kde_parts:krdc? (
+            net-remote/rdesktop [[ description = [ Necessary to make RDP connections with krdc ] ]]
+        )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 # FIXME: Is this still valid? Is zeroconf now automagic?
