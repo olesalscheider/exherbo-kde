@@ -13,6 +13,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        app-crypt/qca:2 [[ description = [ Can be optional ] ]]
         kde/kdelibs:4
         kde/kdepimlibs:4
         x11-libs/libX11
