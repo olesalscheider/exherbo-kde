@@ -45,7 +45,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde_parts:blinken? ( media-libs/phonon )
+        x11-libs/qt:4[phonon]
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}
             sys-libs/readline
@@ -61,19 +61,14 @@ DEPENDENCIES="
                 dev-ml/facile
             )
         )
-        kde_parts:kanagram? ( media-libs/phonon )
-        kde_parts:khangman? ( media-libs/phonon )
         kde_parts:kig? (
             kig-scripting? ( dev-libs/boost[>=1.31] )
         )
-        kde_parts:klettres? ( media-libs/phonon )
-        kde_parts:ktouch? ( media-libs/phonon )
         kde_parts:marble? ( kde/kdebase-workspace:${SLOT} )
         kde_parts:parley? (
             dev-libs/libxml2
             dev-libs/libxslt
             kde/kdebase-workspace:${SLOT}
-            media-libs/phonon
         )
         kde_parts:step? (
             sci-libs/gsl[>=1.8]

@@ -23,7 +23,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.1.83]
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         infowidget? ( net-libs/GeoIP )
-        mediaplayer? ( media-libs/phonon )
+        mediaplayer? ( x11-libs/qt:4[phonon] )
         syndication? ( kde/kdepimlibs:${SLOT} )
 "
 #    run:

@@ -38,8 +38,8 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdebase:${SLOT}
-        media-libs/phonon
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
+        x11-libs/qt:4[phonon]
         kde_parts:dragonplayer? (
             media-libs/phonon[>=4.3.0][xine]
             media-libs/xine-lib[>=1.1][xcb]
