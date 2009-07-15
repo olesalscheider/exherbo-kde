@@ -133,6 +133,11 @@ KDEDIRS="/usr/local:/usr"
 XDG_DATA_DIRS="/usr/local/share:/usr/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
+
+    # Workaround for #175
+    keepdir /usr/share/kde4/services
+    touch "${IMAGE}"/usr/share/kde4/services/ksycoca4
+    fperms 755 /usr/share/kde4/services/{,ksycoca4}
 }
 
 pkg_postinst() {
