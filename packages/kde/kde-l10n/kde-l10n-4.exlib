@@ -11,3 +11,5 @@ SUMMARY="KDE localisation package"
 LICENCES="GPL-2"
 SLOT="4"
 
+HOMEPAGE="http://l10n.kde.org/"
+
