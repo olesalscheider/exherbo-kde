@@ -4,7 +4,7 @@
 require qmake4
 
 SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
-HOMEPAGE="http://www.qtsoftware.com/downloads/"
+HOMEPAGE="http://www.qtsoftware.com/products/appdev/developer-tools/developer-tools/"
 DOWNLOADS="http://get.qtsoftware.com/qtcreator/${PNV}-src.zip"
 
 LICENCES="LGPL-2.1"
@@ -26,4 +26,9 @@ WORK="${WORK}-src/"
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/qt-tools.patch" )
 EQMAKE4_SOURCES="qtcreator.pro"
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
+
+src_install(){
+    default
+    dosym /usr/bin/qtcreator.bin /usr/bin/qt-creator
+}
 
