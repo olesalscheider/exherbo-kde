@@ -8,6 +8,6 @@ require amarok scm-git
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-2.1-mysqle-link-to-amarok-executable.patch"
+    "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
 )
 
