@@ -38,6 +38,8 @@ case ${PV} in
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc1.php" ;;
     4.2.96)
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc2.php" ;;
+    4.2.98)
+        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc3.php" ;;
     4.@(2|3).@(6|7|8|9)*)
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
     4.*)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
@@ -45,7 +47,7 @@ esac
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
-    4.2.@(85|90|95|96)) # Betas, RCs
+    4.2.@(85|90|95|96|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     4.@(2|3).@(6|7|8|9)*) # Weekly SVN snapshots
         case ${PV} in
