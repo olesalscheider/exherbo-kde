@@ -9,7 +9,7 @@ DOWNLOADS="http://delta.affinix.com/download/qca/${QCA_MAJVER}/plugins/${MY_PNV}
 
 LICENCES="LGPL-2.1"
 SLOT="2"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="
