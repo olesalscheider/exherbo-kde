@@ -35,14 +35,11 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        dev-libs/soprano[>=2.1.67]
         kde/kdelibs:${SLOT}[>=${PV}]
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[webkit]
         python? (
             dev-lang/python:=
-            dev-python/sip[>=4.7.8]
-            dev-python/PyQt4[>=4.4.4][opengl][sql][svg][webkit]
             media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Exherimental headers ] ]]
         )
         ruby? ( dev-lang/ruby:= )
@@ -62,6 +59,14 @@ if ever at_least 4.2.90 ; then
             dev-python/PyQt4[>=4.5_pre]
         )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+else
+    DEPENDENCIES+="
+    build+run:
+        dev-libs/soprano[>=2.1.67]
+        python? (
+            dev-python/sip[>=4.7.8]
+            dev-python/PyQt4[>=4.4.4][opengl][sql][svg][webkit]
+        )"
 fi
 
 kdebindings-4_src_configure() {
