@@ -22,6 +22,8 @@ DEPENDENCIES="
         x11-libs/qt:4
 "
 
+WORK=${WORKBASE}/${PN}
+
 # FIXME No target to run tests, even when they're built
 #CMAKE_SRC_CONFIGURE_PARAMS=( -DKDE4_BUILD_TESTS:BOOL=TRUE )
 
