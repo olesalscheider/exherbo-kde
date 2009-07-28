@@ -19,7 +19,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}
-        kde/kdebase:${SLOT}
-        x11-libs/qt:4[webkit]"
+        kde/kdelibs:${SLOT}[>=4.2.98]
+        kde/kdebase:${SLOT}[>=4.2.98]
+        x11-libs/qt:4[>=4.5.0][webkit]
+"
 
