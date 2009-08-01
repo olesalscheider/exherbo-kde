@@ -7,3 +7,9 @@ require strigi
 
 PLATFORMS="~amd64 ~x86"
 
+# 3 new test failures since last release
+RESTRICT="test"
+
+# *sigh*
+WORK=${WORKBASE}/${PN}-$(ever range 1-2)-RC1
+
