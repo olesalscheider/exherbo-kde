@@ -45,11 +45,11 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:= )
 "
 
-if ever at_least 4.2.90 ; then
+if ever at_least 4.3.0 ; then
     MYOPTIONS+=" policykit"
     DEPENDENCIES+="
     build+run:
-        dev-libs/soprano[>=2.2.67]
+        dev-libs/soprano[>=2.3.0]
         policykit? (
             sys-auth/PolicyKit[>=0.8]
             sys-auth/polkit-qt[>=0.9]
@@ -103,9 +103,6 @@ kdebindings-4_src_configure() {
     kde4_src_configure
 }
 
-# (maybe) FIXME PyKDE4 installs /usr/share/apps/pykde4/{kde4.py,pykdeuic4.py}
-# - The latter should be in PATH I think (used by some playground/plasma and/or kdeplasma-addons things.
-# - The former wherever the latter can find it.
 kdebindings-4_src_install() {
     kde.org-4_src_install
 
@@ -118,6 +115,7 @@ kdebindings-4_src_install() {
         dodir /usr/share/doc/${PNVR}/examples
         mv ./usr/share/apps/pykde4/examples ./usr/share/doc/${PNVR}/examples/pykde4 ||
             die "Moving examples in the correct place failed"
+        find "${IMAGE}"/usr/share/apps/pykde4 -type d -empty -delete || die "Failed to remove empty directory"
     fi
 }
 
@@ -127,7 +125,13 @@ kdebindings-4_pkg_postrm() {
 }
 
 kdebindings-4_pkg_postinst() {
-    option python && python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
+    if option python ; then
+        if ever at_least 4.3.0 ; then
+            python_mod_compile $(python_get_sitedir)/PyKDE4/*.py $(python_get_sitedir)/PyQt4/uic/widget-plugins/*.py
+        else
+            python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
+        fi
+    fi
     kde4_pkg_postinst
 }
 
