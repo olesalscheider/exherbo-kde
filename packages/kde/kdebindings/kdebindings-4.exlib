@@ -108,8 +108,6 @@ kdebindings-4_src_install() {
 
     if option python; then
         cd "${IMAGE}" || die "Couldn't enter ${IMAGE}"
-        # byte-compiled python modules shouldn't be in contents.
-        find . -type f -name '*.pyc' -delete || die "Removing *.pyc files failed with error '$?'"
 
         # Fix up PyKDE4 examples destination, see python/pykde4/examples/CMakeLists.txt
         dodir /usr/share/doc/${PNVR}/examples
