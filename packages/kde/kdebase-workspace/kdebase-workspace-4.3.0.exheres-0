@@ -5,3 +5,7 @@ require kdebase-workspace-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    -p2 "${FILES}/${PNV}-oxygen-air.patch"
+)
+
