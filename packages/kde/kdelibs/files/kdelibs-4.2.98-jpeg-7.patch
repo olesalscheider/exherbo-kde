@@ -1,0 +1,30 @@
+From 40249df8fcb6fbac401ab39e8954e3a8ca02e78c Mon Sep 17 00:00:00 2001
+From: orlovich <orlovich@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Fri, 17 Jul 2009 22:31:07 +0000
+Subject: [PATCH] Make this work with libjpeg7 as well. Credit to Daniel Winter
+ for providing me the information to fix this and testing the fix.
+
+BUG: 198779
+
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs@998545 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ khtml/imload/decoders/jpegloader.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/khtml/imload/decoders/jpegloader.cpp b/khtml/imload/decoders/jpegloader.cpp
+index 77ac988..b0c2537 100644
+--- a/khtml/imload/decoders/jpegloader.cpp
++++ b/khtml/imload/decoders/jpegloader.cpp
+@@ -324,7 +324,7 @@ int JPEGLoader::Private::processData(uchar* buffer, int length)
+                 scaleDown *= 2;
+             }
+             
+-            cinfo.scale_denom = scaleDown;
++            cinfo.scale_denom *= scaleDown;
+             
+             if (scaleDown > 8) {
+                 // Still didn't fit... Abort.
+-- 
+1.6.4
+

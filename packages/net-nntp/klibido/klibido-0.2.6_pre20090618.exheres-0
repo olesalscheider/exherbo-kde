@@ -29,7 +29,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/uulib[>=0.5.20]
         kde/kdelibs:3[>=3.5.10]
-        media-libs/jpeg[~6b]
+        media-libs/jpeg[>=6b]
         sys-libs/db:=[>=4.6]
         x11-libs/qt:3[>=3.3.8]
 "
