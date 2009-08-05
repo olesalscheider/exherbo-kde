@@ -19,7 +19,10 @@ DEPENDENCIES="
         sys-auth/PolicyKit[>=0.8]
         x11-libs/qt:4[>=4.4.0]
     post,suggested:
-        kde/PolicyKit-kde [[ description = [ KDE GUI for PolicyKit ] ]]
+        || (
+            kde/kdebase-workspace[>=4.2.85]
+            kde/PolicyKit-kde
+        ) [[ description = [ KDE GUI for PolicyKit ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ )
