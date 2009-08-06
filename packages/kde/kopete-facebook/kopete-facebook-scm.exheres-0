@@ -18,7 +18,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        dev-libs/qjson
+        dev-libs/qjson[>=0.6]
         kde/kdenetwork:4[>=4.2.85][kde_parts:kopete]
         x11-libs/qt:4
 "
