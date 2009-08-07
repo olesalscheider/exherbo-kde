@@ -33,8 +33,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 
     --enable-shared
 
-    # Prevent collisions
-    --program-transform-name="s/$/-virtuoso/"
+    --program-transform-name='s/isql[-]*\(w\)*/isql\1-vt/'
 
     --enable-imagemagick
     --enable-openssl
