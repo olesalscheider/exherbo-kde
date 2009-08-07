@@ -27,6 +27,10 @@ DEPENDENCIES="
         media-gfx/ImageMagick
 "
 
+# FIXME Probably minimal virtuoso for soprano, see http://trueg.wordpress.com/2009/02/27/are-we-there-yet-the-long-road-to-a-stable-soprano-virtuoso-backend/
+#       given that this package installs ~250M
+# FIXME http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
+
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-layout=Gentoo
     --localstatedir=/var
