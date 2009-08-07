@@ -1,0 +1,292 @@
+Source: Upstream SVN (4.3 branch, revisions 1008142, 1008147, 1008148)
+Upstream: Yes
+Reason: Some KIO fixes & one API addition, necessary to compile webkitkde against KDE 4.3.0
+
+
+From af8f31997d2072861e3681ceca2018f9b4e7a9f0 Mon Sep 17 00:00:00 2001
+From: adawit <adawit@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 6 Aug 2009 23:46:45 +0000
+Subject: [PATCH 1/3] Back port r1002257 to fix issues
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.3/kdelibs@1008142 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kio/kio/accessmanagerreply_p.cpp |   37 ++++++++++++++++++++++---------------
+ 1 files changed, 22 insertions(+), 15 deletions(-)
+
+diff --git a/kio/kio/accessmanagerreply_p.cpp b/kio/kio/accessmanagerreply_p.cpp
+index 0401c96..55db9d8 100644
+--- a/kio/kio/accessmanagerreply_p.cpp
++++ b/kio/kio/accessmanagerreply_p.cpp
+@@ -29,6 +29,7 @@
+ 
+ #include <QSslConfiguration>
+ #include <QTimer>
++#include <QPointer>
+ 
+ namespace KDEPrivate {
+ 
+@@ -48,7 +49,7 @@ public:
+ 
+     AccessManagerReply *q;
+ 
+-    KIO::Job *m_kioJob;
++    QPointer<KIO::Job> m_kioJob;
+     QByteArray m_data;
+     bool m_metaDataRead;
+ };
+@@ -127,13 +128,19 @@ void AccessManagerReply::appendData(KIO::Job *kioJob, const QByteArray &data)
+         if (!headers.isEmpty()) {
+             QStringList headerList = headers.split('\n');
+             Q_FOREACH(const QString &header, headerList) {
++                if (header.startsWith(QLatin1String("set-cookie"), Qt::CaseInsensitive)) {
++                    //kDebug() << "Ignored header: " << header;
++                    continue;
++                }
+                 const QStringList headerPair = header.split(": ");
+                 if (headerPair.size() == 2) {
+-//                     kDebug() << headerPair.at(0) << headerPair.at(1);
++                    //kDebug() << headerPair.at(0) << headerPair.at(1);
+                     setRawHeader(headerPair.at(0).toUtf8(), headerPair.at(1).toUtf8());
+                 }
+             }
+         }
++
++        setAttribute(QNetworkRequest::User, kioJob->metaData().toVariant());
+         d->m_metaDataRead = true;
+     }
+ 
+@@ -154,54 +161,54 @@ void AccessManagerReply::jobDone(KJob *kJob)
+     switch (kJob->error())
+     {
+         case 0:
+-            setError(QNetworkReply::NoError, errorString());
++            setError(QNetworkReply::NoError, kJob->errorText());
+             kDebug() << "0 -> QNetworkReply::NoError";
+             break;
+         case KIO::ERR_COULD_NOT_CONNECT:
+-            setError(QNetworkReply::ConnectionRefusedError, errorString());
+-            kDebug() << "KIO::ERR_COULD_NOT_CONNECT -> KIO::ERR_COULD_NOT_CONNECT";
++            setError(QNetworkReply::ConnectionRefusedError, kJob->errorText());
++            kDebug() << "KIO::ERR_COULD_NOT_CONNECT -> QNetworkReply::ConnectionRefusedError";
+             break;
+         case KIO::ERR_UNKNOWN_HOST:
+-            setError(QNetworkReply::HostNotFoundError, errorString());
++            setError(QNetworkReply::HostNotFoundError, kJob->errorText());
+             kDebug() << "KIO::ERR_UNKNOWN_HOST -> QNetworkReply::HostNotFoundError";
+             break;
+         case KIO::ERR_SERVER_TIMEOUT:
+-            setError(QNetworkReply::TimeoutError, errorString());
++            setError(QNetworkReply::TimeoutError, kJob->errorText());
+             kDebug() << "KIO::ERR_SERVER_TIMEOUT -> QNetworkReply::TimeoutError";
+             break;
+         case KIO::ERR_USER_CANCELED:
+         case KIO::ERR_ABORTED:
+-            setError(QNetworkReply::OperationCanceledError, errorString());
++            setError(QNetworkReply::OperationCanceledError, kJob->errorText());
+             kDebug() << "KIO::ERR_ABORTED -> QNetworkReply::OperationCanceledError";
+             break;
+         case KIO::ERR_UNKNOWN_PROXY_HOST:
+-            setError(QNetworkReply::ProxyNotFoundError, errorString());
++            setError(QNetworkReply::ProxyNotFoundError, kJob->errorText());
+             kDebug() << "KIO::UNKNOWN_PROXY_HOST -> QNetworkReply::ProxyNotFoundError";
+             break;
+         case KIO::ERR_ACCESS_DENIED:
+-            setError(QNetworkReply::ContentAccessDenied, errorString());
++            setError(QNetworkReply::ContentAccessDenied, kJob->errorText());
+             kDebug() << "KIO::ERR_ACCESS_DENIED -> QNetworkReply::ContentAccessDenied";
+             break;
+         case KIO::ERR_WRITE_ACCESS_DENIED:
+-            setError(QNetworkReply::ContentOperationNotPermittedError, errorString());
++            setError(QNetworkReply::ContentOperationNotPermittedError, kJob->errorText());
+             kDebug() << "KIO::ERR_WRITE_ACCESS_DENIED -> QNetworkReply::ContentOperationNotPermittedError";
+             break;
+         case KIO::ERR_NO_CONTENT:
+         case KIO::ERR_DOES_NOT_EXIST:
+-            setError(QNetworkReply::ContentNotFoundError, errorString());
++            setError(QNetworkReply::ContentNotFoundError, kJob->errorText());
+             kDebug() << "KIO::ERR_DOES_NOT_EXIST -> QNetworkReply::ContentNotFoundError";
+             break;
+         case KIO::ERR_COULD_NOT_AUTHENTICATE:
+-            setError(QNetworkReply::AuthenticationRequiredError, errorString());
++            setError(QNetworkReply::AuthenticationRequiredError, kJob->errorText());
+             kDebug() << kJob->error();
+             break;
+         case KIO::ERR_UNSUPPORTED_PROTOCOL:
+         case KIO::ERR_NO_SOURCE_PROTOCOL:
+-            setError(QNetworkReply::ProtocolUnknownError, errorString());
++            setError(QNetworkReply::ProtocolUnknownError, kJob->errorText());
+             kDebug() << kJob->error();
+             break;
+         case KIO::ERR_UNSUPPORTED_ACTION:
+-            setError(QNetworkReply::ProtocolInvalidOperationError, errorString());
++            setError(QNetworkReply::ProtocolInvalidOperationError, kJob->errorText());
+             kDebug() << kJob->error();
+             break;
+         default:
+-- 
+1.6.4
+
+
+From 5ab637b4b9a7b8cece935abea8a24d5b4f481c15 Mon Sep 17 00:00:00 2001
+From: adawit <adawit@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 6 Aug 2009 23:53:35 +0000
+Subject: [PATCH 2/3] Back port r1001978 from trunk
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.3/kdelibs@1008147 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kio/kio/accessmanager.cpp |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/kio/kio/accessmanager.cpp b/kio/kio/accessmanager.cpp
+index 0726198..1094cc9 100644
+--- a/kio/kio/accessmanager.cpp
++++ b/kio/kio/accessmanager.cpp
+@@ -124,6 +124,12 @@ KIO::MetaData AccessManager::AccessManagerPrivate::metaDataForRequest(QNetworkRe
+ {
+     KIO::MetaData metaData;
+ 
++    // Add the user-specified meta data first...
++    QVariant userMetaData = request.attribute (QNetworkRequest::User);
++    if (userMetaData.isValid() && userMetaData.type() == QVariant::Map) {
++      metaData += userMetaData.toMap();
++    }
++
+     metaData.insert("PropagateHttpHeader", "true");
+ 
+     metaData.insert("UserAgent", request.rawHeader("User-Agent"));
+-- 
+1.6.4
+
+
+From 3263f7bd36cf196e81621af469906fde1b195d42 Mon Sep 17 00:00:00 2001
+From: adawit <adawit@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 6 Aug 2009 23:56:18 +0000
+Subject: [PATCH 3/3] Back port API addition to this branch because it is needed to address crucial fixes for kdewebkit
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.3/kdelibs@1008148 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kio/kio/global.cpp |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ kio/kio/global.h   |   37 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 80 insertions(+), 1 deletions(-)
+
+diff --git a/kio/kio/global.cpp b/kio/kio/global.cpp
+index a0365c3..7371b48 100644
+--- a/kio/kio/global.cpp
++++ b/kio/kio/global.cpp
+@@ -1242,3 +1242,47 @@ KJobTrackerInterface *KIO::getJobTracker()
+ {
+     return globalJobTracker;
+ }
++
++
++/***************************************************************
++ *
++ * KIO::MetaData
++ *
++ ***************************************************************/
++KIO::MetaData::MetaData(const QMap<QString,QVariant>& map)
++{
++  *this = map;
++}
++
++KIO::MetaData & KIO::MetaData::operator += ( const QMap<QString,QVariant> &metaData )
++{
++  QMap<QString,QVariant>::ConstIterator it;
++  
++  for(it = metaData.constBegin(); it !=  metaData.constEnd(); ++it)
++     insert(it.key(), it.value().toString());
++
++  return *this;
++}
++
++KIO::MetaData & KIO::MetaData::operator = ( const QMap<QString,QVariant> &metaData )
++{
++  clear();
++
++  QMap<QString,QVariant>::ConstIterator it;
++  for(it = metaData.constBegin(); it !=  metaData.constEnd(); ++it)
++     insert(it.key(), it.value().toString());
++
++  return *this;
++}
++
++QVariant KIO::MetaData::toVariant() const
++{
++ QMap<QString, QVariant> map;
++ QMap<QString,QString>::ConstIterator it;
++ QMap<QString,QString>::ConstIterator itEnd = constEnd();
++
++ for(it = constBegin(); it != itEnd; ++it)
++   map.insert(it.key(), it.value());
++
++ return QVariant(map);
++}
+diff --git a/kio/kio/global.h b/kio/kio/global.h
+index 4e5d10b..dda71f6 100644
+--- a/kio/kio/global.h
++++ b/kio/kio/global.h
+@@ -25,6 +25,7 @@
+ #include <QtCore/QHash>
+ #include <QtCore/QMap>
+ #include <QtCore/QList>
++#include <QtCore/QVariant>
+ 
+ #include <kiconloader.h>
+ #include <QtGui/QPixmap> // for pixmapForUrl
+@@ -389,11 +390,17 @@ public:
+      QMap<QString, QString>(metaData) { }
+ 
+    /**
++    * Creates a meta data map from a QVaraint map.
++    * @since 4.3
++    */
++    MetaData(const QMap<QString,QVariant> &);
++
++   /**
+     * Adds the given meta data map to this map.
+     * @param metaData the map to add
+     * @return this map
+     */
+-   MetaData & operator+= ( const QMap<QString,QString> &metaData )
++   MetaData & operator += ( const QMap<QString,QString> &metaData )
+    {
+       QMap<QString,QString>::ConstIterator it;
+       for(it = metaData.constBegin(); it !=  metaData.constEnd(); ++it)
+@@ -402,6 +409,34 @@ public:
+       }
+       return *this;
+    }
++
++   /**
++    * Same as above except the value in the map is a QVariant.
++    *
++    * This convenience function allows you to easily assign the values
++    * of a QVariant to this meta data class.
++    *
++    * @param metaData the map to add
++    * @return this map
++    * @since 4.3
++    */
++   MetaData & operator += ( const QMap<QString,QVariant> &metaData );
++
++   /**
++    * Sets the given meta data map to this map.
++    * @param metaData the map to add
++    * @return this map
++    * @since 4.3
++    */
++   MetaData & operator = ( const QMap<QString,QVariant> &metaData );
++
++   /**
++    * Returns the contents of the map as a QVariant.
++    *
++    * @return a QVariant representation of the meta data map.
++    * @since 4.3
++    */
++   QVariant toVariant() const;
+ };
+ 
+ }
+-- 
+1.6.4
+
