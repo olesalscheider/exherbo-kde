@@ -113,7 +113,7 @@ kdebindings-4_src_install() {
         dodir /usr/share/doc/${PNVR}/examples
         mv ./usr/share/apps/pykde4/examples ./usr/share/doc/${PNVR}/examples/pykde4 ||
             die "Moving examples in the correct place failed"
-        find "${IMAGE}"/usr/share/apps/pykde4 -type d -empty -delete || die "Failed to remove empty directory"
+        find "${IMAGE}"/usr/share/apps/ -type d -empty -delete || die "Failed to remove empty directory"
     fi
 }
 
