@@ -5,5 +5,5 @@ require koffice
 
 PLATFORMS="~amd64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/2009/06/koffice-2-0-1-changelog/"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news/koffice-2-0-2-released/"
 
