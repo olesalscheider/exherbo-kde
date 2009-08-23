@@ -56,7 +56,7 @@ if ever at_least 4.3.0 ; then
         )
         python? (
             dev-python/sip[>=4.8_pre]
-            dev-python/PyQt4[>=4.5_pre][opengl][sql][svg][webkit]
+            dev-python/PyQt4[>=4.5_pre][opengl][sql][webkit]
         )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 else
