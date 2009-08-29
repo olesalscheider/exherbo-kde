@@ -23,6 +23,7 @@ DEPENDENCIES="
         kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
         x11-dri/mesa
         x11-libs/libX11
+        x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
 "
 
