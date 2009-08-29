@@ -30,7 +30,7 @@ BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
 
 case ${PV} in
-    4.3.@(0|2|3|4))
+    4.3.@(0|1|2|3|4))
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/4.3/" ;;
     4.2.@(0|2|3|4))
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/announce-${PV}.php" ;;
