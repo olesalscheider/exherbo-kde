@@ -33,6 +33,7 @@ HOMEPAGE="
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="openexr samba pulseaudio
+    slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
 
@@ -41,8 +42,9 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         dev-cpp/clucene[>=0.9.19]
-        dev-libs/soprano[>=2.1.67]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
+        dev-libs/soprano[>=2.1.69]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -50,29 +52,20 @@ DEPENDENCIES="
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         x11-libs/qt:4[phonon]
+        x11-misc/shared-mime-info[>=0.40]
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
         pulseaudio? ( media-sound/pulseaudio[>=0.9.9] )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
+        slp? ( net-libs/openslp )
         xine? (
             media-libs/phonon[>=4.3.0][xine] [[ note = [ the xine backend is part of media-libs/phonon ] ]]
             media-libs/xine-lib
         )
+    run:
+        kde/oxygen-icons
 "
 #   post,suggested:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
-
-if ever at_least 4.3.0 ; then
-    MYOPTIONS+="slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]"
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano[>=2.2.69]
-            kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
-            x11-misc/shared-mime-info[>=0.40]
-            slp? ( net-libs/openslp )
-        run:
-            kde/oxygen-icons"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( SLP )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Clucene=ON
@@ -81,6 +74,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenEXR
     Samba
+    SLP
     PulseAudio
     Xine
 )

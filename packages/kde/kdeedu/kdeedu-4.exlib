@@ -43,6 +43,12 @@ MYOPTIONS="
 
 
 DEPENDENCIES="
+    build:
+        kde_parts:step? ( sci-libs/eigen:2[>=2.0.3] )
+        kde_parts:kalzium? (
+            3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
+        )
+
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
         x11-libs/qt:4[phonon]
@@ -76,20 +82,6 @@ DEPENDENCIES="
     run:
         kde/kdebase-runtime:${SLOT}
 "
-
-if ever at_least 4.2.85 ; then
-    DEPENDENCIES+="
-        build:
-            kde_parts:step? ( sci-libs/eigen:2[>=2.0.3] )
-            kde_parts:kalzium? (
-                3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
-            )"
-    else
-    DEPENDENCIES+="
-        build:
-            kde_parts:step? ( sci-libs/gmm )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:step GMM' )
-fi
 
 # Someone should probably test this with Marble at some point
 # macro_log_feature(EXPERIMENTAL_PYTHON_BINDINGS "Experimental Python binding
@@ -129,12 +121,10 @@ src_configure() {
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
     fi
 
-    if ever at_least 4.2.85; then
-        if option 3dviewer || option kde_parts:step; then
-            CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
-        else
-            CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=OFF )
-        fi
+    if option 3dviewer || option kde_parts:step; then
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
+    else
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=OFF )
     fi
 
     if option kde_parts:ktouch; then

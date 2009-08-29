@@ -52,8 +52,11 @@ DEPENDENCIES="
         app-crypt/gpgme
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
+        dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs-experimental:4.3[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]
         gnokii? ( mobilephone/gnokii )
         kde_parts:knotes? ( x11-libs/libX11 )
@@ -71,22 +74,6 @@ DEPENDENCIES="
             kde/kdebase-runtime:${SLOT}[>=${PV}] [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "
-
-# 4.2.95 split akonadi/ off into kdepim-runtime
-if ever at_least 4.2.95 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
-            kde/kdelibs-experimental:4.3[>=${PV}]
-            dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build:
-            dev-libs/libxslt [[ note = [ required for building akonadi resources ] ]]
-            x11-misc/shared-mime-info[>=0.20] [[ note = akonadi ]]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_kmailcvt=ON -DBUILD_ksendemail=ON )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )

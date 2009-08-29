@@ -10,11 +10,7 @@ This package contains Personal Information Management libraries and data files n
 HOMEPAGE="http://kdepim.kde.org/"
 
 LICENCES="GPL-2 LGPL-2.1"
-if ever at_least 4.2.85; then
-    MYOPTIONS="ldap"
-else
-    MYOPTIONS="sasl"
-fi
+MYOPTIONS="ldap"
 
 DEPENDENCIES="
     build:
@@ -24,22 +20,12 @@ DEPENDENCIES="
         dev-libs/boost[>=1.33.1]
         dev-libs/libgpg-error
         kde/kdelibs:${SLOT}[>=${PV}]
-        office-libs/libical[>=0.33]
+        net-libs/cyrus-sasl
+        office-libs/libical[>=0.42]
+        server-pim/akonadi[>=1.1.85]
+        ldap? ( net-directory/openldap )
 "
 
-if ever at_least 4.2.85 ; then
-    DEPENDENCIES+="
-        build+run:
-            net-libs/cyrus-sasl
-            office-libs/libical[>=0.42]
-            server-pim/akonadi[>=1.1.85]
-            ldap? ( net-directory/openldap )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2=OFF )
-else
-    DEPENDENCIES+="sasl? ( net-libs/cyrus-sasl )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sasl Sasl2' )
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Ldap=OFF )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2=OFF )
 

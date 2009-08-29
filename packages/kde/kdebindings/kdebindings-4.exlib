@@ -30,44 +30,28 @@ http://kross.dipe.org/solution.html [[ lang = en descripton = [ Using Kross, the
 LICENCES="GPL-2 LGPL-2.1"
 SLOT="4"
 MYOPTIONS="
+    policykit
     ( python ruby ) [[ number-selected = at-least-one ]]
 "
 
 DEPENDENCIES="
     build+run:
+        dev-libs/soprano[>=2.3.0]
         kde/kdelibs:${SLOT}[>=${PV}]
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[webkit]
-        python? (
-            dev-lang/python:=
-            media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Exherimental headers ] ]]
-        )
-        ruby? ( dev-lang/ruby:= )
-"
-
-if ever at_least 4.3.0 ; then
-    MYOPTIONS+=" policykit"
-    DEPENDENCIES+="
-    build+run:
-        dev-libs/soprano[>=2.3.0]
         policykit? (
             sys-auth/PolicyKit[>=0.8]
             sys-auth/polkit-qt[>=0.9]
         )
         python? (
+            dev-lang/python:=
             dev-python/sip[>=4.8_pre]
             dev-python/PyQt4[>=4.5_pre][opengl][sql][webkit]
-        )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
-else
-    DEPENDENCIES+="
-    build+run:
-        dev-libs/soprano[>=2.1.67]
-        python? (
-            dev-python/sip[>=4.7.8]
-            dev-python/PyQt4[>=4.4.4][opengl][sql][svg][webkit]
-        )"
-fi
+            media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Exherimental headers ] ]]
+        )
+        ruby? ( dev-lang/ruby:= )
+"
 
 kdebindings-4_src_configure() {
     # Note: ABI support for python & ruby should use:
@@ -87,10 +71,6 @@ kdebindings-4_src_configure() {
         # We don't currently ship these languages
         -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
     )
-    CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
-        'python KROSSPYTHON'
-        'ruby KROSSRUBY'
-    )
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
         python
         ruby
@@ -99,6 +79,11 @@ kdebindings-4_src_configure() {
         # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
         'ruby smoke'
     )
+    CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+        'python KROSSPYTHON'
+        'ruby KROSSRUBY'
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 
     kde4_src_configure
 }
@@ -124,11 +109,7 @@ kdebindings-4_pkg_postrm() {
 
 kdebindings-4_pkg_postinst() {
     if option python ; then
-        if ever at_least 4.3.0 ; then
-            python_mod_compile $(python_get_sitedir)/PyKDE4/*.py $(python_get_sitedir)/PyQt4/uic/widget-plugins/*.py
-        else
-            python_mod_compile /usr/share/apps/pykde4/*.py $(python_get_sitedir)/PyKDE4/*.py
-        fi
+        python_mod_compile $(python_get_sitedir)/PyKDE4/*.py $(python_get_sitedir)/PyQt4/uic/widget-plugins/*.py
     fi
     kde4_pkg_postinst
 }

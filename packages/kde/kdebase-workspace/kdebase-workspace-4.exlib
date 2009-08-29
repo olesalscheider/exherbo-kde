@@ -34,7 +34,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
+MYOPTIONS="bluetooth lm_sensors networkmanager python policykit wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -54,10 +54,13 @@ DEPENDENCIES="
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
         kde/kdelibs:${SLOT}[>=${PV}] [[ note = [ Needs Nepomuk ] ]]
+        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+       !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
         kde/qimageblitz[>=0.0.4]
+        server-pim/akonadi[>=1.1.85]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         x11-apps/xrandr[>=1.2] [[ note = kcontrol/kxkb/solidcontrol ]]
         x11-dri/mesa
@@ -83,6 +86,10 @@ DEPENDENCIES="
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
+        policykit? (
+            sys-auth/PolicyKit[>=0.8]
+            sys-auth/polkit-qt[>=0.9]
+        )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.7.1]
@@ -103,29 +110,7 @@ DEPENDENCIES="
         python? ( kde/kdebindings:4[python] )
 "
 
-if ever at_least 4.2.85 ; then
-    MYOPTIONS="( ${MYOPTIONS} )
-        policykit"
-
-    DEPENDENCIES+="
-        build+run:
-           !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
-            kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
-            server-pim/akonadi[>=1.1.85]
-            policykit? (
-                sys-auth/PolicyKit[>=0.8]
-                sys-auth/polkit-qt[>=0.9]
-            )
-    "
-
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # GPS support for geolocation" "http://gpsd.berlios.de/"
-        -DWITH_libgps:BOOL=FALSE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' wicd )
-fi
-
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' wicd )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
@@ -140,6 +125,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'consolekit CkConnector'
     'lm_sensors Sensors'
     NetworkManager
+    'policykit PolkitQt'
     'python PythonLibrary'
     'python PyKDE4'
     'python PyQt4'
@@ -164,6 +150,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
     -DWITH_QEdje=Off
+    # GPS support for geolocation" "http://gpsd.berlios.de/"
+    -DWITH_libgps:BOOL=FALSE
 )
 
 # kwrited has an automagic dep on utempter which we don't have atm

@@ -20,8 +20,7 @@ LICENCES="GPL-2"
 MY_KDE_PARTS="bomber bovo kapman katomic kbattleship kblackbox kblocks kbounce
 kbreakout kdiamond kfourinline kgoldrunner killbots kiriki kjumpingcube klines
 kmahjongg kmines knetwalk kolf kollision konquest kpat kreversi ksame kshisen
-ksirk kspaceduel ksquares ksudoku ktuberling kubrick lskat"
-ever at_least 4.2.85 && MY_KDE_PARTS+=" ktron"
+ksirk kspaceduel ksquares ksudoku ktron ktuberling kubrick lskat"
 
 MYOPTIONS="
 kde_parts: ${MY_KDE_PARTS}

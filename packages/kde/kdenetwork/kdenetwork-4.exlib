@@ -28,22 +28,22 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
 MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb" #kdnssd
 MY_IM_PROTOCOLS+="
+    gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
     groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
     jingle [[ description = [ Voice calls over Jabber ] requires = [ im_protocols: xmpp ] ]]
     wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
     xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
 "
-ever at_least 4.2.85 && MY_IM_PROTOCOLS+="gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]"
 #   meanwhile [[ description = [ Enable Sametime protocol ] ]]
 MY_KOPETE_PLUGINS+="
     otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
     statistics [[ description = [ Statistics plugin for Kopete ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
 "
-ever at_least 4.2.85 && MYOPTIONS+="v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]"
 MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
+    v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
     webkit [[ description = [ Build support for the WebKit browser backend ] ]]
 
@@ -71,6 +71,7 @@ DEPENDENCIES="
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
             kde/kdebase:${SLOT} [[ note = Konqueror ]]
+            kde/kdelibs-experimental:4.3[>=${PV}] [[ note = [ LibKNotificationItem-1 for kget/ ] ]]
             bittorrent? ( kde/ktorrent )
             sqlite? ( dev-db/sqlite:3 )
             webkit? ( kde/webkitkde )
@@ -86,6 +87,7 @@ DEPENDENCIES="
             x11-libs/libXft
             x11-libs/libXpm
             x11-libs/libXScrnSaver
+            im_protocols:gadu? ( net-libs/libgadu )
             im_protocols:groupwise? ( app-crypt/qca:2 )
             im_protocols:wlm? ( net-libs/libmsn[>=4.0_beta2] )
             im_protocols:xmpp? (
@@ -103,6 +105,7 @@ DEPENDENCIES="
                 dev-libs/libxml2
                 dev-libs/libxslt
             )
+            v4l? ( media-libs/libv4l )
         )
         kde_parts:krdc? (
             vnc? ( net-libs/libvncserver[>=0.9] )
@@ -125,16 +128,6 @@ DEPENDENCIES="
 # FIXME
 # Warning: kppp uses setuid
 
-if ever at_least 4.2.85 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kget? ( kde/kdelibs-experimental:4.3[>=${PV}] [[ note = [ LibKNotificationItem-1 for kget/ ] ]] )
-            kde_parts:kopete? (
-                im_protocols:gadu? ( net-libs/libgadu )
-                v4l? ( media-libs/libv4l )
-            )"
-fi
-
 src_prepare() {
     default
 
@@ -151,7 +144,6 @@ src_configure() {
 
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
-        $(ever at_least 4.2.87 || echo alias)
         addbookmarks autoreplace contactnotes highlight history latex nowlistening
         pipes privacy texteffect translator urlpicpreview
     )
@@ -193,25 +185,20 @@ src_configure() {
         cmakeparams+=" -DWITH_LibVNCServer=OFF"
     fi
 
-    if ever at_least 4.2.85 ; then
-        cmakeparams+="
-            $(cmake_with im_protocols:gadu Libgadu)
-            $(cmake_with kde_parts:kget LibKNotificationItem-1)
-            $(cmake_with v4l LibV4L2)"
-    fi
-
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
     # >=4.2.88 uses WITH_JINGLE, older uses NO_JINGLE
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
+        $(cmake_with kde_parts:kget LibKNotificationItem-1) \
         $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
         $(cmake_build bittorrent bittorrent) \
         $(cmake_with webkit KdeWebKit) \
         $(cmake_with webkit WebKitPart) \
+        $(cmake_with im_protocols:gadu Libgadu) \
         $(cmake_with im_protocols:groupwise) \
         $(cmake_option !im_protocols:jingle NO_JINGLE) \
         $(cmake_with im_protocols:jingle) \
@@ -225,6 +212,7 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
+        $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
         -DWITH_GMP=OFF

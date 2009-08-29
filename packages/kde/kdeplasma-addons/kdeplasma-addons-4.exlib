@@ -14,6 +14,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         dev-lang/python:*
+        sci-libs/eigen:2[>=2.0.3]
     build+run:
         dev-libs/boost
         kde/kdelibs:${SLOT}[>=${PV}]
@@ -25,18 +26,10 @@ DEPENDENCIES="
         x11-libs/qt:4[opengl][webkit]
 "
 
-if ever at_least 4.2.85 ; then
-    DEPENDENCIES+="
-        build:
-            sci-libs/eigen:2[>=2.0.3]
-"
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Nepomuk:BOOL=TRUE
     # FIXME Should be optional
     -DWITH_Marble:BOOL=FALSE
+    -DWITH_Nepomuk:BOOL=TRUE
+    -DWITH_OpenGL:BOOL=TRUE
 )
-fi
-
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 

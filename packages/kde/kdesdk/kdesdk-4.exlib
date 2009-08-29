@@ -58,15 +58,11 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:kbugbuster KdepimLibs'
+    'kde_parts:kdeaccounts-plugin KdepimLibs'
     'kde_parts:kioslave SVN'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
 )
-if ever at_least 4.2.85 ; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:kbugbuster KdepimLibs'
-        'kde_parts:kdeaccounts-plugin KdepimLibs'
-    )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Kioslave to browse perldoc
