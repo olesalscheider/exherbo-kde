@@ -52,6 +52,7 @@ DEPENDENCIES="
         app-crypt/gpgme
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
+        dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdelibs-experimental:4.3[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
