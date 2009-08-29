@@ -1,0 +1,19 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+SUMMARY="Graphical disk usage information"
+HOMEPAGE="http://www.methylblue.com/${PN}/"
+DOWNLOADS="http://kde-apps.org/CONTENT/content-files/99561-${PNV}.tgz -> ${PNV}.tar.gz"
+
+LICENCES="GPL-3 FDL-1.2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4
+"
+
