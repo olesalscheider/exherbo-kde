@@ -26,3 +26,4 @@ CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'x86_cpu_features:sse SSE'
     'x86_cpu_features:sse2 SSE2'
 )
+

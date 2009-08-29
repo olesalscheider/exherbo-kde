@@ -47,3 +47,4 @@ src_install() {
     doins src/klibido.desktop
     rm -rf "${IMAGE}"/usr/share/applnk || die "removing applnk failed"
 }
+

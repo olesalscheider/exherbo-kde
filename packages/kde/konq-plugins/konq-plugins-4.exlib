@@ -45,4 +45,3 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'webkit WebKitPart'
 )
 
-

@@ -25,3 +25,4 @@ src_install() {
     newpamd "${FILES}/kde.pam-${PV}" kde
     newpamd "${FILES}/kde-np.pam-${PV}" kde-np
 }
+

@@ -100,3 +100,4 @@ kvirc_src_install() {
     cmake_src_install
     mv "${IMAGE}"usr/share/man/man1/kvirc.1 "${IMAGE}"usr/share/man/man1/kvirc4.1 || die "mv kvirc.1 failed"
 }
+

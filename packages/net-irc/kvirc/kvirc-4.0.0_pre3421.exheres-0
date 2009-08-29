@@ -6,3 +6,4 @@ require kvirc
 DOWNLOADS="http://dev.exherbo.org/~philantrop/distfiles/${PNV}.tar.bz2"
 
 PLATFORMS="~amd64"
+
