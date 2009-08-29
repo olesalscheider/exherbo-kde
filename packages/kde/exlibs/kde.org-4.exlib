@@ -32,16 +32,6 @@ REMOTE_IDS="freshmeat:kde"
 case ${PV} in
     4.3.@(0|1|2|3|4))
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/4.3/" ;;
-    4.2.@(0|2|3|4))
-        UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/announce-${PV}.php" ;;
-    4.2.90)
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-beta2.php" ;;
-    4.2.95)
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc1.php" ;;
-    4.2.96)
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc2.php" ;;
-    4.2.98)
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.3-rc3.php" ;;
     4.@(2|3).@(6|7|8|9)*)
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
     4.*)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
@@ -49,11 +39,11 @@ esac
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
-    4.2.@(85|90|95|96|98)) # Betas, RCs
+    4.3.@(85|90|95|96|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
-    4.@(2|3).@(6|7|8|9)*) # Weekly SVN snapshots
+    4.@(3|4).@(6|7|8|9)*) # Weekly SVN snapshots
         case ${PV} in
-            4.2.91) K_SVN_REV="979380" ;;
+            4.3.91) K_SVN_REV="979380" ;;
             *) die "Set K_SVN_REV for ${PV}" ;;
         esac
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.bz2"}"
