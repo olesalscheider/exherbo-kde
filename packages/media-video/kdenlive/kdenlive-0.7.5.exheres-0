@@ -12,7 +12,7 @@ UPSTREAM_RELEASE_NOTES="http://www.kdenlive.org/users/j-b-m/kdenlive-$(ever rang
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="nls"
 
 DEPENDENCIES="
