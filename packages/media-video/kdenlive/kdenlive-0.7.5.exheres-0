@@ -24,8 +24,7 @@ DEPENDENCIES="
     build+run:
         kde/kdebase:4 [[ note = [ Needs Nepomuk ] ]]
         media/ffmpeg
-        media/mlt[ffmpeg][sdl][qt4][westley]
-        media/mlt++
+        media/mlt[>=0.4.0][ffmpeg][sdl][qt4][xml]
         x11-misc/shared-mime-info[>=0.23]
 "
 
