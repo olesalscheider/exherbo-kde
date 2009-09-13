@@ -5,3 +5,4 @@ require kdepim-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( -p4 "${FILES}"/${PNV}-mail_loss.patch )
