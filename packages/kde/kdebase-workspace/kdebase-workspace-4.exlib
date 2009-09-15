@@ -87,7 +87,7 @@ DEPENDENCIES="
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
         policykit? (
-            sys-auth/PolicyKit[>=0.8]
+            sys-auth/PolicyKit:0[>=0.8]
             sys-auth/polkit-qt[>=0.9]
         )
         python? (

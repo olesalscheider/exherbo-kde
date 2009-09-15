@@ -41,7 +41,7 @@ DEPENDENCIES="
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[webkit]
         policykit? (
-            sys-auth/PolicyKit[>=0.8]
+            sys-auth/PolicyKit:0[>=0.8]
             sys-auth/polkit-qt[>=0.9]
         )
         python? (
