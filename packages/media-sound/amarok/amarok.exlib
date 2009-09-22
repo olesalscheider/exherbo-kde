@@ -17,7 +17,7 @@ case ${PV} in
          UPSTREAM_RELEASE_NOTES="" ;;
     2.1.@(8|9)*)
          DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
-    2.1 | 2.1.1)
+    2.2|2.2.1)
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
          UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
     *)   die "Set DOWNLOADS for ${PNVR}" ;;
@@ -27,6 +27,7 @@ LICENCES="GPL-2"
 SLOT="0"
 
 MYOPTIONS="ipod mp3tunes mtp
+    lastfm      [[ description = [ Enable Last.Fm service, including scrobbling, song submissions, and suggested song dynamic playlists ] ]]
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
 "
 
@@ -38,8 +39,8 @@ DEPENDENCIES="
         app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
         dev-libs/soprano[>=2.1.67]
         kde/kdelibs:4[>=4.2.0]
-        media-libs/taglib[>=1.5] [[ description = [ Read and write tags in audio files ] ]]
-        media-plugins/taglib-extras[>=0.1]
+        media-libs/taglib[>=1.6] [[ description = [ Read and write tags in audio files ] ]]
+        media-plugins/taglib-extras[>=1.0.1]
         sys-devel/qtscriptgenerator
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[X][dbus][opengl][qt3support][svg(+)][webkit]
@@ -48,6 +49,7 @@ DEPENDENCIES="
             media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
             x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]]
         )
+        lastfm? ( media-libs/liblastfm )
         mp3tunes? (
             dev-libs/glib:2
             dev-libs/libxml2
@@ -74,7 +76,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
-    'ipod Gdk' Ipod
+    'ipod Gdk' IPOD
+    'lastfm LibLastFm'
     Mtp
     MP3Tunes
 )

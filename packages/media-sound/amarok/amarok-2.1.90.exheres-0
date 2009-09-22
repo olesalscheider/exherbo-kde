@@ -3,9 +3,11 @@
 
 require amarok
 
+UPSTREAM_RELEASE_NOTES="http://amarok.kde.org/en/releases/2.2/rc/1"
+
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-2.1-mysqle-link-to-amarok-executable.patch"
+    "${FILES}/${PN}-scm-mysqle-link-to-amarok-executable.patch"
 )
 
