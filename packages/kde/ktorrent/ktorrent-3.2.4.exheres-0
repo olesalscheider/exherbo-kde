@@ -5,5 +5,3 @@ require ktorrent
 
 PLATFORMS="~amd64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}?q=node/29"
-
