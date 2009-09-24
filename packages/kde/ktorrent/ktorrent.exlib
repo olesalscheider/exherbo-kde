@@ -11,7 +11,7 @@ BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="infowidget mediaplayer syndication" # zeroconf
+MYOPTIONS="infowidget syndication" # mediaplayer zeroconf
 
 DEPENDENCIES="
     build:
@@ -23,9 +23,10 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.1.83]
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         infowidget? ( net-libs/GeoIP )
-        mediaplayer? ( x11-libs/qt:4[phonon] )
         syndication? ( kde/kdepimlibs:${SLOT} )
 "
+#   build+run:
+#        mediaplayer? ( x11-libs/qt:4[phonon] )
 #    run:
 #        zeroconf? ( kde/kdenetwork:${SLOT}[zeroconf] )
 
@@ -44,10 +45,12 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_UPNP_PLUGIN=ON
     -DENABLE_WEBINTERFACE_PLUGIN=ON
     -DENABLE_ZEROCONF_PLUGIN=OFF
+    # Disabled: needs Phonon trunk
+    -DENABLE_MEDIAPLAYER_PLUGIN=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'infowidget INFOWIDGET_PLUGIN'
-    'mediaplayer MEDIAPLAYER_PLUGIN'
+    #'mediaplayer MEDIAPLAYER_PLUGIN'
     'syndication SYNDICATION_PLUGIN'
     # 'zeroconf ZEROCONF_PLUGIN'
 )
