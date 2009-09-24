@@ -1,0 +1,74 @@
+Source:
+Upstream:
+Reason: Fix forms for WebKit KPart, see http://bugs.kde.org/207438
+
+From bbb19e626a307a2545cdf12499d143c85807c1e9 Mon Sep 17 00:00:00 2001
+From: adawit <adawit@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 24 Sep 2009 15:25:31 +0000
+Subject: [PATCH] Send the correct 'Content-Type' header when submitting forms.
+
+BUG:207438
+
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.3/kdelibs@1027715 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kio/kio/accessmanager.cpp |   19 +++++++++----------
+ 1 files changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/kio/kio/accessmanager.cpp b/kio/kio/accessmanager.cpp
+index 985f3c9..1a45b59 100644
+--- a/kio/kio/accessmanager.cpp
++++ b/kio/kio/accessmanager.cpp
+@@ -79,30 +79,22 @@ QNetworkReply *AccessManager::createRequest(Operation op, const QNetworkRequest
+     switch (op) {
+         case HeadOperation: {
+             kDebug() << "HeadOperation:" << req.url();
+-
+             kioJob = KIO::mimetype(req.url(), KIO::HideProgressInfo);
+-
+             break;
+         }
+         case GetOperation: {
+             kDebug() << "GetOperation:" << req.url();
+-
+             kioJob = KIO::get(req.url(), KIO::NoReload, KIO::HideProgressInfo);
+-
+             break;
+         }
+         case PutOperation: {
+             kDebug() << "PutOperation:" << req.url();
+-
+             kioJob = KIO::put(req.url(), -1, KIO::HideProgressInfo);
+-
+             break;
+         }
+         case PostOperation: {
+             kDebug() << "PostOperation:" << req.url();
+-
+             kioJob = KIO::http_post(req.url(), outgoingData->readAll(), KIO::HideProgressInfo);
+-
+             break;
+         }
+         default:
+@@ -115,9 +107,16 @@ QNetworkReply *AccessManager::createRequest(Operation op, const QNetworkRequest
+ 
+     kioJob->addMetaData(d->metaDataForRequest(req));
+ 
+-    if ( op == PostOperation && !kioJob->metaData().contains("content-type")) 
+-        kioJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
++    if ( op == PostOperation && !kioJob->metaData().contains("content-type"))  {
++        QVariant header = req.header(QNetworkRequest::ContentTypeHeader);
++        if (header.isValid())
++          kioJob->addMetaData("content-type",
++                              QString::fromLatin1("Content-Type: %1").arg(header.toString()));
++        else
++          kioJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
++    }
+ 
++    kDebug () << "Job '" << kioJob << "' started...";
+     return reply;
+ }
+ 
+-- 
+1.6.4.3
+

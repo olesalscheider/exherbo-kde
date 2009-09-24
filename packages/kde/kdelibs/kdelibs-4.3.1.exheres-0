@@ -16,6 +16,7 @@ DEPENDENCIES="
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
     "${FILES}/CMake-strict-dependencies.patch"
+    "${FILES}/${PNV}-Content-Type-header.patch"
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
