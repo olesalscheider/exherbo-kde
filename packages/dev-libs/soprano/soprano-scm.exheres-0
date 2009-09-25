@@ -15,5 +15,3 @@ PLATFORMS="~amd64 ~x86"
 # sopranodsocketclienttest sopranodbusclienttest sopranodbusmultithreadtest
 RESTRICT=test
 
-# FIXME: Virtuoso!
-
