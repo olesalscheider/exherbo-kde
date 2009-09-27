@@ -1,0 +1,11 @@
+# Copyright 2009 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://github.com/Arora/${PN}.git"
+
+require arora scm-git
+
+DOWNLOADS=""
+
+PLATFORMS="~amd64 ~x86"
+
