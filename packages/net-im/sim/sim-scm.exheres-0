@@ -27,7 +27,7 @@ MYOPTIONS="debug proxy sound
     trayicon [[ description = [ Enable minimizing to Systray ] ]]
     weather [[ description = [ Enable plugin to fetch weather information ] ]]
     zodiak [[ description = [ Enable plugin to fetch horoscope information ] ]]
-    im_protocols: 
+    im_protocols:
         (
             jabber [[ description = [ Support the Jabber protocol ] ]]
             livejournal [[ description = [ Support the Livejournal protocol ] ]]
