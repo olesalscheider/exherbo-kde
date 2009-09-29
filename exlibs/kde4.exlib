@@ -56,7 +56,7 @@ buildsycoca4() {
         echo -n "Starting dbus session for kbuildsycoca4, "
         eval "$(dbus-launch --sh-syntax)"
         if [[ -n ${DBUS_SESSION_BUS_PID} ]]; then
-            echo "adress='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
+            echo "address='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
 
             echo "/usr/bin/kbuildsycoca4 --global --noincremental"
             /usr/bin/kbuildsycoca4 --global --noincremental || eerror "kbuildsycoca4: returned exit status: ${?}"

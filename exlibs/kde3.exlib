@@ -46,7 +46,7 @@ buildsycoca() {
     if [[ ${ROOT} == '/' && -x ${KDEDIR}/bin/kbuildsycoca ]]; then
         echo -n "Starting dbus session for kbuildsycoca, "
         eval "$(dbus-launch --sh-syntax)"
-        echo "adress='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
+        echo "address='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
 
         echo "${KDEDIR}/bin/kbuildsycoca --global --noincremental"
         ${KDEDIR}/bin/kbuildsycoca --global --noincremental || eerror "kbuildsycoca: returned exit status: ${?}"
