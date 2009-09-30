@@ -17,7 +17,6 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug proxy sound
     floatings [[ description = [ Enable support for floating contacts ] ]]
     gpg [[ description = [ Enable support for gpg-encrypted messages ] ]]
-    kde [[ description = [ Enable KDE4 integration ] ]]
     netmonitor [[ description = [ Monitor SIM network activity ] ]]
     osd [[ description = [ Enable on-screen notifications plugin ] ]]
     remote [[ description = [ Remote control support ] ]]
@@ -35,6 +34,7 @@ MYOPTIONS="debug proxy sound
             oscar [[ description = [ Support the AOL and the ICQ protocol ] ]]
             yahoo [[ description = [ Support the yahoo protocol ] ]]
         ) [[ number-selected = at-least-one ]]"
+#    kde [[ description = [ Enable KDE4 integration ] ]]
 
 DEPENDENCIES="
     build:
@@ -49,13 +49,14 @@ DEPENDENCIES="
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/qt:4
-        kde? ( kde/kdelibs:4[spell=] )
-        !kde? (
-            spell? ( app-spell/aspell )
-        )
+        spell? ( app-spell/aspell )
     run:
         app-arch/zip
 "
+#        kde? ( kde/kdelibs:4[spell=] )
+#        !kde? (
+#            spell? ( app-spell/aspell )
+#        )
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-disable-to-prevent-crashes.patch
@@ -68,6 +69,7 @@ src_configure() {
         -DENABLE_PLUGIN_UPDATE:BOOL=Off \
         -DENABLE_PLUGIN_WINDOCK:BOOL=Off \
         -DENABLE_PLUGIN_ABOUT:BOOL=Off \
+        -DENABLE_KDE4:BOOL=Off \
         $(cmake_enable debug PLUGIN_LOGGER) \
         $(cmake_enable debug DEV_BUILD) \
         $(cmake_enable floatings PLUGIN_FLOATY) \
@@ -78,7 +80,6 @@ src_configure() {
         $(cmake_enable im_protocols:msn PLUGIN_MSN) \
         $(cmake_enable im_protocols:oscar PLUGIN_ICQ) \
         $(cmake_enable im_protocols:yahoo PLUGIN_YAHOO) \
-        $(cmake_enable kde ENABLE_KDE4) \
         $(cmake_enable netmonitor PLUGIN_NETMONITOR) \
         $(cmake_enable osd PLUGIN_OSD) \
         $(cmake_enable proxy PLUGIN_PROXY) \
@@ -89,5 +90,6 @@ src_configure() {
         $(cmake_enable trayicon PLUGIN_DOCK) \
         $(cmake_enable weather PLUGIN_WEATHER) \
         $(cmake_enable zodiak PLUGIN_ZODIAK)
+        #$(cmake_enable kde KDE4) \
 }
 
