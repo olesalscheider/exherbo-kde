@@ -22,7 +22,7 @@ MYOPTIONS="debug proxy sound
     remote [[ description = [ Remote control support ] ]]
     sms [[ description = [ Enable plugin to send SMS to mobile phones ] ]]
     spell [[ description = [ Enable spell support (note when enabling the option
-        \"kde\", the spell support of KDE will be used ] ]]
+        \"kde\", the spell support of KDE will be used ) ] ]]
     trayicon [[ description = [ Enable minimizing to Systray ] ]]
     weather [[ description = [ Enable plugin to fetch weather information ] ]]
     zodiak [[ description = [ Enable plugin to fetch horoscope information ] ]]
