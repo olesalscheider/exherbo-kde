@@ -60,7 +60,6 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-disable-to-prevent-crashes.patch
-    "${FILES}"/0002-gcc-4.4.patch
 )
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake TODO.html AUTHORS.sim jisp-resources.txt )
 
