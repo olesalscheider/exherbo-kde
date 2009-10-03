@@ -3,7 +3,7 @@
 
 require amarok
 
-UPSTREAM_RELEASE_NOTES="http://amarok.kde.org/en/releases/2.2/rc/1"
+UPSTREAM_RELEASE_NOTES="http://amarok.kde.org/en/releases/2.2"
 
 PLATFORMS="~amd64 ~x86"
 

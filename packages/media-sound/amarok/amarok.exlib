@@ -17,7 +17,7 @@ case ${PV} in
          UPSTREAM_RELEASE_NOTES="" ;;
     2.1.@(8|9)*)
          DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
-    2.2|2.2.1)
+    2.2.0|2.2.1)
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
          UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
     *)   die "Set DOWNLOADS for ${PNVR}" ;;
