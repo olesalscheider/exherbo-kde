@@ -17,11 +17,7 @@ MY_PNV=qt-x11-${SRC_TYPE}-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.qtsoftware.com/"
-if [[ $(exparam pv) == *snapshot* ]]; then
-    DOWNLOADS="http://download.qtsoftware.com/qt/snapshots/${MY_PNV}.tar.gz"
-else
-    DOWNLOADS="http://download.qtsoftware.com/qt/source/${MY_PNV}.tar.bz2"
-fi
+DOWNLOADS="http://get.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
 BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"

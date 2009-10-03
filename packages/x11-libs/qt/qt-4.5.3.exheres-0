@@ -7,10 +7,6 @@ PLATFORMS="~amd64 ~ppc64 ~x86"
 
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
-http://labs.trolltech.com/blogs/2009/06/25/qt-452-has-been-released/
+http://labs.trolltech.com/blogs/2009/10/01/qt-453-released/
 "
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PNV}-phonon-header-installation.patch"
-)
 
