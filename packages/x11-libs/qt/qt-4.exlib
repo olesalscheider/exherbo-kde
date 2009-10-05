@@ -163,8 +163,13 @@ qconf4() {
 qt-4_src_prepare() {
     default
 
-    # Set {C,CXX,LD}FLAGS. Don't prestrip. Do not link with -rpath (Gentoo bug #75181).
+    # Don't prestrip.
+    # Set {C,CXX,LD}FLAGS.
+    # Do not link with -rpath (Gentoo bug #75181).
     # Don't put libraries in X11R6/.
+
+    sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro || die "sed on qmake/qmake.pro failed"
+    sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure || die "sed on configure failed"
 
     sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
         -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
