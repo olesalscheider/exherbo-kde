@@ -275,6 +275,11 @@ qt-4_src_configure() {
     fi
 
     qconf4 ${myconf[@]}
+
+    # Dirty hack due to `strip` creeping into generated Makefile despite the
+    # "nostrip" measures employed in qt-4_src_prepare(). Not reproduceable on
+    # all boxen. Root cause is still unknown.
+    sed -e "/^\t-strip /d" -i Makefile || die "sed on Makefile failed"
 }
 
 qt-4_src_install() {
