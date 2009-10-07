@@ -168,7 +168,7 @@ qt-4_src_prepare() {
     # Do not link with -rpath (Gentoo bug #75181).
     # Don't put libraries in X11R6/.
 
-    sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro || die "sed on qmake/qmake.pro failed"
+    sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro projects.pro || die "sed on .pro files failed"
     sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure || die "sed on configure failed"
 
     sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
@@ -275,11 +275,6 @@ qt-4_src_configure() {
     fi
 
     qconf4 ${myconf[@]}
-
-    # Dirty hack due to `strip` creeping into generated Makefile despite the
-    # "nostrip" measures employed in qt-4_src_prepare(). Not reproduceable on
-    # all boxen. Root cause is still unknown.
-    sed -e "/^\t-strip /d" -i Makefile || die "sed on Makefile failed"
 }
 
 qt-4_src_install() {
