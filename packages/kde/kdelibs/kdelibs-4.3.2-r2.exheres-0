@@ -17,6 +17,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
     "${FILES}/CMake-strict-dependencies.patch"
     "${FILES}/${PNV}-KLocale-deadlock.patch"
+    "${FILES}/${PNV}-KHTML-part-crash.patch"
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
