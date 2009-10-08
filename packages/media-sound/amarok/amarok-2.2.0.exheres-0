@@ -9,5 +9,6 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
+    "${FILES}/${PNV}-lyrics-script-spam.patch"
 )
 
