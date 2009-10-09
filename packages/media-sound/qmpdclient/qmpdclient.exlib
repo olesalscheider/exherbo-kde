@@ -7,8 +7,8 @@ require qmake4
 export_exlib_phases src_prepare src_install
 
 SUMMARY="QMPDClient is an easy to use MPD client written in Qt 4"
-HOMEPAGE="http://bitcheese.net/wiki/QMPDClient-ne   [[ description = [ New official homepage ] ]]
-    http://havtknut.tihlde.org/qmpdclient           [[ description = [ Old, official homepage ] ]]"
+HOMEPAGE="http://bitcheese.net/wiki/QMPDClient   [[ description = [ New official homepage ] ]]
+    http://havtknut.tihlde.org/qmpdclient        [[ description = [ Old, official homepage ] ]]"
 DOWNLOADS="http://github.com/Voker57/${PN}-ne/tarball/${PV} -> ${PNV}.tar.gz"
 
 LICENCES="GPL-2"
