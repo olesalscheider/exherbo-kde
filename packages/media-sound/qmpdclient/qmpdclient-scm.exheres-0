@@ -1,7 +1,7 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://github.com/Voker57/qmpdclient-ne.git"
+SCM_REPOSITORY="git://github.com/Voker57/qmpdclient.git"
 
 require qmpdclient scm-git
 
