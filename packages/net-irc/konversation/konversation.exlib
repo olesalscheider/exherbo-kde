@@ -5,7 +5,7 @@ require kde4
 
 SUMMARY="Konversation is a graphical Internet Relay Chat client for KDE"
 HOMEPAGE="http://konversation.kde.org/"
-DOWNLOADS="mirror://berlios/konversation/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/$(ever range 1-2)/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
