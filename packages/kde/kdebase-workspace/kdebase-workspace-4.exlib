@@ -75,7 +75,6 @@ DEPENDENCIES="
         x11-libs/libXfixes [[ note = kcontrol ]]
         x11-libs/libXft [[ note = kcontrol ]]
         x11-libs/libXrender [[ note = kwin ]]
-        x11-libs/libXres [[ note = ksysguardd ]]
         x11-libs/libXScrnSaver [[ note = krunner ]]
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
