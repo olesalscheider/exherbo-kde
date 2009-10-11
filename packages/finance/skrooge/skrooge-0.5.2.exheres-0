@@ -1,0 +1,34 @@
+# Copyright 2009 Xavier Barrachina <xabarci@ega.upv.es>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+SUMMARY="A personal finances manager for KDE4"
+DESCRIPTION="
+Skrooge is a personal finances manager for KDE4, aiming at being simple and intuitive.  It allows
+you to keep track of your expenses and incomes, categorize them, and build reports of them.
+"
+HOMEPAGE="http://extragear.kde.org/apps/skrooge/"
+DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/skrooge/${PNV}.tar.gz"
+
+REMOTE_IDS="freshmeat:${PN}"
+
+UPSTREAM_DOCUMENTATION="http://docs.kde.org/development/en/extragear-office/skrooge/index.html [[ lang = en ]]"
+
+LICENCES="GPL-3"
+SLOT="4"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+"
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+        dev-db/sqlite:3
+        finance/libofx
+        kde/kdebase-runtime:4[>=4.1.0]
+        kde/kdelibs:4[>=4.1.0]
+    run:
+        x11-libs/qt:4[sql][sqlite]
+"
+
