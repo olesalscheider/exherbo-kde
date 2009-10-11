@@ -24,7 +24,7 @@ DEPENDENCIES="
         dev-libs/libgcrypt
         dev-libs/openssl
         x11-libs/qt:4[qt3support]
-   post,suggested:
+    suggestion:
         net-apps/vpnc               [[ description = [ Enable VPN support ] ]]
         net-dialup/pptpclient       [[ description = [ Necessary for PPTP support ] ]]
         net-firewall/ipsec-tools    [[ description = [ Enable FreeS/WAN, OpenSwan, StrongSwan, racoon support ] ]]

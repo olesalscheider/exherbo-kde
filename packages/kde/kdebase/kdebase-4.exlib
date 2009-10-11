@@ -42,7 +42,7 @@ DEPENDENCIES="
         x11-libs/qt:4[glib][opengl]
         ieee1394? ( media-libs/libraw1394 )
         webkit? ( kde/webkitkde )
-    post,suggested:
+    suggestion:
         sys-apps/eject
 "
 

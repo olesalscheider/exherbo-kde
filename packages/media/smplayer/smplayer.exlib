@@ -21,7 +21,7 @@ DEPENDENCIES="
         x11-libs/qt:4[X]
     run:
         media/mplayer[>=1.0_rc2_p28994][srt][truetype]
-    post,suggested:
+    suggestion:
         x11-themes/smplayer-themes
 "
 

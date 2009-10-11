@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/kdemultimedia:${SLOT}
         media-libs/taglib
-    post,suggested:
+    suggestion:
         media-libs/flac          [[ note = [ Encode flac files ] ]]
         media-sound/lame         [[ note = [ Encode mp3 files ] ]]
         media-sound/vorbis-tools [[ note = [ Encode ogg vorbis files ] ]]

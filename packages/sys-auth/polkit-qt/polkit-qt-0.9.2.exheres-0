@@ -18,7 +18,7 @@ DEPENDENCIES="
     build+run:
         sys-auth/PolicyKit:0[>=0.8]
         x11-libs/qt:4[>=4.4.0]
-    post,suggested:
+    suggestion:
         kde/kdebase-workspace[>=4.2.85] [[ description = [ KDE GUI for PolicyKit ] ]]
 "
 

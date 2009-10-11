@@ -114,7 +114,7 @@ DEPENDENCIES="
             net-libs/libvncserver[>=0.9]
             x11-libs/libXtst
         )
-    post,suggested:
+    suggestion:
         kde_parts:krdc? (
             net-remote/rdesktop [[ description = [ Necessary to make RDP connections with krdc ] ]]
         )

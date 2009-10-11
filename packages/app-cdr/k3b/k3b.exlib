@@ -55,13 +55,13 @@ DEPENDENCIES="
         app-cdr/dvd+rw-tools[>=5.10]
         sys-apps/hal
 
-    post,suggested:
+    suggestion:
         media-sound/normalize           [[ description = [ Normalize audio volume ] ]]
         media-sound/sox                 [[ description = [ Support for encoding audio to various files formats ] ]]
         media-video/transcode           [[ description = [ Support for transcoding video between different container formats ] ]]
-        media-libs/vcdimager[xml][popt] [[ description = [ Support for dealing with VCD ] ]]   
+        media-libs/vcdimager[xml][popt] [[ description = [ Support for dealing with VCD ] ]]
 "
-#   post,suggested: media-video/emovix 
+#   suggestion: media-video/emovix
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DK3B_ENABLE_TAGLIB:BOOL=TRUE

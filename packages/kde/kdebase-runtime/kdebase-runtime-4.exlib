@@ -64,7 +64,7 @@ DEPENDENCIES="
     run:
         kde/oxygen-icons
 "
-#   post,suggested:
+#   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
