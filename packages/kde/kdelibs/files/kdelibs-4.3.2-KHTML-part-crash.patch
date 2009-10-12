@@ -32,3 +32,43 @@ index 342d0bb..7ca15b3 100644
 -- 
 1.6.5.rc3.193.gdf7a
 
+From 1d02da9b7d96e6cacece70f43d497f56b6ac23bd Mon Sep 17 00:00:00 2001
+From: orlovich <orlovich@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Sun, 11 Oct 2009 17:35:30 +0000
+Subject: [PATCH] Don't crash if the widget gets destroyed directly,
+ which happens a lot in apps like kopete and dikigam
+ (This does not directly destroy the view as it's not
+ actually a child object)
+
+@packagers:
+If any 4.3.x packages include 1032787 --- which looks like
+some do --- then this change should also be included.
+
+Thanks to Dario Andres for pointing out the bug to me.
+BUG:209960
+CCMAIL: kde-packager@kde.org
+
+
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.3/kdelibs@1033984 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ khtml/khtml_part.cpp |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/khtml/khtml_part.cpp b/khtml/khtml_part.cpp
+index 7ca15b3..ce48dc9 100644
+--- a/khtml/khtml_part.cpp
++++ b/khtml/khtml_part.cpp
+@@ -609,7 +609,8 @@ KHTMLPart::~KHTMLPart()
+ 
+   if ( d->m_view )
+   {
+-    widget()->hide();
++    if (widget())
++        widget()->hide();
+     d->m_view->m_part = 0;
+   }
+ 
+-- 
+1.6.5
+
