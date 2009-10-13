@@ -33,6 +33,7 @@ SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
 # option=X enables: accessibility gif jpeg mng png svg tiff
 # TODO -X builds QtCore only, conflicts with other flags
 MYOPTIONS="X dbus cups glib gstreamer opengl phonon
+    platform:amd64
     qt3support sql ssl webkit xinerama ${MYOPTIONS_PARTS}
     ( opengl webkit xinerama ) [[ requires = X ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
@@ -109,6 +110,7 @@ qt4_mkspecs_dir() {
     CXX=$(tc-getCXX)
     if [[ ${CXX} == *g++* ]]; then
         spec+="-g++"
+        option platform:amd64 && spec+="-64"
     else
         die "Unknown compiler ${CXX}"
     fi
