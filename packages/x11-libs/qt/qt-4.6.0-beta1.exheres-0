@@ -2,16 +2,12 @@
 #           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt-4
+require qt-4 [ pn='qt-everywhere-opensource-src' ]
 
 PLATFORMS="~amd64 ~ppc64 ~x86"
 
-MY_PNV=qt-everywhere-opensource-src-4.6.0-tp1
-
-DOWNLOADS="http://download.qtsoftware.com/qt/source/${MY_PNV}.tar.gz"
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
-http://qt.nokia.com/developer/qt-4.6-technology-preview/
+http://qt.nokia.com/developer/qt-4.6-preview/
 "
-WORK="${WORKBASE}/${MY_PNV}"
 

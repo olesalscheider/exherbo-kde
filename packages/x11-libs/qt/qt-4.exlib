@@ -10,14 +10,11 @@ export_exlib_phases src_prepare src_configure src_install
 
 myexparam pn=${MY_PN:-${PN}}
 myexparam pv=${MY_PV:-${PV}}
-myexparam pnv=${MY_PNV:-$(exparam pn)-$(exparam pv)}
-
-SRC_TYPE=opensource-src
-MY_PNV=qt-x11-${SRC_TYPE}-$(exparam pv)
+MY_PNV=$(exparam pn)-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
 HOMEPAGE="http://www.qtsoftware.com/"
-DOWNLOADS="http://get.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
+DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
 BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
@@ -198,7 +195,7 @@ qt-4_src_configure() {
     local myconf=()
     myconf=(
         -confirm-license
-        $(ever at_least 4.5.1 && echo -opensource)
+        -opensource
         -fast
         -largefile
         -no-rpath
