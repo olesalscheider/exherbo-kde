@@ -68,6 +68,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ASPELL'
 )
 
+src_prepare() {
+    sed -e '/CMAKE_VERBOSE_MAKEFILE/d' -i CMakeLists.txt || die "sed /CMAKE_VERBOSE_MAKEFILE/d failed"
+}
+
 src_install() {
     cmake_src_install
 
