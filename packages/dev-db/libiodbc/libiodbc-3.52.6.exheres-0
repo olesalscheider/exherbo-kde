@@ -28,5 +28,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-gui
     --enable-pthreads
     --enable-odbc3
+    --hates=docdir
 )
 
