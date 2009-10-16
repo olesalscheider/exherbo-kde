@@ -5,6 +5,13 @@ require kdenetwork-4
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        kde_parts:kget? ( 
+            kde/kdelibs-experimental:4.3[>=${PV}] [[ note = [ LibKNotificationItem-1 for kget/ ] ]]
+        )
+"
+
 # FIXME braino in r4b6a313 CMakeLists.txt:
 # 37 find_package(Strigi) <- remove this one, nothing else needs it besides the .torrent strigianalyzer stuff below:
 # 61 macro_optional_find_package(Strigi) (.torrent files)

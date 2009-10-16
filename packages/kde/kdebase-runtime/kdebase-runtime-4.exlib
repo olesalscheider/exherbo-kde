@@ -44,7 +44,6 @@ DEPENDENCIES="
         dev-cpp/clucene[>=0.9.19]
         dev-libs/soprano[>=2.3.0]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]

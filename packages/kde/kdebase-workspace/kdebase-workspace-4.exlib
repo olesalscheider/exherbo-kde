@@ -54,7 +54,6 @@ DEPENDENCIES="
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
         kde/kdelibs:${SLOT}[>=${PV}] [[ note = [ Needs Nepomuk ] ]]
-        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kcontrol/xrandr/ ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]

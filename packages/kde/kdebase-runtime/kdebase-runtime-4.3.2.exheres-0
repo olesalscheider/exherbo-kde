@@ -7,3 +7,8 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.4-optional-xine.patch" )
 
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
+"
+

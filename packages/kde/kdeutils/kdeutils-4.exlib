@@ -39,7 +39,6 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kgpg, kwallet ] ]]
         kde/kdepimlibs:${SLOT}
         kde_parts:ark? (
             app-arch/xz

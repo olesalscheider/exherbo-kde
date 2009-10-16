@@ -54,7 +54,6 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdelibs-experimental:4.3[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]

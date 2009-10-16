@@ -71,7 +71,6 @@ DEPENDENCIES="
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
             kde/kdebase:${SLOT} [[ note = Konqueror ]]
-            kde/kdelibs-experimental:4.3[>=${PV}] [[ note = [ LibKNotificationItem-1 for kget/ ] ]]
             bittorrent? ( kde/ktorrent )
             sqlite? ( dev-db/sqlite:3 )
             webkit? ( kde/webkitkde )
