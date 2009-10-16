@@ -30,6 +30,7 @@ DEPENDENCIES=""
 
 WORK="${WORKBASE}"/${MY_P}/${PN}
 
+DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
 DEFAULT_SRC_PREPARE_PATCHES=(
     -p2 "${FILES}/${PNV}-Build-a-shared-libuu-Debian-216593.patch"
     "${FILES}/${PNV}-Unsafe-temp-file-creation-Debian-320541.patch"
