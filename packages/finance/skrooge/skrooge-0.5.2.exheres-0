@@ -18,8 +18,9 @@ UPSTREAM_DOCUMENTATION="http://docs.kde.org/development/en/extragear-office/skro
 LICENCES="GPL-3"
 SLOT="4"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="
-"
+MYOPTIONS=""
+
+RESTRICT="test"
 
 DEPENDENCIES="
     build+run:
