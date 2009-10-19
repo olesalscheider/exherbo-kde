@@ -1,0 +1,37 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require multilib qmake4
+
+SUMMARY="Qt Widgets for Technical Applications"
+DESCRIPTION="
+The Qwt library contains GUI Components and utility classes which are primarily useful for programs
+with a technical background. Beside a 2D plot widget it provides scales, sliders, dials, compasses,
+thermometers, wheels and knobs to control or display values, arrays, or ranges of type double.
+"
+HOMEPAGE="http://qwt.sourceforge.net/"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
+
+LICENCES="Qwt-1.0"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[X]
+"
+
+DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
+
+src_prepare() {
+    cat > qwtconfig.pri <<-EOF
+target.path = /usr/$(get_libdir)
+headers.path = /usr/include/qwt5
+doc.path = /usr/share/doc/${PNVR}
+CONFIG += qt warn_on thread release
+CONFIG += QwtDll QwtPlot QwtWidgets QwtDesigner
+VERSION = ${PV}
+EOF
+}
+
