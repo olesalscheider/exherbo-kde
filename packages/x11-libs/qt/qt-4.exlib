@@ -298,8 +298,8 @@ qt-4_src_install() {
     hereenvd 44qt4 <<EOF
 LDPATH=/usr/$(get_libdir)/qt4
 EOF
-    #  only needed for <=qt-4.6.0_pre1
-    if option doc && ! ever at_least 4.6.0_pre1 ; then
+    #  only needed for <=qt-4.6.0-beta1
+    if option doc && ! ever at_least 4.6.0-beta1 ; then
         dobin "${WORK}/tools/qdoc3/qdoc3"
     fi
 
