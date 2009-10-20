@@ -1,0 +1,15 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdegraphics-4
+
+PLATFORMS="~amd64 ~x86"
+
+# FIXME Update tiff option description
+DEPENDENCIES="
+    build+run:
+        kde_parts:strigi-analyzer? (
+            tiff? ( media-libs/tiff )
+        )
+"
+
