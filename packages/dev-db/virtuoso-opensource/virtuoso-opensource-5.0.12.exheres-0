@@ -18,6 +18,8 @@ SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
+RESTRICT="test"
+
 # build: htmldoc for pdf docs
 DEPENDENCIES="
     build+run:
