@@ -29,9 +29,6 @@ DEPENDENCIES="
         media-gfx/ImageMagick
 "
 
-# FIXME Probably minimal virtuoso for soprano, see http://trueg.wordpress.com/2009/02/27/are-we-there-yet-the-long-road-to-a-stable-soprano-virtuoso-backend/
-#       given that this package installs ~250M
-# FIXME http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-layout=Gentoo
@@ -39,6 +36,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 
     --enable-shared
     # FIXME Needs an internal header of zlib (zutil.h)
+    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
     # --without-internal-zlib
 
     --program-transform-name='s/isql[-]*\(w\)*/isql\1-vt/'
@@ -47,6 +45,8 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-openssl
     --with-readline
 
+    # installed by default but they're huge (an extra 110MB), unnecessary for soprano, they break parallel make
+    --disable-all-vads
     # upstream enables these by default
     --disable-hslookup
     --disable-wbxml2
@@ -63,18 +63,10 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --without-jdk{1,2,3,4}
 )
 
-src_compile() {
-    # FIXME Some calls to 'gmake' instead of 'make'
-    # FIXME Hack around parallel make bug (in binsrc/samples/demo ?), without the slowness of -j1
-    if ! nonfatal emake ; then
-        einfo "Parallel make failed, retrying with 'emake -j1'"
-        nonfatal emake -j1 || die "emake -j1 failed"
-    fi
-}
-
 src_install() {
     default
 
+    rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,} || die "Empty directories"
     rm -r "${IMAGE}"/usr/$(get_libdir)/{jdbc-*,jena,sesame}/{*.jar,} || die "One man no jars!"
 }
 
