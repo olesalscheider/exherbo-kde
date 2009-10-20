@@ -52,6 +52,10 @@ case ${PV} in
             kdebase)
                 SCM_SUBPATH="KDE/${KDEMODULE}/apps/"
                 ;;
+            kdepim|kdepim-runtime)
+                KDEMODULE=kdepim
+                SCM_SUBPATH="KDE/${KDEMODULE}/"
+                ;;
             oxygen-icons)
                 SCM_SUBPATH="kdesupport/${KDEMODULE}/"
                 ;;

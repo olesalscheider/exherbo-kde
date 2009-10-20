@@ -1,0 +1,14 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kdepim-runtime-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/soprano    [[ note = [ raptorparser plugin enabled ] ]]
+"
+
+WORK="${WORK}/akonadi"
+
