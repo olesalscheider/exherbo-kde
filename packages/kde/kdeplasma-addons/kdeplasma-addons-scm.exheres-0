@@ -1,0 +1,10 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeplasma-addons-4
+
+PLATFORMS="~amd64 ~x86"
+
+# kdepimlibs is now optional
+# applets/CMakeLists.txt: find_package(Qalculate)
+
