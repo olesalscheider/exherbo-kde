@@ -1,0 +1,18 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdenetwork-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        kde_parts:kopete?  (
+            im_protocols:wlm? ( media-libs/giflib )
+        )
+"
+
+# krdc: TelepathyQt4 [>=0.18] - Telepathy Tubes support
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DTelepathyQt4:BOOL=FALSE )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'im_protocols:wlm GIF' )
+
