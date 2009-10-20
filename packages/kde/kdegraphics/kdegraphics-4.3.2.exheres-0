@@ -5,11 +5,3 @@ require kdegraphics-4
 
 PLATFORMS="~amd64 ~x86"
 
-src_prepare() {
-    default
-
-    # FIXME Undefined references
-    sed -e '/raw/s/^/# Fails to link/' -i thumbnailers/CMakeLists.txt ||
-        die "couldn't disable broken thumbnailer"
-}
-

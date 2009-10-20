@@ -85,11 +85,6 @@ DEPENDENCIES="
         )
 "
 
-# Kdcraw, Kexiv2 are part of this module, so don't attempt to find them
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Kdcraw:BOOL=FALSE
-    -DWITH_Kexiv2:BOOL=FALSE
-)
 # OpenMP isn't optional for our GCC, so hard-enabled
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 
