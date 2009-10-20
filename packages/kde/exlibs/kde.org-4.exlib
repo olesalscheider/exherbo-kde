@@ -41,6 +41,44 @@ esac
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
+    scm)
+        DOWNLOADS=""
+        SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+
+        case ${KDEMODULE} in
+            kdebase-*|kdelibs-experimental)
+                SCM_SUBPATH="KDE/${KDEMODULE%%-*}/${KDEMODULE##*-}"
+                ;;
+            kdebase)
+                SCM_SUBPATH="KDE/${KDEMODULE}/apps/"
+                ;;
+            oxygen-icons)
+                SCM_SUBPATH="kdesupport/${KDEMODULE}/"
+                ;;
+            @(kde|koffice)-l10n)
+                die "Add support for ${PN}-scm"
+                ;;
+            *)
+                SCM_SUBPATH="KDE/${KDEMODULE}/"
+                ;;
+        esac
+
+        case ${KDEMODULE} in
+            kdebase-workspace)
+                SCM_SECONDARY_REPOSITORIES="kdebase_runtime_kstyles_oxygen_lib"
+                SCM_SVN_EXTERNALS="kwin/clients/oxygen/lib/:kdebase_runtime_kstyles_oxygen_lib"
+                SCM_kdebase_runtime_kstyles_oxygen_lib_REPOSITORY="${SCM_REPOSITORY}/"
+                SCM_kdebase_runtime_kstyles_oxygen_lib_SUBPATH="${SCM_SUBPATH/workspace/runtime}/kstyles/oxygen/lib/"
+                ;;
+            kdenetwork)
+                SCM_SECONDARY_REPOSITORIES="ktorrent_libbtcore"
+                SCM_SVN_EXTERNALS="kget/transfer-plugins/bittorrent/libbtcore:ktorrent_libbtcore"
+                SCM_ktorrent_libbtcore_REPOSITORY="${SCM_REPOSITORY}/"
+                SCM_ktorrent_libbtcore_BRANCH="stable/extragear-kde4/network/ktorrent/libbtcore/"
+                ;;
+        esac
+
+        require scm-svn ;;
     4.3.@(85|90|95|96|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     4.@(3|4).@(6|7|8|9)*) # Weekly SVN snapshots
