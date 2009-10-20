@@ -28,6 +28,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+# TODO kdelirc
 MY_KDE_PARTS="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
 okteta printer-applet superkaramba sweeper"
 MYOPTIONS="
