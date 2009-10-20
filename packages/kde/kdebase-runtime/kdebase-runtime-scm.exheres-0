@@ -1,0 +1,19 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdebase-runtime-4
+
+PLATFORMS="~amd64 ~x86"
+
+MYOPTIONS="sftp [[ description = [ SFTP kioslave ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/soprano[>=scm]
+        sftp? ( net-libs/libssh[>=0.3.4] )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sftp LibSSH' )
+
+DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.4-optional-xine.patch" )
+
