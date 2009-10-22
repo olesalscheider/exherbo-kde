@@ -1,0 +1,17 @@
+Source: KDE #209095
+Upstream: Not committed, fixed in SIP snapshots
+Reason: Printer-applet crashes when built with sip 4.9
+
+Index: printer-applet.py
+===================================================================
+--- a/printer-applet/printer-applet.py	(revision 1031496)
++++ a/printer-applet/printer-applet.py	(working copy)
+@@ -221,7 +221,7 @@
+         self.jobs = {}
+         self.jobiters = {}
+         self.will_update_job_creation_times = False # whether timeout is set FIXME now job_creation_times_timer
+-        self.update_job_creation_times_timer = QTimer(self)
++        self.update_job_creation_times_timer = QTimer()
+         self.connect(self.update_job_creation_times_timer, SIGNAL("timeout()"), self.update_job_creation_times)
+         self.statusbar_set = False
+         self.connecting_to_device = {} # dict of printer->time first seen

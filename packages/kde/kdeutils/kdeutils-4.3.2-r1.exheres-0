@@ -12,3 +12,5 @@ DEPENDENCIES="
         kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kgpg, kwallet ] ]]
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-printer-applet-crash.patch" )
+
