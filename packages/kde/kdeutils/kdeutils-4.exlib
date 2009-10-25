@@ -28,8 +28,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-# TODO kdelirc
-MY_KDE_PARTS="ark kcalc kcharselect kdessh kdf kfloppy kgpg ktimer kwallet
+MY_KDE_PARTS="ark kcalc kcharselect kdelirc kdessh kdf kfloppy kgpg ktimer kwallet
 okteta printer-applet superkaramba sweeper"
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
@@ -71,6 +70,8 @@ DEPENDENCIES="
             x11-libs/libXrender
             python? ( dev-lang/python:= )
         )
+    run:
+        kde_parts:kdelirc? ( app-misc/lirc )
     suggestion:
         kde_parts:ark? (
             app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
