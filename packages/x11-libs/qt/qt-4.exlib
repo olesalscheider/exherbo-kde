@@ -127,6 +127,16 @@ qt4_enable() {
     fi
 }
 
+qt4_build() {
+    local flag="${1}" feature="${2:-${1}}"
+
+    if option "${flag}" ; then
+        echo "-make ${feature}"
+    else
+        echo "-nomake ${feature}"
+    fi
+}
+
 qconf4() {
     local myconf=() libdir=$(get_libdir)
 
@@ -264,15 +274,11 @@ qt-4_src_configure() {
     )
 
     # optional parts
-    if option !demos; then
-        myconf+=( -nomake demos )
-    fi
-    if option !doc; then
-        myconf+=( -nomake docs )
-    fi
-    if option !examples; then
-        myconf+=( -nomake examples )
-    fi
+    myconf+=(
+        $(qt4_build demos)
+        $(qt4_build doc docs)
+        $(qt4_build examples)
+    )
 
     qconf4 ${myconf[@]}
 }
