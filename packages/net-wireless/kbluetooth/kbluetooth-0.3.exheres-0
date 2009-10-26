@@ -1,0 +1,14 @@
+# Copyright 2008 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PN=kdebluetooth4
+MY_PNV=${MY_PN}-${PV}
+
+require kbluetooth
+
+DOWNLOADS="mirror://sourceforge/kde-bluetooth/${MY_PNV}.tar.bz2"
+
+PLATFORMS="~amd64 ~x86"
+
+WORK="${WORKBASE}"/${MY_PNV}
+
