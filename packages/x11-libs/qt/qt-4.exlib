@@ -275,6 +275,9 @@ qt-4_src_configure() {
 
     # optional parts
     myconf+=(
+        -make libs
+        -make tools
+        -make translations
         $(qt4_build demos)
         $(qt4_build doc docs)
         $(qt4_build examples)
