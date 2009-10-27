@@ -16,8 +16,8 @@ DEPENDENCIES="
         dev-lang/perl:*
     build+run:
         kde/kdelibs:4[>=4.2.0]
-    run:
-        app-text/texlive
+    recommendation:
+        app-text/texlive [[ description = [ Needed to produce dvi/pdf from (La)TeX sources ] ]]
 "
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( kile-remote-control.txt )
