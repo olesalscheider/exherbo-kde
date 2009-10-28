@@ -6,7 +6,7 @@ export_exlib_phases src_configure
 
 MY_PNV="${PNV/_/-}"
 QCA_MAJVER="${PV%.*}"
-HOMEPAGE="http://delta.affinix.com/qca"
+HOMEPAGE="http://delta.affinix.com/qca/"
 DOWNLOADS="http://delta.affinix.com/download/qca/${QCA_MAJVER}/plugins/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
@@ -15,7 +15,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        app-crypt/qca[>=${QCA_MAJVER}]
+        app-crypt/qca:2[>=${QCA_MAJVER}]
 "
 
 WORK="${WORKBASE}/${MY_PNV}"

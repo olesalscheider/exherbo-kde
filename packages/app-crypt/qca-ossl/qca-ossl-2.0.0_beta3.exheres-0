@@ -2,11 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require qca-plugin
+
 SUMMARY="Openssl-based crypto algorithms plugin for QCA"
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES+="
+DEPENDENCIES="
     build+run:
         dev-libs/openssl
 "

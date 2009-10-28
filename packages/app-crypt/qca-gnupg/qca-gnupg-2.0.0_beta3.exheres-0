@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require qca-plugin
+
 SUMMARY="GnuPG-based crypto algorithms plugin for QCA"
 
 PLATFORMS="~amd64 ~x86"
@@ -9,3 +10,4 @@ PLATFORMS="~amd64 ~x86"
 DEPENDENCIES="
     run:
         app-crypt/gnupg"
+
