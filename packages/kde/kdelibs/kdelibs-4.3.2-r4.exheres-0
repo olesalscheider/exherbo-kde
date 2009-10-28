@@ -10,5 +10,6 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/CMake-strict-dependencies.patch"
     "${FILES}/${PNV}-KLocale-deadlock.patch"
     "${FILES}/${PNV}-KHTML-part-crash.patch"
+    "${FILES}/0001-Backport-1035538-Restrict-XMLHttpRequest-so-that-it-.patch"
 )
 
