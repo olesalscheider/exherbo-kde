@@ -1,31 +1,15 @@
 # Copyright 2008 Thomas Anderson
 # Distributed under the terms of the GNU General Public License v2
 
-MY_PNV="${PNV/_/-}"
-QCA_MAJVER="${PV%.*}"
+require qca-plugin
 SUMMARY="Openssl-based crypto algorithms plugin for QCA"
-HOMEPAGE="http://delta.affinix.com/qca"
-DOWNLOADS="http://delta.affinix.com/download/qca/${QCA_MAJVER}/plugins/${MY_PNV}.tar.bz2"
 
-LICENCES="LGPL-2.1"
-SLOT="2"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build+run:
         dev-libs/openssl
-        app-crypt/qca[>=${QCA_MAJVER}]
 "
 
-WORK="${WORKBASE}/${MY_PNV}"
 DEFAULT_SRC_PREPARE_PATCHES=( -p3 "${FILES}/${PNV}-remove-whirlpool.patch" )
-DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
-
-src_configure() {
-    ./configure \
-        --qtdir=/usr \
-        --no-separate-debug-info \
-        || die "Configure failed."
-}
 
