@@ -58,9 +58,6 @@ DEPENDENCIES="
 #            spell? ( app-spell/aspell )
 #        )
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-disable-to-prevent-crashes.patch
-)
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( TODO.CMake TODO.html AUTHORS.sim jisp-resources.txt )
 
 src_configure() {
