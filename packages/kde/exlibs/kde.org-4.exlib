@@ -59,7 +59,12 @@ case ${PV} in
             oxygen-icons)
                 SCM_SUBPATH="kdesupport/${KDEMODULE}/"
                 ;;
-            @(kde|koffice)-l10n)
+            kde-l10n)
+                SCM_SUBPATH=l10n-kde4/scripts
+                SCM_CHECKOUT_TO=${PN}:${SLOT}/scripts
+                SCM_UNPACK_TO=${WORKBASE}/scripts
+                ;;
+            koffice-l10n)
                 die "Add support for ${PN}-scm"
                 ;;
             *)

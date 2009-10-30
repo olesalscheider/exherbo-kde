@@ -9,6 +9,7 @@ myexparam base_uri
 
 set_kde_l10n_downloads() {
     local localisation base_uri=$(exparam base_uri)
+    [[ -z ${base_uri} ]] && return
     for localisation in $(exparam langs); do
         echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.tar.bz2 ) "
     done
