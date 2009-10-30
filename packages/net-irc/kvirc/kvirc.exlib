@@ -20,8 +20,8 @@ HOMEPAGE="http://www.${PN}.net"
 BUGS_TO="philantrop@exherbo.org"
 REMOTE_IDS="freshmeat:${PN}"
 
-UPSTREAM_REVISION=${PV#*_pre}
-UPSTREAM_CHANGELOG="https://svn.${PN}.de/${PN}/browser/trunk/${PN}/ChangeLog?rev=${UPSTREAM_REVISION}"
+MY_UPSTREAM_REVISION=${PV#*_pre}
+UPSTREAM_CHANGELOG="https://svn.${PN}.de/${PN}/browser/trunk/${PN}/ChangeLog?rev=${MY_UPSTREAM_REVISION}"
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/docu/ [[ lang = en ]]"
 LICENCES="kvirc"
 SLOT="4"
@@ -93,7 +93,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
 )
 
 kvirc_src_prepare() {
-    sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp || die "Failed to set revision number"
+    sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp || die "Failed to set revision number"
 }
 
 kvirc_src_install() {
