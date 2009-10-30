@@ -1,0 +1,14 @@
+Source: Yury G. Kudryashov
+Upstream: Not submitted because I don't know whether it breaks build with kdevplatform
+Reason: Doesn't build without kdevplatform
+
+--- a/smoke/kde/kde_includes.h	(revision 1041728)
++++ b/smoke/kde/kde_includes.h	(working copy)
+@@ -42,7 +42,6 @@
+ #include <kcharsets.h>
+ #include <kcmdlineargs.h>
+ #include <kcmodulecontainer.h>
+-#include <kdevplatform/project/projectkcmodule.h>
+ #include <kcmodule.h>
+ #include <kcmoduleinfo.h>
+ #include <kcmoduleloader.h>
