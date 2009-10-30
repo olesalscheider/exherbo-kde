@@ -34,7 +34,7 @@ parley step"
 MYOPTIONS="
     3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra        ] ]]
     3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
-    kig-scripting [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
+    python        [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
     solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
     ( kde_parts: ${MY_KDE_PARTS} )
 "
@@ -68,7 +68,7 @@ DEPENDENCIES="
             )
         )
         kde_parts:kig? (
-            kig-scripting? ( dev-libs/boost[>=1.31] )
+            python? ( dev-libs/boost[>=1.31] )
         )
         kde_parts:marble? ( kde/kdebase-workspace:${SLOT} )
         kde_parts:parley? (
@@ -110,7 +110,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:parley LibXslt' # required to build HTML export
     'kde_parts:parley LibXml2' # required to build HTML export
     'kde_parts:step GSL' # Optional, hard-enabled
-    'kig-scripting BoostPython'
+    'python BoostPython'
     'solver OCaml' 'solver Libfacile'
 )
 
