@@ -313,9 +313,13 @@ qt-4_src_install() {
     hereenvd 44qt4 <<EOF
 LDPATH=/usr/$(get_libdir)/qt4
 EOF
-    #  only needed for <qt-4.6.0-beta1
-    if option doc && ! ever at_least 4.6.0-beta1 ; then
-        dobin "${WORK}/tools/qdoc3/qdoc3"
+    #  qdoc3 not installed by default - needed for qt-creator
+    if option doc ; then
+        if ! ever at_least 4.6.0-beta1 ; then
+            dobin "${WORK}/tools/qdoc3/qdoc3"
+        else
+            dobin "${WORK}/bin/qdoc3"
+       fi
     fi
 
 }
