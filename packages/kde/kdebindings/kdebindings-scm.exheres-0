@@ -14,11 +14,3 @@ DEPENDENCIES="
 # FIXME: Review after kdevplatform is packaged
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-no_kdevplatform.diff" )
 
-src_compile() {
-    # Generator tries to use plugins in ${ECMAKE_BUILD_DIR}/generator/bin
-    # FIXME: find a proper CMake patch. AFAIK cmake does not allow to export env variables.
-    # The current upstream "fix" doesn't work.
-    export LD_LIBRARY_PATH=${ECMAKE_BUILD_DIR}/generator/bin:${LD_LIBRARY_PATH}
-    cmake_src_compile
-}
-
