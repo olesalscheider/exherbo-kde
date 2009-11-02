@@ -5,34 +5,21 @@ LANGS="af ar as ast be be@latin bg bn bn_IN br ca ca@valencia crh cs csb cy da d
        eu fa fi fr fy ga gl gu ha he hi hne hr hsb hu hy id is it ja ka kk km kn ko ku lb lt lv mai
        mk ml mr ms mt nb nds ne nl nn nso oc or pa pl ps pt pt_BR ro ru rw se si sk sl sr sr@latin
        sv ta te tg th tr uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW"
+SCM_NO_AUTOMATIC_FINALISE=1
 require kde-l10n-4 [ base_uri="" langs="${LANGS}" ]
 
 PLATFORMS="~amd64 ~x86"
 
-setup_scm_vars() {
-    local localisation
-    for localisation in ${LANGS}; do
-        option linguas:${localisation} || continue
+for localisation in ${LANGS}; do
+    SCM_THIS=${localisation//@/_}
+    SCM_SECONDARY_REPOSITORIES+=" linguas:${localisation}? ( ${SCM_THIS} )"
+    scm_set_var REPOSITORY "${SCM_REPOSITORY}"
+    scm_set_var SUBPATH l10n-kde4/${localisation}
+    scm_set_var CHECKOUT_TO ${PN}:${SLOT}/${localisation}
+    scm_set_var UNPACK_TO "${WORK}"/${PNV}-${localisation}
+done
 
-        SCM_SECONDARY_REPOSITORIES+=" ${localisation}"
-        SCM_THIS=${localisation}
-        scm_set_var TYPE svn
-        scm_set_var REPOSITORY "${SCM_REPOSITORY%/}"
-        scm_set_var SUBPATH l10n-kde4/${localisation}
-        scm_set_var CHECKOUT_TO ${SCM_HOME}/${PN}:${SLOT}/${localisation}
-        scm_set_var UNPACK_TO ${WORKBASE}/${PNV}-${localisation}
-    done
-}
-
-src_fetch_extra() {
-    setup_scm_vars
-    scm_src_fetch_extra
-}
-
-src_unpack() {
-    setup_scm_vars
-    scm_src_unpack
-}
+scm_finalise
 
 src_prepare() {
     local localisation

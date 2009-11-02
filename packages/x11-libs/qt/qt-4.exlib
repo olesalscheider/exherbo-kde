@@ -30,7 +30,6 @@ SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
 # option=X enables: accessibility gif jpeg mng png svg tiff
 # TODO -X builds QtCore only, conflicts with other flags
 MYOPTIONS="X dbus cups glib gstreamer opengl phonon
-    platform:amd64
     qt3support sql ssl webkit xinerama ${MYOPTIONS_PARTS}
     ( opengl webkit xinerama ) [[ requires = X ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
@@ -48,6 +47,7 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
     sql         [[ description = [ Build the SQL plugins ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
+    platform: amd64 ia64 ppc64 x86
 "
 
 DEPENDENCIES="
@@ -138,10 +138,26 @@ qt4_build() {
 }
 
 qconf4() {
-    local myconf=() libdir=$(get_libdir)
+    local x myarch myconf=() libdir=$(get_libdir) option_to_arch_map=(
+        #alpha arm mips s390 sparc
+        #{hppa,sh}:generic
+        amd64:x86_64
+        ia64
+        #ppc:powerpc
+        ppc64:powerpc
+        x86:i386
+    )
+    for x in "${option_to_arch_map[@]}"; do
+        if option platform:${x%:*}; then
+            myarch="${x#*:}"
+            break
+        fi
+    done
+    [[ -z ${myarch} ]] && die "Your platform is not supported by qt-4.exlib. Please file a bug."
 
     # paths
     myconf=(
+        -arch ${myarch}
         -prefix /usr
         -bindir /usr/bin
         -docdir /usr/share/doc/${PNVR}
@@ -154,16 +170,6 @@ qconf4() {
         -examplesdir /usr/share/qt4/examples
         -demosdir /usr/share/qt4/demos
     )
-
-    # arch
-    case "${ARCH}" in
-        amd64)                          myconf+=( -arch x86_64 ) ;;
-        ppc|ppc64)                      myconf+=( -arch powerpc ) ;;
-        x86|x86-*)                      myconf+=( -arch i386 ) ;;
-        alpha|arm|ia64|mips|s390|sparc) myconf+=( -arch ${ARCH} ) ;;
-        hppa|sh)                        myconf+=( -arch generic ) ;;
-        *) die "${ARCH} is unsupported by this eclass. Please file a bug" ;;
-    esac
 
     echo ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} 1>&2
     ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
