@@ -1,0 +1,21 @@
+# Copyright 2009 Timo Gurr
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+SUMMARY="KDing - dictionary lookup program"
+DESCRIPTION="KDing is a KDE port of Ding, a dictionary lookup program."
+HOMEPAGE="http://www.rexi.org/software/${PN}/"
+DOWNLOADS="http://www.rexi.org/downloads/${PN}/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+REMOTE_IDS="freshmeat:kding"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4
+"
+
