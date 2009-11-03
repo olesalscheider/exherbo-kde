@@ -12,7 +12,7 @@ require multilib kde.org-4
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
 filesharing: Network file sharing
-kdnssd: Zeroconf (disabled)
+kdnssd: Zeroconf
 kget: Download manager
 kopete: Multi-protocol instant messaging client with various plugins for extra functionality
 kppp: A frontend to pppd
@@ -26,7 +26,7 @@ HOMEPAGE="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
-MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb" #kdnssd
+MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb kdnssd"
 MY_IM_PROTOCOLS+="
     gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
     groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
@@ -57,7 +57,6 @@ MYOPTIONS+="
     kopete_plugins:
         ( ${MY_KOPETE_PLUGINS} ) [[ requires = [ kde_parts: kopete ] ]]
 "
-#   zeroconf [[ description = [ Enable service discovery in Krfb and Krdc ] ]]
 
 DEPENDENCIES="
     build+run:
@@ -120,12 +119,10 @@ DEPENDENCIES="
         kde_parts:krdc? (
             net-remote/rdesktop [[ description = [ Necessary to make RDP connections with krdc ] ]]
         )
+    recommendation:
+        kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
-# FIXME: Is this still valid? Is zeroconf now automagic?
-#       kde_parts:kdnssd? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) )
-#       kde_parts:krfb? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
-#       kde_parts:krdc? ( zeroconf? ( || ( net-dns/avahi[mdnssd_compat] net-dns/mDNSResponder ) ) )
 
 # FIXME
 # Warning: kppp uses setuid
@@ -161,7 +158,6 @@ src_configure() {
     cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
 
     # These are missing required dependencies
-    cmakeparams+=" -DBUILD_kdnssd=OFF" # needs avahi[mdnsresponder-compat] or mDNSResponder
     cmakeparams+=" -DWITH_gadu=OFF" # >=net-libs/libgadu-1.8.0, http://toxygen.net/libgadu/
     cmakeparams+=" -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF" # net-libs/meanwhile, http://meanwhile.sf.net
 

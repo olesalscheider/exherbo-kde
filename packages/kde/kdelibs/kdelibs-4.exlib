@@ -10,7 +10,7 @@ This package contains shared libraries and data files needed to run KDE 4 applic
 HOMEPAGE="http://techbase.kde.org/Projects/kdelibs"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="acl doc fam jpeg2000 openexr spell
+MYOPTIONS="acl avahi doc fam jpeg2000 openexr spell
     ppc_cpu_features: altivec
     x86_cpu_features: mmx sse sse2
 "
@@ -33,6 +33,7 @@ DEPENDENCIES="
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
+        avahi? ( net-dns/avahi )
         sys-apps/dbus [[ note = [ Need dbus with X support ] ]]
         x11-libs/libICE
         x11-libs/libSM
@@ -80,8 +81,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibLZMA=ON
     -DWITH_OpenGL=ON
     -DWITH_OpenSSL=ON
-    # Zeroconf support
-    -DWITH_Avahi=OFF -DWITH_DNSSD=OFF
+    -DWITH_DNSSD=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # Used in solid
@@ -92,6 +92,7 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     ACL
+    Avahi
     FAM
     'jpeg2000 Jasper'
     OpenEXR
