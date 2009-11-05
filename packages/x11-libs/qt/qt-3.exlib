@@ -73,6 +73,7 @@ qt-3_src_prepare() {
             -e "s:\(^QMAKE_CFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CFLAGS}:" \
             -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
             -e "s:\(^QMAKE_LFLAGS_RELEASE[[:space:]]*=\).*:\1 ${LDFLAGS}:" \
+            -e "s:\(^QMAKE_STRIP[[:space:]]*=\).*:\1:" \
             -e "s:\(^QMAKE_RPATH[[:space:]]*=\).*:\1:" \
             -i mkspecs/${platform}*/qmake.conf
 
