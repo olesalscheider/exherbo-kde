@@ -114,6 +114,11 @@ DEPENDENCIES="
             x11-libs/libXtst
         )
     suggestion:
+        kde_parts:kopete? (
+            im_protocols:xmpp? (
+                app-crypt/qca-ossl:2 [[ description = [ Necessary to make SSL secured xmpp connections with kopete ] ]]
+            )
+        )
         kde_parts:krdc? (
             net-remote/rdesktop [[ description = [ Necessary to make RDP connections with krdc ] ]]
         )
