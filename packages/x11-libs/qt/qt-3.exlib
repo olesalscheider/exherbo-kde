@@ -61,24 +61,22 @@ qt-3_pkg_setup() {
 }
 
 qt-3_src_prepare() {
-    default_src_prepare
+    default
 
-    sed -e "s:/lib$:/${libdir}:" \
-        -i mkspecs/${platform}*/qmake.conf || die 'sed for libdir failed'
+    edo sed -i -e "s:/lib$:/${libdir}:" mkspecs/${platform}*/qmake.conf
 
-    sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 $(tc-getCC):" \
-        -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 $(tc-getCXX):" \
-        -e "s:\(^QMAKE_LINK[[:space:]]*=\).*:\1 $(tc-getCXX):" \
-        -e "s:\(^QMAKE_LINK_SHLIB[[:space:]]*=\).*:\1 $(tc-getCXX):" \
-        -e "s:\(^QMAKE_CFLAGS[[:space:]]*=\).*:\1:" \
-        -e "s:\(^QMAKE_CFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CFLAGS}:" \
-        -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
-        -e "s:\(^QMAKE_LFLAGS_RELEASE[[:space:]]*=\).*:\1 ${LDFLAGS}:" \
-        -e "s:\(^QMAKE_RPATH[[:space:]]*=\).*:\1:" \
-        -i mkspecs/${platform}*/qmake.conf || die 'sed for user-defined {C,CXX}FLAGS failed'
+    edo sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 $(tc-getCC):" \
+            -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+            -e "s:\(^QMAKE_LINK[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+            -e "s:\(^QMAKE_LINK_SHLIB[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+            -e "s:\(^QMAKE_CFLAGS[[:space:]]*=\).*:\1:" \
+            -e "s:\(^QMAKE_CFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CFLAGS}:" \
+            -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
+            -e "s:\(^QMAKE_LFLAGS_RELEASE[[:space:]]*=\).*:\1 ${LDFLAGS}:" \
+            -e "s:\(^QMAKE_RPATH[[:space:]]*=\).*:\1:" \
+            -i mkspecs/${platform}*/qmake.conf
 
-    sed -e 's:read[[:space:]]*acceptance:acceptance=yes:' \
-        -i configure || die 'sed for license acceptance failed'
+    edo sed -i -e 's:read[[:space:]]*acceptance:acceptance=yes:' configure
 }
 
 myoption() {
@@ -93,7 +91,7 @@ myoption() {
 
 qt-3_src_configure() {
     # -no-pch gif png zlib
-    STATIC_CONFIGURE_PARAMS=(
+    local myconf=(
         -dlopen-opengl -fast -largefile -shared -sm -stl -tablet -thread -verbose
         -xcursor -xft -xkb -xrandr -xrender -no-sql-ibase -no-sql-odbc
         -system-libjpeg -system-libmng -system-libpng -system-zlib
@@ -101,7 +99,7 @@ qt-3_src_configure() {
     )
 
     # -platform=host, -xplatform=target
-    PLATFORM_CONFIGURE_PARAMS=(
+    myconf+=(
         -platform ${platform} -xplatform ${platform}
         -prefix ${QTBASEDIR} -bindir ${QTBINDIR}
         -libdir ${QTLIBDIR} -L/usr/${libdir}
@@ -110,7 +108,7 @@ qt-3_src_configure() {
         -translationdir ${QTTRANSLATIONDIR} -sysconfdir ${QTSYSCONFDIR}
     )
 
-    CONFIGURE_OPTIONS=(
+    myconf+=(
         $(option debug && echo '-debug' || echo '-release')
         $(option opengl && echo '-enable-module=opengl' || echo '-disable-opengl')
         $(myoption cups)
@@ -124,12 +122,10 @@ qt-3_src_configure() {
     )
 
     if option !doc; then
-        echo "INSTALLS -= htmldocs" >> ./src/qt_install.pri || die "Disabling apidocs failed"
+        echo "INSTALLS -= htmldocs" >> ./src/qt_install.pri
     fi
 
-    echo "./configure ${STATIC_CONFIGURE_PARAMS[@]} ${PLATFORM_CONFIGURE_PARAMS[@]} ${CONFIGURE_OPTIONS[@]}"
-    ./configure ${STATIC_CONFIGURE_PARAMS[@]} ${PLATFORM_CONFIGURE_PARAMS[@]} ${CONFIGURE_OPTIONS[@]} \
-        || die './configure failed'
+    edo ./configure "${myconf[@]}" ${EXTRA_ECONF}
 }
 
 qt-3_src_compile() {
@@ -163,6 +159,6 @@ EOF
     doman doc/man/man1/*
 
     # Unneeded & broken symlink to ${WORKBASE}
-    rm "${IMAGE}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
+    edo rm "${IMAGE}/usr/share/qt3/mkspecs/linux-g++/linux-g++"
 }
 

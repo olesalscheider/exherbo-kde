@@ -171,8 +171,7 @@ qconf4() {
         -demosdir /usr/share/qt4/demos
     )
 
-    echo ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} 1>&2
-    ./configure ${myconf[@]} "$@" ${EXTRA_ECONF} || die_unless_nonfatal "configure failed" || return 1
+    edo ./configure "${myconf[@]}" "$@" ${EXTRA_ECONF}
 }
 
 qt-4_src_prepare() {
@@ -183,33 +182,32 @@ qt-4_src_prepare() {
     # Do not link with -rpath (Gentoo bug #75181).
     # Don't put libraries in X11R6/.
 
-    sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro projects.pro || die "sed on .pro files failed"
-    sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure || die "sed on configure failed"
+    edo sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro projects.pro
+    edo sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure
 
-    sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
-        -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
-        -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-        -e "/CONFIG/s:$: nostrip:" \
-        -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
-        -e "s:X11R6/::" \
-        -i "${WORK}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf || die "sed on qmake.conf failed"
+    edo sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+            -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+            -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+            -e "/CONFIG/s:$: nostrip:" \
+            -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
+            -e "s:X11R6/::" \
+            -i "${WORK}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf
 
-    sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CPPFLAGS} ${CFLAGS} ${ASFLAGS}:" \
-        -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS}:" \
-        -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-        -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
-        -i "${WORK}"/mkspecs/common/g++.conf || die "sed on g++.conf failed"
+    edo sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CPPFLAGS} ${CFLAGS} ${ASFLAGS}:" \
+            -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS}:" \
+            -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+            -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
+            -i "${WORK}"/mkspecs/common/g++.conf
 
-    sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf || die "sed on linux.conf failed"
+    edo sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf
 
-    sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
-        -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
-        -i "${WORK}"/qmake/Makefile.unix || die "sed on Makefile.unix failed"
+    edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
+            -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
+            -i "${WORK}"/qmake/Makefile.unix
 }
 
 qt-4_src_configure() {
-    local myconf=()
-    myconf=(
+    local myconf=(
         -confirm-license
         -opensource
         -fast
@@ -255,7 +253,7 @@ qt-4_src_configure() {
         prefix="-no"
     fi
     for o in ${X_options}; do
-        myconf+=" ${prefix}-${o}"
+        myconf+=( ${prefix}-${o} )
     done
 
     myconf+=(
@@ -289,7 +287,7 @@ qt-4_src_configure() {
         $(qt4_build examples)
     )
 
-    qconf4 ${myconf[@]}
+    qconf4 "${myconf[@]}"
 }
 
 qt-4_src_install() {
@@ -297,11 +295,10 @@ qt-4_src_install() {
 
     local lib libdir=$(get_libdir)
     # remove build dir from libraries
-    sed -i -e "s:${WORK}/lib:/usr/${libdir}/qt4:g" "${IMAGE}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc} \
-        || die "Failed to remove build dir from libraries"
+    edo sed -i -e "s:${WORK}/lib:/usr/${libdir}/qt4:g" "${IMAGE}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc}
 
     # move pkgconfig files out of qt4/ dir
-    mv "${IMAGE}"/usr/${libdir}/qt4/pkgconfig "${IMAGE}"/usr/${libdir}/ || die "Failed to move pkgconfig dir"
+    edo mv "${IMAGE}"/usr/${libdir}/qt4/pkgconfig "${IMAGE}"/usr/${libdir}/
 
     # install symlinks to Qt4 versions of executables that Qt3 also provides. Some buildsystems would fail to find the Qt4 versions without these
     for i in assistant designer linguist lrelease lupdate moc qmake qtconfig uic; do
@@ -315,10 +312,10 @@ LDPATH=/usr/$(get_libdir)/qt4
 EOF
     #  qdoc3 not installed by default - needed for qt-creator
     if option doc ; then
-        if ! ever at_least 4.6.0-beta1 ; then
-            dobin "${WORK}/tools/qdoc3/qdoc3"
-        else
+        if ever at_least 4.6.0-beta1 ; then
             dobin "${WORK}/bin/qdoc3"
+        else
+            dobin "${WORK}/tools/qdoc3/qdoc3"
        fi
     fi
 
