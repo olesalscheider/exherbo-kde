@@ -45,9 +45,8 @@ MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
-    webkit [[ description = [ Build support for the WebKit browser backend ] ]]
 
-    ( bittorrent sqlite webkit ) [[ requires = [ kde_parts: kget ] ]]
+    ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
     vnc [[ requires = [ kde_parts: krdc ] ]]
 
     kde_parts:
@@ -73,7 +72,6 @@ DEPENDENCIES="
             kde/kdebase:${SLOT} [[ note = Konqueror ]]
             bittorrent? ( kde/ktorrent )
             sqlite? ( dev-db/sqlite:3 )
-            webkit? ( kde/webkitkde )
         )
         kde_parts:kopete? (
             kde/qimageblitz
@@ -195,13 +193,13 @@ src_configure() {
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
+        -DWITH_KdeWebKit:BOOL=FALSE \
+        -DWITH_WebKitPart:BOOL=FALSE \
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
         $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
         $(cmake_build bittorrent bittorrent) \
-        $(cmake_with webkit KdeWebKit) \
-        $(cmake_with webkit WebKitPart) \
         $(cmake_with im_protocols:gadu Libgadu) \
         $(cmake_with im_protocols:groupwise) \
         $(cmake_option !im_protocols:jingle NO_JINGLE) \
