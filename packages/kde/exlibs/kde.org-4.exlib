@@ -64,6 +64,9 @@ case ${PV} in
                 SCM_CHECKOUT_TO=${PN}:${SLOT}/scripts
                 SCM_UNPACK_TO=${WORKBASE}/scripts
                 ;;
+            konq-plugins)
+                SCM_SUBPATH=extragear/base/${KDEMODULE}/
+                ;;
             koffice-l10n)
                 die "Add support for ${PN}-scm"
                 ;;
