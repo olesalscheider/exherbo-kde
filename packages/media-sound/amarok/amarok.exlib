@@ -26,9 +26,10 @@ esac
 LICENCES="GPL-2"
 SLOT="0"
 
-MYOPTIONS="ipod mp3tunes mtp
+MYOPTIONS="ipod
     lastfm      [[ description = [ Enable Last.Fm service, including scrobbling, song submissions, and suggested song dynamic playlists ] ]]
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
+    mtp         [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]]
 "
 
 DEPENDENCIES="
@@ -58,7 +59,7 @@ DEPENDENCIES="
             net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
             x11-libs/qt:4[glib]
         )
-        mtp? (   media-libs/libmtp[>=0.3.0] [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]] )
+        mtp? ( media-libs/libmtp[>=0.3.0] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
