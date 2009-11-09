@@ -62,6 +62,10 @@ DEPENDENCIES="
             )
         )
         musicbrainz? ( media-libs/libmusicbrainz:2 )
+    suggestion:
+        kde_parts:kioslave? (
+            media-sound/lame [[ description = [ Support MP3 in the AudioCD kioslave ] ]]
+        )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
