@@ -21,6 +21,7 @@ kipi_plugins:
 
 DEPENDENCIES="
     build+run:
+        app-crypt/qca:2
         dev-libs/expat   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
         dev-libs/libxml2 [[ description = [ Htmlexport ] ]]
         dev-libs/libxslt [[ description = [ Htmlexport ] ]]
