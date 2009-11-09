@@ -64,6 +64,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
 
+        kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
             dev-libs/soprano
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
@@ -119,8 +120,6 @@ DEPENDENCIES="
         kde_parts:krdc? (
             net-remote/rdesktop [[ description = [ Necessary to make RDP connections with krdc ] ]]
         )
-    recommendation:
-        kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 
