@@ -1,0 +1,14 @@
+# Copyright 2009 Timo Gurr
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="playground/multimedia/${PN}"
+
+require scm-svn audex
+
+DOWNLOADS=""
+
+PLATFORMS="~amd64"
+
+WORK=${WORKBASE}/${PNV}
+

@@ -1,0 +1,25 @@
+# Copyright 2009 Timo Gurr
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+MY_PNV="${PNV/_beta/b}"
+
+SUMMARY="KDE4 based CDDA extraction tool"
+DESCRIPTION="Audex is a audio grabber tool for CD-ROM drives based on KDE4."
+HOMEPAGE="http://opensource.maniatek.de/audex/"
+DOWNLOADS="http://opensource.maniatek.de/${PN}/files/${MY_PNV}.tar.bz2"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4
+        kde/kdemultimedia:4
+        media/cdparanoia
+"
+
+WORK=${WORKBASE}/${PN}
+
