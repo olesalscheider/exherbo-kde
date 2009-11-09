@@ -6,7 +6,8 @@ require kdelibs-4
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
     "${FILES}/CMake-strict-dependencies.patch"
+    "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
+    "${FILES}/0001-Backport-compilation-fix-for-glibc-2.11-we-weren-t-i.patch"
 )
 
