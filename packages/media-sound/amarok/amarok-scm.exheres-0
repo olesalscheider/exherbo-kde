@@ -7,6 +7,11 @@ require amarok scm-git
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+"
+
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
 )
