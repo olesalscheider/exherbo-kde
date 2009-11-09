@@ -1,7 +1,21 @@
-# Copyright 2008 Arne Janbu <arnej@ampheus.de>
+# Copyright 2008, 2009 Arne Janbu <arnej@ampheus.de>
 # Distributed under the terms of the GNU General Public License v2
 
 require kdegames-4
 
 PLATFORMS="~amd64 ~x86"
+
+MY_KDE_PARTS+="
+    granatier"
+
+MYOPTIONS="
+    ( gluon [[ description = [ Enable gluon sound backend in granatier ] requires = [ kde_parts: granatier ] ]] )
+    kde_parts: granatier
+"
+
+DEPENDENCIES="
+    build+run:
+        gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend; exherbo package is unwritten ] ]] )
+"
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon' )
 
