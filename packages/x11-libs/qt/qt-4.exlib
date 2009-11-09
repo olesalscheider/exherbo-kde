@@ -21,7 +21,7 @@ UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
 
 LICENCES="|| ( LGPL-2.1 GPL-3 )"
 
-SLOT=${PV:0:1}
+SLOT=$(ever major)
 
 WORK=${WORKBASE}/${MY_PNV}
 
