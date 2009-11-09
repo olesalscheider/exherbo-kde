@@ -1,0 +1,21 @@
+# Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org-4
+
+SUMMARY="KDE official IDE"
+DESCRIPTION="A free, opensource IDE (Integrated Development Environment) for MS Windows, Mac OsX,
+Linux, Solaris and FreeBSD. It is a feature-full, plugin extendable IDE for C/C++ and other
+programing languages. It is based on KDevPlatform, KDE and Qt libraries and is under development
+since 1998."
+HOMEPAGE="http://www.kdevelop.org"
+
+LICENCES="GPL-2 LGPL-2 FDL-1.2"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdevplatform[>=0.9.96]
+        kde/kdelibs:${SLOT}[>=4.3.0]
+        kde/kdebase-workspace[>=4.2.0]
+"
+
