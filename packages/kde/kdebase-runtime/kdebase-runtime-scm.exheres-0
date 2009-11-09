@@ -10,7 +10,7 @@ MYOPTIONS="sftp [[ description = [ SFTP kioslave ] ]]"
 DEPENDENCIES="
     build+run:
         dev-libs/soprano[>=scm]
-        sftp? ( net-libs/libssh[>=0.3.4] )
+        sftp? ( net-libs/libssh[>=0.3.91] )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sftp LibSSH' )
