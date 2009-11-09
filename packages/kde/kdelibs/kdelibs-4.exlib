@@ -154,8 +154,6 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-    kde4_pkg_postrm
-
     # Cleanup ksycoca4 database if we just uninstalled.
     # It's part of contents, but it's modified in pkg_post{inst,rm} phase of a KDE package.
     [[ -n ${REPLACED_BY_ID} ]] || rm /usr/share/kde4/services/ksycoca4
