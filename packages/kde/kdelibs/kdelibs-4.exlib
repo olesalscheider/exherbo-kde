@@ -34,7 +34,7 @@ DEPENDENCIES="
         media-libs/jpeg
         media-libs/libpng
         avahi? ( net-dns/avahi )
-        sys-apps/dbus[X]
+        sys-apps/dbus[X(-)]
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
