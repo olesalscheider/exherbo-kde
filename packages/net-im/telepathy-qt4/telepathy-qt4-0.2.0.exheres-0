@@ -1,0 +1,30 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="A high-level binding for Telepathy, similar to telepathy-glib but for Qt 4"
+HOMEPAGE="http://telepathy.freedesktop.org/"
+DOWNLOADS="${HOMEPAGE}/releases/${PN}/${PNV}.tar.gz"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config[>=0.21]
+        dev-lang/python:*[>=2.5.0]
+    build+run:
+        x11-libs/qt:4[>=4.5.0][dbus][X]
+"
+#   test:
+#       (
+#           net-im/telepathy-glib[>=0.7.28]
+#           x11-libs/qt:4[glib]
+#       ) [[ notes = [ Run more tests ] ]]
+
+# to build an audio/video calling example
+# telepathy-farsight >= 0.0.4 gstreamer-0.10 gstreamer-interfaces-0.10
+
+BUGS_TO="kde@exherbo.org"
+
