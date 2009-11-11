@@ -219,6 +219,7 @@ qt-4_src_configure() {
         -release
         -stl
         -verbose
+        # For crosscompiling: -force-pkg-config
     )
 
     myconf+=(
