@@ -10,6 +10,7 @@ MYOPTIONS="policykit"
 DEPENDENCIES="
     build+run:
         app-crypt/qca:2
+        dev-libs/soprano[>=2.3.67]
         x11-libs/qt:4[>=4.6.0-beta]
         policykit? (
             sys-auth/PolicyKit:0[>=0.8]
