@@ -1,0 +1,25 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+#           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://gitorious.org/qt/qt.git"
+SCM_BRANCH="4.6"
+
+require qt-4 scm-git
+
+DOWNLOADS=""
+
+UPSTREAM_CHANGELOG=""
+
+PLATFORMS="~amd64 ~ppc64 ~x86"
+
+MYOPTIONS="multimedia  [[ description = [ Build the QtMultimedia module ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        sys-sound/alsa-lib
+"
+
+# The alsa dep is optional aside from having an option, afaics.
+# Disabled by default: openvg egl
+
