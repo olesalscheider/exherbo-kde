@@ -9,7 +9,7 @@ DESCRIPTION="The KDE Bluetooth Framework is a set of tools built on top of
 Linux' Bluetooth stack BlueZ. Our goal is to provide easy access to the most
 common Bluetooth profiles and to make data exchange with Bluetooth enabled
 phones and PDAs as straightforward as possible."
-HOMEPAGE="http://bluetooth.kmobiletools.org/"
+HOMEPAGE="http://techbase.kde.org/Kbluetooth"
 DOWNLOADS=""
 
 LICENCES="GPL-2"
