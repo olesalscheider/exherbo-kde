@@ -1,0 +1,53 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="playground/office/${PN}/"
+
+require kde4 scm-svn
+
+SUMMARY="Personal finance manager for KDE"
+DESCRIPTION="
+KMyMoney is the personal finance manager for KDE. It operates in a manner similar to MS Money and
+Quicken and supports different account types, categorisation of expenses, QIF import/export,
+multiple currencies, and online banking.
+"
+HOMEPAGE="http://kmymoney2.sf.net/"
+DOWNLOADS=""
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+# Tries to connect to a running X server
+RESTRICT="test"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        dev-cpp/libxml++:2.6
+        dev-libs/glib:2
+        dev-libs/libxml2:2.0
+        finance/libofx
+        gnome-bindings/glibmm:2.4
+        kde/kdelibs:4
+        kde/kdepimlibs:4
+        media-libs/jpeg
+        media-libs/libpng
+        office-libs/libical
+        x11-misc/shared-mime-info
+        x11-libs/qt:4[qt3support][sql][sqlite]
+"
+
+#FIXME Automagic
+#Gwenhywfar
+#AqBanking
+
+BUGS_TO="kde@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DUSE_OFX_DIRECTCONNECT:BOOL=TRUE
+)
+
