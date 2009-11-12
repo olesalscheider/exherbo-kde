@@ -37,6 +37,7 @@ DEPENDENCIES="
         dev-db/mysql[embedded-server]   [[ description = [ Linked statically, so a build dependency ] ]]
         sys-devel/gettext
     build+run:
+        app-crypt/qca:2
         app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
         dev-libs/soprano[>=2.1.67]
         kde/kdelibs:4[>=4.2.0]
