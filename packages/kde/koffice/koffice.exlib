@@ -65,7 +65,7 @@ DEPENDENCIES="
             eps? ( media-gfx/pstoedit )
             wordperfect? ( office-libs/libwpg )
         )
-        kde_parts:kplato? ( kde/kdepimlibs:4[>=4.1.0] )
+        kde_parts:kplato? ( kde/kdepimlibs:4[>=4.1.0] [[ note = [ Needs libkcal for iCalender filter ] ]] )
         kde_parts:kpresenter? ( dev-libs/boost )
         kde_parts:krita? (
             graphics/exiv2[>=0.16]
@@ -97,10 +97,7 @@ DEPENDENCIES="
         )
         kde_parts:kword? (
             msword? ( office-libs/wv2 )
-            wordperfect? (
-                office-libs/libwpd
-                office-libs/libwpd
-            )
+            wordperfect? ( office-libs/libwpd )
         )
         odf? ( app-crypt/qca:2 )
         spacenavigator? ( sci-libs/libspnav )
