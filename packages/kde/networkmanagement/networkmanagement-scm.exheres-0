@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="playground/base/plasma/applets/networkmanager"
+SCM_SUBPATH="kdereview/${PN}/"
 
 require kde4 scm-svn
 
@@ -10,10 +10,11 @@ SUMMARY="KDE4 Plasma applet and System Settings module for NetworkManager"
 HOMEPAGE="http://plasma.kde.org/"
 DOWNLOADS=""
 
-LICENCES="GPL-2"
+LICENCES="GPL-3 LGPL-3"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
+
 RESTRICT="test"
 
 DEPENDENCIES="
@@ -25,5 +26,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DDBUS_SYSTEM_POLICY_DIR=/etc/dbus-1/system.d
+    # Add wicd, networkmanager options when wicd works:
+    #-DI_KNOW_WICD_BACKEND_IS_BROKEN_AND_I_LIKE_TO_HURT_MYSELF:BOOL:TRUE
 )
 
