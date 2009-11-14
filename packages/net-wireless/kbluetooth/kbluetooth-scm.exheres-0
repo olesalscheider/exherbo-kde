@@ -10,3 +10,8 @@ DOWNLOADS=""
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs-experimental:4.3
+"
+
