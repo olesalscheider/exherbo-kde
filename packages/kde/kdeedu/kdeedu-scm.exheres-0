@@ -4,12 +4,13 @@
 require kdeedu-4
 
 DESCRIPTION+="
-* cantor: Use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
+* cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
+* rocs:        a full featured Graph Editor
 "
 
 PLATFORMS="~amd64 ~x86"
 
-MY_KDE_PARTS+=" cantor"
+MY_KDE_PARTS+=" cantor rocs"
 MYOPTIONS="
 ( R [[ description = [ Compile the 'R' backend for Cantor ] requires = [ kde_parts: cantor ] ]] )
 ( kde_parts: ${MY_KDE_PARTS} )

@@ -23,8 +23,7 @@ DESCRIPTION="
 * kwordquiz:   a powerful way to master new vocabularies
 * marble:      a virtual globe
 * parley:      vocabulary trainer
-* step:        a physics simulator
-"
+* step:        a physics simulator"
 HOMEPAGE="http://edu.kde.org/"
 
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
