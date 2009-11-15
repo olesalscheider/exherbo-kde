@@ -19,6 +19,10 @@ DEPENDENCIES="
         kde/kdelibs:4
         kde/kdemultimedia:4
         media/cdparanoia
+    suggestion:
+        media-libs/flac          [[ note = [ Encode flac files ] ]]
+        media-sound/lame         [[ note = [ Encode mp3 files ] ]]
+        media-sound/vorbis-tools [[ note = [ Encode ogg vorbis files ] ]]
 "
 
 WORK=${WORKBASE}/${PN}
