@@ -11,6 +11,3 @@ DEPENDENCIES="
         kde/qimageblitz
 "
 
-# FIXME: Review after kdevplatform is packaged
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-no_kdevplatform.diff" )
-
