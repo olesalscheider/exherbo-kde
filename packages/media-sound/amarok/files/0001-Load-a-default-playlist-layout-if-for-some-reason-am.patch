@@ -1,0 +1,25 @@
+From 4e365fb1ecb20ccf70b1f13bee52488237ea1e08 Mon Sep 17 00:00:00 2001
+From: Teo Mrnjavac <teo@getamarok.com>
+Date: Sat, 14 Nov 2009 18:04:35 +0100
+Subject: [PATCH 1/2] Load a default playlist layout if for some reason amarokrc contains an invalid CurrentLayout.
+
+---
+ src/playlist/layouts/LayoutManager.cpp |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/src/playlist/layouts/LayoutManager.cpp b/src/playlist/layouts/LayoutManager.cpp
+index b2903ee..541f989 100644
+--- a/src/playlist/layouts/LayoutManager.cpp
++++ b/src/playlist/layouts/LayoutManager.cpp
+@@ -55,6 +55,8 @@ LayoutManager::LayoutManager()
+ 
+     KConfigGroup config = Amarok::config("Playlist Layout");
+     m_activeLayout = config.readEntry( "CurrentLayout", "Default" );
++    if( !layouts().contains( m_activeLayout ) )
++        m_activeLayout = "Default";
+     Playlist::ModelStack::instance()->top()->setGroupingCategory( activeLayout().groupBy() );
+ }
+ 
+-- 
+1.6.5.2.433.g23cdb
+
