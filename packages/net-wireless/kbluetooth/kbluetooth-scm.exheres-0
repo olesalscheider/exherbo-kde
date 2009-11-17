@@ -12,6 +12,9 @@ PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs-experimental:4.3
+        || (
+            kde/kdelibs:4[>=4.3.66]
+            kde/kdelibs-experimental:4.3
+        )
 "
 
