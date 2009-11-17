@@ -1,0 +1,25 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require launchpad [ branch=trunk suffix=bz2 ] cmake
+
+SUMMARY="A set of Qt bindings for libindicate, the indicator system developed by Canonical"
+
+LICENCES="GPL-3 || ( LGPL-3 LGPL-2.1 )"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+# Tests need a running dbus session
+RESTRICT="test"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        dev-libs/libindicate[>=0.2.1]
+        x11-libs/qt:4[X]
+"
+
+BUGS_TO="kde@exherbo.org"
+
