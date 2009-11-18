@@ -44,7 +44,7 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
                    requires = glib ]]
     phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
     qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
-    sql         [[ description = [ Build the SQL plugins ] ]]
+    sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
     platform: amd64 ia64 ppc64 x86
