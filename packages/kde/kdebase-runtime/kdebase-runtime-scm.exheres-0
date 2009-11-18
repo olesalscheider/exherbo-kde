@@ -5,15 +5,19 @@ require kdebase-runtime-4
 
 PLATFORMS="~amd64 ~x86"
 
-MYOPTIONS="sftp [[ description = [ SFTP kioslave ] ]]"
+MYOPTIONS="
+    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    sftp [[ description = [ SFTP kioslave ] ]]
+"
 
 DEPENDENCIES="
     build+run:
         dev-libs/soprano[>=scm]
+        jpeg-rotation? ( graphics/exiv2 )
         sftp? ( net-libs/libssh[>=0.3.91] )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'sftp LibSSH' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
 
 DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.4-optional-xine.patch" )
 
