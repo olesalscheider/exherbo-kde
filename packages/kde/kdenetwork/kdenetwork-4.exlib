@@ -66,6 +66,7 @@ DEPENDENCIES="
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
+            dev-libs/boost
             dev-libs/soprano
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
