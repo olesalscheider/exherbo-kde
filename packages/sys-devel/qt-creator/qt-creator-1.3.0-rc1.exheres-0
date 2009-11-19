@@ -14,14 +14,13 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.6][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.6.0-rc1][dbus][doc][sql][webkit]
 "
 
 BUGS_TO="kimrhh@exherbo.org"
 
 WORK="${WORKBASE}/${PN}-${PN}/"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-tools.patch" )
 EQMAKE4_SOURCES="qtcreator.pro"
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
 
