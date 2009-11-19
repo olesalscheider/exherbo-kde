@@ -1,0 +1,24 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="kdesupport/${PN}/"
+
+require cmake scm-svn
+
+SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
+HOMEPAGE="http://www.kde.org/"
+DOWNLOADS=""
+
+LICENCES="|| ( LGPL-3 LGPL-2.1 )"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[X]
+"
+
+BUGS_TO="kde@exherbo.org"
+
