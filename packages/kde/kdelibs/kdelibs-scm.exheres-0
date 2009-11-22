@@ -6,7 +6,7 @@ require kdelibs-4
 PLATFORMS="~amd64 ~x86"
 
 MYOPTIONS="attica policykit
-    attica [[ description = [ Provide access to OSC providers in get hot new stuff ] ]]"
+    attica [[ description = [ Provide access to OCS providers in get hot new stuff ] ]]"
 
 DEPENDENCIES="
     build+run:
