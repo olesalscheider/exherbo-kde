@@ -48,7 +48,7 @@ DEPENDENCIES="
             dev-lang/python:=
             dev-python/sip[>=4.8_pre]
             dev-python/PyQt4[>=4.5_pre][opengl][sql][webkit]
-            media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Exherimental headers ] ]]
+            media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Experimental headers ] ]]
         )
         ruby? ( dev-lang/ruby:= )
 "
