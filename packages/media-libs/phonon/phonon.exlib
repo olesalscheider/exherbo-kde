@@ -1,0 +1,77 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'phonon-4.2-scm.kdebuild-1' from Genkdesvn, which is:
+#     Copyright 2007-2008 by the individual contributors of the genkdesvn project
+#     Based in part upon the respective ebuild in Gentoo which is:
+#     Copyright 1999-2008 Gentoo Foundation
+
+require multilib cmake
+
+export_exlib_phases src_install
+
+SUMMARY="KDE multimedia API"
+HOMEPAGE="http://phonon.kde.org"
+DOWNLOADS="mirror://kde/Attic/4.2.1/src/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS="
+(
+    gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
+    xine        [[ description = [ Enable the Phonon Xine backend, which is the recommended backend ] ]]
+) [[ number-selected = at-least-one ]]"
+
+DEPENDENCIES="
+    build:
+        kde/automoc4[>=0.9.86]
+    build+run:
+        x11-libs/qt:4[>=4.5.0][dbus][phonon]
+        gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
+        xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
+"
+
+# FIXME Test executables not found, regardless of ECMAKE_BUILD_TYPE
+# RESTRICT="test"
+# Renable building tests when unrestricting
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Fix-version-for-4.3.1-release.patch" )
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Tests are restricted
+    -DPHONON_BUILD_TESTS:BOOL=FALSE
+
+    # The gstreamer backend comes from Qt4
+    -DWITH_{GStreamer,GStreamerPlugins,GLIB2,GObject,LibXml2}:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    GStreamer
+    'gstreamer GStreamerPlugins'
+    'gstreamer GLIB2'
+    'gstreamer GObject'
+    'gstreamer LibXml2'
+    'gstreamer OpenGL'
+    Xine
+    'xine XCB'
+)
+
+phonon_src_install() {
+    cmake_src_install
+
+    # Symlink Phonon.Experimental headers where Qt4 puts its headers, so KDE packages that use them can find them
+    dodir /usr/include/qt4/phonon/Phonon/
+    dosym /usr/include/phonon/experimental /usr/include/qt4/phonon/experimental
+    dosym /usr/include/KDE/Phonon/Experimental /usr/include/qt4/phonon/Phonon/Experimental
+
+    # This is crude ... but it'll do for now
+    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig} || die "Couldn't remove libphonon"
+    rm -r "${IMAGE}"/usr/include/phonon/*.h || die "Couldn't remove libphonon headers"
+    find "${IMAGE}"/usr/include/KDE/Phonon/ -maxdepth 1 -type f -delete || die "Couldn't remove KDE/Phonon headers"
+
+    # Need gstreamer.desktop
+    if option gstreamer; then
+        rm "${IMAGE}"/usr/$(get_libdir)/kde4/plugins/phonon_backend/phonon_gstreamer.so ||
+            die "Couldn't remove libphonon_gstreamer.so"
+        find "${IMAGE}"/usr/$(get_libdir)/ -type d -empty -delete || die "Removing empty dirs failed"
+    fi
+}
+
