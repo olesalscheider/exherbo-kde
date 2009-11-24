@@ -1,0 +1,79 @@
+Source: Debian, http://patch-tracking.debian.net/patch/series/view/amarok/2.0.60+svn935422-2/03_mysqle_link_to_amarok_executable.diff
+    Slightly altered to work on Exherbo
+Upstream: No
+Reason: Link libmysqle statically in /usr/bin/amarok. This works on all arches, without the need for a shared libmysqle, or -fPIC hackery
+
+
+From 3b913d672a1a1aed2769a6ed9597e9db2c24247b Mon Sep 17 00:00:00 2001
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Date: Wed, 6 May 2009 22:51:29 +0200
+Subject: [PATCH] Link libmysqle statically
+
+---
+ src/CMakeLists.txt                             |   13 +++++++++++++
+ src/collection/mysqlecollection/CMakeLists.txt |   14 +++-----------
+ 2 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 35820d5..40bcaa2 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -804,6 +804,19 @@ if(Q_WS_MAC)
+ else(Q_WS_MAC)
+     kde4_add_executable(amarok ${amarok_SRCS})
+     target_link_libraries(amarok ${KDE4_KDEUI_LIBS} amaroklib ${TAGLIB_LIBRARIES} ${TAGLIB-EXTRAS_LIBRARIES} )
++    # Link MySQLe to the executable. Hence -fPIC for libmysqld is not
++    # needed anymore.
++
++    STRING(REPLACE "-Wl,--no-undefined" "" CMAKE_MODULE_LINKER_FLAGS_ALLOW_UNDEFINED ${CMAKE_MODULE_LINKER_FLAGS})
++    SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_ALLOW_UNDEFINED} )
++
++    target_link_libraries(amarok -Wl,-whole-archive ${MYSQL_EMBEDDED_LIBRARIES} -Wl,-no-whole-archive)
++    if(NOT WIN32)
++        if(NOT APPLE)
++            target_link_libraries(amarok crypt pthread dl ssl)
++        endif(NOT APPLE)
++    endif(NOT WIN32)
++    set_target_properties(amarok PROPERTIES LINK_FLAGS "-Wl,--allow-multiple-definition")
+ 
+     install(TARGETS amarok ${INSTALL_TARGETS_DEFAULT_ARGS})
+ endif(Q_WS_MAC)
+diff --git a/src/collection/mysqlecollection/CMakeLists.txt b/src/collection/mysqlecollection/CMakeLists.txt
+index e2975e1..9d2b50d 100755
+--- a/src/collection/mysqlecollection/CMakeLists.txt
++++ b/src/collection/mysqlecollection/CMakeLists.txt
+@@ -60,6 +60,9 @@ SET(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_NOFATALWARN} )
+ STRING(REPLACE "-Wl,--fatal-warnings" "" CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN ${CMAKE_MODULE_LINKER_FLAGS})
+ SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN} )
+ 
++STRING(REPLACE "-Wl,--no-undefined" "" CMAKE_MODULE_LINKER_FLAGS_ALLOW_UNDEFINED ${CMAKE_MODULE_LINKER_FLAGS})
++SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_ALLOW_UNDEFINED} )
++
+ target_link_libraries(amarok_collection-mysqlecollection
+     amaroklib
+     amarokpud
+@@ -67,21 +70,10 @@ target_link_libraries(amarok_collection-mysqlecollection
+     ${KDE4_KIO_LIBS}
+     ${KDE4_THREADWEAVER_LIBRARIES}
+     ${OPENSSL_LIBRARIES}
+-    ${MYSQL_EMBEDDED_LIBRARIES}
+-    ${MYSQL_LIBRARIES}
+-    ${CMAKE_DL_LIBS}
+-    ${ZLIB_LIBRARIES}
+     ${TAGLIB_LIBRARIES}
+     ${TAGLIB-EXTRAS_LIBRARIES}
+ )
+ 
+-if(NOT WIN32)
+-    target_link_libraries(amarok_collection-mysqlecollection crypto ssl)
+-    if(NOT APPLE)
+-        target_link_libraries(amarok_collection-mysqlecollection crypt pthread)
+-    endif(NOT APPLE)
+-endif(NOT WIN32)
+-
+ if(APPLE)
+ 	SET_TARGET_PROPERTIES(amarok_collection-mysqlecollection PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+ endif(APPLE)
+-- 
+1.6.6.rc0.236.ge0b94
+
