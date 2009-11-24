@@ -15,3 +15,8 @@ PLATFORMS="~amd64 ~x86"
 # sopranodsocketclienttest sopranodbusclienttest sopranodbusmultithreadtest
 RESTRICT=test
 
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # tests are RESTRICTed
+    -DSOPRANO_BUILD_TESTS:BOOL=FALSE
+)
+
