@@ -12,7 +12,3 @@ DEPENDENCIES="
         )
 "
 
-# FIXME braino in r4b6a313 CMakeLists.txt:
-# 37 find_package(Strigi) <- remove this one, nothing else needs it besides the .torrent strigianalyzer stuff below:
-# 61 macro_optional_find_package(Strigi) (.torrent files)
-
