@@ -1,5 +1,5 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008, 2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde4
@@ -26,7 +26,8 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="karbon kchart kplato kpresenter krita kspread kword"
 MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kformula kivio"
-MYOPTIONS="eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
+MYOPTIONS="
+    eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     glew [[ description = [ Shader filter plugin for Krita ] ]]
     graphicsmagick [[ description = [ Support for various file formats (including PSD, XCF) through GraphicsMagick in Krita ] ]]
     msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
@@ -107,58 +108,59 @@ DEPENDENCIES="
 RESTRICT="test"
 
 src_configure() {
-    local p cmakeparams
+    local p cmakeparams=(
+        $(kde4_shared_cmake_params)
+        -DWITH_LibXml2=ON
+        -DWITH_LibXslt=ON
+        -DWITH_OpenGL=ON
+        -DWITH_PNG=ON
+        $(cmake_with eps Pstoedit)
+        $(cmake_with GLEW)
+        $(cmake_with GraphicsMagick)
+        $(cmake_with kde_parts:karbon)
+        $(cmake_with kde_parts:krita Blitz)
+        $(cmake_with kde_parts:krita Exiv2)
+        $(cmake_with kde_parts:krita JPEG)
+        $(cmake_with kde_parts:kpresenter Boost)
+        $(cmake_with kde_parts:kplato KdepimLibs)
+        $(cmake_with msword WV2)
+        $(cmake_with odf QCA2)
+        $(cmake_with openexr OpenCTL)
+        $(cmake_with OpenEXR)
+        $(cmake_with panorama GMM)
+        $(cmake_with pdf Poppler)
+        $(cmake_with raw Kdcraw)
+        $(cmake_with solver GSL)
+        $(cmake_with spacenavigator Spnav)
+        $(cmake_with TIFF)
+    )
 
     if option kde_parts:krita || option kde_parts:kspread; then
-        cmakeparams+=" -DWITH_Eigen2=ON"
+        cmakeparams+=( -DWITH_Eigen2=ON )
     else
-        cmakeparams+=" -DWITH_Eigen2=OFF"
+        cmakeparams+=( -DWITH_Eigen2=OFF )
     fi
 
     if option kde_parts:karbon || option kde_parts:kplato; then
-        cmakeparams+=" -DBUILD_kdgantt=ON"
+        cmakeparams+=( -DBUILD_kdgantt=ON )
     else
-        cmakeparams+=" -DBUILD_kdgantt=OFF"
+        cmakeparams+=( -DBUILD_kdgantt=OFF )
     fi
 
     if option wordperfect; then
-        cmakeparams+="
+        cmakeparams+=(
            $(cmake_with kde_parts:karbon WPG)
-           $(cmake_with kde_parts:kword WPD)"
+           $(cmake_with kde_parts:kword WPD)
+       )
     else
-        cmakeparams+=" -DWITH_WPD=OFF -DWITH_WPG=OFF"
+        cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
     fi
 
     for p in ${MY_KDE_PARTS}; do
-        cmakeparams+=" $(cmake_build kde_parts:${p})"
+        cmakeparams+=( $(cmake_build kde_parts:${p}) )
     done
 
-    ecmake \
-        $(kde4_shared_cmake_params) \
-        ${cmakeparams} \
-        -DWITH_LibXml2=ON \
-        -DWITH_LibXslt=ON \
-        -DWITH_OpenGL=ON \
-        -DWITH_PNG=ON \
-        $(cmake_with eps Pstoedit) \
-        $(cmake_with GLEW) \
-        $(cmake_with GraphicsMagick) \
-        $(cmake_with kde_parts:karbon) \
-        $(cmake_with kde_parts:krita Blitz) \
-        $(cmake_with kde_parts:krita Exiv2) \
-        $(cmake_with kde_parts:krita JPEG) \
-        $(cmake_with kde_parts:kpresenter Boost) \
-        $(cmake_with kde_parts:kplato KdepimLibs) \
-        $(cmake_with msword WV2) \
-        $(cmake_with odf QCA2) \
-        $(cmake_with openexr OpenCTL) \
-        $(cmake_with OpenEXR) \
-        $(cmake_with panorama GMM) \
-        $(cmake_with pdf Poppler) \
-        $(cmake_with raw Kdcraw) \
-        $(cmake_with solver GSL) \
-        $(cmake_with spacenavigator Spnav) \
-        $(cmake_with TIFF)
+    ecmake "${cmakeparams[@]}"
 }
 
 src_install() {
