@@ -6,7 +6,7 @@ require kdegames-4
 PLATFORMS="~amd64 ~x86"
 
 MY_KDE_PARTS+="
-    granatier palapeli"
+    granatier kigo palapeli"
 
 MYOPTIONS="
     ( gluon [[ description = [ Enable gluon sound backend in granatier ] requires = [ kde_parts: granatier ] ]] )
