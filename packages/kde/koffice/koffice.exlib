@@ -31,7 +31,12 @@ if ever at_least 2.1.0; then
     MY_KDE_PARTS+=" kformula"
     DEPENDENCIES="
         build+run:
-            kde_parts:krita? ( x11-misc/shared-mime-info [[ note = [ krita/plugins/formats/ofa/ ] ]] )"
+            kde_parts:krita? ( x11-misc/shared-mime-info [[ note = [ krita/plugins/formats/ofa/ ] ]] )
+            kde_parts:kword? ( msword? ( office-libs/wv2[>=0.4.01] ) )"
+else
+    DEPENDENCIES="
+        build+run:
+            kde_parts:kword? ( msword? ( office-libs/wv2[=0.3*] ) )"
 fi
 
 MYOPTIONS="
@@ -99,7 +104,6 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:kword? (
-            msword? ( office-libs/wv2[>=0.4.01] )
             wordperfect? ( office-libs/libwpd )
         )
         odf? ( app-crypt/qca:2 )
