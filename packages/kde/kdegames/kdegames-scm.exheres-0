@@ -6,16 +6,17 @@ require kdegames-4
 PLATFORMS="~amd64 ~x86"
 
 MY_KDE_PARTS+="
-    granatier"
+    granatier palapeli"
 
 MYOPTIONS="
     ( gluon [[ description = [ Enable gluon sound backend in granatier ] requires = [ kde_parts: granatier ] ]] )
-    kde_parts: granatier
+    ( kde_parts: ${MY_KDE_PARTS} )
 "
 
 DEPENDENCIES="
     build+run:
-        gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend; exherbo package is unwritten ] ]] )
+        x11-libs/qt:4[>=4.6.0]
+        gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
         kde_parts:granatier? ( x11-libs/qt:4[multimedia(-)] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon' )
