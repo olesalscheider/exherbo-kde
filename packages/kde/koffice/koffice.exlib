@@ -42,17 +42,18 @@ MYOPTIONS="
     odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     openexr [[ description = [ Support for OpenEXR formatted images in Krita ] ]]
     panorama [[ description = [ Panorama plugin for Krita ] ]]
-    pdf  [[ description = [ Support for PDF (Portable Document Format) files in Krita ] ]]
+    pdf  [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
     raw  [[ description = [ Support for the RAW filter in Krita ] ]]
     solver [[ description = [ Solver plugin for KSpread ] requires = [ kde_parts: kspread ] ]]
     spacenavigator [[ description = [ Space navigator 3D mouse device plugin ] ]]
     tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
-    ( graphicsmagick openexr panorama pdf raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( graphicsmagick openexr panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     kde_parts: ${MY_KDE_PARTS}
 
+    pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon kword ) [[ number-selected = at-least-one ]] )"
 
 #    build: kde_parts:kexi? ( app-arch/bzip2 )
@@ -96,7 +97,6 @@ DEPENDENCIES+="
                 media-libs/openexr
             )
             panorama? ( sci-libs/gmm )
-            pdf? ( app-text/poppler[>=0.6][qt4] )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
             tiff? ( media-libs/tiff )
         )
@@ -109,6 +109,7 @@ DEPENDENCIES+="
             wordperfect? ( office-libs/libwpd )
         )
         odf? ( app-crypt/qca:2 )
+        pdf? ( app-text/poppler[>=0.6][qt4] )
         spacenavigator? ( sci-libs/libspnav )
 "
 
