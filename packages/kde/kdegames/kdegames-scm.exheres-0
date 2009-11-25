@@ -16,6 +16,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend; exherbo package is unwritten ] ]] )
+        kde_parts:granatier? ( x11-libs/qt:4[multimedia(-)] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon' )
 
