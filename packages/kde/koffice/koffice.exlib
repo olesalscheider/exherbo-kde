@@ -16,7 +16,6 @@ DESCRIPTION="
 * Kugar: A powerful formula editor tool for generating business quality reports
 "
 #* Kexi: An integrated environment for creating databases and database applications
-#* KFormula: A powerful formula editor
 #* Kivio: A Visio®-style flowcharting application
 HOMEPAGE="http://www.koffice.org/"
 REMOTE_IDS="freshmeat:${PN}"
@@ -25,7 +24,13 @@ DOWNLOADS="mirror://kde/stable/${PNV}/src/${PNV}.tar.bz2"
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="karbon kchart kplato kpresenter krita kspread kword"
-MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kformula kivio"
+MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kivio"
+
+if ever at_least 2.1.0; then
+    DESCRIPTION+="* KFormula: A powerful formula editor"
+    MY_KDE_PARTS+=" kformula"
+fi
+
 MYOPTIONS="
     eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     glew [[ description = [ Shader filter plugin for Krita ] ]]
