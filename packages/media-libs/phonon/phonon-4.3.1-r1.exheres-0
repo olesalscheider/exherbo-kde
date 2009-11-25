@@ -10,3 +10,5 @@ require phonon
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Fix-version-for-4.3.1-release.patch" )
+
