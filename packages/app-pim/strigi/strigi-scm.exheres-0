@@ -1,0 +1,14 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+SCM_SUBPATH="kdesupport/${PN}/"
+
+require strigi scm-svn
+
+DOWNLOADS=""
+
+PLATFORMS="~amd64 ~x86"
+
