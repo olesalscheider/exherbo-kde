@@ -126,7 +126,6 @@ src_configure() {
         $(cmake_with eps Pstoedit)
         $(cmake_with GLEW)
         $(cmake_with GraphicsMagick)
-        $(cmake_with kde_parts:karbon)
         $(cmake_with kde_parts:krita Blitz)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:krita JPEG)
@@ -151,6 +150,7 @@ src_configure() {
     fi
 
     if ever at_least 2.1.0; then
+        cmakeparams+=( -DTINY:BOOL=FALSE -DWITH_CreateResources:BOOL=FALSE )
         cmakeparams+=( $(cmake_build kde_parts:kplato kdgantt) )
     else
         if option kde_parts:karbon || option kde_parts:kplato; then
