@@ -40,7 +40,7 @@ MYOPTIONS="
     graphicsmagick [[ description = [ Support for various file formats (including PSD, XCF) through GraphicsMagick in Krita ] ]]
     msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
     odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
-    openexr [[ description = [ Support for OpenEXR formatted images in Krita ] ]]
+    openexr [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
     panorama [[ description = [ Panorama plugin for Krita ] ]]
     pdf  [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
     raw  [[ description = [ Support for the RAW filter in Krita ] ]]
@@ -49,7 +49,7 @@ MYOPTIONS="
     tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
-    ( graphicsmagick openexr panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( graphicsmagick panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     kde_parts: ${MY_KDE_PARTS}
 
@@ -92,10 +92,6 @@ DEPENDENCIES+="
             sci-libs/eigen:2[>=2.0]
             glew? ( media-libs/glew )
             graphicsmagick? ( media-gfx/GraphicsMagick[>=1.1&<1.2.5] )
-            openexr? (
-                media-libs/openctl
-                media-libs/openexr
-            )
             panorama? ( sci-libs/gmm )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
             tiff? ( media-libs/tiff )
@@ -109,6 +105,7 @@ DEPENDENCIES+="
             wordperfect? ( office-libs/libwpd )
         )
         odf? ( app-crypt/qca:2 )
+        openexr? ( media-libs/openexr )
         pdf? ( app-text/poppler[>=0.6][qt4] )
         spacenavigator? ( sci-libs/libspnav )
 "
@@ -122,6 +119,7 @@ src_configure() {
         -DWITH_LibXml2=ON
         -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
+        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, unwritten, [>=0.9.10]
         -DWITH_PNG=ON # for the Krita PNG filter
         $(cmake_with eps Pstoedit)
         $(cmake_with GLEW)
@@ -133,7 +131,6 @@ src_configure() {
         $(cmake_with kde_parts:kplato KdepimLibs)
         $(cmake_with msword WV2)
         $(cmake_with odf QCA2)
-        $(cmake_with openexr OpenCTL)
         $(cmake_with OpenEXR)
         $(cmake_with panorama GMM)
         $(cmake_with pdf Poppler)
