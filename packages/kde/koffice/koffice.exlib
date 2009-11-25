@@ -37,7 +37,6 @@ fi
 MYOPTIONS="
     eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     glew [[ description = [ Shader filter plugin for Krita ] ]]
-    graphicsmagick [[ description = [ Support for various file formats (including PSD, XCF) through GraphicsMagick in Krita ] ]]
     msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
     odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     openexr [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
@@ -49,7 +48,7 @@ MYOPTIONS="
     tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
-    ( graphicsmagick panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     kde_parts: ${MY_KDE_PARTS}
 
@@ -91,7 +90,6 @@ DEPENDENCIES+="
             media-libs/jpeg
             sci-libs/eigen:2[>=2.0]
             glew? ( media-libs/glew )
-            graphicsmagick? ( media-gfx/GraphicsMagick[>=1.1&<1.2.5] )
             panorama? ( sci-libs/gmm )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
             tiff? ( media-libs/tiff )
@@ -116,6 +114,7 @@ RESTRICT="test"
 src_configure() {
     local p cmakeparams=(
         $(kde4_shared_cmake_params)
+        -DWITH_GraphicsMagick=OFF # requires GraphicsMagick[>=1.1&<1.2.5] which is unpackaged and obsolete
         -DWITH_LibXml2=ON
         -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
@@ -123,7 +122,6 @@ src_configure() {
         -DWITH_PNG=ON # for the Krita PNG filter
         $(cmake_with eps Pstoedit)
         $(cmake_with GLEW)
-        $(cmake_with GraphicsMagick)
         $(cmake_with kde_parts:krita Blitz)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:krita JPEG)
