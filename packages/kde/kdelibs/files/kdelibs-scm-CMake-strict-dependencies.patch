@@ -1,0 +1,35 @@
+Source: Ingmar Vanhassel <ingmar@exherbo.org>
+Upstream: No, Exherbo-specific change, which isn't fit for upstreaming in its current form.
+Reason: If we explicitly enable a Package, we want to be told that it wasn't found.
+    This patch makes this an error, if WITH_STRICT_DEPENDENCIES is enabled.
+
+From 18c5ad727e788c96fe7bd9034ebbfb28f45013c5 Mon Sep 17 00:00:00 2001
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Date: Fri, 24 Apr 2009 00:27:32 +0200
+Subject: [PATCH] Add WITH_STRICT_DEPENDENCIES
+
+---
+ cmake/modules/MacroOptionalFindPackage.cmake |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/cmake/modules/MacroOptionalFindPackage.cmake b/cmake/modules/MacroOptionalFindPackage.cmake
+index f09952f..c04d868 100644
+--- a/cmake/modules/MacroOptionalFindPackage.cmake
++++ b/cmake/modules/MacroOptionalFindPackage.cmake
+@@ -16,7 +16,12 @@
+ macro (MACRO_OPTIONAL_FIND_PACKAGE _name )
+    option(WITH_${_name} "Search for ${_name} package" ON)
+    if (WITH_${_name})
+-      find_package(${_name} ${ARGN})
++      option(WITH_STRICT_DEPENDENCIES "Handle optional dependencies more strictly" ON)
++      if (WITH_STRICT_DEPENDENCIES)
++          find_package(${_name} ${ARGN} REQUIRED)
++      else (WITH_STRICT_DEPENDENCIES)
++          find_package(${_name} ${ARGN})
++      endif (WITH_STRICT_DEPENDENCIES)
+    else (WITH_${_name})
+       set(${_name}_FOUND)
+       set(${_name}_INCLUDE_DIR)
+-- 
+1.6.6.rc0.236.ge0b94
+
