@@ -78,7 +78,8 @@ DEPENDENCIES+="
         x11-dri/mesa
         kde_parts:karbon? (
             eps? ( media-gfx/pstoedit )
-            wordperfect? ( office-libs/libwpg )
+            wordperfect? ( office-libs/libwpd
+                           office-libs/libwpg )
         )
         kde_parts:kplato? ( kde/kdepimlibs:4[>=4.1.0] [[ note = [ Needs libkcal for iCalender filter ] ]] )
         kde_parts:kpresenter? ( dev-libs/boost
@@ -159,10 +160,12 @@ src_configure() {
     fi
 
     if option wordperfect; then
-        cmakeparams+=(
-           $(cmake_with kde_parts:karbon WPG)
-           $(cmake_with kde_parts:kword WPD)
-       )
+        cmakeparams+=( $(cmake_with kde_parts:karbon WPG) )
+        if ever at_least 2.1.0; then
+            cmakeparams+=( -DWITH_WPD=ON )
+        else
+            cmakeparams+=( $(cmake_with kde_parts:kword WPD) )
+        fi
     else
         cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
     fi
