@@ -12,16 +12,13 @@ DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 LICENCES="LGPL-2"
 SLOT="0"
 MYOPTIONS="debug exif fam inotify qt4"
-# log sqlite
 
-# There are other backends too, but only the clucene backend works well and fast
-# enough, so we hard enable it and disable: hyperestraier, sqlite
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
         dev-libs/libxml2
-        dev-cpp/clucene[>=0.9.19]
+        dev-cpp/clucene[>=0.9.19] [[ note = [ Can probably be an optional dependency ] ]]
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
         qt4? (
@@ -30,26 +27,29 @@ DEPENDENCIES="
         )
 "
 
-src_configure() {
-    # Strigi needs either expat or libxml2.
-    # However libxml2 seems to be required in both cases, linking to 2 xml parsers
-    # is just silly, so we disable to expat.
-    # Enabled: POLLING (only reliable way to check for files changed.)
-
-    ecmake \
-        -DENABLE_EXPAT=OFF \
-        -DENABLE_POLLING=ON \
-        -DFORCE_DEPS=ON \
-        -DENABLE_REGENERATEXSD=OFF \
-        -DENABLE_HYPERESTRAIER=OFF \
-        -DENABLE_SQLITE=Off \
-        -DENABLE_CLUCENE=On \
-        -DENABLE_CPPUNIT=On \
-        $(cmake_enable exif EXIV2) \
-        $(cmake_enable fam FAM) \
-        $(cmake_enable inotify INOTIFY) \
-        $(cmake_enable qt4 DBUS) \
-        $(cmake_enable qt4 QT4)
-#       $(cmake_enable log LOG4CXX)
-}
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Strigi needs either expat or libxml2.  However libxml2 seems to be required in both cases,
+    # linking to 2 xml parsers is just silly, so we disable expat.
+    -DENABLE_EXPAT=OFF
+    # Always enabled, the only reliable way to check for files changed
+    -DENABLE_POLLING=ON
+    -DFORCE_DEPS=ON
+    -DENABLE_REGENERATEXSD=OFF
+    # Only the clucene backend works well and fast enough, so we hard enable clune and
+    # hyperestraier, sqlite
+    -DENABLE_HYPERESTRAIER=OFF
+    -DENABLE_SQLITE=OFF
+    -DENABLE_CLUCENE=ON
+    # Used for tests
+    -DENABLE_CPPUNIT=ON
+    # Analyzers, stream don't us this atm
+    -DENABLE_LOG4CXX=OFF
+)
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
+    'exif EXIV2'
+    'fam FAM'
+    'inotify INOTIFY'
+    'qt4 DBUS'
+    'qt4 QT4'
+)
 
