@@ -27,6 +27,7 @@ DEPENDENCIES="
     build:
         dev-util/pkg-config
     build+run:
+        app-crypt/gpgme
         dev-cpp/libxml++:2.6
         dev-libs/glib:2
         dev-libs/libxml2:2.0
