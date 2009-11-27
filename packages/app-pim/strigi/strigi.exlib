@@ -11,7 +11,10 @@ DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
-MYOPTIONS="debug exif fam inotify qt4"
+MYOPTIONS="dbus debug exif fam inotify qt4
+    qt4 [[ description = [ Build strigiclient, a Qt4 GUI for strigi ]
+           requires = dbus ]]
+"
 
 DEPENDENCIES="
     build:
@@ -19,12 +22,10 @@ DEPENDENCIES="
     build+run:
         dev-libs/libxml2
         dev-cpp/clucene[>=0.9.19] [[ note = [ Can probably be an optional dependency ] ]]
+        dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
-        qt4? (
-            sys-apps/dbus
-            x11-libs/qt:4[dbus][X]
-        )
+        qt4? ( x11-libs/qt:4[dbus][X] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
@@ -46,10 +47,10 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_LOG4CXX=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
+    'dbus DBUS'
     'exif EXIV2'
     'fam FAM'
     'inotify INOTIFY'
-    'qt4 DBUS'
     'qt4 QT4'
 )
 
