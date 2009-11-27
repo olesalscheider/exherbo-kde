@@ -10,6 +10,7 @@ MYOPTIONS="policykit"
 DEPENDENCIES="
     build+run:
         app-crypt/qca:2
+        app-text/shared-desktop-ontologies
         dev-libs/attica
         dev-libs/soprano[>=2.3.67]
         x11-libs/qt:4[>=4.6.0-beta]
@@ -27,6 +28,8 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_experimental:BOOL=FALSE
     -DWITH_LibAttica:BOOL=TRUE
+    -DWITH_QCA2:BOOL=TRUE
+    -DWITH_SharedDesktopOntologies:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'policykit PolkitQt'
