@@ -29,6 +29,7 @@ DEPENDENCIES="
     build+run:
         app-crypt/gpgme
         dev-cpp/libxml++:2.6
+        dev-libs/boost[>=1.33.1]
         dev-libs/glib:2
         dev-libs/libxml2:2.0
         finance/libofx
