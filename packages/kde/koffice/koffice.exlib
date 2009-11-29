@@ -28,6 +28,7 @@ MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kivio"
 
 if ever at_least 2.1.0; then
     DESCRIPTION+="* KFormula: A powerful formula editor"
+    DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
     MY_KDE_PARTS+=" kformula"
     DEPENDENCIES="
         build+run:

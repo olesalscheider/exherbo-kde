@@ -2,7 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 myexparam langs
-myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/src/${PN}"
+if ever at_least 2.1.0 ; then
+    myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}"
+else
+    myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/src/${PN}"
+fi
 
 require kde4 l10n [ langs="$(exparam langs)" base_uri="$(exparam base_uri)" ]
 
