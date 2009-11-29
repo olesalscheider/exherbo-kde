@@ -64,6 +64,9 @@ case ${PV} in
                 SCM_CHECKOUT_TO=${PN}:${SLOT}/scripts
                 SCM_UNPACK_TO=${WORKBASE}/scripts
                 ;;
+            kdevelop|kdevplatform)
+                SCM_SUBPATH=extragear/sdk/${KDEMODULE}/
+                ;;
             konq-plugins)
                 SCM_SUBPATH=extragear/base/${KDEMODULE}/
                 ;;
