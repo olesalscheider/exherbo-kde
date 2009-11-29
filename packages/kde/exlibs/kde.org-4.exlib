@@ -95,7 +95,7 @@ case ${PV} in
                 SCM_SECONDARY_REPOSITORIES="kate_completion_expandingtree"
                 SCM_SVN_EXTERNALS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
                 SCM_kate_completion_expandingtree_REPOSITORY="${SCM_REPOSITORY}/"
-                SCM_kate_completion_expandingtree_SUBPATH="${SCM_SUBPATH/kdevplatform/kdelibs}/kate/completion/expandingtree"
+                SCM_kate_completion_expandingtree_SUBPATH="KDE/kdelibs/kate/completion/expandingtree"
                 ;;
         esac
 
