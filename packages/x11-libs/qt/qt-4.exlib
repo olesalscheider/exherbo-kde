@@ -320,5 +320,32 @@ EOF
        fi
     fi
 
+    insinto /usr/share/pixmaps
+    doins tools/designer/src/designer/images/designer.png
+    newins tools/linguist/linguist/images/icons/linguist-128-32.png linguist.png
+
+    insinto /usr/share/applications
+    hereins designer.desktop <<EOF
+[Desktop Entry]
+Type=Application
+Name=Qt Designer
+GenericName=GUI Designer
+Comment=Design GUIs for Qt applications
+Exec=designer
+Icon=designer
+Categories=Qt;Development;GUIDesigner;
+MimeType=application/x-designer;
+EOF
+    hereins linguist.desktop <<EOF
+[Desktop Entry]
+Type=Application
+Name=Qt Linguist
+GenericName=GUI Translation Tool
+Comment=Add translations to Qt applications
+Exec=linguist
+Icon=linguist
+Categories=Qt;Development;Translation;
+MimeType=application/x-linguist;
+EOF
 }
 
