@@ -16,20 +16,29 @@ DOWNLOADS="mirror://kde/Attic/4.2.1/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS="
-(
+PHONON_BACKENDS="
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     xine        [[ description = [ Enable the Phonon Xine backend, which is the recommended backend ] ]]
-) [[ number-selected = at-least-one ]]"
+"
+ever at_least scm && PHONON_BACKENDS+="pulseaudio [[ description = [ Enable the Phonon Pulseaudio backend ] ]]"
+MYOPTIONS="( ${PHONON_BACKENDS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
+        dev-util/pkg-config
         kde/automoc4[>=0.9.86]
     build+run:
         x11-libs/qt:4[>=4.5.0][dbus][phonon]
         gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
         xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
 "
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        pulseaudio? (
+            dev-libs/glib:2
+            media-sound/pulseaudio[>=0.9.21]
+        )"
+fi
 
 # FIXME Test executables not found, regardless of ECMAKE_BUILD_TYPE
 # RESTRICT="test"
@@ -45,12 +54,15 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     GStreamer
     'gstreamer GStreamerPlugins'
-    'gstreamer GLIB2'
-    'gstreamer GObject'
     'gstreamer LibXml2'
     'gstreamer OpenGL'
     Xine
     'xine XCB'
+)
+ever at_least scm &&
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'pulseaudio GLIB2'
+    'pulseaudio PulseAudio'
 )
 
 phonon_src_prepare() {
