@@ -4,17 +4,22 @@
 
 require qmake4
 
-SUMMARY="Arora is a simple cross platform web browser."
+SUMMARY="Lightweight cross-platform web browser"
 DESCRIPTION="
-Arora is a simple cross platform web browser. Currently Arora is a very basic
-browser whose feature list includes things like 'History' and 'Bookmarks'. When
-using Qt 4.4 Arora does not have support for netscape plugins, but if you use
-qt-snapshot then it will work. But it is small, less than 10,000 lines of code,
-very fast, lean, mean and loads of fun to hack on. Arora and QtWebKit is
-developed to be cross-platform using the Qt library. It was originally created
-as a demo for Qt to help test the QtWebKit component and find API issues and
-bugs before the release. An older version can still be found in Qt's source
-code in the demo/browser directory.
+Arora is a lightweight cross-platform web browser. It uses the QtWebKit port of
+the fully standards-compliant WebKit layout engine. It features fast rendering,
+powerful JavaScript engine and supports Netscape plugins. Apart from the
+must-have features such as bookmarks, history and tabbed browsing Arora boasts:
+ * very fast startup
+ * integration with desktop environments
+ * smart location bar
+ * session management
+ * privacy mode
+ * flexible search engine management
+ * ClickToFlash plugin
+ * download manager
+ * WebInspector, a set of tools for web developers
+ * 30 translations
 "
 HOMEPAGE="http://arora.googlecode.com"
 DOWNLOADS="${HOMEPAGE}/files/${PNV}.tar.gz"
