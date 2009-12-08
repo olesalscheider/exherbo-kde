@@ -11,6 +11,7 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 LICENCES="GPL-2"
 MY_KDE_PARTS="mandelbrot"
 MYOPTIONS="
+    marble [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
 
@@ -28,11 +29,15 @@ DEPENDENCIES="
         x11-libs/libX11
         x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
+        marble? ( kde/kdeedu:4[marble] )
 "
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Marble
+)
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # FIXME Should be optional
-    -DWITH_Marble:BOOL=FALSE
     -DWITH_Nepomuk:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
 )
