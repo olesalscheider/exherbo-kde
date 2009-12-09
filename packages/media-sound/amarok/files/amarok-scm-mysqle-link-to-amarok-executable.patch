@@ -4,21 +4,21 @@ Upstream: No
 Reason: Link libmysqle statically in /usr/bin/amarok. This works on all arches, without the need for a shared libmysqle, or -fPIC hackery
 
 
-From 3b913d672a1a1aed2769a6ed9597e9db2c24247b Mon Sep 17 00:00:00 2001
+From 6af92068fb3f9f56b11643f72b18aa09adec8d76 Mon Sep 17 00:00:00 2001
 From: Ingmar Vanhassel <ingmar@exherbo.org>
 Date: Wed, 6 May 2009 22:51:29 +0200
 Subject: [PATCH] Link libmysqle statically
 
 ---
  src/CMakeLists.txt                             |   13 +++++++++++++
- src/collection/mysqlecollection/CMakeLists.txt |   14 +++-----------
- 2 files changed, 16 insertions(+), 11 deletions(-)
+ src/collection/mysqlecollection/CMakeLists.txt |   13 +++----------
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 35820d5..40bcaa2 100644
+index f148c84..2bc9025 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -804,6 +804,19 @@ if(Q_WS_MAC)
+@@ -808,6 +808,19 @@ if(Q_WS_MAC)
  else(Q_WS_MAC)
      kde4_add_executable(amarok ${amarok_SRCS})
      target_link_libraries(amarok ${KDE4_KDEUI_LIBS} amaroklib ${TAGLIB_LIBRARIES} ${TAGLIB-EXTRAS_LIBRARIES} )
@@ -39,7 +39,7 @@ index 35820d5..40bcaa2 100644
      install(TARGETS amarok ${INSTALL_TARGETS_DEFAULT_ARGS})
  endif(Q_WS_MAC)
 diff --git a/src/collection/mysqlecollection/CMakeLists.txt b/src/collection/mysqlecollection/CMakeLists.txt
-index e2975e1..9d2b50d 100755
+index 0193a5a..9d2b50d 100755
 --- a/src/collection/mysqlecollection/CMakeLists.txt
 +++ b/src/collection/mysqlecollection/CMakeLists.txt
 @@ -60,6 +60,9 @@ SET(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_NOFATALWARN} )
@@ -52,12 +52,11 @@ index e2975e1..9d2b50d 100755
  target_link_libraries(amarok_collection-mysqlecollection
      amaroklib
      amarokpud
-@@ -67,21 +70,10 @@ target_link_libraries(amarok_collection-mysqlecollection
+@@ -67,20 +70,10 @@ target_link_libraries(amarok_collection-mysqlecollection
      ${KDE4_KIO_LIBS}
      ${KDE4_THREADWEAVER_LIBRARIES}
      ${OPENSSL_LIBRARIES}
 -    ${MYSQL_EMBEDDED_LIBRARIES}
--    ${MYSQL_LIBRARIES}
 -    ${CMAKE_DL_LIBS}
 -    ${ZLIB_LIBRARIES}
      ${TAGLIB_LIBRARIES}
@@ -75,5 +74,5 @@ index e2975e1..9d2b50d 100755
  	SET_TARGET_PROPERTIES(amarok_collection-mysqlecollection PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
  endif(APPLE)
 -- 
-1.6.6.rc0.236.ge0b94
+1.6.6.rc1.244.g34c92
 
