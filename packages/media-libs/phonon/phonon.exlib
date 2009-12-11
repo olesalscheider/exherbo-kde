@@ -8,7 +8,7 @@
 
 require multilib cmake
 
-export_exlib_phases src_install
+export_exlib_phases src_prepare src_install
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -52,6 +52,14 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     Xine
     'xine XCB'
 )
+
+phonon_src_prepare() {
+    default
+
+    # Qt's installed .so is called libphonon_gstreamer, not phonon_gstreamer
+    option gstreamer && edo sed -e "/^X-KDE-Library=/s/phonon_gstreamer/lib\0/" \
+        -i gstreamer/gstreamer.desktop
+}
 
 phonon_src_install() {
     cmake_src_install
