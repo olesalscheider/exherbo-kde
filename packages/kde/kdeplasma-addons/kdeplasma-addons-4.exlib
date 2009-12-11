@@ -9,7 +9,7 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 "
 
 LICENCES="GPL-2"
-MY_KDE_PARTS="mandelbrot"
+MY_KDE_PARTS=""
 MYOPTIONS="
     marble [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
     kde_parts: ${MY_KDE_PARTS}
@@ -18,7 +18,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build:
         dev-lang/python:*
-        kde_parts:mandelbrot? ( sci-libs/eigen:2[>=2.0.3] )
+        sci-libs/eigen:2[>=2.0.3]
     build+run:
         dev-libs/boost
         kde/kdelibs:${SLOT}[>=${PV}]
@@ -39,8 +39,5 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
-)
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-Make-mandelbrot-optional.patch
 )
 
