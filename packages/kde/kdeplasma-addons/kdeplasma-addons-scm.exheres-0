@@ -16,8 +16,6 @@ DEPENDENCIES="
         scim? ( inputmethods/scim )
 "
 
-# kdepimlibs is now optional
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Qalculate
     SCIM
