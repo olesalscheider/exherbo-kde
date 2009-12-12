@@ -18,7 +18,6 @@ knotes: yellow notes application
 konsolekalendar: Command line tool for accessing calendar files
 kontact: Integrated PIM application
 korganizer: a calendar-of-events and todo-list manager
-kpilot: Software for syncing PalmOS based handhelds
 ktimetracker: Time tracker
 "
 HOMEPAGE="http://kdepim.kde.org/"
@@ -27,7 +26,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Currently not optional: kmail kmailcvt ksendemail kaddressbook
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
-korganizer kpilot ktimetracker strigi-analyzer"
+korganizer ktimetracker strigi-analyzer"
 
 MYOPTIONS="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
@@ -63,22 +62,26 @@ DEPENDENCIES="
             x11-libs/libX11
             x11-libs/libXScrnSaver
         )
-        kde_parts:kpilot? (
-            app-crypt/qca:2
-            pda/pilot-link[>=0.12]
-        )
         nepomuk? (
             dev-libs/soprano[>=2.1.67]
             kde/kdebase-runtime:${SLOT}[>=${PV}] [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_kmailcvt=ON -DBUILD_ksendemail=ON )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DBUILD_kmailcvt=ON
+    -DBUILD_ksendemail=ON
+
+    # kpilot removed upstream
+    -DBUILD_KPILOT=OFF
+    -DWITH_QCA2=OFF
+    -DWITH_Mal=OFF
+    -DWITH_Pilotlink=OFF
+)
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
     'nepomuk Nepomuk' 'nepomuk Soprano'
     'kde_parts:kleopatra Assuan'
-    'kde_parts:kpilot QCA2' 'kde_parts:kpilot Mal' 'kde_parts:kpilot Pilotlink'
 )
 
