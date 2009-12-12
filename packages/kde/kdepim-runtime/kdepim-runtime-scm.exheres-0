@@ -7,6 +7,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
+        app-text/shared-desktop-ontologies[>=0.2]
         dev-libs/soprano    [[ note = [ raptorparser plugin enabled ] ]]
 "
 
