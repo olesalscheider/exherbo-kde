@@ -6,18 +6,18 @@ require kdeplasma-addons-4
 PLATFORMS="~amd64 ~x86"
 
 MYOPTIONS="
+    kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
     qalculate [[ description = [ Build qalculate applet ] ]]
-    scim [[ description = [ Build kimpanel: multibyte input widget ] ]]
 "
 
 DEPENDENCIES="
     build+run:
+        kimpanel? ( inputmethods/scim )
         qalculate? ( sci-libs/libqalculate )
-        scim? ( inputmethods/scim )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kimpanel SCIM'
     Qalculate
-    SCIM
 )
 
