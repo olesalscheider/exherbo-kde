@@ -29,7 +29,7 @@ DEPENDENCIES="
         x11-libs/libX11
         x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
-        marble? ( kde/kdeedu:4[marble] )
+        marble? ( kde/kdeedu:4[kde_parts:marble] )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
