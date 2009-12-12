@@ -10,5 +10,5 @@ DEPENDENCIES="
         dev-libs/soprano    [[ note = [ raptorparser plugin enabled ] ]]
 "
 
-WORK="${WORK}/akonadi"
+WORK="${WORK}/runtime/"
 
