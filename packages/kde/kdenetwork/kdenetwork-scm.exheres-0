@@ -13,6 +13,6 @@ DEPENDENCIES="
 "
 
 # krdc: TelepathyQt4 [>=0.18] - Telepathy Tubes support
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DTelepathyQt4:BOOL=FALSE )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_TelepathyQt4:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'im_protocols:wlm GIF' )
 

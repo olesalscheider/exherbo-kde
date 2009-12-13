@@ -189,6 +189,7 @@ src_configure() {
     ecmake \
         $(kde4_shared_cmake_params) \
         ${cmakeparams} \
+        "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
         -DWITH_KdeWebKit:BOOL=FALSE \
         -DWITH_WebKitPart:BOOL=FALSE \
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
