@@ -1,7 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde4 sourceforge [ suffix=gz ]
 
 SUMMARY="3-way diff & merge program"
 DESCRIPTION="
@@ -10,8 +10,6 @@ shows the differences line by line and character by character, provides an
 automatic merge facility and an integrated editor for comfortable solving of
 merge conflicts, and has an intuitive graphical user interface.
 "
-HOMEPAGE="http://kdiff3.sourceforge.net/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
