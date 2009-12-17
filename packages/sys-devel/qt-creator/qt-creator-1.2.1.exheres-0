@@ -4,8 +4,8 @@
 require qmake4
 
 SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
-HOMEPAGE="http://www.qtsoftware.com/products/appdev/developer-tools/developer-tools/"
-DOWNLOADS="http://get.qtsoftware.com/qtcreator/${PNV}-src.zip"
+HOMEPAGE="http://www.qt.nokia.com/products/appdev/developer-tools/developer-tools/"
+DOWNLOADS="http://get.qt.nokia.com/qtcreator/${PNV}-src.zip"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
