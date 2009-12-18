@@ -3,6 +3,8 @@
 
 require cmake
 
+export_exlib_phases src_configure
+
 SUMMARY="KIPI (KDE Image Plugin Interface) is an effort to develop a common plugin structure for Digikam, KPhotoAlbum, Showimg and GwenView"
 HOMEPAGE="http://www.kipi-plugins.org"
 DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV}.tar.bz2"
@@ -11,7 +13,7 @@ BUGS_TO="kde@exherbo.org"
 
 LICENCES="ADOBE-DNG GPL-2"
 SLOT="0"
-PLATFORMS="~amd64 ~x86"
+
 MYOPTIONS="
 kipi_plugins:
     ipodexport    [[ description = [ A plugin to export images to an iPod ] ]]
@@ -49,7 +51,7 @@ DEPENDENCIES="
         )
 "
 
-src_configure() {
+kipi-plugins_src_configure() {
     ecmake \
         -DWITH_X11:BOOL=TRUE \
         $(cmake_with kipi_plugins:ipodexport Gpod) \
@@ -59,4 +61,3 @@ src_configure() {
         $(cmake_with kipi_plugins:sane KSane) \
         $(cmake_with kipi_plugins:sane Sane)
 }
-
