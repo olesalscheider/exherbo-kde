@@ -19,24 +19,29 @@ MYOPTIONS="gphoto2"
 
 DEPENDENCIES="
     build+run:
+        dev-libs/glib:2
         kde/kdelibs:4
         kde/kdepimlibs:4
         kde/kdegraphics:4[>=4.1.96][kde_parts:gwenview] [[
-            note = [ We need LibKExiv2, a wrapper around the Exiv2 library ]
+            note = [ For libkexiv2, libkdcraw, libkipi ]
         ]]
+        media-libs/jasper[>=1.7.0]
         media-libs/jpeg
         media-libs/lcms
         media-libs/libpng[>=1.2.7]
+        media-libs/liblqr:1
         media-libs/tiff
         x11-libs/qt:4[X][sql][sqlite]
         gphoto2? ( media-libs/libgphoto2[>=2.4.0] )
-        media-libs/jasper[>=1.7.0]
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( GPHOTO2 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Gphoto2 )
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DWITH_LensFun:BOOL=FALSE
     -DWITH_MarbleWidget:BOOL=FALSE
+
+    # Liquid rescale image editor tool, it's either on, or uses an internal copy
+    -DWITH_GLIB2:BOOL=TRUE
+    -DWITH_Lqr-1:BOOL=TRUE
 )
 
