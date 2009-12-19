@@ -57,6 +57,7 @@ kipi-plugins_src_configure() {
         $(cmake_with kipi_plugins:ipodexport Gpod) \
         $(cmake_with kipi_plugins:ipodexport GLIB2)  \
         $(cmake_with kipi_plugins:ipodexport GObject) \
+        $(cmake_with kipi_plugins:ipodexport Gdk) \
         $(cmake_with kipi_plugins:removeredeyes OpenCV) \
         $(cmake_with kipi_plugins:sane KSane) \
         $(cmake_with kipi_plugins:sane Sane)
