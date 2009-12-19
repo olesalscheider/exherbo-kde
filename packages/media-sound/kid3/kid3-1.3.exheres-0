@@ -1,7 +1,7 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake kde4 sourceforge [ suffix=gz ]
+require cmake kde4 sourceforge [ suffix=tar.gz ]
 
 SUMMARY="A KDE music tagger"
 DESCRIPTION="
