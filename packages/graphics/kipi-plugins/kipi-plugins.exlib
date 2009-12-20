@@ -3,8 +3,6 @@
 
 require cmake
 
-export_exlib_phases src_configure
-
 SUMMARY="KIPI (KDE Image Plugin Interface) is an effort to develop a common plugin structure for Digikam, KPhotoAlbum, Showimg and GwenView"
 HOMEPAGE="http://www.kipi-plugins.org"
 DOWNLOADS="mirror://sourceforge/${PN/-plugins}/${PNV}.tar.bz2"
@@ -51,14 +49,15 @@ DEPENDENCIES="
         )
 "
 
-kipi-plugins_src_configure() {
-    ecmake \
-        -DWITH_X11:BOOL=TRUE \
-        $(cmake_with kipi_plugins:ipodexport Gpod) \
-        $(cmake_with kipi_plugins:ipodexport GLIB2)  \
-        $(cmake_with kipi_plugins:ipodexport GObject) \
-        $(cmake_with kipi_plugins:ipodexport Gdk) \
-        $(cmake_with kipi_plugins:removeredeyes OpenCV) \
-        $(cmake_with kipi_plugins:sane KSane) \
-        $(cmake_with kipi_plugins:sane Sane)
-}
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    "kipi_plugins:ipodexport Gpod"
+    "kipi_plugins:ipodexport GLIB2"
+    "kipi_plugins:ipodexport GObject"
+    "kipi_plugins:ipodexport Gdk"
+    "kipi_plugins:removeredeyes OpenCV"
+    "kipi_plugins:sane KSane"
+    "kipi_plugins:sane Sane"
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS=( "-DWITH_X11:BOOL=TRUE" )
+
