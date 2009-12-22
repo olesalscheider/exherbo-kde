@@ -4,3 +4,4 @@
 require kipi-plugins
 
 PLATFORMS="~amd64 ~x86"
+
