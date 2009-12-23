@@ -21,3 +21,10 @@ http://labs.trolltech.com/blogs/2009/12/01/qt-460-released-early-due-to-good-beh
 # The alsa dep is optional aside from having an option, afaics.
 # Disabled by default: openvg egl
 
+src_prepare() {
+    expatch "${FILES}/0001-Update-phonon-copy-with-changes-from-KDE-svn.patch"
+    # We need to run this, otherwise the new headers added by the previous patch are NOT installed
+    edo env QTDIR=$(pwd) ./bin/syncqt
+    qt-4_src_prepare
+}
+
