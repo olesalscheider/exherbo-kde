@@ -15,7 +15,7 @@ DEPENDENCIES="
 
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
-http://labs.trolltech.com/blogs/2009/11/17/qt-460-release-candidate-1/
+http://labs.trolltech.com/blogs/2009/12/01/qt-460-released-early-due-to-good-behaviour/
 "
 
 # The alsa dep is optional aside from having an option, afaics.
