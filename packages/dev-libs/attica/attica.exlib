@@ -1,0 +1,20 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
+HOMEPAGE="http://www.kde.org/"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
+
+LICENCES="|| ( LGPL-3 LGPL-2.1 )"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[X]
+"
+
+BUGS_TO="kde@exherbo.org"
+
