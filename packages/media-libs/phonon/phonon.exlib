@@ -20,8 +20,8 @@ PHONON_BACKENDS="
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     xine        [[ description = [ Enable the Phonon Xine backend, which is the recommended backend ] ]]
 "
-ever at_least scm && PHONON_BACKENDS+="pulseaudio [[ description = [ Enable the Phonon Pulseaudio backend ] ]]"
 MYOPTIONS="( ${PHONON_BACKENDS} ) [[ number-selected = at-least-one ]]"
+ever at_least scm && MYOPTIONS+=" pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]"
 
 DEPENDENCIES="
     build:
