@@ -11,7 +11,7 @@ DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         app-text/shared-desktop-ontologies
-        dev-libs/attica
+        dev-libs/attica[>=0.1.1]
         dev-libs/soprano[>=2.3.67]
         x11-libs/qt:4[>=4.6.0-beta]
         policykit? (
