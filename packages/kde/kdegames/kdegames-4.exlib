@@ -31,6 +31,9 @@ DEPENDENCIES="
         app-crypt/qca:2
         kde/kdelibs:${SLOT}[>=${PV}]
         x11-libs/qt:4[>=4.2.0][opengl][phonon]
+        kde_parts:kigo? (
+            games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
+        )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
