@@ -48,8 +48,8 @@ if ever at_least 4.3.2; then
     )
 else
     CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DKdeWebKit=FALSE
-        -DWebKitPart=FALSE
+        -DWITH_KdeWebKit=FALSE
+        -DWITH_WebKitPart=FALSE
     )
 fi
 
