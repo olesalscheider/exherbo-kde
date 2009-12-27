@@ -52,10 +52,6 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DWITH_{GStreamer,GStreamerPlugins,GLIB2,GObject,LibXml2}:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    GStreamer
-    'gstreamer GStreamerPlugins'
-    'gstreamer LibXml2'
-    'gstreamer OpenGL'
     Xine
     'xine XCB'
 )
@@ -88,9 +84,8 @@ phonon_src_install() {
 
     # Need gstreamer.desktop
     if option gstreamer; then
-        rm "${IMAGE}"/usr/$(get_libdir)/kde4/plugins/phonon_backend/phonon_gstreamer.so ||
-            die "Couldn't remove libphonon_gstreamer.so"
-        find "${IMAGE}"/usr/$(get_libdir)/ -type d -empty -delete || die "Removing empty dirs failed"
+        insinto /usr/share/kde4/services/phononbackends
+        doins gstreamer/gstreamer.desktop
     fi
 }
 
