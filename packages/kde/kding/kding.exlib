@@ -1,12 +1,14 @@
 # Copyright 2009 Timo Gurr
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde4 sourceforge
 
 SUMMARY="KDing - dictionary lookup program"
-DESCRIPTION="KDing is a KDE port of Ding, a dictionary lookup program."
+DESCRIPTION="
+KDing is a KDE port of Ding, a dictionary lookup program. KDing is intended to translate between
+German and English, but it can be used for every language for which a word list is available for
+Ding."
 HOMEPAGE="http://www.rexi.org/software/${PN}/"
-DOWNLOADS="http://www.rexi.org/downloads/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
