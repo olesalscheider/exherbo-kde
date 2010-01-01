@@ -85,6 +85,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:ark LibLZMA'
     'kde_parts:ark ZLIB'
     'kde_parts:kcalc GMP'
+    'kde_parts:okteta QCA2'
     'kde_parts:printer-applet PythonLibrary' 'kde_parts:printer-applet SIP'
     'python PythonLibs'
 )
