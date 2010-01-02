@@ -1,0 +1,28 @@
+# Copyright 2009, 2010 Yury G. Kudryashov
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+MY_PN="${PN}-1"
+MY_PNV="${MY_PN}-${PV}"
+WORK="${WORKBASE}"/${MY_PNV}
+
+SUMMARY="KDE GUI for PolicyKit"
+DESCRIPTION="FIXME"
+HOMEPAGE="http://www.kde.org"
+DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        sys-auth/polkit-qt:1[>=0.95.1]
+        kde/kdelibs:4
+        sys-apps/dbus[>=1.0]
+"
+
