@@ -180,17 +180,7 @@ src_install() {
     doins "${FILES}"/agent-shutdown.sh
 
     if option python; then
-        find "${IMAGE}" -type f -name '*.pyc' -delete || die "Removing *.pyc files failed with error '$?'"
+        python_bytecompile
     fi
-}
-
-pkg_postrm() {
-    option python && python_mod_cleanup
-    kde4_pkg_postrm
-}
-
-pkg_postinst() {
-    option python && python_mod_compile /usr/share/apps/plasma_scriptengine_python/*.py $(python_get_sitedir)/PyKDE4/*.py
-    kde4_pkg_postinst
 }
 

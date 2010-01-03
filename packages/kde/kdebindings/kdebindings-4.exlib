@@ -3,7 +3,7 @@
 
 require python kde.org-4
 
-export_exlib_phases src_configure src_install pkg_postinst pkg_postrm
+export_exlib_phases src_configure src_install
 
 SUMMARY="KDE Language Bindings"
 DESCRIPTION="
@@ -100,17 +100,7 @@ kdebindings-4_src_install() {
             die "Moving examples in the correct place failed"
         find "${IMAGE}"/usr/share/apps/ -type d -empty -delete || die "Failed to remove empty directory"
     fi
-}
 
-kdebindings-4_pkg_postrm() {
-    option python && python_mod_cleanup
-    kde4_pkg_postrm
-}
-
-kdebindings-4_pkg_postinst() {
-    if option python ; then
-        python_mod_compile $(python_get_sitedir)/PyKDE4/*.py $(python_get_sitedir)/PyQt4/uic/widget-plugins/*.py
-    fi
-    kde4_pkg_postinst
+    option python && python_bytecompile
 }
 
