@@ -15,8 +15,8 @@ DEPENDENCIES="
         dev-libs/soprano[>=2.3.67]
         x11-libs/qt:4[>=4.6.0-beta]
         policykit? (
-            sys-auth/PolicyKit:0[>=0.8]
-            sys-auth/polkit-qt[>=0.9]
+            sys-auth/PolicyKit:0[>=0.9]
+            sys-auth/polkit-qt:0[>=0.9.3]
         )
 "
 
@@ -30,6 +30,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibAttica:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_SharedDesktopOntologies:BOOL=TRUE
+    -DWITH_PolkitQt-1=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'policykit PolkitQt'
