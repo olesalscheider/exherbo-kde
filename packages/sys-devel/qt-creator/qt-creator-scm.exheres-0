@@ -1,32 +1,19 @@
-# Copyright 2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Copyright 2010 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="git://gitorious.org/qt-creator/qt-creator.git"
 
-require qmake4 scm-git
-
-SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
-HOMEPAGE="http://www.qt.nokia.com/products/appdev/developer-tools/developer-tools/"
+require qt-creator scm-git
 
 DOWNLOADS=""
 
 LICENCES="LGPL-2.1"
-SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.6.0-rc1][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.6.0-rc1][X][dbus][doc][sql][webkit]
 "
 
-BUGS_TO="kimrhh@exherbo.org"
-
-EQMAKE4_SOURCES="qtcreator.pro"
-DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
-
-src_install(){
-    default
-    dosym /usr/bin/qtcreator.bin /usr/bin/qt-creator
-}
+UPSTREAM_CHANGELOG=""
 

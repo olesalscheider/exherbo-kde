@@ -1,31 +1,17 @@
 # Copyright 2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qmake4
+require qt-creator
 
-SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
-HOMEPAGE="http://www.qt.nokia.com/products/appdev/developer-tools/developer-tools/"
 DOWNLOADS="http://get.qt.nokia.com/qtcreator/${PNV}-src.zip"
 
-LICENCES="LGPL-2.1"
-SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/qtcreator-1.3/index.html"
 
 DEPENDENCIES="
     build:
         app-arch/unzip
     build+run:
-        x11-libs/qt:4[>=4.6.0-rc1][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.6.0-rc1][X][dbus][doc][sql][webkit]
 "
-
-BUGS_TO="kimrhh@exherbo.org"
-
-EQMAKE4_SOURCES="qtcreator.pro"
-DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
-
-src_install(){
-    default
-    dosym /usr/bin/qtcreator.bin /usr/bin/qt-creator
-}
 
