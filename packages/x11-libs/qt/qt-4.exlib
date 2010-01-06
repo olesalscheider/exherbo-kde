@@ -4,7 +4,7 @@
 # Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require multilib toolchain-funcs
+require multilib
 
 export_exlib_phases src_prepare src_configure src_install
 
@@ -104,7 +104,6 @@ qt4_mkspecs_dir() {
     local spec
 
     spec="linux"
-    CXX=$(tc-getCXX)
     if [[ ${CXX} == *g++* ]]; then
         spec+="-g++"
         option platform:amd64 && spec+="-64"

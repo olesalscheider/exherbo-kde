@@ -3,8 +3,6 @@
 # Based in part upon 'uulib-0.5.20.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require toolchain-funcs
-
 MY_P=uudeview-${PV}
 
 SUMMARY="The uulib library from UUDeview. Supports Base64 (MIME), uuencode, xxencode and binhex coding"
@@ -36,10 +34,6 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-Unsafe-temp-file-creation-Debian-320541.patch"
     "${FILES}/${PNV}-Possible-symlink-attachs-Debian-480972.patch"
 )
-
-pkg_setup() {
-    tc-export CC
-}
 
 src_install() {
     dolib.so libuu.so*

@@ -8,7 +8,7 @@
 #   Bo Ørsted Andresen <zlin@gentoo.org>
 #   Ingmar Vanhassel <ingmar@gentoo.org>
 
-require multilib flag-o-matic toolchain-funcs
+require multilib flag-o-matic
 
 SRC_TYPE="free"
 DOWNLOADS="ftp://ftp.trolltech.com/${PN}/source/${PN}-x11-${SRC_TYPE}-${PV}.tar.bz2"
@@ -22,8 +22,6 @@ export_exlib_phases pkg_pretend pkg_setup src_prepare src_configure \
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
 set_platform() {
-    CXX=$(tc-getCXX)
-
     case ${CXX} in
         *g++*) platform_cxx="g++" ;;
         *icpc*) platform_cxx="icc" ;;
@@ -65,10 +63,10 @@ qt-3_src_prepare() {
 
     edo sed -i -e "s:/lib$:/${libdir}:" mkspecs/${platform}*/qmake.conf
 
-    edo sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 $(tc-getCC):" \
-            -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 $(tc-getCXX):" \
-            -e "s:\(^QMAKE_LINK[[:space:]]*=\).*:\1 $(tc-getCXX):" \
-            -e "s:\(^QMAKE_LINK_SHLIB[[:space:]]*=\).*:\1 $(tc-getCXX):" \
+    edo sed -e "s:\(^QMAKE_CC[[:space:]]*=\).*:\1 ${CC}:" \
+            -e "s:\(^QMAKE_CXX[[:space:]]*=\).*:\1 ${CXX}:" \
+            -e "s:\(^QMAKE_LINK[[:space:]]*=\).*:\1 ${CXX}:" \
+            -e "s:\(^QMAKE_LINK_SHLIB[[:space:]]*=\).*:\1 ${CXX}:" \
             -e "s:\(^QMAKE_CFLAGS[[:space:]]*=\).*:\1:" \
             -e "s:\(^QMAKE_CFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CFLAGS}:" \
             -e "s:\(^QMAKE_CXXFLAGS_RELEASE[[:space:]]*=\).*:\1 ${CXXFLAGS}:" \
