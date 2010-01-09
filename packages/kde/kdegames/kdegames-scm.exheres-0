@@ -19,5 +19,5 @@ DEPENDENCIES="
         gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
         kde_parts:granatier? ( x11-libs/qt:4[multimedia(-)] )
 "
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon GluonCommon' 'Gluon KAL' 'Gluon Eigen2' )
 
