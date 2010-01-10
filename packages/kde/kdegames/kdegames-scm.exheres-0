@@ -16,7 +16,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4[>=4.6.0-rc1]
-        gluon? ( games-libs/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
+        gluon? ( dev-games/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
         kde_parts:granatier? ( x11-libs/qt:4[multimedia(-)] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'Gluon GluonCommon' 'Gluon KAL' 'Gluon Eigen2' )
