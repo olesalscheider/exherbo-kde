@@ -157,6 +157,7 @@ qconf4() {
     # paths
     myconf=(
         -arch ${myarch}
+        -platform $(qt4_mkspecs_dir)
         -prefix /usr
         -bindir /usr/bin
         -docdir /usr/share/doc/${PNVR}
