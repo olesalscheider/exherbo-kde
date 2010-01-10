@@ -13,14 +13,12 @@ UPSTREAM_RELEASE_NOTES="http://www.kdenlive.org/users/j-b-m/kdenlive-$(ever rang
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="nls"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        nls? (
-            kde/kdesdk[kde_parts:scripts]
-            sys-devel/gettext
-        )
+        kde/kdesdk[kde_parts:scripts]
+        sys-devel/gettext
     build+run:
         kde/kdebase:4 [[ note = [ Needs Nepomuk ] ]]
         media/ffmpeg

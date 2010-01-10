@@ -37,7 +37,6 @@ MYOPTIONS="
     ipc [[ description = [ Enable support for IPC between ${PN} processes ] ]]
     ipv6
     kde [[ description = [ Enable the KDE (K Desktop Enviroment; the one true Desktop Environment) integration ] ]]
-    nls
     perl
     phonon [[ description = [ Enable support for the Phonon, KDE4's multimedia API, for sound ] ]]
     python
@@ -48,7 +47,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        nls? ( sys-devel/gettext )
+        sys-devel/gettext
         doc? (
            app-doc/doxygen
            dev-lang/perl
@@ -70,6 +69,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
         -DCOEXISTENCE=1
         -DWANT_PIZZA=1
         -DWANT_BEER=1
+        -DWANT_GETTEXT=1
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
@@ -83,7 +83,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
         "ipc IPC"
         "ipv6 IPV6"
         "kde KDE4"
-        "nls GETTEXT"
         "perl PERL"
         "phonon PHONON"
         "python PYTHON"
