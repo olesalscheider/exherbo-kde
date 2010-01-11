@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -130,7 +130,7 @@ src_install() {
 
     # Number goes _down_ for a new KDE major version
     hereenvd 44kde-${SLOT} <<EOF
-CONFIG_PROTECT="/usr/share/config /usr/shutdown /usr/env"
+CONFIG_PROTECT="/usr/shutdown /usr/env"
 KDEDIRS="/usr/local:/usr"
 XDG_DATA_DIRS="/usr/local/share:/usr/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
