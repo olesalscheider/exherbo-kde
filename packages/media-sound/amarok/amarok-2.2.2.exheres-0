@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require amarok
@@ -9,7 +9,5 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
-    "${FILES}/0001-Load-a-default-playlist-layout-if-for-some-reason-am.patch"
-    "${FILES}/0002-Revert-to-a-default-playlist-layout-on-dialog-reject.patch"
 )
 
