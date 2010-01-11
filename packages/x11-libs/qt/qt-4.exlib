@@ -6,7 +6,7 @@
 
 require multilib
 
-export_exlib_phases src_prepare src_configure src_install
+export_exlib_phases src_prepare src_configure src_install src_compile
 
 myexparam pn=${MY_PN:-${PN}}
 myexparam pv=${MY_PV:-${PV}}
@@ -289,6 +289,13 @@ qt-4_src_configure() {
     )
 
     qconf4 "${myconf[@]}"
+}
+
+qt-4_src_compile() {
+    # http://bugreports.qt.nokia.com/browse/QTBUG-5471
+    export LD_LIBRARY_PATH="${WORK}/lib${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}"
+
+    default
 }
 
 qt-4_src_install() {
