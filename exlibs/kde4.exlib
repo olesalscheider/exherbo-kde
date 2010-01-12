@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 #
 # Use this exlib for packages that use KDE 4's CMake buildsystem
@@ -53,6 +53,8 @@ kde4_src_configure() {
 
 buildsycoca4() {
     if [[ ${ROOT} == '/' && -x /usr/bin/kbuildsycoca4 ]]; then
+        sydboxcmd 'net/whitelist/bind/unix-abstract:///tmp/dbus-*'
+
         echo -n "Starting dbus session for kbuildsycoca4, "
         eval "$(dbus-launch --sh-syntax)"
         if [[ -n ${DBUS_SESSION_BUS_PID} ]]; then
@@ -65,6 +67,8 @@ buildsycoca4() {
         else
             eerror "dbus failed, not running kbuildsycoca4 --global --noincremental"
         fi
+
+        sydboxcmd 'net/unwhitelist/bind/unix-abstract:///tmp/dbus-*'
     else
         echo "kbuildsycoca4: Update skipped: \${ROOT}=${ROOT}. You need to run \`/usr/bin/kbuildsycoca4 --global --noincremental\` in your ROOT manually."
     fi
