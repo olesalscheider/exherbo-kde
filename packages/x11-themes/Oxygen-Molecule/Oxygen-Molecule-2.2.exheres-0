@@ -7,7 +7,7 @@ Oxygen-Molecule is a theme for GTK+ applications to provide a uniform look when
 used under the KDE 4.3 desktop environment.
 "
 HOMEPAGE="http://www.kde-look.org/content/show.php/${PN}+KDE+&+GTK++unified+theme?content=103741"
-DOWNLOADS="http://www.kde-look.org/CONTENT/content-files/103741-${PN}_${PV}_theme.tar.gz"
+DOWNLOADS="http://www.kde-look.org/CONTENT/content-files/103741-${PN}_${PV}_theme.tar.gz -> ${PN}_${PV}_theme.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -39,6 +39,6 @@ src_install() {
     insinto /usr/share/themes/${PN}
     doins -r kde43-oxygen-molecule/*
 
-    dodoc "Oxygen-Molecule 2.1 setup guide.pdf"
+    dodoc "Oxygen-Molecule 2.2 setup guide.pdf"
 }
 
