@@ -39,6 +39,6 @@ src_install() {
     insinto /usr/share/themes/${PN}
     doins -r kde43-oxygen-molecule/*
 
-    dodoc "Oxygen-Molecule 2.2 setup guide.pdf"
+    dodoc "${PN} ${PV} setup guide.pdf"
 }
 
