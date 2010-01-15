@@ -1,7 +1,7 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require launchpad [ branch=trunk suffix=bz2 ] cmake
+require launchpad [ branch=trunk suffix='tar.bz2' ] cmake
 
 SUMMARY="A set of Qt bindings for libindicate, the indicator system developed by Canonical"
 
