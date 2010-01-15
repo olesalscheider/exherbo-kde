@@ -14,31 +14,19 @@ DESCRIPTION="
 * KPlato: An integrated project management and planning tool
 * KChart: An integrated graph and chart drawing tool
 * Kugar: A powerful formula editor tool for generating business quality reports
+* KFormula: A powerful formula editor
 "
 #* Kexi: An integrated environment for creating databases and database applications
 #* Kivio: A Visio®-style flowcharting application
 HOMEPAGE="http://www.koffice.org/"
 REMOTE_IDS="freshmeat:${PN}"
-DOWNLOADS="mirror://kde/stable/${PNV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MY_KDE_PARTS="karbon kchart kplato kpresenter krita kspread kword"
+MY_KDE_PARTS="karbon kchart kformula kplato kpresenter krita kspread kword"
 MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kivio"
 
-if ever at_least 2.1.0; then
-    DESCRIPTION+="* KFormula: A powerful formula editor"
-    DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
-    MY_KDE_PARTS+=" kformula"
-    DEPENDENCIES="
-        build+run:
-            kde_parts:krita? ( x11-misc/shared-mime-info [[ note = [ krita/plugins/formats/ofa/ ] ]] )
-            kde_parts:kword? ( msword? ( office-libs/wv2[>=0.4.01] ) )"
-else
-    DEPENDENCIES="
-        build+run:
-            kde_parts:kword? ( msword? ( office-libs/wv2[=0.3*] ) )"
-fi
 
 MYOPTIONS="
     eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
@@ -95,6 +83,7 @@ DEPENDENCIES+="
             kde/qimageblitz
             media-libs/jpeg
             sci-libs/eigen:2[>=2.0]
+            x11-misc/shared-mime-info [[ note = [ krita/plugins/formats/ofa/ ] ]]
             glew? ( media-libs/glew )
             panorama? ( sci-libs/gmm )
             raw? ( kde/kdegraphics:4[>=4.1.0] )
@@ -105,6 +94,7 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:kword? (
+            msword? ( office-libs/wv2[>=0.4.01] )
             wordperfect? ( office-libs/libwpd )
         )
         odf? ( app-crypt/qca:2 )
@@ -149,24 +139,12 @@ src_configure() {
         cmakeparams+=( -DWITH_Eigen2=OFF )
     fi
 
-    if ever at_least 2.1.0; then
-        cmakeparams+=( -DTINY:BOOL=FALSE -DWITH_CreateResources:BOOL=FALSE )
-        cmakeparams+=( $(cmake_build kde_parts:kplato kdgantt) )
-    else
-        if option kde_parts:karbon || option kde_parts:kplato; then
-            cmakeparams+=( -DBUILD_kdgantt=ON )
-        else
-            cmakeparams+=( -DBUILD_kdgantt=OFF )
-        fi
-    fi
+    cmakeparams+=( -DTINY:BOOL=FALSE -DWITH_CreateResources:BOOL=FALSE )
+    cmakeparams+=( $(cmake_build kde_parts:kplato kdgantt) )
 
     if option wordperfect; then
         cmakeparams+=( $(cmake_with kde_parts:karbon WPG) )
-        if ever at_least 2.1.0; then
-            cmakeparams+=( -DWITH_WPD=ON )
-        else
-            cmakeparams+=( $(cmake_with kde_parts:kword WPD) )
-        fi
+        cmakeparams+=( -DWITH_WPD=ON )
     else
         cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
     fi
