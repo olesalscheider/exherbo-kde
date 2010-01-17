@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 #
 # Based in part upon 'kde4-base.eclass', 'kde4-functions.eclass', 'kde4-meta.eclass'
@@ -32,8 +32,6 @@ REMOTE_IDS="freshmeat:kde"
 case ${PV} in
     4.3.@(1|2|3|4))
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
-    4.3.0)
-        UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/4.3/" ;;
     4.@(2|3).@(6|7|8|9)*)
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
     4.*)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
