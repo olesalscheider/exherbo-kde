@@ -27,5 +27,7 @@ DEPENDENCIES="
         x11-misc/shared-mime-info[>=0.23]
 "
 
+# FIXME Experimental PostgreSQL support for [>=1.2.90]
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DAKONADI_BUILD_TESTS:BOOL=TRUE )
 
