@@ -11,7 +11,8 @@ DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
-MYOPTIONS="dbus debug exif fam inotify qt4
+MYOPTIONS="clucene dbus debug exif fam inotify qt4
+    clucene [[ description = [ Indexing support for strigi, using clucene ] ]]
     qt4 [[ description = [ Build strigiclient, a Qt4 GUI for strigi ]
            requires = dbus ]]
 "
@@ -21,7 +22,7 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         dev-libs/libxml2
-        dev-cpp/clucene[>=0.9.19] [[ note = [ Can probably be an optional dependency ] ]]
+        clucene? ( dev-cpp/clucene[>=0.9.21b] )
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
@@ -36,17 +37,16 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_POLLING=ON
     -DFORCE_DEPS=ON
     -DENABLE_REGENERATEXSD=OFF
-    # Only the clucene backend works well and fast enough, so we hard enable clune and
-    # hyperestraier, sqlite
+    # Only the clucene backend works well and fast enough, so we disable hyperestraier, sqlite
     -DENABLE_HYPERESTRAIER=OFF
     -DENABLE_SQLITE=OFF
-    -DENABLE_CLUCENE=ON
     # Used for tests
     -DENABLE_CPPUNIT=ON
     # Analyzers, stream don't us this atm
     -DENABLE_LOG4CXX=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
+    'clucene CLUCENE'
     'dbus DBUS'
     'exif EXIV2'
     'fam FAM'
