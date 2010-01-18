@@ -1,5 +1,5 @@
 # Copyright 2008 Arne Janbu <arnej@ampheus.de>
-# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org-4
@@ -31,9 +31,6 @@ DEPENDENCIES="
         app-crypt/qca:2
         kde/kdelibs:${SLOT}[>=${PV}]
         x11-libs/qt:4[>=4.2.0][opengl][phonon]
-        kde_parts:kigo? (
-            games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
-        )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
