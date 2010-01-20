@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'soprano-2.0.2.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
@@ -26,7 +26,7 @@ DEPENDENCIES="
     build+run:
         dev-cpp/clucene[>=0.9.19]
         dev-libs/rasqal[>=0.9.15]
-        dev-libs/redland[>=1.0.6][berkdb]
+        dev-libs/redland[>=1.0.6]
         media-libs/raptor[>=1.4.16]
         x11-libs/qt:4[dbus]
 "
