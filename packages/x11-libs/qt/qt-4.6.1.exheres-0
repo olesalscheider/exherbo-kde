@@ -4,6 +4,10 @@
 
 require qt-4 [ pn='qt-everywhere-opensource-src' ]
 
+DOWNLOADS+="
+    http://dev.exherbo.org/~ingmar/distfiles/qt/qt-4.6.1-updated-phonon.tar.bz2
+"
+
 PLATFORMS="~amd64 ~ppc64 ~x86"
 
 MYOPTIONS="multimedia  [[ description = [ Build the QtMultimedia module ] ]]"
@@ -15,14 +19,14 @@ DEPENDENCIES="
 
 UPSTREAM_CHANGELOG=""
 UPSTREAM_RELEASE_NOTES="
-http://labs.trolltech.com/blogs/2009/12/01/qt-460-released-early-due-to-good-behaviour/
+http://labs.trolltech.com/blogs/2010/01/19/qt-461-released/
 "
 
 # The alsa dep is optional aside from having an option, afaics.
 # Disabled by default: openvg egl
 
 src_prepare() {
-    expatch "${FILES}/0001-Update-phonon-copy-with-changes-from-KDE-svn.patch"
+    expatch "${WORKBASE}"/000?-*.patch
     # We need to run this, otherwise the new headers added by the previous patch are NOT installed
     edo env QTDIR=$(pwd) ./bin/syncqt
     qt-4_src_prepare
