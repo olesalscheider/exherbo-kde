@@ -42,10 +42,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kdat:BOOL=FALSE
     # KDE control Center Module to configure Network settings
     # Needs GNOME system tools, http://www.gnome.org/projects/gst/
-    -DBUILD_knetworkconf:BOOL=FALSE
-    # Manager for software packages on Debian or RPM based systems
-    # Needs the SMART package manager, but ours is smarter
-    -DBUILD_kpackage:BOOL=FALSE
+   -DBUILD_knetworkconf:BOOL=FALSE
     # Editor for System V startup schemes
     # Disabled upstream, probably not compatible with our init scripts
     -DBUILD_ksysv:BOOL=FALSE
