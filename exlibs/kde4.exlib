@@ -76,10 +76,14 @@ buildsycoca4() {
 
 kde4_pkg_postrm() {
     # If this is not an uninstall, buildsycoca4 will be run in pkg_postinst().
-    [[ -n ${REPLACED_BY_ID} ]] || buildsycoca4
+    if [[ -n ${REPLACED_BY_ID} ]] ; then
+        unset DISPLAY
+        buildsycoca4
+    fi
 }
 
 kde4_pkg_postinst() {
+    unset DISPLAY
     buildsycoca4
 }
 
