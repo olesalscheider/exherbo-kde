@@ -17,8 +17,3 @@ DEPENDENCIES="
         )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'telepathy TelepathyQt4'
-    'im_protocols:wlm GIF'
-)
-
