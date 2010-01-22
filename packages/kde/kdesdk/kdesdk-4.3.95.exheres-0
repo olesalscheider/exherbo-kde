@@ -1,0 +1,19 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdesdk-4
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        kde_parts:kate? (
+            x11-misc/shared-mime-info[>=0.30]
+        )
+        kde_parts:lokalize? (
+            app-spell/hunspell
+        )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:lokalize HUNSPELL' )
+
