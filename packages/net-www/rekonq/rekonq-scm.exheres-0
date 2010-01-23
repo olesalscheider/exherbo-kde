@@ -1,0 +1,9 @@
+# Copyright 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://gitorious.org/${PN}/mainline.git"
+
+require rekonq scm-git
+
+PLATFORMS="~amd64"
+
