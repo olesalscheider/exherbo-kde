@@ -12,7 +12,7 @@ DEPENDENCIES="
         kde/qimageblitz
         python? (
             dev-python/sip[>=4.9.0]
-            dev-python/PyQt4[>=4.7.0]
+            dev-python/PyQt4[>=4.7]
         )
 "
 
