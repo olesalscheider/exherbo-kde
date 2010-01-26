@@ -109,6 +109,8 @@ RESTRICT="test"
 src_configure() {
     local p cmakeparams=(
         $(kde4_shared_cmake_params)
+        -DTINY:BOOL=FALSE
+        -DWITH_CreateResources:BOOL=FALSE
         -DWITH_GraphicsMagick=OFF # requires GraphicsMagick[>=1.1&<1.2.5] which is unpackaged and obsolete
         -DWITH_KdepimLibs=ON # required by KPlato and the KDE address book integration
         -DWITH_LibXml2=ON
@@ -116,6 +118,7 @@ src_configure() {
         -DWITH_OpenGL=ON
         -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, unwritten, [>=0.9.10&<=0.9.12]
         -DWITH_PNG=ON # for the Krita PNG filter
+        $(cmake_build kde_parts:kplato kdgantt)
         $(cmake_with eps Pstoedit)
         $(cmake_with GLEW)
         $(cmake_with kde_parts:krita Blitz)
@@ -139,8 +142,6 @@ src_configure() {
         cmakeparams+=( -DWITH_Eigen2=OFF )
     fi
 
-    cmakeparams+=( -DTINY:BOOL=FALSE -DWITH_CreateResources:BOOL=FALSE )
-    cmakeparams+=( $(cmake_build kde_parts:kplato kdgantt) )
 
     if option wordperfect; then
         cmakeparams+=( $(cmake_with kde_parts:karbon WPG) )
@@ -160,7 +161,6 @@ src_install() {
     cmake_src_install
 
     # FIXME should be fixed properly upstream
-    rm "${IMAGE}"/usr/share/applications/kde4/koffice.desktop ||
-        die "Couldn't remove bad .desktop file"
+    edo rm "${IMAGE}"/usr/share/applications/kde4/koffice.desktop
 }
 
