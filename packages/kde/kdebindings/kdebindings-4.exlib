@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require python kde.org-4
@@ -38,8 +38,9 @@ DEPENDENCIES="
     build+run:
         dev-libs/soprano[>=2.3.0]
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         server-pim/akonadi[>=1.1.0]
-        x11-libs/qt:4[webkit]
+        x11-libs/qt:4[X][dbus][webkit]
         policykit? (
             sys-auth/PolicyKit:0[>=0.8]
             sys-auth/polkit-qt[>=0.9]
@@ -65,6 +66,7 @@ kdebindings-4_src_configure() {
         -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
         # Optional bindings to unwritten packages
         -DWITH_QScintilla:BOOL=FALSE
+        # These require Qwt, we can optionally enable these if there's a user for them
         -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
         # Don't think anything currently uses okular bindings, could be made optional
         -DWITH_Okular:BOOL=FALSE
