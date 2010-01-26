@@ -18,6 +18,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         kde/kdemultimedia:${SLOT}
+        media-libs/libdiscid
         media-libs/taglib
     suggestion:
         media-libs/flac          [[ note = [ Encode flac files ] ]]
