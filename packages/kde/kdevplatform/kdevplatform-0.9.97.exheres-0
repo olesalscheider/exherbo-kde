@@ -1,0 +1,9 @@
+# Copyright 2010 Yury G. Kudryashov <urkud@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdevplatform-4
+
+PLATFORMS="~amd64"
+
+DOWNLOADS="mirror://kde/unstable/kdevelop/3.9.97/src/${PNV}.tar.bz2"
+
