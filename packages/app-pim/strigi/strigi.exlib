@@ -42,15 +42,8 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_SQLITE=OFF
     # Used for tests
     -DENABLE_CPPUNIT=ON
-    # Analyzers, stream don't us this atm
+    # Analyzers, stream don't use this atm
     -DENABLE_LOG4CXX=OFF
 )
-CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
-    'clucene CLUCENE'
-    'dbus DBUS'
-    'exif EXIV2'
-    'fam FAM'
-    'inotify INOTIFY'
-    'qt4 QT4'
-)
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( CLUCENE DBUS 'exif EXIV2' FAM INOTIFY QT4 )
 
