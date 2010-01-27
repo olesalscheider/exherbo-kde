@@ -39,11 +39,12 @@ if ever at_least 4.3.95; then
             dev-libs/soprano[>=2.3.70]
             indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
+else
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk=ON -DWITH_Soprano=ON )
 fi
 
 MYOPTIONS+="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
-    nepomuk [[ description = [ Desktop-wide tagging support for Akonadi and Kmail ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -65,6 +66,8 @@ DEPENDENCIES+="
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+        dev-libs/soprano[>=2.1.67]
+        kde/kdebase-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
@@ -74,10 +77,6 @@ DEPENDENCIES+="
         kde_parts:ktimetracker? (
             x11-libs/libX11
             x11-libs/libXScrnSaver
-        )
-        nepomuk? (
-            dev-libs/soprano[>=2.1.67]
-            kde/kdebase-runtime:${SLOT}[>=${PV}] [[ note = [ Nepomuk, does disabling this work properly? ] ]]
         )
 "
 
@@ -94,7 +93,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
-    Nepomuk 'nepomuk Soprano'
     'kde_parts:kleopatra Assuan'
 )
 
