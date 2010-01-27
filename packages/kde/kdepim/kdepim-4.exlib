@@ -40,11 +40,14 @@ if ever at_least 4.3.95; then
             indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
 else
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk=ON -DWITH_Soprano=ON )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_GNOKII=OFF
+        -DWITH_Nepomuk=ON
+        -DWITH_Soprano=ON
+    )
 fi
 
 MYOPTIONS+="
-    gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -72,7 +75,6 @@ DEPENDENCIES+="
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]
-        gnokii? ( mobilephone/gnokii )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -92,7 +94,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    GNOKII
     'kde_parts:kleopatra Assuan'
 )
 
