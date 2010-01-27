@@ -21,13 +21,22 @@ DEPENDENCIES="
         dev-libs/libxslt            [[ note = [ xsltproc ] ]]
     build+run:
         app-pim/strigi[qt4]         [[ note = [ DBus support ] ]]
-        dev-libs/boost[>=1.33.1]
+        dev-libs/boost[>=1.34.0]
         dev-libs/libxml2
         kde/kdelibs:${SLOT}[>=${PV}]      [[ note = [ We need nepomuk libraries enabled ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         server-pim/akonadi
         x11-misc/shared-mime-info[>=0.30]
 "
+if ever at_least 4.3.95 ; then
+DEPENDENCIES+="
+    build+run:
+        app-text/shared-desktop-ontologies[>=0.2]
+        dev-libs/soprano[>=2.3.70]    [[ note = [ raptorparser plugin enabled ] ]]
+        kde/kdelibs[nepomuk(+)]
+        app-pim/strigi
+"
+fi
 
 # Currently disabled (resources/CMakeLists.txt)
 # OpenChange -- http://www.openchange.org -- "Needed to support OpenChange / Exchange servers"

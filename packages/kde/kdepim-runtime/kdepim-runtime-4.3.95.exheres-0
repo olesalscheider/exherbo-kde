@@ -5,5 +5,3 @@ require kdepim-runtime-4
 
 PLATFORMS="~amd64 ~x86"
 
-WORK="${WORK}/runtime/"
-
