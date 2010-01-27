@@ -39,3 +39,11 @@ fi
 # Currently disabled (resources/CMakeLists.txt)
 # OpenChange -- http://www.openchange.org -- "Needed to support OpenChange / Exchange servers"
 
+src_fetch_extra() {
+    scm_src_fetch_extra
+
+    # Clean up unused duplicate checkout of kdepim:4
+    [[ -d ${SCM_HOME}/${PN}:${SLOT} ]] &&
+        edo rm -rf "${SCM_HOME}"/${PN}:${SLOT}
+}
+

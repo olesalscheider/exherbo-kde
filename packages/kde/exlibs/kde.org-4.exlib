@@ -54,6 +54,7 @@ case ${PV} in
                 ;;
             kdepim|kdepim-runtime)
                 KDEMODULE=kdepim
+                SCM_CHECKOUT_TO=${KDEMODULE}:${SLOT}
                 SCM_SUBPATH="KDE/${KDEMODULE}/"
                 ;;
             oxygen-icons)
