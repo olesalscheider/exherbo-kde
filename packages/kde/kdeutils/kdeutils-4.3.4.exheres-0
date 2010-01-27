@@ -12,3 +12,6 @@ DEPENDENCIES="
         kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for kgpg, kwallet ] ]]
 "
 
+# Removed upstream for KDE 4.4.0
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_kdessh:BOOL=FALSE )
+

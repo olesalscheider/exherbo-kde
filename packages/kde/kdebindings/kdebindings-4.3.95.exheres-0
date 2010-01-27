@@ -10,6 +10,10 @@ DEPENDENCIES="
         dev-libs/attica
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
+        python? (
+            dev-python/sip[>=4.9.0]
+            dev-python/PyQt4[>=4.7]
+        )
 "
 
 # XXX QtSQL, QtMultimedia bindings (see smoke/CMakeLists.txt)

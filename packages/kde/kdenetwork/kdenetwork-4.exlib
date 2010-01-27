@@ -1,4 +1,4 @@
-# Copyright 2008-2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008-2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008-2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
@@ -211,6 +211,8 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
+        $(cmake_with im_protocols:wlm GIF) \
+        $(cmake_with telepathy TelepathyQt4) \
         $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \

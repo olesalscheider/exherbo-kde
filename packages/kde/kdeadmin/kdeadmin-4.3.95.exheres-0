@@ -5,8 +5,3 @@ require kdeadmin-4
 
 PLATFORMS="~amd64 ~x86"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Gone in KDE 4.4.0
-    -DBUILD_kpackage:BOOL=FALSE
-)
-

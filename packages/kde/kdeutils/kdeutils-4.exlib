@@ -8,7 +8,6 @@ DESCRIPTION="
 ark: Archiving tool
 kcalc: scientific calculator
 kcharselect: select special characters from any fonts and put them into the clipboard
-kdessh: front end to ssh
 kdf: like 'df', a graphical free disk space viewer
 kfloppy: format a floppy disks with this program
 kgpg: graphical GPG frontend
@@ -28,7 +27,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MY_KDE_PARTS="ark kcalc kcharselect kdelirc kdessh kdf kfloppy kgpg ktimer kwallet
+MY_KDE_PARTS="ark kcalc kcharselect kdelirc kdf kfloppy kgpg ktimer kwallet
 okteta printer-applet superkaramba sweeper"
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]

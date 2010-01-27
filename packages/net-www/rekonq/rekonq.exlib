@@ -1,0 +1,28 @@
+# Copyright 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kde4
+
+SUMMARY="A KDE browser based on Webkit"
+DESCRIPTION="
+rekonq is a KDE browser based on Webkit. Its code is based on Nokia
+QtDemoBrowser, just like Arora. Anyway its implementation is going to embrace
+KDE technologies to have a full-featured KDE web browser.
+"
+HOMEPAGE="http://rekonq.sourceforge.net/"
+DOWNLOADS=""
+
+RESTRICT="test" # Tests don't compile
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[>=4.6.0][X][dbus][glib][webkit]
+        kde/kdelibs:4[>=4.3.80]
+"
+
+BUGS_TO="kde@exherbo.org"
+
