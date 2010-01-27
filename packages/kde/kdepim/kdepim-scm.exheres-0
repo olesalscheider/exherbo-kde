@@ -5,16 +5,8 @@ require kdepim-4
 
 PLATFORMS="~amd64 ~x86"
 
-MYOPTIONS="indicators [[ description = [ Indicators support in Kmail ] ]]"
-DEPENDENCIES="
-    build:
-        indicators? ( dev-util/pkg-config )
-    build+run:
-        indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # akonadi is kde/kdepim-runtime
     -DBUILD_runtime:BOOL=FALSE
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
 

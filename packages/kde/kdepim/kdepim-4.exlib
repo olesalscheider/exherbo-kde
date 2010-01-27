@@ -27,8 +27,21 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker strigi-analyzer"
+if ever at_least 4.3.95; then
+    DESCRIPTION+="blogilo: Blogging application"
+    MY_KDE_PARTS+=" blogilo"
+    MYOPTIONS="indicators [[ description = [ Indicators support in Kmail ] ]]"
+    DEPENDENCIES="
+        build:
+            indicators? ( dev-util/pkg-config )
+        build+run:
+            app-text/shared-desktop-ontologies[>=0.2]
+            dev-libs/soprano[>=2.3.70]
+            indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
+fi
 
-MYOPTIONS="
+MYOPTIONS+="
     gnokii [[ description = [ Import/export KDE addressbook entries to/from mobile phones that are accessible via gnokii ] ]]
     nepomuk [[ description = [ Desktop-wide tagging support for Akonadi and Kmail ] ]]
     kde_parts:
@@ -42,7 +55,7 @@ MYOPTIONS="
 # add_subdirectory(opensync)
 # endif ( OPENSYNC_FOUND )
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build:
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=1.0.4] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
