@@ -33,6 +33,7 @@ if ever at_least 4.3.95; then
     MYOPTIONS="indicators [[ description = [ Indicators support in Kmail ] ]]"
     DEPENDENCIES="
         build:
+            dev-libs/libxslt
             indicators? ( dev-util/pkg-config )
         build+run:
             app-text/shared-desktop-ontologies[>=0.2]
@@ -44,6 +45,11 @@ else
         -DWITH_GNOKII=OFF
         -DWITH_Nepomuk=ON
         -DWITH_Soprano=ON
+        # kpilot removed upstream
+        -DBUILD_KPILOT=OFF
+        -DWITH_QCA2=OFF
+        -DWITH_Mal=OFF
+        -DWITH_Pilotlink=OFF
     )
 fi
 
@@ -85,12 +91,6 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kmailcvt=ON
     -DBUILD_ksendemail=ON
-
-    # kpilot removed upstream
-    -DBUILD_KPILOT=OFF
-    -DWITH_QCA2=OFF
-    -DWITH_Mal=OFF
-    -DWITH_Pilotlink=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
