@@ -81,7 +81,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     GNOKII
-    'nepomuk Nepomuk' 'nepomuk Soprano'
+    Nepomuk 'nepomuk Soprano'
     'kde_parts:kleopatra Assuan'
 )
 

@@ -1,0 +1,20 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdepim-4
+
+PLATFORMS="~amd64 ~x86"
+
+MY_KDE_PARTS="blogilo"
+
+MYOPTIONS="indicators [[ description = [ Indicators support in Kmail ] ]]
+    kde_parts: ${MY_KDE_PARTS}"
+DEPENDENCIES="
+    build:
+        indicators? ( dev-util/pkg-config )
+    build+run:
+        indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
+
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
+
