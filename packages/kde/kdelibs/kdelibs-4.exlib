@@ -137,3 +137,15 @@ COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
 }
 
+pkg_preinst() {
+    if [[ -f ${ROOT}/usr/share/kde4/services/ksycoca4 ]] ; then
+        rm "${ROOT}"/usr/share/kde4/services/ksycoca4 || eerror "Couldn't remove ${ROOT}/usr/share/kde4/services/ksycoca4"
+    fi
+}
+
+pkg_preinst() {
+    if [[ -f ${ROOT}/usr/share/kde4/services/ksycoca4 ]] ; then
+        rm "${ROOT}"/usr/share/kde4/services/ksycoca4 || eerror "Couldn't remove ${ROOT}/usr/share/kde4/services/ksycoca4"
+    fi
+}
+
