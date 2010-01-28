@@ -212,7 +212,7 @@ src_configure() {
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_with im_protocols:wlm GIF) \
-        $(cmake_with telepathy TelepathyQt4) \
+        $(ever at_least 4.3.95 && cmake_with telepathy TelepathyQt4) \
         $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
