@@ -135,27 +135,5 @@ KDEDIRS="/usr/local:/usr"
 XDG_DATA_DIRS="/usr/local/share:/usr/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
-
-    # Workaround for #175
-    keepdir /usr/share/kde4/services
-    touch "${IMAGE}"/usr/share/kde4/services/ksycoca4
-    fperms 755 /usr/share/kde4/services/{,ksycoca4}
-}
-
-pkg_postinst() {
-    [[ -z ${XDG_DATA_DIRS} ]] \
-        && echo "XDG_DATA_DIRS is unset, defaulting to XDG_DATA_DIRS='/usr/local/share:/usr/share'"
-    [[ -z ${KDEDIRS} ]] \
-        && echo "KDEDIRS is unset, defaulting to KDEDIRS='/usr/local:/usr'"
-    export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-    export KDEDIRS="${KDEDIRS:-/usr/local:/usr}"
-
-    kde4_pkg_postinst
-}
-
-pkg_postrm() {
-    # Cleanup ksycoca4 database if we just uninstalled.
-    # It's part of contents, but it's modified in pkg_post{inst,rm} phase of a KDE package.
-    [[ -n ${REPLACED_BY_ID} ]] || rm /usr/share/kde4/services/ksycoca4
 }
 

@@ -5,7 +5,7 @@
 
 require flag-o-matic cmake
 
-export_exlib_phases pkg_setup src_configure pkg_postinst pkg_postrm
+export_exlib_phases pkg_setup src_configure
 
 myexparam -b debug=true
 myexparam -b dependencies=true
@@ -49,41 +49,5 @@ kde4_src_configure() {
     done
 
     cmake_src_configure
-}
-
-buildsycoca4() {
-    if [[ ${ROOT} == '/' && -x /usr/bin/kbuildsycoca4 ]]; then
-        sydboxcmd 'net/whitelist/bind/unix-abstract:///tmp/dbus-*'
-
-        echo -n "Starting dbus session for kbuildsycoca4, "
-        eval "$(dbus-launch --sh-syntax)"
-        if [[ -n ${DBUS_SESSION_BUS_PID} ]]; then
-            echo "address='${DBUS_SESSION_BUS_ADDRESS}', pid='${DBUS_SESSION_BUS_PID}'"
-
-            echo "/usr/bin/kbuildsycoca4 --global --noincremental"
-            /usr/bin/kbuildsycoca4 --global --noincremental || eerror "kbuildsycoca4: returned exit status: ${?}"
-
-            kill ${DBUS_SESSION_BUS_PID} || eerror "kill ${DBUS_SESSION_BUS_PID} returned exit status: ${?}"
-        else
-            eerror "dbus failed, not running kbuildsycoca4 --global --noincremental"
-        fi
-
-        sydboxcmd 'net/unwhitelist/bind/unix-abstract:///tmp/dbus-*'
-    else
-        echo "kbuildsycoca4: Update skipped: \${ROOT}=${ROOT}. You need to run \`/usr/bin/kbuildsycoca4 --global --noincremental\` in your ROOT manually."
-    fi
-}
-
-kde4_pkg_postrm() {
-    # If this is not an uninstall, buildsycoca4 will be run in pkg_postinst().
-    if [[ -n ${REPLACED_BY_ID} ]] ; then
-        unset DISPLAY
-        buildsycoca4
-    fi
-}
-
-kde4_pkg_postinst() {
-    unset DISPLAY
-    buildsycoca4
 }
 
