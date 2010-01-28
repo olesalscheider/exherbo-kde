@@ -21,7 +21,7 @@ index f09952f..c04d868 100644
     option(WITH_${_name} "Search for ${_name} package" ON)
     if (WITH_${_name})
 -      find_package(${_name} ${ARGN})
-+      option(WITH_STRICT_DEPENDENCIES "Handle optional dependencies more strictly" ON)
++      option(WITH_STRICT_DEPENDENCIES "Handle optional dependencies more strictly" OFF)
 +      if (WITH_STRICT_DEPENDENCIES)
 +          find_package(${_name} ${ARGN} REQUIRED)
 +      else (WITH_STRICT_DEPENDENCIES)
