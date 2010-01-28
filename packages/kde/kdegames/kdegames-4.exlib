@@ -6,12 +6,14 @@ require kde.org-4
 
 SUMMARY="Games for KDE4"
 DESCRIPTION="
-* Arcade games:     KBounce, KBreakout, KDiamond, KGoldrunner, KLines, Kolf, Kollision, KSame & KSpaceduel
-* Board games:      Bovo, KBattleship, KMahjongg, KReversi, KShisen & KFourInLine
+* Arcade games:     Bomber,$(ever at_least 4.3.95 && echo " Granatier,") Kapman, KBounce, KBreakout,
+                    KDiamond, KGoldrunner, KLines, Kolf, Kollision, KTron, KSame & KSpaceduel
+* Board games:      Bovo, KBattleship, Kfourinline,$(ever at_least 4.3.95 && echo " Kigo,") KMahjongg,
+                    KReversi, KShisen & KFourInLine
 * Card games:       KPat & LsKat
 * Dice games:       Kiriki
-* Logic games:      Katomic, KBlackbox, KMines, KNetwalk, KSquares, KSudoku
-* Strategy games:   Konquest, KsirK, KJumpingcube
+* Logic games:      Katomic, KBlackbox, KBlocks, KMines, KNetwalk, KSquares, KSudoku & Kubrick
+* Strategy games:   KillBots, Konquest, KsirK, KJumpingcube
 * Toy games:        KTuberling
 "
 HOMEPAGE="http://games.kde.org/"
@@ -23,6 +25,7 @@ kmahjongg kmines knetwalk kolf kollision konquest kpat kreversi ksame kshisen
 ksirk kspaceduel ksquares ksudoku ktron ktuberling kubrick lskat"
 
 if ever at_least 4.3.95; then
+    DESCRIPTION+="* Puzzle games:     Palapeli"
     MY_KDE_PARTS+=" granatier kigo palapeli"
     MYOPTIONS="gluon [[ description = [ Enable gluon sound backend in granatier ]
                            requires = [ kde_parts: granatier ] ]]"
