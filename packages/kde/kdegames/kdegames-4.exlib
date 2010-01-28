@@ -34,6 +34,7 @@ if ever at_least 4.3.95; then
             kde_parts:kigo? (
                 games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
             )
+            kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
     "
     CMAKE_SRC_CONFIGURE_OPTIONS+=( 'gluon GRANATIER_USE_GLUON_SOUND_BACKEND' )
 fi
