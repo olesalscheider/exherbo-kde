@@ -1,7 +1,7 @@
 # Copyright 2008 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde
 
 SUMMARY="Yakuake - Quake style terminal emulator"
 DESCRIPTION="Yakuake is a drop-down terminal emulator based on KDE Konsole technology."

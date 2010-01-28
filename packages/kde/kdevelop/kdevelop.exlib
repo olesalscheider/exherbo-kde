@@ -1,7 +1,7 @@
 # Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require kde.org
 
 SUMMARY="KDE official IDE"
 DESCRIPTION="A free, opensource IDE (Integrated Development Environment) for MS Windows, Mac OsX,

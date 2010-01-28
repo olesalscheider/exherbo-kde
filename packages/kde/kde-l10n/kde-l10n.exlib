@@ -4,7 +4,7 @@
 myexparam langs
 myexparam base_uri="mirror://kde/stable/${PV}/src/${PN}"
 
-require kde.org-4 l10n [ base_uri="$(exparam base_uri)" \
+require kde.org l10n [ base_uri="$(exparam base_uri)" \
                          langs="$(exparam langs)" ]
 
 SUMMARY="KDE localisation package"

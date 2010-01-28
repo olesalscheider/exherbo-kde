@@ -1,7 +1,7 @@
 # Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdevelop-4
+require kdevelop
 
 PLATFORMS="~amd64 ~x86"
 

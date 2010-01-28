@@ -33,11 +33,11 @@ kde4_shared_cmake_params() {
           fi)
 }
 
-kde4_pkg_setup() {
+kde_pkg_setup() {
     exparam -b debug && option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
 }
 
-kde4_src_configure() {
+kde_src_configure() {
     CMAKE_SRC_CONFIGURE_PARAMS=(
         $(kde4_shared_cmake_params)
         "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"

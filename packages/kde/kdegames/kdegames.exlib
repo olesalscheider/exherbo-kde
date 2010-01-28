@@ -2,7 +2,7 @@
 # Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org-4
+require kde.org
 
 SUMMARY="Games for KDE4"
 DESCRIPTION="

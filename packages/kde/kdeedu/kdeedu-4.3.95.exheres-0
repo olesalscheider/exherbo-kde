@@ -2,7 +2,7 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kdeedu-4
+require kdeedu
 
 DESCRIPTION+="
 * cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface

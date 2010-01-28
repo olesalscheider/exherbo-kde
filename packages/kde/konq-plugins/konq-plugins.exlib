@@ -1,7 +1,7 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake kde.org-4
+require cmake kde.org
 
 SUMMARY="Plugins for Konqueror, the KDE file/web/doc browser"
 DESCRIPTION="

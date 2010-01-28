@@ -2,7 +2,7 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require python kde.org-4
+require python kde.org
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
 DESCRIPTION="
@@ -167,7 +167,7 @@ src_prepare() {
 }
 
 src_install() {
-    GENKDMCONF_FLAGS="--no-old --no-backup" kde.org-4_src_install
+    GENKDMCONF_FLAGS="--no-old --no-backup" kde.org_src_install
 
     keepdir /usr/share/config/kdm/sessions
     sed -e '/SessionsDirs=/ s:$:,/usr/share/xsessions:' \

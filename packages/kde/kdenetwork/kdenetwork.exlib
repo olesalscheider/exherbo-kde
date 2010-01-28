@@ -7,7 +7,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require multilib kde.org-4
+require multilib kde.org
 
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="

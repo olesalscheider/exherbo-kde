@@ -4,7 +4,7 @@
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="extragear/multimedia/${PN}"
 
-require scm-svn kde4
+require scm-svn kde
 
 SUMMARY="CD ripper and audio encoder frontend"
 HOMEPAGE="http://extragear.kde.org/"

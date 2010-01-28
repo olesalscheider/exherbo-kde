@@ -3,7 +3,7 @@
 
 MY_KDE_PARTS+="kdelirc"
 
-require kdeutils-4
+require kdeutils
 
 PLATFORMS="~amd64 ~x86"
 

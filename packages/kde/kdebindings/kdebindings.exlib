@@ -1,7 +1,7 @@
 # Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require python kde.org-4
+require python kde.org
 
 export_exlib_phases src_configure src_install
 
@@ -54,7 +54,7 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:= )
 "
 
-kdebindings-4_src_configure() {
+kdebindings_src_configure() {
     # Note: ABI support for python & ruby should use:
     # -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/
     # -DRUBY_LIBRARY=/usr/lib/libruby1.8.so
@@ -90,8 +90,8 @@ kdebindings-4_src_configure() {
     kde4_src_configure
 }
 
-kdebindings-4_src_install() {
-    kde.org-4_src_install
+kdebindings_src_install() {
+    kde.org_src_install
 
     if option python; then
         cd "${IMAGE}" || die "Couldn't enter ${IMAGE}"

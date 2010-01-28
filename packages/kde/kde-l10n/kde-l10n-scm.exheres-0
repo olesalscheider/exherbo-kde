@@ -6,7 +6,7 @@ LANGS="af ar as ast be be@latin bg bn bn_IN br ca ca@valencia crh cs csb cy da d
        mk ml mr ms mt nb nds ne nl nn nso oc or pa pl ps pt pt_BR ro ru rw se si sk sl sr sr@latin
        sv ta te tg th tr uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW"
 SCM_NO_AUTOMATIC_FINALISE=1
-require kde-l10n-4 [ base_uri="" langs="${LANGS}" ]
+require kde-l10n [ base_uri="" langs="${LANGS}" ]
 
 PLATFORMS="~amd64 ~x86"
 

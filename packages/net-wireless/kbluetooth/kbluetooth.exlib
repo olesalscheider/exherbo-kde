@@ -2,7 +2,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde
 
 SUMMARY="A collection of Bluetooth utilities and modules for KDE based on BlueZ"
 DESCRIPTION="The KDE Bluetooth Framework is a set of tools built on top of

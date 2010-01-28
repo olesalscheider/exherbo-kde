@@ -1,14 +1,14 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4 [ debug=false ] kde.org-4
+require kde [ debug=false ] kde.org
 
 SUMMARY="KDE Oxygen theme icons"
 HOMEPAGE="http://www.oxygen-icons.org/"
 LICENCES="|| ( GPL-3 LGPL-3 )"
 
 src_install() {
-    kde.org-4_src_install
+    kde.org_src_install
     find "${IMAGE}" -type d -empty -delete || die "Couldn't remove empty directories"
 }
 

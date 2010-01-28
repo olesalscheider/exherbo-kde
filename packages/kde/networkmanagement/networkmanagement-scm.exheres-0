@@ -4,7 +4,7 @@
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="kdereview/${PN}/"
 
-require kde4 scm-svn
+require kde scm-svn
 
 SUMMARY="KDE4 Plasma applet and System Settings module for NetworkManager"
 HOMEPAGE="http://plasma.kde.org/"

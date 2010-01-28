@@ -4,7 +4,7 @@
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 SCM_SUBPATH="playground/office/${PN}/"
 
-require kde4 scm-svn
+require kde scm-svn
 
 SUMMARY="Personal finance manager for KDE"
 DESCRIPTION="

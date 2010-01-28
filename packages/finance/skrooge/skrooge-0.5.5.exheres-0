@@ -1,7 +1,7 @@
 # Copyright 2009 Xavier Barrachina <xabarci@ega.upv.es>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde
 
 SUMMARY="A personal finances manager for KDE4"
 DESCRIPTION="

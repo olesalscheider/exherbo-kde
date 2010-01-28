@@ -1,7 +1,7 @@
 # Copyright 2008-2009 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4
+require kde
 
 SUMMARY="Konversation is a graphical Internet Relay Chat client for KDE"
 HOMEPAGE="http://konversation.kde.org/"

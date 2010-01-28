@@ -1,7 +1,7 @@
 # Copyright 2008 Daniel Mierswa <impulze@impulze.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake kde4
+require cmake kde
 
 SUMMARY="QtCurve - Qt4/KDE4/KDE3/GTK+2 widget styles"
 DESCRIPTION="This is a set of widget styles for Qt4/KDE4, KDE3 and Gtk2 based apps."

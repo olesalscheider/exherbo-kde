@@ -1,7 +1,7 @@
 # Copyright 2009 Timo Gurr
 # Distributed under the terms of the GNU General Public License v2
 
-require kde4 sourceforge
+require kde sourceforge
 
 SUMMARY="KDing - dictionary lookup program"
 DESCRIPTION="

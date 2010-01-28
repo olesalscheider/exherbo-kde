@@ -8,7 +8,7 @@ else
     myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/src/${PN}"
 fi
 
-require kde4 l10n [ langs="$(exparam langs)" base_uri="$(exparam base_uri)" ]
+require kde l10n [ langs="$(exparam langs)" base_uri="$(exparam base_uri)" ]
 
 SUMMARY="Koffice localisation package"
 HOMEPAGE="http://www.koffice.org/"

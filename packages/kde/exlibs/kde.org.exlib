@@ -15,7 +15,7 @@
 # Canonical KDE packages go in packages/kde/${PN}
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
-require kde4
+require kde
 
 export_exlib_phases src_install
 
@@ -120,7 +120,7 @@ DEPENDENCIES="
         x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X]
 "
 
-kde.org-4_src_install() {
+kde.org_src_install() {
     cmake_src_install
 
     local f d
