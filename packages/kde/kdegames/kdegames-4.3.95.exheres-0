@@ -6,22 +6,3 @@ require kdegames-4
 
 PLATFORMS="~amd64 ~x86"
 
-MY_KDE_PARTS+="
-    granatier kigo palapeli"
-
-MYOPTIONS="
-    ( gluon [[ description = [ Enable gluon sound backend in granatier ] requires = [ kde_parts: granatier ] ]] )
-    ( kde_parts: ${MY_KDE_PARTS} )
-"
-
-DEPENDENCIES="
-    build+run:
-        x11-libs/qt:4[>=4.6.0-rc1]
-        gluon? ( dev-games/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
-        kde_parts:granatier? ( x11-libs/qt:4[multimedia(-)] )
-        kde_parts:kigo? (
-            games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
-        )
-"
-CMAKE_SRC_CONFIGURE_OPTIONS+=( 'gluon GRANATIER_USE_GLUON_SOUND_BACKEND' )
-
