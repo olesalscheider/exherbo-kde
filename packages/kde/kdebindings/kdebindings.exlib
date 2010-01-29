@@ -87,7 +87,7 @@ kdebindings_src_configure() {
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 
-    kde4_src_configure
+    kde_src_configure
 }
 
 kdebindings_src_install() {
