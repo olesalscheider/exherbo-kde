@@ -133,6 +133,6 @@ src_configure() {
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DKDEEDU_KTOUCH_BUILD_WITH_PHONON:BOOL=FALSE )
     fi
 
-    kde4_src_configure
+    kde_src_configure
 }
 
