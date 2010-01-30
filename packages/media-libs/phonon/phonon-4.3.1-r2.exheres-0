@@ -28,7 +28,7 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[>=4.5.0][dbus][phonon]
         gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
-        xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
+        xine? ( media-libs/xine-lib[>=1.1.9&<1.1.90][xcb] )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Fix-version-for-4.3.1-release.patch" )
