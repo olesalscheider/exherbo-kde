@@ -1,5 +1,6 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'phonon-4.2-scm.kdebuild-1' from Genkdesvn, which is:
 #     Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -8,58 +9,40 @@
 
 require multilib cmake
 
-export_exlib_phases src_prepare src_install
+export_exlib_phases src_prepare src_configure
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-DOWNLOADS="mirror://kde/Attic/4.2.1/src/${PNV}.tar.bz2"
+DOWNLOADS=""
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-PHONON_BACKENDS="
+MYOPTIONS="
+pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
+(
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     xine        [[ description = [ Enable the Phonon Xine backend, which is the recommended backend ] ]]
+) [[ number-selected = at-least-one ]]
 "
-MYOPTIONS="( ${PHONON_BACKENDS} ) [[ number-selected = at-least-one ]]"
-ever at_least scm && MYOPTIONS+=" pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]"
 
 DEPENDENCIES="
     build:
         dev-util/pkg-config
         kde/automoc4[>=0.9.86]
     build+run:
-        x11-libs/qt:4[>=4.5.0][dbus][phonon]
+        sys-sound/alsa-lib
+        x11-libs/qt:4[>=4.6.1][dbus][phonon]
         gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
-        xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
-"
-if ever at_least scm ; then
-    DEPENDENCIES+="
         pulseaudio? (
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.21]
-        )"
-fi
+        )
+        xine? ( media-libs/xine-lib[>=1.1.9][xcb] )
+"
 
 # FIXME Test executables not found, regardless of ECMAKE_BUILD_TYPE
 # RESTRICT="test"
 # Renable building tests when unrestricting
-
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    # Tests are restricted
-    -DPHONON_BUILD_TESTS:BOOL=FALSE
-
-    # The gstreamer backend comes from Qt4
-    -DWITH_{GStreamer,GStreamerPlugins,GLIB2,GObject,LibXml2}:BOOL=FALSE
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    Xine
-    'xine XCB'
-)
-ever at_least scm &&
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'pulseaudio GLIB2'
-    'pulseaudio PulseAudio'
-)
 
 phonon_src_prepare() {
     default
@@ -69,23 +52,26 @@ phonon_src_prepare() {
         -i gstreamer/gstreamer.desktop
 }
 
-phonon_src_install() {
-    cmake_src_install
+phonon_src_configure() {
+    local PHONON_SRC_CONFIGURE_PARAMS=()
 
-    # Symlink Phonon.Experimental headers where Qt4 puts its headers, so KDE packages that use them can find them
-    dodir /usr/include/qt4/phonon/Phonon/
-    dosym /usr/include/phonon/experimental /usr/include/qt4/phonon/experimental
-    dosym /usr/include/KDE/Phonon/Experimental /usr/include/qt4/phonon/Phonon/Experimental
-
-    # This is crude ... but it'll do for now
-    rm -r "${IMAGE}"/usr/$(get_libdir)/{libphonon.so*,pkgconfig} || die "Couldn't remove libphonon"
-    rm -r "${IMAGE}"/usr/include/phonon/*.h || die "Couldn't remove libphonon headers"
-    find "${IMAGE}"/usr/include/KDE/Phonon/ -maxdepth 1 -type f -delete || die "Couldn't remove KDE/Phonon headers"
-
-    # Need gstreamer.desktop
-    if option gstreamer; then
-        insinto /usr/share/kde4/services/phononbackends
-        doins gstreamer/gstreamer.desktop
+    if option gstreamer || option pulseaudio ; then
+        PHONON_SRC_CONFIGURE_PARAMS+=( -DWITH_GLIB2:BOOL=TRUE )
     fi
+
+    # Tests are restricted
+    ecmake \
+        -DPHONON_BUILD_EXAMPLES:BOOL=FALSE \
+        -DPHONON_BUILD_TESTS:BOOL=FALSE \
+        $(cmake_with GStreamer) \
+        $(cmake_with gstreamer GStreamerPlugins) \
+        $(cmake_with gstreamer GObject) \
+        $(cmake_with gstreamer LibXml2) \
+        $(cmake_with gstreamer OpenGL) \
+        $(cmake_with Xine) \
+        $(cmake_with xine XCB) \
+        "${PHONON_SRC_CONFIGURE_PARAMS[@]}"
+    'pulseaudio GLIB2'
+    'pulseaudio PulseAudio'
 }
 
