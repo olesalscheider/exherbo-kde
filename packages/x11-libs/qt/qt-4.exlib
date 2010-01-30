@@ -13,11 +13,11 @@ myexparam pv=${MY_PV:-${PV}}
 MY_PNV=$(exparam pn)-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
-HOMEPAGE="http://www.qtsoftware.com/"
+HOMEPAGE="http://qt.nokia.com/"
 DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_CHANGELOG="http://www.qtsoftware.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://qt.nokia.com/developer/changes/changes-${PV}"
 
 LICENCES="|| ( LGPL-2.1 GPL-3 )"
 
