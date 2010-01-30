@@ -234,6 +234,7 @@ qt-4_src_configure() {
         $(qt4_enable cups)
         $(qt4_enable dbus "" "" linked)
         $(qt4_enable glib)
+        $(qt4_enable gstreamer gstreamer)
         $(qt4_enable gstreamer phonon-backend)
         $(qt4_enable gtk gtkstyle)
         $(ever at_least 4.6.0_beta && echo -no-javascript-jit)
