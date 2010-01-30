@@ -76,6 +76,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # -DWITH_LibLastFm=OFF
     # The bindings test requires dbus to be working during configure, since we can't guarantee this, we disable it
     -DBINDINGS_RUN_RESULT=1
+    # Needs Google Mock
+    -DKDE4_BUILD_TESTS:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     # Gdk: Artwork for ipod, via GdkPixbuf
