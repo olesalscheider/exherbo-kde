@@ -1,0 +1,19 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+#           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-4 [ pn='qt-everywhere-opensource-src' ]
+
+PLATFORMS="~amd64 ~ppc64 ~x86"
+
+MYOPTIONS="multimedia  [[ description = [ Build the QtMultimedia module ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        multimedia? ( sys-sound/alsa-lib )
+"
+
+UPSTREAM_RELEASE_NOTES="
+http://labs.trolltech.com/blogs/2010/01/19/qt-461-released/
+"
+
