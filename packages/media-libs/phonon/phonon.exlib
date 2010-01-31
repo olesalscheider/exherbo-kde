@@ -44,14 +44,6 @@ DEPENDENCIES="
 # RESTRICT="test"
 # Renable building tests when unrestricting
 
-phonon_src_prepare() {
-    default
-
-    # Qt's installed .so is called libphonon_gstreamer, not phonon_gstreamer
-    option gstreamer && edo sed -e "/^X-KDE-Library=/s/phonon_gstreamer/lib\0/" \
-        -i gstreamer/gstreamer.desktop
-}
-
 phonon_src_configure() {
     local PHONON_SRC_CONFIGURE_PARAMS=()
 
