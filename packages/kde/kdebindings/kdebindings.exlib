@@ -3,7 +3,7 @@
 
 require python kde.org
 
-export_exlib_phases src_configure src_install
+export_exlib_phases src_install
 
 SUMMARY="KDE Language Bindings"
 DESCRIPTION="
@@ -39,6 +39,7 @@ DEPENDENCIES="
         dev-libs/soprano[>=2.3.0]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/qimageblitz
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[X][dbus][webkit]
         policykit? (
@@ -54,41 +55,37 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:= )
 "
 
-kdebindings_src_configure() {
-    # Note: ABI support for python & ruby should use:
-    # -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/
-    # -DRUBY_LIBRARY=/usr/lib/libruby1.8.so
-    # -DPYTHON_INCLUDE_PATH=/usr/include/python2.5
-    # -DPYTHON_LIBRARIES=/usr/lib/python2.5/config/libpython2.5.so
+# Note: ABI support for python & ruby should use:
+# -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/
+# -DRUBY_LIBRARY=/usr/lib/libruby1.8.so
+# -DPYTHON_INCLUDE_PATH=/usr/include/python2.5
+# -DPYTHON_LIBRARIES=/usr/lib/python2.5/config/libpython2.5.so
 
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # We don't have kde/kdevplatform, so don't compile bindings for it
-        -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
-        # Optional bindings to unwritten packages
-        -DWITH_QScintilla:BOOL=FALSE
-        # These require Qwt, we can optionally enable these if there's a user for them
-        -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
-        # Don't think anything currently uses okular bindings, could be made optional
-        -DWITH_Okular:BOOL=FALSE
-        # We don't currently ship these languages
-        -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-        python
-        ruby
-        # Smoke is needed to build the language bindings for Ruby, C#, perl.
-        # Python doesn't need smoke
-        # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
-        'ruby smoke'
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
-        'python KROSSPYTHON'
-        'ruby KROSSRUBY'
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
-
-    kde_src_configure
-}
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # We don't have kde/kdevplatform, so don't compile bindings for it
+    -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
+    # Optional bindings to unwritten packages
+    -DWITH_QScintilla:BOOL=FALSE
+    # These require Qwt, we can optionally enable these if there's a user for them
+    -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
+    # Don't think anything currently uses okular bindings, could be made optional
+    -DWITH_Okular:BOOL=FALSE
+    # We don't currently ship these languages
+    -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    python
+    ruby
+    # Smoke is needed to build the language bindings for Ruby, C#, perl.
+    # Python doesn't need smoke
+    # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
+    'ruby smoke'
+)
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+    'python KROSSPYTHON'
+    'ruby KROSSRUBY'
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 
 kdebindings_src_install() {
     kde.org_src_install

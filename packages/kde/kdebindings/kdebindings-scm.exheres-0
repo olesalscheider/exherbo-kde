@@ -8,8 +8,10 @@ PLATFORMS="~amd64 ~x86"
 DEPENDENCIES="
     build+run:
         dev-libs/attica
-        kde/kdepimlibs:${SLOT}[>=${PV}]
-        kde/qimageblitz
+        python? (
+            dev-python/sip[>=4.10]
+            dev-python/PyQt4[>=4.7]
+        )
 "
 
 # XXX QtSQL, QtMultimedia bindings (see smoke/CMakeLists.txt)

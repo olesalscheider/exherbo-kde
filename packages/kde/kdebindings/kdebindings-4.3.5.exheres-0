@@ -5,9 +5,3 @@ require kdebindings
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES="
-    build+run:
-        kde/kdepimlibs:${SLOT}[>=${PV}]
-        kde/qimageblitz
-"
-
