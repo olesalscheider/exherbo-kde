@@ -34,7 +34,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager python policykit wicd xinerama
+MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -85,10 +85,6 @@ DEPENDENCIES="
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
-        policykit? (
-            sys-auth/PolicyKit:0[>=0.8]
-            sys-auth/polkit-qt[>=0.9]
-        )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.7.1]
@@ -109,7 +105,23 @@ DEPENDENCIES="
         python? ( kde/kdebindings:4[python] )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' wicd )
+if ever at_least 4.3.95 ; then
+    # Use sys-auth/polkit-kde instead
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_PolicyKit-kde:BOOL=FALSE )
+else
+    MYOPTIONS="policykit ${MYOPTIONS}"
+    DEPENDENCIES+="
+        build+run:
+            policykit? (
+                sys-auth/PolicyKit:0[>=0.8]
+                sys-auth/polkit-qt:0[>=0.9]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+fi
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
@@ -124,7 +136,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'consolekit CkConnector'
     'lm_sensors Sensors'
     NetworkManager
-    'policykit PolkitQt'
     'python PythonLibrary'
     'python PyKDE4'
     'python PyQt4'

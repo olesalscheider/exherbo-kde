@@ -90,14 +90,15 @@ if ever at_least 4.3.95 ; then
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DBUILD_experimental:BOOL=FALSE
+        -DKDE4_AUTH_BACKEND_NAME:STRING=POLKITQT-1
         -DWITH_LibAttica:BOOL=TRUE
         -DWITH_QCA2:BOOL=TRUE
-        -DWITH_PolkitQt-1=FALSE
+        -DWITH_PolkitQt=FALSE
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'nepomuk SharedDesktopOntologies'
         'nepomuk Soprano'
-        'policykit PolkitQt'
+        'policykit PolkitQt-1'
     )
 fi
 
