@@ -68,10 +68,9 @@ phonon_src_configure() {
         $(cmake_with gstreamer GObject) \
         $(cmake_with gstreamer LibXml2) \
         $(cmake_with gstreamer OpenGL) \
+        $(cmake_with pulseaudio PulseAudio) \
         $(cmake_with Xine) \
         $(cmake_with xine XCB) \
         "${PHONON_SRC_CONFIGURE_PARAMS[@]}"
-    'pulseaudio GLIB2'
-    'pulseaudio PulseAudio'
 }
 
