@@ -9,7 +9,7 @@
 
 require multilib cmake
 
-export_exlib_phases src_prepare src_configure
+export_exlib_phases src_configure
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
