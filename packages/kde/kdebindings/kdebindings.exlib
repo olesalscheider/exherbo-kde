@@ -29,10 +29,7 @@ http://kross.dipe.org/solution.html [[ lang = en descripton = [ Using Kross, the
 
 LICENCES="GPL-2 LGPL-2.1"
 SLOT="4"
-MYOPTIONS="
-    policykit
-    ( python ruby ) [[ number-selected = at-least-one ]]
-"
+MYOPTIONS="( python ruby ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
@@ -42,10 +39,6 @@ DEPENDENCIES="
         kde/qimageblitz
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[X][dbus][webkit]
-        policykit? (
-            sys-auth/PolicyKit:0[>=0.8]
-            sys-auth/polkit-qt[>=0.9]
-        )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.8_pre]
@@ -64,6 +57,8 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # We don't have kde/kdevplatform, so don't compile bindings for it
     -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
+    # polkit-qt:0 is deprecated, nobody use these bindings
+    -DWITH_PolkitQt:BOOL=FALSE
     # Optional bindings to unwritten packages
     -DWITH_QScintilla:BOOL=FALSE
     # These require Qwt, we can optionally enable these if there's a user for them
@@ -85,7 +80,6 @@ CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'python KROSSPYTHON'
     'ruby KROSSRUBY'
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
 
 kdebindings_src_install() {
     kde.org_src_install
