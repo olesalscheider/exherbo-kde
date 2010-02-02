@@ -30,6 +30,8 @@ BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
 
 case ${PV} in
+    4.3.98)
+        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.4-rc3.php" ;;
     4.3.95)
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.4-rc2.php" ;;
     4.3.@(1|2|3|4|5))
