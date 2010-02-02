@@ -27,6 +27,15 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
+if ever at_least 4.3.95 ; then
+DEPENDENCIES+="
+    build+run:
+        dev-libs/boost[>=1.34.0]
+        server-pim/akonadi[>=1.3.0]
+        x11-libs/qt:4[>=4.6.0-beta]
+"
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2=OFF )
 
