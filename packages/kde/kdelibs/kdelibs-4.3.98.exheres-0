@@ -1,0 +1,14 @@
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdelibs
+
+PLATFORMS="~amd64 ~x86"
+
+MYOPTIONS="policykit"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-4.2.4-FindRUBY.cmake.patch"
+    "${FILES}/${PN}-scm-CMake-strict-dependencies.patch"
+)
+
