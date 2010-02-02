@@ -12,6 +12,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        app-pim/strigi[dbus][qt4]
         dev-libs/attica[>=0.1.1]
         dev-libs/soprano[>=scm]
         jpeg-rotation? ( graphics/exiv2 )
