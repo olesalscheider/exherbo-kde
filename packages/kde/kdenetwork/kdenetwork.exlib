@@ -139,7 +139,12 @@ src_prepare() {
 }
 
 src_configure() {
-    local x kopete_plugins kopete_protocols cmakeparams="-DWITH_GLIB2=OFF -DWITH_Xmms=OFF -DWITH_XMMS_LIBRARIES=OFF -DWITH_XMMS_INCLUDE_DIRS=OFF"
+    local x kopete_plugins kopete_protocols cmakeparams=(
+        -DWITH_GLIB2=OFF
+        -DWITH_Xmms=OFF
+        -DWITH_XMMS_LIBRARIES=OFF
+        -DWITH_XMMS_INCLUDE_DIRS=OFF
+    )
 
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
@@ -148,39 +153,40 @@ src_configure() {
     )
     # Kopete protocols with no extra dependencies
     my_kopete_protocols=( bonjour irc oscar qq sms testbed winpopup yahoo )
-    cmakeparams+="$(for p in ${my_kopete_plugins[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
-    cmakeparams+="$(for p in ${my_kopete_protocols[@]}; do echo "-DWITH_${p}:BOOL=TRUE"; done)"
+    for p in "${my_kopete_plugins[@]}" "${my_kopete_protocols[@]}"; do
+        cmakeparams+=( -DWITH_${p}:BOOL=TRUE )
+    done
 
     # This isn't optional for kdelibs:4
-    cmakeparams+=" -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE"
+    cmakeparams+=( -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE )
 
     # These do not work
-    cmakeparams+=" -DWITH_telepathy=OFF -DWITH_Decibel=OFF"
+    cmakeparams+=( -DWITH_telepathy=OFF -DWITH_Decibel=OFF )
 
     # These are missing required dependencies
-    cmakeparams+=" -DWITH_gadu=OFF" # >=net-libs/libgadu-1.8.0, http://toxygen.net/libgadu/
-    cmakeparams+=" -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF" # net-libs/meanwhile, http://meanwhile.sf.net
+    cmakeparams+=( -DWITH_gadu=OFF ) # >=net-libs/libgadu-1.8.0, http://toxygen.net/libgadu/
+    cmakeparams+=( -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF ) # net-libs/meanwhile, http://meanwhile.sf.net
 
     for x in ${MY_KDE_PARTS}; do
-        cmakeparams+=" $(cmake_build kde_parts:${x})"
+        cmakeparams+=( $(cmake_build kde_parts:${x}) )
     done
 
     if option sqlite || option kopete_plugins:statistics; then
-        cmakeparams+=" -DWITH_Sqlite=ON"
+        cmakeparams+=( -DWITH_Sqlite=ON )
     else
-        cmakeparams+=" -DWITH_Sqlite=OFF"
+        cmakeparams+=( -DWITH_Sqlite=OFF )
     fi
 
     if option im_protocols:groupwise || option im_protocols:xmpp; then
-        cmakeparams+=" -DWITH_QCA2=ON"
+        cmakeparams+=( -DWITH_QCA2=ON )
     else
-        cmakeparams+=" -DWITH_QCA2=OFF"
+        cmakeparams+=( -DWITH_QCA2=OFF )
     fi
 
     if option kde_parts:krfb || option vnc; then
-        cmakeparams+=" -DWITH_LibVNCServer=ON"
+        cmakeparams+=( -DWITH_LibVNCServer=ON )
     else
-        cmakeparams+=" -DWITH_LibVNCServer=OFF"
+        cmakeparams+=( -DWITH_LibVNCServer=OFF )
     fi
 
     #   $(cmake_with im_protocols:meanwhile) \
@@ -188,7 +194,7 @@ src_configure() {
     # >=4.2.88 uses WITH_JINGLE, older uses NO_JINGLE
     ecmake \
         $(kde4_shared_cmake_params) \
-        ${cmakeparams} \
+        "${cmakeparams[@]}" \
         "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
         -DWITH_KdeWebKit:BOOL=FALSE \
         -DWITH_WebKitPart:BOOL=FALSE \
