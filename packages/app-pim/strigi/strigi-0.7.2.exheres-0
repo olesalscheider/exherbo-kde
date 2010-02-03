@@ -6,8 +6,7 @@
 
 require strigi
 
-# Re-released tarball
-DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2 -> ${PNV}-r0.tar.bz2"
+DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 
 PLATFORMS="~amd64 ~x86"
 
