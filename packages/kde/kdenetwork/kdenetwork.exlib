@@ -120,7 +120,7 @@ DEPENDENCIES+="
             x11-libs/libXft
             x11-libs/libXpm
             x11-libs/libXScrnSaver
-            im_protocols:gadu? ( net-libs/libgadu )
+            im_protocols:gadu? ( net-libs/libgadu[>=1.8.0] [[ url = [ http://toxygen.net/libgadu/ ] ]] )
             im_protocols:groupwise? ( app-crypt/qca:2 )
             im_protocols:wlm? ( net-libs/libmsn[>=4.0_beta2] )
             im_protocols:xmpp? (
@@ -169,13 +169,12 @@ src_prepare() {
     #   1. External btcore (from ktorrent)
     #   2. Internal btcore
     # We replace 2. by no torrent support instead, since we hate internal libraries
-    sed -e '/^add_subdirectory.*bittorrent/s:^:macro_optional_:' -i kget/transfer-plugins/CMakeLists.txt ||
-        die "Couldn't make bittorrent optional"
+    edo sed -e '/^add_subdirectory.*bittorrent/s:^:macro_optional_:' -i kget/transfer-plugins/CMakeLists.txt
 }
 
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams=(
-        -DWITH_GLIB2=OFF
+        -DWITH_GLIB2=OFF # needed only for Xmms support
         -DWITH_Xmms=OFF
         -DWITH_XMMS_LIBRARIES=OFF
         -DWITH_XMMS_INCLUDE_DIRS=OFF
@@ -187,7 +186,7 @@ src_configure() {
         pipes privacy texteffect translator urlpicpreview
     )
     # Kopete protocols with no extra dependencies
-    my_kopete_protocols=( bonjour irc oscar qq sms testbed winpopup yahoo )
+    my_kopete_protocols=( bonjour irc oscar qq skype sms testbed winpopup yahoo )
     for p in "${my_kopete_plugins[@]}" "${my_kopete_protocols[@]}"; do
         cmakeparams+=( -DWITH_${p}:BOOL=TRUE )
     done
@@ -199,7 +198,6 @@ src_configure() {
     cmakeparams+=( -DWITH_telepathy=OFF -DWITH_Decibel=OFF )
 
     # These are missing required dependencies
-    cmakeparams+=( -DWITH_gadu=OFF ) # >=net-libs/libgadu-1.8.0, http://toxygen.net/libgadu/
     cmakeparams+=( -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF ) # net-libs/meanwhile, http://meanwhile.sf.net
 
     for x in ${MY_KDE_PARTS}; do
@@ -229,6 +227,7 @@ src_configure() {
             $(cmake_with im_protocols:wlm GIF)
             $(cmake_with im_protocols:GOOGLETALK)
             $(cmake_with im_protocols:googletalk Expat)
+            $(cmake_with telepathy TelepathyQt4)
         )
 
         if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
@@ -259,11 +258,13 @@ src_configure() {
         $(cmake_with kde_parts:kget QGpgme) \
         $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
-        $(cmake_build bittorrent bittorrent) \
+        $(cmake_build bittorrent) \
+        $(cmake_with im_protocols:gadu) \
         $(cmake_with im_protocols:gadu Libgadu) \
         $(cmake_with im_protocols:groupwise) \
-        $(cmake_option !im_protocols:jingle NO_JINGLE) \
         $(cmake_with im_protocols:jingle) \
+        $(cmake_with im_protocols:jingle Alsa) \
+        $(cmake_with im_protocols:jingle Speex) \
         $(cmake_with im_protocols:wlm) \
         $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with kopete_plugins:otr) \
@@ -273,7 +274,6 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
-        $(ever at_least 4.3.95 && cmake_with telepathy TelepathyQt4) \
         $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
