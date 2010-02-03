@@ -5,10 +5,3 @@ require kdemultimedia
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES="
-    build+run:
-        kde_parts:juk? (
-            media-libs/taglib[>=1.6]
-        )
-"
-
