@@ -41,6 +41,16 @@ MY_KOPETE_PLUGINS+="
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
 "
 
+if ever at_least 4.3.98; then
+    MYOPTIONS+="
+        webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
+    "
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kget? (
+                webkit? ( kde/kwebkitpart )
+            )"
+fi
 if ever at_least 4.3.95; then
     MY_IM_PROTOCOLS+="
         googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
@@ -222,6 +232,12 @@ src_configure() {
         cmakeparams+=( -DWITH_LibVNCServer=OFF )
     fi
 
+    if ever at_least 4.3.98; then
+        cmakeparams+=( $(cmake_with webkit KWebKitPart) )
+    else
+        cmakeparams+=( -DWITH_KdeWebKit:BOOL=FALSE -DWITH_WebKitPart:BOOL=FALSE -DWITH_KWebKitPart:BOOL=FALSE )
+    fi
+
     if ever at_least 4.3.95; then
         cmakeparams+=(
             $(cmake_with im_protocols:wlm GIF)
@@ -251,8 +267,6 @@ src_configure() {
         $(kde4_shared_cmake_params) \
         "${cmakeparams[@]}" \
         "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
-        -DWITH_KdeWebKit:BOOL=FALSE \
-        -DWITH_WebKitPart:BOOL=FALSE \
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
         $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget QGpgme) \
