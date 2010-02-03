@@ -10,12 +10,32 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 
 LICENCES="GPL-2"
 MY_KDE_PARTS=""
-MYOPTIONS="
+
+if ever at_least 4.3.95; then
+    MYOPTIONS+="
+        kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
+        qalculate [[ description = [ Build qalculate applet ] ]]
+    "
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/attica[>=0.1.1]
+            kimpanel? ( inputmethods/scim )
+            qalculate? ( sci-libs/libqalculate )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_LibAttica:BOOL=TRUE
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kimpanel SCIM'
+        Qalculate
+    )
+fi
+
+MYOPTIONS+="
     marble [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
-
-DEPENDENCIES="
+DEPENDENCIES+="
     build:
         dev-lang/python:*
         sci-libs/eigen:2[>=2.0.3]
@@ -35,7 +55,6 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Marble
 )
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
