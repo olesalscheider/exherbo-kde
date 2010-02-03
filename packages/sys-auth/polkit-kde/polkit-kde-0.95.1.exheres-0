@@ -7,8 +7,7 @@ MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
 WORK="${WORKBASE}"/${MY_PNV}
 
-SUMMARY="KDE GUI for PolicyKit"
-DESCRIPTION="FIXME"
+SUMMARY="KDE Polkit-1 authentication agent"
 HOMEPAGE="http://www.kde.org"
 DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
 
