@@ -10,7 +10,7 @@ DESCRIPTION="
 * kuser: User and group manager
 * strigi-analyzer: Strigi plugin for rpm files
 * system-config-printer-kde: Port of Red Hat's Gnome system-config-printer to KDE
-Other, currently disabled parts include kdat, knetworkconf, kpackage, ksysv & lilo-config.
+Other, currently disabled parts include kdat, knetworkconf, ksysv & lilo-config.
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
