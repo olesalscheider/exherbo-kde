@@ -30,7 +30,31 @@ LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
 MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble
 parley step"
-MYOPTIONS="
+
+if ever at_least 4.3.95; then
+    DESCRIPTION+="
+* cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
+* rocs:        a full featured Graph Editor
+"
+    MY_KDE_PARTS+=" cantor rocs"
+    MYOPTIONS+="
+        R [[ description = [ Compile the 'R' backend for Cantor ] requires = [ kde_parts: cantor ] ]]
+    "
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:cantor? (
+                app-text/libspectre
+                R? ( sci-lang/R )
+            )
+            kde_parts:parley? ( dev-libs/attica )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kde_parts:cantor LibSpectre'
+        'R R'
+    )
+fi
+
+MYOPTIONS+="
     3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra        ] ]]
     3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
     python        [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
@@ -41,7 +65,7 @@ MYOPTIONS="
 #   python        [[ description = [ Adds support for Python plugins in Marble ] requires = [ kde_parts: marble ] ]]
 
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build:
         kde_parts:step? ( sci-libs/eigen:2[>=2.0.3] )
         kde_parts:kalzium? (

@@ -4,30 +4,5 @@
 
 require kdeedu
 
-DESCRIPTION+="
-* cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
-* rocs:        a full featured Graph Editor
-"
-
 PLATFORMS="~amd64 ~x86"
-
-MY_KDE_PARTS+=" cantor rocs"
-MYOPTIONS="
-( R [[ description = [ Compile the 'R' backend for Cantor ] requires = [ kde_parts: cantor ] ]] )
-( kde_parts: ${MY_KDE_PARTS} )
-"
-
-DEPENDENCIES="
-    build+run:
-        kde_parts:cantor? (
-            app-text/libspectre
-            R? ( sci-lang/R )
-        )
-        kde_parts:parley? ( dev-libs/attica )
-"
-
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kde_parts:cantor LibSpectre'
-    'R R'
-)
 
