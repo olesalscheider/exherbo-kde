@@ -25,11 +25,25 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
-MYOPTIONS="
+
+if ever at_least 4.3.95; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kate? (
+                x11-misc/shared-mime-info[>=0.30]
+            )
+            kde_parts:lokalize? (
+                app-spell/hunspell
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:lokalize HUNSPELL' )
+fi
+
+MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
 
 # - bash & zsh completion in scripts/completions, but nothing really worth having (KDE 3 things)
-DEPENDENCIES="
+DEPENDENCIES+="
     build:
         kde_parts:kapptemplate? (
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
