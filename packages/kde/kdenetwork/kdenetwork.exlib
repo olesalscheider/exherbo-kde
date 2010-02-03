@@ -40,6 +40,22 @@ MY_KOPETE_PLUGINS+="
     statistics [[ description = [ Statistics plugin for Kopete ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
 "
+
+if ever at_least 4.3.95; then
+    MYOPTIONS+="
+        telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
+    "
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kopete?  (
+                im_protocols:wlm? ( media-libs/giflib )
+            )
+            kde_parts:krdc? (
+                telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
+            )
+    "
+fi
+
 MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
@@ -58,7 +74,7 @@ MYOPTIONS+="
         ( ${MY_KOPETE_PLUGINS} ) [[ requires = [ kde_parts: kopete ] ]]
 "
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build+run:
         dev-libs/openssl
         kde/kdelibs:${SLOT}[>=${PV}]

@@ -5,15 +5,3 @@ require kdenetwork
 
 PLATFORMS="~amd64 ~x86"
 
-MYOPTIONS="( telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]] )"
-
-DEPENDENCIES="
-    build+run:
-        kde_parts:kopete?  (
-            im_protocols:wlm? ( media-libs/giflib )
-        )
-        kde_parts:krdc? (
-            telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
-        )
-"
-
