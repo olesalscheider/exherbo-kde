@@ -42,6 +42,9 @@ MY_KOPETE_PLUGINS+="
 "
 
 if ever at_least 4.3.95; then
+    MY_IM_PROTOCOLS+="
+        googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
+    "
     MYOPTIONS+="
         telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
     "
@@ -49,6 +52,13 @@ if ever at_least 4.3.95; then
         build+run:
             kde_parts:kopete?  (
                 im_protocols:wlm? ( media-libs/giflib )
+                im_protocols:xmpp? (
+                    im_protocols:googletalk? (
+                        dev-libs/expat
+                        media-libs/mediastreamer[>=2.3.0]
+                        net-libs/ortp[>=0.13]
+                    )
+                )
             )
             kde_parts:krdc? (
                 telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
@@ -206,6 +216,22 @@ src_configure() {
         cmakeparams+=( -DWITH_LibVNCServer=OFF )
     fi
 
+    if ever at_least 4.3.95; then
+        cmakeparams+=(
+            $(cmake_with im_protocols:GOOGLETALK)
+            $(cmake_with im_protocols:googletalk Expat)
+            $(cmake_with im_protocols:googletalk Mediastreamer)
+        )
+
+        if option im_protocols:jingle || option im_protocols:googletalk; then
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
+        fi
+    else
+        cmakeparams+=( $(cmake_with im_protocols:jingle LiboRTP) )
+    fi
+
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
     # >=4.2.88 uses WITH_JINGLE, older uses NO_JINGLE
@@ -225,7 +251,6 @@ src_configure() {
         $(cmake_with im_protocols:groupwise) \
         $(cmake_option !im_protocols:jingle NO_JINGLE) \
         $(cmake_with im_protocols:jingle) \
-        $(cmake_with im_protocols:jingle LiboRTP) \
         $(cmake_with im_protocols:wlm) \
         $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with kopete_plugins:otr) \
