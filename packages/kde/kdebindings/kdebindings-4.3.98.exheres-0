@@ -1,0 +1,19 @@
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdebindings
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/attica
+        python? (
+            dev-python/sip[>=4.10]
+            dev-python/PyQt4[>=4.7]
+        )
+"
+
+# XXX QtSQL, QtMultimedia bindings (see smoke/CMakeLists.txt)
+# Add options for this, or hard-enable it?
+
