@@ -12,6 +12,7 @@ LICENCES="GPL-2"
 MY_KDE_PARTS=""
 
 if ever at_least 4.3.95; then
+    MY_KDE_PARTS+=" kdeobservatory"
     MYOPTIONS+="
         kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
         qalculate [[ description = [ Build qalculate applet ] ]]
@@ -19,6 +20,7 @@ if ever at_least 4.3.95; then
     DEPENDENCIES+="
         build+run:
             dev-libs/attica[>=0.1.1]
+            kde_parts:kdeobservatory? ( x11-libs/qwt )
             kimpanel? ( inputmethods/scim )
             qalculate? ( sci-libs/libqalculate )
     "
