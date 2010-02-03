@@ -45,13 +45,21 @@ if ever at_least 4.3.95; then
     MY_IM_PROTOCOLS+="
         googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
     "
+    MY_KOPETE_PLUGINS+="
+        wlm_voice [[ requires = [ im_protocols: wlm ]
+                     description = [ Voice clips support in Windows Live Messenger Kopete plugin ] ]]"
     MYOPTIONS+="
-        telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
-    "
+        telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]] "
     DEPENDENCIES+="
         build+run:
             kde_parts:kopete?  (
-                im_protocols:wlm? ( media-libs/giflib )
+                im_protocols:wlm? (
+                    media-libs/giflib
+                    kopete_plugins:wlm_voice? (
+                        media-libs/mediastreamer[>=2.3.0]
+                        net-libs/ortp[>=0.13]
+                    )
+                )
                 im_protocols:xmpp? (
                     im_protocols:googletalk? (
                         dev-libs/expat
@@ -218,12 +226,17 @@ src_configure() {
 
     if ever at_least 4.3.95; then
         cmakeparams+=(
+            $(cmake_with im_protocols:wlm GIF)
             $(cmake_with im_protocols:GOOGLETALK)
             $(cmake_with im_protocols:googletalk Expat)
-            $(cmake_with im_protocols:googletalk Mediastreamer)
         )
 
-        if option im_protocols:jingle || option im_protocols:googletalk; then
+        if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
+        fi
+        if option im_protocols:jingle || option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
             cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
         else
             cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
@@ -260,7 +273,6 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
-        $(cmake_with im_protocols:wlm GIF) \
         $(ever at_least 4.3.95 && cmake_with telepathy TelepathyQt4) \
         $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
