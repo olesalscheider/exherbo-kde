@@ -82,6 +82,7 @@ DEPENDENCIES+="
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
+            app-crypt/gpgme
             dev-libs/boost
             dev-libs/soprano
             kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
@@ -216,6 +217,7 @@ src_configure() {
         -DWITH_WebKitPart:BOOL=FALSE \
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
         $(cmake_with kde_parts:kget Nepomuk) \
+        $(cmake_with kde_parts:kget QGpgme) \
         $(cmake_with kde_parts:kget Plasma) \
         $(cmake_with kde_parts:kget Soprano) \
         $(cmake_build bittorrent bittorrent) \
