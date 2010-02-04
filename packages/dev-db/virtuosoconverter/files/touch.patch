@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3cf4872..039db13 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,6 +71,7 @@ add_custom_command(
+ add_custom_command(
+   OUTPUT ${VIRTUOSO_V5_SOURCE_DIR}/Makefile.am
+   COMMAND tar xzf ${VIRTUOSO_V5_SOURCE}
++  COMMAND touch ${VIRTUOSO_V5_SOURCE_DIR}/Makefile.am
+   DEPENDS ${VIRTUOSO_V5_SOURCE}
+   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+   COMMENT "Extracting Virtuoso 5 sources...")

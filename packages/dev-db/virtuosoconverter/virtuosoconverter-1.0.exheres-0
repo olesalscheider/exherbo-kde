@@ -1,0 +1,33 @@
+# Copyright 2010 Yury G. Kudryashov <urkud@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde
+
+SUMMARY="Virtuoso 5.0->6.0 database conversion tool for Nepomuk"
+HOMEPAGE="http://kde-apps.org/content/show.php/Nepomuk+Virtuoso+Converter?content=119661"
+DOWNLOADS="
+http://www.kde-apps.org/CONTENT/content-files/119661-${PNV}.tar.bz2 -> ${PNV}.tar.bz2
+mirror://sourceforge/virtuoso/virtuoso-opensource-5.0.12.tar.gz
+"
+
+LICENCES="|| ( GPL-2 GPL-3 )"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4[>=4.3.80][nepomuk(+)]
+        kde/kdebase-workspace:4[>=4.3.80]
+        dev-libs/soprano[>=2.3.68]
+"
+
+BUGS_TO="urkud@ya.ru"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/touch.patch )
+
+src_prepare() {
+    default
+    ln -s "${FETCHEDDIR}"/virtuoso-opensource-5.0.12.tar.gz .
+}
+
