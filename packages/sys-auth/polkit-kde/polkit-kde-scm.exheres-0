@@ -1,9 +1,9 @@
-# Copyright 2009, 2010 Yury G. Kudryashov
+# Copyright 2010 Yury G. Kudryashov
 # Distributed under the terms of the GNU General Public License v2
 
 require polkit-kde
 
-DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
+SUMMARY="KDE Polkit-1 authentication agent and configuration modules"
 
 PLATFORMS="~amd64 ~x86"
 
