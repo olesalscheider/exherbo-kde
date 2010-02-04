@@ -41,7 +41,18 @@ MYOPTIONS="chm  [[ description = [ Support for Microsoft Compiled HTML Help form
 kde_parts: ${MY_KDE_PARTS}
 "
 
-DEPENDENCIES="
+if ever at_least 4.3.95; then
+    # FIXME Update tiff option description
+    DEPENDENCIES+="
+        build+run:
+            graphics/exiv2[>=0.19]
+            kde_parts:strigi-analyzer? (
+                tiff? ( media-libs/tiff )
+            )
+    "
+fi
+
+DEPENDENCIES+="
     build:
         sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
         kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )

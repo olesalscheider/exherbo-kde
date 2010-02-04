@@ -5,12 +5,3 @@ require kdegraphics
 
 PLATFORMS="~amd64 ~x86"
 
-# FIXME Update tiff option description
-DEPENDENCIES="
-    build+run:
-        graphics/exiv2[>=0.18]  [[ note = [ Preview access was added in 0.18 ] ]]
-        kde_parts:strigi-analyzer? (
-            tiff? ( media-libs/tiff )
-        )
-"
-
