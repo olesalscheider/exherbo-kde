@@ -36,13 +36,12 @@ MYOPTIONS="chm  [[ description = [ Support for Microsoft Compiled HTML Help form
            odf  [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
            pdf  [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
            ps   [[ description = [ Support for PS (PostScript) files in Okular ] ]]
-           tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular ] ]]
-           ( chm djvu epub odf ps pdf tiff ) [[ requires = [ kde_parts: okular ] ]]
+           tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular and strigi-analyzers ] ]]
+           ( chm djvu epub odf ps pdf ) [[ requires = [ kde_parts: okular ] ]]
 kde_parts: ${MY_KDE_PARTS}
 "
 
 if ever at_least 4.3.95; then
-    # FIXME Update tiff option description
     DEPENDENCIES+="
         build+run:
             graphics/exiv2[>=0.19]
