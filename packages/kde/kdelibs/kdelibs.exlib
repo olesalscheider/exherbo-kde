@@ -36,7 +36,6 @@ DEPENDENCIES="
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
-        avahi? ( net-dns/avahi )
         sys-apps/dbus[X(-)]
         x11-libs/libICE
         x11-libs/libSM
@@ -57,6 +56,7 @@ DEPENDENCIES="
             sys-apps/acl
             sys-apps/attr
         )
+        avahi? ( net-dns/avahi )
         fam? ( app-admin/gamin )
         jpeg2000? ( media-libs/jasper )
         openexr? (
@@ -78,8 +78,8 @@ if ever at_least 4.3.95 ; then
             app-crypt/qca:2
             app-text/shared-desktop-ontologies
             dev-libs/attica[>=0.1.1]
-            dev-libs/soprano[>=2.3.67]
-            x11-libs/qt:4[>=4.6.0-beta]
+            dev-libs/soprano[>=2.3.70]
+            x11-libs/qt:4[>=4.6.0]
             policykit? (
                 sys-auth/PolicyKit:0[>=0.9]
                 sys-auth/polkit-qt:0[>=0.9.3]
