@@ -49,6 +49,7 @@ DEPENDENCIES+="
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
         )
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )

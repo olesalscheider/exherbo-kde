@@ -41,6 +41,7 @@ DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-cpp/clucene[>=0.9.19]
         dev-libs/soprano[>=2.3.0]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]

@@ -72,6 +72,7 @@ DEPENDENCIES+="
         )
     build+run:
         app-crypt/gpgme
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]

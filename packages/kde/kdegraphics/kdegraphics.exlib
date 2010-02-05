@@ -56,6 +56,7 @@ DEPENDENCIES+="
         sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
         kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         graphics/exiv2[>=0.17]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/jpeg[>=6b]

@@ -47,6 +47,7 @@ MYOPTIONS+="
 # XXX Xine is optional for dragonplayer
 DEPENDENCIES+="
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         kde/kdebase:${SLOT}
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]

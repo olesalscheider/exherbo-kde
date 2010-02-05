@@ -26,6 +26,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         app-arch/xz
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/pcre
         dev-libs/libxml2
         dev-libs/libxslt

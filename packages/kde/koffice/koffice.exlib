@@ -52,6 +52,7 @@ MYOPTIONS="
 #    build: kde_parts:kexi? ( app-arch/bzip2 )
 DEPENDENCIES+="
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*
         dev-libs/libxml2 [[ note = [ xlsltfilter ] ]]
         dev-libs/libxslt [[ note = [ xsltfilter ] ]]

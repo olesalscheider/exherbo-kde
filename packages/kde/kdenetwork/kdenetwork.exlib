@@ -104,6 +104,7 @@ MYOPTIONS+="
 
 DEPENDENCIES+="
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
