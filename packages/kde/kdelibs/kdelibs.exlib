@@ -15,7 +15,7 @@ MYOPTIONS="acl avahi doc fam jpeg2000 openexr spell
     x86_cpu_features: mmx sse sse2
 "
 if ever at_least 4.3.95 ; then
-    MYOPTIONS+=" policykit"
+    MYOPTIONS="( policykit ) ${MYOPTIONS}"
 fi
 
 DEPENDENCIES="
