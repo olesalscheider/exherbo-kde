@@ -41,7 +41,7 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'doc SOPRANO_BUILD_API_DOCS'
 )
 
-if ever at_least scm ; then
+if ever at_least 2.4.0 ; then
     MYOPTIONS+=" virtuoso [[ description = [ Enable the virtuoso backend, the fastest backend ] ]]"
     DEPENDENCIES+="
     build+run:
@@ -49,7 +49,7 @@ if ever at_least scm ; then
         virtuoso? ( dev-db/libiodbc )
     suggestion:
         virtuoso? (
-            dev-db/virtuoso-opensource[>=5.0.12&<6] [[ description = [ Necessary to use Nepomuk ] ]]
+            dev-db/virtuoso-opensource[>=6.1.0] [[ description = [ Necessary to use Nepomuk ] ]]
         )"
     CMAKE_SRC_CONFIGURE_OPTIONS+=( '!virtuoso SOPRANO_DISABLE_VIRTUOSO_BACKEND' )
 fi
