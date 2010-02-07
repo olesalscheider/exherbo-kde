@@ -1,0 +1,23 @@
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdebase-runtime
+
+PLATFORMS="~amd64 ~x86"
+
+MYOPTIONS="
+    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    sftp [[ description = [ SFTP kioslave ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        app-pim/strigi[dbus][qt4]
+        dev-libs/attica[>=0.1.1]
+        dev-libs/soprano[>=scm]
+        jpeg-rotation? ( graphics/exiv2 )
+        sftp? ( net-libs/libssh[>=0.3.91] )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
+
