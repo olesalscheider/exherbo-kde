@@ -107,7 +107,10 @@ DEPENDENCIES="
 
 if ever at_least 4.3.95 ; then
     # Use sys-auth/polkit-kde instead
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_PolicyKit-kde:BOOL=FALSE )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DBUILD_PolicyKit-kde:BOOL=FALSE
+        -DWITH_PolkitQt:BOOL=FALSE
+    )
 else
     MYOPTIONS="policykit ${MYOPTIONS}"
     DEPENDENCIES+="
