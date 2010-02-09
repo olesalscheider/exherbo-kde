@@ -29,12 +29,12 @@ http://kross.dipe.org/solution.html [[ lang = en descripton = [ Using Kross, the
 
 LICENCES="GPL-2 LGPL-2.1"
 SLOT="4"
-MYOPTIONS="( python ruby ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="nepomuk ( python ruby ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
         dev-libs/soprano[>=2.3.0]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
         server-pim/akonadi[>=1.1.0]
@@ -79,6 +79,10 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'python KROSSPYTHON'
     'ruby KROSSRUBY'
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Nepomuk
+    'nepomuk Soprano'
 )
 
 kdebindings_src_install() {
