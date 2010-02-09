@@ -37,6 +37,13 @@ MYOPTIONS="openexr samba pulseaudio
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
 
+if ever at_least 4.3.98 ; then
+MYOPTIONS+="
+    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    sftp [[ description = [ SFTP kioslave ] ]]
+"
+fi
+
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
@@ -67,6 +74,18 @@ DEPENDENCIES="
 "
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
+
+if ever at_least 4.3.98 ; then
+DEPENDENCIES+="
+    build+run:
+        app-pim/strigi[dbus][qt4]
+        dev-libs/attica[>=0.1.1]
+        dev-libs/soprano[>=scm]
+        jpeg-rotation? ( graphics/exiv2 )
+        sftp? ( net-libs/libssh[>=0.3.91] )
+"
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Clucene=ON
