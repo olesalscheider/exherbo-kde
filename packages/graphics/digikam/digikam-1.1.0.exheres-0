@@ -13,10 +13,7 @@ BUGS_TO="kde@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="doc gphoto2
-    nepomuk       [[ description = [
-        Support for storage and querying of metadata (tags, ratings, file contents, etc.)
-    ] ]]"
+MYOPTIONS="doc gphoto2 nepomuk"
 #    themedesigner [[ description = [ Build digiKam theme designer ] ]]
 
 # MarbleWidget: marble? ( >=kde/kdeedu-4.1.85 )
