@@ -28,7 +28,6 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk?(+)]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
         kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
