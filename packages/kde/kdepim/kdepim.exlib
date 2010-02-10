@@ -78,7 +78,7 @@ DEPENDENCIES+="
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.1.67]
         kde/kdebase-runtime:${SLOT}[>=${PV}]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]
