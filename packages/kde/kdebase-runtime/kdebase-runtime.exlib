@@ -51,6 +51,7 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-cpp/clucene[>=0.9.19]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
+        kde/qimageblitz[>=0.0.4]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         sys-sound/alsa-lib[>=1.0.14a]
