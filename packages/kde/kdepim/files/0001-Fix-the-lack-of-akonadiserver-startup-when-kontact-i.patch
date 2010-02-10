@@ -1,0 +1,38 @@
+From 8fe23aac1599a8cd2c1f3831e5954ad3d3be5a79 Mon Sep 17 00:00:00 2001
+From: dfaure <dfaure@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Tue, 9 Feb 2010 14:44:07 +0000
+Subject: [PATCH] Fix the lack of akonadiserver startup when kontact is restored by session management,
+ and fix the lack of a mainwindow appearing at all in some other cases (kmailpart
+ waiting for akonadi forever), as discussed with Volker.
+
+git-svn-id: svn://anonsvn.kde.org/home/kde/branches/KDE/4.4/kdepim@1087778 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ kontact/src/main.cpp |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/kontact/src/main.cpp b/kontact/src/main.cpp
+index e58b014..356aa57 100644
+--- a/kontact/src/main.cpp
++++ b/kontact/src/main.cpp
+@@ -138,7 +138,6 @@ int KontactApp::newInstance()
+         mMainWindow->setInitialActivePluginModule( moduleName );
+       }
+       mMainWindow->show();
+-      Akonadi::Control::start( mMainWindow );
+       KontactInterface::UniqueAppHandler::setMainWidget( mMainWindow );
+       // --iconify is needed in kontact, although kstart can do that too,
+       // because kstart returns immediately so it's too early to talk D-Bus to the app.
+@@ -200,6 +199,10 @@ int main( int argc, char **argv )
+ 
+   KontactApp app;
+ 
++  // KDE 4.4: do akonadi startup before creating any window, since creating
++  // the window loads kmail. In 4.5 we'll do this startup async instead.
++  Akonadi::Control::start( 0 );
++
+   // Qt doesn't treat the system tray as a window, and therefore Qt would quit
+   // the event loop when an error message is clicked away while Kontact is in the
+   // tray.
+-- 
+1.6.6.1
+
