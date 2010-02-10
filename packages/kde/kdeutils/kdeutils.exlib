@@ -41,7 +41,7 @@ DEPENDENCIES="
         kde/kdepimlibs:${SLOT}
         kde_parts:ark? (
             app-arch/xz
-            kde/kdebase:4               [[ note = [ konqueror ark_extract_here plugin ] ]]
+            kde/kdebase:4               [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
             archive? ( app-arch/libarchive )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
