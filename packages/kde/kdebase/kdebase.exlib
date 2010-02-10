@@ -69,7 +69,7 @@ if ever at_least 4.4.0; then
     MYOPTIONS+=" webkit"
     DEPENDENCIES+="
         build+run:
-            kde/kwebkitpart
+            webkit? ( kde/kwebkitpart )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
 fi
