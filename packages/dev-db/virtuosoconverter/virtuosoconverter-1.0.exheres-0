@@ -26,8 +26,8 @@ BUGS_TO="urkud@ya.ru"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/touch.patch )
 
-src_prepare() {
-    default
-    ln -s "${FETCHEDDIR}"/virtuoso-opensource-5.0.12.tar.gz .
+src_unpack() {
+    unpack "${PNV}".tar.bz2
+    edo ln -s "${FETCHEDDIR}"/virtuoso-opensource-5.0.12.tar.gz "${PNV}"
 }
 
