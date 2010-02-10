@@ -50,7 +50,7 @@ DEPENDENCIES+="
         sci-libs/eigen:2[>=2.0.3]
     build+run:
         dev-libs/boost
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk?(+)]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}
         kde/kdebase-workspace:${SLOT}
         kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]

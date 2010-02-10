@@ -20,7 +20,7 @@ MYOPTIONS="nepomuk"
 DEPENDENCIES="
     build+run:
         kde/kdebase-workspace:4[>=4.2.0][bluetooth]
-        kde/kdelibs:4[nepomuk?(+)]
+        kde/kdelibs:4[nepomuk(+)?]
         || (
             kde/kdelibs:4[>=4.3.66]
             kde/kdelibs-experimental:4.3

@@ -53,7 +53,7 @@ DEPENDENCIES="
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk?(+)]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
