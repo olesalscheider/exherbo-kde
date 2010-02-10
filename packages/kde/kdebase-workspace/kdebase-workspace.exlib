@@ -34,7 +34,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
+MYOPTIONS="bluetooth lm_sensors nepomuk networkmanager python wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -50,12 +50,10 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/glib:2
         dev-libs/libusb:0.1
-        dev-libs/soprano[>=2.1.67] [[ note = [ plasma engine explorer ] ]]
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
-        kde/kdelibs:${SLOT}[>=${PV}] [[ note = [ Needs Nepomuk ] ]]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk?(+)]
         kde/kdebase-runtime:${SLOT}
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
        !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
@@ -84,6 +82,7 @@ DEPENDENCIES="
         bluetooth? ( net-wireless/bluez )
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
+        nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
         python? (
             dev-lang/python:=
@@ -135,6 +134,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'bluetooth BlueZ'
     'consolekit CkConnector'
     'lm_sensors Sensors'
+    Nepomuk
+    'nepomuk Soprano'
     NetworkManager
     'python PythonLibrary'
     'python PyKDE4'
@@ -153,9 +154,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_KRB5AUTH=OFF
     -DKDE4_XDMCP=ON
     -DWITH_Xmms=OFF
-    # Not optional in Exherbo
-    -DWITH_Nepomuk=On
-    -DWITH_Soprano=ON
     -DWITH_KdepimLibs=ON # for plasma RSS data engine
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
