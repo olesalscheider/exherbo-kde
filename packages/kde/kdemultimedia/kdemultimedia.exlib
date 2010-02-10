@@ -72,6 +72,7 @@ DEPENDENCIES+="
                 media-sound/pulseaudio[>=0.9.12]
             )
         )
+        kde_parts:mplayerthumbs? ( run: media/mplayer )
         musicbrainz? ( media-libs/libmusicbrainz:2 )
     suggestion:
         kde_parts:kioslave? (
@@ -79,10 +80,11 @@ DEPENDENCIES+="
         )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # mplayerthumbs' phonon support requires phonon-scm
-    -DENABLE_PHONON_SUPPORT:BOOL=FALSE
-)
+if ever at_least 4.4.0 . then
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_PHONON_SUPPORT:BOOL=TRUE )
+else
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_PHONON_SUPPORT:BOOL=FALSE )
+fi
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave Cdparanoia'
     Flac
