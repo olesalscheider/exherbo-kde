@@ -57,9 +57,20 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_USBIDS_DIR="/usr/share/misc"
     -DDISABLE_USBIDS_INSTALL=ON
     -DWITH_XKB=ON
+
+    # gone in >= 4.4.0
     -DWITH_KdeWebKit=OFF
     -DWITH_WebKitPart=OFF
 )
 
 KDE_APPS_PREFIX="apps"
+
+if ever at_least 4.4.0; then
+    MYOPTIONS+=" webkit"
+    DEPENDENCIES+="
+        build+run:
+            kde/kwebkitpart
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
+fi
 
