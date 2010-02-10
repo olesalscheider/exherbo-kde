@@ -23,6 +23,7 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/boost[>=1.34.0]
         dev-libs/libxml2
+        kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]  [[ note = [ We need nepomuk libraries enabled ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         server-pim/akonadi

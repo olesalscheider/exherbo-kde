@@ -77,7 +77,7 @@ DEPENDENCIES+="
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.1.67]
-        kde/kdebase-runtime:${SLOT}[>=${PV}]
+        kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
