@@ -33,12 +33,12 @@ MYOPTIONS="nepomuk ( python ruby ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
-        dev-libs/soprano[>=2.3.0]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
         server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[X][dbus][webkit]
+        nepomuk? ( dev-libs/soprano[>=2.3.0] )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.8_pre]
@@ -68,6 +68,11 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # We don't currently ship these languages
     -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
 )
+
+if ever at_least 4.4.0; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_QTMULTIMEDIA_SMOKE:BOOL=FALSE )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
     python
     ruby
