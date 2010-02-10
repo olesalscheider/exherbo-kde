@@ -18,7 +18,7 @@ kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="ieee1394"
+MYOPTIONS="ieee1394 nepomuk"
 
 DEPENDENCIES="
     build:
@@ -26,9 +26,8 @@ DEPENDENCIES="
         x11-apps/bdftopcf
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        dev-libs/soprano[>=2.1.67]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk?(+)]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}
         kde/kdebase-workspace:${SLOT}
@@ -42,17 +41,18 @@ DEPENDENCIES="
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
         ieee1394? ( media-libs/libraw1394 )
+        nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     suggestion:
         sys-apps/eject
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'ieee1394 RAW1394'
+    Nepomuk
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
-    -DWITH_Nepomuk=ON
     -DWITH_Soprano=ON
     -DWITH_PCIUTILS=ON
     -DKDE_USBIDS_DIR="/usr/share/misc"
