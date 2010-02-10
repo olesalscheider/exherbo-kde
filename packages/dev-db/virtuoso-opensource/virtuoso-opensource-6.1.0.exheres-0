@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require multilib sourceforge [ project=virtuoso suffix=tar.gz ]
@@ -31,9 +31,9 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --localstatedir=/var
 
     --enable-shared
-    # FIXME Needs an internal header of zlib (zutil.h)
-    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
-    # --without-internal-zlib
+    # There're more internel copies (libpcre), not all of those have ./configure options.
+    # See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
+    --without-internal-zlib
 
     --program-transform-name='s/isql[-]*\(w\)*/isql\1-vt/'
 
