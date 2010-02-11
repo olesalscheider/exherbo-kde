@@ -96,10 +96,10 @@ fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Clucene=ON
+    -DWITH_Soprano=ON
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Nepomuk
-    'nepomuk Soprano'
     OpenEXR
     Samba
     SLP
