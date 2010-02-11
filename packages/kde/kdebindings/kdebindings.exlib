@@ -36,7 +36,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
-        x11-libs/qt:4[X][dbus][webkit]
+        x11-libs/qt:4[X][dbus][sql][webkit]
         nepomuk? ( dev-libs/soprano[>=2.3.0] )
         python? (
             dev-lang/python:=
