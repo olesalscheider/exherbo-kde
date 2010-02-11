@@ -5,6 +5,3 @@ require kdebindings
 
 PLATFORMS="~amd64 ~x86"
 
-# XXX QtSQL, QtMultimedia bindings (see smoke/CMakeLists.txt)
-# Add options for this, or hard-enable it?
-
