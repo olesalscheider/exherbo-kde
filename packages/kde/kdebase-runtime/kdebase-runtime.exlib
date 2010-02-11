@@ -80,7 +80,7 @@ DEPENDENCIES+="
         app-pim/strigi[dbus][qt4]
         dev-libs/attica[>=0.1.1]
         jpeg-rotation? ( graphics/exiv2 )
-        nepomuk? ( dev-libs/soprano[>=2.4.0][virtuoso] )
+        nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
         sftp? ( net-libs/libssh[>=0.3.91] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
