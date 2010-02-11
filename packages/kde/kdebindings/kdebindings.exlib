@@ -36,7 +36,6 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
-        server-pim/akonadi[>=1.1.0]
         x11-libs/qt:4[X][dbus][webkit]
         nepomuk? ( dev-libs/soprano[>=2.3.0] )
         python? (
@@ -47,6 +46,14 @@ DEPENDENCIES="
         )
         ruby? ( dev-lang/ruby:= )
 "
+
+if ever at_least scm ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=scm]"
+elif ever at_least 4.3.95 ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
+else
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.2.0]"
+fi
 
 # Note: ABI support for python & ruby should use:
 # -DRUBY_INCLUDE_PATH=/usr/lib/ruby/1.8/i486-linux/

@@ -59,7 +59,6 @@ DEPENDENCIES="
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
        !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
         kde/qimageblitz[>=0.0.4]
-        server-pim/akonadi[>=1.1.85]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         x11-apps/xrandr[>=1.2] [[ note = kcontrol/kxkb/solidcontrol ]]
         x11-dri/mesa
@@ -122,6 +121,14 @@ else
     "
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
+fi
+
+if ever at_least scm ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=scm]"
+elif ever at_least 4.3.95 ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
+else
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.2.0]"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
