@@ -84,20 +84,8 @@ DEPENDENCIES+="
         sftp? ( net-libs/libssh[>=0.3.91] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
-else
-DEPENDENCIES+="
-    build+run:
-        nepomuk? (
-            dev-libs/soprano[>=2.3.0]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
-            kde/kdelibs:4[nepomuk(+)]
-        )
-"
 fi
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Clucene=ON
-    -DWITH_Soprano=ON
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Nepomuk
     OpenEXR
