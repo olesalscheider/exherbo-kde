@@ -3,6 +3,12 @@
 
 require kde.org
 
+if ! ever at_least scm; then
+    PLATFORM_PV="$(( $(ever major)-3 )).$(ever range 2-)"
+else
+    PLATFORM_PV=scm
+fi
+
 SUMMARY="KDE official IDE"
 DESCRIPTION="A free, opensource IDE (Integrated Development Environment) for MS Windows, Mac OsX,
 Linux, Solaris and FreeBSD. It is a feature-full, plugin extendable IDE for C/C++ and other
@@ -14,8 +20,11 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 
 DEPENDENCIES="
     build+run:
-        kde/kdevplatform[>=0.9.96]
+        kde/kdevplatform[>=${PLATFORM_PV}]
         kde/kdelibs:${SLOT}[>=4.3.0]
         kde/kdebase-workspace[>=4.2.0]
+        x11-libs/qt:4[>=4.5.2]
+    suggestion:
+        sys-devel/gdb[>=7.0][python] [[ description = [ The only supported debugger ] ]]
 "
 
