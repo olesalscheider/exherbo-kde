@@ -79,6 +79,7 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[dbus][qt4]
         dev-libs/attica[>=0.1.1]
+        media-libs/phonon[>=4.3.80]
         jpeg-rotation? ( graphics/exiv2 )
         nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
         sftp? ( net-libs/libssh[>=0.3.91] )
