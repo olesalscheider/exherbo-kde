@@ -5,5 +5,7 @@ require kdevplatform
 
 PLATFORMS="~amd64"
 
-DOWNLOADS="mirror://kde/unstable/kdevelop/3.9.97/src/${PNV}.tar.bz2"
+KDEVELOP_PV="$(( $(ever major)+3 )).$(ever range 2-)"
+
+DOWNLOADS="mirror://kde/unstable/kdevelop/${KDEVELOP_PV}/src/${PNV}.tar.bz2"
 
