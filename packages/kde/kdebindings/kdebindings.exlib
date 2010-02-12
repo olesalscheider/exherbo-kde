@@ -67,7 +67,7 @@ else
     DEPENDENCIES+="
     build+run: server-pim/akonadi[~>1.2.0]
         python? (
-            dev-python/sip[~>4,9]
+            dev-python/sip[~>4.9]
             dev-python/PyQt4[~>4.6]
         )"
 fi
