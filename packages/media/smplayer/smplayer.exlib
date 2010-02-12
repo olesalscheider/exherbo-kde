@@ -3,8 +3,6 @@
 
 require qmake4 sourceforge
 
-export_exlib_phases src_prepare
-
 SUMMARY="A complete front-end for MPlayer"
 
 REMOTE_IDS+=" freshmeat:${PN}"
@@ -27,11 +25,4 @@ EQMAKE4_SOURCES=( src/${PN}.pro )
 QMAKE4_SRC_CONFIGURE_PARAMS=( -o src/Makefile )
 DEFAULT_SRC_COMPILE_PARAMS=( PREFIX=/usr )
 DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr CONF_PATH="/etc/${PN}" DOC_PATH="/usr/share/doc/${PNVR}" )
-
-smplayer_src_prepare() {
-    default
-    sed -e '/MimeType/s/$/;/' \
-        -e '/GenericName=/s/A great MPlayer front-end/Media Player/' \
-        -i ${PN}.desktop || die "Fixing .desktop file failed"
-}
 
