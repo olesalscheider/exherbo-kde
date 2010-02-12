@@ -49,7 +49,6 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        dev-cpp/clucene[>=0.9.19]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/qimageblitz[>=0.0.4]
         sys-apps/hal
@@ -85,6 +84,11 @@ DEPENDENCIES+="
         sftp? ( net-libs/libssh[>=0.3.91] )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
+else
+DEPENDENCIES+="
+    build+run:
+        dev-cpp/clucene[>=0.9.19]
+"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
