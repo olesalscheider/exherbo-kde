@@ -15,7 +15,7 @@ MYOPTIONS="acl avahi doc fam jpeg2000 openexr spell
     x86_cpu_features: mmx sse sse2
 "
 if ever at_least 4.3.95 ; then
-    MYOPTIONS="( policykit ) ${MYOPTIONS}"
+    MYOPTIONS="( nepomuk policykit ) ${MYOPTIONS}"
 fi
 
 DEPENDENCIES="
@@ -26,6 +26,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         app-arch/xz
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/pcre
         dev-libs/libxml2
         dev-libs/libxslt
@@ -36,7 +37,6 @@ DEPENDENCIES="
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
-        avahi? ( net-dns/avahi )
         sys-apps/dbus[X(-)]
         x11-libs/libICE
         x11-libs/libSM
@@ -57,6 +57,7 @@ DEPENDENCIES="
             sys-apps/acl
             sys-apps/attr
         )
+        avahi? ( net-dns/avahi )
         fam? ( app-admin/gamin )
         jpeg2000? ( media-libs/jasper )
         openexr? (
@@ -76,31 +77,35 @@ if ever at_least 4.3.95 ; then
     DEPENDENCIES+="
         build+run:
             app-crypt/qca:2
-            app-text/shared-desktop-ontologies
             dev-libs/attica[>=0.1.1]
-            dev-libs/soprano[>=2.3.67]
-            x11-libs/qt:4[>=4.6.0-beta]
-            policykit? (
-                sys-auth/PolicyKit:0[>=0.9]
-                sys-auth/polkit-qt:0[>=0.9.3]
-            )"
+            dev-libs/soprano[>=2.3.70]
+            x11-libs/qt:4[>=4.6.0]
+            nepomuk? (
+                app-text/shared-desktop-ontologies
+                dev-libs/soprano[virtuoso(-)]
+            )
+            policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
+        recommendation:
+            policykit? ( sys-auth/polkit-kde[>=0.95.1] )
+    "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DBUILD_experimental:BOOL=FALSE
+        -DKDE4_AUTH_BACKEND_NAME:STRING=POLKITQT-1
         -DWITH_LibAttica:BOOL=TRUE
         -DWITH_QCA2:BOOL=TRUE
-        -DWITH_SharedDesktopOntologies:BOOL=TRUE
-        -DWITH_Soprano:BOOL=TRUE
-        -DWITH_PolkitQt-1=FALSE
+        -DWITH_PolkitQt=FALSE
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'policykit PolkitQt'
+        'nepomuk SharedDesktopOntologies'
+        'nepomuk Soprano'
+        'policykit PolkitQt-1'
     )
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_DEFAULT_HOME=".kde4"
     -DKDE_DISTRIBUTION_TEXT="Exherbo"
-    -DSYSCONF_INSTALL_DIR="/etc/kde4/"
+    -DSYSCONF_INSTALL_DIR="/etc/"
     -DBUILD_experimental=OFF
     -DWITH_BZip2=ON
     -DWITH_GSSAPI=OFF # Kerberos

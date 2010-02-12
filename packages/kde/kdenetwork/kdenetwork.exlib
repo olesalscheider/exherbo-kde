@@ -86,11 +86,12 @@ fi
 
 MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
+    nepomuk
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
-    ( bittorrent sqlite ) [[ requires = [ kde_parts: kget ] ]]
+    ( bittorrent nepomuk sqlite ) [[ requires = [ kde_parts: kget ] ]]
     vnc [[ requires = [ kde_parts: krdc ] ]]
 
     kde_parts:
@@ -104,19 +105,22 @@ MYOPTIONS+="
 
 DEPENDENCIES+="
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
             app-crypt/gpgme
             dev-libs/boost
-            dev-libs/soprano
-            kde/kdebase-runtime:${SLOT} [[ note = Nepomuk ]]
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
             kde/kdebase:${SLOT} [[ note = Konqueror ]]
             bittorrent? ( kde/ktorrent )
+            nepomuk? (
+                dev-libs/soprano
+                kde/kdebase-runtime:${SLOT}[nepomuk(+)]
+            )
             sqlite? ( dev-db/sqlite:3 )
         )
         kde_parts:kopete? (
@@ -268,10 +272,8 @@ src_configure() {
         "${cmakeparams[@]}" \
         "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
-        $(cmake_with kde_parts:kget Nepomuk) \
         $(cmake_with kde_parts:kget QGpgme) \
         $(cmake_with kde_parts:kget Plasma) \
-        $(cmake_with kde_parts:kget Soprano) \
         $(cmake_build bittorrent) \
         $(cmake_with im_protocols:gadu) \
         $(cmake_with im_protocols:gadu Libgadu) \
@@ -288,6 +290,8 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
+        $(cmake_with Nepomuk) \
+        $(cmake_with nepomuk Soprano) \
         $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \

@@ -41,6 +41,7 @@ fi
 
 MYOPTIONS+="
     marble [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
+    nepomuk
     kde_parts: ${MY_KDE_PARTS}
 "
 DEPENDENCIES+="
@@ -49,10 +50,11 @@ DEPENDENCIES+="
         sci-libs/eigen:2[>=2.0.3]
     build+run:
         dev-libs/boost
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}
         kde/kdebase-workspace:${SLOT}
         kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
+        kde/qimageblitz[>=0.0.4]
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/libXrender
@@ -62,9 +64,9 @@ DEPENDENCIES+="
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Marble
+    Nepomuk
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Nepomuk:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
 )
 

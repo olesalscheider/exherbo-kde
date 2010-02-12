@@ -10,5 +10,12 @@ DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-4.2.4-optional-xine.patch" )
 DEPENDENCIES="
     build+run:
         kde/kdelibs-experimental:4.3[>=${PV}]   [[ note = [ LibKNotificationItem-1 for nepomuk ] ]]
+        nepomuk? (
+            dev-libs/soprano[>=2.3.0]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
+        )
 "
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'nepomuk Soprano'
+    'nepomuk Clucene'
+)
 

@@ -32,19 +32,26 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS="openexr samba pulseaudio
+MYOPTIONS="nepomuk openexr samba pulseaudio
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
+
+if ever at_least 4.3.98 ; then
+MYOPTIONS+="
+    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    sftp [[ description = [ SFTP kioslave ] ]]
+"
+fi
 
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-cpp/clucene[>=0.9.19]
-        dev-libs/soprano[>=2.3.0]        [[ note = [ We need at least one backend enabled (redland, sesame2, virtuoso) for nepomuk to be build ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
+        kde/qimageblitz[>=0.0.4]
         sys-apps/hal
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         sys-sound/alsa-lib[>=1.0.14a]
@@ -67,11 +74,21 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Clucene=ON
-    -DWITH_Soprano=ON
-)
+if ever at_least 4.3.98 ; then
+DEPENDENCIES+="
+    build+run:
+        app-pim/strigi[dbus][qt4]
+        dev-libs/attica[>=0.1.1]
+        media-libs/phonon[>=4.3.80]
+        jpeg-rotation? ( graphics/exiv2 )
+        nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
+        sftp? ( net-libs/libssh[>=0.3.91] )
+"
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Nepomuk
     OpenEXR
     Samba
     SLP

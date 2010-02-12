@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -64,6 +64,7 @@ DEPENDENCIES="
 #   suggestion: media-video/emovix
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DSYSCONF_INSTALL_DIR="/etc/"
     -DK3B_ENABLE_TAGLIB:BOOL=TRUE
     # Hard-enabled
     -DWITH_Samplerate:BOOL=TRUE

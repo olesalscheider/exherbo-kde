@@ -5,3 +5,8 @@ require kdepimlibs
 
 PLATFORMS="~amd64 ~x86"
 
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
+"
+

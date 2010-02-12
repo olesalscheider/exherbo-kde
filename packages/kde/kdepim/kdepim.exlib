@@ -72,12 +72,13 @@ DEPENDENCIES+="
         )
     build+run:
         app-crypt/gpgme
+        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.1.67]
-        kde/kdebase-runtime:${SLOT}[>=${PV}]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
+        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]

@@ -3,7 +3,7 @@
 
 ECMAKE_BUILD_TYPE="in-source"
 
-require cmake
+require cmake googlecode
 
 SUMMARY="Plugin for GTK that allows GTK applications to use Qt widget styles"
 DESCRIPTION="
@@ -13,8 +13,6 @@ will only affect applications while KDE is running. If you want to use KDE
 themes in GNOME, you will need to use the GNOME control panel to select the
 'Qt' theme engine.
 "
-HOMEPAGE="http://code.google.com/p/gtk-qt-engine/"
-DOWNLOADS="http://${PN}.googlecode.com/files/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"

@@ -34,7 +34,7 @@ case ${PV} in
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.4-rc3.php" ;;
     4.3.95)
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.4-rc2.php" ;;
-    4.3.@(1|2|3|4|5))
+    4.@(3|4).@(0|1|2|3|4|5))
         UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
     4.@(2|3).@(6|7|8|9)*)
         UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
@@ -121,7 +121,6 @@ esac
 
 DEPENDENCIES="
     build+run:
-        app-pim/strigi[>=0.6.3][qt4] [[ note = [ Also needs dbus support, which is hard-enabled with qt4 in the strigi exheres ] ]]
         x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X]
 "
 
