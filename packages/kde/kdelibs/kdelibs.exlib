@@ -71,6 +71,8 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb
+    suggestion:
+        sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
 "
 
 if ever at_least 4.3.95 ; then
