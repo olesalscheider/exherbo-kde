@@ -1,7 +1,9 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require flag-o-matic cmake
+
+export_exlib_phases src_configure
 
 SUMMARY="KIPI (KDE Image Plugin Interface) is an effort to develop a common plugin structure for Digikam, KPhotoAlbum, Showimg and GwenView"
 HOMEPAGE="http://www.kipi-plugins.org"
@@ -60,3 +62,9 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 )
 CMAKE_SRC_CONFIGURE_PARAMS=( "-DWITH_X11:BOOL=TRUE" )
 
+kipi-plugins_src_configure() {
+    # kipi-plugins' code doesn't like graphite.
+    filter-flags -floop-interchange -floop-strip-mine -floop-block
+
+    cmake_src_configure
+}
