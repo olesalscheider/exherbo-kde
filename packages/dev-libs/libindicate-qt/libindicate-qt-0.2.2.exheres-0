@@ -7,7 +7,7 @@ SUMMARY="A set of Qt bindings for libindicate, the indicator system developed by
 
 LICENCES="GPL-3 || ( LGPL-3 LGPL-2.1 )"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 # Tests need a running dbus session
