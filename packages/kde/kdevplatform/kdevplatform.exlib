@@ -12,19 +12,18 @@ HOMEPAGE="http://www.kdevelop.org"
 LICENCES="GPL-2 LGPL-2"
 
 MYOPTIONS="
-    boost [[ description = [ Boost libraries for enabling the classbrowser ] ]]
     subversion [[ description = [ Support for Subversion integration ] ]]
 "
 
 DEPENDENCIES="
     build:
-        boost? ( dev-libs/boost[>=1.35.0] [[ note = [ Needs multiindex ] ]] )
+        dev-libs/boost[>=1.35.0] [[ note = [ Needs multiindex ] ]]
     build+run:
         kde/kdelibs:${SLOT}[>=4.3]
         subversion? ( dev-scm/subversion[>=1.3.0] )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Boost "subversion SubversionLibrary" )
-
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Boost=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( Subversion )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( "subversion SubversionLibrary" )
 
