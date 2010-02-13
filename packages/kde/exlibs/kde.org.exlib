@@ -75,7 +75,7 @@ case ${PV} in
                 die "Add support for ${PN}-scm"
                 ;;
             kwebkitpart)
-                SCM_SUBPATH="kdereview/${PN}"
+                SCM_SUBPATH="extragear/base/${PN}"
                 ;;
             *)
                 SCM_SUBPATH="KDE/${KDEMODULE}/"
