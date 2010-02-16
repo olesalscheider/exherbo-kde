@@ -3,8 +3,6 @@
 # Based in part upon 'qca-2.0.0.ebuild', which is:
 #   Copyright 1999-2008 Gentoo Foundation
 
-require multilib
-
 SUMMARY="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="http://delta.affinix.com/qca/"
 DOWNLOADS="http://delta.affinix.com/download/${PN}/${PV%.*}/${PNV}.tar.bz2"
@@ -18,36 +16,37 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4"
 
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --hates=build
+    --hates=host
+    --hates=docdir
+    --hates=mandir
+    --hates=infodir
+    --hates=sysconfdir
+    --hates=localstatedir
+    --hates=disable-dependency-tracking
+    --hates=disable-silent-rules
+    --hates=enable-fast-install
+    --no-separate-debug-info
+    --qtdir=/usr
+)
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
 src_prepare() {
     default
 
     # This test fails when qca-ossl is installed
-    sed -e '/velox/d' -i unittest/checkall ||
-        die "Couldn't disable veloxunittest"
-}
-
-src_configure() {
-    ./configure \
-        --prefix=/usr \
-        --qtdir=/usr \
-        --libdir="/usr/$(get_libdir)" \
-        --no-separate-debug-info \
-        || die "configure failed"
+    edo sed -e '/velox/d' -i unittest/checkall
 }
 
 src_install() {
     default
 
-    if option doc; then
-        insinto /usr/share/doc/${PNVR}/html/
-        doins -r "${WORK}"/apidocs/html/* || die "Failed to install documentation"
-    fi
+    option examples && dodoc -r examples/
 
-    if option examples; then
-        insinto /usr/share/doc/${PNVR}/
-        doins -r "${WORK}"/examples || die "Failed to install examples"
+    if option doc ; then
+        docinto html
+        dodoc apidocs/html/*
     fi
 }
 
