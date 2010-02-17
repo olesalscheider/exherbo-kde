@@ -6,10 +6,9 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="kdesupport/${PN}/"
+SCM_REPOSITORY="git://gitorious.org/phonon/phonon.git"
 
-require phonon scm-svn
+require phonon scm-git
 
 DOWNLOADS=""
 
