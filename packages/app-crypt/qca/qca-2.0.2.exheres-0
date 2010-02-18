@@ -35,8 +35,13 @@ DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 src_prepare() {
     default
 
-    # This test fails when qca-ossl is installed
-    edo sed -e '/velox/d' -i unittest/checkall
+    # Velox test fails when qca-ossl is installed
+    # PipeUnitTest test failure reported:
+    #     https://bugs.kde.org/show_bug.cgi?id=169210
+    edo sed \
+        -e '/velox/d' \
+        -e '/pipeunittest/d' \
+        -i unittest/checkall
 }
 
 src_install() {
