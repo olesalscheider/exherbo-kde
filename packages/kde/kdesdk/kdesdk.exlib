@@ -73,8 +73,6 @@ DEPENDENCIES+="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kde_parts:kbugbuster KdepimLibs'
-    'kde_parts:kdeaccounts-plugin KdepimLibs'
     'kde_parts:kioslave SVN'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
 )
@@ -83,4 +81,14 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Kioslave to browse perldoc
     -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE
 )
+
+src_configure() {
+    if option kde_parts:kbugbuster || option kde_parts:kdeaccounts-plugin; then
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=TRUE )
+    else
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=FALSE )
+    fi
+
+    kde_src_configure
+}
 
