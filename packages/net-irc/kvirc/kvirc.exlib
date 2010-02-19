@@ -1,4 +1,4 @@
-# Copyright 2009 Wulf C. Krueger <philantrop@exherbo.org>
+# Copyright 2010 Wulf C. Krueger <philantrop@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kvirc-4.0_pre3154.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
@@ -17,6 +17,9 @@ online help and configurable logging.
 "
 HOMEPAGE="http://www.${PN}.net"
 
+# I'm going to bump to 4.0.0 when it has been released. Afterwards, I most likely
+# won't care about kvirc anymore, remove myself from BUGS_TO and if things break,
+# I won't fix them but nuke kvirc. So if you care about kvirc, keep an eye on it.
 BUGS_TO="philantrop@exherbo.org"
 REMOTE_IDS="freshmeat:${PN}"
 
