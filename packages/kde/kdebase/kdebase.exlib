@@ -18,7 +18,7 @@ kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="ieee1394 nepomuk"
+MYOPTIONS="nepomuk"
 
 DEPENDENCIES="
     build:
@@ -32,23 +32,16 @@ DEPENDENCIES="
         kde/kdebase-workspace:${SLOT}
         kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
         sys-apps/pciutils
-        sys-apps/usbutils-data [[
-            note = [ required to display USB information in kinfocenter ]
-        ]]
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
-        ieee1394? ( media-libs/libraw1394 )
         nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     suggestion:
         sys-apps/eject
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    'ieee1394 RAW1394'
-    Nepomuk
-)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Nepomuk )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
@@ -72,5 +65,17 @@ if ever at_least 4.4.0; then
             webkit? ( kde/kwebkitpart )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
+fi
+
+if ! ever at_least scm; then
+    MYOPTIONS+= "ieee1384"
+    DEPENDENCIES+="
+        build+run:
+            sys-apps/usbutils-data [[
+                note = [ required to display USB information in kinfocenter ]
+            ]]
+            ieee1394? ( media-libs/libraw1394 )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'ieee1394 RAW1394' )
 fi
 
