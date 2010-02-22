@@ -4,6 +4,3 @@
 require kdebase
 
 PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}/${PN}-usbids.patch" )
-
