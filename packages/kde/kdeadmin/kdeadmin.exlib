@@ -10,7 +10,7 @@ DESCRIPTION="
 * kuser: User and group manager
 * strigi-analyzer: Strigi plugin for rpm files
 * system-config-printer-kde: Port of Red Hat's Gnome system-config-printer to KDE
-Other, currently disabled parts include kdat, knetworkconf, ksysv & lilo-config.
+Other, currently disabled parts knetworkconf
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
@@ -38,16 +38,11 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Tape backup tool, disabled upstream
-    -DBUILD_kdat:BOOL=FALSE
     # KDE control Center Module to configure Network settings
     # Needs GNOME system tools, http://www.gnome.org/projects/gst/
-   -DBUILD_knetworkconf:BOOL=FALSE
-    # Editor for System V startup schemes
-    # Disabled upstream, probably not compatible with our init scripts
-    -DBUILD_ksysv:BOOL=FALSE
-    # KDE control Center Module for configuring the LILO boot loader
-    -DBUILD_lilo-config:BOOL=FALSE
+    -DBUILD_knetworkconf:BOOL=FALSE
+    # FIXME removed from KDE 4.4.1 and above
+    -DBUILD_{kdat,ksysv,lilo-config}:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde PyCups'
