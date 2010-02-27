@@ -6,6 +6,6 @@ require kdelibs
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PNV}-CMake-strict-dependencies.patch"
+    "${FILES}/${PN}-4.4.0-CMake-strict-dependencies.patch"
 )
 
