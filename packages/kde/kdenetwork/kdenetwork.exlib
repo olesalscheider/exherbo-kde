@@ -88,7 +88,6 @@ MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     nepomuk
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
-    v4l [[ description = [ Use video4linux libraries for better webcam support ] requires = [ kde_parts: kopete ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
     ( bittorrent nepomuk sqlite ) [[ requires = [ kde_parts: kget ] ]]
@@ -125,6 +124,7 @@ DEPENDENCIES+="
         )
         kde_parts:kopete? (
             kde/qimageblitz
+            media-libs/libv4l
             x11-libs/libICE
             x11-libs/libSM
             x11-libs/libX11
@@ -152,7 +152,6 @@ DEPENDENCIES+="
                 dev-libs/libxml2
                 dev-libs/libxslt
             )
-            v4l? ( media-libs/libv4l )
         )
         kde_parts:krdc? (
             vnc? ( net-libs/libvncserver[>=0.9] )
@@ -292,7 +291,6 @@ src_configure() {
         $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_with Nepomuk) \
         $(cmake_with nepomuk Soprano) \
-        $(cmake_with v4l LibV4L2) \
         -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
         -DWITH_GMP=OFF
