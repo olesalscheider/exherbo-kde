@@ -6,21 +6,24 @@ require kde
 SUMMARY="KDE Non Linear Video Editor"
 HOMEPAGE="http://www.kdenlive.org/"
 DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.gz"
-UPSTREAM_RELEASE_NOTES="http://www.kdenlive.org/users/j-b-m/kdenlive-$(ever range 1-3)-released"
+UPSTREAM_RELEASE_NOTES="http://www.kdenlive.org/discover/${PV}"
 
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+MYOPTIONS="nepomuk"
 
 DEPENDENCIES="
     build:
         kde/kdesdk[kde_parts:scripts]
+            [[ note = [ the extractrc perl script extracts messages from .ui and .rc for xgettext ] ]]
         sys-devel/gettext
     build+run:
-        kde/kdebase:4 [[ note = [ Needs Nepomuk ] ]]
+        kde/kdelibs[nepomuk?]
         media/ffmpeg
         media/mlt[>=0.4.0][ffmpeg][sdl][qt4][xml]
         x11-misc/shared-mime-info[>=0.23]
+    run:
+        kde/kdebase-runtime[nepomuk?]
 "
 
