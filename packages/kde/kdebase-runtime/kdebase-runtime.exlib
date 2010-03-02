@@ -49,51 +49,39 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        dev-libs/attica[>=0.1.1]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/qimageblitz[>=0.0.4]
+        media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         sys-sound/alsa-lib[>=1.0.14a]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         x11-libs/qt:4[phonon]
         x11-misc/shared-mime-info[>=0.40]
+        jpeg-rotation? ( graphics/exiv2 )
+        nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
         pulseaudio? ( media-sound/pulseaudio[>=0.9.9] )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
+        sftp? ( net-libs/libssh[>=0.3.91] )
         slp? ( net-libs/openslp )
-        xine? (
-            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ]
-                                                note = [ FIXME: This is no longer a build: dependency for KDE 4.4.0, just run: ] ]]
-            media-libs/xine-lib
-        )
+        xine? ( media-libs/xine-lib )
     run:
         kde/oxygen-icons
+        xine? (
+            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ]
+        )
 "
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least 4.3.98 ; then
-DEPENDENCIES+="
-    build+run:
-        app-pim/strigi[dbus][qt4]
-        dev-libs/attica[>=0.1.1]
-        media-libs/phonon[>=4.3.80]
-        jpeg-rotation? ( graphics/exiv2 )
-        nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
-        sftp? ( net-libs/libssh[>=0.3.91] )
-"
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'jpeg-rotation Exiv2' 'sftp LibSSH' )
-else
-DEPENDENCIES+="
-    build+run:
-        dev-cpp/clucene[>=0.9.19]
-"
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'jpeg-rotation Exiv2'
     Nepomuk
     OpenEXR
     Samba
+    'sftp LibSSH'
     SLP
     PulseAudio
     Xine
