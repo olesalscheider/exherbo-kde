@@ -1,9 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-ECMAKE_BUILD_TYPE="in-source"
-
-require cmake googlecode
+require googlecode cmake [ out_of_source=false ]
 
 SUMMARY="Plugin for GTK that allows GTK applications to use Qt widget styles"
 DESCRIPTION="

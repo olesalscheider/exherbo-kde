@@ -3,7 +3,7 @@
 # Based in part upon 'soprano-2.0.2.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require cmake
+require cmake [ out_of_source=false ]
 
 SUMMARY="Soprano is a library which provides a nice Qt interface to RDF storage solutions."
 DESCRIPTION='
@@ -30,8 +30,6 @@ DEPENDENCIES="
         media-libs/raptor[>=1.4.16]
         clucene? ( dev-cpp/clucene[>=0.9.19] )
 "
-
-ECMAKE_BUILD_TYPE="in-source"
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DSOPRANO_DISABLE_SESAME2_BACKEND:BOOL=TRUE
