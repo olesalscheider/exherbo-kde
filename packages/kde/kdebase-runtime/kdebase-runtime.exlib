@@ -70,7 +70,7 @@ DEPENDENCIES="
     run:
         kde/oxygen-icons
         xine? (
-            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ]
+            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ] ]]
         )
 "
 #   suggestion:
