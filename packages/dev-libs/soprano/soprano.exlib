@@ -53,3 +53,12 @@ if ever at_least 2.4.0 ; then
     CMAKE_SRC_CONFIGURE_OPTIONS+=( '!virtuoso SOPRANO_DISABLE_VIRTUOSO_BACKEND' )
 fi
 
+src_install() {
+    cmake_src_install
+
+    if option doc ; then
+        insinto /usr/share/doc/${PNVR}
+        doins -r "${WORK}"/docs/html
+    fi
+}
+

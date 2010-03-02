@@ -74,6 +74,7 @@ DEPENDENCIES+="
 
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
+        media-libs/phonon
         x11-libs/qt:4[phonon]
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}

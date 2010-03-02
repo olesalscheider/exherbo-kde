@@ -37,6 +37,7 @@ DEPENDENCIES="
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng
+        media-libs/phonon
         sys-apps/dbus[X(-)]
         x11-libs/libICE
         x11-libs/libSM
