@@ -9,6 +9,6 @@ WORK="${WORKBASE}/${PN}"
 
 src_install() {
     newbin bin/qgit qgit4
-    dodoc README
+    emagicdocs
 }
 

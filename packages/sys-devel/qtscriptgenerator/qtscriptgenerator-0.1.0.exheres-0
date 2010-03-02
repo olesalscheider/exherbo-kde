@@ -70,5 +70,7 @@ src_install() {
             dosym ${plugin} /usr/$(get_libdir)/qt4/plugins/script/${symlink}
         done
     done
+
+    emagicdocs
 }
 
