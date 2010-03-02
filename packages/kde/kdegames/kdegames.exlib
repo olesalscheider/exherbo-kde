@@ -31,6 +31,7 @@ if ever at_least 4.3.95; then
                            requires = [ kde_parts: granatier ] ]]"
     DEPENDENCIES="
         build+run:
+            media-libs/phonon
             x11-libs/qt:4[>=4.6.0-rc1]
             gluon? ( dev-games/gluon [[ note = [ New KDE games library, used as a sound backend ] ]] )
             kde_parts:kigo? (

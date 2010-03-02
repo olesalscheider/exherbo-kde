@@ -22,6 +22,7 @@ DEPENDENCIES="
         dev-libs/gmp
         kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
+        media-libs/phonon
         infowidget? ( net-libs/GeoIP )
         mediaplayer? (
             media-libs/taglib
