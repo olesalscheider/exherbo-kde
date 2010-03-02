@@ -139,18 +139,17 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 src_prepare() {
     default
     # Kate tests need a tarball from SVN
-    sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
-        -i kate/CMakeLists.txt || die 'sed failed'
+    edo sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
+            -i kate/CMakeLists.txt
 }
 
 src_compile() {
     cmake_src_compile
 
     if option doc; then
-        pushd "${WORK}/doc/api"
-        echo ./doxygen.sh "${WORK}"
-        ./doxygen.sh "${WORK}" || die "Generating API documentation failed."
-        popd
+        edo pushd "${WORK}/doc/api"
+        edo ./doxygen.sh "${WORK}"
+        edo popd
     fi
 }
 
@@ -158,10 +157,10 @@ src_install() {
     kde.org_src_install
 
     if option doc; then
-        pushd "${WORK}/doc/api"
+        edo pushd "${WORK}/doc/api"
         insinto /usr/share/doc/${PNVR}/apidocs
         doins -r ${PNV}-apidocs/*
-        popd
+        edo popd
     fi
 
     # Number goes _down_ for a new KDE major version

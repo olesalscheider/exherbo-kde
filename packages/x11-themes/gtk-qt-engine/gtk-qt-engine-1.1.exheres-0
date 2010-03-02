@@ -34,7 +34,7 @@ src_prepare() {
     default
 
     # Optional, automagic & deprecated, so disable it unless someone needs it
-    sed -e '/PKGCONFIG.*libbonoboui/s/^/# DISABLED:/' \
-        -i CMakeLists.txt || die 'Failed to disable libbonoboui dependency'
+    edo sed -e '/PKGCONFIG.*libbonoboui/s/^/# DISABLED:/' \
+            -i CMakeLists.txt
 }
 

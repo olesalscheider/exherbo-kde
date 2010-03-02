@@ -69,18 +69,15 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_prepare() {
-    sed -e '/CMAKE_VERBOSE_MAKEFILE/d' -i CMakeLists.txt || die "sed /CMAKE_VERBOSE_MAKEFILE/d failed"
+    edo sed -i -e '/CMAKE_VERBOSE_MAKEFILE/d' CMakeLists.txt
 }
 
 src_install() {
     cmake_src_install
 
     # empty directories
-    rmdir "${IMAGE}"/usr/include/scribus/{keysets,loremipsum,profiles,swatches,unicodemap} ||
-        die 'rmdir empty dirs (scribus) failed'
-    rmdir "${IMAGE}"/usr/include/scribus/templates/{br1,nl1,nl2,sc_presentation,textbased,} ||
-        die 'rmdir empty dirs (templates) failed'
-    rmdir "${IMAGE}"/usr/include/scribus/plugins/scriptplugin/{samples,scripter2,scripts} ||
-        die 'rmdir empty dirs (plugins) failed'
+    edo rmdir "${IMAGE}"/usr/include/scribus/{keysets,loremipsum,profiles,swatches,unicodemap}
+    edo rmdir "${IMAGE}"/usr/include/scribus/templates/{br1,nl1,nl2,sc_presentation,textbased,}
+    edo rmdir "${IMAGE}"/usr/include/scribus/plugins/scriptplugin/{samples,scripter2,scripts}
 }
 

@@ -24,7 +24,7 @@ DEFAULT_SRC_INSTALL_EXTRA_DOCS=( kile-remote-control.txt )
 
 src_prepare() {
     default
-    sed -e '/^INSTALL.*KILE_SPECIAL_DOC_DIR/s/^/# default_src_install() installs these: /' -i CMakeLists.txt ||
-        die "Couldn't disable docs"
+    edo sed -e '/^INSTALL.*KILE_SPECIAL_DOC_DIR/s/^/# default_src_install() installs these: /' \
+            -i CMakeLists.txt
 }
 

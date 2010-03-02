@@ -98,6 +98,6 @@ src_install() {
     done
 
     # Get rid of empty icons directories
-    find "${IMAGE}" -type d -empty -delete
+    edo find "${IMAGE}" -type d -empty -delete
 }
 

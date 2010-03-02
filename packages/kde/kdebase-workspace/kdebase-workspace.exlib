@@ -193,18 +193,17 @@ src_prepare() {
     default
 
     # We sed out the CMake check for PyKDE4, to avoid a circular dependency on kde/kdebindings:4, which provides PyKDE4
-    sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
-        -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
-        -i CMakeLists.txt  ||
-        die "Disabling PyKDE4 check failed"
+    edo sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
+            -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
+            -i CMakeLists.txt
 }
 
 src_install() {
     GENKDMCONF_FLAGS="--no-old --no-backup" kde.org_src_install
 
     keepdir /usr/share/config/kdm/sessions
-    sed -e '/SessionsDirs=/ s:$:,/usr/share/xsessions:' \
-        -i "${IMAGE}"/usr/share/config/kdm/kdmrc || die "sed failed"
+    edo sed -e '/SessionsDirs=/ s:$:,/usr/share/xsessions:' \
+            -i "${IMAGE}"/usr/share/config/kdm/kdmrc
 
     insinto /usr/env
     doins "${FILES}"/agent-startup.sh

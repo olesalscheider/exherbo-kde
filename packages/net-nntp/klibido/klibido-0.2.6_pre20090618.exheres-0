@@ -45,6 +45,6 @@ src_install() {
     # Even KDE3 deprecated the legacy applnk directory in the end.
     insinto /usr/share/applications
     doins src/klibido.desktop
-    rm -rf "${IMAGE}"/usr/share/applnk || die "removing applnk failed"
+    edo rm -rf "${IMAGE}"/usr/share/applnk
 }
 

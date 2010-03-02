@@ -24,7 +24,7 @@ scm_finalise
 src_prepare() {
     local localisation
     for localisation in ${PNV}-*; do
-        ./scripts/autogen.sh ${localisation} || die "autogen ${localisation} failed"
+        edo ./scripts/autogen.sh ${localisation}
     done
 }
 

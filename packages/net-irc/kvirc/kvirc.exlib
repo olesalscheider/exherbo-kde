@@ -98,11 +98,11 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
 )
 
 kvirc_src_prepare() {
-    sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp || die "Failed to set revision number"
+    edo sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp
 }
 
 kvirc_src_install() {
     cmake_src_install
-    mv "${IMAGE}"usr/share/man/man1/kvirc.1 "${IMAGE}"usr/share/man/man1/kvirc4.1 || die "mv kvirc.1 failed"
+    edo mv "${IMAGE}"usr/share/man/man1/kvirc{,4}.1
 }
 

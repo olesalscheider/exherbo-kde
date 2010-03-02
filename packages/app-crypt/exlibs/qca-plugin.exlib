@@ -22,9 +22,8 @@ WORK="${WORKBASE}/${MY_PNV}"
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
 qca-plugin_src_configure() {
-    ./configure \
+    edo ./configure \
         --qtdir=/usr \
-        --no-separate-debug-info \
-        || die "Configure failed."
+        --no-separate-debug-info
 }
 

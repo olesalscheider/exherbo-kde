@@ -9,6 +9,6 @@ LICENCES="|| ( GPL-3 LGPL-3 )"
 
 src_install() {
     kde.org_src_install
-    find "${IMAGE}" -type d -empty -delete || die "Couldn't remove empty directories"
+    edo find "${IMAGE}" -type d -empty -delete
 }
 

@@ -65,7 +65,7 @@ src_install() {
 
     edo rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,}
     edo rmdir "${IMAGE}"/usr/$(get_libdir)/virtuoso/{hosting/,}
-    rm -r "${IMAGE}"/usr/$(get_libdir)/{jdbc-*,jena,sesame}/{*.jar,} || die "One man no jars!"
+    edo rm -r "${IMAGE}"/usr/$(get_libdir)/{jdbc-*,jena,sesame}/{*.jar,}
     edo mv -u "${IMAGE}"/usr/share/doc/virtuoso/* "${IMAGE}"/usr/share/doc/${PNVR}
     edo rm -r "${IMAGE}"/usr/share/doc/virtuoso
 }

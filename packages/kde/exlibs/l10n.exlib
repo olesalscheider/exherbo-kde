@@ -33,10 +33,9 @@ for_all_enabled_linguas_run() {
         ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
         WORK=${lingua}
 
-        pushd "${lingua}" || die "Failed to enter ${lingua}"
-        einfo "${@}: Running in ${lingua}"
-        "${@}"
-        popd || die "Failed to leave ${lingua}"
+        edo pushd "${lingua}"
+        edo "${@}"
+        edo popd
     done
 }
 
@@ -51,6 +50,6 @@ l10n_src_compile() {
 
 l10n_src_install() {
     for_all_enabled_linguas_run cmake_src_install
-    find "${IMAGE}" -type d -empty -delete || die "Failed to delete empty directories"
+    edo find "${IMAGE}" -type d -empty -delete
 }
 

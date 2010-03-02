@@ -38,19 +38,19 @@ src_prepare() {
 
 src_configure() {
     for subdir in generator qtbindings ; do
-        cd "${WORK}/${subdir}" || die "Couldn't enter ${WORK}/${subdir}"
+        edo cd "${WORK}/${subdir}"
         eqmake4 ${subdir}.pro
     done
 }
 
 src_compile() {
-    cd "${WORK}/generator" || die "Couldn't enter ${WORK}/generator/"
+    edo cd "${WORK}/generator"
     default
 
     # The qtbindings plugins use these, so we have to generate them
-    ./generator --include-paths=/usr/include/qt4 || die "./generator returned exit status $?"
+    edo ./generator --include-paths=/usr/include/qt4
 
-    cd "${WORK}/qtbindings" || die "Couldn't enter ${WORK}/qtbindings/"
+    edo cd "${WORK}/qtbindings"
     default
 }
 

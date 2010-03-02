@@ -118,13 +118,12 @@ kdebindings_src_install() {
     kde.org_src_install
 
     if option python; then
-        cd "${IMAGE}" || die "Couldn't enter ${IMAGE}"
+        edo cd "${IMAGE}"
 
         # Fix up PyKDE4 examples destination, see python/pykde4/examples/CMakeLists.txt
         dodir /usr/share/doc/${PNVR}/examples
-        mv ./usr/share/apps/pykde4/examples ./usr/share/doc/${PNVR}/examples/pykde4 ||
-            die "Moving examples in the correct place failed"
-        find "${IMAGE}"/usr/share/apps/ -type d -empty -delete || die "Failed to remove empty directory"
+        edo mv ./usr/share/apps/pykde4/examples ./usr/share/doc/${PNVR}/examples/pykde4
+        edo find "${IMAGE}"/usr/share/apps/ -type d -empty -delete
     fi
 
     option python && python_bytecompile
