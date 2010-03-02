@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PNV=${PN}-src-${PV}
@@ -22,12 +22,19 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[dbus][opengl][phonon]
+        x11-libs/qt:4[dbus][opengl]
 "
 
 WORK="${WORKBASE}/${MY_PNV}"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-gcc-4.4.0.patch" )
+
+src_prepare() {
+    default
+
+    # Won't build with our seperate phonon
+    edo sed -e "/phonon/d" -i generator/generator.qrc qtbindings/qtbindings.pro
+}
 
 src_configure() {
     for subdir in generator qtbindings ; do
