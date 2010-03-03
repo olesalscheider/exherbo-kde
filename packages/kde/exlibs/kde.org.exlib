@@ -83,12 +83,6 @@ case ${PV} in
         esac
 
         case ${KDEMODULE} in
-            kdebase-workspace)
-                SCM_SECONDARY_REPOSITORIES="kdebase_runtime_kstyles_oxygen_lib"
-                SCM_SVN_EXTERNALS="kwin/clients/oxygen/lib/:kdebase_runtime_kstyles_oxygen_lib"
-                SCM_kdebase_runtime_kstyles_oxygen_lib_REPOSITORY="${SCM_REPOSITORY}/"
-                SCM_kdebase_runtime_kstyles_oxygen_lib_SUBPATH="${SCM_SUBPATH/workspace/runtime}/kstyles/oxygen/lib/"
-                ;;
             kdenetwork)
                 SCM_SECONDARY_REPOSITORIES="ktorrent_libbtcore"
                 SCM_SVN_EXTERNALS="kget/transfer-plugins/bittorrent/libbtcore:ktorrent_libbtcore"
