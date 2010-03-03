@@ -50,6 +50,7 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXpm
         x11-libs/libXrender
+        x11-libs/libXScrnSaver
         x11-libs/libXt
         x11-libs/libXtst
         x11-libs/qt:4[>=4.5.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
