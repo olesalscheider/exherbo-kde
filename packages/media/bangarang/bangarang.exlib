@@ -1,0 +1,25 @@
+# Copyright 2010 Paul Mulders <info@mld.demon.nl>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde
+
+ODO_ID=113305
+
+SUMMARY="A KDE media player"
+HOMEPAGE="http://bangarangkde.wordpress.com/"
+DOWNLOADS="http://opendesktop.org/CONTENT/content-files/${ODO_ID}-${PNV}.tar.gz -> ${PNV}.tar.gz"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        kde/kdelibs:4[>=4.3.0][nepomuk]
+        kde/kdemultimedia:4[>=4.3.0]
+        media-libs/phonon
+        media-libs/taglib
+"
+
