@@ -18,13 +18,13 @@ DOWNLOADS=""
 
 LICENCES="GPL-2 FDL-1.2"
 SLOT="0"
-MYOPTIONS="debug ffmpeg flac mp3 musepack musicbrainz policykit vorbis
+MYOPTIONS="debug ffmpeg flac mp3 musepack musicbrainz vorbis
     mp3 [[ description = [ Adds support for encoding mp3 files with lame, and decoding with mad ] ]]
 "
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:4
+        kde/kdelibs:4[>=4.3.85]
         kde/kdemultimedia:4 [[ note = [ KCddb is used to retrieve audio CD meta data from the internet ] ]]
         media-libs/libdvdread[>=1.0]
         media-libs/libsamplerate
@@ -33,7 +33,6 @@ DEPENDENCIES="
         x11-libs/qt:4[X][qt3support]
         ffmpeg? ( media/ffmpeg )
         flac? ( media-libs/flac [[ note = [ Flac with C++ bindings ] ]] )
-        policykit? ( sys-auth/polkit-qt:0[>=0.9.2] )
         mp3? (
             media-libs/libmad
             media-sound/lame
@@ -79,11 +78,7 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'mp3 K3B_BUILD_MAD_DECODER_PLUGIN'
     'musepack K3B_BUILD_MUSE_DECODER_PLUGIN'
     'musicbrainz K3B_ENABLE_MUSICBRAINZ'
-    'policykit K3B_BUILD_K3BSETUP'
     'vorbis K3B_BUILD_OGGVORBIS_DECODER_PLUGIN'
     'vorbis K3B_BUILD_OGGVORBIS_ENCODER_PLUGIN'
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    'policykit PolkitQt'
 )
 
