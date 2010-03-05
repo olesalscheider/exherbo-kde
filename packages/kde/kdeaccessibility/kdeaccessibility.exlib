@@ -1,0 +1,42 @@
+# Copyright 2010 Yury G. Kudryashov <urkud+exherbo@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE accessibility programs"
+DESCRIPTION="
+* Mono icon theme
+* kmag - screen magnifier
+* kmousetool - clicks the mouse for you
+* kmouth - enables persons that cannot speak to let their computers speak
+* kttsd - text to speech daemon
+"
+HOMEPAGE="
+http://accessibility.kde.org/
+http://kmag.sourceforge.net/
+"
+
+LICENCES="GPL-2"
+# ksayit disabled upstream
+MY_KDE_PARTS="iconthemes kmag kmousetool kmouth kttsd"
+
+MYOPTIONS+="
+    kde_parts:
+        ${MY_KDE_PARTS}
+"
+
+DEPENDENCIES+="
+    build+run:
+        kde/kdelibs:4
+        kde_parts:kmag? ( x11-libs/qt:4[qt3support] )
+        kde_parts:kmousetool? (
+            media-libs/phonon
+            x11-libs/libXext
+            x11-libs/libXtst
+        )
+        kde_parts:kttsd? ( app-speech/speechd )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'kde_parts:kttsd Speechd' )
+
