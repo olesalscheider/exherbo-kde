@@ -83,12 +83,6 @@ case ${PV} in
         esac
 
         case ${KDEMODULE} in
-            kdenetwork)
-                SCM_SECONDARY_REPOSITORIES="ktorrent_libbtcore"
-                SCM_SVN_EXTERNALS="kget/transfer-plugins/bittorrent/libbtcore:ktorrent_libbtcore"
-                SCM_ktorrent_libbtcore_REPOSITORY="${SCM_REPOSITORY}/"
-                SCM_ktorrent_libbtcore_BRANCH="stable/extragear-kde4/network/ktorrent/libbtcore/"
-                ;;
             kdevplatform)
                 SCM_SECONDARY_REPOSITORIES="kate_completion_expandingtree"
                 SCM_SVN_EXTERNALS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
