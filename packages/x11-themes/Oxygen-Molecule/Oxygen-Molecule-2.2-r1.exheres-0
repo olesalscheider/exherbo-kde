@@ -34,6 +34,10 @@ src_unpack() {
     unpack ./kde43-oxygen-molecule.tar.gz
 }
 
+src_prepare() {
+    edo sed -e "s/clearlooks/pixmap/" -i kde43-oxygen-molecule/gtk-2.0/panel.rc
+}
+
 src_install() {
     dodir /usr/share/themes/${PN}
     insinto /usr/share/themes/${PN}
