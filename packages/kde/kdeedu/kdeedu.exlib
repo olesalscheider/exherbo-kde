@@ -58,6 +58,7 @@ MYOPTIONS+="
     3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra        ] ]]
     3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
     python        [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
+    qalculate     [[ description = [ Support unit conversion in Step  ] requires = [ kde_parts: step            ] ]]
     solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
     ( kde_parts: ${MY_KDE_PARTS} )
 "
@@ -102,6 +103,7 @@ DEPENDENCIES+="
         )
         kde_parts:step? (
             sci-libs/gsl[>=1.8]
+            qalculate? ( sci-libs/libqalculate[>=0.9.5] )
         )
     run:
         kde/kdebase-runtime:${SLOT}
@@ -123,8 +125,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_INDI=OFF
     # Kstars, requires xplanet - http://xplanet.sourceforge.net/
     -DWITH_Xplanet=OFF
-    # Step, requires sci-libs/libqalculate - http://qalculate.sourceforge.net/
-    -DWITH_Qalculate=OFF
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
@@ -135,6 +135,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:parley LibXml2' # required to build HTML export
     'kde_parts:step GSL' # Optional, hard-enabled
     'python BoostPython'
+    'qalculate Qalculate'
     'solver OCaml' 'solver Libfacile'
 )
 
