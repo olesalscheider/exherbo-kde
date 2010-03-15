@@ -3,8 +3,6 @@
 
 require amarok
 
-UPSTREAM_RELEASE_NOTES="http://amarok.kde.org/en/releases/${PV}"
-
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
