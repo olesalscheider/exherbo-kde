@@ -9,3 +9,9 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/amarok-scm-mysqle-link-to-amarok-executable.patch"
 )
 
+pkg_postinst() {
+    elog "Amarok doesn't currently generate .mood files for the moodbar so they must be"
+    elog "generated manually. Scripts to help with this can be found here:"
+    elog "    http://amarok.kde.org/wiki/Moodbar#Moodbar_File_Generation_Script"
+}
+

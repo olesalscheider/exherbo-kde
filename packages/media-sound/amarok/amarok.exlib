@@ -61,6 +61,7 @@ DEPENDENCIES="
         )
         mtp? ( media-libs/libmtp[>=0.3.0] )
     suggestion:
+        media-sound/moodbar [[ description = [ Generate .mood files needed by the moodbar ] ]]
         sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
 "
 
