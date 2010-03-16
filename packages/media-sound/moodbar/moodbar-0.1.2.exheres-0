@@ -1,0 +1,36 @@
+# Copyright 2010 Sterling X. Winter <replica@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Analyzes audio to create .mood files for use in visualizing its \"mood\""
+HOMEPAGE="http://amarok.kde.org/wiki/Moodbar"
+DOWNLOADS="http://pwsp.net/~qbob/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="flac mp3 mp4 musepack ogg wma"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        media-libs/gstreamer:0.10
+        media-plugins/gst-plugins-base[>=0.10]
+        media-plugins/gst-plugins-good[>=0.10]
+        sci-libs/fftw[>=3.0]
+
+        flac?     ( media-plugins/gst-plugins-good[>=0.10][gstreamer_plugins:flac]    )
+        mp3?      ( media-plugins/gst-plugins-ugly[>=0.10][gstreamer_plugins:mad]     )
+        mp4?      ( media-plugins/gst-plugins-bad[>=0.10][gstreamer_plugins:faad]     )
+        musepack? ( media-plugins/gst-plugins-bad[>=0.10][gstreamer_plugins:musepack] )
+        ogg?      (
+            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:ogg][gstreamer_plugins:vorbis]
+        )
+        wma?      ( media-plugins/gst-ffmpeg[>=0.10] )
+"
+
+BUGS_TO="replica@exherbo.org"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gthread_init.patch )
+DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
+
