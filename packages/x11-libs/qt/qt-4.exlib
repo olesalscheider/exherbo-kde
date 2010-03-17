@@ -92,17 +92,13 @@ DEPENDENCIES="
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )
         xinerama? ( x11-libs/libXinerama )
-"
-
-if ever at_least 4.6.1 ; then
-DEPENDENCIES+="
     post:
         phonon? (
             media-libs/phonon[>=4.3.80]
             gstreamer? ( media-libs/phonon[>=4.3.80][gstreamer] )
         )
 "
-fi
+
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
@@ -234,6 +230,7 @@ qt-4_src_configure() {
 
     myconf+=(
         -iconv
+        -no-javascript-jit
         -no-nas-sound
         -no-nis
         # This also enables tablet support
@@ -247,8 +244,8 @@ qt-4_src_configure() {
         $(qt4_enable gstreamer gstreamer)
         $(qt4_enable gstreamer phonon-backend)
         $(qt4_enable gtk gtkstyle)
-        $(ever at_least 4.6.0_beta && echo -no-javascript-jit)
-        $(ever at_least 4.6.1 && echo $(qt4_enable multimedia) $(qt4_enable multimedia audio-backend))
+        $(qt4_enable multimedia)
+        $(qt4_enable multimedia audio-backend)
         $(qt4_enable opengl)
         $(qt4_enable qt3support)
         $(qt4_enable phonon)
@@ -332,11 +329,7 @@ LDPATH=/usr/$(get_libdir)/qt4
 EOF
     #  qdoc3 not installed by default - needed for qt-creator
     if option doc ; then
-        if ever at_least 4.6.0-beta1 ; then
-            dobin "${WORK}/bin/qdoc3"
-        else
-            dobin "${WORK}/tools/qdoc3/qdoc3"
-       fi
+        dobin "${WORK}/bin/qdoc3"
     fi
 
     insinto /usr/share/pixmaps
@@ -367,16 +360,14 @@ Categories=Qt;Development;Translation;
 MimeType=application/x-linguist;
 EOF
 
-    if ever at_least 4.6.1 ; then
-        if option phonon ; then
-            edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/libphonon*
-            edo rm -rf "${IMAGE}"/usr/$(get_libdir)/pkgconfig/phonon.pc
-            edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
-        fi
+    if option phonon ; then
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/libphonon*
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/pkgconfig/phonon.pc
+        edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
+    fi
 
-        if option gstreamer ; then
-            edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
-        fi
+    if option gstreamer ; then
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
     fi
 }
 
