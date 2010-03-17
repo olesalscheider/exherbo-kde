@@ -33,16 +33,11 @@ HOMEPAGE="
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="nepomuk openexr samba pulseaudio
+    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
     xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
-
-if ever at_least 4.3.98 ; then
-MYOPTIONS+="
-    jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
-    sftp [[ description = [ SFTP kioslave ] ]]
-"
-fi
 
 DEPENDENCIES="
     build:

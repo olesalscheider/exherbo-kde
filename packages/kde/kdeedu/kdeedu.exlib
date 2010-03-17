@@ -7,6 +7,7 @@ require kde.org
 SUMMARY="Collection of educational programs for KDE4"
 DESCRIPTION="
 * blinken:     the KDE version of the well-known game Simon Says
+* cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
 * kalgebra:    mathematics: editor and plotting
 * kalzium:     periodic table of elements
 * kanagram:    an anagram game
@@ -23,43 +24,23 @@ DESCRIPTION="
 * kwordquiz:   a powerful way to master new vocabularies
 * marble:      a virtual globe
 * parley:      vocabulary trainer
-* step:        a physics simulator"
+* rocs:        a full featured Graph Editor
+* step:        a physics simulator
+"
 HOMEPAGE="http://edu.kde.org/"
 
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
-MY_KDE_PARTS="blinken kalgebra kalzium kanagram kbruch kgeography khangman
+MY_KDE_PARTS="blinken cantor kalgebra kalzium kanagram kbruch kgeography khangman
 kig kiten klettres kmplot kstars ktouch kturtle kwordquiz marble
-parley step"
-
-if ever at_least 4.3.95; then
-    DESCRIPTION+="
-* cantor:      use your favorite mathematical applications from within a nice KDE-integrated Worksheet Interface
-* rocs:        a full featured Graph Editor
-"
-    MY_KDE_PARTS+=" cantor rocs"
-    MYOPTIONS+="
-        R [[ description = [ Compile the 'R' backend for Cantor ] requires = [ kde_parts: cantor ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:cantor? (
-                app-text/libspectre
-                R? ( sci-lang/R )
-            )
-            kde_parts:parley? ( dev-libs/attica )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:cantor LibSpectre'
-        'R R'
-    )
-fi
+parley rocs step"
 
 MYOPTIONS+="
-    3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra   ] requires = [ kde_parts: kalgebra        ] ]]
-    3dviewer      [[ description = [ Compound Viewer for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
-    python        [[ description = [ Provides Python Scripting in Kig ] requires = [ kde_parts: kig             ] ]]
-    qalculate     [[ description = [ Support unit conversion in Step  ] requires = [ kde_parts: step            ] ]]
-    solver        [[ description = [ Equation solver for Kalzium      ] requires = [ kde_parts: kalzium         ] ]]
+    3dgraphs      [[ description = [ Provides 3d graphs in KAlgebra     ] requires = [ kde_parts: kalgebra ] ]]
+    3dviewer      [[ description = [ Compound Viewer for Kalzium        ] requires = [ kde_parts: kalzium  ] ]]
+    python        [[ description = [ Provides Python Scripting in Kig   ] requires = [ kde_parts: kig      ] ]]
+    qalculate     [[ description = [ Support unit conversion in Step    ] requires = [ kde_parts: step     ] ]]
+    R             [[ description = [ Compile the 'R' backend for Cantor ] requires = [ kde_parts: cantor   ] ]]
+    solver        [[ description = [ Equation solver for Kalzium        ] requires = [ kde_parts: kalzium  ] ]]
     ( kde_parts: ${MY_KDE_PARTS} )
 "
 # Experimental Python bindings
@@ -77,6 +58,10 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon
         x11-libs/qt:4[phonon]
+        kde_parts:cantor? (
+            app-text/libspectre
+            R? ( sci-lang/R )
+        )
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}
             sys-libs/readline
@@ -97,6 +82,7 @@ DEPENDENCIES+="
         )
         kde_parts:marble? ( kde/kdebase-workspace:${SLOT} )
         kde_parts:parley? (
+            dev-libs/attica
             dev-libs/libxml2
             dev-libs/libxslt
             kde/kdebase-workspace:${SLOT}
@@ -129,6 +115,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     '3dviewer OpenBabel2'
+    'kde_parts:cantor LibSpectre'
     'kde_parts:kalgebra Readline'
     'kde_parts:marble DESIGNER_PLUGIN'
     'kde_parts:parley LibXslt' # required to build HTML export
@@ -136,6 +123,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:step GSL' # Optional, hard-enabled
     'python BoostPython'
     'qalculate Qalculate'
+    'R R'
     'solver OCaml' 'solver Libfacile'
 )
 

@@ -104,24 +104,6 @@ DEPENDENCIES="
         python? ( kde/kdebindings:4[python] )
 "
 
-if ever at_least 4.3.95 ; then
-    # Use sys-auth/polkit-kde instead
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DBUILD_PolicyKit-kde:BOOL=FALSE
-        -DWITH_PolkitQt:BOOL=FALSE
-    )
-else
-    MYOPTIONS="policykit ${MYOPTIONS}"
-    DEPENDENCIES+="
-        build+run:
-            policykit? (
-                sys-auth/PolicyKit:0[>=0.8]
-                sys-auth/polkit-qt:0[>=0.9]
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'policykit PolicyKit-kde' )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'policykit PolkitQt' )
-fi
 
 if ever at_least scm ; then
     MYOPTIONS="ieee1394 ${MYOPTIONS}"
@@ -139,10 +121,8 @@ if ever at_least scm ; then
         -DKDE_USBIDS_DIR="/usr/share/misc"
         -DDISABLE_USBIDS_INSTALL=ON
     )
-elif ever at_least 4.3.95 ; then
-    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
 else
-    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.2.0]"
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
@@ -168,6 +148,9 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'python SIP'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Use sys-auth/polkit-kde:1 instead
+    -DBUILD_PolicyKit-kde:BOOL=FALSE
+    -DWITH_PolkitQt:BOOL=FALSE
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on.
     -DWITH_Fontconfig=ON
     -DWITH_Freetype=ON

@@ -6,6 +6,7 @@ require kde.org
 SUMMARY="KDE Personal Information Management"
 DESCRIPTION="
 akregator: Feed reader
+blogilo: Blogging application
 kaddressbook: The KDE addressbook application
 kalarm: gui for setting up personal alarm messages, emails and commands
 kalarmd: alarm monitoring daemon, shared by korganizer and kalarm
@@ -25,35 +26,11 @@ HOMEPAGE="http://kdepim.kde.org/"
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Currently not optional: kmail kmailcvt ksendemail kaddressbook
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
-MY_KDE_PARTS="akregator console kalarm kjots kleopatra knode knotes kontact
+MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker strigi-analyzer"
-if ever at_least 4.3.95; then
-    DESCRIPTION+="blogilo: Blogging application"
-    MY_KDE_PARTS+=" blogilo"
-    MYOPTIONS="indicators [[ description = [ Indicators support in Kmail ] ]]"
-    DEPENDENCIES="
-        build:
-            dev-libs/libxslt
-            indicators? ( dev-util/pkg-config )
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.2]
-            dev-libs/soprano[>=2.3.70]
-            indicators? ( dev-libs/libindicate-qt[>=0.2.1] )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
-else
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_GNOKII=OFF
-        -DWITH_Nepomuk=ON
-        -DWITH_Soprano=ON
-        # kpilot removed upstream
-        -DBUILD_KPILOT=OFF
-        -DWITH_QCA2=OFF
-        -DWITH_Mal=OFF
-        -DWITH_Pilotlink=OFF
-    )
-fi
 
 MYOPTIONS+="
+    indicators [[ description = [ Indicators support in Kmail ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -67,21 +44,25 @@ MYOPTIONS+="
 
 DEPENDENCIES+="
     build:
+        dev-libs/libxslt
+        indicators? ( dev-util/pkg-config )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=1.0.4] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
         )
     build+run:
         app-crypt/gpgme
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.2]
         dev-libs/boost[>=1.33.1] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
-        dev-libs/soprano[>=2.1.67]
+        dev-libs/soprano[>=2.3.70]
         kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]
+        indicators? ( dev-libs/libindicate-qt[>=0.2.1] )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -95,6 +76,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'indicators IndicateQt'
     'kde_parts:kleopatra Assuan'
 )
 

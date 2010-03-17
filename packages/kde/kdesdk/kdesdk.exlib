@@ -26,19 +26,6 @@ MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
 kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
 scripts strigi-analyzer umbrello"
 
-if ever at_least 4.3.95; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kate? (
-                x11-misc/shared-mime-info[>=0.30]
-            )
-            kde_parts:lokalize? (
-                app-spell/hunspell
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:lokalize HUNSPELL' )
-fi
-
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
 
@@ -52,10 +39,12 @@ DEPENDENCIES+="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
         kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT} )
         kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
+            app-spell/hunspell
             x11-libs/qt:4[sql][sqlite]
         )
         kde_parts:umbrello? (
@@ -74,6 +63,7 @@ DEPENDENCIES+="
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'
+    'kde_parts:lokalize HUNSPELL'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
 )
 

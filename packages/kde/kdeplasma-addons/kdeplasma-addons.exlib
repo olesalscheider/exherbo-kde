@@ -9,39 +9,19 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 "
 
 LICENCES="GPL-2"
-MY_KDE_PARTS=""
+MY_KDE_PARTS="kdeobservatory"
 
 if ever at_least scm; then
     DEPENDENCIES+="
         x11-misc/shared-mime-info
     "
 fi
-if ever at_least 4.3.95; then
-    MY_KDE_PARTS+=" kdeobservatory"
-    MYOPTIONS+="
-        kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
-        qalculate [[ description = [ Build qalculate applet ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/attica[>=0.1.1]
-            kde_parts:kdeobservatory? ( x11-libs/qwt )
-            kimpanel? ( inputmethods/scim[>=1.4] )
-            qalculate? ( sci-libs/libqalculate )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_LibAttica:BOOL=TRUE
-        -DWITH_KdepimLibs:BOOL=TRUE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kimpanel SCIM'
-        Qalculate
-    )
-fi
 
 MYOPTIONS+="
-    marble [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
+    kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
+    marble    [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
     nepomuk
+    qalculate [[ description = [ Build qalculate applet ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
 DEPENDENCIES+="
@@ -49,6 +29,7 @@ DEPENDENCIES+="
         dev-lang/python:*
         sci-libs/eigen:2[>=2.0.3]
     build+run:
+        dev-libs/attica[>=0.1.1]
         dev-libs/boost
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}
@@ -59,14 +40,21 @@ DEPENDENCIES+="
         x11-libs/libX11
         x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
+        kde_parts:kdeobservatory? ( x11-libs/qwt )
+        kimpanel? ( inputmethods/scim[>=1.4] )
         marble? ( kde/kdeedu:4[kde_parts:marble] )
+        qalculate? ( sci-libs/libqalculate )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kimpanel SCIM'
     Marble
     Nepomuk
+    Qalculate
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_KdepimLibs:BOOL=TRUE
+    -DWITH_LibAttica:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
 )
 

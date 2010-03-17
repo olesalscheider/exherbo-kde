@@ -43,23 +43,13 @@ MYOPTIONS="
 kde_parts: ${MY_KDE_PARTS}
 "
 
-if ever at_least 4.3.95; then
-    DEPENDENCIES+="
-        build+run:
-            graphics/exiv2[>=0.19]
-            kde_parts:strigi-analyzer? (
-                tiff? ( media-libs/tiff )
-            )
-    "
-fi
-
 DEPENDENCIES+="
     build:
         sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
         kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        graphics/exiv2[>=0.17]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
+        graphics/exiv2[>=0.19]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         media-libs/jpeg[>=6b]
         media-libs/lcms[>=1.14]
@@ -96,6 +86,9 @@ DEPENDENCIES+="
             odf? ( app-crypt/qca:2 )
             ps? ( app-text/libspectre[>=0.2] )
             pdf? ( app-text/poppler[>=0.6][qt4] )
+            tiff? ( media-libs/tiff )
+        )
+        kde_parts:strigi-analyzer? (
             tiff? ( media-libs/tiff )
         )
 "

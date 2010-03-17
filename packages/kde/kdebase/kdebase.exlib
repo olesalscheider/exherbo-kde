@@ -18,7 +18,7 @@ kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="nepomuk"
+MYOPTIONS="nepomuk webkit"
 
 DEPENDENCIES="
     build:
@@ -37,11 +37,12 @@ DEPENDENCIES="
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
         nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
+        webkit? ( kde/kwebkitpart )
     suggestion:
         sys-apps/eject
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Nepomuk )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Nepomuk 'webkit KWebKitPart' )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
@@ -57,15 +58,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 KDE_APPS_PREFIX="apps"
-
-if ever at_least 4.4.0; then
-    MYOPTIONS+=" webkit"
-    DEPENDENCIES+="
-        build+run:
-            webkit? ( kde/kwebkitpart )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
-fi
 
 if ! ever at_least scm; then
     MYOPTIONS+=" ieee1394"

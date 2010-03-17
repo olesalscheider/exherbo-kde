@@ -29,6 +29,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb kdnssd"
 MY_IM_PROTOCOLS+="
     gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
+    googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
     groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
     jingle [[ description = [ Voice calls over Jabber ] requires = [ im_protocols: xmpp ] ]]
     wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
@@ -39,55 +40,16 @@ MY_KOPETE_PLUGINS+="
     otr [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
     statistics [[ description = [ Statistics plugin for Kopete ] ]]
     webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
+    wlm_voice [[ requires = [ im_protocols: wlm ]
+                 description = [ Voice clips support in Windows Live Messenger Kopete plugin ] ]]
 "
-
-if ever at_least 4.3.98; then
-    MYOPTIONS+="
-        webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kget? (
-                webkit? ( kde/kwebkitpart )
-            )"
-fi
-if ever at_least 4.3.95; then
-    MY_IM_PROTOCOLS+="
-        googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
-    "
-    MY_KOPETE_PLUGINS+="
-        wlm_voice [[ requires = [ im_protocols: wlm ]
-                     description = [ Voice clips support in Windows Live Messenger Kopete plugin ] ]]"
-    MYOPTIONS+="
-        telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]] "
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kopete?  (
-                im_protocols:wlm? (
-                    media-libs/giflib
-                    kopete_plugins:wlm_voice? (
-                        media-libs/mediastreamer[>=2.3.0]
-                        net-libs/ortp[>=0.13]
-                    )
-                )
-                im_protocols:xmpp? (
-                    im_protocols:googletalk? (
-                        dev-libs/expat
-                        media-libs/mediastreamer[>=2.3.0]
-                        net-libs/ortp[>=0.13]
-                    )
-                )
-            )
-            kde_parts:krdc? (
-                telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
-            )
-    "
-fi
 
 MYOPTIONS+="
     bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     nepomuk
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
+    telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
+    webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
     ( bittorrent nepomuk sqlite ) [[ requires = [ kde_parts: kget ] ]]
@@ -121,6 +83,7 @@ DEPENDENCIES+="
                 kde/kdebase-runtime:${SLOT}[nepomuk(+)]
             )
             sqlite? ( dev-db/sqlite:3 )
+            webkit? ( kde/kwebkitpart )
         )
         kde_parts:kopete? (
             kde/qimageblitz
@@ -136,7 +99,14 @@ DEPENDENCIES+="
             x11-libs/libXScrnSaver
             im_protocols:gadu? ( net-libs/libgadu[>=1.8.0] [[ url = [ http://toxygen.net/libgadu/ ] ]] )
             im_protocols:groupwise? ( app-crypt/qca:2 )
-            im_protocols:wlm? ( net-libs/libmsn[>=4.0_beta2] )
+            im_protocols:wlm? (
+                media-libs/giflib
+                net-libs/libmsn[>=4.0_beta2]
+                kopete_plugins:wlm_voice? (
+                    media-libs/mediastreamer[>=2.3.0]
+                    net-libs/ortp[>=0.13]
+                )
+            )
             im_protocols:xmpp? (
                 app-crypt/qca:2
                 net-dns/libidn
@@ -144,6 +114,11 @@ DEPENDENCIES+="
                     media-libs/speex
                     net-libs/ortp[>=0.13]
                     sys-sound/alsa-lib
+                )
+                im_protocols:googletalk? (
+                    dev-libs/expat
+                    media-libs/mediastreamer[>=2.3.0]
+                    net-libs/ortp[>=0.13]
                 )
             )
             kopete_plugins:otr? ( net-libs/libotr[>=3.2.0] )
@@ -154,6 +129,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:krdc? (
+            telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
             vnc? ( net-libs/libvncserver[>=0.9] )
         )
         kde_parts:krfb? (
@@ -235,32 +211,23 @@ src_configure() {
         cmakeparams+=( -DWITH_LibVNCServer=OFF )
     fi
 
-    if ever at_least 4.3.98; then
-        cmakeparams+=( $(cmake_with webkit KWebKitPart) )
+    cmakeparams+=(
+        $(cmake_with im_protocols:wlm GIF)
+        $(cmake_with im_protocols:GOOGLETALK)
+        $(cmake_with im_protocols:googletalk Expat)
+        $(cmake_with telepathy TelepathyQt4)
+        $(cmake_with webkit KWebKitPart)
+    )
+
+    if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
+        cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
     else
-        cmakeparams+=( -DWITH_KdeWebKit:BOOL=FALSE -DWITH_WebKitPart:BOOL=FALSE -DWITH_KWebKitPart:BOOL=FALSE )
+        cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
     fi
-
-    if ever at_least 4.3.95; then
-        cmakeparams+=(
-            $(cmake_with im_protocols:wlm GIF)
-            $(cmake_with im_protocols:GOOGLETALK)
-            $(cmake_with im_protocols:googletalk Expat)
-            $(cmake_with telepathy TelepathyQt4)
-        )
-
-        if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
-            cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
-        else
-            cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
-        fi
-        if option im_protocols:jingle || option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
-            cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
-        else
-            cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
-        fi
+    if option im_protocols:jingle || option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
+        cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
     else
-        cmakeparams+=( $(cmake_with im_protocols:jingle LiboRTP) )
+        cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
     fi
 
     #   $(cmake_with im_protocols:meanwhile) \
