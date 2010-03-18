@@ -1,10 +1,10 @@
 # Copyright 2009 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SUMMARY="GTK+ clone of KDE 4.3's Oxygen theme"
+SUMMARY="GTK+ clone of KDE 4.4's Oxygen theme"
 DESCRIPTION="
 Oxygen-Molecule is a theme for GTK+ applications to provide a uniform look when
-used under the KDE 4.3 desktop environment.
+used under the KDE 4.4 desktop environment.
 "
 HOMEPAGE="http://www.kde-look.org/content/show.php/${PN}+KDE+&+GTK++unified+theme?content=103741"
 DOWNLOADS="http://www.kde-look.org/CONTENT/content-files/103741-${PN}_${PV}_theme.tar.gz -> ${PN}_${PV}_theme.tar.gz"
@@ -31,17 +31,13 @@ WORK="${WORKBASE}"
 
 src_unpack() {
     default
-    unpack ./kde43-oxygen-molecule.tar.gz
-}
-
-src_prepare() {
-    edo sed -e "s/clearlooks/pixmap/" -i kde43-oxygen-molecule/gtk-2.0/panel.rc
+    unpack ./kde44-oxygen-molecule.tar.gz
 }
 
 src_install() {
     dodir /usr/share/themes/${PN}
     insinto /usr/share/themes/${PN}
-    doins -r kde43-oxygen-molecule/*
+    doins -r kde44-oxygen-molecule/*
 
     dodoc "${PN} ${PV} setup guide.pdf"
 }
