@@ -4,3 +4,4 @@
 require kdebase
 
 PLATFORMS="~amd64 ~x86"
+
