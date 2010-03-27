@@ -72,14 +72,14 @@ DEPENDENCIES="
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
 if ever at_least scm ; then
-DEPENDENCIES+="
-    build+run:
-        nepomuk? ( app-text/shared-desktop-ontologies[>=0.3] )
-"
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'nepomuk SharedDesktopOntologies' )
+    DEPENDENCIES+="
+        build+run:
+            nepomuk? ( app-text/shared-desktop-ontologies[>=0.3.60] )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'nepomuk SharedDesktopOntologies' )
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
