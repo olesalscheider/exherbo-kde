@@ -30,6 +30,8 @@ DEPENDENCIES="
 if ever at_least scm ; then
     DEPENDENCIES+="
         build+run:
+            app-text/shared-desktop-ontologies[>=0.2]
+            dev-libs/soprano[>=2.3.70]
             kde/kdelibs:${SLOT}[>=${PV}][nepomuk]
             server-pim/akonadi[>=scm]
         "
