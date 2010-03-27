@@ -29,8 +29,18 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker strigi-analyzer"
 
+if ! ever at_least scm; then
+    MYOPTIONS+="
+        indicators [[ description = [ Indicators support in Kmail ] ]]"
+    DEPENDENCIES+="
+        build:
+            indicators? ( dev-util/pkg-config )
+        build+run:
+            indicators? ( dev-libs/libindicate-qt[>=0.2.1] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
+fi
 MYOPTIONS+="
-    indicators [[ description = [ Indicators support in Kmail ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -45,7 +55,6 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build:
         dev-libs/libxslt
-        indicators? ( dev-util/pkg-config )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=1.0.4] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
         )
@@ -62,7 +71,6 @@ DEPENDENCIES+="
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         x11-libs/qt:4[dbus][sql]
-        indicators? ( dev-libs/libindicate-qt[>=0.2.1] )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -75,8 +83,5 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_ksendemail=ON
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'indicators IndicateQt'
-    'kde_parts:kleopatra Assuan'
-)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
 
