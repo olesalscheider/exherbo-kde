@@ -32,7 +32,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS="nepomuk openexr samba pulseaudio
+MYOPTIONS="alsa nepomuk openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
@@ -49,7 +49,6 @@ DEPENDENCIES="
         kde/qimageblitz[>=0.0.4]
         media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
-        sys-sound/alsa-lib[>=1.0.14a]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         x11-libs/qt:4[phonon]
@@ -80,6 +79,15 @@ if ever at_least scm ; then
         -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'nepomuk SharedDesktopOntologies' )
+fi
+
+if ever at_least 4.4.2; then
+    DEPENDENCIES+="
+        alsa? ( sys-sound/alsa-lib[>=1.0.14a] )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( ALSA )
+else
+    DEPENDENCIES+="
+        sys-sound/alsa-lib[>=1.0.14a]"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
