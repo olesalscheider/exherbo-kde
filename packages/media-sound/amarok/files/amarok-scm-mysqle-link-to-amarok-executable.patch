@@ -4,9 +4,9 @@ Upstream: No
 Reason: Link libmysqle statically in /usr/bin/amarok. This works on all arches, without the need for a shared libmysqle, or -fPIC hackery
 
 
-From 6efe247eed13a86021ad98f14f80e58582f57427 Mon Sep 17 00:00:00 2001
+From bcc4907b4b3e5a734488e4d8a041c0b7d8a44681 Mon Sep 17 00:00:00 2001
 From: tgurr <tgurr@gentoo.org>
-Date: Wed, 3 Feb 2010 02:47:53 +0100
+Date: Thu, 1 Apr 2010 03:51:53 +0200
 Subject: [PATCH] Link libmysqle statically
 
 ---
@@ -15,10 +15,10 @@ Subject: [PATCH] Link libmysqle statically
  2 files changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 9ef124c..b926187 100644
+index 144ab25..8a02c30 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -832,6 +832,19 @@ if(Q_WS_MAC)
+@@ -864,6 +864,19 @@ if(Q_WS_MAC)
  else(Q_WS_MAC)
      kde4_add_executable(amarok ${amarok_SRCS})
      target_link_libraries(amarok ${KDE4_KDEUI_LIBS} amaroklib ${TAGLIB_LIBRARIES} ${TAGLIB-EXTRAS_LIBRARIES} )
@@ -38,10 +38,10 @@ index 9ef124c..b926187 100644
  
      install(TARGETS amarok ${INSTALL_TARGETS_DEFAULT_ARGS})
  endif(Q_WS_MAC)
-diff --git a/src/collection/sqlcollection/mysqlecollection/CMakeLists.txt b/src/collection/sqlcollection/mysqlecollection/CMakeLists.txt
+diff --git a/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt b/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
 index 3f6d951..a30d6d6 100755
---- a/src/collection/sqlcollection/mysqlecollection/CMakeLists.txt
-+++ b/src/collection/sqlcollection/mysqlecollection/CMakeLists.txt
+--- a/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
++++ b/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
 @@ -26,6 +26,9 @@ SET(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_NOFATALWARN} )
  STRING(REPLACE "-Wl,--fatal-warnings" "" CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN ${CMAKE_MODULE_LINKER_FLAGS})
  SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN} )
@@ -72,5 +72,5 @@ index 3f6d951..a30d6d6 100755
  	SET_TARGET_PROPERTIES(amarok_collection-mysqlecollection PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
  endif(APPLE)
 -- 
-1.6.6.1
+1.7.0.3
 
