@@ -18,17 +18,21 @@ DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2.1"
 SLOT="0"
-MYOPTIONS="clucene doc"
+MYOPTIONS="clucene doc virtuoso
+virtuoso [[ description = [ Enable the virtuoso backend, the fastest backend ] ]]"
 
 DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen )
     build+run:
-        x11-libs/qt:4[dbus]
+        x11-libs/qt:4[dbus][>=4.5.0]
         dev-libs/rasqal[>=0.9.15]
         dev-libs/redland[>=1.0.6]
         media-libs/raptor[>=1.4.16]
         clucene? ( dev-cpp/clucene[>=0.9.19] )
+        virtuoso? ( dev-db/libiodbc )
+    run:
+        virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
@@ -38,18 +42,9 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     '!clucene SOPRANO_DISABLE_CLUCENE_INDEX'
     'doc SOPRANO_BUILD_API_DOCS'
+    '!virtuoso SOPRANO_DISABLE_VIRTUOSO_BACKEND'
 )
 
-if ever at_least 2.4.0 ; then
-    MYOPTIONS+=" virtuoso [[ description = [ Enable the virtuoso backend, the fastest backend ] ]]"
-    DEPENDENCIES+="
-    build+run:
-        x11-libs/qt:4[>=4.5.0]
-        virtuoso? ( dev-db/libiodbc )
-    run:
-        virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )"
-    CMAKE_SRC_CONFIGURE_OPTIONS+=( '!virtuoso SOPRANO_DISABLE_VIRTUOSO_BACKEND' )
-fi
 
 src_install() {
     cmake_src_install
