@@ -6,7 +6,7 @@ require amarok
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/amarok-scm-mysqle-link-to-amarok-executable.patch"
+    "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
 )
 
 pkg_postinst() {
