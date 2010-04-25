@@ -42,8 +42,8 @@ Index: config-workspace.h.cmake
  
 Index: kinfocenter/usbview/usbdb.cpp
 ===================================================================
---- ./kinfocenter/usbview/usbdb.cpp	(revision 1093709)
-+++ ./kinfocenter/usbview/usbdb.cpp	(working copy)
+--- ./kinfocenter/Modules/usbview/usbdb.cpp	(revision 1093709)
++++ ./kinfocenter/Modules/usbview/usbdb.cpp	(working copy)
 @@ -20,7 +20,7 @@
  #include <kstandarddirs.h>
  
@@ -55,8 +55,8 @@ Index: kinfocenter/usbview/usbdb.cpp
  	if (db.isEmpty())
 Index: kinfocenter/usbview/CMakeLists.txt
 ===================================================================
---- ./kinfocenter/usbview/CMakeLists.txt	(revision 1093709)
-+++ ./kinfocenter/usbview/CMakeLists.txt	(working copy)
+--- ./kinfocenter/Modules/usbview/CMakeLists.txt	(revision 1093709)
++++ ./kinfocenter/Modules/usbview/CMakeLists.txt	(working copy)
 @@ -17,4 +17,6 @@
  ########### install files ###############
  
