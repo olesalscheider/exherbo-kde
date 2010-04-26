@@ -1,0 +1,29 @@
+
+SCM_REPOSITORY="git://gitorious.org/dbusmenu/dbusmenu-qt.git"
+require scm-git cmake
+
+SUMMARY="dbusmenu-qt is a standalone library providing a way to import and export QMenu instances using the DBusMenu protocol."
+HOMEPAGE="http://gitorious.org/dbusmenu"
+
+RESTRICT="test"
+
+LICENCES="LGPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+"
+#   Tests require qjson, but are useless currently; see note below
+#   test:
+#       dev-libs/qjson[>=0.7.1]
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-add-tests-build-flag.patch"
+)
+
+# Tests both require X to run and are currently broken (2010-04-25)
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
+
