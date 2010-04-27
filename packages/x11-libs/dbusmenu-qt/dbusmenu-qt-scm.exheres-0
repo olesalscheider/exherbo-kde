@@ -22,10 +22,6 @@ DEPENDENCIES="
 #   test:
 #       dev-libs/qjson[>=0.7.1]
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-add-tests-build-flag.patch"
-)
-
 # Tests both require X to run and are currently broken (2010-04-25)
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
 
