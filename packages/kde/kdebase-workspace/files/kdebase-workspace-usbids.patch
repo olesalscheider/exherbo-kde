@@ -40,12 +40,15 @@ Index: config-workspace.h.cmake
  /* Define where your java executable is */
  #undef PATH_JAVA
  
-Index: kinfocenter/usbview/usbdb.cpp
+Index: kinfocenter/Modules/usbview/usbdb.cpp
 ===================================================================
 --- ./kinfocenter/Modules/usbview/usbdb.cpp	(revision 1093709)
 +++ ./kinfocenter/Modules/usbview/usbdb.cpp	(working copy)
-@@ -20,7 +20,7 @@
+@@ -18,9 +18,10 @@
+ #include <QTextStream>
+ 
  #include <kstandarddirs.h>
++#include <config-workspace.h>
  
  USBDB::USBDB() {
 -	QString db = "/usr/share/hwdata/usb.ids"; /* on Fedora */
@@ -53,7 +56,7 @@ Index: kinfocenter/usbview/usbdb.cpp
  	if (!QFile::exists(db))
  		db = KStandardDirs::locate("data", "kcmusb/usb.ids");
  	if (db.isEmpty())
-Index: kinfocenter/usbview/CMakeLists.txt
+Index: kinfocenter/Modules/usbview/CMakeLists.txt
 ===================================================================
 --- ./kinfocenter/Modules/usbview/CMakeLists.txt	(revision 1093709)
 +++ ./kinfocenter/Modules/usbview/CMakeLists.txt	(working copy)
