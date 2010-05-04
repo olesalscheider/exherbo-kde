@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="git://gitorious.org/dbusmenu/dbusmenu-qt.git"
+
 require scm-git cmake
 
-SUMMARY="dbusmenu-qt is a standalone library providing a way to import and export QMenu instances using the DBusMenu protocol."
+SUMMARY="dbusmenu-qt is a standalone library providing a way to import and export QMenu instances using the DBusMenu protocol"
 HOMEPAGE="http://gitorious.org/dbusmenu"
 
 RESTRICT="test"
