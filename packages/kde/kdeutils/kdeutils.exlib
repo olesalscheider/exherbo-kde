@@ -42,7 +42,7 @@ DEPENDENCIES="
         kde_parts:ark? (
             app-arch/xz
             kde/kdebase:4               [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
-            archive? ( app-arch/libarchive )
+            archive? ( app-arch/libarchive[>=2.7.0] )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
         kde_parts:okteta? ( app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]] )
