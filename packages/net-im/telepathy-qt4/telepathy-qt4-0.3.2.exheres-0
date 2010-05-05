@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="A high-level binding for Telepathy, similar to telepathy-glib but for Qt 4"
@@ -19,7 +19,7 @@ DEPENDENCIES="
 "
 #   test:
 #       (
-#           net-im/telepathy-glib[>=0.7.28]
+#           net-im/telepathy-glib[>=0.10.0]
 #           x11-libs/qt:4[glib]
 #       ) [[ notes = [ Run more tests ] ]]
 
@@ -27,4 +27,9 @@ DEPENDENCIES="
 # telepathy-farsight >= 0.0.4 gstreamer-0.10 gstreamer-interfaces-0.10
 
 BUGS_TO="kde@exherbo.org"
+
+src_test() {
+    sydboxcmd "net/whitelist/bind/unix-abstract:///tmp/dbus-*"
+    default
+}
 
