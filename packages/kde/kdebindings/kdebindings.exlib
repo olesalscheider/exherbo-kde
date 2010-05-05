@@ -81,6 +81,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QScintilla:BOOL=FALSE
     # These require Qwt, we can optionally enable these if there's a user for them
     -DENABLE_QWT_{RUBY,SMOKE}:BOOL=FALSE
+    -DWITH_Qwt5:BOOL=FALSE
     # Don't think anything currently uses okular bindings, could be made optional
     -DWITH_Okular:BOOL=FALSE
     # We don't currently ship these languages
