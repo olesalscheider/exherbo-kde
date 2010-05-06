@@ -29,11 +29,11 @@ DEPENDENCIES="
         )
         syndication? ( kde/kdepimlibs:${SLOT} )
 "
-if ever at_least 4.0_beta2 ; then
+if ever at_least 4.0_rc1 ; then
     DEPENDENCIES+="
         build+run:
             dev-libs/boost
-    "
+            net-p2p/libktorrent[>=1.0_rc1]"
 fi
 
 BUGS_TO="kde@exherbo.org"
