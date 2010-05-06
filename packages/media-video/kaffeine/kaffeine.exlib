@@ -14,7 +14,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.2.0]
-        media-libs/phonon
+        media-libs/phonon[xine]
+        media-libs/xine-lib
         x11-libs/qt:4[>=4.4.0][phonon]
 "
 
