@@ -1,7 +1,7 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases src_prepare
+export_exlib_phases src_prepare src_compile src_install
 
 require kde
 
@@ -41,5 +41,22 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'doc Doxygen' )
 libktorrent_src_prepare() {
     default
     edo sed -e '/find_package/s/^/macro_optional_/' -i doc/CMakeLists.txt
+}
+
+libktorrent_src_compile() {
+    cmake_src_compile
+
+    if option doc ; then
+        emake docs
+    fi
+}
+
+libktorrent_src_install() {
+    cmake_src_install
+
+    if option doc ; then
+        insinto /usr/share/doc/${PNVR}/
+        doins -r apidocs/html
+    fi
 }
 
