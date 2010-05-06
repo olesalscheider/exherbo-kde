@@ -3,11 +3,10 @@
 
 require kde
 
-SUMMARY="KTorrent - The KDE BitTorrent client."
+SUMMARY="KTorrent - The KDE BitTorrent client"
+DESCRIPTION="A rich featured BitTorrent client for KDE"
 HOMEPAGE="http://ktorrent.org/"
 DOWNLOADS="${HOMEPAGE}/downloads/${PV/_}/${PNV/_}.tar.bz2"
-DESCRIPTION="A rich featured BitTorrent client for KDE"
-BUGS_TO="kde@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="4"
@@ -36,6 +35,8 @@ if ever at_least 4.0_beta2 ; then
             dev-libs/boost
     "
 fi
+
+BUGS_TO="kde@exherbo.org"
 
 WORK="${WORKBASE}/${PNV/_}"
 
