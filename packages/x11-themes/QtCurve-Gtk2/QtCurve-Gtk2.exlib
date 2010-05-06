@@ -6,13 +6,15 @@ require cmake
 SUMMARY="QtCurve - Qt4/KDE4/KDE3/GTK+2 widget styles"
 DESCRIPTION="This is a set of widget styles for Qt4/KDE4, KDE3 and Gtk2 based apps."
 HOMEPAGE="http://www.kde-look.org/content/show.php?content=40492"
-DOWNLOADS="http://home.freeuk.com/cpdrummond/${PNV}.tar.bz2"
+DOWNLOADS="http://craigd.wikispaces.com/file/view/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        dev-util/pkg-config
     build+run:
         x11-libs/cairo
         x11-libs/gtk+:2
