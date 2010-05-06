@@ -1,0 +1,26 @@
+# Copyright 2010 Alex Elsayed <eternaleye@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="dbusmenu-qt is a standalone library providing a way to import and export QMenu instances using the DBusMenu protocol"
+HOMEPAGE="http://people.canonical.com/~agateau/dbusmenu/ http://gitorious.org/dbusmenu/"
+DOWNLOADS="http://people.canonical.com/~agateau/dbusmenu/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+RESTRICT="test"
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+"
+#   Tests require qjson, but are useless currently; see note below
+#   test:
+#       dev-libs/qjson[>=0.7.1]
+
+# Tests both require X to run and are currently broken (2010-04-25)
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
+
