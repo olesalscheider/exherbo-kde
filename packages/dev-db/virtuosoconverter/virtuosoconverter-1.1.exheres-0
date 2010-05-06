@@ -7,7 +7,7 @@ SUMMARY="Virtuoso 5.0->6.0 database conversion tool for Nepomuk"
 HOMEPAGE="http://kde-apps.org/content/show.php/Nepomuk+Virtuoso+Converter?content=119661"
 DOWNLOADS="
 http://www.kde-apps.org/CONTENT/content-files/119661-${PNV}.tar.bz2 -> ${PNV}.tar.bz2
-mirror://sourceforge/virtuoso/virtuoso-opensource-5.0.12.tar.gz
+mirror://sourceforge/virtuoso/virtuoso-opensource-5.0.13.tar.gz
 "
 
 LICENCES="|| ( GPL-2 GPL-3 )"
@@ -28,6 +28,6 @@ DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/touch.patch )
 
 src_unpack() {
     unpack "${PNV}".tar.bz2
-    edo ln -s "${FETCHEDDIR}"/virtuoso-opensource-5.0.12.tar.gz "${PNV}"
+    edo ln -s "${FETCHEDDIR}"/virtuoso-opensource-5.0.13.tar.gz "${PNV}"
 }
 
