@@ -9,7 +9,7 @@ Virtuoso is a scalable cross-platform server that combines SQL/RDF/XML
 Data Management with Web Application Server and Web Services Platform
 functionality.
 "
-HOMEPAGE+=" http://www.openlinksw.com/borislav/wiki/Main/VOSMake"
+HOMEPAGE="http://virtuoso.openlinksw.com/wiki/main/ ${HOMEPAGE}"
 
 LICENCES="GPL-2"
 SLOT="0"
