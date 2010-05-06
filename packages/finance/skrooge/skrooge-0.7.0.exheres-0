@@ -9,7 +9,7 @@ Skrooge is a personal finances manager for KDE4, aiming at being simple and intu
 you to keep track of your expenses and incomes, categorize them, and build reports of them.
 "
 HOMEPAGE="http://skrooge.org/"
-DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/skrooge/${PNV}.tar.bz2"
+DOWNLOADS="${HOMEPAGE}/files/${PNV}.tar.bz2"
 
 REMOTE_IDS="freshmeat:${PN}"
 
@@ -32,4 +32,9 @@ DEPENDENCIES="
     run:
         x11-libs/qt:4[sql][sqlite]
 "
+
+src_install() {
+    cmake_src_install
+    edo rmdir "${IMAGE}"/usr/share/apps/skrooge/theme
+}
 
