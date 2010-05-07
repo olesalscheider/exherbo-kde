@@ -9,3 +9,5 @@ DOWNLOADS=""
 
 PLATFORMS="~amd64"
 
+WORK=${WORKBASE}/${PNV}/
+
