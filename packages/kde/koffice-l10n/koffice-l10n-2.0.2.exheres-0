@@ -1,7 +1,0 @@
-# Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-require koffice-l10n [ langs="ca cs da de el en_GB es et fr fy gl hi it ja kk nb nds nl pl pt pt_BR sv tr uk wa zh_CN zh_TW" ]
-
-PLATFORMS="~amd64 ~x86"
-
