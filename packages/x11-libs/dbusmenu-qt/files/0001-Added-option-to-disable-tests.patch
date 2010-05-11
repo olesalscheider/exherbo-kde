@@ -1,0 +1,56 @@
+Source: Alex Elsayed
+Upstream: Yes
+Reason: Tests fail to link if qjson is found
+
+From aa70ec914b97988bd51c3055fcf8da7bd5069431 Mon Sep 17 00:00:00 2001
+From: Alex Elsayed <eternaleye@gmail.com>
+Date: Mon, 26 Apr 2010 12:56:43 -0700
+Subject: [PATCH] Added option to disable tests
+
+---
+ CMakeLists.txt       |    6 +++++-
+ tools/CMakeLists.txt |   18 +++++++++++-------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 710791b..695871b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -50,6 +50,10 @@ install(FILES ${CMAKE_BINARY_DIR}/dbusmenu-qt.pc
+     DESTINATION lib${LIB_SUFFIX}/pkgconfig
+     )
+ 
++option(BUILD_TESTS "Build tests" ON)
++
+ add_subdirectory(src)
+-add_subdirectory(tests)
++if (BUILD_TESTS)
++    add_subdirectory(tests)
++endif (BUILD_TESTS)
+ add_subdirectory(tools)
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index c150cc7..a258e56 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -1,7 +1,11 @@
+-find_package(QJSON)
+-if (QJSON_FOUND)
+-    message(STATUS "QJSON found, testapp will be built")
+-    add_subdirectory(testapp)
+-else (QJSON_FOUND)
+-    message(STATUS "QJSON not found, testapp will not be built")
+-endif (QJSON_FOUND)
++if (BUILD_TESTS)
++    find_package(QJSON)
++    if (QJSON_FOUND)
++        message(STATUS "QJSON found and tests enabled, testapp will be built")
++        add_subdirectory(testapp)
++    else (QJSON_FOUND)
++        message(STATUS "QJSON not found, testapp will not be built")
++    endif (QJSON_FOUND)
++else (BUILD_TESTS)
++    message(STATUS "Tests disabled, testapp will not be built")
++endif (BUILD_TESTS)
+-- 
+1.7.1
+

@@ -5,3 +5,5 @@ require dbusmenu-qt
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/0001-Added-option-to-disable-tests.patch" )
+
