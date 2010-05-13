@@ -7,3 +7,5 @@ DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( -p4 "${FILES}/polkit-kde-0.95.1-gcc45.patch" )
+
