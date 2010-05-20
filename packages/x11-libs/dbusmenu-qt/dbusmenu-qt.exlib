@@ -15,7 +15,7 @@ RESTRICT="test"
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4
+        x11-libs/qt:4[>=4.6.0]
 "
 #   Tests require qjson, but are useless currently; see note below
 #   test:
