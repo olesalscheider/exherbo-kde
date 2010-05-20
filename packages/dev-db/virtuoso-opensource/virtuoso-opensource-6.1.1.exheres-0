@@ -57,7 +57,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-rendezvous
     # hosting
     --disable-{mono,php5,perl,python,ruby}
-    --without-jdk{1,2,3,4}
+    --without-jdk{2,3,4}
 )
 
 src_install() {
