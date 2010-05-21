@@ -17,7 +17,6 @@ http://kmag.sourceforge.net/
 "
 
 LICENCES="GPL-2"
-# ksayit disabled upstream
 MY_KDE_PARTS="iconthemes kmag kmousetool kmouth kttsd"
 
 MYOPTIONS+="
