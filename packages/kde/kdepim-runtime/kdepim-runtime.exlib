@@ -34,7 +34,7 @@ DEPENDENCIES="
 if ever at_least scm ; then
     DEPENDENCIES+="build+run: server-pim/akonadi[>=scm]"
 else
-    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=1.3.0]"
 fi
 
 # Currently disabled (resources/CMakeLists.txt)
