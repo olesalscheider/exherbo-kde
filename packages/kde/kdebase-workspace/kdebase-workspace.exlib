@@ -114,6 +114,7 @@ if ever at_least 4.4.80 ; then
     "
     DEPENDENCIES+="
         build+run:
+            user/kdm
             media-libs/jpeg [[ note = ksplash ]]
             sys-apps/pciutils
             sys-apps/usbutils-data [[
@@ -224,4 +225,13 @@ src_install() {
         python_bytecompile
     fi
 }
+
+if ever at_least 4.4.80; then
+    pkg_postinst() {
+        [[ -d ${ROOT}/var/lib/kdm ]] || edo mkdir "${ROOT}"/var/lib/kdm
+        [[ -e ${ROOT}/var/log/kdm.log ]] || edo touch "${ROOT}"/var/log/kdm.log
+        edo chown -R kdm:kdm "${ROOT}"/var/{lib/kdm,log/kdm.log}
+        edo chmod -R 775 "${ROOT}"/var/{lib/kdm,log/kdm.log}
+    }
+fi
 
