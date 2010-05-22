@@ -19,7 +19,7 @@ DEPENDENCIES="
 "
 #   test:
 #       (
-#           net-im/telepathy-glib[>=0.10.0]
+#           net-im/telepathy-glib[>=0.11.3]
 #           x11-libs/qt:4[glib]
 #       ) [[ notes = [ Run more tests ] ]]
 
