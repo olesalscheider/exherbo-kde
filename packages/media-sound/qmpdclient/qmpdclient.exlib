@@ -1,5 +1,5 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake
@@ -9,7 +9,7 @@ export_exlib_phases src_install
 SUMMARY="QMPDClient is an easy to use MPD client written in Qt 4"
 HOMEPAGE="http://bitcheese.net/wiki/QMPDClient   [[ description = [ New official homepage ] ]]
     http://havtknut.tihlde.org/qmpdclient        [[ description = [ Old, official homepage ] ]]"
-DOWNLOADS="http://github.com/Voker57/${PN}-ne/tarball/${PV} -> ${PNV}.tar.gz"
+DOWNLOADS="http://dump.bitcheese.net/files/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
