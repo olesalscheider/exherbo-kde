@@ -6,7 +6,7 @@ require kde
 SUMMARY="KTorrent - The KDE BitTorrent client"
 DESCRIPTION="A rich featured BitTorrent client for KDE"
 HOMEPAGE="http://ktorrent.org/"
-DOWNLOADS="${HOMEPAGE}/downloads/${PV/_}/${PNV/_}.tar.bz2"
+DOWNLOADS="${HOMEPAGE}/downloads/4.0/${PNV/_}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="4"
@@ -15,13 +15,14 @@ MYOPTIONS="avahi infowidget mediaplayer syndication"
 DEPENDENCIES="
     build:
         sys-devel/gettext
-        syndication? ( dev-libs/boost )
     build+run:
         app-crypt/qca:2
+        dev-libs/boost
         dev-libs/gmp
         kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         media-libs/phonon
+        net-p2p/libktorrent[>=1.0]
         infowidget? ( net-libs/GeoIP )
         mediaplayer? (
             media-libs/taglib
@@ -29,12 +30,6 @@ DEPENDENCIES="
         )
         syndication? ( kde/kdepimlibs:${SLOT} )
 "
-if ever at_least 4.0_rc1 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/boost
-            net-p2p/libktorrent[>=1.0_rc1]"
-fi
 
 BUGS_TO="kde@exherbo.org"
 
