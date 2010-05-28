@@ -7,5 +7,5 @@ PLATFORMS="~amd64"
 
 KDEVELOP_PV="$(( $(ever major)+3 )).$(ever range 2-)"
 
-DOWNLOADS="mirror://kde/unstable/kdevelop/${KDEVELOP_PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/kdevelop/${KDEVELOP_PV}/src/${PNV}.tar.bz2"
 
