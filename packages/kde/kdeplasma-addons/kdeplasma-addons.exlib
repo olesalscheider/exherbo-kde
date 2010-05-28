@@ -11,7 +11,7 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 LICENCES="GPL-2"
 MY_KDE_PARTS="kdeobservatory"
 
-if ever at_least scm; then
+if ever at_least 4.4.80 ; then
     DEPENDENCIES+="
         x11-misc/shared-mime-info
     "
