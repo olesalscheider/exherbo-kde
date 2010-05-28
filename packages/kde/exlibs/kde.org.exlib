@@ -11,7 +11,7 @@
 #       Ingmar Vanhassel <ingmar@exherbo.org>
 
 # Exlib for KDE 4 things
-# Seperate exlib for packages with _optional_ KDE support
+# Separate exlib for packages with _optional_ KDE support
 # Canonical KDE packages go in packages/kde/${PN}
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
