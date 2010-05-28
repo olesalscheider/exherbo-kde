@@ -19,6 +19,8 @@ require kde
 
 export_exlib_phases src_install
 
+myexparam -b upstream_release_notes=true
+
 # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
 
@@ -29,15 +31,17 @@ SLOT="4"
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freshmeat:kde"
 
-case ${PV} in
-    4.4.0)
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/4.4/" ;;
-    4.@(3|4).@(0|1|2|3|4|5))
-        UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
-    4.@(2|3).@(6|7|8|9)*)
-        UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
-    4.*)  die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
-esac
+if exparam -b upstream_release_notes ; then
+    case ${PV} in
+        4.4.0)
+            UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/4.4/" ;;
+        4.@(3|4).@(0|1|2|3|4|5))
+            UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
+        4.@(2|3).@(6|7|8|9)*)
+            UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
+        4.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
+    esac
+fi
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
