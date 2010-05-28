@@ -5,5 +5,7 @@ require kdevelop
 
 PLATFORMS="~amd64"
 
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+UPSTREAM_RELEASE_NOTES="http://dot.kde.org/2010/05/01/kdevelop-40-stable-released-wild"
 
