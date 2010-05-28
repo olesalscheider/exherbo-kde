@@ -29,17 +29,6 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker strigi-analyzer"
 
-if ! ever at_least scm; then
-    MYOPTIONS+="
-        indicators [[ description = [ Indicators support in Kmail ] ]]"
-    DEPENDENCIES+="
-        build:
-            indicators? ( dev-util/pkg-config )
-        build+run:
-            indicators? ( dev-libs/libindicate-qt[>=0.2.1] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'indicators IndicateQt' )
-fi
 MYOPTIONS+="
     kde_parts:
         ${MY_KDE_PARTS}
@@ -81,6 +70,7 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kmailcvt=ON
     -DBUILD_ksendemail=ON
+    -DWITH_IndicateQt=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
