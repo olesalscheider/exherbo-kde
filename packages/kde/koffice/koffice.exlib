@@ -74,11 +74,15 @@ DEPENDENCIES+="
         x11-dri/mesa
         kde_parts:karbon? (
             eps? ( media-gfx/pstoedit )
-            wordperfect? ( office-libs/libwpd
-                           office-libs/libwpg )
+            wordperfect? (
+                office-libs/libwpd
+                office-libs/libwpg
+            )
         )
-        kde_parts:kpresenter? ( dev-libs/boost
-                                x11-libs/libXext )
+        kde_parts:kpresenter? (
+            dev-libs/boost
+            x11-libs/libXext
+        )
         kde_parts:krita? (
             graphics/exiv2[>=0.16]
             kde/qimageblitz
