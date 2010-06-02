@@ -5,5 +5,3 @@ require kdenetwork
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/kget-${PV}-CVE-2010-1000.patch )
-
