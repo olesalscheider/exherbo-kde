@@ -45,14 +45,13 @@ MY_KOPETE_PLUGINS+="
 "
 
 MYOPTIONS+="
-    bittorrent [[ description = [ Enable bittorrent transfer plugin for KGet ] ]]
     nepomuk
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] ]]
     telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
     webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
-    ( bittorrent nepomuk sqlite ) [[ requires = [ kde_parts: kget ] ]]
+    ( nepomuk sqlite ) [[ requires = [ kde_parts: kget ] ]]
     vnc [[ requires = [ kde_parts: krdc ] ]]
 
     kde_parts:
@@ -77,7 +76,6 @@ DEPENDENCIES+="
             dev-libs/boost
             kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
             kde/kdebase:${SLOT} [[ note = Konqueror ]]
-            bittorrent? ( kde/ktorrent )
             nepomuk? (
                 dev-libs/soprano
                 kde/kdebase-runtime:${SLOT}[nepomuk(+)]
@@ -157,8 +155,9 @@ src_prepare() {
     # Upstream CMakeLists only allows for
     #   1. External btcore (from ktorrent)
     #   2. Internal btcore
-    # We replace 2. by no torrent support instead, since we hate internal libraries
-    edo sed -e '/^add_subdirectory.*bittorrent/s:^:macro_optional_:' -i kget/transfer-plugins/CMakeLists.txt
+    # Since building with libktorrent 1.0.0 fails, and since we hate internal libraries, we disable
+    # torrent support entirely
+    edo sed -e '/^add_subdirectory.*bittorrent/s:^:# :' -i kget/transfer-plugins/CMakeLists.txt
 }
 
 src_configure() {
@@ -240,7 +239,6 @@ src_configure() {
         $(cmake_with kde_parts:kget LibKNotificationItem-1) \
         $(cmake_with kde_parts:kget QGpgme) \
         $(cmake_with kde_parts:kget Plasma) \
-        $(cmake_build bittorrent) \
         $(cmake_with im_protocols:gadu) \
         $(cmake_with im_protocols:gadu Libgadu) \
         $(cmake_with im_protocols:groupwise) \
@@ -258,7 +256,6 @@ src_configure() {
         $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_with Nepomuk) \
         $(cmake_with nepomuk Soprano) \
-        -DENABLE_EMBEDDED_TORRENT_SUPPORT:BOOL=FALSE \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
         -DWITH_GMP=OFF
 }
