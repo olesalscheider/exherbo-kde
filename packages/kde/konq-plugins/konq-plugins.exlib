@@ -27,26 +27,20 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MYOPTIONS="
 tidy    [[ description = [ Build the CSS & HTML validator plugins ] ]]
+webkit  [[ description = [ Build support for the WebKit browser backend ] ]]
 "
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        kde/kdebase:${SLOT}
+        kde/kdebase:${SLOT}[>=4.4]
         tidy? ( app-text/tidy )
+        webkit? ( kde/kwebkitpart )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tidy LibTidy' )
-
-if ever at_least 4.3.2; then
-    MYOPTIONS+="webkit  [[ description = [ Build support for the WebKit browser backend ] ]]"
-    DEPENDENCIES+="webkit? ( kde/kwebkitpart )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
-else
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_KdeWebKit=FALSE
-        -DWITH_WebKitPart=FALSE
-    )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'tidy LibTidy'
+    'webkit KWebKitPart'
+)
 
