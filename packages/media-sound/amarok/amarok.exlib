@@ -12,6 +12,12 @@ Amarok tries to be a little different, providing a simple drag and drop
 interface that really makes playlist handling easy.
 "
 HOMEPAGE="http://amarok.kde.org/"
+
+UPSTREAM_DOCUMENTATION="
+http://amarok.kde.org/wiki/Moodbar#Moodbar_File_Generation_Script [[
+    description = [ How to generate .mood files for the moodbar ] ]]
+"
+
 case ${PV} in
     scm) DOWNLOADS=""
          UPSTREAM_RELEASE_NOTES="" ;;
