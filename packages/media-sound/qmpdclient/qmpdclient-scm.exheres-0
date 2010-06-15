@@ -11,3 +11,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-fix-cmake.patch )
 
+src_configure() {
+    GIT_DIR=${WORK}/.git cmake_src_configure
+}
+
