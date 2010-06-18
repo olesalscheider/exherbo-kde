@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="kdereview/${PN}/"
+SCM_SUBPATH="extragear/office/${PN}/"
 
 require kde scm-svn
 
