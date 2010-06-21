@@ -3,7 +3,7 @@
 
 require kdevelop
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 

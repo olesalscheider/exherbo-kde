@@ -3,7 +3,7 @@
 
 require kdevplatform
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 KDEVELOP_PV="$(( $(ever major)+3 )).$(ever range 2-)"
 
