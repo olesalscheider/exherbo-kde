@@ -10,7 +10,7 @@ DOWNLOADS="${HOMEPAGE}/downloads/4.0/${PNV/_}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="4"
-MYOPTIONS="avahi infowidget mediaplayer syndication"
+MYOPTIONS="avahi"
 
 DEPENDENCIES="
     build:
@@ -19,16 +19,12 @@ DEPENDENCIES="
         app-crypt/qca:2
         dev-libs/boost
         dev-libs/gmp
-        kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
+        kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
         media-libs/phonon
+        media-libs/taglib
+        net-libs/GeoIP
         net-p2p/libktorrent[>=1.0]
-        infowidget? ( net-libs/GeoIP )
-        mediaplayer? (
-            media-libs/taglib
-            x11-libs/qt:4[phonon]
-        )
-        syndication? ( kde/kdepimlibs:${SLOT} )
 "
 
 BUGS_TO="kde@exherbo.org"
@@ -38,14 +34,18 @@ WORK="${WORKBASE}/${PNV/_}"
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_BWSCHEDULER_PLUGIN=ON
     -DENABLE_DOWNLOADORDER_PLUGIN=ON
+    -DENABLE_INFOWIDGET_PLUGIN=ON
     -DENABLE_IPFILTER_PLUGIN=ON
     -DENABLE_LOGVIEWER_PLUGIN=ON
+    -DENABLE_MEDIAPLAYER_PLUGIN=ON
     -DENABLE_SCANFOLDER_PLUGIN=ON
     -DENABLE_SCRIPTING_PLUGIN=ON
     -DENABLE_SEARCH_PLUGIN=ON
     -DENABLE_STATS_PLUGIN=ON
+    -DENABLE_SYNDICATION_PLUGIN=ON
     -DENABLE_UPNP_PLUGIN=ON
     -DENABLE_WEBINTERFACE_PLUGIN=ON
+    -DWITH_SYSTEM_GEOIP=ON
 )
 if ever at_least 4.0_beta2 ; then
     CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -55,13 +55,8 @@ if ever at_least 4.0_beta2 ; then
 else
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_DHT_SUPPORT=ON )
 fi
+
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'avahi ZEROCONF_PLUGIN'
-    'infowidget INFOWIDGET_PLUGIN'
-    'mediaplayer MEDIAPLAYER_PLUGIN'
-    'syndication SYNDICATION_PLUGIN'
-)
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'infowidget SYSTEM_GEOIP'
 )
 
