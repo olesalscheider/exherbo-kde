@@ -18,8 +18,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.6.0][X][dbus][glib][webkit]
         kde/kdelibs:4[>=4.4.0]
+        x11-libs/gtk+:2[>=2.8.0]
+        x11-libs/qt:4[>=4.6.0][X][dbus][glib][webkit]
 "
 
 BUGS_TO="kde@exherbo.org"
