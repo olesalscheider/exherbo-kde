@@ -6,7 +6,7 @@ require kde
 SUMMARY="KTorrent - The KDE BitTorrent client"
 DESCRIPTION="A rich featured BitTorrent client for KDE"
 HOMEPAGE="http://ktorrent.org/"
-DOWNLOADS="${HOMEPAGE}/downloads/4.0/${PNV/_}.tar.bz2"
+DOWNLOADS="${HOMEPAGE}/downloads/${PV}/${PNV/_}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="4"

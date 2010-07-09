@@ -1,7 +1,7 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require libktorrent
+require libktorrent [ ktorrent_version=4.0.2 ]
 
 PLATFORMS="~amd64 ~x86"
 
