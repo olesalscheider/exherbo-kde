@@ -1,11 +1,11 @@
 # Copyright 2010 Alex Elsayed <eternaleye@gmail.com>
+# Copyright 2010 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require launchpad [ pn=lib${PN} branch=trunk suffix=tar.bz2 ] cmake
 
-SUMMARY="dbusmenu-qt is a standalone library providing a way to import and export QMenu instances using the DBusMenu protocol"
-HOMEPAGE="http://people.canonical.com/~agateau/dbusmenu/ http://gitorious.org/dbusmenu/"
-DOWNLOADS="http://people.canonical.com/~agateau/dbusmenu/lib${PNV}.tar.bz2"
+SUMMARY="standalone library providing a way to import and export QMenu instances using the DBusMenu protocol"
+HOMEPAGE="http://people.canonical.com/~agateau/dbusmenu/ ${HOMEPAGE}"
 
 LICENCES="LGPL-2"
 SLOT="0"
