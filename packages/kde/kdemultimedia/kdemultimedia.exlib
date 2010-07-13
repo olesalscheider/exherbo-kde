@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -22,6 +22,18 @@ HOMEPAGE="
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd mplayerthumbs"
+
+if ever at_least 4.4.80; then
+    MY_KDE_PARTS+=" ffmpegthumbs"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kde_parts:ffmpegthumbs FFmpeg'
+        'kde_parts:ffmpegthumbs Swscale'
+    )
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ffmpegthumbs? ( media/ffmpeg )
+    "
+fi
 
 MYOPTIONS+="
     flac         [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
