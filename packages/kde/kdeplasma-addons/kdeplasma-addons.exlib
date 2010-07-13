@@ -1,4 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -11,9 +12,11 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 LICENCES="GPL-2"
 MY_KDE_PARTS="kdeobservatory"
 
-if ever at_least 4.4.80 ; then
+if ever at_least 4.4.90 ; then
     DEPENDENCIES+="
-        x11-misc/shared-mime-info
+        build+run:
+            app-crypt/qca:2 [[ note = [ dataengines/microblog/ ] ]]
+            x11-misc/shared-mime-info
     "
 fi
 
