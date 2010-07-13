@@ -42,6 +42,7 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
                    requires    = [ glib phonon ] ]]
     gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
                    requires = glib ]]
+    multimedia  [[ description = [ Build the QtMultimedia module ] ]]
     phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
     qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the QtSQL module ] ]]
@@ -86,6 +87,7 @@ DEPENDENCIES="
             x11-libs/gtk+:2[>=2.10]
             dev-libs/atk
         )
+        multimedia? ( sys-sound/alsa-lib )
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
         postgresql? ( dev-db/postgresql )
