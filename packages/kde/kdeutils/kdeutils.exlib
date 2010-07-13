@@ -1,4 +1,4 @@
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -27,15 +27,37 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MY_KDE_PARTS="ark kcalc kcharselect kdelirc kdf kfloppy kgpg ktimer kwallet
+MY_KDE_PARTS="ark kcalc kcharselect kdf kfloppy kgpg ktimer kwallet
 okteta printer-applet superkaramba sweeper"
+
+if ever at_least 4.4.80; then
+    MY_KDE_PARTS+=" kremotecontrol"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kremotecontrol? ( kde/kdebase-workspace:${SLOT}[>=${PV}] )
+            kde_parts:okteta? ( x11-misc/shared-mime-info[>=0.40] )
+        run:
+            kde_parts:kremotecontrol? ( app-misc/lirc )
+    "
+    # This dependency was added in 4.5 but since all KDE tests are restricted we don't build unit tests.
+    #   build+test:
+    #       kde_parts:ark? (
+    #           dev-libs/qjson [[ note = [ This is a test dep but the tests get built during the compile phase, also we could disable it ] ]]
+    #       )
+else
+    MY_KDE_PARTS+=" kdelirc"
+    DEPENDENCIES+="
+        run:
+            kde_parts:kdelirc? ( app-misc/lirc )
+    "
+fi
 MYOPTIONS="
     archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
     ( archive ) [[ requires = [ kde_parts: ark ] ]]
     kde_parts: ${MY_KDE_PARTS}"
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
@@ -69,8 +91,6 @@ DEPENDENCIES="
             x11-libs/libXrender
             python? ( dev-lang/python:= )
         )
-    run:
-        kde_parts:kdelirc? ( app-misc/lirc )
     suggestion:
         kde_parts:ark? (
             app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
@@ -83,6 +103,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:ark BZip2'
     'kde_parts:ark LibKonq'
     'kde_parts:ark LibLZMA'
+    #'kde_parts:ark QJSON' # Only for unit tests. See above.
     'kde_parts:ark ZLIB'
     'kde_parts:kcalc GMP'
     'kde_parts:okteta QCA2'
