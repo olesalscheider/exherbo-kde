@@ -27,16 +27,21 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
-if ever at_least scm ; then
+if ever at_least 4.4.80 ; then
     DEPENDENCIES+="
         build+run:
             app-text/shared-desktop-ontologies[>=0.2]
             dev-libs/soprano[>=2.3.70]
             kde/kdelibs:${SLOT}[>=${PV}][nepomuk]
-            server-pim/akonadi[>=scm]
-        "
+    "
+fi
+
+if ever at_least scm ; then
+    DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
+elif ever at_least 4.4.80 ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=1.3.60]"
 else
-    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.0]"
+    DEPENDENCIES+="build+run: server-pim/akonadi[~>1.3.1]"
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
