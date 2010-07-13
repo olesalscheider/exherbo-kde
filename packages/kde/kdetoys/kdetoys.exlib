@@ -1,5 +1,5 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -9,12 +9,16 @@ DESCRIPTION="
 amor: Amusing Misuse Of Resources put's comic figures above your windows
 kteatime: system tray applet that makes sure your tea doesn't get too strong
 ktux: Tux-in-a-Spaceship screen saver
-kweather: kicker applet that will display the current weather outside
 "
 
 LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
-MY_KDE_PARTS="amor kteatime ktux kweather"
-MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
+
+MY_KDE_PARTS="amor kteatime ktux"
+if ! ever at_least 4.4.80; then
+    DESCRIPTION+="kweather: kicker applet that will display the current weather outside"
+    MY_KDE_PARTS+=" kweather"
+fi
+MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
