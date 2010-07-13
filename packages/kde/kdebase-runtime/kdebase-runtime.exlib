@@ -1,4 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -17,7 +18,6 @@ knotify: Notification daemon
 kquitapp: Close a KDE application using D-Bus
 kreadconfig: Read/write configuration files from a script
 kstart: Start application s with special window properties
-kstyles: Styles for KDE widgets
 ktraderclient: Query KDE trader system
 kuiserver: Display progress information
 kwalletd: Password storage service
@@ -46,7 +46,6 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/attica[>=0.1.1]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-        kde/qimageblitz[>=0.0.4]
         media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
@@ -70,15 +69,25 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least scm ; then
+if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
-            nepomuk? ( app-text/shared-desktop-ontologies[>=0.3.60] )
+            dev-libs/attica[>=0.1.4]
+            nepomuk? (
+                app-text/shared-desktop-ontologies[>=0.3.60]
+                dev-libs/soprano[>=2.4.63][virtuoso]
+            )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'nepomuk SharedDesktopOntologies' )
+else
+    DESCRIPTION+="kstyles: Styles for KDE widgets"
+    DEPENDENCIES+="
+        build+run:
+            kde/qimageblitz[>=0.0.4]
+    "
 fi
 
 if ever at_least 4.4.2; then
