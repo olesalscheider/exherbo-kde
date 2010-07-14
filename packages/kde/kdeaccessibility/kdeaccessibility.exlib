@@ -1,7 +1,14 @@
 # Copyright 2010 Yury G. Kudryashov <urkud+exherbo@ya.ru>
+# Copyright 2010 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
+
+if ever at_least 4.4.90; then
+    _KTTSD_NAME=jovie
+else
+    _KTTSD_NAME=kttsd
+fi
 
 SUMMARY="KDE accessibility programs"
 DESCRIPTION="
@@ -9,7 +16,7 @@ DESCRIPTION="
 * kmag - screen magnifier
 * kmousetool - clicks the mouse for you
 * kmouth - enables persons that cannot speak to let their computers speak
-* kttsd - text to speech daemon
+* ${_KTTSD_NAME} - text to speech daemon
 "
 HOMEPAGE="
 http://accessibility.kde.org/
@@ -17,13 +24,12 @@ http://kmag.sourceforge.net/
 "
 
 LICENCES="GPL-2"
-MY_KDE_PARTS="iconthemes kmag kmousetool kmouth kttsd"
+MY_KDE_PARTS="iconthemes kmag kmousetool kmouth ${_KTTSD_NAME}"
 
 MYOPTIONS+="
     kde_parts:
         ${MY_KDE_PARTS}
 "
-
 DEPENDENCIES+="
     build+run:
         kde/kdelibs:4
@@ -33,9 +39,9 @@ DEPENDENCIES+="
             x11-libs/libXext
             x11-libs/libXtst
         )
-        kde_parts:kttsd? ( app-speech/speechd )
+        kde_parts:${_KTTSD_NAME}? ( app-speech/speechd )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'kde_parts:kttsd Speechd' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'kde_parts:${_KTTSD_NAME} Speechd' )
 
