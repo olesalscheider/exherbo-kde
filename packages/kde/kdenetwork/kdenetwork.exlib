@@ -1,5 +1,5 @@
 # Copyright 2008-2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008-2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
 #   Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -146,6 +146,15 @@ DEPENDENCIES+="
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 
+if ever at_least 4.4.80; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kget? (
+                nepomuk? ( app-text/shared-desktop-ontologies[>=0.4] )
+            )
+    "
+fi
+
 # FIXME
 # Warning: kppp uses setuid
 
@@ -183,7 +192,7 @@ src_configure() {
     cmakeparams+=( -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE )
 
     # These do not work
-    cmakeparams+=( -DWITH_telepathy=OFF -DWITH_Decibel=OFF )
+    cmakeparams+=( -DWITH_telepathy=OFF -DWITH_Decibel=OFF -DWITH_KTorrent:BOOL=OFF )
 
     # These are missing required dependencies
     cmakeparams+=( -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF ) # net-libs/meanwhile, http://meanwhile.sf.net
