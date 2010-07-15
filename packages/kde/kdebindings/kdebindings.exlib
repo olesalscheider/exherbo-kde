@@ -1,4 +1,5 @@
 # Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require python kde.org
@@ -16,7 +17,7 @@ DESCRIPTION="
 * KrossRuby: The Ruby plugin for the Kross scripting framework
 
 kdebindings has optional components, that we currently disable:
-Qyoto & Kimono (C# bindings), KrossJava, KrossFalcon
+Qyoto & Kimono (C# bindings), KrossJava, KrossFalcon, Perl, PHP
 "
 # Broken: xparts; Obsolete: Everything else
 HOMEPAGE+=" http://techbase.kde.org/Development/Languages"
@@ -73,6 +74,8 @@ fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_QTMULTIMEDIA_SMOKE:BOOL=FALSE
+    # We depend on these so maybe they're needed? Could be made optional or disabled in 4.5.
+    -DWITH_{Akonadi,KdepimLibs,LibAttica,QImageBlitz}:BOOL=TRUE
     # Nobody use these bindings
     -DWITH_KDevPlatform:BOOL=FALSE -DENABLE_KDEVPLATFORM_{RUBY,SMOKE}:BOOL=FALSE
     # polkit-qt:0 is deprecated, nobody use these bindings
@@ -85,9 +88,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Don't think anything currently uses okular bindings, could be made optional
     -DWITH_Okular:BOOL=FALSE
     # We don't currently ship these languages
-    -DBUILD_{csharp,java,php,falcon}:BOOL=FALSE
+    -DBUILD_{csharp,java,perl,php,falcon}:BOOL=FALSE
 )
-
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
     python
@@ -104,6 +106,11 @@ CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Nepomuk
     'nepomuk Soprano'
+    'python Phonon'
+    'python PyQt4'
+    'python PythonLibrary'
+    'python SIP'
+    Ruby
 )
 
 kdebindings_src_install() {
