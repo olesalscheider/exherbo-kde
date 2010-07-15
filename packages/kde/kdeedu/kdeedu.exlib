@@ -1,5 +1,5 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2008-2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -68,10 +68,7 @@ DEPENDENCIES+="
             3dgraphs? ( x11-dri/mesa )
         )
         kde_parts:kalzium? (
-            3dviewer? (
-                sci-chemistry/openbabel[>=2.2]
-                x11-dri/mesa
-            )
+            3dviewer? ( sci-chemistry/openbabel[>=2.2] )
             solver? (
                 dev-lang/ocaml
                 dev-ml/facile
@@ -95,6 +92,19 @@ DEPENDENCIES+="
         kde/kdebase-runtime:${SLOT}
 "
 
+if ever at_least 4.4.80; then
+    DEPENDENCIES+="
+        build+run:
+            3dviewer? ( sci-chemistry/avogadro[>=1.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            3dviewer? ( x11-dri/mesa )
+            kde_parts:rocs? ( media-gfx/graphviz )
+    "
+fi
+
 # Someone should probably test this with Marble at some point
 # macro_log_feature(EXPERIMENTAL_PYTHON_BINDINGS "Experimental Python binding
 #   support for the Marble library" "Experimental Python binding support for
@@ -103,7 +113,7 @@ DEPENDENCIES+="
 #   "Experimental Python binding support for the Marble library. To activate it
 #   pass -DEXPERIMENTAL_PYTHON_BINDINGS=TRUE to cmake.")
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/
+    # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
     -DHAVE_LIBGPS=OFF
     # Kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
     -DWITH_CFitsio=OFF
@@ -114,6 +124,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    '3dviewer Avogadro' # http://avogadro.openmolecules.net
     '3dviewer OpenBabel2'
     'kde_parts:cantor LibSpectre'
     'kde_parts:kalgebra Readline'
