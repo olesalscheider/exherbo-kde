@@ -33,8 +33,10 @@ REMOTE_IDS="freshmeat:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.4.90)
+        4.4.92)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.5-rc2.php" ;;
+        4.4.90)
+            UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-4.5-rc1.php" ;;
         4.4.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/4.4/" ;;
         4.@(3|4).@(0|1|2|3|4|5))
@@ -98,7 +100,7 @@ case ${PV} in
         esac
 
         require scm-svn ;;
-    4.4.@(80|85|90|95|96|98)) # Betas, RCs
+    4.4.@(80|85|90|92|95|96|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     4.@(3|4).@(6|7|8|9)*) # Weekly SVN snapshots
         case ${PV} in
