@@ -4,10 +4,21 @@
 
 require kde.org
 
-if ever at_least 4.4.90; then
+if ever at_least 4.4.92; then
     _KTTSD_NAME=jovie
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:${_KTTSD_NAME}? (
+                app-speech/opentts
+                app-speech/speechd
+            )
+    " # http://www.opentts.org - Jovie requires either speech dispatcher or opentts
 else
     _KTTSD_NAME=kttsd
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:${_KTTSD_NAME}? ( app-speech/speechd )
+    "
 fi
 
 SUMMARY="KDE accessibility programs"
@@ -39,9 +50,8 @@ DEPENDENCIES+="
             x11-libs/libXext
             x11-libs/libXtst
         )
-        kde_parts:${_KTTSD_NAME}? ( app-speech/speechd )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'kde_parts:${_KTTSD_NAME} Speechd' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( "kde_parts:${_KTTSD_NAME} Speechd" )
 
