@@ -1,0 +1,17 @@
+Source:   http://websvn.kde.org/trunk/KDE/kdebindings/python/pykde4/sip/akonadi/addressattribute.sip?r1=1130239&r2=1150375&view=patch
+Upstream: yes
+Reason:   Akonadi bindings don't build with sip-4.10.3 and higher
+
+--- kdebindings/python/pykde4/sip/akonadi/addressattribute.sip	2010/05/24 20:18:51	1130239
++++ kdebindings/python/pykde4/sip/akonadi/addressattribute.sip	2010/07/15 20:17:52	1150375
+@@ -59,6 +59,10 @@
+     else if (dynamic_cast<Akonadi::PersistentSearchAttribute*>(sipCpp))
+         sipType = sipType_Akonadi_PersistentSearchAttribute;
+ %End
++private:
++//force
++Akonadi::AddressAttribute& operator = (const Akonadi::AddressAttribute&);
++//end
+ };
+ };
+ %ModuleHeaderCode

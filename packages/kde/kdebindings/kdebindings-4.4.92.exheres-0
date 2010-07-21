@@ -5,3 +5,7 @@ require kdebindings
 
 PLATFORMS="~amd64 ~x86"
 
+# Still broken with sip[>=4.10.3] in 4.5 rc2. Remove this for 4.5 final.
+# See https://bugs.kde.org/244697
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-sip-fix.patch )
+
