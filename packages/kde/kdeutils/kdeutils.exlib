@@ -98,12 +98,14 @@ DEPENDENCIES+="
         )
 "
 
+# Only for unit tests. See above.
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QJSON:BOOL=FALSE )
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'archive LibArchive'
     'kde_parts:ark BZip2'
     'kde_parts:ark LibKonq'
     'kde_parts:ark LibLZMA'
-    #'kde_parts:ark QJSON' # Only for unit tests. See above.
     'kde_parts:ark ZLIB'
     'kde_parts:kcalc GMP'
     'kde_parts:okteta QCA2'
