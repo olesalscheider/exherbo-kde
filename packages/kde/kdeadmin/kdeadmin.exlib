@@ -15,7 +15,7 @@ Other, currently disabled parts knetworkconf
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MY_KDE_PARTS="kcron ksystemlog kuser strigi-analyzer system-config-printer-kde"
-MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
+MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
