@@ -65,7 +65,6 @@ DEPENDENCIES+="
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}
             sys-libs/readline
-            3dgraphs? ( x11-dri/mesa )
         )
         kde_parts:kalzium? (
             3dviewer? ( sci-chemistry/openbabel[>=2.2] )
@@ -96,12 +95,16 @@ if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
             3dviewer? ( sci-chemistry/avogadro[>=1.0] )
+            kde_parts:kalgebra? ( x11-dri/mesa )
     "
 else
     DEPENDENCIES+="
         build+run:
             3dviewer? ( x11-dri/mesa )
             kde_parts:rocs? ( media-gfx/graphviz )
+            kde_parts:kalgebra? ( 
+                3dgraphs? ( x11-dri/mesa )
+                )
     "
 fi
 
@@ -139,7 +142,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_configure() {
-    if option 3dviewer || option 3dgraphs; then
+    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
