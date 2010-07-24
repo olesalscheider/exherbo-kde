@@ -82,7 +82,6 @@ DEPENDENCIES="
         bluetooth? ( net-wireless/bluez )
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
         python? (
             dev-lang/python:=
@@ -115,6 +114,7 @@ if ever at_least 4.4.80 ; then
     DEPENDENCIES+="
         build+run:
             user/kdm
+            dev-libs/soprano[>=2.1.67][virtuoso(+)]
             media-libs/jpeg [[ note = ksplash ]]
             sys-apps/pciutils
             sys-apps/usbutils-data [[
@@ -131,6 +131,7 @@ if ever at_least 4.4.80 ; then
         -DKDE_USBIDS_DIR="/usr/share/misc"
         -DDISABLE_USBIDS_INSTALL=ON
         -DWITH_PCIUTILS:BOOL=TRUE
+        -DWTH_Soprano:BOOL=TRUE
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'ieee1394 RAW1394'
@@ -140,6 +141,7 @@ else
     DEPENDENCIES+="
         build+run:
             x11-libs/libxklavier[>=3.0] [[ note = kcontrol/kxkb ]]
+            nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     "
 fi
 
