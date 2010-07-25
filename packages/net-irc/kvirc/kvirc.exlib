@@ -16,15 +16,14 @@ resume, voice), CTCP functions, mIRC colour support with preview, notify list,
 online help and configurable logging.
 "
 HOMEPAGE="http://www.${PN}.net"
+DOWNLOADS="ftp://ftp.${PN}.de/pub/${PN}/${PV}/source/${PNV}.tar.bz2"
 
-# I'm going to bump to 4.0.0 when it has been released. Afterwards, I most likely
-# won't care about kvirc anymore, remove myself from BUGS_TO and if things break,
-# I won't fix them but nuke kvirc. So if you care about kvirc, keep an eye on it.
-BUGS_TO="philantrop@exherbo.org"
+# The bump to 4.0.0 done, I don't care about kvirc anymore. Thus, I removed myself
+# from BUGS_TO and if things break, I won't fix them but nuke kvirc. So if you care
+# about kvirc, keep an eye on it.
+BUGS_TO=""
 REMOTE_IDS="freshmeat:${PN}"
 
-MY_UPSTREAM_REVISION=${PV#*_pre}
-UPSTREAM_CHANGELOG="https://svn.${PN}.de/${PN}/browser/trunk/${PN}/ChangeLog?rev=${MY_UPSTREAM_REVISION}"
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/docu/ [[ lang = en ]]"
 LICENCES="kvirc"
 SLOT="4"
@@ -73,9 +72,11 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
         -DCOEXISTENCE=1
-        -DWANT_PIZZA=1
         -DWANT_BEER=1
         -DWANT_GETTEXT=1
+        -DWANT_PIZZA=1
+        -DWANT_STRIP:BOOL=FALSE
+        -DWITHOUT_STRIP:BOOL=TRUE
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
