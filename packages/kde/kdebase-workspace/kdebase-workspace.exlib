@@ -143,6 +143,9 @@ else
             x11-libs/libxklavier[>=3.0] [[ note = kcontrol/kxkb ]]
             nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'nepomuk Soprano'
+    )
 fi
 
 if ever at_least scm ; then
@@ -193,7 +196,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'consolekit CkConnector'
     'lm_sensors Sensors'
     Nepomuk
-    'nepomuk Soprano'
     NetworkManager
     'python PythonLibrary'
     'python PyKDE4'
