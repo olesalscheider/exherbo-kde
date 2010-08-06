@@ -3,23 +3,10 @@
 
 SCM_REPOSITORY="git://git.videolan.org/vlc/bindings/phonon.git"
 
-require cmake scm-git
+require phonon-vlc scm-git
 
-SUMMARY="A VLC-based phonon backend"
-HOMEPAGE="http://www.videolan.org/vlc"
 DOWNLOADS=""
-
-LICENCES="LGPL-3"
-SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
 
-DEPENDENCIES="
-    build:
-        kde/automoc4[>=0.9.86]
-    build+run:
-        media/vlc[>=1.1.0_pre]
-        media-libs/phonon
-        x11-libs/qt:4[>=4.4.0][dbus][phonon]
-"
+WORK="${WORKBASE}"/${PNV}
 
