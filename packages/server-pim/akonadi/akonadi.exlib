@@ -8,7 +8,7 @@
 require cmake
 
 SUMMARY="The server part of Akonadi"
-HOMEPAGE="http://pim.kde.org/akonadi/"
+HOMEPAGE="http://www.akonadi-project.org/"
 DOWNLOADS="http://download.akonadi-project.org/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
