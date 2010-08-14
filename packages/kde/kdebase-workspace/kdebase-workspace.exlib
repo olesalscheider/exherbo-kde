@@ -121,6 +121,7 @@ if ever at_least 4.4.80 ; then
                 note = [ required to display USB information in kinfocenter ]
             ]]
             x11-libs/dbusmenu-qt
+            x11-libs/libXi[>=1.2] [[ note = kcontrol/keyboard ]]
             ieee1394? ( media-libs/libraw1394 )
             qalculate? ( sci-libs/libqalculate[>=0.9.5] ) [[
                 note = [ Support advanced features of the calculator runner ]
