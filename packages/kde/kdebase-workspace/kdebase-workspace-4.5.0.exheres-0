@@ -5,3 +5,7 @@ require kdebase-workspace
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}/0001-Disable-glibc-memory-corruption-checker-in-4.5-branc.patch"
+)
+

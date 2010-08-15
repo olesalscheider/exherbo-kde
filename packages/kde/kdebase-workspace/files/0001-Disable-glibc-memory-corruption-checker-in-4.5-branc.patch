@@ -1,0 +1,54 @@
+From eb13d0fbdca2c208ff0217c1eff60c00f677fc18 Mon Sep 17 00:00:00 2001
+From: mmrozowski <mmrozowski@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 12 Aug 2010 11:41:53 +0000
+Subject: [PATCH] Disable glibc memory corruption checker in 4.5 branch
+
+BUG: 247398
+CCMAIL: kde-packager@kde.org
+
+git-svn-id: svn+ssh://svn.kde.org/home/kde/branches/KDE/4.5/kdebase/workspace@1162653 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ startkde.cmake |   18 +++---------------
+ 1 files changed, 3 insertions(+), 15 deletions(-)
+
+diff --git a/startkde.cmake b/startkde.cmake
+index 2d99616..d993986 100755
+--- a/startkde.cmake
++++ b/startkde.cmake
+@@ -36,18 +36,6 @@ fi
+ # we have to unset this for Darwin since it will screw up KDE's dynamic-loading
+ unset DYLD_FORCE_FLAT_NAMESPACE
+ 
+-# Enable lightweight memory corruption checker if not already set
+-# -- this is for trunk only, we remove it for releases
+-if [ "x$MALLOC_CHECK_" = "x" ] && [ -x /lib/libc.so.6 ]; then
+-    # Extract the first two components of the version from the output.
+-    glibc_version=$(LC_ALL=C /lib/libc.so.6 | sed -e 's/[^0-9]*\([0-9]\.[0-9]\+\).*/\1/;s/\.\([0-9]\)$/.0\1/;q')
+-
+-    MALLOC_CHECK_=2 # Default to 2 unless glibc 2.9 or higher.
+-    test $glibc_version \> 2.08 && MALLOC_CHECK_=3
+-
+-    export MALLOC_CHECK_
+-fi
+-
+ # in case we have been started with full pathname spec without being in PATH
+ bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
+ if [ -n "$bindir" ]; then
+@@ -405,11 +393,11 @@ fi
+ # if KDEWM is not set, ksmserver will ensure kwin is started.
+ # kwrapper4 is used to reduce startup time and memory usage
+ # kwrapper4 does not return useful error codes such as the exit code of ksmserver.
+-# We only check for 255 which means that the ksmserver process could not be 
+-# started, any problems thereafter, e.g. ksmserver failing to initialize, 
++# We only check for 255 which means that the ksmserver process could not be
++# started, any problems thereafter, e.g. ksmserver failing to initialize,
+ # will remain undetected.
+ test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM"
+-kwrapper4 ksmserver $KDEWM 
++kwrapper4 ksmserver $KDEWM
+ if test $? -eq 255; then
+   # Startup error
+   echo 'startkde: Could not start ksmserver. Check your installation.'  1>&2
+-- 
+1.7.2.1
+
