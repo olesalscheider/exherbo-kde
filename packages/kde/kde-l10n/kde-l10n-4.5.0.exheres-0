@@ -1,0 +1,10 @@
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde-l10n [ langs="ar bg ca ca@valencia cs da de el en_GB eo es et eu fi fr fy ga gl gu he hi
+    hr hu ia id is it ja kk km kn ko lt lv ml nb nds nl nn pa pl pt pt_BR ro ru sk sl sr sv th tr uk
+    wa zh_CN zh_TW" \
+    base_uri="mirror://kde/stable/${PV}/src/${PN}" ]
+
+PLATFORMS="~amd64 ~x86"
+
