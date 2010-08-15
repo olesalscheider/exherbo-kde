@@ -5,3 +5,7 @@ require kdebase-runtime
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}/0001-backport-of-1160390-fixed-start-call-to-cagibi-only-.patch"
+)
+
