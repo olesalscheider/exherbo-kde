@@ -102,9 +102,9 @@ else
         build+run:
             3dviewer? ( x11-dri/mesa )
             kde_parts:rocs? ( media-gfx/graphviz )
-            kde_parts:kalgebra? ( 
+            kde_parts:kalgebra? (
                 3dgraphs? ( x11-dri/mesa )
-                )
+            )
     "
 fi
 
@@ -120,7 +120,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DHAVE_LIBGPS=OFF
     # Kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
     -DWITH_CFitsio=OFF
-    # Kstars, requires sci-libs/indilib - http://indi.sf.net/
+    # Kstars, requires sci-libs/indilib[>=0.6.1] - http://indi.sf.net/
     -DWITH_INDI=OFF
     # Kstars, requires xplanet - http://xplanet.sourceforge.net/
     -DWITH_Xplanet=OFF
