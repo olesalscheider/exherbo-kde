@@ -15,7 +15,7 @@ DOWNLOADS="http://www.afiestas.org/files/${PN}-${MY_PV}.tgz"
 
 LICENCES="GPL-3"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     pulseaudio [[ description = [ Support Bluetooth audio via PulseAudio in addition to ALSA ] ]]
 "

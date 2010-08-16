@@ -13,7 +13,7 @@ DOWNLOADS=""
 
 LICENCES="LGPL-2"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     pulseaudio [[ description = [ Support Bluetooth audio via PulseAudio in addition to ALSA ] ]]
 "
