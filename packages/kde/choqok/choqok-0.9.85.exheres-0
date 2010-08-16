@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -19,6 +19,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:4
+        app-crypt/qca:2
+        dev-libs/qjson
+        kde/kdelibs:4[>=4.4.0]
+        sys-auth/qoauth
 "
 
