@@ -1,0 +1,25 @@
+# Copyright 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4
+
+SUMMARY="A small Qt-based C++ library aiming to prepare OAuth"
+HOMEPAGE="http://wiki.github.com/ayoy/qoauth/"
+DOWNLOADS="http://files.ayoy.net/${PN}/${PV}/${PNV}-src.tar.bz2"
+
+LICENCES="LGPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+RESTRICT="test" # lots of sydbox violations
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+        app-crypt/qca-ossl:2
+        x11-libs/qt:4[>=4.4.0]
+"
+
+WORK=${WORK}-src
+
