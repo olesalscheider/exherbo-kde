@@ -38,7 +38,7 @@ DEPENDENCIES="
             media-sound/lame
         )
         musepack? ( media-libs/libmpcdec )
-        musicbrainz? ( media-libs/libmusicbrainz[>=1.1] )
+        musicbrainz? ( media-libs/libmusicbrainz:2[>=1.1] )
         vorbis? (
             media-libs/libogg
             media-libs/libvorbis
