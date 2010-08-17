@@ -8,3 +8,36 @@ require kde-l10n [ langs="ar bg ca ca@valencia cs da de el en_GB eo es et eu fi 
 
 PLATFORMS="~amd64 ~x86"
 
+KDEPIM_PV="4.4.4"
+MYOPTIONS="kdepim [[ description = [ Install localisations for kdepim:${KDEPIM_PV:0:3} ] ]]"
+
+add_kdepim_to_downloads() {
+    local d kdepim
+    echo -n " kdepim? ( "
+    while [[ -n ${@} ]]; do
+        case ${1#linguas:} in
+            ia|th) continue;; # these don't exist in 4.4.4
+        esac
+        echo -n "${1} ${2} ${3//${PV}/${KDEPIM_PV}} ${4} "
+        shift 4
+    done
+    echo -n ")"
+}
+DOWNLOADS+=$(add_kdepim_to_downloads ${DOWNLOADS})
+
+src_prepare() {
+    default
+
+    local d lingua lingua_kdepim
+    if option kdepim; then
+        for lingua in "${WORKBASE}"/${PN}-*-${PV}; do
+            for d in docs messages; do
+                lingua_kdepim=${lingua/%-${PV}/-${KDEPIM_PV}}
+                edo echo "add_subdirectory(kdepim)" >> "${lingua}"/${d}/CMakeLists.txt
+                edo mv {"${lingua_kdepim}","${lingua}"}/${d}/kdepim
+            done
+            edo rm -rf "${lingua_kdepim}"
+        done
+    fi
+}
+
