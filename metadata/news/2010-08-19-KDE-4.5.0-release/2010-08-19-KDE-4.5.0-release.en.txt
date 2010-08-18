@@ -1,0 +1,17 @@
+Title: KDE 4.5.0 release
+Author: Bo Ørsted Andresen <zlin@exherbo.org>
+Content-Type: text/plain
+Posted: 2010-08-19
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/kdepim-runtime
+
+KDE 4.5.0 has been released. This release does not include KDEPIM since
+upstream wants to test it further before unleashing it on users.
+
+Instead they fully support using KDEPIM 4.4 with KDE 4.5.0.
+
+So if you use KDEPIM you should upgrade by using:
+
+  cave resolve kde --with kdepim-runtime --with kdepim
+
