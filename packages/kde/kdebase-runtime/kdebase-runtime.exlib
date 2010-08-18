@@ -44,7 +44,6 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        dev-libs/attica[>=0.1.1]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -86,6 +85,7 @@ else
     DESCRIPTION+="kstyles: Styles for KDE widgets"
     DEPENDENCIES+="
         build+run:
+            dev-libs/attica[>=0.1.1&<0.1.4]
             kde/qimageblitz[>=0.0.4]
     "
 fi

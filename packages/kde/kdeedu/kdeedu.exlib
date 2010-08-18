@@ -105,6 +105,7 @@ else
             kde_parts:kalgebra? (
                 3dgraphs? ( x11-dri/mesa )
             )
+            kde_parts:parley? ( dev-libs/attica[<0.1.4] )
     "
 fi
 
