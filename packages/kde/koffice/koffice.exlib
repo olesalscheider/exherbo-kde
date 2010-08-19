@@ -13,10 +13,9 @@ DESCRIPTION="
 * Krita: A layered pixel image manipulation application
 * KPlato: An integrated project management and planning tool
 * KChart: An integrated graph and chart drawing tool
-* Kugar: A powerful formula editor tool for generating business quality reports
 * KFormula: A powerful formula editor
+* Kexi: An integrated environment for creating databases and database applications
 "
-#* Kexi: An integrated environment for creating databases and database applications
 #* Kivio: A Visio®-style flowcharting application
 HOMEPAGE="http://www.koffice.org/"
 REMOTE_IDS="freshmeat:${PN}"
@@ -24,44 +23,52 @@ DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MY_KDE_PARTS="karbon kchart kformula kplato kpresenter krita kspread kword"
-MY_KDE_PARTS_EXCLUDED_BY_UPSTREAM="kexi kivio"
-
+MY_KDE_PARTS="karbon kchart kexi kformula kplato kpresenter krita kspread kword" # kivio
 
 MYOPTIONS="
-    eps [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
-    glew [[ description = [ Shader filter plugin for Krita ] ]]
-    msword [[ description = [ Support for Microsoft Word documents in KWord ] requires = [ kde_parts: kword ] ]]
-    odf  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
-    openexr [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
-    panorama [[ description = [ Panorama plugin for Krita ] ]]
-    pdf  [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
-    raw  [[ description = [ Support for the RAW filter in Krita ] ]]
-    solver [[ description = [ Solver plugin for KSpread ] requires = [ kde_parts: kspread ] ]]
+    eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
+    fftw           [[ description = [ Fast convolution operators in Krita ] ]]
+    gif            [[ description = [ GIF image support for Krita ] ]]
+    glew           [[ description = [ Shader filter plugin for Krita ] ]]
+    mdb            [[ description = [ Support for the Microsoft Access mdb database format ]   requires = [ kde_parts: kexi ] ]]
+    msword         [[ description = [ Support for Microsoft Word documents in KWord ]          requires = [ kde_parts: kword ] ]]
+    odf            [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
+    openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
+    openjpeg       [[ description = [ Support for the JPEG 2000 image format ] ]]
+    pdf            [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
+    raw            [[ description = [ Support for the RAW filter in Krita ] ]]
+    solver         [[ description = [ Solver plugin for KSpread ]                              requires = [ kde_parts: kspread ] ]]
     spacenavigator [[ description = [ Space navigator 3D mouse device plugin ] ]]
-    tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
-    wordperfect [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
+    tiff           [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
+    wordperfect    [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
-    ( panorama raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( fftw gif glew raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+
+    openjpeg? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
     kde_parts: ${MY_KDE_PARTS}
+
+    kplato [[ requires = [ kde_parts: kchart ] ]]
 
     pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon kword ) [[ number-selected = at-least-one ]] )"
 
-#    build: kde_parts:kexi? ( app-arch/bzip2 )
 DEPENDENCIES+="
+    build:
+        kde_parts:kexi? ( app-arch/bzip2 )
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*
         dev-libs/libxml2 [[ note = [ xlsltfilter ] ]]
         dev-libs/libxslt [[ note = [ xsltfilter ] ]]
-        kde/kdelibs:4[>=4.1.0]
-        kde/kdebase-runtime:4[>=4.1.0] [[ note = [ FIXME Verify whether kde/kdebase{,-workspace} are needed ] ]]
-        kde/kdepimlibs:4[>=4.1.0]
+        dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
+        kde/kdelibs:4[>=4.2.0]
+        kde/kdebase-runtime:4[>=4.2.0] [[ note = [ FIXME Verify whether kde/kdebase{,-workspace} are needed ] ]]
+        kde/kdepimlibs:4[>=4.2.0]
         media-libs/lcms[>=1.18]
         media-libs/libpng
         sys-libs/zlib
+        x11-dri/mesa
         x11-libs/qt:4[>=4.5.0][dbus][opengl][qt3support]
         x11-libs/libICE
         x11-libs/libSM
@@ -71,27 +78,35 @@ DEPENDENCIES+="
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXpm
-        x11-dri/mesa
+        x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         kde_parts:karbon? (
             eps? ( media-gfx/pstoedit )
+            pdf? (
+                media-libs/jpeg
+                openjpeg? ( media-libs/OpenJPEG )
+            )
             wordperfect? (
-                office-libs/libwpd
-                office-libs/libwpg
+                office-libs/libwpd[>=0.8]
+                office-libs/libwpg[>=0.1]
             )
         )
-        kde_parts:kpresenter? (
-            dev-libs/boost
-            x11-libs/libXext
+        kde_parts:kexi? (
+            ( dev-db/mysql dev-db/postgresql dev-db/libpqxx[>=3&<4] ) [[ note = [ automagic dependencies from kexi/kexidb/drivers/ ] ]]
+            dev-db/sqlite:3[>=3.6.23] [[ note = [ 3.6.16 is required but this is recommended ] ]]
+            mdb? ( dev-libs/glib:2 )
         )
+        kde_parts:kpresenter? ( dev-libs/boost )
         kde_parts:krita? (
+            dev-libs/glib:2 [[ note = [ Required by the Krita MyPaint-compatible brush engine ] ]]
             graphics/exiv2[>=0.16]
             kde/qimageblitz
             media-libs/jpeg
             sci-libs/eigen:2[>=2.0]
-            x11-misc/shared-mime-info [[ note = [ krita/plugins/formats/ofa/ ] ]]
+            fftw? ( sci-libs/fftw[>=3] )
+            gif? ( media-libs/giflib )
             glew? ( media-libs/glew )
-            panorama? ( sci-libs/gmm )
-            raw? ( kde/kdegraphics:4[>=4.1.0] )
+            openjpeg? ( media-libs/OpenJPEG )
+            raw? ( kde/kdegraphics:4[>=4.2.0] )
             tiff? ( media-libs/tiff )
         )
         kde_parts:kspread? (
@@ -99,8 +114,11 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:kword? (
-            msword? ( office-libs/wv2[>=0.4.01] )
-            wordperfect? ( office-libs/libwpd )
+            msword? (
+                dev-libs/glib:2
+                office-libs/libgsf[>=1]
+            )
+            wordperfect? ( office-libs/libwpd[>=0.8] )
         )
         odf? ( app-crypt/qca:2 )
         openexr? ( media-libs/openexr )
@@ -108,32 +126,47 @@ DEPENDENCIES+="
         spacenavigator? ( sci-libs/libspnav )
 "
 
-# Tests need X, testsuite should be fixed to run only those tests that can run.
+# Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.2.1
 RESTRICT="test"
+
+# FIXME: Is the apidox custom target useful now?
+# FIXME: kexi/kexidb/drivers/ also have automagic dependencies upon xbase and freetds
+# FIXME: are there automagic dependencies on media-libs/phonon ?
 
 src_configure() {
     local p cmakeparams=(
         $(kde4_shared_cmake_params)
         -DTINY:BOOL=FALSE
         -DWITH_CreateResources:BOOL=FALSE
-        -DWITH_GraphicsMagick=OFF # requires GraphicsMagick[>=1.1&<1.2.5] which is unpackaged and obsolete
+        -DWITH_WEBFORMS:BOOL=FALSE # webforms support for kexi, requires:
+        # PionNet "Pion Network Library" "C++ development library for implementing lightweight HTTP interfaces" "http://www.pion.org/projects/pion-network-library"
+        # GOOGLE_CTEMPLATE_FOUND "Google Ctemplate" "Simple but powerful template language for C++" "http://code.google.com/p/google-ctemplate/"
+        # dev-libs/boost
+        -DWITH_FreeTDS:BOOL=FALSE # kexi/migration/
+        -DWITH_XBase:BOOL=FALSE # kexi/migration/
+        -DWITH_LibRCPS:BOOL=FALSE # "Resource Conflict Project Scheduling Library" "http://www.librcps.org" >=0.3 "Required by KPlato RCPS Plugin"
         -DWITH_KdepimLibs=ON # required by KPlato and the KDE address book integration
         -DWITH_LibXml2=ON
         -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
-        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, unwritten, [>=0.9.10&<=0.9.12]
+        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, unwritten, [>=0.9.12]
         -DWITH_PNG=ON # for the Krita PNG filter
+        -DWITH_Soprano:BOOL=TRUE
         $(cmake_build kde_parts:kplato kdgantt)
+        $(cmake_build kde_parts:kexi MySQL)
+        $(cmake_build kde_parts:kexi PostgreSQL)
         $(cmake_with eps Pstoedit)
+        $(cmake_with gif GIF2)
         $(cmake_with GLEW)
         $(cmake_with kde_parts:krita Blitz)
         $(cmake_with kde_parts:krita Exiv2)
-        $(cmake_with kde_parts:krita JPEG)
+        $(cmake_with fftw FFTW3)
         $(cmake_with kde_parts:kpresenter Boost)
-        $(cmake_with msword WV2)
+        $(cmake_with msword GObject)
+        $(cmake_with msword Iconv)
+        $(cmake_with msword LIBGSF)
         $(cmake_with odf QCA2)
         $(cmake_with OpenEXR)
-        $(cmake_with panorama GMM)
         $(cmake_with pdf Poppler)
         $(cmake_with raw Kdcraw)
         $(cmake_with solver GSL)
@@ -147,6 +180,17 @@ src_configure() {
         cmakeparams+=( -DWITH_Eigen2=OFF )
     fi
 
+    if option msword || option mdb || option kde_parts:krita; then
+        cmakeparams+=( -DWITH_GLIB2=ON )
+    else
+        cmakeparams+=( -DWITH_GLIB2=OFF )
+    fi
+
+    if option kde_parts:karbon && option pdf || option kde_parts:krita; then
+        cmakeparams+=( -DWITH_JPEG=ON $(cmake_with OpenJPEG) )
+    else
+        cmakeparams+=( -DWITH_JPEG=OFF -DWITH_OpenJPEG=OFF )
+    fi
 
     if option wordperfect; then
         cmakeparams+=( $(cmake_with kde_parts:karbon WPG) )
