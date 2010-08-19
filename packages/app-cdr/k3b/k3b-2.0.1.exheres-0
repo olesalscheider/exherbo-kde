@@ -3,9 +3,7 @@
 
 require k3b
 
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV/_rc/rc}.tar.bz2"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 
 PLATFORMS="~amd64 ~x86"
-
-WORK="${WORKBASE}/${PNV%_rc*}"
 
