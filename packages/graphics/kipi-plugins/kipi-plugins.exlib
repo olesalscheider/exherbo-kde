@@ -68,3 +68,4 @@ kipi-plugins_src_configure() {
 
     cmake_src_configure
 }
+
