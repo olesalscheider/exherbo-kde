@@ -66,8 +66,10 @@ DEPENDENCIES+="
         kde_parts:kioslave? (
             media/cdparanoia
             flac? ( media-libs/flac[>=1.1.2] )
-            vorbis? ( media-libs/libogg
-                media-libs/libvorbis )
+            vorbis? (
+                media-libs/libogg
+                media-libs/libvorbis
+            )
         )
         kde_parts:kmix? (
             kde/kdebase-workspace:${SLOT}
