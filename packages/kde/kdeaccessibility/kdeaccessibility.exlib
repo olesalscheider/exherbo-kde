@@ -43,7 +43,7 @@ MYOPTIONS+="
 "
 DEPENDENCIES+="
     build+run:
-        kde/kdelibs:4
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kmag? ( x11-libs/qt:4[qt3support] )
         kde_parts:kmousetool? (
             media-libs/phonon

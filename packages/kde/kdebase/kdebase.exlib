@@ -27,8 +27,8 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-        kde/kdebase-runtime:${SLOT}
-        kde/kdebase-workspace:${SLOT}
+        kde/kdebase-runtime:${SLOT}[>=${PV}]
+        kde/kdebase-workspace:${SLOT}[>=${PV}]
         kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
         x11-libs/libXrender

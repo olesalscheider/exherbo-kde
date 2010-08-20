@@ -21,7 +21,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kuser? (
-            kde/kdepimlibs:${SLOT}
+            kde/kdepimlibs:${SLOT}[>=${PV}]
         )
     run:
         kde_parts:kcron? (
@@ -33,7 +33,7 @@ DEPENDENCIES="
             dev-python/pycups
             dev-python/PyQt4[dbus]
             dev-python/sip
-            kde/kdebindings:${SLOT}[python] [[ note = PyKDE ]]
+            kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE ]]
         )
 "
 

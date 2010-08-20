@@ -63,7 +63,7 @@ DEPENDENCIES+="
             R? ( sci-lang/R )
         )
         kde_parts:kalgebra? (
-            kde/kdebase-workspace:${SLOT}
+            kde/kdebase-workspace:${SLOT}[>=${PV}]
             sys-libs/readline
         )
         kde_parts:kalzium? (
@@ -76,19 +76,19 @@ DEPENDENCIES+="
         kde_parts:kig? (
             python? ( dev-libs/boost[>=1.31] )
         )
-        kde_parts:marble? ( kde/kdebase-workspace:${SLOT} )
+        kde_parts:marble? ( kde/kdebase-workspace:${SLOT}[>=${PV}] )
         kde_parts:parley? (
             dev-libs/attica
             dev-libs/libxml2
             dev-libs/libxslt
-            kde/kdebase-workspace:${SLOT}
+            kde/kdebase-workspace:${SLOT}[>=${PV}]
         )
         kde_parts:step? (
             sci-libs/gsl[>=1.8]
             qalculate? ( sci-libs/libqalculate[>=0.9.5] )
         )
     run:
-        kde/kdebase-runtime:${SLOT}
+        kde/kdebase-runtime:${SLOT}[>=${PV}]
 "
 
 if ever at_least 4.4.80; then

@@ -74,11 +74,11 @@ DEPENDENCIES+="
         kde_parts:kget? (
             app-crypt/gpgme
             dev-libs/boost
-            kde/kdebase-workspace:${SLOT} [[ note = Plasma ]]
-            kde/kdebase:${SLOT} [[ note = Konqueror ]]
+            kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+            kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
             nepomuk? (
                 dev-libs/soprano
-                kde/kdebase-runtime:${SLOT}[nepomuk(+)]
+                kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
             )
             sqlite? ( dev-db/sqlite:3 )
             webkit? ( kde/kwebkitpart )

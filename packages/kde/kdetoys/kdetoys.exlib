@@ -27,6 +27,6 @@ DEPENDENCIES="
             x11-libs/libX11
             x11-libs/libXext
         )
-        kde_parts:ktux? ( kde/kdebase-workspace:${SLOT} [[ note = KScreensaver ]] )
+        kde_parts:ktux? ( kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
 "
 

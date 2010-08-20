@@ -56,7 +56,7 @@ DEPENDENCIES="
         media-libs/libpng [[ note = ksplash ]]
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
-        kde/kdebase-runtime:${SLOT}
+        kde/kdebase-runtime:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
        !kde/PolicyKit-kde                       [[ description = [ PolicyKit-kde is part of kdebase-workspace since KDE 4.2.85 ] ]]
         kde/qimageblitz[>=0.0.4]

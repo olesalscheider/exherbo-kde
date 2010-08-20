@@ -40,8 +40,8 @@ DEPENDENCIES+="
     build+run:
         dev-libs/boost
         kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-        kde/kdepimlibs:${SLOT}
-        kde/kdebase-workspace:${SLOT}
+        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/kdebase-workspace:${SLOT}[>=${PV}]
         kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
         kde/qimageblitz[>=0.0.4]
         x11-dri/mesa

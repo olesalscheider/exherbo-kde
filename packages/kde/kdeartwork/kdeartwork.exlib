@@ -16,7 +16,7 @@ DEPENDENCIES="
         )
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdebase-workspace:${SLOT}
+        kde/kdebase-workspace:${SLOT}[>=${PV}]
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/qt:4[opengl]
