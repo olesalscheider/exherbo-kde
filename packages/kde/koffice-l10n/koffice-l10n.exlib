@@ -14,5 +14,6 @@ SLOT="2"
 DEPENDENCIES="
     build:
         kde/kdelibs:4
+        kde/koffice[>=${PV}]
 "
 
