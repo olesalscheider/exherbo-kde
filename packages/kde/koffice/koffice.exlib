@@ -30,18 +30,21 @@ MYOPTIONS="
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
     gif            [[ description = [ GIF image support for Krita ] ]]
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
-    mdb            [[ description = [ Support for the Microsoft Access mdb database format ]   requires = [ kde_parts: kexi ] ]]
+    mdb            [[ description = [ Support for the Microsoft Access mdb database format ] ]]
     msword         [[ description = [ Support for Microsoft Word documents in KWord ]          requires = [ kde_parts: kword ] ]]
+    mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
     odf            [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
     openjpeg       [[ description = [ Support for the JPEG 2000 image format ] ]]
     pdf            [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
+    postgresql     [[ description = [ Support for PostgreSQL databases in Kexi ] ]]
     raw            [[ description = [ Support for the RAW filter in Krita ] ]]
     solver         [[ description = [ Solver plugin for KSpread ]                              requires = [ kde_parts: kspread ] ]]
     spacenavigator [[ description = [ Space navigator 3D mouse device plugin ] ]]
     tiff           [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect    [[ description = [ WordPerfect Document support for KWord and Graphics support for Karbon ] ]]
 
+    ( mdb mysql postgresql ) [[ requires = [ kde_parts: kexi ] ]]
     ( fftw gif glew raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     openjpeg? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
@@ -91,9 +94,13 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
-            ( dev-db/mysql dev-db/postgresql dev-db/libpqxx[>=3&<4] ) [[ note = [ automagic dependencies from kexi/kexidb/drivers/ ] ]]
             dev-db/sqlite:3[>=3.6.23] [[ note = [ 3.6.16 is required but this is recommended ] ]]
             mdb? ( dev-libs/glib:2 )
+            mysql? ( dev-db/mysql )
+            postgresql? (
+                dev-db/libpqxx[>=3&<4]
+                dev-db/postgresql
+            )
         )
         kde_parts:kpresenter? ( dev-libs/boost )
         kde_parts:krita? (
@@ -130,7 +137,6 @@ DEPENDENCIES+="
 RESTRICT="test"
 
 # FIXME: Is the apidox custom target useful now?
-# FIXME: kexi/kexidb/drivers/ also have automagic dependencies upon xbase and freetds
 # FIXME: are there automagic dependencies on media-libs/phonon ?
 
 src_configure() {
@@ -142,19 +148,18 @@ src_configure() {
         # PionNet "Pion Network Library" "C++ development library for implementing lightweight HTTP interfaces" "http://www.pion.org/projects/pion-network-library"
         # GOOGLE_CTEMPLATE_FOUND "Google Ctemplate" "Simple but powerful template language for C++" "http://code.google.com/p/google-ctemplate/"
         # dev-libs/boost
-        -DWITH_FreeTDS:BOOL=FALSE # kexi/migration/
-        -DWITH_XBase:BOOL=FALSE # kexi/migration/
+        -DWITH_FreeTDS:BOOL=FALSE # kexi/migration/, http://www.freetds.org/, support for Sybase db
+        -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db
         -DWITH_LibRCPS:BOOL=FALSE # "Resource Conflict Project Scheduling Library" "http://www.librcps.org" >=0.3 "Required by KPlato RCPS Plugin"
         -DWITH_KdepimLibs=ON # required by KPlato and the KDE address book integration
         -DWITH_LibXml2=ON
         -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
         -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, unwritten, [>=0.9.12]
+        -DWITH_{Open,Qt}Shiva:BOOL=OFF # krita/plugins/extensions/
         -DWITH_PNG=ON # for the Krita PNG filter
         -DWITH_Soprano:BOOL=TRUE
         $(cmake_build kde_parts:kplato kdgantt)
-        $(cmake_build kde_parts:kexi MySQL)
-        $(cmake_build kde_parts:kexi PostgreSQL)
         $(cmake_with eps Pstoedit)
         $(cmake_with gif GIF2)
         $(cmake_with GLEW)
@@ -165,9 +170,11 @@ src_configure() {
         $(cmake_with msword GObject)
         $(cmake_with msword Iconv)
         $(cmake_with msword LIBGSF)
+        $(cmake_with MySQL)
         $(cmake_with odf QCA2)
         $(cmake_with OpenEXR)
         $(cmake_with pdf Poppler)
+        $(cmake_with PostgreSQL)
         $(cmake_with raw Kdcraw)
         $(cmake_with solver GSL)
         $(cmake_with spacenavigator Spnav)

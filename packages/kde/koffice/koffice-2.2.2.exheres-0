@@ -7,9 +7,5 @@ PLATFORMS="~amd64 ~x86"
 
 UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news/koffice-2-2-1-released/"
 
-# FIXME: AUTOMAGIC:
-
-# krita/plugins/extensions/CMakeLists.txt
-# OpenShiva[>=0.9.12]
-# QtShiva[>=0.9.0]
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-0001-Crude-fix-for-automagic-dependencies.patch )
 
