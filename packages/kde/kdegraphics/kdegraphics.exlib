@@ -93,6 +93,10 @@ DEPENDENCIES+="
         )
 "
 
+if ! ever at_least 4.5.1 ; then
+    DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-fix-okular-memory-corruption.patch )
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 
 src_configure() {
