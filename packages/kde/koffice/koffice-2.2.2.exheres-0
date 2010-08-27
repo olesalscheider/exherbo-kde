@@ -5,7 +5,7 @@ require koffice
 
 PLATFORMS="~amd64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news/koffice-2-2-1-released/"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news/koffice-$(ever replace_all -)-released/"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-0001-Crude-fix-for-automagic-dependencies.patch )
 
