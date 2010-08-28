@@ -88,6 +88,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DBUILD_experimental:BOOL=FALSE
     -DWITH_BZip2=ON
+    -DWITH_DBusMenuQt:BOOL=ON # as of kde 4.5.1 we could make this optional
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
     -DWITH_LibAttica:BOOL=TRUE
