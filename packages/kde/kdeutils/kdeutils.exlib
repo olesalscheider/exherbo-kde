@@ -52,9 +52,7 @@ else
     "
 fi
 MYOPTIONS="
-    archive [[ description = [ Support various archive formats via libarchive in Ark ] ]]
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
-    ( archive ) [[ requires = [ kde_parts: ark ] ]]
     kde_parts: ${MY_KDE_PARTS}"
 
 DEPENDENCIES+="
@@ -62,9 +60,9 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde_parts:ark? (
+            app-arch/libarchive[>=2.7.0&<scm]
             app-arch/xz
             kde/kdebase:${SLOT}[>=${PV}]    [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
-            archive? ( app-arch/libarchive[>=2.7.0] )
         )
         kde_parts:kcalc? ( dev-libs/gmp )
         kde_parts:okteta? ( app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]] )
@@ -102,8 +100,8 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QJSON:BOOL=FALSE )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'archive LibArchive'
     'kde_parts:ark BZip2'
+    'kde_parts:ark LibArchive'
     'kde_parts:ark LibKonq'
     'kde_parts:ark LibLZMA'
     'kde_parts:ark ZLIB'
