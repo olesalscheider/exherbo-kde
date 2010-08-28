@@ -165,6 +165,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_PolicyKit-kde:BOOL=FALSE
     -DWITH_PolkitQt:BOOL=FALSE
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on, hence as of 4.5 beta1 these do nothing
+    -DWITH_DBusMenuQt:BOOL=ON # as of kde 4.5.1 we could make this optional
     -DWITH_Fontconfig=ON
     -DWITH_Freetype=ON
     -DWITH_GLIB2=ON -DWITH_GObject=ON # as of 4.5 beta1 -DWITH_GObject does nothing
