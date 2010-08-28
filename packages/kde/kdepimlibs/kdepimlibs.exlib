@@ -32,7 +32,7 @@ if ever at_least 4.4.80 ; then
         build+run:
             app-text/shared-desktop-ontologies[>=0.2]
             dev-libs/soprano[>=2.3.70]
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk]
+            kde/kdelibs:${SLOT}[>=${PV}]
     "
 fi
 

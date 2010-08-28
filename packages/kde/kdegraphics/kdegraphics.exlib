@@ -34,7 +34,6 @@ MYOPTIONS="
     epub [[ description = [ Support for EPub documents in Okular ] ]]
     kipi [[ description = [ Enable KDE Image Plugin Interface (KIPI) support for Gwenview ]
             requires    = [ kde_parts: gwenview ] ]]
-    nepomuk
     odf  [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
     pdf  [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
     ps   [[ description = [ Support for PS (PostScript) files in Okular ] ]]
@@ -50,7 +49,6 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         graphics/exiv2[>=0.19]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         media-libs/jpeg[>=6b]
         media-libs/lcms[>=1.14]
         media-libs/phonon
@@ -93,7 +91,17 @@ DEPENDENCIES+="
         )
 "
 
-if ! ever at_least 4.5.1 ; then
+if ever at_least 4.5.1 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=${PV}]
+    "
+else
+    MYOPTIONS="nepomuk ${MYOPTIONS}"
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
+    "
     DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-fix-okular-memory-corruption.patch )
 fi
 
@@ -128,7 +136,11 @@ src_configure() {
         $(cmake_with kde_parts:okular Freetype) \
         $(cmake_with kde_parts:okular ZLIB) \
         $(cmake_with Kipi) \
-        -DGWENVIEW_SEMANTICINFO_BACKEND=$(option nepomuk && echo Nepomuk || echo None) \
+        -DGWENVIEW_SEMANTICINFO_BACKEND=$(if ever at_least 4.5.1 || option nepomuk; then
+                echo Nepomuk
+            else
+                echo None
+            fi) \
         $(cmake_with ps LibSpectre) \
         $(cmake_with pdf Poppler) \
         $(cmake_with odf QCA2) \

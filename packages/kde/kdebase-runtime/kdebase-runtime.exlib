@@ -32,7 +32,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS="alsa nepomuk openexr samba pulseaudio
+MYOPTIONS="alsa openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
@@ -44,7 +44,6 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
@@ -52,7 +51,6 @@ DEPENDENCIES="
         x11-libs/qt:4[phonon]
         x11-misc/shared-mime-info[>=0.40]
         jpeg-rotation? ( graphics/exiv2 )
-        nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
         pulseaudio? ( media-sound/pulseaudio[>=0.9.9] )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
@@ -71,23 +69,27 @@ DEPENDENCIES="
 if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
+            app-text/shared-desktop-ontologies[>=0.3.60]
             dev-libs/attica[>=0.1.4]
-            nepomuk? (
-                app-text/shared-desktop-ontologies[>=0.3.60]
-                dev-libs/soprano[>=2.4.63][virtuoso]
-            )
+            dev-libs/soprano[>=2.4.63][virtuoso]
+            kde/kdelibs:${SLOT}[>=${PV}]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
+        -DWITH_Nepomuk:BOOL=ON
+        -DWITH_SharedDesktopOntologies:BOOL=ON
     )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'nepomuk SharedDesktopOntologies' )
 else
     DESCRIPTION+="kstyles: Styles for KDE widgets"
+    MYOPTIONS+=" nepomuk"
     DEPENDENCIES+="
         build+run:
             dev-libs/attica[>=0.1.1&<0.1.4]
+            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
             kde/qimageblitz[>=0.0.4]
+            nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Nepomuk )
 fi
 
 if ever at_least 4.4.2; then
@@ -101,7 +103,6 @@ fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'jpeg-rotation Exiv2'
-    Nepomuk
     OpenEXR
     Samba
     'sftp LibSSH'

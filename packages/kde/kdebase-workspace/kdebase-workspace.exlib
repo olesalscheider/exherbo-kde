@@ -34,7 +34,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors nepomuk networkmanager python wicd xinerama
+MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -54,7 +54,6 @@ DEPENDENCIES="
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/libpng [[ note = ksplash ]]
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
@@ -115,6 +114,7 @@ if ever at_least 4.4.80 ; then
         build+run:
             user/kdm
             dev-libs/soprano[>=2.1.67][virtuoso(+)]
+            kde/kdelibs:${SLOT}[>=${PV}]
             media-libs/jpeg [[ note = ksplash ]]
             sys-apps/pciutils
             sys-apps/usbutils-data [[
@@ -132,20 +132,23 @@ if ever at_least 4.4.80 ; then
         -DKDE_USBIDS_DIR="/usr/share/misc"
         -DDISABLE_USBIDS_INSTALL=ON
         -DWITH_PCIUTILS:BOOL=TRUE
-        -DWTH_Soprano:BOOL=TRUE
+        -DWITH_{Nepomuk,Soprano}:BOOL=TRUE
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'ieee1394 RAW1394'
         'qalculate Qalculate'
     )
 else
+    MYOPTIONS="nepomuk ${MYOPTIONS}"
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
             x11-libs/libxklavier[>=3.0] [[ note = kcontrol/kxkb ]]
             nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'nepomuk Soprano'
+        Nepomuk
     )
 fi
 
@@ -196,7 +199,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'bluetooth BlueZ'
     'consolekit CkConnector'
     'lm_sensors Sensors'
-    Nepomuk
     NetworkManager
     'python PythonLibrary'
     'python PyKDE4'

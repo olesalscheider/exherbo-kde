@@ -11,7 +11,7 @@ This package contains shared libraries and data files needed to run KDE 4 applic
 HOMEPAGE="http://techbase.kde.org/Projects/kdelibs"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="acl avahi doc fam jpeg2000 nepomuk openexr policykit spell
+MYOPTIONS="acl avahi doc fam jpeg2000 openexr policykit spell
     ppc_cpu_features: altivec
     x86_cpu_features: mmx sse sse2
 "
@@ -61,10 +61,6 @@ DEPENDENCIES="
         avahi? ( net-dns/avahi )
         fam? ( app-admin/gamin )
         jpeg2000? ( media-libs/jasper )
-        nepomuk? (
-            app-text/shared-desktop-ontologies[>=0.4]
-            dev-libs/soprano[virtuoso(-)]
-        )
         openexr? (
             media-libs/ilmbase
             media-libs/openexr
@@ -115,8 +111,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Avahi
     FAM
     'jpeg2000 Jasper'
-    'nepomuk SharedDesktopOntologies'
-    'nepomuk Soprano'
     OpenEXR
     'policykit PolkitQt-1'
     'spell ASPELL'
@@ -129,15 +123,29 @@ if ever at_least 4.4.80; then
             app-text/docbook-xml-dtd:4.2
             app-text/docbook-xsl-stylesheets
         build+run:
+            app-text/shared-desktop-ontologies[>=0.4]
             dev-libs/attica[>=0.1.4]
-            dev-libs/soprano[>=2.4.63]
+            dev-libs/soprano[>=2.4.63][virtuoso(-)]
             x11-libs/dbusmenu-qt
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_SharedDesktopOntologies:BOOL=TRUE
+        -DWITH_Soprano:BOOL=TRUE
+    )
 else
+    MYOPTIONS="nepomuk ${MYOPTIONS}"
     DEPENDENCIES+="
         build+run:
             dev-libs/attica[>=0.1.1&<0.1.4]
+            nepomuk? (
+                app-text/shared-desktop-ontologies[>=0.4]
+                dev-libs/soprano[virtuoso(-)]
+            )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'nepomuk SharedDesktopOntologies'
+        'nepomuk Soprano'
+    )
 fi
 
 src_prepare() {

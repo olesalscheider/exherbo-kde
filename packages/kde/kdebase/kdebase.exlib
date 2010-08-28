@@ -17,7 +17,7 @@ kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="nepomuk webkit"
+MYOPTIONS="webkit"
 
 DEPENDENCIES="
     build:
@@ -26,7 +26,6 @@ DEPENDENCIES="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
         kde/kdebase-runtime:${SLOT}[>=${PV}]
         kde/kdebase-workspace:${SLOT}[>=${PV}]
         kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
@@ -34,13 +33,12 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
-        nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
         webkit? ( kde/kwebkitpart )
     suggestion:
         sys-apps/eject
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Nepomuk 'webkit KWebKitPart' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'webkit KWebKitPart' )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
@@ -54,22 +52,31 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 
 KDE_APPS_PREFIX="apps"
 
-if ! ever at_least 4.4.80; then
-    DESCRIPTION+="kinfocenter: Information Center"
-    MYOPTIONS+=" ieee1394"
+if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
+            dev-libs/soprano[>=2.1.67][virtuoso(+)]
+            kde/kdelibs:${SLOT}[>=${PV}]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk:BOOL=ON )
+else
+    DESCRIPTION+="kinfocenter: Information Center"
+    MYOPTIONS+=" ieee1394 nepomuk"
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
             sys-apps/pciutils
             sys-apps/usbutils-data [[
                 note = [ required to display USB information in kinfocenter ]
             ]]
             ieee1394? ( media-libs/libraw1394 )
+            nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_PCIUTILS=ON
         -DKDE_USBIDS_DIR="/usr/share/misc"
         -DDISABLE_USBIDS_INSTALL=ON
     )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'ieee1394 RAW1394' )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'ieee1394 RAW1394' Nepomuk )
 fi
 
