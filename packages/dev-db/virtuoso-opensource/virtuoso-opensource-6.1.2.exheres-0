@@ -39,7 +39,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 
     --disable-imagemagick
     --enable-openssl
-    --without-editline
     --with-readline
 
     # installed by default but they're huge (an extra 110MB), unnecessary for soprano, they break parallel make
