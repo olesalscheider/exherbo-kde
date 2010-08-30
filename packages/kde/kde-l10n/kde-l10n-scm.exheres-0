@@ -10,21 +10,20 @@ require kde-l10n [ base_uri="" langs="${LANGS}" ]
 
 PLATFORMS="~amd64 ~x86"
 
+WORK=${WORKBASE}/${PN}
+
 for localisation in ${LANGS}; do
     SCM_THIS=${localisation//@/_}
     SCM_SECONDARY_REPOSITORIES+=" linguas:${localisation}? ( ${SCM_THIS} )"
     scm_set_var REPOSITORY "${SCM_REPOSITORY}"
     scm_set_var SUBPATH l10n-kde4/${localisation}
     scm_set_var CHECKOUT_TO ${PN}:${SLOT}/${localisation}
-    scm_set_var UNPACK_TO "${WORK}"/${PNV}-${localisation}
+    scm_set_var UNPACK_TO "${WORK}"/${localisation}
 done
 
 scm_finalise
 
 src_prepare() {
-    local localisation
-    for localisation in ${PNV}-*; do
-        edo ./scripts/autogen.sh ${localisation}
-    done
+    edo "${WORKBASE}"/scripts/autogen.sh *
 }
 

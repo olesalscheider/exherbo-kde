@@ -26,9 +26,10 @@ DEPENDENCIES="
 WORK="${WORKBASE}"
 
 for_all_enabled_linguas_run() {
-    local lingua ECMAKE_BUILD_DIR WORK
+    local lingua separator ECMAKE_BUILD_DIR WORK
 
-    for lingua in "${WORKBASE}"/${PN}-*; do
+    ever is_scm && separator=/ || separator=-
+    for lingua in "${WORKBASE}"/${PN}${separator}*; do
         # The relevant directories for this lingua for ecmake()
         ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
         WORK=${lingua}
