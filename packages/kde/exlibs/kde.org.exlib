@@ -81,9 +81,6 @@ case ${PV} in
             konq-plugins)
                 SCM_SUBPATH=extragear/base/${KDEMODULE}/
                 ;;
-            koffice-l10n)
-                die "Add support for ${PN}-scm"
-                ;;
             kwebkitpart)
                 SCM_SUBPATH="extragear/base/${PN}"
                 ;;
