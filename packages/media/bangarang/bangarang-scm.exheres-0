@@ -9,7 +9,7 @@ DOWNLOADS=""
 # for KStatusNotifierItem
 DEPENDENCIES="
     build+run:
-        kde/kdelibs[>=4.3.80][nepomuk]
+        kde/kdelibs[>=4.3.80][nepomuk(+)]
         kde/kdemultimedia[>=4.3.80]"
 
 PLATFORMS="~amd64 ~x86"

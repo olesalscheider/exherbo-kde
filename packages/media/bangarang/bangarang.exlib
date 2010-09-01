@@ -17,7 +17,7 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        kde/kdelibs:4[>=4.3.0][nepomuk]
+        kde/kdelibs:4[>=4.3.0][nepomuk(+)]
         kde/kdemultimedia:4[>=4.3.0]
         media-libs/phonon
         media-libs/taglib
