@@ -149,6 +149,12 @@ else
     )
 fi
 
+if ever at_least scm; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_HUpnp:BOOL=FALSE
+    )
+fi
+
 src_prepare() {
     default
     # Kate tests need a tarball from SVN
