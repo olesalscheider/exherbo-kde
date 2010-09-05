@@ -58,43 +58,43 @@ DEPENDENCIES="
         x11-proto/inputproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
-        sys-libs/zlib
-        x11-libs/libX11
-        x11-libs/libXext
-        x11-libs/libXi
+        sys-libs/zlib[multibuild_c:*(?)?]
+        x11-libs/libX11[multibuild_c:*(?)?]
+        x11-libs/libXext[multibuild_c:*(?)?]
+        x11-libs/libXi[multibuild_c:*(?)?]
         X? (
-            media-libs/fontconfig
-            media-libs/freetype:2
-            media-libs/jpeg
-            media-libs/libmng
-            media-libs/libpng
-            media-libs/tiff
-            x11-libs/libSM
-            x11-libs/libXcursor
-            x11-libs/libXfixes
-            x11-libs/libXrandr[>=1.1]
-            x11-libs/libXrender[>=0.6]
+            media-libs/fontconfig[multibuild_c:*(?)?]
+            media-libs/freetype:2[multibuild_c:*(?)?]
+            media-libs/jpeg[multibuild_c:*(?)?]
+            media-libs/libmng[multibuild_c:*(?)?]
+            media-libs/libpng[multibuild_c:*(?)?]
+            media-libs/tiff[multibuild_c:*(?)?]
+            x11-libs/libSM[multibuild_c:*(?)?]
+            x11-libs/libXcursor[multibuild_c:*(?)?]
+            x11-libs/libXfixes[multibuild_c:*(?)?]
+            x11-libs/libXrandr[>=1.1][multibuild_c:*(?)?]
+            x11-libs/libXrender[>=0.6][multibuild_c:*(?)?]
         )
-        cups? ( net-print/cups )
-        dbus? ( sys-apps/dbus[>=1.0.2] )
-        glib? ( dev-libs/glib:2 )
+        cups? ( net-print/cups[multibuild_c:*(?)?] )
+        dbus? ( sys-apps/dbus[>=1.0.2][multibuild_c:*(?)?] )
+        glib? ( dev-libs/glib:2[multibuild_c:*(?)?] )
         gstreamer? (
-            dev-libs/libxml2
-            media-libs/gstreamer[>=0.10]
-            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:alsa]
-            media-plugins/gst-plugins-good[>=0.10]  [[ description = [ Needed for Phonon video functionality ] ]]
+            dev-libs/libxml2[multibuild_c:*(?)?]
+            media-libs/gstreamer[>=0.10][multibuild_c:*(?)?]
+            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:alsa][multibuild_c:*(?)?]
+            media-plugins/gst-plugins-good[>=0.10][multibuild_c:*(?)?]  [[ description = [ Needed for Phonon video functionality ] ]]
         )
         gtk? (
-            x11-libs/gtk+:2[>=2.10]
-            dev-libs/atk
+            x11-libs/gtk+:2[>=2.10][multibuild_c:*(?)?]
+            dev-libs/atk[multibuild_c:*(?)?]
         )
-        multimedia? ( sys-sound/alsa-lib )
-        mysql? ( dev-db/mysql )
-        opengl? ( x11-dri/mesa )
-        postgresql? ( dev-db/postgresql )
-        sqlite? ( dev-db/sqlite:3 )
-        ssl? ( dev-libs/openssl )
-        xinerama? ( x11-libs/libXinerama )
+        multimedia? ( sys-sound/alsa-lib[multibuild_c:*(?)?] )
+        mysql? ( dev-db/mysql[multibuild_c:*(?)?] )
+        opengl? ( x11-dri/mesa[multibuild_c:*(?)?] )
+        postgresql? ( dev-db/postgresql[multibuild_c:*(?)?] )
+        sqlite? ( dev-db/sqlite:3[multibuild_c:*(?)?] )
+        ssl? ( dev-libs/openssl[multibuild_c:*(?)?] )
+        xinerama? ( x11-libs/libXinerama[multibuild_c:*(?)?] )
     post:
         phonon? (
             media-libs/phonon[>=4.3.80]
@@ -115,8 +115,10 @@ qt4_mkspecs_dir() {
     spec="linux"
     if [[ ${CXX} == *g++* ]]; then
         spec+="-g++"
-        if option platform:amd64 && option "!multibuild_c:32" || option platform:ppc64; then
+        if option platform:ppc64; then
             spec+="-64"
+        elif option platform:amd64; then
+            spec+="-${MULTIBUILD_TARGET}"
         fi
     else
         die "Unknown compiler ${CXX}"
@@ -163,7 +165,7 @@ qconf4() {
             break
         fi
     done
-    option platform:amd64 && option multibuild_c:32 && myarch=i386
+    option platform:amd64 && [[ "${MULTIBUILD_TARGET}" == "32" ]] && myarch=i386
     [[ -z ${myarch} ]] && die "Your platform is not supported by qt-4.exlib. Please file a bug."
 
     # paths
@@ -307,19 +309,38 @@ configure_one_multibuild() {
 
 compile_one_multibuild() {
     # http://bugreports.qt.nokia.com/browse/QTBUG-5471
-    # FIXME: Is this hack needed in later phases too ?
     LD_LIBRARY_PATH="${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/lib" default
 }
 
-qt-4_src_install() {
-    easy-multibuild_src_install
+install_one_multibuild() {
+    default
+
+    # TODO: does anything need 32bit binaries?
 
     # remove build dir from libraries
-    # FIXME: WORK or WORKBASE/C/*/, for each libdir or only for primary libdir ?
-    edo sed -i -e "s:${WORK}/lib:/usr/${LIBDIR}/qt4:g" "${IMAGE}"/usr/${LIBDIR}/qt4/{*.la,*.prl,pkgconfig/*.pc}
+    edo sed -i -e "s:${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/lib:/usr/${LIBDIR}/qt4:g" "${IMAGE}"/usr/${LIBDIR}/qt4/{*.la,*.prl,pkgconfig/*.pc}
 
     # move pkgconfig files out of qt4/ dir
     edo mv "${IMAGE}"/usr/${LIBDIR}/qt4/pkgconfig "${IMAGE}"/usr/${LIBDIR}/
+
+    if option phonon ; then
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/libphonon*
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/pkgconfig/phonon.pc
+        edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
+    fi
+
+    if option gstreamer ; then
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/plugins/phonon_backend
+    fi
+
+    # construct ldpath for all targets
+    ldpath="/usr/${LIBDIR}/qt4${ldpath:+:${ldpath}}"
+}
+
+qt-4_src_install() {
+    local ldpath
+
+    easy-multibuild_src_install
 
     # install symlinks to Qt4 versions of executables that Qt3 also provides. Some buildsystems would fail to find the Qt4 versions without these
     for i in assistant designer linguist lrelease lupdate moc qmake $(option qt3support && echo qtconfig) uic ; do
@@ -329,9 +350,8 @@ qt-4_src_install() {
 
     keepdir /etc/qt4
 
-    # FIXME: Does anything need /usr/lib32/qt4 in LDPATH ?
     hereenvd 44qt4 <<EOF
-LDPATH=/usr/${LIBDIR}/qt4
+LDPATH=${ldpath}
 EOF
 
     insinto /usr/share/pixmaps
@@ -361,15 +381,5 @@ Icon=linguist
 Categories=Qt;Development;Translation;
 MimeType=application/x-linguist;
 EOF
-
-    if option phonon ; then
-        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/libphonon*
-        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/pkgconfig/phonon.pc
-        edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
-    fi
-
-    if option gstreamer ; then
-        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/plugins/phonon_backend
-    fi
 }
 
