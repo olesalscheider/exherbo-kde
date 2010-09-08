@@ -330,10 +330,6 @@ qt-4_src_install() {
     hereenvd 44qt4 <<EOF
 LDPATH=/usr/$(get_libdir)/qt4
 EOF
-    #  qdoc3 not installed by default - needed for qt-creator
-    if option doc ; then
-        dobin "${WORK}/bin/qdoc3"
-    fi
 
     insinto /usr/share/pixmaps
     doins tools/designer/src/designer/images/designer.png
