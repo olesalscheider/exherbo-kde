@@ -322,7 +322,7 @@ qt-4_src_install() {
     # install symlinks to Qt4 versions of executables that Qt3 also provides. Some buildsystems would fail to find the Qt4 versions without these
     for i in assistant designer linguist lrelease lupdate moc qmake $(option qt3support && echo qtconfig) uic ; do
         [[ -e ${IMAGE}/usr/bin/${i} ]] || die "/usr/bin/${i} does not exist in ${IMAGE}"
-        dosym /usr/bin/${i} /usr/bin/${i}-qt4
+        dosym ${i} /usr/bin/${i}-qt4
     done
 
     keepdir /etc/qt4
