@@ -150,6 +150,12 @@ else
 fi
 
 if ever at_least scm; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/attica[>=0.1.90]
+        suggestion:
+            sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
+    "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_HUpnp:BOOL=FALSE
     )
