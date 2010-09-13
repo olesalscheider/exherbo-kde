@@ -8,7 +8,7 @@ MY_PNV="${MY_PN}-${PV}"
 
 SUMMARY="A library that allows developer to access PolicyKit-1 API with a nice Qt-style API"
 HOMEPAGE="http://www.kde.org"
-DOWNLOADS="mirror://kde/stable/${MY_PN}/${MY_PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="1"
@@ -22,7 +22,7 @@ DEPENDENCIES="
         sys-auth/polkit:1[>=0.95]
         x11-libs/qt:4[>=4.4.0]
     suggestion:
-        sys-auth/polkit-kde[>=${PV}] [[ description = [ KDE GUI for PolicyKit ] ]]
+        sys-auth/polkit-kde[>=0.95.1] [[ description = [ KDE GUI for PolicyKit ] ]]
 "
 
 WORK="${WORKBASE}"/${MY_PNV}
