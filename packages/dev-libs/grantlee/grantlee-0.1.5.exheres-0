@@ -1,0 +1,43 @@
+# Copyright 2010 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="A plugin based String Template system written using the Qt framework"
+HOMEPAGE="http://www.${PN}.org"
+DOWNLOADS="http://downloads.${PN}.org/${PNV}.tar.gz"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+# Tests want to connect to a running X server
+RESTRICT="test"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen[dot] )
+    build+run:
+        x11-libs/qt:4[>=4.5.0][X]
+"
+
+BUGS_TO="kde@exherbo.org"
+
+src_compile() {
+    cmake_src_compile
+
+    if option doc ; then
+        cmake_run emake docs
+    fi
+}
+
+src_install() {
+    cmake_src_install
+
+    if option doc ; then
+        insinto /usr/share/doc/${PNVR}/
+        doins -r "${ECMAKE_BUILD_DIR}"/apidox
+    fi
+}
+
