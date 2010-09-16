@@ -5,10 +5,3 @@ require kdepim
 
 PLATFORMS="~amd64 ~x86"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # akonadi is kde/kdepim-runtime
-    -DBUILD_runtime:BOOL=FALSE
-    # Use libassuan-1 until unstable works with assuan2
-    -DWITH_Assuan2:BOOL=FALSE
-)
-
