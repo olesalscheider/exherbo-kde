@@ -3,7 +3,7 @@
 
 require kde
 
-MY_PV=v${PV/_}
+MY_PV=v1.0rc4-1
 
 SUMMARY="KDE Bluetooth stack, successor to kbluetooth"
 DESCRIPTION="
@@ -28,13 +28,16 @@ DEPENDENCIES="
         x11-misc/shared-mime-info
     run:
         net-libs/libbluedevil[pulseaudio?]
-        !net-wireless/kbluetooth
         net-wireless/obex-data-server
         net-wireless/obexd
+        !net-wireless/kbluetooth [[
+            description = [ kbluetooth is superseded by BlueDevil ]
+            resolution = uninstall-blocked-after
+        ]]
         pulseaudio? ( media-sound/pulseaudio )
 "
 
 BUGS_TO="replica@exherbo.org"
 
-WORK=${WORKBASE}/${PN}
+WORK=${WORKBASE}/${PN}-rc4-1
 
