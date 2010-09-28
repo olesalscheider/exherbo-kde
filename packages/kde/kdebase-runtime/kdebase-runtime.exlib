@@ -82,7 +82,8 @@ if ever at_least scm; then
             sftp? ( net-libs/libssh[>=0.4.0] )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( NetworkManager )
-elif ever at_least 4.4.80; then
+fi
+if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
             app-text/shared-desktop-ontologies[>=0.3.60]
