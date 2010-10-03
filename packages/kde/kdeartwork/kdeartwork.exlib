@@ -7,7 +7,7 @@ SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="xscreensaver"
+MYOPTIONS="xscreensaver [[ description = [ Support xscreensaver screensavers ] ]]"
 
 DEPENDENCIES="
     build:
@@ -25,8 +25,16 @@ DEPENDENCIES="
             x11-apps/xscreensaver
         )
 "
+if ever at_least 4.5.2; then
+    MYOPTIONS+="autorotate [[ description = [ Auto-rotate photos in kslideshow ] ]]"
+    DEPENDENCIES+="
+        build+run:
+            autorotate? ( kde/kdegraphics:${SLOT}[>=${PV}] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'autorotate Kexiv2' )
+fi
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_OpenGL:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'xscreensaver Xscreensaver'
     'xscreensaver Eigen2'
