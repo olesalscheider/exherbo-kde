@@ -91,10 +91,12 @@ if ever at_least 4.4.80; then
             dev-libs/soprano[>=2.4.63][virtuoso]
             kde/kdelibs:${SLOT}[>=${PV}]
     "
+# QNtrack is currently unpackaged (2010-10-05)
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
         -DWITH_Nepomuk:BOOL=ON
         -DWITH_SharedDesktopOntologies:BOOL=ON
+        -DWITH_QNtrack:BOOL=OFF
     )
 else
     DESCRIPTION+="kstyles: Styles for KDE widgets"
@@ -117,6 +119,7 @@ else
     DEPENDENCIES+="
         sys-sound/alsa-lib[>=1.0.14a]"
 fi
+
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'jpeg-rotation Exiv2'
