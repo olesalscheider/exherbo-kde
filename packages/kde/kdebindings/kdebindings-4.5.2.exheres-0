@@ -5,8 +5,5 @@ require kdebindings
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-fix-krossruby.patch
-    "${FILES}"/${PNV}-sip-fix.patch
-)
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-sip-fix.patch )
 
