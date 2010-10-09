@@ -11,7 +11,7 @@ buttons do you have to press for simply adding some new tracks to the playlist?
 Amarok tries to be a little different, providing a simple drag and drop
 interface that really makes playlist handling easy.
 "
-HOMEPAGE="http://amarok.kde.org/"
+HOMEPAGE="http://amarok.kde.org"
 
 UPSTREAM_DOCUMENTATION="
 http://amarok.kde.org/wiki/Moodbar#Moodbar_File_Generation_Script [[
@@ -23,7 +23,7 @@ case ${PV} in
          UPSTREAM_RELEASE_NOTES="" ;;
     2.[0-9].[0-9].@(8|9)*)
          DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
-    2.3.0|2.3.1)
+    2.3.2)
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
          UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
     *)   die "Set DOWNLOADS for ${PNVR}" ;;
@@ -54,9 +54,8 @@ DEPENDENCIES="
         ipod? (
             dev-libs/glib:2
             media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
-            x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]]
         )
-        lastfm? ( media-libs/liblastfm )
+        lastfm? ( media-libs/liblastfm[>=0.3.0] )
         mp3tunes? (
             dev-libs/glib:2
             dev-libs/libxml2
@@ -65,11 +64,37 @@ DEPENDENCIES="
             net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
             x11-libs/qt:4[glib]
         )
-        mtp? ( media-libs/libmtp[>=0.3.0] )
+        mtp? ( media-libs/libmtp[>=1.0.0] )
     suggestion:
         media-sound/moodbar [[ description = [ Generate .mood files needed by the moodbar ] ]]
         sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
 "
+
+if ever at_least scm ; then
+    MYOPTIONS+=" musicbrainz"
+    DEPENDENCIES+="
+        build+run:
+            ipod? ( x11-libs/gdk-pixbuf:2.0 [[ description = [ Support for artwork on iPods ] ]] )
+            musicbrainz? (
+                media/ffmpeg[>=0.5]
+                media-libs/libofa[>=0.9.0]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'ipod GDKPixBuf'
+        'musicbrainz FFmpeg'
+        'musicbrainz LibOFA'
+    )
+else
+    DEPENDENCIES+="
+        build+run:
+            ipod? ( x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        # Gdk: Artwork for ipod, via GdkPixbuf
+        'ipod Gdk'
+    )
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
@@ -88,8 +113,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_BUILD_TESTS:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    # Gdk: Artwork for ipod, via GdkPixbuf
-    'ipod Gdk' IPOD
+    IPOD
     'lastfm LibLastFm'
     Mtp
     MP3Tunes
