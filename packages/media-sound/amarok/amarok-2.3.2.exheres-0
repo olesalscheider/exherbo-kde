@@ -6,6 +6,7 @@ require amarok
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PNV}-re-add-some-tests-for-unprintable-but-also-invalid-c.patch"
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
 )
 
