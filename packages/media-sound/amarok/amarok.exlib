@@ -46,11 +46,11 @@ DEPENDENCIES="
         app-crypt/qca:2
         app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
         dev-libs/soprano[>=2.1.67]
-        kde/kdelibs:4[>=4.3.0]
+        kde/kdelibs:4[>=4.4.0]
         media-libs/taglib[>=1.6] [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
-        x11-libs/qt:4[>=4.5.0][X][dbus][opengl][qt3support][svg(+)][webkit]
+        x11-libs/qt:4[>=4.6.0][X][dbus][opengl][qt3support][svg(+)][webkit]
         ipod? (
             dev-libs/glib:2
             media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
