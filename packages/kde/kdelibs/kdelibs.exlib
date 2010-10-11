@@ -153,6 +153,7 @@ if ever at_least scm; then
     DEPENDENCIES+="
         build+run:
             dev-libs/attica[>=0.1.90]
+            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
         suggestion:
             sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
     "
