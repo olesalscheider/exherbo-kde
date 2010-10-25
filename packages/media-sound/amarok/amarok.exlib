@@ -65,9 +65,10 @@ DEPENDENCIES="
             x11-libs/qt:4[glib]
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
+    recommendation:
+        sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
     suggestion:
         media-sound/moodbar [[ description = [ Generate .mood files needed by the moodbar ] ]]
-        sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
 "
 
 if ever at_least scm ; then
