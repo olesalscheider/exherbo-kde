@@ -1,10 +1,9 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="kdesupport/${PN}/"
+SCM_REPOSITORY="git://git.kde.org/attica.git"
 
-require attica scm-svn
+require attica scm-git
 
 DOWNLOADS=""
 
