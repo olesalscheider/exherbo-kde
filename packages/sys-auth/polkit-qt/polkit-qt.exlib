@@ -1,0 +1,51 @@
+# Copyright 2009, 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+MY_PN="${PN}-1"
+MY_PNV="${MY_PN}-${PV}"
+
+if ever at_least scm; then
+    SCM_REPOSITORY="git://git.kde.org/${MY_PN}.git"
+
+    require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
+
+    WORK="${WORKBASE}"/${MY_PNV}
+fi
+
+SUMMARY="A library that allows developer to access PolicyKit-1 API with a nice Qt-style API"
+HOMEPAGE="http://www.kde.org"
+
+LICENCES="LGPL-2.1"
+SLOT="1"
+MYOPTIONS="examples"
+
+if ever at_least scm; then
+    DEPENDENCIES="
+        build:
+            kde/automoc4
+        build+run:
+            sys-auth/polkit:1[>=0.98]
+            x11-libs/qt:4[>=4.4.0]
+        suggestion:
+            sys-auth/polkit-kde-agent[~scm] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+            sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+    "
+else
+    DEPENDENCIES="
+        build:
+            kde/automoc4
+        build+run:
+            sys-auth/polkit:1[>=0.95]
+            x11-libs/qt:4[>=4.4.0]
+        suggestion:
+            sys-auth/polkit-kde[>=0.95.1] [[ description = [ KDE GUI for PolicyKit ] ]]
+    "
+fi
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( EXAMPLES )
+
