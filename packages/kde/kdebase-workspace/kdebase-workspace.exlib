@@ -2,7 +2,7 @@
 # Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require python kde.org
+require python kde.org systemd-service
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
 DESCRIPTION="
@@ -239,6 +239,8 @@ src_install() {
     if option python; then
         python_bytecompile
     fi
+
+    install_systemd_files
 }
 
 if ever at_least 4.4.80; then
