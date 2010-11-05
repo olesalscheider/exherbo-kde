@@ -42,14 +42,26 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
                    requires    = [ glib phonon ] ]]
     gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
                    requires = glib ]]
-    multimedia  [[ description = [ Build the QtMultimedia module ] ]]
-    phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
-    qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
-    platform: amd64 ia64 ppc64 x86
 "
+if ever at_least 4.7 ; then
+    MYOPTIONS+="
+        multimedia  [[ description = [ Build the QtMultimedia module ] requires = [ X ] ]]
+        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] requires = [ X ] ]]
+        pulseaudio
+        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] requires = [ X ] ]]
+    "
+else
+    MYOPTIONS+="
+        multimedia  [[ description = [ Build the QtMultimedia module ] ]]
+        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
+        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
+    "
+fi
+
+MYOPTIONS+=" platform: amd64 ia64 ppc64 x86"
 
 DEPENDENCIES="
     build:
@@ -101,6 +113,15 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.7 ; then
+    DEPENDENCIES+="
+        build:
+            X? ( x11-proto/videoproto )
+        build+run:
+            pulseaudio? ( media-sound/pulseaudio[>=0.9.10] )
+            X? ( x11-libs/libXv )
+    "
+fi
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
@@ -178,6 +199,11 @@ qconf4() {
         -examplesdir /usr/share/qt4/examples
         -demosdir /usr/share/qt4/demos
     )
+    if ever at_least 4.7 ; then
+        myconf+=(
+            -importdir /usr/${libdir}/qt4/imports
+        )
+    fi
 
     edo ./configure "${myconf[@]}" "$@" ${EXTRA_ECONF}
 }
@@ -212,6 +238,21 @@ qt-4_src_prepare() {
     edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
             -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
             -i "${WORK}"/qmake/Makefile.unix
+
+    if ever at_least 4.7 ; then
+        # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
+        edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
+        # No big chance to come across CoreWLAN on Linux but disable it anyway.
+        edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
+
+        # There's no configure switch for pulseaudio, so we change the default from
+        # "auto" to an explicit "yes" or "no".
+        if option pulseaudio ; then
+            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
+        else
+            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
+        fi
+    fi
 }
 
 qt-4_src_configure() {
@@ -256,7 +297,11 @@ qt-4_src_configure() {
         $(qt4_enable xinerama)
     )
     if ever at_least 4.7 ; then
-        myconf+=( -declarative )
+        myconf+=(
+            -declarative
+            -no-egl
+            -no-s60
+        )
     fi
 
     # CPU flags: XXX
@@ -274,6 +319,9 @@ qt-4_src_configure() {
     local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
     if option !X; then
         prefix="-no"
+        if ever at_least 4.7 ; then
+            myconf+=( ${prefix}-gui )
+        fi
     fi
     for o in ${X_options}; do
         myconf+=( ${prefix}-${o} )
