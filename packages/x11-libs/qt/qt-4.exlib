@@ -424,6 +424,12 @@ EOF
         edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
     fi
 
+    if option examples ; then
+        # The examples might add some empty dirs. Since the examples are additional documentation,
+        # there shouldn't be any empty dirs we might want to keep, so we remove them all in one go.
+        edo find "${IMAGE}"/usr/share/qt4/examples -type d -empty -delete
+    fi
+
     if option gstreamer ; then
         edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
     fi
