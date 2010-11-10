@@ -1,12 +1,12 @@
-# Copyright 2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Copyright 2010 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require qt-creator
 
-DOWNLOADS="http://get.qt.nokia.com/qtcreator/${PNV}-src.zip"
+DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.zip"
 
 PLATFORMS="~amd64 ~x86"
-UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/qtcreator-1.2/index.html"
+UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PNV/-/}/index.html"
 
 DEPENDENCIES="
     build:
@@ -17,5 +17,5 @@ DEPENDENCIES="
 
 WORK="${WORK}-src/"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/qt-tools.patch" )
+QMAKE4_SRC_CONFIGURE_PARAMS=( SUPPORT_QT_S60=1 SUPPORT_QT_QML=1 )
 
