@@ -84,30 +84,3 @@ index 37d4025..818c3af 100644
  
  macro_optional_find_package(FreeTDS)
  macro_log_feature(FREETDS_FOUND "FreeTDS" "Open source implementation of the TDS (Tabular Data Stream) protocol" "http://www.freetds.org" FALSE "" "Required by Kexi Sybase Migration driver")
-diff --git a/krita/plugins/extensions/CMakeLists.txt b/krita/plugins/extensions/CMakeLists.txt
-index b56aafe..dbc2e48 100644
---- a/krita/plugins/extensions/CMakeLists.txt
-+++ b/krita/plugins/extensions/CMakeLists.txt
-@@ -24,13 +24,13 @@ if(OPENEXR_FOUND)
-   add_subdirectory( painterlyframework )
- endif(OPENEXR_FOUND)
- 
--find_package(OpenShiva)
--find_package(QtShiva )
-+macro_optional_find_package(OpenShiva)
-+macro_optional_find_package(QtShiva )
- 
--if(HAVE_OPENSHIVA AND HAVE_QTSHIVA)
-+if(OPENSHIVA_FOUND AND QTSHIVA_FOUND)
-  add_subdirectory(shiva)
--endif(HAVE_OPENSHIVA AND HAVE_QTSHIVA)
-+endif(OPENSHIVA_FOUND AND QTSHIVA_FOUND)
- 
--macro_log_feature(HAVE_OPENSHIVA "OpenShiva" "OpenShiva interpreter for the Shiva Kernel Language" "http://www.openshiva.org" FALSE "" "Required for Shiva based Generators and Filters")
--macro_log_feature(HAVE_QTSHIVA "QtShiva" "Qt bindings for the OpenShiva interpreter" "http://www.openshiva.org" FALSE "" "Required for Shiva based Generators and Filters")
-+macro_log_feature(OPENSHIVA_FOUND "OpenShiva" "OpenShiva interpreter for the Shiva Kernel Language" "http://www.openshiva.org" FALSE "" "Required for Shiva based Generators and Filters")
-+macro_log_feature(QTSHIVA_FOUND "QtShiva" "Qt bindings for the OpenShiva interpreter" "http://www.openshiva.org" FALSE "" "Required for Shiva based Generators and Filters")
- 
--- 
-1.7.2.2
-
