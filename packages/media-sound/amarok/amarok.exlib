@@ -65,6 +65,8 @@ DEPENDENCIES="
             x11-libs/qt:4[glib]
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
+    run:
+        kde/oxygen-icons
     recommendation:
         sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
     suggestion:
