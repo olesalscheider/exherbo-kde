@@ -7,5 +7,5 @@ require kile scm-git
 
 DOWNLOADS=""
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
