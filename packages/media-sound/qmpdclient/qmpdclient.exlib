@@ -6,9 +6,9 @@ require cmake
 
 export_exlib_phases src_install
 
-SUMMARY="QMPDClient is an easy to use MPD client written in Qt 4"
+SUMMARY="QMPDClient is an easy to use Qt-based MPD client"
 HOMEPAGE="http://bitcheese.net/wiki/QMPDClient   [[ description = [ New official homepage ] ]]
-    http://havtknut.tihlde.org/qmpdclient        [[ description = [ Old, official homepage ] ]]"
+    http://havtknut.tihlde.org/qmpdclient        [[ description = [ Old official homepage ] ]]"
 DOWNLOADS="http://dump.bitcheese.net/files/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
@@ -17,10 +17,17 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.4.0][dbus]
+        x11-libs/qt:4[>=4.4.0][dbus][X]
     suggestion:
         media-sound/mpd [[ description = [ ${PN} connects to an mpd daemon, either locally or on a remote host ] ]]
 "
+
+if ever at_least 1.2-rc1; then
+    DEPENDENCIES="
+        build+run:
+            x11-libs/qt:4[webkit]
+    "
+fi
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( INSTALL THANKSTO )
 
