@@ -45,8 +45,8 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
     sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
-    multibuild_c: 32 64
-    platform: amd64 ia64 ppc64 x86
+    ( multibuild_c: 32 64 )
+    ( platform: amd64 ia64 ppc64 x86 )
 "
 if ever at_least 4.7 ; then
     MYOPTIONS+="
