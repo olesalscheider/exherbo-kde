@@ -1,0 +1,16 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+#           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-4 [ pn='qt-everywhere-opensource-src' ]
+
+PLATFORMS="~amd64 ~ppc64 ~x86"
+
+UPSTREAM_RELEASE_NOTES="
+http://labs.qt.nokia.com/2010/11/09/qt-4-7-1-released/
+"
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-make-declarative-debug-work.patch\
+    "${FILES}"/${PNV}-fix-sse4.x-build.patch
+)
+

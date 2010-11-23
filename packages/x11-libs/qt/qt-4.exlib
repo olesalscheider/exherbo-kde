@@ -242,6 +242,7 @@ qt-4_src_prepare() {
     if ever at_least 4.7 ; then
         # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
         edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
+
         # No big chance to come across CoreWLAN on Linux but disable it anyway.
         edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
 
@@ -303,17 +304,14 @@ qt-4_src_configure() {
             -no-s60
         )
     fi
+    if ever at_least 4.7.1 ; then
+        myconf+=(
+            -declarative-debug
+       )
+    fi
 
     # CPU flags: XXX
     # 3dnow, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2
-    if ever at_least 4.7-scm ; then
-        # Disable SSE4.x, since auto-detection is currently broken
-        # Upstream bug http://bugreports.qt.nokia.com/browse/QTBUG-13623
-        myconf+=(
-            -no-sse4.1
-            -no-sse4.2
-        )
-    fi
 
     # X
     local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
