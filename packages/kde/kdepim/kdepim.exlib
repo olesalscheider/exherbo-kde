@@ -75,3 +75,18 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
 
+if ever at_least scm; then
+    DEPENDENCIES+="
+    build:
+        kde_parts:kleopatra? (
+            dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
+        )
+        build+run:
+            dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # akonadi is kde/kdepim-runtime
+        -DBUILD_runtime:BOOL=FALSE
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan2' )
+fi

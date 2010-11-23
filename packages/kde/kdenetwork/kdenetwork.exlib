@@ -277,6 +277,7 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence) \
         $(cmake_with kopete_plugins:webpresence LibXml2) \
         $(cmake_with kopete_plugins:webpresence LibXslt) \
+        $(cmake_with kopete_plugins:wlm_voice WLM_MEDIASTREAMER) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
         -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \

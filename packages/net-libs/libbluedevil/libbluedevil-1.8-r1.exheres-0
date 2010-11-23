@@ -1,0 +1,29 @@
+# Copyright 2010 Sterling X. Winter <replica@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+MY_PNV=${PN}-v${PV}-1
+
+SUMMARY="BlueZ wrapper for the BlueDevil KDE Bluetooth stack"
+HOMEPAGE="http://www.gitorious.org/${PN}"
+DOWNLOADS="http://media.ereslibre.es/2010/11/${MY_PNV}.tar.bz2"
+
+LICENCES="LGPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    pulseaudio [[ description = [ Support Bluetooth audio via PulseAudio in addition to ALSA ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+    run:
+        net-wireless/bluez[>=4][alsa][pulseaudio(+)?]
+"
+
+BUGS_TO="replica@exherbo.org"
+
+WORK=${WORKBASE}/${MY_PNV}
+

@@ -29,16 +29,22 @@ LICENCES="GPL-2 kolourpaint FDL-1.2 LGPL-2.1"
 MY_KDE_PARTS="gwenview kamera kcolorchooser kgamma kolourpaint kruler
 ksaneplugin ksnapshot okular strigi-analyzer svgpart"
 MYOPTIONS="
-    chm  [[ description = [ Support for Microsoft Compiled HTML Help format files in Okular ] ]]
-    djvu [[ description = [ Support for DjVu formatted files in Okular ] ]]
-    epub [[ description = [ Support for EPub documents in Okular ] ]]
-    kipi [[ description = [ Enable KDE Image Plugin Interface (KIPI) support for Gwenview ]
-            requires    = [ kde_parts: gwenview ] ]]
-    odf  [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
-    pdf  [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
-    ps   [[ description = [ Support for PS (PostScript) files in Okular ] ]]
-    tiff [[ description = [ Support for TIFF (Tagged Image File Format) files in Okular and strigi-analyzers ] ]]
-    ( chm djvu epub odf ps pdf ) [[ requires = [ kde_parts: okular ] ]]
+    chm        [[
+        description = [ Support for Microsoft Compiled HTML Help format files in Okular ]
+    ]]
+    djvu       [[ description = [ Support for DjVu formatted files in Okular ] ]]
+    epub       [[ description = [ Support for EPub documents in Okular ] ]]
+    kipi       [[
+        description = [ Enable KDE Image Plugin Interface (KIPI) support for Gwenview ]
+        requires    = [ kde_parts: gwenview ]
+    ]]
+    odf        [[ description = [ Support for encrypted OpenDocument Text documents in Okular ] ]]
+    pdf        [[ description = [ Support for PDF (Portable Document Format) files in Okular ] ]]
+    postscript [[ description = [ Support for PS (PostScript) files in Okular ] ]]
+    tiff       [[ description = [
+        Support for TIFF (Tagged Image File Format) files in Okular and strigi-analyzers
+    ] ]]
+    ( chm djvu epub odf pdf postscript ) [[ requires = [ kde_parts: okular ] ]]
 kde_parts: ${MY_KDE_PARTS}
 "
 
@@ -82,8 +88,8 @@ DEPENDENCIES+="
             djvu? ( app-text/djvu[>=3.5.17] )
             epub? ( app-text/ebook-tools )
             odf? ( app-crypt/qca:2 )
-            ps? ( app-text/libspectre[>=0.2] )
             pdf? ( app-text/poppler[>=0.6][qt4] )
+            postscript? ( app-text/libspectre[>=0.2] )
             tiff? ( media-libs/tiff )
         )
         kde_parts:strigi-analyzer? (
@@ -141,8 +147,8 @@ src_configure() {
             else
                 echo None
             fi) \
-        $(cmake_with ps LibSpectre) \
         $(cmake_with pdf Poppler) \
+        $(cmake_with postscript LibSpectre) \
         $(cmake_with odf QCA2) \
         $(cmake_with TIFF)
 }

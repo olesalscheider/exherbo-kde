@@ -1,0 +1,21 @@
+# Copyright 2010 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-creator
+
+DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.zip"
+
+PLATFORMS="~amd64 ~x86"
+UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PNV/-/}/index.html"
+
+DEPENDENCIES="
+    build:
+        app-arch/unzip
+    build+run:
+        x11-libs/qt:4[>=4.5][X][dbus][doc][sql][webkit]
+"
+
+WORK="${WORK}-src/"
+
+QMAKE4_SRC_CONFIGURE_PARAMS=( SUPPORT_QT_S60=1 SUPPORT_QT_QML=1 )
+

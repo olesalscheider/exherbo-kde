@@ -23,9 +23,12 @@ DEPENDENCIES="
         kde/kdelibs:4[>=4.3.66][nepomuk(+)?]
         x11-libs/qt:4[qt3support]
     run:
-        !net-wireless/bluedevil
         net-wireless/bluez[>=4]
         net-wireless/obex-data-server
+        !net-wireless/bluedevil [[
+            description = [ BlueDevil supersedes kbluetooth ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Nepomuk )

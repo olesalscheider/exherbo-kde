@@ -1,7 +1,7 @@
-# Copyright 2009 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2010 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kding
+require polkit-kde-agent
 
 PLATFORMS="~amd64 ~x86"
 

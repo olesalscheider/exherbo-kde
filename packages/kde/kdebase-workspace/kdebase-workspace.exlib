@@ -2,7 +2,7 @@
 # Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require python kde.org
+require python kde.org systemd-service
 
 SUMMARY="This package provides a basic KDE 4 desktop installation"
 DESCRIPTION="
@@ -102,6 +102,19 @@ DEPENDENCIES="
         python? ( kde/kdebindings:4[python] )
 "
 
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        build+run:
+            server-pim/akonadi[>=scm]
+            x11-apps/xrandr[>=1.3]
+            x11-libs/dbusmenu-qt[>=0.6.0]
+            networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # Create mobile barcodes from clipboard data "http://www.libdmtx.org"
+        -DWITH_Dmtx:BOOL=FALSE
+    )
+fi
 if ever at_least 4.4.80 ; then
     DESCRIPTION+="kinfocenter: Information Center
     kstyles: Styles for KDE widgets"
@@ -116,6 +129,7 @@ if ever at_least 4.4.80 ; then
             dev-libs/soprano[>=2.1.67][virtuoso(+)]
             kde/kdelibs:${SLOT}[>=${PV}]
             media-libs/jpeg [[ note = ksplash ]]
+            server-pim/akonadi[>=1.3.60]
             sys-apps/pciutils
             sys-apps/usbutils-data [[
                 note = [ required to display USB information in kinfocenter ]
@@ -143,6 +157,7 @@ else
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
+            server-pim/akonadi[~>1.3.0]
             x11-libs/libxklavier[>=3.0] [[ note = kcontrol/kxkb ]]
             nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
     "
@@ -150,14 +165,6 @@ else
         'nepomuk Soprano'
         Nepomuk
     )
-fi
-
-if ever at_least scm ; then
-    DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
-elif ever at_least 4.4.80 ; then
-    DEPENDENCIES+="build+run: server-pim/akonadi[>=1.3.60]"
-else
-    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.3.0]"
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -232,6 +239,8 @@ src_install() {
     if option python; then
         python_bytecompile
     fi
+
+    install_systemd_files
 }
 
 if ever at_least 4.4.80; then

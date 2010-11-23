@@ -65,7 +65,6 @@ DEPENDENCIES="
             media-libs/ilmbase
             media-libs/openexr
         )
-        policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
         spell? (
             app-spell/aspell
             app-spell/enchant
@@ -73,8 +72,6 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb
-    recommendation:
-        policykit? ( sys-auth/polkit-kde[>=0.95.1] )
     suggestion:
         sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
 "
@@ -128,6 +125,7 @@ if ever at_least 4.4.80; then
             dev-libs/attica[>=0.1.4]
             dev-libs/soprano[>=2.4.63][virtuoso(-)]
             x11-libs/dbusmenu-qt
+            policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_SharedDesktopOntologies:BOOL=TRUE
@@ -142,6 +140,7 @@ else
                 app-text/shared-desktop-ontologies[>=0.4]
                 dev-libs/soprano[virtuoso(-)]
             )
+            policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'nepomuk SharedDesktopOntologies'
@@ -150,9 +149,27 @@ else
 fi
 
 if ever at_least scm; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/attica[>=0.1.90]
+            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
+            policykit? ( sys-auth/polkit-qt:1[>=0.98.1] )
+        recommendation:
+            policykit? (
+                sys-auth/polkit-kde-agent[~scm]
+                sys-auth/polkit-kde-kcmodules[~scm]
+            )
+        suggestion:
+            sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
+    "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_HUpnp:BOOL=FALSE
     )
+else
+    DEPENDENCIES+="
+        recommendation:
+            policykit? ( sys-auth/polkit-kde[>=0.95.1] )
+    "
 fi
 
 src_prepare() {

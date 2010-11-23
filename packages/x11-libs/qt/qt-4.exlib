@@ -42,15 +42,28 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
                    requires    = [ glib phonon ] ]]
     gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
                    requires = glib ]]
-    multimedia  [[ description = [ Build the QtMultimedia module ] ]]
-    phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
-    qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
     multibuild_c: 32 64
     platform: amd64 ia64 ppc64 x86
 "
+if ever at_least 4.7 ; then
+    MYOPTIONS+="
+        multimedia  [[ description = [ Build the QtMultimedia module ] requires = [ X ] ]]
+        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] requires = [ X ] ]]
+        pulseaudio
+        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] requires = [ X ] ]]
+    "
+else
+    MYOPTIONS+="
+        multimedia  [[ description = [ Build the QtMultimedia module ] ]]
+        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
+        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
+    "
+fi
+
+MYOPTIONS+=" platform: amd64 ia64 ppc64 x86"
 
 DEPENDENCIES="
     build:
@@ -102,6 +115,15 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.7 ; then
+    DEPENDENCIES+="
+        build:
+            X? ( x11-proto/videoproto )
+        build+run:
+            pulseaudio? ( media-sound/pulseaudio[>=0.9.10] )
+            X? ( x11-libs/libXv )
+    "
+fi
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
@@ -184,6 +206,11 @@ qconf4() {
         -examplesdir /usr/share/qt4/examples
         -demosdir /usr/share/qt4/demos
     )
+    if ever at_least 4.7 ; then
+        myconf+=(
+            -importdir /usr/${libdir}/qt4/imports
+        )
+    fi
 
     edo "${ECONF_SOURCE:-.}"/configure "${myconf[@]}" "$@" ${EXTRA_ECONF}
 }
@@ -202,7 +229,30 @@ qt-4_src_prepare() {
             -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
             -i "${WORK}"/mkspecs/common/g++.conf
 
+<<<<<<< HEAD
     #edo sed -i -e '/^LIBS/ aQMAKE_LFLAGS += $$CFLAGS' "${WORK}"/src/tools/moc/moc.pro
+=======
+    edo sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf
+
+    edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
+            -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
+            -i "${WORK}"/qmake/Makefile.unix
+
+    if ever at_least 4.7 ; then
+        # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
+        edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
+        # No big chance to come across CoreWLAN on Linux but disable it anyway.
+        edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
+
+        # There's no configure switch for pulseaudio, so we change the default from
+        # "auto" to an explicit "yes" or "no".
+        if option pulseaudio ; then
+            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
+        else
+            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
+        fi
+    fi
+>>>>>>> origin/master
 }
 
 configure_one_multibuild() {
@@ -246,14 +296,32 @@ configure_one_multibuild() {
         $(qt4_enable webkit)
         $(qt4_enable xinerama)
     )
+    if ever at_least 4.7 ; then
+        myconf+=(
+            -declarative
+            -no-egl
+            -no-s60
+        )
+    fi
 
     # CPU flags: XXX
-    # 3dnow, mmx, sse, sse2
+    # 3dnow, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2
+    if ever at_least 4.7-scm ; then
+        # Disable SSE4.x, since auto-detection is currently broken
+        # Upstream bug http://bugreports.qt.nokia.com/browse/QTBUG-13623
+        myconf+=(
+            -no-sse4.1
+            -no-sse4.2
+        )
+    fi
 
     # X
     local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
     if option !X; then
         prefix="-no"
+        if ever at_least 4.7 ; then
+            myconf+=( ${prefix}-gui )
+        fi
     fi
     for o in ${X_options}; do
         myconf+=( ${prefix}-${o} )
@@ -381,5 +449,24 @@ Icon=linguist
 Categories=Qt;Development;Translation;
 MimeType=application/x-linguist;
 EOF
+<<<<<<< HEAD
+=======
+
+    if option phonon ; then
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/libphonon*
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/pkgconfig/phonon.pc
+        edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
+    fi
+
+    if option examples ; then
+        # The examples might add some empty dirs. Since the examples are additional documentation,
+        # there shouldn't be any empty dirs we might want to keep, so we remove them all in one go.
+        edo find "${IMAGE}"/usr/share/qt4/examples -type d -empty -delete
+    fi
+
+    if option gstreamer ; then
+        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
+    fi
+>>>>>>> origin/master
 }
 

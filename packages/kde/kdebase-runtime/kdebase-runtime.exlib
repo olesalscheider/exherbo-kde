@@ -66,6 +66,23 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
+if ever at_least scm; then
+    MYOPTIONS+=" networkmanager"
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi[>=0.7.3][dbus][qt4]
+            app-text/shared-desktop-ontologies[>=0.5.0]
+            dev-libs/soprano[>=2.5.63][virtuoso]
+            media-libs/phonon[>=4.4.3]
+            networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
+            pulseaudio? (
+                media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
+                media-sound/pulseaudio[>=0.9.16]
+            )
+            sftp? ( net-libs/libssh[>=0.4.0] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( NetworkManager )
+fi
 if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
@@ -74,10 +91,12 @@ if ever at_least 4.4.80; then
             dev-libs/soprano[>=2.4.63][virtuoso]
             kde/kdelibs:${SLOT}[>=${PV}]
     "
+# QNtrack is currently unpackaged (2010-10-05)
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
         -DWITH_Nepomuk:BOOL=ON
         -DWITH_SharedDesktopOntologies:BOOL=ON
+        -DWITH_QNtrack:BOOL=OFF
     )
 else
     DESCRIPTION+="kstyles: Styles for KDE widgets"
@@ -100,6 +119,7 @@ else
     DEPENDENCIES+="
         sys-sound/alsa-lib[>=1.0.14a]"
 fi
+
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'jpeg-rotation Exiv2'
