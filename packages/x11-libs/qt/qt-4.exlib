@@ -229,9 +229,6 @@ qt-4_src_prepare() {
             -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
             -i "${WORK}"/mkspecs/common/g++.conf
 
-<<<<<<< HEAD
-    #edo sed -i -e '/^LIBS/ aQMAKE_LFLAGS += $$CFLAGS' "${WORK}"/src/tools/moc/moc.pro
-=======
     edo sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf
 
     edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
@@ -252,7 +249,6 @@ qt-4_src_prepare() {
             edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
         fi
     fi
->>>>>>> origin/master
 }
 
 configure_one_multibuild() {
@@ -449,8 +445,6 @@ Icon=linguist
 Categories=Qt;Development;Translation;
 MimeType=application/x-linguist;
 EOF
-<<<<<<< HEAD
-=======
 
     if option phonon ; then
         edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/libphonon*
@@ -467,6 +461,5 @@ EOF
     if option gstreamer ; then
         edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
     fi
->>>>>>> origin/master
 }
 
