@@ -1,27 +1,22 @@
 Source: Debian, http://patch-tracking.debian.net/patch/series/view/amarok/2.0.60+svn935422-2/03_mysqle_link_to_amarok_executable.diff
-    Slightly altered to work on Exherbo
-Upstream: No
+        Slightly altered to work on Exherbo and work with upstream modifications
+Upstream: no
 Reason: Link libmysqle statically in /usr/bin/amarok. This works on all arches, without the need for a shared libmysqle, or -fPIC hackery
 
+commit 445d3cb247584de3cd4f2ea370a834e26c5fd008
+Author: Johannes Nixdorf <mixi@user-helfen-usern.de>
+Date:   Thu Nov 25 11:14:27 2010 +0100
 
-From e9d43bb0feabdbff7575f9e8403a9008ff184e2d Mon Sep 17 00:00:00 2001
-From: Timo Gurr <tgurr@exherbo.org>
-Date: Sat, 24 Jul 2010 18:07:38 +0200
-Subject: [PATCH] Link libmysqle statically
-
----
- src/CMakeLists.txt                                 |   13 +++++++++++++
- .../sqlcollection/mysqlecollection/CMakeLists.txt  |    6 +++---
- 2 files changed, 16 insertions(+), 3 deletions(-)
+    Link libmysqle statically
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 23436ef..585822d 100644
+index 3a0ac94..999c4ac 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -884,6 +884,19 @@ if(Q_WS_MAC)
+@@ -959,6 +959,19 @@ if(Q_WS_MAC)
  else(Q_WS_MAC)
      kde4_add_executable(amarok ${amarok_SRCS})
-     target_link_libraries(amarok ${KDE4_KDEUI_LIBS} amaroklib ${TAGLIB_LIBRARIES} ${TAGLIB-EXTRAS_LIBRARIES} )
+     target_link_libraries(amarok ${KDE4_KDEUI_LIBS} amarokcore amaroklib ${TAGLIB_LIBRARIES} ${TAGLIB-EXTRAS_LIBRARIES} )
 +    # Link MySQLe to the executable. Hence -fPIC for libmysqld is not
 +    # needed anymore.
 +
@@ -38,10 +33,10 @@ index 23436ef..585822d 100644
  
      install(TARGETS amarok ${INSTALL_TARGETS_DEFAULT_ARGS})
  endif(Q_WS_MAC)
-diff --git a/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt b/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
-index 4419b21..fcbb182 100644
---- a/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
-+++ b/src/core-impl/collections/sqlcollection/mysqlecollection/CMakeLists.txt
+diff --git a/src/core-impl/collections/db/sql/mysqlecollection/CMakeLists.txt b/src/core-impl/collections/db/sql/mysqlecollection/CMakeLists.txt
+index aa3588c..872051f 100644
+--- a/src/core-impl/collections/db/sql/mysqlecollection/CMakeLists.txt
++++ b/src/core-impl/collections/db/sql/mysqlecollection/CMakeLists.txt
 @@ -27,6 +27,9 @@ SET(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_NOFATALWARN} )
  STRING(REPLACE "-Wl,--fatal-warnings" "" CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN ${CMAKE_MODULE_LINKER_FLAGS})
  SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_NOFATALWARN} )
@@ -61,7 +56,4 @@ index 4419b21..fcbb182 100644
 -    ${ZLIB_LIBRARIES}
  )
  
- if(APPLE)
--- 
-1.7.1
-
+ if(NOT WIN32 AND NOT APPLE)
