@@ -9,7 +9,7 @@ UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PNV/-/}/index.html"
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.5][X][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.7][X][dbus][doc][sql][webkit]
 "
 
 WORK="${WORK}-src/"
