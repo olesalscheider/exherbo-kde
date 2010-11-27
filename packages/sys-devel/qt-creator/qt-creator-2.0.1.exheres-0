@@ -3,14 +3,11 @@
 
 require qt-creator
 
-DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.zip"
-
+DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.tgz"
 PLATFORMS="~amd64 ~x86"
 UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PNV/-/}/index.html"
 
 DEPENDENCIES="
-    build:
-        app-arch/unzip
     build+run:
         x11-libs/qt:4[>=4.5][X][dbus][doc][sql][webkit]
 "

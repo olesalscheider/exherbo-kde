@@ -3,8 +3,6 @@
 
 require qt-creator
 
-DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.tar.gz"
-
 PLATFORMS="~amd64 ~x86"
 UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)-snapshot/index.html"
 
