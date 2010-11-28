@@ -304,15 +304,13 @@ qt-4_src_configure() {
     )
     if ever at_least 4.7 ; then
         myconf+=(
-            -declarative
             -no-egl
             -no-s60
         )
+        option X && myconf+=( -declarative )
     fi
-    if ever at_least 4.7.1 ; then
-        myconf+=(
-            -declarative-debug
-       )
+    if ever at_least 4.7.1 && option X ; then
+        myconf+=( -declarative-debug )
     fi
 
     # Avoid auto detection of CPU features: 
