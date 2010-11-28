@@ -16,20 +16,11 @@ LICENCES="GPL-3"
 SLOT="0"
 MYOPTIONS=""
 
-if ever at_least 0.5.80; then
-    DEPENDENCIES="
-        build+run:
-            kde/kdelibs:4[>=4.5.0]
-            x11-libs/qt:4[>=4.7.0-rc1][X][dbus][glib][webkit]
-    "
-else
-    DEPENDENCIES="
-        build+run:
-            kde/kdelibs:4[>=4.4.0]
-            x11-libs/gtk+:2[>=2.8.0]
-            x11-libs/qt:4[>=4.6.0][X][dbus][glib][webkit]
-    "
-fi
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4[>=4.5.0]
+        x11-libs/qt:4[>=4.7.0][X][dbus][glib][webkit]
+"
 
 BUGS_TO="kde@exherbo.org"
 
