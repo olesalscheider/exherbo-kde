@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake
@@ -13,7 +13,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[X]
+        x11-libs/qt:4
 "
 
 BUGS_TO="kde@exherbo.org"
