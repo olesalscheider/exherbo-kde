@@ -5,8 +5,3 @@ require kdebase-runtime
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/0001-a-minimal-variant-of-trunk-s-r1173672-ifdef-out-some.patch"
-    "${FILES}/0002-compile-phononnamespace.h-isn-t-local.patch"
-)
-
