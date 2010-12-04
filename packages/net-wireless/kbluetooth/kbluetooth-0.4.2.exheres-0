@@ -1,9 +1,0 @@
-# Copyright 2008 Bo Ørsted Andresen
-# Distributed under the terms of the GNU General Public License v2
-
-require kbluetooth
-
-DOWNLOADS="http://kde-apps.org/CONTENT/content-files/112110-${PNV}.tar.bz2"
-
-PLATFORMS="~amd64 ~x86"
-

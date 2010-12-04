@@ -3,8 +3,6 @@
 
 require kde
 
-myexparam ktorrent_version
-
 export_exlib_phases src_compile src_install
 
 SUMMARY="Libktorrent contains all ktorrent's downloading code"
@@ -14,7 +12,7 @@ and plugins. The goal is to make libktorrent an independent library (though stil
 ktorrent), which can be used by other applications.
 "
 HOMEPAGE="http://ktorrent.org/"
-DOWNLOADS="${HOMEPAGE}/downloads/$(exparam ktorrent_version)/${PNV/_}.tar.bz2"
+DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV/_}.tar.bz2"
 
 LICENCES="|| ( LGPL-3 LGPL-2 )"
 SLOT="0"

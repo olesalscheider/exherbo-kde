@@ -8,20 +8,22 @@ MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="http://www.videolan.org/vlc"
-DOWNLOADS="mirror://kde/stable/${MY_PN}/${PV}/src/${MY_PNV}.tar.gz"
+DOWNLOADS="mirror://kde/stable/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-3"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="v4l"
 
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.86]
     build+run:
-        media/vlc[>=1.1.0]
+        media/vlc[>=1.1.1][v4l?]
         media-libs/phonon
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
 
 WORK="${WORKBASE}"/${MY_PNV}
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'v4l V4L2' )
 

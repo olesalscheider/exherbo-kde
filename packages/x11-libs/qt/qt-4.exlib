@@ -63,7 +63,12 @@ else
     "
 fi
 
-MYOPTIONS+=" platform: amd64 ia64 ppc64 x86"
+MYOPTIONS+=" 
+    platform: amd64 ia64 ppc64 x86
+    amd64_cpu_features: mmx sse sse2 3dnow
+    arm_cpu_features: neon
+    x86_cpu_features: mmx sse sse2 3dnow
+"
 
 DEPENDENCIES="
     build:
@@ -238,6 +243,7 @@ qt-4_src_prepare() {
     if ever at_least 4.7 ; then
         # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
         edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
+
         # No big chance to come across CoreWLAN on Linux but disable it anyway.
         edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
 
@@ -294,22 +300,47 @@ configure_one_multibuild() {
     )
     if ever at_least 4.7 ; then
         myconf+=(
-            -declarative
             -no-egl
             -no-s60
         )
+        if option X ; then
+            myconf+=(
+                -declarative
+                -declarative-debug
+            )
+        else
+            myconf+=(
+                -no-declarative
+                -no-declarative-debug
+            )
+        fi
     fi
 
-    # CPU flags: XXX
-    # 3dnow, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2
-    if ever at_least 4.7-scm ; then
-        # Disable SSE4.x, since auto-detection is currently broken
-        # Upstream bug http://bugreports.qt.nokia.com/browse/QTBUG-13623
-        myconf+=(
-            -no-sse4.1
-            -no-sse4.2
-        )
+    # Avoid auto detection of CPU features: 
+    # 3dnow, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, neon
+    if option !amd64_cpu_features:3dnow && option !x86_cpu_features:3dnow; then
+        myconf+=( -no-3dnow )
     fi
+    if option !amd64_cpu_features:mmx && option !x86_cpu_features:mmx ; then
+        myconf+=( -no-mmx )
+    fi
+    if option !amd64_cpu_features:sse && option !x86_cpu_features:sse ; then
+        myconf+=( -no-sse )
+    fi
+    if option !amd64_cpu_features:sse2 && option !x86_cpu_features:sse2 ; then
+        myconf+=( -no-sse2 )
+    fi
+    if option !arm_cpu_features:neon ; then
+        myconf+=( -no-neon)
+    fi
+    #enable when supported by a profile
+    myconf+=(
+        -no-sse3
+        -no-ssse3
+        -no-sse4.1
+        -no-sse4.2
+        -no-avx
+    )
 
     # X
     local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
