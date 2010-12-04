@@ -33,7 +33,7 @@ REMOTE_IDS="freshmeat:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.5.1|4.5.2|4.5.3)
+        4.5.1|4.5.2|4.5.3|4.5.4)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
         4.5.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
