@@ -8,7 +8,7 @@ UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)-snap
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.7][X][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.7][X][dbus][doc][sql][sqlite][webkit]
 "
 
 WORK="${WORK}-src/"

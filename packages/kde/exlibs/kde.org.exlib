@@ -33,11 +33,11 @@ REMOTE_IDS="freshmeat:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.5.1|4.5.2|4.5.3)
+        4.5.1|4.5.2|4.5.3|4.5.4)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
         4.5.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
-        4.@(3|4).@(0|1|2|3|4|5|6|7))
+        4.@(3|4).@(0|1|2|3|4|5|6|7|8))
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
         4.@(2|3).@(6|7|8|9)*)
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
@@ -97,14 +97,14 @@ case ${PV} in
         require scm-svn ;;
     4.4.@(80|85|90|92|95|96|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
-    4.@(3|4).@(8|9)*) # Weekly SVN snapshots
+    4.@(3|4).@(9)*) # Weekly SVN snapshots
         case ${PV} in
             4.3.91) K_SVN_REV="979380" ;;
             *) die "Set K_SVN_REV for ${PV}" ;;
         esac
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.bz2"}"
         WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
-    4.4.@(6|7)) # newer KDEPim 4.4.x releases
+    4.4.@(6|7|8)) # newer KDEPim 4.4.x releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
     *)  # Stable releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
