@@ -1,6 +1,6 @@
 [Unit]
 Description=Display Manager
-Conflicts=gdm.service slim.service xdm.service
+Conflicts=gdm.service lxdm.service slim.service xdm.service
 
 [Service]
 ExecStart=/usr/bin/kdm -nodaemon
