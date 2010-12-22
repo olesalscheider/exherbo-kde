@@ -26,7 +26,7 @@ DEPENDENCIES="
             dev-python/dbus-python[>=0.83.1]
             net-im/telepathy-glib[>=0.11.16]
             x11-libs/qt:4[glib]
-       ) [[ notes = [ Run more tests ] ]]
+       ) [[ note = [ Run more tests ] ]]
 "
 
 # to build an audio/video calling example
