@@ -3,15 +3,13 @@
 
 require kde
 
-MY_PNV=${PN}-v${PV}
-
 SUMMARY="KDE Bluetooth stack, successor to kbluetooth"
 DESCRIPTION="
 BlueDevil is the new Bluetooth stack for KDE, it's composed of: KCM, KDED, KIO, library and some
 other small applications.
 "
-HOMEPAGE="http://gitorious.org/bluedevil"
-DOWNLOADS="http://media.ereslibre.es/2010/11/${MY_PNV}.tar.bz2"
+HOMEPAGE="http://gitorious.org/${PN}"
+DOWNLOADS="http://www.afiestas.org/files/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-3"
 SLOT="0"
@@ -38,6 +36,4 @@ DEPENDENCIES="
 "
 
 BUGS_TO="replica@exherbo.org"
-
-WORK=${WORKBASE}/${MY_PNV}
 
