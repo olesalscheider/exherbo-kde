@@ -1,11 +1,12 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://gitorious.org/phonon/phonon-vlc.git"
+SCM_REPOSITORY="git://git.kde.org/${PN}.git"
 
 require phonon-vlc scm-git
 
 DOWNLOADS=""
+
 PLATFORMS="~amd64 ~x86"
 
 WORK="${WORKBASE}"/${PNV}
