@@ -221,6 +221,8 @@ qconf4() {
 }
 
 qt-4_src_prepare() {
+    default
+
     # Don't prestrip.
     edo sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro projects.pro
     edo sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure
