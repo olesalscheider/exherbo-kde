@@ -25,7 +25,7 @@ HOMEPAGE+=" http://techbase.kde.org/Development/Languages"
 UPSTREAM_DOCUMENTATION="
 http://techbase.kde.org/Development/Languages/Python [[ lang = en description = [ PyKDE4 documentation ] ]]
 http://techbase.kde.org/Development/Languages/Ruby [[ lang = en description = [ QtRuby, Korundum documentation ] ]]
-http://kross.dipe.org/solution.html [[ lang = en descripton = [ Using Kross, the scripting framework ] ]]
+http://kross.dipe.org/solution.html [[ lang = en description = [ Using Kross, the scripting framework ] ]]
 "
 
 LICENCES="GPL-2 LGPL-2.1"
