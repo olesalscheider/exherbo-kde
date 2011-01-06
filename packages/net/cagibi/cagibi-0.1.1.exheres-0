@@ -1,0 +1,28 @@
+# Copyright 2011 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="Experimental cache/proxy system for SSDP (Simple Service Discovery Protocol)"
+DESCRIPTION="
+Cagibi aims to be to SSDP what Avahi is to DNS-SD/Zeroconf: A cache caching all service/device
+announcements on the network in a local process as well as being a broker serving local
+announcements to the network.
+"
+HOMEPAGE="https://projects.kde.org/projects/kdesupport/cagibi"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
+
+LICENCES="GPL-2 LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde/automoc4
+    build+run:
+        x11-libs/qt:4[dbus]
+"
+
+BUGS_TO="kde@exherbo.org"
+
