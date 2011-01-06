@@ -21,7 +21,7 @@ This package contains the following plugins:
 * validators: CSS/HTML validator plugins
 Also included are adblock, autorefresh, crashes, imagerotation, microformat rellinks, searchbar, webarchive plugins.
 "
-DOWNLOADS="mirror://kde/stable/${PV}/src/extragear/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/extragear/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
