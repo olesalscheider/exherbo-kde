@@ -20,6 +20,7 @@ require kde
 export_exlib_phases src_install
 
 myexparam -b upstream_release_notes=true
+myexparam -b git=false
 
 # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
@@ -45,70 +46,72 @@ if exparam -b upstream_release_notes ; then
     esac
 fi
 
-# NOTE: kde-l10n has its own DOWNLOADS logic
-case ${PV} in
-    scm)
-        DOWNLOADS=""
-        SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+if exparam -b git ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}"
+    require scm-git
+else
+    # NOTE: kde-l10n has its own DOWNLOADS logic
+    case ${PV} in
+        scm)
+            DOWNLOADS=""
+            SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
 
-        case ${KDEMODULE} in
-            kdebase-*|kdelibs-experimental)
-                SCM_SUBPATH="KDE/${KDEMODULE%%-*}/${KDEMODULE##*-}"
-                ;;
-            kdebase)
-                SCM_SUBPATH="KDE/${KDEMODULE}/apps/"
-                ;;
-            kdepim|kdepim-runtime)
-                KDEMODULE=kdepim
-                SCM_CHECKOUT_TO=${KDEMODULE}:${SLOT}
-                SCM_SUBPATH="KDE/${KDEMODULE}/"
-                ;;
-            oxygen-icons)
-                SCM_SUBPATH="kdesupport/${KDEMODULE}/"
-                ;;
-            kde-l10n)
-                SCM_SUBPATH=l10n-kde4/scripts
-                SCM_CHECKOUT_TO=${PN}:${SLOT}/scripts
-                SCM_UNPACK_TO=${WORKBASE}/scripts
-                ;;
-            kdevelop|kdevplatform)
-                SCM_SUBPATH=extragear/sdk/${KDEMODULE}/
-                ;;
-            konq-plugins)
-                SCM_SUBPATH=extragear/base/${KDEMODULE}/
-                ;;
-            kwebkitpart)
-                SCM_SUBPATH="extragear/base/${PN}"
-                ;;
-            *)
-                SCM_SUBPATH="KDE/${KDEMODULE}/"
-                ;;
-        esac
+            case ${KDEMODULE} in
+                kdebase-*|kdelibs-experimental)
+                    SCM_SUBPATH="KDE/${KDEMODULE%%-*}/${KDEMODULE##*-}"
+                    ;;
+                kdebase)
+                    SCM_SUBPATH="KDE/${KDEMODULE}/apps/"
+                    ;;
+                kdepim|kdepim-runtime)
+                    KDEMODULE=kdepim
+                    SCM_CHECKOUT_TO=${KDEMODULE}:${SLOT}
+                    SCM_SUBPATH="KDE/${KDEMODULE}/"
+                    ;;
+                oxygen-icons)
+                    SCM_SUBPATH="kdesupport/${KDEMODULE}/"
+                    ;;
+                kde-l10n)
+                    SCM_SUBPATH=l10n-kde4/scripts
+                    SCM_CHECKOUT_TO=${PN}:${SLOT}/scripts
+                    SCM_UNPACK_TO=${WORKBASE}/scripts
+                    ;;
+                kdevelop|kdevplatform)
+                    SCM_SUBPATH=extragear/sdk/${KDEMODULE}/
+                    ;;
+                konq-plugins)
+                    SCM_SUBPATH=extragear/base/${KDEMODULE}/
+                    ;;
+                *)
+                    SCM_SUBPATH="KDE/${KDEMODULE}/"
+                    ;;
+            esac
 
-        case ${KDEMODULE} in
-            kdevplatform)
-                SCM_SECONDARY_REPOSITORIES="kate_completion_expandingtree"
-                SCM_SVN_EXTERNALS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
-                SCM_kate_completion_expandingtree_REPOSITORY="${SCM_REPOSITORY}/"
-                SCM_kate_completion_expandingtree_SUBPATH="KDE/kdelibs/kate/completion/expandingtree"
-                ;;
-        esac
+            case ${KDEMODULE} in
+                kdevplatform)
+                    SCM_SECONDARY_REPOSITORIES="kate_completion_expandingtree"
+                    SCM_SVN_EXTERNALS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
+                    SCM_kate_completion_expandingtree_REPOSITORY="${SCM_REPOSITORY}/"
+                    SCM_kate_completion_expandingtree_SUBPATH="KDE/kdelibs/kate/completion/expandingtree"
+                    ;;
+            esac
 
-        require scm-svn ;;
-    4.4.@(80|85|90|92|95|96|98)) # Betas, RCs
-        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
-    4.@(3|4).@(9)*) # Weekly SVN snapshots
-        case ${PV} in
-            4.3.91) K_SVN_REV="979380" ;;
-            *) die "Set K_SVN_REV for ${PV}" ;;
-        esac
-        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.bz2"}"
-        WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
-    4.4.@(6|7|8)) # newer KDEPim 4.4.x releases
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
-    *)  # Stable releases
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
-esac
+            require scm-svn ;;
+        4.4.@(80|85|90|92|95|96|98)) # Betas, RCs
+            DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+        4.@(3|4).@(9)*) # Weekly SVN snapshots
+            case ${PV} in
+                4.3.91) K_SVN_REV="979380" ;;
+                *) die "Set K_SVN_REV for ${PV}" ;;
+            esac
+            DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.bz2"}"
+            WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
+        4.4.@(6|7|8)) # newer KDEPim 4.4.x releases
+            DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+        *)  # Stable releases
+            DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
+    esac
+fi
 
 DEPENDENCIES="
     build+run:
