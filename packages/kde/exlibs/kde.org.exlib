@@ -40,7 +40,7 @@ if exparam -b upstream_release_notes ; then
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
         4.@(3|4).@(0|1|2|3|4|5|6|7|8|9|10))
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
-        4.@(2|3).@(6|7|8|9)*)
+        4.@(2|3|4|5).@(6|7|8|9)*)
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
         4.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
     esac
@@ -97,7 +97,7 @@ else
             esac
 
             require scm-svn ;;
-        4.4.@(80|85|90|92|95|96|98)) # Betas, RCs
+        4.$(4|5).@(80|85|90|92|95|96|98)) # Betas, RCs
             DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
         4.@(5).@(9)*) # Weekly SVN snapshots
             case ${PV} in
