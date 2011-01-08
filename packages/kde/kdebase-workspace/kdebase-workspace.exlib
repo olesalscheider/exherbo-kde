@@ -34,7 +34,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="bluetooth lm_sensors networkmanager python wicd xinerama
+MYOPTIONS="lm_sensors networkmanager python wicd xinerama
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -77,8 +77,6 @@ DEPENDENCIES="
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
         x11-libs/libxkbfile
-        x11-libs/qt:4[opengl][webkit]
-        bluetooth? ( net-wireless/bluez )
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
@@ -107,14 +105,33 @@ if ever at_least scm ; then
         build+run:
             server-pim/akonadi[>=scm]
             x11-apps/xrandr[>=1.3]
+    "
+fi
+
+if ever at_least 4.5.95 ; then
+    DEPENDENCIES+="
+        build+run:
             x11-libs/dbusmenu-qt[>=0.6.0]
+            x11-libs/qt:4[>=4.7.0][opengl][webkit]
             networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         # Create mobile barcodes from clipboard data "http://www.libdmtx.org"
         -DWITH_Dmtx:BOOL=FALSE
     )
+else
+    # Bluetooth has been moved to libbluedevil for KDE 4.6
+    MYOPTIONS+="bluetooth ${MYOPTIONS}"
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[opengl][webkit]
+            bluetooth? ( net-wireless/bluez )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'bluetooth BlueZ'
+    )
 fi
+
 if ever at_least 4.4.80 ; then
     DESCRIPTION+="kinfocenter: Information Center
     kstyles: Styles for KDE widgets"
@@ -204,7 +221,6 @@ CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     'x86_cpu_features:sse2 X86_SSE2'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'bluetooth BlueZ'
     'consolekit CkConnector'
     'lm_sensors Sensors'
     NetworkManager
