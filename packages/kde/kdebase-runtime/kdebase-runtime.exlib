@@ -61,12 +61,12 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least scm; then
+if ever at_least 4.5.95; then
     MYOPTIONS+=" networkmanager"
     DEPENDENCIES+="
         build+run:
             app-pim/strigi[>=0.7.3][dbus][qt4]
-            app-text/shared-desktop-ontologies[>=0.5.0]
+            app-text/shared-desktop-ontologies[>=0.5]
             dev-libs/soprano[>=2.5.63][virtuoso]
             media-libs/phonon[>=4.4.3]
             networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
@@ -78,6 +78,7 @@ if ever at_least scm; then
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( NetworkManager )
 fi
+
 if ever at_least 4.4.80; then
     DEPENDENCIES+="
         build+run:
