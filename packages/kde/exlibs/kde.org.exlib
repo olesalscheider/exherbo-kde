@@ -97,7 +97,7 @@ else
             esac
 
             require scm-svn ;;
-        4.$(4|5).@(80|85|90|92|95|96|98)) # Betas, RCs
+        4.@(4|5).@(80|85|90|92|95|96|98)) # Betas, RCs
             DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.bz2"}" ;;
         4.@(5).@(9)*) # Weekly SVN snapshots
             case ${PV} in
