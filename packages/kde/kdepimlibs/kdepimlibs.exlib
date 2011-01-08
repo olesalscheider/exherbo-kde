@@ -32,12 +32,13 @@ if ever at_least 4.4.80 ; then
         build+run:
             app-text/shared-desktop-ontologies[>=0.2]
             dev-libs/soprano[>=2.3.70]
-            kde/kdelibs:${SLOT}[>=${PV}]
     "
 fi
 
 if ever at_least scm ; then
-    DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=scm]"
+elif ever at_least 4.5.95 ; then
+    DEPENDENCIES+="build+run: server-pim/akonadi[>=1.4.81]"
 elif ever at_least 4.4.80 ; then
     DEPENDENCIES+="build+run: server-pim/akonadi[>=1.3.60]"
 else
