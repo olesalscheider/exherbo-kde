@@ -65,7 +65,7 @@ if ever at_least 4.5.95; then
     MYOPTIONS+=" networkmanager"
     DEPENDENCIES+="
         build+run:
-            app-pim/strigi[>=0.7.3][dbus][qt4]
+            app-pim/strigi[>=0.7.3_pre20110108][dbus][qt4]
             app-text/shared-desktop-ontologies[>=0.5]
             dev-libs/soprano[>=2.5.63][virtuoso]
             media-libs/phonon[>=4.4.3]
