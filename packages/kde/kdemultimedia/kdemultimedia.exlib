@@ -23,6 +23,18 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd mplayerthumbs"
 
+if ever at_least 4.5.95; then
+    DEPENDENCIES+="
+        build+run:
+            musicbrainz? ( media-libs/libmusicbrainz:3 )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            musicbrainz? ( media-libs/libmusicbrainz:2 )
+    "
+fi
+
 if ever at_least 4.4.80; then
     MY_KDE_PARTS+=" ffmpegthumbs"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
@@ -77,7 +89,6 @@ DEPENDENCIES+="
             )
         )
         kde_parts:mplayerthumbs? ( run: media/mplayer )
-        musicbrainz? ( media-libs/libmusicbrainz:2 )
     suggestion:
         kde_parts:kioslave? (
             media-sound/lame [[ description = [ Support MP3 in the AudioCD kioslave ] ]]
