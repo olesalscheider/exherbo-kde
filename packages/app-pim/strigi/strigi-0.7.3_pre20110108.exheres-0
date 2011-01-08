@@ -1,0 +1,17 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+require strigi
+
+DOWNLOADS="http://dev.exherbo.org/~berniyh/${PNV}.tar.bz2"
+
+PLATFORMS="~amd64 ~x86"
+
+# FIXME indexertest fails with option !clucene
+# FIXME indextest fails with: symbol lookup error: /usr/lib64/libldap-2.4.so.2: undefined symbol: ldap_int_tls_destroy
+# Probably depends on having kdepimlibs[ldap]
+RESTRICT=test
+
