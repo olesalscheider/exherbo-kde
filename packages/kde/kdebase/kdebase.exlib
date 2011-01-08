@@ -17,7 +17,7 @@ kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
 "
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="webkit"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
@@ -33,12 +33,10 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
-        webkit? ( kde/kwebkitpart )
     suggestion:
         sys-apps/eject
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'webkit KWebKitPart' )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
@@ -51,6 +49,15 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 KDE_APPS_PREFIX="apps"
+
+if ! ever at_least 4.5.95; then
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'webkit KWebKitPart' )
+    MYOPTIONS+="webkit"
+    DEPENDENCIES+="
+        build+run:
+            webkit? ( kde/kwebkitpart )
+    "
+fi
 
 if ever at_least 4.4.80; then
     DEPENDENCIES+="
