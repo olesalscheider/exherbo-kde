@@ -97,6 +97,13 @@ DEPENDENCIES+="
         )
 "
 
+if ever at_least 4.5.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            graphics/exiv2[>=0.20]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
+    "
+fi
+
 if ever at_least 4.5.1 ; then
     DEPENDENCIES+="
         build+run:
