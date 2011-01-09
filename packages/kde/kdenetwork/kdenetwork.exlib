@@ -26,7 +26,8 @@ HOMEPAGE="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
-MY_KDE_PARTS+="filesharing kget kopete kppp krdc krfb kdnssd"
+# krfb from 4.6 contains an internal copy of libvncserver -> Deactivated for KDE 4.6
+MY_KDE_PARTS+="filesharing kget kopete kppp krdc kdnssd"
 MY_IM_PROTOCOLS+="
     gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
     googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
@@ -123,10 +124,6 @@ DEPENDENCIES+="
             telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
             vnc? ( net-libs/libvncserver[>=0.9] )
         )
-        kde_parts:krfb? (
-            net-libs/libvncserver[>=0.9]
-            x11-libs/libXtst
-        )
     suggestion:
         kde_parts:kopete? (
             im_protocols:xmpp? (
@@ -138,6 +135,26 @@ DEPENDENCIES+="
         )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
+
+if ever at_least 4.5.95; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kopete? (
+                im_protocols:wlm? (
+                    dev-libs/boost
+                )
+            )
+    "
+else
+    MY_KDE_PARTS+="krfb"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:krfb? (
+                net-libs/libvncserver[>=0.9]
+                x11-libs/libXtst
+            )
+    "
+fi
 
 if ever at_least 4.4.80; then
     DEPENDENCIES+="
@@ -220,10 +237,20 @@ src_configure() {
         cmakeparams+=( -DWITH_QCA2=OFF )
     fi
 
-    if option kde_parts:krfb || option vnc; then
-        cmakeparams+=( -DWITH_LibVNCServer=ON )
+    # Deactivate krfb for KDE 4.6
+    if ever at_least 4.5.95; then
+        cmakeparams+=( -DBUILD_krfb=FALSE )
+        if option vnc; then
+            cmakeparams+=( -DWITH_LibVNCServer=ON )
+        else
+            cmakeparams+=( -DWITH_LibVNCServer=OFF )
+        fi
     else
-        cmakeparams+=( -DWITH_LibVNCServer=OFF )
+        if option kde_parts:krfb || option vnc; then
+            cmakeparams+=( -DWITH_LibVNCServer=ON )
+        else
+            cmakeparams+=( -DWITH_LibVNCServer=OFF )
+        fi
     fi
 
     cmakeparams+=(
