@@ -21,7 +21,8 @@ MYOPTIONS="
 pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
 (
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
-    xine        [[ description = [ Enable the Phonon Xine backend, which is the recommended backend ] ]]
+    vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
+    xine        [[ description = [ Enable the Phonon Xine backend ] ]]
 ) [[ number-selected = at-least-one ]]
 "
 
@@ -37,7 +38,9 @@ DEPENDENCIES="
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.21]
         )
-        xine? ( media-libs/xine-lib[>=1.1.9&<1.1.90][xcb] )
+        xine? ( media-libs/xine-lib[>=1.1.9&<1.1.90][xcb(+)] )
+    post:
+        vlc? ( media-libs/phonon-vlc )
 "
 
 # FIXME Test executables not found, regardless of ECMAKE_BUILD_TYPE

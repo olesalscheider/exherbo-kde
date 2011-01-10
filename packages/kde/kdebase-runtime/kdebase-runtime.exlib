@@ -90,6 +90,8 @@ if ever at_least 4.4.80; then
             dev-libs/attica[>=0.1.4]
             dev-libs/soprano[>=2.4.63][virtuoso]
             kde/kdelibs:${SLOT}[>=${PV}]
+        suggestion:
+            net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
     "
 # QNtrack is currently unpackaged (2010-10-05)
     CMAKE_SRC_CONFIGURE_PARAMS+=(
