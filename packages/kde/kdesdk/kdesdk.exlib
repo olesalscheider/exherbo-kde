@@ -4,30 +4,63 @@
 require kde.org
 
 SUMMARY="KDE Software Development Kit"
+
+LICENCES="GPL-2 LGPL-2 FDL-1.2"
+MY_KDE_PARTS="cervisia kapptemplate kate kcachegrind kdeaccounts-plugin
+kmtrace kompare kstartperf kuiviewer lokalize poxml scripts
+strigi-analyzer umbrello
+"
+
 DESCRIPTION="
+$(ever at_least 4.5.95 || echo 'kbugbuster: a graphical frontend for the KDE bug reporting system')
 cervisia: CVS client part
+$(ever at_least 4.4.80 && echo 'dolphin-plugins: scm plugins for Dolphin for git and svn')
 kapptemplate: shell script to easy the beginning of new apps
-kate: A fast and advanced text editor, extensible with nice plugins.
-kbugbuster: a graphical frontend for the KDE bug reporting system
-kcachegrind: A Profiling Visualisation Tool.
+kate: A fast and advanced text editor, extensible with nice plugins
+kcachegrind: A Profiling Visualisation Tool
 kmtrace: converts glibc's mtrace log into a full backtrace
-kompare: A program to view the differences between files.
+kompare: A program to view the differences between files
 kspy: displays all used QObjects in an application
-kuiviewer: A KPart that lets you view .ui files.
+kuiviewer: A KPart that lets you view .ui files
 lokalize: A computer-aided translation system
+$(ever at_least 4.5.95 && echo 'okteta: A binary file editor')
 poxml: auxillary programs for documentation translation
 scripts: various helper scripts (see scripts/README)
 scheck: An interface style to highlight accel and style guide conflicts
-umbrello: A UML modeller.
+umbrello: A UML modeller
 "
 
-LICENCES="GPL-2 LGPL-2 FDL-1.2"
-MY_KDE_PARTS="cervisia kapptemplate kate kbugbuster kcachegrind
-kdeaccounts-plugin kmtrace kompare kstartperf kuiviewer lokalize poxml
-scripts strigi-analyzer umbrello"
+if ever at_least 4.5.95; then
+    MY_KDE_PARTS+=" okteta"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:okteta? (
+                app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]]
+                x11-misc/shared-mime-info[>=0.40]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # kde_parts doesn't work with / and these plugins are very small and need no
+        # additional dependencies, so we hard enable those
+        -DBUILD_dolphin-plugins/git:BOOL=TRUE
+        -DBUILD_dolphin-plugins/svn:BOOL=TRUE
+    )
+elif ever at_least 4.4.80; then
+    MY_KDE_PARTS+=" kbugbuster dolphin-plugins"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
+    "
+else
+DESCRIPTION+="kbugbuster: a graphical frontend for the KDE bug reporting system"
+    MY_KDE_PARTS+=" kbugbuster"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
+    "
+fi
 
 if ever at_least 4.4.80; then
-    MY_KDE_PARTS+=" dolphin-plugins"
     DEPENDENCIES+="
         build+run:
             kde_parts:poxml? ( dev-java/antlr[=2*] )
@@ -52,7 +85,6 @@ DEPENDENCIES+="
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
-        kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
         kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
@@ -85,7 +117,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 src_configure() {
-    if option kde_parts:kbugbuster || option kde_parts:kdeaccounts-plugin; then
+    if option kde_parts:kdeaccounts-plugin || ! ever at_least 4.5.95 && option kde_parts:kbugbuster; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=TRUE )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=FALSE )
