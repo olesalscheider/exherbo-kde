@@ -6,9 +6,6 @@ require amarok
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PNV}-re-add-some-tests-for-unprintable-but-also-invalid-c.patch"
-    "${FILES}/${PNV}-workaround-for-wrong-applet-size-on-startup.patch"
-    "${FILES}/${PNV}-fix-reading-of-BPM-tags-in-FLAC.patch"
     "${FILES}/${PNV}-mysqle-link-to-amarok-executable.patch"
 )
 
