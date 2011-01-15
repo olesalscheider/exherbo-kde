@@ -20,12 +20,11 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        kde/kdebase-workspace:4[>=4.4.0][bluetooth]
         kde/kdelibs:4[>=4.4.0]
+        net-libs/libbluedevil[pulseaudio?]
         net-wireless/openobex[bluetooth]
         x11-misc/shared-mime-info
     run:
-        net-libs/libbluedevil[pulseaudio?]
         net-wireless/obex-data-server
         net-wireless/obexd
         !net-wireless/kbluetooth [[
