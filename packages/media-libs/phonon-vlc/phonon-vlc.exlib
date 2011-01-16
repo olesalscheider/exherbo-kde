@@ -23,6 +23,13 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
 
+if ever at_least scm; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/phonon[~scm]
+    "
+fi
+
 WORK="${WORKBASE}"/${MY_PNV}
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'v4l V4L2' )
