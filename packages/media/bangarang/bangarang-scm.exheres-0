@@ -4,13 +4,5 @@
 SCM_REPOSITORY="git://gitorious.org/bangarang/bangarang.git"
 require bangarang scm-git
 
-DOWNLOADS=""
-
-# for KStatusNotifierItem
-DEPENDENCIES="
-    build+run:
-        kde/kdelibs[>=4.3.80][nepomuk(+)]
-        kde/kdemultimedia[>=4.3.80]"
-
 PLATFORMS="~amd64 ~x86"
 

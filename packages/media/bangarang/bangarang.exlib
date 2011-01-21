@@ -7,19 +7,35 @@ ODO_ID=113305
 
 SUMMARY="A KDE media player"
 HOMEPAGE="http://bangarangkde.wordpress.com/"
+
+if ! ever is_scm ; then
 DOWNLOADS="http://opendesktop.org/CONTENT/content-files/${ODO_ID}-${PNV}.tar.gz -> ${PNV}.tar.gz"
+fi
 
 LICENCES="GPL-3"
 SLOT="0"
-MYOPTIONS=""
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        kde/kdelibs:4[>=4.3.0][nepomuk(+)]
-        kde/kdemultimedia:4[>=4.3.0]
         media-libs/phonon
         media-libs/taglib
 "
+
+if ever at_least 2.0 ; then
+DEPENDENCIES+="
+    build+run:
+        dev-libs/soprano
+        kde/kdebindings:4[>=4.5.0]
+        kde/kdelibs:4[>=4.5.0][nepomuk(+)]
+        x11-libs/qt:4[>=4.3.0]  [[ note = [ Minimum version needed for QtScript ] ]]
+"
+else
+DEPENDENCIES+="
+    build+run:
+        kde/kdelibs:4[>=4.3.0][nepomuk(+)]
+        kde/kdemultimedia:4[>=4.3.0]
+"
+fi
 
