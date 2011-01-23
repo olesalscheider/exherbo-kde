@@ -9,11 +9,9 @@
 
 require multilib cmake
 
-export_exlib_phases src_configure
-
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-DOWNLOADS="mirror://kde/stable/phonon/${PV}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -22,7 +20,6 @@ pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
 (
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
-    xine        [[ description = [ Enable the Phonon Xine backend ] ]]
 ) [[ number-selected = at-least-one ]]
 "
 
@@ -31,15 +28,13 @@ DEPENDENCIES="
         dev-util/pkg-config
         kde/automoc4[>=0.9.86]
     build+run:
-        sys-sound/alsa-lib
         x11-libs/qt:4[>=4.6.1][dbus][phonon]
-        gstreamer? ( x11-libs/qt:4[>=4.5.0][glib][gstreamer] )
         pulseaudio? (
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.21]
         )
-        xine? ( media-libs/xine-lib[>=1.1.9&<1.1.90][xcb(+)] )
     post:
+        gstreamer? ( media-libs/phonon-gstreamer )
         vlc? ( media-libs/phonon-vlc )
 "
 
@@ -47,24 +42,7 @@ DEPENDENCIES="
 # RESTRICT="test"
 # Renable building tests when unrestricting
 
-phonon_src_configure() {
-    local PHONON_SRC_CONFIGURE_PARAMS=()
-
-    if option gstreamer || option pulseaudio ; then
-        PHONON_SRC_CONFIGURE_PARAMS+=( -DWITH_GLIB2:BOOL=TRUE )
-    fi
-
-    # Tests are restricted
-    ecmake \
-        -DPHONON_BUILD_TESTS:BOOL=FALSE \
-        $(cmake_with GStreamer) \
-        $(cmake_with gstreamer GStreamerPlugins) \
-        $(cmake_with gstreamer GObject) \
-        $(cmake_with gstreamer LibXml2) \
-        $(cmake_with gstreamer OpenGL) \
-        $(cmake_with pulseaudio PulseAudio) \
-        $(cmake_with Xine) \
-        $(cmake_with xine XCB) \
-        "${PHONON_SRC_CONFIGURE_PARAMS[@]}"
-}
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'pulseaudio GLIB2' 'pulseaudio PulseAudio' )
+# Tests are restricted
+CMAKE_SRC_CONFIGURE_PARAMS=( -DPHONON_BUILD_TESTS:BOOL=FALSE )
 
