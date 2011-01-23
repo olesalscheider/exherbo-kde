@@ -8,7 +8,7 @@ MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="http://www.videolan.org/vlc"
-DOWNLOADS="mirror://kde/stable/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-3"
 SLOT="0"
