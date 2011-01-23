@@ -10,7 +10,7 @@ Environment. It currently supports the Twitter.com and Identi.ca services. The
 name comes from an ancient Persian word that means sparrow.
 "
 HOMEPAGE="http://choqok.gnufolks.org/"
-DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="http://choqok.gnufolks.org/pkgs/${PN}_${PV}.tar.bz2"
 
 LICENCES="GPL-3"
 SLOT="0"
