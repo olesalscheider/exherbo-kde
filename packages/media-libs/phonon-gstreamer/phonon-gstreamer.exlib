@@ -21,7 +21,7 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libxml2:2.0
         media-libs/gstreamer:0.10
-        media-libs/phonon[>=4.4.4]
+        media-libs/phonon[>=${PV}]
         media-plugins/gst-plugins-base:0.10
         sys-sound/alsa-lib
         x11-dri/mesa
