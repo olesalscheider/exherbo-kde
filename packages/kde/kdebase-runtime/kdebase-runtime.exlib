@@ -36,7 +36,6 @@ MYOPTIONS="alsa openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
-    xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
 
 DEPENDENCIES="
@@ -56,12 +55,8 @@ DEPENDENCIES="
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.3.91] )
         slp? ( net-libs/openslp )
-        xine? ( media-libs/xine-lib )
     run:
         kde/oxygen-icons
-        xine? (
-            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ] ]]
-        )
 "
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
@@ -122,7 +117,7 @@ else
         sys-sound/alsa-lib[>=1.0.14a]"
 fi
 
-
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xine:BOOL=OFF )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'jpeg-rotation Exiv2'
     OpenEXR
@@ -130,7 +125,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'sftp LibSSH'
     SLP
     PulseAudio
-    Xine
 )
 
 src_install() {
