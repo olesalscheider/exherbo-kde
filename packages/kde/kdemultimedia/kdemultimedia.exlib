@@ -47,7 +47,6 @@ MYOPTIONS+="
         kscd [[ requires = [ musicbrainz ] ]]
 "
 
-# XXX Xine is optional for dragonplayer
 DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
@@ -56,8 +55,7 @@ DEPENDENCIES+="
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
         kde_parts:dragonplayer? (
-            media-libs/phonon[>=4.3.0][xine]
-            media-libs/xine-lib[>=1.1][xcb(+)]
+            media-libs/phonon[>=4.3.0]
         )
         kde_parts:juk? (
             media-libs/taglib[>=1.6]
@@ -86,7 +84,10 @@ DEPENDENCIES+="
         )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_PHONON_SUPPORT:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_PHONON_SUPPORT:BOOL=TRUE
+    -DWITH_Xine:BOOL=FALSE
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave Cdparanoia'
     Flac
