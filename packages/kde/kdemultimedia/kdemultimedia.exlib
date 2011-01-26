@@ -38,7 +38,8 @@ fi
 if ever at_least 4.4.80; then
     MY_KDE_PARTS+=" ffmpegthumbs"
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:ffmpegthumbs FFmpeg'
+        'kde_parts:ffmpegthumbs FFmpeg' # KDE 4.5
+        'kde_parts:ffmpegthumbs FFMPEG' # KDE 4.6
         'kde_parts:ffmpegthumbs Swscale'
     )
     DEPENDENCIES+="
