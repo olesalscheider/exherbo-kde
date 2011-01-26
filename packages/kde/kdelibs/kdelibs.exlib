@@ -19,10 +19,12 @@ MYOPTIONS="acl avahi doc fam jpeg2000 openexr policykit spell
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
+        dev-lang/perl:*
         sys-devel/gettext
         x11-proto/xf86vidmodeproto
         doc? ( app-doc/doxygen )
     build+run:
+        app-arch/bzip2
         app-arch/xz
         app-crypt/qca:2
         app-pim/strigi[>=0.6.3][dbus][qt4]
@@ -38,6 +40,7 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/phonon[>=4.3.80]
         sys-apps/dbus[X(-)]
+        sys-libs/zlib
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
@@ -72,8 +75,6 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb
-    suggestion:
-        sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -85,7 +86,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DBUILD_experimental:BOOL=FALSE
     -DWITH_BZip2=ON
-    -DWITH_DBusMenuQt:BOOL=ON # as of kde 4.5.1 we could make this optional
+    -DWITH_DBusMenuQt:BOOL=ON
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
     -DWITH_LibAttica:BOOL=TRUE
@@ -148,31 +149,51 @@ else
     )
 fi
 
+if ever at_least scm; then
+    DEPENDENCIES+="
+        build+run:
+            x11-misc/shared-mime-info[>=0.60]
+        recommendation:
+            policykit? (
+                sys-auth/polkit-kde-agent[~scm]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+                sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_HUpnp:BOOL=FALSE )
+elif ever at_least 4.5.90; then
+    DEPENDENCIES+="
+        recommendation:
+            policykit? (
+                sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+                sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+            )
+    "
+fi
+
 if ever at_least 4.5.90; then
     DEPENDENCIES+="
         build+run:
             app-text/shared-desktop-ontologies[>=0.5]
             dev-libs/attica[>=0.1.90]
             dev-libs/soprano[>=2.5.60][virtuoso(-)]
+            sys-fs/udev
             x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
             policykit? ( sys-auth/polkit-qt:1[>=0.99.0] )
         recommendation:
-            policykit? (
-                sys-auth/polkit-kde-agent[~scm]
-                sys-auth/polkit-kde-kcmodules[~scm]
-            )
-        suggestion:
             sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
+            sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_HUpnp:BOOL=FALSE
         -DWITH_SharedDesktopOntologies:BOOL=TRUE
         -DWITH_Soprano:BOOL=TRUE
+        -DWITH_UDev:BOOL=TRUE
     )
 else
     DEPENDENCIES+="
         recommendation:
             policykit? ( sys-auth/polkit-kde[>=0.95.1] )
+        suggestion:
+            sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
     "
 fi
 
