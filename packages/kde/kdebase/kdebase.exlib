@@ -49,8 +49,17 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 
 KDE_APPS_PREFIX="apps"
 
+if ever at_least scm; then
+    MYOPTIONS+=" tidy [[ description = [ Build the CSS & HTML validator plugins ] ]]"
+    DEPENDENCIES+="
+        build+run:
+            tidy? ( app-text/tidy )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tidy LibTidy' )
+fi
+
 if ! ever at_least 4.5.95; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'webkit KWebKitPart' )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
     MYOPTIONS+="webkit"
     DEPENDENCIES+="
         build+run:
