@@ -29,11 +29,11 @@ if ever at_least 0.99.0; then
             kde/automoc4
         build+run:
             dev-libs/glib:2
-            sys-auth/polkit:1[>=0.98]
+            sys-auth/polkit:1[>=0.99]
             x11-libs/qt:4[>=4.4.0]
         suggestion:
-            sys-auth/polkit-kde-agent[~scm] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-            sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+            sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+            sys-auth/polkit-kde-kcmodules[>=0.98.1] [[ description = [ KDE settings GUI for PolicyKit ] ]]
     "
 else
     DEPENDENCIES="
@@ -47,6 +47,6 @@ else
     "
 fi
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ )
+CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ -DBUILD_TEST:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( EXAMPLES )
 
