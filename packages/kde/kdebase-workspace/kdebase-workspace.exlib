@@ -103,8 +103,8 @@ DEPENDENCIES="
 if ever at_least scm ; then
     DEPENDENCIES+="
         build+run:
+            dev-libs/soprano[>=2.5.63][virtuoso(+)]
             server-pim/akonadi[>=scm]
-            x11-apps/xrandr[>=1.3]
     "
 fi
 
@@ -127,6 +127,12 @@ else
             x11-libs/qt:4[opengl][webkit]
             bluetooth? ( net-wireless/bluez )
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_QEdje=Off
+        # Use sys-auth/polkit-kde:1 instead
+        -DBUILD_PolicyKit-kde:BOOL=FALSE
+        -DWITH_PolkitQt:BOOL=FALSE
+    )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'bluetooth BlueZ'
     )
@@ -185,11 +191,8 @@ else
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # Use sys-auth/polkit-kde:1 instead
-    -DBUILD_PolicyKit-kde:BOOL=FALSE
-    -DWITH_PolkitQt:BOOL=FALSE
     -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on, hence as of 4.5 beta1 these do nothing
-    -DWITH_DBusMenuQt:BOOL=ON # as of kde 4.5.1 we could make this optional
+    -DWITH_DBusMenuQt:BOOL=ON
     -DWITH_Fontconfig=ON
     -DWITH_Freetype=ON
     -DWITH_GLIB2=ON -DWITH_GObject=ON # as of 4.5 beta1 -DWITH_GObject does nothing
@@ -203,7 +206,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_KdepimLibs=ON # for plasma RSS data engine
     # Extra plasma functionality
     -DWITH_Googlegadgets=Off
-    -DWITH_QEdje=Off
     # GPS support for geolocation" "http://gpsd.berlios.de/"
     -DWITH_libgps:BOOL=FALSE
     # optional kdepimlibs support, adds 3 pim-related plasma data-engines
