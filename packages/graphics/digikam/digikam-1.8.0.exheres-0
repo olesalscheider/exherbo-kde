@@ -16,6 +16,8 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="doc gphoto2 nepomuk"
 #    themedesigner [[ description = [ Build digiKam theme designer ] ]]
 
+RESTRICT="test"
+
 # MarbleWidget: marble? ( >=kde/kdeedu-4.1.85 )
 # LensFun:      lensfun? ( media-libs/lensfun ) [[ url = http://lensfun.berlios.de/ ]]
 
