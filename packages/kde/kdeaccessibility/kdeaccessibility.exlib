@@ -6,9 +6,17 @@ require kde.org
 
 if ever at_least 4.4.92; then
     _KTTSD_NAME=jovie
-    MYOPTIONS+="
-        speechd [[ description = [ Speech Dispatcher for Jovie ] requires = [ kde_parts: ${_KTTSD_NAME} ] ]]
-    "
+
+    if ever at_least 4.5.95; then
+        MYOPTIONS+="
+            speechd [[ description = [ Speech Dispatcher for Jovie and Kaccessible ] ]]
+            speechd? ( ( kde_parts: ${_KTTSD_NAME} kaccessible ) [[ number-selected = at-least-one ]] )
+        "
+    else
+        MYOPTIONS+="
+            speechd [[ description = [ Speech Dispatcher for Jovie ] requires = [ kde_parts: ${_KTTSD_NAME} ] ]]
+        "
+    fi
     DEPENDENCIES+="
         build+run:
             kde_parts:${_KTTSD_NAME}? (
@@ -39,6 +47,19 @@ http://kmag.sourceforge.net/
 
 LICENCES="GPL-2"
 MY_KDE_PARTS="iconthemes kmag kmousetool kmouth ${_KTTSD_NAME}"
+
+if ever at_least 4.5.95; then
+    DESCRIPTION+="* kaccessible - services like focus tracking and a screen reader"
+    MY_KDE_PARTS+=" kaccessible"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kaccessible? (
+                speechd? ( app-speech/speechd )
+                build:
+                    dev-util/pkg-config
+            )
+    "
+fi
 
 MYOPTIONS+="
     kde_parts:
