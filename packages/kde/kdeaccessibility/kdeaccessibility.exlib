@@ -1,18 +1,21 @@
 # Copyright 2010 Yury G. Kudryashov <urkud+exherbo@ya.ru>
-# Copyright 2010 Bo Ørsted Andresen
+# Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
 
 if ever at_least 4.4.92; then
     _KTTSD_NAME=jovie
+    MYOPTIONS+="
+        speechd [[ description = [ Speech Dispatcher for Jovie ] requires = [ kde_parts: ${_KTTSD_NAME} ] ]]
+    "
     DEPENDENCIES+="
         build+run:
             kde_parts:${_KTTSD_NAME}? (
-                app-speech/opentts
-                app-speech/speechd
+                speechd? ( app-speech/speechd )
+                !speechd? ( app-speech/opentts )
             )
-    " # http://www.opentts.org - Jovie requires either speech dispatcher or opentts
+    "
 else
     _KTTSD_NAME=kttsd
     DEPENDENCIES+="
@@ -53,5 +56,7 @@ DEPENDENCIES+="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( "kde_parts:${_KTTSD_NAME} Speechd" )
+if ever at_least 4.4.92; then
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Speechd "!speechd Opentts" )
+fi
 
