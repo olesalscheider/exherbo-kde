@@ -27,7 +27,7 @@ HOMEPAGE="
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # Only plugins and protocols with external dependencies are made optional
 # krfb from 4.6 contains an internal copy of libvncserver -> Deactivated for KDE 4.6
-MY_KDE_PARTS+="filesharing kget kopete kppp krdc kdnssd"
+MY_KDE_PARTS+="filesharing kdnssd kget kopete kppp krdc"
 MY_IM_PROTOCOLS+="
     gadu [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
     googletalk [[ requires = [ im_protocols: xmpp ] description = [ Voice calls over the Google Talk protocol ] ]]
@@ -44,6 +44,49 @@ MY_KOPETE_PLUGINS+="
     wlm_voice [[ requires = [ im_protocols: wlm ]
                  description = [ Voice clips support in Windows Live Messenger Kopete plugin ] ]]
 "
+
+if ever at_least 4.5.95; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kopete? (
+                im_protocols:wlm? (
+                    dev-libs/boost
+                )
+            )
+    "
+else
+    MY_KDE_PARTS+=" krfb"
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:krfb? (
+                net-libs/libvncserver[>=0.9]
+                x11-libs/libXtst
+            )
+    "
+fi
+
+if ever at_least 4.4.80; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/soprano
+            kde/kdelibs:${SLOT}[>=${PV}]
+            kde/kdebase-runtime:${SLOT}[>=${PV}]
+            kde_parts:kget? (
+                app-text/shared-desktop-ontologies[>=0.4]
+            )
+    "
+else
+    MYOPTIONS="nepomuk [[ requires = [ kde_parts: kget ] ]]
+        ${MYOPTIONS}"
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
+            nepomuk? (
+                dev-libs/soprano
+                kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
+            )
+    "
+fi
 
 MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] requires = [ kde_parts: kget ] ]]
@@ -136,49 +179,6 @@ DEPENDENCIES+="
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 
-if ever at_least 4.5.95; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kopete? (
-                im_protocols:wlm? (
-                    dev-libs/boost
-                )
-            )
-    "
-else
-    MY_KDE_PARTS+="krfb"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:krfb? (
-                net-libs/libvncserver[>=0.9]
-                x11-libs/libXtst
-            )
-    "
-fi
-
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano
-            kde/kdelibs:${SLOT}[>=${PV}]
-            kde/kdebase-runtime:${SLOT}[>=${PV}]
-            kde_parts:kget? (
-                app-text/shared-desktop-ontologies[>=0.4]
-            )
-    "
-else
-    MYOPTIONS="nepomuk [[ requires = [ kde_parts: kget ] ]]
-        ${MYOPTIONS}"
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-            nepomuk? (
-                dev-libs/soprano
-                kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
-            )
-    "
-fi
-
 # FIXME
 # Warning: kppp uses setuid
 
@@ -237,22 +237,6 @@ src_configure() {
         cmakeparams+=( -DWITH_QCA2=OFF )
     fi
 
-    # Deactivate krfb for KDE 4.6
-    if ever at_least 4.5.95; then
-        cmakeparams+=( -DBUILD_krfb=FALSE )
-        if option vnc; then
-            cmakeparams+=( -DWITH_LibVNCServer=ON )
-        else
-            cmakeparams+=( -DWITH_LibVNCServer=OFF )
-        fi
-    else
-        if option kde_parts:krfb || option vnc; then
-            cmakeparams+=( -DWITH_LibVNCServer=ON )
-        else
-            cmakeparams+=( -DWITH_LibVNCServer=OFF )
-        fi
-    fi
-
     cmakeparams+=(
         $(cmake_with im_protocols:wlm GIF)
         $(cmake_with im_protocols:GOOGLETALK)
@@ -279,6 +263,22 @@ src_configure() {
             $(cmake_with Nepomuk)
             $(cmake_with nepomuk Soprano)
         )
+    fi
+
+    # Deactivate krfb for KDE 4.6
+    if ever at_least 4.5.95; then
+        cmakeparams+=( -DBUILD_krfb=FALSE )
+        if option vnc; then
+            cmakeparams+=( -DWITH_LibVNCServer=ON )
+        else
+            cmakeparams+=( -DWITH_LibVNCServer=OFF )
+        fi
+    else
+        if option kde_parts:krfb || option vnc; then
+            cmakeparams+=( -DWITH_LibVNCServer=ON )
+        else
+            cmakeparams+=( -DWITH_LibVNCServer=OFF )
+        fi
     fi
 
     #   $(cmake_with im_protocols:meanwhile) \
