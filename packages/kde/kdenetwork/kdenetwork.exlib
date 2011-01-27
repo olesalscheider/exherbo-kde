@@ -17,7 +17,6 @@ kget: Download manager
 kopete: Multi-protocol instant messaging client with various plugins for extra functionality
 kppp: A frontend to pppd
 krdc: KDE remote desktop connection (RDP and VNC) client
-krfb: Desktop sharing server, allow others to access your desktop via VNC
 "
 HOMEPAGE="
     http://www.kde.org/
@@ -46,22 +45,31 @@ MY_KOPETE_PLUGINS+="
 "
 
 if ever at_least 4.5.95; then
+    MY_IM_PROTOCOLS+=" ilbc [[ description = [ iLBC codec support for voice calls over Jabber ] requires = [ im_protocols: jingle ] ]]"
     DEPENDENCIES+="
         build+run:
             kde_parts:kopete? (
-                im_protocols:wlm? (
-                    dev-libs/boost
-                )
+                im_protocols:ilbc? ( media-plugins/msilbc )
+                im_protocols:wlm? ( dev-libs/boost )
             )
     "
 else
+    DESCRIPTION+="krfb: Desktop sharing server, allow others to access your desktop via VNC"
     MY_KDE_PARTS+=" krfb"
+    MYOPTIONS+="
+        telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
+        webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
+    "
     DEPENDENCIES+="
         build+run:
+            kde_parts:krdc? (
+                telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
+            )
             kde_parts:krfb? (
                 net-libs/libvncserver[>=0.9]
                 x11-libs/libXtst
             )
+            webkit? ( kde/kwebkitpart )
     "
 fi
 
@@ -76,8 +84,7 @@ if ever at_least 4.4.80; then
             )
     "
 else
-    MYOPTIONS="nepomuk [[ requires = [ kde_parts: kget ] ]]
-        ${MYOPTIONS}"
+    MYOPTIONS+=" nepomuk [[ requires = [ kde_parts: kget ] ]]"
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
@@ -88,10 +95,9 @@ else
     "
 fi
 
+
 MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] requires = [ kde_parts: kget ] ]]
-    telepathy [[ requires = [ kde_parts: krdc ] description = [ Add Telepathy Tubes support to kdrc ] ]]
-    webkit    [[ requires = [ kde_parts: kget ] description = [ Kget support for KWebKitPart ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
     vnc [[ requires = [ kde_parts: krdc ] ]]
@@ -118,7 +124,6 @@ DEPENDENCIES+="
             kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
             kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
             sqlite? ( dev-db/sqlite:3 )
-            webkit? ( kde/kwebkitpart )
         )
         kde_parts:kopete? (
             kde/qimageblitz
@@ -164,7 +169,6 @@ DEPENDENCIES+="
             )
         )
         kde_parts:krdc? (
-            telepathy? ( net-im/telepathy-qt4[>=0.1.9] )
             vnc? ( net-libs/libvncserver[>=0.9] )
         )
     suggestion:
@@ -241,8 +245,6 @@ src_configure() {
         $(cmake_with im_protocols:wlm GIF)
         $(cmake_with im_protocols:GOOGLETALK)
         $(cmake_with im_protocols:googletalk Expat)
-        $(cmake_with telepathy TelepathyQt4)
-        $(cmake_with webkit KWebKitPart)
     )
 
     if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
@@ -267,18 +269,22 @@ src_configure() {
 
     # Deactivate krfb for KDE 4.6
     if ever at_least 4.5.95; then
-        cmakeparams+=( -DBUILD_krfb=FALSE )
-        if option vnc; then
-            cmakeparams+=( -DWITH_LibVNCServer=ON )
-        else
-            cmakeparams+=( -DWITH_LibVNCServer=OFF )
-        fi
+        cmakeparams+=(
+            -DBUILD_krfb=FALSE
+            $(cmake_with im_protocols:ilbc msiLBC)
+            $(cmake_with vnc LibVNCServer)
+        )
     else
         if option kde_parts:krfb || option vnc; then
             cmakeparams+=( -DWITH_LibVNCServer=ON )
         else
             cmakeparams+=( -DWITH_LibVNCServer=OFF )
         fi
+        cmakeparams+=(
+            # telepathy qt4 can be enabled in KDE 4.6.0 by enabling -DBUILD_EXPERIMENTAL_TUBES_SUPPORT but it's highly discouraged
+            $(cmake_with telepathy TelepathyQt4)
+            $(cmake_with webkit KWebKitPart)
+        )
     fi
 
     #   $(cmake_with im_protocols:meanwhile) \
@@ -294,7 +300,7 @@ src_configure() {
         $(cmake_with im_protocols:gadu) \
         $(cmake_with im_protocols:gadu Libgadu) \
         $(cmake_with im_protocols:groupwise) \
-        $(cmake_with im_protocols:jingle) \
+        $(cmake_with im_protocols:JINGLE) \
         $(cmake_with im_protocols:jingle Alsa) \
         $(cmake_with im_protocols:jingle Speex) \
         $(cmake_with im_protocols:wlm) \
