@@ -5,3 +5,5 @@ require kdebase-workspace
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PNV}-0001-Remove-MALLOC_CHECK_-from-4.6-branch.patch )
+
