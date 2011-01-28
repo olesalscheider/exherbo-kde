@@ -5,3 +5,7 @@ require akonadi
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/Make-sqlite-optional.patch
+)
+
