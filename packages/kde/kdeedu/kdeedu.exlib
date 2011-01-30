@@ -156,13 +156,13 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_configure() {
-    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra; then
+    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra || { ever at_least 4.5.95 && option kde_parts:kstars; }; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
     fi
 
-    if option 3dviewer || option kde_parts:step; then
+    if option 3dviewer || option kde_parts:step || { ever at_least 4.5.95 && option kde_parts:kstars; }; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=OFF )
