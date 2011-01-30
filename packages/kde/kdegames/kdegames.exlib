@@ -1,6 +1,7 @@
 # Copyright 2008 Arne Janbu <arnej@ampheus.de>
 # Copyright 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -21,9 +22,9 @@ DESCRIPTION="
 HOMEPAGE="http://games.kde.org/"
 LICENCES="GPL-2"
 
-MY_KDE_PARTS="bomber bovo granatier kapman katomic kbattleship kblackbox kblocks kbounce kbreakout
-kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube klines kmahjongg kmines knetwalk
-kolf kollision konquest kpat kreversi kshisen ksirk kspaceduel ksquares ksudoku ktron
+MY_KDE_PARTS="bomber bovo granatier kajongg kapman katomic kbattleship kblackbox kblocks kbounce
+kbreakout kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube klines kmahjongg kmines
+knetwalk kolf kollision konquest kpat kreversi kshisen ksirk kspaceduel ksquares ksudoku ktron
 ktuberling kubrick lskat palapeli
 "
 
@@ -46,20 +47,6 @@ else
     CMAKE_SRC_CONFIGURE_OPTIONS+=( 'gluon GRANATIER_USE_GLUON_SOUND_BACKEND' )
 fi
 
-if ever at_least 4.4.80; then
-    MY_KDE_PARTS+=" kajongg"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kajongg? (
-                dev-db/sqlite:3
-                dev-lang/python:=[>=2.6&<3.0]
-                dev-python/PyQt4
-                kde/kdebindings:${SLOT}[>=${PV}]
-                net-twisted/twisted
-            )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
-fi
-
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS}
 "
@@ -69,6 +56,13 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon
         x11-libs/qt:4[>=4.6.0][opengl][phonon]
+        kde_parts:kajongg? (
+            dev-db/sqlite:3
+            dev-lang/python:=[>=2.6&<3.0]
+            dev-python/PyQt4
+            kde/kdebindings:${SLOT}[>=${PV}]
+            net-twisted/twisted
+        )
         kde_parts:kigo? (
             games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
         )
@@ -78,4 +72,5 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenGL:BOOL=ON
     -DWITH_QCA2:BOOL=ON
 )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
 

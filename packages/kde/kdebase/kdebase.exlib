@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2010 Bo Ørsted Andresen
+# Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -26,6 +26,8 @@ DEPENDENCIES="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
+        dev-libs/soprano[>=2.1.67][virtuoso(+)]
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdebase-runtime:${SLOT}[>=${PV}]
         kde/kdebase-workspace:${SLOT}[>=${PV}]
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
@@ -39,12 +41,8 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2=ON
     -DWITH_OpenGL=ON
-    -DWITH_Soprano=ON
+    -DWITH_{Nepomuk,Soprano}:BOOL=ON
     -DWITH_XKB=ON
-
-    # gone in >= 4.4.0
-    -DWITH_KdeWebKit=OFF
-    -DWITH_WebKitPart=OFF
 )
 
 KDE_APPS_PREFIX="apps"
@@ -66,33 +64,5 @@ if ! ever at_least 4.5.95; then
             kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
             webkit? ( kde/kwebkitpart )
     "
-fi
-
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano[>=2.1.67][virtuoso(+)]
-            kde/kdelibs:${SLOT}[>=${PV}]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk:BOOL=ON )
-else
-    DESCRIPTION+="kinfocenter: Information Center"
-    MYOPTIONS+=" ieee1394 nepomuk"
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-            sys-apps/pciutils
-            sys-apps/usbutils-data [[
-                note = [ required to display USB information in kinfocenter ]
-            ]]
-            ieee1394? ( media-libs/libraw1394 )
-            nepomuk? ( dev-libs/soprano[>=2.1.67][virtuoso(+)] )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_PCIUTILS=ON
-        -DKDE_USBIDS_DIR="/usr/share/misc"
-        -DDISABLE_USBIDS_INSTALL=ON
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'ieee1394 RAW1394' Nepomuk )
 fi
 

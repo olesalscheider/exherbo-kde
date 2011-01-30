@@ -4,41 +4,14 @@
 
 require kde.org
 
-if ever at_least 4.4.92; then
-    _KTTSD_NAME=jovie
-
-    if ever at_least 4.5.95; then
-        MYOPTIONS+="
-            speechd [[ description = [ Speech Dispatcher for Jovie and Kaccessible ] ]]
-            speechd? ( ( kde_parts: ${_KTTSD_NAME} kaccessible ) [[ number-selected = at-least-one ]] )
-        "
-    else
-        MYOPTIONS+="
-            speechd [[ description = [ Speech Dispatcher for Jovie ] requires = [ kde_parts: ${_KTTSD_NAME} ] ]]
-        "
-    fi
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:${_KTTSD_NAME}? (
-                speechd? ( app-speech/speechd )
-                !speechd? ( app-speech/opentts )
-            )
-    "
-else
-    _KTTSD_NAME=kttsd
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:${_KTTSD_NAME}? ( app-speech/speechd )
-    "
-fi
 
 SUMMARY="KDE accessibility programs"
 DESCRIPTION="
 * Mono icon theme
+* jovie - text to speech daemon
 * kmag - screen magnifier
 * kmousetool - clicks the mouse for you
 * kmouth - enables persons that cannot speak to let their computers speak
-* ${_KTTSD_NAME} - text to speech daemon
 "
 HOMEPAGE="
 http://accessibility.kde.org/
@@ -46,11 +19,15 @@ http://kmag.sourceforge.net/
 "
 
 LICENCES="GPL-2"
-MY_KDE_PARTS="iconthemes kmag kmousetool kmouth ${_KTTSD_NAME}"
+MY_KDE_PARTS="iconthemes kmag kmousetool kmouth jovie"
 
 if ever at_least 4.5.95; then
     DESCRIPTION+="* kaccessible - services like focus tracking and a screen reader"
     MY_KDE_PARTS+=" kaccessible"
+    MYOPTIONS+="
+        speechd [[ description = [ Speech Dispatcher for Jovie and Kaccessible ] ]]
+        speechd? ( ( kde_parts: jovie kaccessible ) [[ number-selected = at-least-one ]] )
+    "
     DEPENDENCIES+="
         build+run:
             kde_parts:kaccessible? (
@@ -58,6 +35,10 @@ if ever at_least 4.5.95; then
                 build:
                     dev-util/pkg-config
             )
+    "
+else
+    MYOPTIONS+="
+        speechd [[ description = [ Speech Dispatcher for Jovie ] requires = [ kde_parts: jovie ] ]]
     "
 fi
 
@@ -68,6 +49,10 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde_parts:jovie? (
+            speechd? ( app-speech/speechd )
+            !speechd? ( app-speech/opentts )
+        )
         kde_parts:kmag? ( x11-libs/qt:4[qt3support] )
         kde_parts:kmousetool? (
             media-libs/phonon
@@ -77,7 +62,5 @@ DEPENDENCIES+="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
-if ever at_least 4.4.92; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Speechd "!speechd Opentts" )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Speechd "!speechd Opentts" )
 

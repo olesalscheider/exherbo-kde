@@ -1,5 +1,5 @@
 # Copyright 2008-2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kopete-scm.kdebuild-1' from the genkdesvn project, which is:
 #   Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -73,29 +73,6 @@ else
     "
 fi
 
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano
-            kde/kdelibs:${SLOT}[>=${PV}]
-            kde/kdebase-runtime:${SLOT}[>=${PV}]
-            kde_parts:kget? (
-                app-text/shared-desktop-ontologies[>=0.4]
-            )
-    "
-else
-    MYOPTIONS+=" nepomuk [[ requires = [ kde_parts: kget ] ]]"
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-            nepomuk? (
-                dev-libs/soprano
-                kde/kdebase-runtime:${SLOT}[>=${PV}][nepomuk(+)]
-            )
-    "
-fi
-
-
 MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] requires = [ kde_parts: kget ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
@@ -115,11 +92,15 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
+        dev-libs/soprano
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
+        kde/kdebase-runtime:${SLOT}[>=${PV}]
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
             app-crypt/gpgme
+            app-text/shared-desktop-ontologies[>=0.4]
             dev-libs/boost
             kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
             kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
@@ -200,6 +181,7 @@ src_prepare() {
 src_configure() {
     local x kopete_plugins kopete_protocols cmakeparams=(
         -DWITH_GLIB2=OFF # needed only for Xmms support
+        -DWITH_Nepomuk:BOOL=ON
         -DWITH_Xmms=OFF
         -DWITH_XMMS_LIBRARIES=OFF
         -DWITH_XMMS_INCLUDE_DIRS=OFF
@@ -258,15 +240,6 @@ src_configure() {
         cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
     fi
 
-    if ever at_least 4.4.80; then
-        cmakeparams+=( -DWITH_Nepomuk:BOOL=ON )
-    else
-        cmakeparams+=(
-            $(cmake_with Nepomuk)
-            $(cmake_with nepomuk Soprano)
-        )
-    fi
-
     # Deactivate krfb for KDE 4.6
     if ever at_least 4.5.95; then
         cmakeparams+=(
@@ -289,7 +262,6 @@ src_configure() {
 
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
-    # >=4.2.88 uses WITH_JINGLE, older uses NO_JINGLE
     ecmake \
         $(kde4_shared_cmake_params) \
         "${cmakeparams[@]}" \

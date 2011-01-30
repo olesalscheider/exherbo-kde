@@ -1,4 +1,4 @@
-# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -7,7 +7,7 @@ SUMMARY="KDE Software Development Kit"
 DESCRIPTION="
 $(ever at_least 4.5.95 || echo 'kbugbuster: a graphical frontend for the KDE bug reporting system')
 cervisia: CVS client part
-$(ever at_least 4.4.80 && echo 'dolphin-plugins: scm plugins for Dolphin for git and svn')
+dolphin-plugins: scm plugins for Dolphin for git and svn
 kapptemplate: shell script to easy the beginning of new apps
 kate: A fast and advanced text editor, extensible with nice plugins
 kcachegrind: A Profiling Visualisation Tool
@@ -48,26 +48,12 @@ if ever at_least 4.5.95; then
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:okteta QCA2' )
 else
-    if ever at_least 4.4.80; then
-        MY_KDE_PARTS+=" dolphin-plugins"
-    fi
     DESCRIPTION+="kbugbuster: a graphical frontend for the KDE bug reporting system"
-    MY_KDE_PARTS+=" kbugbuster"
+    MY_KDE_PARTS+=" dolphin-plugins kbugbuster"
     DEPENDENCIES+="
         build+run:
             kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
     "
-fi
-
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:poxml? ( dev-java/antlr[=2*] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:poxml Antlr2'
-    )
-    #macro_log_feature(HAVE_ANTLR "Antlr" "Language tool for constructing recognizers, compilers, etc" "http://www.antlr2.org/" FALSE "2.x" "Used for the po2xml and swappo tools.")
 fi
 
 MYOPTIONS+="
@@ -90,6 +76,7 @@ DEPENDENCIES+="
             app-spell/hunspell
             x11-libs/qt:4[sql][sqlite]
         )
+        kde_parts:poxml? ( dev-java/antlr[=2*] )
         kde_parts:umbrello? (
             dev-libs/boost[>=1.33.1]
             dev-libs/libxslt
@@ -107,6 +94,8 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'
     'kde_parts:lokalize HUNSPELL'
+    #macro_log_feature(HAVE_ANTLR "Antlr" "Language tool for constructing recognizers, compilers, etc" "http://www.antlr2.org/" FALSE "2.x" "Used for the po2xml and swappo tools.")
+    'kde_parts:poxml Antlr2'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
 )
 
