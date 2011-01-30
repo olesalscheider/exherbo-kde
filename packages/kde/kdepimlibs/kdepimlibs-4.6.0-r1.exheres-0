@@ -5,3 +5,5 @@ require kdepimlibs
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-backport-SVN-commit-r1216161-by-winterz.patch )
+
