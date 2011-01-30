@@ -47,6 +47,16 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:1.8 )
 "
 
+if ever at_least 4.5.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            python? (
+                dev-python/sip[>=4.12.0]
+                dev-python/PyQt4[>=4.8.2][opengl][sql][webkit]
+            )
+    "
+fi
+
 if ever at_least 4.5.0 ; then
     DEPENDENCIES+="
         build+run:
@@ -67,6 +77,8 @@ fi
 
 if ever at_least scm ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
+elif ever at_least 4.5.95 ; then
+    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.5.0]"
 elif ever at_least 4.5.0 ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.4.0]"
 else
@@ -115,7 +127,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'python PyQt4'
     'python PythonLibrary'
     'python SIP'
-    Ruby
+    Ruby # hard dep of the ruby bindings in KDE 4.6
 )
 
 kdebindings_src_install() {
