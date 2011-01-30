@@ -1,4 +1,4 @@
-# Copyright 2009, 2010 Ingmar Vanhassel
+# Copyright 2009, 2010, 2011 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -10,7 +10,7 @@ Environment. It currently supports the Twitter.com and Identi.ca services. The
 name comes from an ancient Persian word that means sparrow.
 "
 HOMEPAGE="http://choqok.gnufolks.org/"
-DOWNLOADS="http://choqok.gnufolks.org/pkgs/${PN}-${PV}.tar.bz2"
+DOWNLOADS="http://choqok.gnufolks.org/pkgs/${PNV}.tar.bz2"
 
 LICENCES="GPL-3"
 SLOT="0"
@@ -24,4 +24,6 @@ DEPENDENCIES="
         kde/kdelibs:4[>=4.4.0]
         sys-auth/qoauth
 "
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DQTINDICATE_DISABLE:BOOL=TRUE )
 
