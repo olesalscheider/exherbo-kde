@@ -45,7 +45,7 @@ DEPENDENCIES="
         net-print/cups
         sys-libs/zlib
         x11-libs/cairo[>=1.4.10][X]
-        x11-libs/qt:4[>=4.5.0]
+        x11-libs/qt:4[>=4.6.0]
         podofo? ( app-text/podofo[>=0.5.0] )
         spell? ( app-spell/aspell )
     suggestion:
