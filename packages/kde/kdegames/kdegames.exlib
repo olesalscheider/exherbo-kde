@@ -57,6 +57,7 @@ if ever at_least 4.4.80; then
                 kde/kdebindings:${SLOT}[>=${PV}]
                 net-twisted/twisted
             )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
 fi
 
 MYOPTIONS+="
