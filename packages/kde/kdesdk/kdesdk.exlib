@@ -116,7 +116,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 
 src_configure() {
-    if option kde_parts:kdeaccounts-plugin || ! ever at_least 4.5.95 && option kde_parts:kbugbuster; then
+    if option kde_parts:kdeaccounts-plugin || { ! ever at_least 4.5.95 && option kde_parts:kbugbuster; }; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=TRUE )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=FALSE )
