@@ -35,7 +35,7 @@ if ever at_least 4.5.95; then
                 media-libs/libsndfile
             )"
     # Granatier can use openal as a sound backend. If openal is deactivated it uses phonon.
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenAL=Off )
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenAL=OFF )
 else
     MY_KDE_PARTS+=" ksame"
     MYOPTIONS+="
@@ -53,7 +53,7 @@ if ever at_least 4.4.80; then
         build+run:
             kde_parts:kajongg? (
                 dev-db/sqlite:3
-                dev-lang/python:=
+                dev-lang/python:=[>=2.6&<3.0]
                 dev-python/PyQt4
                 kde/kdebindings:${SLOT}[>=${PV}]
                 net-twisted/twisted
@@ -75,7 +75,7 @@ DEPENDENCIES+="
         kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
 "
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_OpenGL=ON
-    -DWITH_QCA2=ON
+    -DWITH_OpenGL:BOOL=ON
+    -DWITH_QCA2:BOOL=ON
 )
 
