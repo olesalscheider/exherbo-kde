@@ -29,13 +29,12 @@ ktuberling kubrick lskat palapeli
 
 if ever at_least 4.5.95; then
     MY_KDE_PARTS+=" klickety"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:granatier? (
-                media-libs/libsndfile
-            )"
-    # Granatier can use openal as a sound backend. If openal is deactivated it uses phonon.
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenAL=OFF )
+    # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
+    # If OpenAL isn't enabled, then enabling sndfile doesn't do anything
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_OpenAL:BOOL=OFF
+        -DWITH_SndFile:BOOL=OFF
+    )
 else
     MY_KDE_PARTS+=" ksame"
     MYOPTIONS+="
