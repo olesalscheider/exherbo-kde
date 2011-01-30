@@ -33,6 +33,7 @@ printer-applet superkaramba sweeper"
 
 if ever at_least 4.5.95; then
     MY_KDE_PARTS+=" filelight"
+    DEPENDENCIES+=" build+run: !kde/filelight [[ description = [ filelight is now a part of ${CATEGORY}/${PN} ] ]]"
 elif ever at_least 4.4.80; then
     MY_KDE_PARTS+=" okteta"
     DEPENDENCIES+="
