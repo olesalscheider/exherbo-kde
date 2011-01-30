@@ -134,6 +134,3 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'python PythonLibs'
 )
 
-# FIXME 4 new ark plugins in kdeutils.git/ark/plugins, check whether they have additional run dependencies
-# FIXME (Needs verification) All subdirs in doc/ are added & built regardless of whether the corresponding applications are built
-
