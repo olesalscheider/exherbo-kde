@@ -40,19 +40,18 @@ if ever at_least 4.5.95; then
             )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_LibKonq:BOOL=TRUE
         # kde_parts doesn't work with / and these plugins are very small and need no
         # additional dependencies, so we hard enable those
         -DBUILD_dolphin-plugins/git:BOOL=TRUE
         -DBUILD_dolphin-plugins/svn:BOOL=TRUE
     )
-elif ever at_least 4.4.80; then
-    MY_KDE_PARTS+=" kbugbuster dolphin-plugins"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
-    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:okteta QCA2' )
 else
-DESCRIPTION+="kbugbuster: a graphical frontend for the KDE bug reporting system"
+    if ever at_least 4.4.80; then
+        MY_KDE_PARTS+=" dolphin-plugins"
+    fi
+    DESCRIPTION+="kbugbuster: a graphical frontend for the KDE bug reporting system"
     MY_KDE_PARTS+=" kbugbuster"
     DEPENDENCIES+="
         build+run:
