@@ -42,3 +42,9 @@ DEPENDENCIES="
         sys-devel/gdb[>=7.0][python] [[ description = [ The only supported debugger ] ]]
 "
 
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    "okteta LibOktetaKasten"
+    "okteta LibOkteta"
+    "okteta LibKasten"
+)
+
