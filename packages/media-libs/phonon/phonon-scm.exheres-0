@@ -6,7 +6,7 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-SCM_REPOSITORY="git://git.kde.org/${PN}.git"
+SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
 
 require phonon scm-git
 
