@@ -3,7 +3,5 @@
 
 require bangarang
 
-WORK=${WORKBASE}/bangarang-bangarang
-
 PLATFORMS="~amd64 ~x86"
 

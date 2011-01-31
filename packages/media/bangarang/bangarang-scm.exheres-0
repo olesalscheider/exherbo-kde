@@ -1,8 +1,7 @@
 # Copyright 2010 Paul Mulders <info@mld.demon.nl>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://gitorious.org/bangarang/bangarang.git"
-require bangarang scm-git
+require bangarang
 
 PLATFORMS="~amd64 ~x86"
 
