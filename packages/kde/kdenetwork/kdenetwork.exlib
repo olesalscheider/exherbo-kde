@@ -108,7 +108,7 @@ DEPENDENCIES+="
         )
         kde_parts:kopete? (
             kde/qimageblitz
-            media-libs/libv4l
+            media-libs/v4l-utils
             x11-libs/libICE
             x11-libs/libSM
             x11-libs/libX11
