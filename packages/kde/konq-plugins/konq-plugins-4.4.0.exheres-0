@@ -5,3 +5,5 @@ require konq-plugins
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-fix-compile-with-qt-4.7.patch )
+
