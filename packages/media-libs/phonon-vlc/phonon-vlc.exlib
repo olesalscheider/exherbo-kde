@@ -3,6 +3,8 @@
 
 require cmake
 
+myexparam phonon_ver
+
 MY_PN=phonon-backend-vlc
 MY_PNV=${MY_PN}-${PV}
 
@@ -19,16 +21,9 @@ DEPENDENCIES="
         kde/automoc4[>=0.9.86]
     build+run:
         media/vlc[>=1.1.1][v4l?]
-        media-libs/phonon
+        media-libs/phonon[>=$(exparam phonon_ver)]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
-
-if ever at_least scm; then
-    DEPENDENCIES+="
-        build+run:
-            media-libs/phonon[~scm]
-    "
-fi
 
 WORK="${WORKBASE}"/${MY_PNV}
 

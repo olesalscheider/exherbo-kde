@@ -3,7 +3,7 @@
 
 SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
 
-require phonon-vlc scm-git
+require phonon-vlc [ phonon_ver="scm" ] scm-git
 
 DOWNLOADS=""
 
