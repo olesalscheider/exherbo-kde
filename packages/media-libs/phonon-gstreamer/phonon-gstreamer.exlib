@@ -1,0 +1,35 @@
+# Copyright 2011 Johannes Nixdorf <mixi@user-helfen-usern.de>
+# Distributed unter the terms of the GNU General Public License v2
+
+require cmake
+
+MY_PN=phonon-backend-gstreamer
+
+SUMMARY="A GStreamer-based phonon backend"
+HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
+if ! ever is_scm ; then
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PN}-${PV}.tar.bz2"
+    WORK="${WORKBASE}/${MY_PN}-${PV}"
+fi
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/glib:2
+        dev-libs/libxml2:2.0
+        media-libs/gstreamer:0.10
+        media-libs/phonon[>=${PV}]
+        media-plugins/gst-plugins-base:0.10
+        sys-sound/alsa-lib
+        x11-dri/mesa
+"
+
+BUGS_TO="mixi@user-helfen-usern.de"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DWITH_Alsa:BOOL=TRUE
+)
+

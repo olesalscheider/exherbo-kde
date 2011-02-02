@@ -1,9 +1,0 @@
-# Copyright 2010 Paul Mulders <info@mld.demon.nl>
-# Distributed under the terms of the GNU General Public License v2
-
-require bangarang
-
-WORK=${WORKBASE}/bangarang-bangarang
-
-PLATFORMS="~amd64 ~x86"
-

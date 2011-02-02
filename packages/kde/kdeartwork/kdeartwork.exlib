@@ -1,4 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -7,8 +8,10 @@ SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MYOPTIONS="xscreensaver [[ description = [ Support xscreensaver screensavers ] ]]"
-
+MYOPTIONS="
+    autorotate [[ description = [ Auto-rotate photos in kslideshow ] ]]
+    xscreensaver [[ description = [ Support xscreensaver screensavers ] ]]
+"
 DEPENDENCIES="
     build:
         xscreensaver? (
@@ -20,22 +23,16 @@ DEPENDENCIES="
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/qt:4[opengl]
+        autorotate? ( kde/kdegraphics:${SLOT}[>=${PV}] )
         xscreensaver? (
             app-pim/strigi[>=0.6.3][dbus][qt4]
             x11-apps/xscreensaver
         )
 "
-if ever at_least 4.5.2; then
-    MYOPTIONS+=" autorotate [[ description = [ Auto-rotate photos in kslideshow ] ]]"
-    DEPENDENCIES+="
-        build+run:
-            autorotate? ( kde/kdegraphics:${SLOT}[>=${PV}] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'autorotate Kexiv2' )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'autorotate Kexiv2'
     'xscreensaver Xscreensaver'
     'xscreensaver Eigen2'
 )

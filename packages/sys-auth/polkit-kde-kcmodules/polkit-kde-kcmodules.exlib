@@ -6,10 +6,12 @@ require kde
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
 
-if ever at_least scm; then
-    SCM_REPOSITORY="git://git.kde.org/${MY_PN}.git"
-
+if ever is_scm scm; then
+    SCM_REPOSITORY="git://anongit.kde.org/${MY_PN}.git"
     require scm-git
+else
+    DOWNLOADS="http://dev.exherbo.org/~zlin/distfiles/${MY_PNV}.tar.bz2"
+    WORK=${WORKBASE}/${MY_PNV}
 fi
 
 SUMMARY="KDE configuration modules which allow administrators to change Polkit-1 settings"

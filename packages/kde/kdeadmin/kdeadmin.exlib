@@ -10,7 +10,6 @@ DESCRIPTION="
 * kuser: User and group manager
 * strigi-analyzer: Strigi plugin for rpm files
 * system-config-printer-kde: Port of Red Hat's Gnome system-config-printer to KDE
-Other, currently disabled parts knetworkconf
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
@@ -37,11 +36,6 @@ DEPENDENCIES="
         )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # KDE control Center Module to configure Network settings
-    # Needs GNOME system tools, http://www.gnome.org/projects/gst/
-    -DBUILD_knetworkconf:BOOL=FALSE
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde PyCups'
     'kde_parts:system-config-printer-kde PyKDE4'
@@ -50,4 +44,13 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde SIP'
     'kde_parts:system-config-printer-kde SystemConfigPrinter'
 )
+
+if ! ever at_least 4.5.95; then
+    DESCRIPTION+="Other, currently disabled parts knetworkconf"
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # KDE control Center Module to configure Network settings
+        # Needs GNOME system tools, http://www.gnome.org/projects/gst/
+        -DBUILD_knetworkconf:BOOL=FALSE
+    )
+fi
 

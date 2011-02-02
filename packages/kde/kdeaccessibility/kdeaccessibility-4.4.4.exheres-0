@@ -1,7 +1,0 @@
-# Copyright 2010 Yury G. Kudryashov <urkud+exherbo@ya.ru>
-# Distributed under the terms of the GNU General Public License v2
-
-require kdeaccessibility
-
-PLATFORMS="~amd64"
-

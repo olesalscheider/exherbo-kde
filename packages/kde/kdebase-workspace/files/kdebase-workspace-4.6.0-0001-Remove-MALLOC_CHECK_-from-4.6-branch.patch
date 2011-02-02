@@ -1,0 +1,42 @@
+Source: kde-packager@
+Upstream: Yes.
+Reason: Upstream fucked up again and forgot to remove this before releasing.
+
+From d54096d893ab892bdf86908373ca95275630809f Mon Sep 17 00:00:00 2001
+From: wstephens <wstephens@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Wed, 26 Jan 2011 14:25:13 +0000
+Subject: [PATCH] Remove MALLOC_CHECK_ from 4.6 branch
+ CCMAIL: release-team@kde.org
+ CCMAIL: kde-packager@kde.org
+
+git-svn-id: svn+ssh://svn.kde.org/home/kde/branches/KDE/4.6/kdebase/workspace@1217284 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ startkde.cmake |   12 ------------
+ 1 files changed, 0 insertions(+), 12 deletions(-)
+
+diff --git a/startkde.cmake b/startkde.cmake
+index dde9c23..7a2c5ca 100755
+--- a/startkde.cmake
++++ b/startkde.cmake
+@@ -36,18 +36,6 @@ fi
+ # we have to unset this for Darwin since it will screw up KDE's dynamic-loading
+ unset DYLD_FORCE_FLAT_NAMESPACE
+ 
+-# Enable lightweight memory corruption checker if not already set
+-# -- this is for trunk only, we remove it for releases
+-if [ "x$MALLOC_CHECK_" = "x" ] && [ -x /lib/libc.so.6 ]; then
+-    # Extract the first two components of the version from the output.
+-    glibc_version=$(LC_ALL=C /lib/libc.so.6 | sed -e 's/[^0-9]*\([0-9]\.[0-9]\+\).*/\1/;s/\.\([0-9]\)$/.0\1/;q')
+-
+-    MALLOC_CHECK_=2 # Default to 2 unless glibc 2.9 or higher.
+-    test $glibc_version \> 2.08 && MALLOC_CHECK_=3
+-
+-    export MALLOC_CHECK_
+-fi
+-
+ # in case we have been started with full pathname spec without being in PATH
+ bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
+ if [ -n "$bindir" ]; then
+-- 
+1.7.3.5
+

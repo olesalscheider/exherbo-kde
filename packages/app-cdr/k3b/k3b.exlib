@@ -52,7 +52,6 @@ DEPENDENCIES="
         )
         app-cdr/cdrdao
         app-cdr/dvd+rw-tools[>=5.10]
-        sys-apps/hal
 
     suggestion:
         media-sound/normalize           [[ description = [ Normalize audio volume ] ]]
@@ -65,6 +64,8 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DK3B_ENABLE_TAGLIB:BOOL=TRUE
+    # HAL breaks kde-4.6 and is not needed anymore
+    -DK3B_ENABLE_HAL_SUPPORT:BOOL=FALSE
     # Hard-enabled
     -DWITH_Samplerate:BOOL=TRUE
     # Note optional for libsamplerate, which is a hard dependency. Support for burning audio CDs.

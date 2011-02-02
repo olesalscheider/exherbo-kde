@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -21,17 +21,17 @@ HOMEPAGE="
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
-MY_KDE_PARTS="dragonplayer juk kioslave kmix kscd mplayerthumbs"
+MY_KDE_PARTS="dragonplayer ffmpegthumbs juk kioslave kmix kscd mplayerthumbs"
 
-if ever at_least 4.4.80; then
-    MY_KDE_PARTS+=" ffmpegthumbs"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:ffmpegthumbs FFmpeg'
-        'kde_parts:ffmpegthumbs Swscale'
-    )
+if ever at_least 4.5.95; then
     DEPENDENCIES+="
         build+run:
-            kde_parts:ffmpegthumbs? ( media/ffmpeg )
+            musicbrainz? ( media-libs/libmusicbrainz:3 )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            musicbrainz? ( media-libs/libmusicbrainz:2 )
     "
 fi
 
@@ -47,7 +47,6 @@ MYOPTIONS+="
         kscd [[ requires = [ musicbrainz ] ]]
 "
 
-# XXX Xine is optional for dragonplayer
 DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
@@ -55,10 +54,8 @@ DEPENDENCIES+="
         media-libs/phonon
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
-        kde_parts:dragonplayer? (
-            media-libs/phonon[>=4.3.0][xine]
-            media-libs/xine-lib[>=1.1][xcb(+)]
-        )
+        kde_parts:dragonplayer? ( media-libs/phonon[>=4.3.0] )
+        kde_parts:ffmpegthumbs? ( media/ffmpeg )
         kde_parts:juk? (
             media-libs/taglib[>=1.6]
             tunepimp? ( media-libs/tunepimp )
@@ -79,18 +76,23 @@ DEPENDENCIES+="
             )
         )
         kde_parts:mplayerthumbs? ( run: media/mplayer )
-        musicbrainz? ( media-libs/libmusicbrainz:2 )
     suggestion:
         kde_parts:kioslave? (
             media-sound/lame [[ description = [ Support MP3 in the AudioCD kioslave ] ]]
         )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_PHONON_SUPPORT:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_PHONON_SUPPORT:BOOL=TRUE
+    -DWITH_Xine:BOOL=FALSE
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kde_parts:kioslave Cdparanoia'
     Flac
+    'kde_parts:ffmpegthumbs FFmpeg' # KDE 4.5
+    'kde_parts:ffmpegthumbs FFMPEG' # KDE 4.6
+    'kde_parts:ffmpegthumbs Swscale'
     'kde_parts:juk Taglib'
+    'kde_parts:kioslave Cdparanoia'
     MusicBrainz
     PulseAudio
     TunePimp

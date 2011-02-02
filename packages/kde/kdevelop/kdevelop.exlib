@@ -18,16 +18,33 @@ HOMEPAGE="http://www.kdevelop.org"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 
+MYOPTIONS="okteta [[ description = [ Edit binary files ] ]]"
+
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
         kde/kdevplatform:${SLOT}[>=${PLATFORM_PV}]
-        kde/kdelibs:${SLOT}[>=4.3.0]
+        kde/kdelibs:${SLOT}[>=4.5.0]
         kde/kdebase-workspace:${SLOT}[>=4.2.0]
-        x11-libs/qt:4[>=4.5.2]
+        x11-libs/qt:4[>=4.5.2][webkit]
         x11-misc/shared-mime-info
+        okteta? (
+            || (
+                kde/kdesdk[kde_parts:okteta][>=4.6.0]
+                kde/kdeutils[kde_parts:okteta][~>4.5.0]
+            )
+        )
     suggestion:
+        dev-scm/cvs [[ description = [ Use CVS from within KDevelop ] ]]
+        dev-scm/git [[ description = [ Use Git from within KDevelop ] ]]
+        dev-scm/subversion [[ description = [ Use Subversion from within KDevelop ] ]]
         sys-devel/gdb[>=7.0][python] [[ description = [ The only supported debugger ] ]]
 "
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    "okteta LibOktetaKasten"
+    "okteta LibOkteta"
+    "okteta LibKasten"
+)
 

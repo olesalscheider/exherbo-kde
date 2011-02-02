@@ -3,12 +3,14 @@
 
 require cmake
 
+myexparam phonon_ver
+
 MY_PN=phonon-backend-vlc
 MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="http://www.videolan.org/vlc"
-DOWNLOADS="mirror://kde/stable/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-3"
 SLOT="0"
@@ -19,7 +21,7 @@ DEPENDENCIES="
         kde/automoc4[>=0.9.86]
     build+run:
         media/vlc[>=1.1.1][v4l?]
-        media-libs/phonon
+        media-libs/phonon[>=$(exparam phonon_ver)]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
 

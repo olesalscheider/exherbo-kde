@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2010 Bo Ørsted Andresen
+# Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -36,7 +36,6 @@ MYOPTIONS="alsa openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
-    xine [[ description = [ Install the phonon-xine KControl Module ] ]]
 "
 
 DEPENDENCIES="
@@ -44,38 +43,41 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.3.60]
+        dev-libs/attica[>=0.1.4]
+        dev-libs/soprano[>=2.4.63][virtuoso]
+        kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon[>=4.3.80]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         x11-libs/qt:4[phonon]
         x11-misc/shared-mime-info[>=0.40]
+        alsa? ( sys-sound/alsa-lib[>=1.0.14a] )
         jpeg-rotation? ( graphics/exiv2 )
         openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
         pulseaudio? ( media-sound/pulseaudio[>=0.9.9] )
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.3.91] )
         slp? ( net-libs/openslp )
-        xine? ( media-libs/xine-lib )
     run:
         kde/oxygen-icons
-        xine? (
-            media-libs/phonon[>=4.3.0][xine] [[ description = [ the xine backend is part of media-libs/phonon ] ]]
-        )
+    suggestion:
+        net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
 "
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least scm; then
+if ever at_least 4.5.95; then
     MYOPTIONS+=" networkmanager"
     DEPENDENCIES+="
         build+run:
-            app-pim/strigi[>=0.7.3][dbus][qt4]
-            app-text/shared-desktop-ontologies[>=0.5.0]
+            app-text/shared-desktop-ontologies[>=0.5]
             dev-libs/soprano[>=2.5.63][virtuoso]
             media-libs/phonon[>=4.4.3]
             networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
             pulseaudio? (
+                dev-libs/glib:2
                 media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
                 media-sound/pulseaudio[>=0.9.16]
             )
@@ -83,54 +85,23 @@ if ever at_least scm; then
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( NetworkManager )
 fi
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.3.60]
-            dev-libs/attica[>=0.1.4]
-            dev-libs/soprano[>=2.4.63][virtuoso]
-            kde/kdelibs:${SLOT}[>=${PV}]
-        suggestion:
-            net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
-    "
-# QNtrack is currently unpackaged (2010-10-05)
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
-        -DWITH_Nepomuk:BOOL=ON
-        -DWITH_SharedDesktopOntologies:BOOL=ON
-        -DWITH_QNtrack:BOOL=OFF
-    )
-else
-    DESCRIPTION+="kstyles: Styles for KDE widgets"
-    MYOPTIONS+=" nepomuk"
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/attica[>=0.1.1&<0.1.4]
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-            kde/qimageblitz[>=0.0.4]
-            nepomuk? ( dev-libs/soprano[>=2.4.0.1][virtuoso] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Nepomuk )
-fi
 
-if ever at_least 4.4.2; then
-    DEPENDENCIES+="
-        alsa? ( sys-sound/alsa-lib[>=1.0.14a] )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( ALSA )
-else
-    DEPENDENCIES+="
-        sys-sound/alsa-lib[>=1.0.14a]"
-fi
-
-
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
+    -DWITH_Nepomuk:BOOL=ON
+    -DWITH_SharedDesktopOntologies:BOOL=ON
+    # QNtrack is currently unpackaged (2010-10-05)
+    -DWITH_QNtrack:BOOL=OFF
+    -DWITH_Xine:BOOL=OFF
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    ALSA
     'jpeg-rotation Exiv2'
     OpenEXR
     Samba
     'sftp LibSSH'
     SLP
     PulseAudio
-    Xine
 )
 
 src_install() {

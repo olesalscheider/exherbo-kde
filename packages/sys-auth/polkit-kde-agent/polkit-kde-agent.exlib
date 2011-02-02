@@ -6,10 +6,12 @@ require kde
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
 
-if ever at_least scm; then
-    SCM_REPOSITORY="git://git.kde.org/${MY_PN}.git"
-
+if ever is_scm; then
+    SCM_REPOSITORY="git://anongit.kde.org/${MY_PN}.git"
     require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
+    WORK=${WORKBASE}/${MY_PNV}
 fi
 
 SUMMARY="KDE daemon providing a Polkit-1 based authentication UI"
@@ -22,6 +24,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4
-        sys-auth/polkit-qt:1[>=0.98.1]
+        sys-auth/polkit-qt:1[>=0.99.0]
 "
 

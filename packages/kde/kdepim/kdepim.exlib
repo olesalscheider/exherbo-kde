@@ -41,6 +41,12 @@ MYOPTIONS+="
 # add_subdirectory(opensync)
 # endif ( OPENSYNC_FOUND )
 
+# 4.4.10 (temporarily) introduces:
+# option(KONTACT_ENABLE_MIXEDMODE_SUMMARY_PLUGINS "Build the Special Dates and
+#    Planner plugins for Kontact." FALSE)
+# "We have too many bad bugs with these summaries that can't be fixed until KDEPIM4.6,
+# so we had no choice but to disable them" - I'm with upstream about this. WK.
+
 DEPENDENCIES+="
     build:
         dev-libs/libxslt
@@ -90,3 +96,4 @@ if ever at_least scm; then
     )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan2' )
 fi
+

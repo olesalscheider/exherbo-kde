@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2010 Bo Ørsted Andresen
+# Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -18,19 +18,25 @@ MYOPTIONS="acl avahi doc fam jpeg2000 openexr policykit spell
 
 DEPENDENCIES="
     build:
+        app-text/docbook-xml-dtd:4.2
+        app-text/docbook-xsl-stylesheets
         dev-cpp/cppunit
+        dev-lang/perl:*
         sys-devel/gettext
         x11-proto/xf86vidmodeproto
         doc? ( app-doc/doxygen )
     build+run:
+        app-arch/bzip2
         app-arch/xz
         app-crypt/qca:2
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.4]
+        dev-libs/attica[>=0.1.4]
         dev-libs/pcre
         dev-libs/libxml2
         dev-libs/libxslt
         dev-libs/openssl
-        dev-libs/soprano[>=2.3.70] [[ note = [ Need soprano's clucene support enabled ] ]]
+        dev-libs/soprano[>=2.3.70][virtuoso] [[ note = [ Need soprano's clucene support enabled ] ]]
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/giflib
@@ -38,6 +44,8 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/phonon[>=4.3.80]
         sys-apps/dbus[X(-)]
+        sys-libs/zlib
+        x11-libs/dbusmenu-qt
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
@@ -65,6 +73,7 @@ DEPENDENCIES="
             media-libs/ilmbase
             media-libs/openexr
         )
+        policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
         spell? (
             app-spell/aspell
             app-spell/enchant
@@ -72,8 +81,6 @@ DEPENDENCIES="
     run:
         x11-apps/iceauth
         x11-apps/rgb
-    suggestion:
-        sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -85,7 +92,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DBUILD_experimental:BOOL=FALSE
     -DWITH_BZip2=ON
-    -DWITH_DBusMenuQt:BOOL=ON # as of kde 4.5.1 we could make this optional
+    -DWITH_DBusMenuQt:BOOL=ON
+    -DWITH_DNSSD=OFF
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
     -DWITH_LibAttica:BOOL=TRUE
@@ -95,7 +103,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenSSL=ON
     -DWITH_PolkitQt=FALSE
     -DWITH_QCA2:BOOL=TRUE
-    -DWITH_DNSSD=OFF
+    -DWITH_SharedDesktopOntologies:BOOL=TRUE
+    -DWITH_Soprano:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # Used in solid
@@ -115,60 +124,47 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ENCHANT'
 )
 
-if ever at_least 4.4.80; then
-    DEPENDENCIES+="
-        build:
-            app-text/docbook-xml-dtd:4.2
-            app-text/docbook-xsl-stylesheets
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.4]
-            dev-libs/attica[>=0.1.4]
-            dev-libs/soprano[>=2.4.63][virtuoso(-)]
-            x11-libs/dbusmenu-qt
-            policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_SharedDesktopOntologies:BOOL=TRUE
-        -DWITH_Soprano:BOOL=TRUE
-    )
-else
-    MYOPTIONS="nepomuk ${MYOPTIONS}"
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/attica[>=0.1.1&<0.1.4]
-            nepomuk? (
-                app-text/shared-desktop-ontologies[>=0.4]
-                dev-libs/soprano[virtuoso(-)]
-            )
-            policykit? ( sys-auth/polkit-qt:1[>=0.95.1] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'nepomuk SharedDesktopOntologies'
-        'nepomuk Soprano'
-    )
-fi
-
 if ever at_least scm; then
     DEPENDENCIES+="
         build+run:
-            dev-libs/attica[>=0.1.90]
-            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
-            policykit? ( sys-auth/polkit-qt:1[>=0.98.1] )
+            x11-misc/shared-mime-info[>=0.60]
         recommendation:
             policykit? (
-                sys-auth/polkit-kde-agent[~scm]
-                sys-auth/polkit-kde-kcmodules[~scm]
+                sys-auth/polkit-kde-agent[~scm]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+                sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
             )
-        suggestion:
-            sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_HUpnp:BOOL=FALSE
-    )
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_HUpnp:BOOL=FALSE )
+elif ever at_least 4.5.90; then
+    DEPENDENCIES+="
+        recommendation:
+            policykit? (
+                sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+                sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+            )
+    "
+fi
+
+if ever at_least 4.5.90; then
+    DEPENDENCIES+="
+        build+run:
+            app-text/shared-desktop-ontologies[>=0.5]
+            dev-libs/attica[>=0.1.90]
+            dev-libs/soprano[>=2.5.60][virtuoso(-)]
+            sys-fs/udev
+            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
+            policykit? ( sys-auth/polkit-qt:1[>=0.99.0] )
+        recommendation:
+            sys-apps/udisks [[ description = [ Enable auto-mounting support ] ]]
+            sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_UDev:BOOL=TRUE )
 else
     DEPENDENCIES+="
         recommendation:
             policykit? ( sys-auth/polkit-kde[>=0.95.1] )
+        suggestion:
+            sys-apps/hal [[ description = [ Enable auto-mounting support ] ]]
     "
 fi
 

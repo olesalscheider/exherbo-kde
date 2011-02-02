@@ -1,25 +1,39 @@
 # Copyright 2010 Paul Mulders <info@mld.demon.nl>
+# Copyright 2011 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
+
+if ever is_scm ; then
+SCM_REPOSITORY="git://gitorious.org/bangarang/bangarang.git"
+require scm-git
+fi
 
 ODO_ID=113305
 
 SUMMARY="A KDE media player"
 HOMEPAGE="http://bangarangkde.wordpress.com/"
+
+if ! ever is_scm ; then
 DOWNLOADS="http://opendesktop.org/CONTENT/content-files/${ODO_ID}-${PNV}.tar.gz -> ${PNV}.tar.gz"
+fi
 
 LICENCES="GPL-3"
 SLOT="0"
-MYOPTIONS=""
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        kde/kdelibs:4[>=4.3.0][nepomuk(+)]
-        kde/kdemultimedia:4[>=4.3.0]
+        dev-libs/soprano
+        kde/kdebindings:4[>=4.5.0]
+        kde/kdelibs:4[>=4.5.0][nepomuk(+)]
         media-libs/phonon
         media-libs/taglib
+        x11-libs/qt:4[>=4.3.0]  [[ note = [ Minimum version needed for QtScript ] ]]
 "
+
+if ! ever is_scm ; then
+WORK=${WORKBASE}/${PN}-${PN}
+fi
 

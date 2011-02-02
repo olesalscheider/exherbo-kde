@@ -1,4 +1,4 @@
-# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -6,6 +6,7 @@ require kde.org
 SUMMARY="KDE Utilities"
 DESCRIPTION="
 ark: Archiving tool
+$(ever at_least 4.5.95 && echo 'filelight: tool to analyze diskusage graphically')
 kcalc: scientific calculator
 kcharselect: select special characters from any fonts and put them into the clipboard
 kdf: like 'df', a graphical free disk space viewer
@@ -13,7 +14,7 @@ kfloppy: format a floppy disks with this program
 kgpg: graphical GPG frontend
 ktimer: execute programs after some time
 kwallet: KDE wallet management tool
-okteta: binary file editor
+$(ever at_least 4.5.95 || echo 'okteta: binary file editor')
 printer-applet: a system tray utility that shows current print jobs, shows printer
                 warnings and errors and shows when printers that have been plugged
                 in for the first time are being auto-configured
@@ -27,30 +28,26 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MY_KDE_PARTS="ark kcalc kcharselect kdf kfloppy kgpg ktimer kwallet
-okteta printer-applet superkaramba sweeper"
+MY_KDE_PARTS="ark kcalc kcharselect kdf kfloppy kgpg kremotecontrol ktimer kwallet printer-applet
+superkaramba sweeper"
 
-if ever at_least 4.4.80; then
-    MY_KDE_PARTS+=" kremotecontrol"
+if ever at_least 4.5.95; then
+    MY_KDE_PARTS+=" filelight"
+    DEPENDENCIES+=" build+run: !kde/filelight [[ description = [ filelight is now a part of ${CATEGORY}/${PN} ] ]]"
+else
+    MY_KDE_PARTS+=" okteta"
     DEPENDENCIES+="
         build+run:
-            kde_parts:kremotecontrol? ( kde/kdebase-workspace:${SLOT}[>=${PV}] )
-            kde_parts:okteta? ( x11-misc/shared-mime-info[>=0.40] )
-        run:
-            kde_parts:kremotecontrol? ( app-misc/lirc )
+            kde_parts:okteta? (
+                x11-misc/shared-mime-info[>=0.40]
+                app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]]
+        )
     "
-    # This dependency was added in 4.5 but since all KDE tests are restricted we don't build unit tests.
-    #   build+test:
-    #       kde_parts:ark? (
-    #           dev-libs/qjson [[ note = [ This is a test dep but the tests get built during the compile phase, also we could disable it ] ]]
-    #       )
-else
-    MY_KDE_PARTS+=" kdelirc"
-    DEPENDENCIES+="
-        run:
-            kde_parts:kdelirc? ( app-misc/lirc )
-    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kde_parts:okteta QCA2'
+    )
 fi
+
 MYOPTIONS="
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
     kde_parts: ${MY_KDE_PARTS}"
@@ -65,7 +62,11 @@ DEPENDENCIES+="
             kde/kdebase:${SLOT}[>=${PV}]    [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
         )
         kde_parts:kcalc? ( dev-libs/gmp )
-        kde_parts:okteta? ( app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]] )
+        kde_parts:kremotecontrol? (
+            kde/kdebase-workspace:${SLOT}[>=${PV}]
+            run:
+                app-misc/lirc
+        )
         kde_parts:printer-applet? (
             app-admin/system-config-printer
              dev-lang/python:*
@@ -95,6 +96,11 @@ DEPENDENCIES+="
             app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
         )
 "
+# This dependency was added in 4.5 but since all KDE tests are restricted we don't build unit tests.
+#   build+test:
+#       kde_parts:ark? (
+#           dev-libs/qjson [[ note = [ This is a test dep but the tests get built during the compile phase, also we could disable it ] ]]
+#       )
 
 # Only for unit tests. See above.
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QJSON:BOOL=FALSE )
@@ -106,11 +112,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:ark LibLZMA'
     'kde_parts:ark ZLIB'
     'kde_parts:kcalc GMP'
-    'kde_parts:okteta QCA2'
     'kde_parts:printer-applet PythonLibrary' 'kde_parts:printer-applet SIP'
     'python PythonLibs'
 )
-
-# FIXME 4 new ark plugins in kdeutils.git/ark/plugins, check whether they have additional run dependencies
-# FIXME (Needs verification) All subdirs in doc/ are added & built regardless of whether the corresponding applications are built
 

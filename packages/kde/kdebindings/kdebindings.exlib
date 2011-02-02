@@ -1,5 +1,5 @@
 # Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require python kde.org
@@ -35,6 +35,8 @@ MYOPTIONS="( python ruby ) [[ number-selected = at-least-one ]]"
 DEPENDENCIES="
     build+run:
         dev-libs/attica
+        dev-libs/soprano[>=2.3.0]
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
         x11-libs/qt:4[X][dbus][sql][webkit]
@@ -47,30 +49,22 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:1.8 )
 "
 
-if ever at_least 4.5.0 ; then
+if ever at_least 4.5.95 ; then
     DEPENDENCIES+="
         build+run:
-            dev-libs/soprano[>=2.3.0]
-            kde/kdelibs:${SLOT}[>=${PV}]
+            python? (
+                dev-python/sip[>=4.12.0]
+                dev-python/PyQt4[>=4.8.2][opengl][sql][webkit]
+            )
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_{Nepomuk,Soprano}:BOOL=ON )
-else
-    MYOPTIONS+=" nepomuk"
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/attica[<0.1.4]
-            kde/kdelibs:${SLOT}[>=${PV}][nepomuk(+)?]
-            nepomuk? ( dev-libs/soprano[>=2.3.0] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Nepomuk 'nepomuk Soprano' )
 fi
 
 if ever at_least scm ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
-elif ever at_least 4.5.0 ; then
-    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.4.0]"
+elif ever at_least 4.5.95 ; then
+    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.5.0]"
 else
-    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.3.0]"
+    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.4.0]"
 fi
 
 # Note: ABI support for python & ruby should use:
@@ -81,6 +75,7 @@ fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_QTMULTIMEDIA_SMOKE:BOOL=FALSE
+    -DWITH_{Nepomuk,Soprano}:BOOL=ON
     # We depend on these so maybe they're needed? Could be made optional or disabled in 4.5.
     -DWITH_{Akonadi,KdepimLibs,LibAttica,QImageBlitz}:BOOL=TRUE
     # Nobody use these bindings
@@ -115,7 +110,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'python PyQt4'
     'python PythonLibrary'
     'python SIP'
-    Ruby
+    Ruby # hard dep of the ruby bindings in KDE 4.6
 )
 
 kdebindings_src_install() {

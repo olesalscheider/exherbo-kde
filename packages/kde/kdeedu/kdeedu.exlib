@@ -1,5 +1,5 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -65,9 +65,13 @@ DEPENDENCIES+="
         kde_parts:kalgebra? (
             kde/kdebase-workspace:${SLOT}[>=${PV}]
             sys-libs/readline
+            x11-dri/mesa
         )
         kde_parts:kalzium? (
-            3dviewer? ( sci-chemistry/openbabel[>=2.2] )
+            3dviewer? (
+                sci-chemistry/avogadro[>=1.0]
+                sci-chemistry/openbabel[>=2.2]
+            )
             solver? (
                 dev-lang/ocaml
                 dev-ml/facile
@@ -91,21 +95,16 @@ DEPENDENCIES+="
         kde/kdebase-runtime:${SLOT}[>=${PV}]
 "
 
-if ever at_least 4.4.80; then
+if ever at_least 4.5.95; then
     DEPENDENCIES+="
-        build+run:
-            3dviewer? ( sci-chemistry/avogadro[>=1.0] )
-            kde_parts:kalgebra? ( x11-dri/mesa )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            3dviewer? ( x11-dri/mesa )
-            kde_parts:rocs? ( media-gfx/graphviz )
-            kde_parts:kalgebra? (
-                3dgraphs? ( x11-dri/mesa )
+        build:
+            kde_parts:kstars? (
+                sci-libs/eigen:2[>=2.0.3] [[ note = [ Required to build kstars since KDE 4.6 ] ]]
+                x11-libs/qt:4[opengl]
             )
-            kde_parts:parley? ( dev-libs/attica[<0.1.4] )
+            kde_parts:rocs? (
+                dev-libs/boost[>=1.43]
+            )
     "
 fi
 
@@ -121,7 +120,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DHAVE_LIBGPS=OFF
     # Kstars, requires sci-libs/cfitsio (or so it did? might be covered by indilib too now?) - http://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
     -DWITH_CFitsio=OFF
-    # Kstars, requires sci-libs/indilib[>=0.6.1] - http://indi.sf.net/
+    # Kstars, requires sci-libs/indilib[>=0.6.2] - http://indi.sf.net/
     -DWITH_INDI=OFF
     # Kstars, requires xplanet - http://xplanet.sourceforge.net/
     -DWITH_Xplanet=OFF
@@ -143,13 +142,13 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_configure() {
-    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra; then
+    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra || { ever at_least 4.5.95 && option kde_parts:kstars; }; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
     fi
 
-    if option 3dviewer || option kde_parts:step; then
+    if option 3dviewer || option kde_parts:step || { ever at_least 4.5.95 && option kde_parts:kstars; }; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
     else
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=OFF )

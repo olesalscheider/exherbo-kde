@@ -1,0 +1,11 @@
+# Copyright 2010 Yury G. Kudryashov <urkud@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdevelop
+
+PLATFORMS="~amd64 ~x86"
+
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+UPSTREAM_RELEASE_NOTES="http://milianw.de/blog/kdevelop-42-available/"
+

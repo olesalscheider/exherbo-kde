@@ -60,7 +60,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     "kipi_plugins:sane KSane"
     "kipi_plugins:sane Sane"
 )
-CMAKE_SRC_CONFIGURE_PARAMS=( "-DWITH_X11:BOOL=TRUE" )
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DWITH_X11:BOOL=TRUE
+    -DWITH_QJSON:BOOL=FALSE
+)
 
 kipi-plugins_src_configure() {
     # kipi-plugins' code doesn't like graphite.
