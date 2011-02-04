@@ -157,11 +157,10 @@ DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_USBIDS_DIR="/usr/share/misc"
     -DDISABLE_USBIDS_INSTALL=ON
-    -DUSE_XKLAVIER=ON -DWITH_LibXKlavier=ON # Old keyboard-detection code is unmaintained, new code using xklavier forced on, hence as of 4.5 beta1 these do nothing
     -DWITH_DBusMenuQt:BOOL=ON
     -DWITH_Fontconfig=ON
     -DWITH_Freetype=ON
-    -DWITH_GLIB2=ON -DWITH_GObject=ON # as of 4.5 beta1 -DWITH_GObject does nothing
+    -DWITH_GLIB2=ON
     -DWITH_{Nepomuk,Soprano}:BOOL=TRUE
     -DWITH_OpenGL=ON
     -DWITH_PAM=ON # Automagic, hard-enabled
