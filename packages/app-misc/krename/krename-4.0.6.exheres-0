@@ -1,0 +1,30 @@
+# Copyright 2011 Sterling X. Winter <replica@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake sourceforge
+
+SUMMARY="Powerful batch renamer for KDE"
+DESCRIPTION="
+KRename is a powerful batch renamer for KDE. It allows you to easily rename hundreds or even more
+files in one go. The filenames can be created using parts of the original filename, by numbering
+the files, or from file metadata like creation date or EXIF information of an image.
+"
+HOMEPAGE="http://www.krename.net/"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        app-text/podofo          [[ note = [ Automagic dependency ] ]]
+        graphics/exiv2[>=0.13]   [[ note = [ Automagic dependency ] ]]
+        kde/kdelibs:4
+        media-libs/freetype:2    [[ note = [ Automagic dependency ] ]]
+        media-libs/taglib[>=1.5] [[ note = [ Automagic dependency ] ]]
+"
+
+BUGS_TO="replica@exherbo.org"
+
