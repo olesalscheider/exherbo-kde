@@ -20,19 +20,10 @@ SCM_SECONDARY_REPOSITORIES="
 "
 
 SCM_strigiclient_REPOSITORY="http://anongit.kde.org/strigiclient"
-SCM_strigiclient_REVISION="_"
-
 SCM_strigidaemon_REPOSITORY="http://anongit.kde.org/strigidaemon"
-SCM_strigidaemon_REVISION="_"
-
 SCM_strigiutils_REPOSITORY="http://anongit.kde.org/strigiutils"
-SCM_strigiutils_REVISION="_"
-
 SCM_libstreamanalyzer_REPOSITORY="http://anongit.kde.org/libstreamanalyzer"
-SCM_libstreamanalyzer_REVISION="_"
-
 SCM_libstreams_REPOSITORY="http://anongit.kde.org/libstreams"
-SCM_libstreams_REVISION="_"
 
 require strigi scm-git
 
