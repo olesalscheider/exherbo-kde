@@ -28,11 +28,13 @@ if ever at_least 4.5.95; then
         build+run:
             musicbrainz? ( media-libs/libmusicbrainz:3 )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'musicbrainz MusicBrainz3' )
 else
     DEPENDENCIES+="
         build+run:
             musicbrainz? ( media-libs/libmusicbrainz:2 )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( MusicBrainz )
 fi
 
 MYOPTIONS+="
@@ -93,7 +95,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:ffmpegthumbs Swscale'
     'kde_parts:juk Taglib'
     'kde_parts:kioslave Cdparanoia'
-    MusicBrainz
     PulseAudio
     TunePimp
     'vorbis OggVorbis'
