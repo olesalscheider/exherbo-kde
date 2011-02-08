@@ -1,0 +1,26 @@
+# Copyright 2011 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake4 sourceforge [ project=kdropbox suffix=tar.gz ]
+
+SUMMARY="Syncing Dropbox in KDE"
+HOMEPAGE="http://kdropbox.deuteros.es/"
+
+LICENCES="GPL-3 [[ note = [ See main.cpp, KAboutData ] ]]"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4[>=4.4.0]
+        x11-libs/qt:4[dbus][sql][X]
+"
+
+BUGS_TO="ingmar@exherbo.org"
+
+src_install() {
+    default
+    edo chmod -R a-wx,a+rX,u+w "${IMAGE}"/usr/share
+}
+
