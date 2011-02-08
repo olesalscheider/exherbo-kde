@@ -90,7 +90,7 @@ else
             case ${KDEMODULE} in
                 kdevplatform)
                     SCM_SECONDARY_REPOSITORIES="kate_completion_expandingtree"
-                    SCM_SVN_EXTERNALS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
+                    SCM_EXTERNAL_REFS="plugins/quickopen/expandingtree:kate_completion_expandingtree"
                     SCM_kate_completion_expandingtree_REPOSITORY="${SCM_REPOSITORY}/"
                     SCM_kate_completion_expandingtree_SUBPATH="KDE/kdelibs/kate/completion/expandingtree"
                     ;;

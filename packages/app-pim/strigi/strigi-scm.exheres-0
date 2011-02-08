@@ -4,7 +4,7 @@
 #     Copyright 1999-2008 Gentoo Foundation.
 
 SCM_REPOSITORY="git://anongit.kde.org/strigi.git"
-SCM_GIT_SUBMODULES="
+SCM_EXTERNAL_REFS="
     strigiclient:strigiclient
     strigidaemon:strigidaemon
     strigiutils:strigiutils
