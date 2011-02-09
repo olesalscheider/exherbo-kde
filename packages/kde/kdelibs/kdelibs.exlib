@@ -170,9 +170,12 @@ fi
 
 src_prepare() {
     default
+
     # Kate tests need a tarball from SVN
-    edo sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
-            -i kate/CMakeLists.txt
+    if ! ever at_least 4.6.41; then
+        edo sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
+                -i kate/CMakeLists.txt
+    fi
 }
 
 src_compile() {
