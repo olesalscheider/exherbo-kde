@@ -1,0 +1,175 @@
+# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require python kde.org systemd-service
+
+SUMMARY="The interface and basic tools for the KDE workspace"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+# afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
+# captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
+# kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
+MYOPTIONS="ieee1394 lm_sensors networkmanager python wicd xinerama
+    consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
+    qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
+    wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
+    ppc_cpu_features: altivec
+    x86_cpu_features: 3dnow mmx sse sse2"
+# cpu_features are for ksplash
+
+# kwrited has an automagic dep on utempter which we don't have atm
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        dev-lang/perl:* [[ note = kdm ]]
+    build+run:
+        user/kdm
+        app-pim/strigi[>=0.6.3][dbus][qt4]
+        dev-libs/boost
+        dev-libs/glib:2
+        dev-libs/libusb:0.1
+        dev-libs/soprano[>=2.5.63][virtuoso(+)]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+        kde/kde-runtime:${SLOT}[>=${PV}]
+        kde/qimageblitz[>=0.0.4]
+        media-libs/fontconfig [[ note = kcontrol ]]
+        media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
+        media-libs/jpeg [[ note = ksplash ]]
+        media-libs/libpng [[ note = ksplash ]]
+        server-pim/akonadi[>=1.3.60]
+        sys-apps/pciutils
+        sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
+        sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+        x11-dri/mesa
+        x11-libs/dbusmenu-qt[>=0.6.0]
+        x11-libs/libICE [[ note = ksmserver ]]
+        x11-libs/libX11 [[ note = [ kdm ] ]]
+        x11-libs/libXau [[ note = kdm ]]
+        x11-libs/libXcomposite [[ note = kwin ]]
+        x11-libs/libXcursor [[ note = kcontrol ]]
+        x11-libs/libXdamage [[ note = kwin ]]
+        x11-libs/libXdmcp [[ note = kdm ]]
+        x11-libs/libXext [[ note = ksysguardd ]]
+        x11-libs/libXfixes [[ note = kcontrol ]]
+        x11-libs/libXft [[ note = kcontrol ]]
+        x11-libs/libXi[>=1.2] [[ note = kcontrol/keyboard ]]
+        x11-libs/libXrandr[>=1.2]
+        x11-libs/libXrender [[ note = kwin ]]
+        x11-libs/libXScrnSaver [[ note = krunner ]]
+        x11-libs/libXtst [[ note = kcontrol ]]
+        x11-libs/libXxf86misc [[ note = krunner ]]
+        x11-libs/libxkbfile
+        x11-libs/qt:4[>=4.7.0][opengl][webkit]
+        consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
+        ieee1394? ( media-libs/libraw1394 )
+        lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
+        networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
+        python? (
+            dev-lang/python:=
+            dev-python/PyQt4[>=4.4.0]
+            dev-python/sip[>=4.7.1]
+        )
+        qalculate? ( sci-libs/libqalculate[>=0.9.5] )
+        xinerama? ( x11-libs/libXinerama )
+        !kde/kdebase-workspace [[
+            description = [ kde-workspace replaces kdebase-workspace ]
+            resolution = uninstall-blocked-after
+        ]]
+    run:
+        x11-apps/mkfontdir
+        x11-apps/setxkbmap
+        x11-apps/xinit [[ note = kdm ]]
+        x11-apps/xkeyboard-config
+        x11-apps/xmessage
+        x11-apps/xprop
+        x11-apps/xsetroot
+        x11-apps/xset
+        wicd? ( net-misc/wicd )
+    post:
+        python? ( kde/kdebindings:4[python] )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DKDE_USBIDS_DIR="/usr/share/misc"
+    -DDISABLE_USBIDS_INSTALL:BOOL=TRUE
+    -DWITH_DBusMenuQt:BOOL=TRUE
+    -DWITH_Dmtx:BOOL=FALSE # Create mobile barcodes from clipboard data "http://www.libdmtx.org"
+    -DWITH_Fontconfig:BOOL=TRUE
+    -DWITH_Freetype:BOOL=TRUE
+    -DWITH_GLIB2:BOOL=TRUE
+    -DWITH_{Nepomuk,Soprano}:BOOL=TRUE
+    -DWITH_OpenGL:BOOL=TRUE
+    -DWITH_PAM:BOOL=TRUE # Automagic, hard-enabled
+    -DWITH_PCIUTILS:BOOL=TRUE
+    -DWITH_USB:BOOL=TRUE # Logitech USB mouse support in kcontrol
+    -DWITH_XKB:BOOL=TRUE # kxkb, kdm
+    -DKDE4_KRB5AUTH:BOOL=FALSE
+    -DKDE4_XDMCP:BOOL=TRUE
+    -DWITH_Xmms:BOOL=FALSE
+    -DWITH_KdepimLibs:BOOL=TRUE # Plasma RSS data engine
+    -DWITH_Googlegadgets:BOOL=FALSE # Extra plasma functionality
+    -DWITH_libgps:BOOL=FALSE # GPS support for geolocation" "http://gpsd.berlios.de/"
+)
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( python wicd )
+CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
+    # CMake options are different from kde/qimageblitz!
+    # These are for KSplash
+    'ppc_cpu_features:altivec PPC_ALTIVEC'
+    'x86_cpu_features:3dnow X86_3DNOW'
+    'x86_cpu_features:mmx X86_MMX'
+    'x86_cpu_features:sse X86_SSE'
+    'x86_cpu_features:sse2 X86_SSE2'
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'consolekit CkConnector'
+    'ieee1394 RAW1394'
+    'lm_sensors Sensors'
+    NetworkManager
+    'python PythonLibrary'
+    'python PyKDE4'
+    'python PyQt4'
+    'python SIP'
+    'qalculate Qalculate'
+)
+
+src_prepare() {
+    default
+
+    # We sed out the CMake check for PyKDE4, to avoid a circular dependency on kde/kdebindings:4, which provides PyKDE4
+    edo sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
+            -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
+            -i CMakeLists.txt
+}
+
+src_install() {
+    GENKDMCONF_FLAGS="--no-old --no-backup" kde.org_src_install
+
+    keepdir /usr/share/config/kdm/sessions
+    edo sed -e '/SessionsDirs=/ s:$:,/usr/share/xsessions:' \
+            -i "${IMAGE}"/usr/share/config/kdm/kdmrc
+
+    insinto /usr/env
+    doins "${FILES}"/agent-startup.sh
+
+    insinto /usr/shutdown
+    doins "${FILES}"/agent-shutdown.sh
+
+    if option python; then
+        python_bytecompile
+    fi
+
+    install_systemd_files
+}
+
+pkg_postinst() {
+    [[ -d ${ROOT}/var/lib/kdm ]] || edo mkdir "${ROOT}"/var/lib/kdm
+    [[ -e ${ROOT}/var/log/kdm.log ]] || edo touch "${ROOT}"/var/log/kdm.log
+    edo chown -R kdm:kdm "${ROOT}"/var/{lib/kdm,log/kdm.log}
+    edo chmod -R 775 "${ROOT}"/var/{lib/kdm,log/kdm.log}
+}
+
