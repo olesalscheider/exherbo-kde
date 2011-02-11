@@ -65,6 +65,10 @@ DEPENDENCIES="
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
+        !kde/kde-runtime [[
+            description = [ kde-runtime replaces kdebase-runtime in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
     run:
         kde/oxygen-icons
     suggestion:

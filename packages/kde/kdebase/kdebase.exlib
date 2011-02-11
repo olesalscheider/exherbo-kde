@@ -34,6 +34,10 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
+        !kde/kde-baseapps [[
+            description = [ kde-baseapps replaces kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
     suggestion:
         sys-apps/eject
 "
