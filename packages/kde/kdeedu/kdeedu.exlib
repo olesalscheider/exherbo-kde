@@ -115,6 +115,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_CFitsio=OFF
     # Kstars, requires sci-libs/indilib[>=0.6.2] - http://indi.sf.net/
     -DWITH_INDI=OFF
+    -DWITH_OpenGL=ON
     # Kstars, requires xplanet - http://xplanet.sourceforge.net/
     -DWITH_Xplanet=OFF
 )
@@ -135,12 +136,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 )
 
 src_configure() {
-    if option 3dviewer || option 3dgraphs || option kde_parts:kalgebra || option kde_parts:kstars; then
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=ON )
-    else
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL=OFF )
-    fi
-
     if option 3dviewer || option kde_parts:step || option kde_parts:kstars ; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Eigen2=ON )
     else
