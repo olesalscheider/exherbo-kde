@@ -6,7 +6,7 @@ require kde.org
 SUMMARY="KDE Utilities"
 DESCRIPTION="
 ark: Archiving tool
-$(ever at_least 4.5.95 && echo 'filelight: tool to analyze diskusage graphically')
+filelight: tool to analyze diskusage graphically
 kcalc: scientific calculator
 kcharselect: select special characters from any fonts and put them into the clipboard
 kdf: like 'df', a graphical free disk space viewer
@@ -14,7 +14,6 @@ kfloppy: format a floppy disks with this program
 kgpg: graphical GPG frontend
 ktimer: execute programs after some time
 kwallet: KDE wallet management tool
-$(ever at_least 4.5.95 || echo 'okteta: binary file editor')
 printer-applet: a system tray utility that shows current print jobs, shows printer
                 warnings and errors and shows when printers that have been plugged
                 in for the first time are being auto-configured
@@ -28,25 +27,8 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
-MY_KDE_PARTS="ark kcalc kcharselect kdf kfloppy kgpg kremotecontrol ktimer kwallet printer-applet
-superkaramba sweeper"
-
-if ever at_least 4.5.95; then
-    MY_KDE_PARTS+=" filelight"
-    DEPENDENCIES+=" build+run: !kde/filelight [[ description = [ filelight is now a part of ${CATEGORY}/${PN} ] ]]"
-else
-    MY_KDE_PARTS+=" okteta"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:okteta? (
-                x11-misc/shared-mime-info[>=0.40]
-                app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]]
-        )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:okteta QCA2'
-    )
-fi
+MY_KDE_PARTS="ark filelight kcalc kcharselect kdf kfloppy kgpg kremotecontrol ktimer kwallet
+printer-applet superkaramba sweeper"
 
 MYOPTIONS="
     python [[ description = [ Python bindings for SuperKaramba ] requires = [ kde_parts: superkaramba ] ]]
@@ -54,6 +36,7 @@ MYOPTIONS="
 
 DEPENDENCIES+="
     build+run:
+       !kde/filelight [[ description = [ filelight is now a part of ${CATEGORY}/${PN} ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde_parts:ark? (

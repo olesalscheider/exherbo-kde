@@ -56,13 +56,3 @@ if ever at_least scm; then
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tidy LibTidy' )
 fi
 
-if ! ever at_least 4.5.95; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
-    MYOPTIONS+="webkit"
-    DEPENDENCIES+="
-        build+run:
-            kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
-            webkit? ( kde/kwebkitpart )
-    "
-fi
-

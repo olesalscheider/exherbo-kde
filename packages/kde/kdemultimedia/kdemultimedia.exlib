@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -22,20 +22,6 @@ HOMEPAGE="
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 SLOT="4"
 MY_KDE_PARTS="dragonplayer ffmpegthumbs juk kioslave kmix kscd mplayerthumbs"
-
-if ever at_least 4.5.95; then
-    DEPENDENCIES+="
-        build+run:
-            musicbrainz? ( media-libs/libmusicbrainz:3 )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'musicbrainz MusicBrainz3' )
-else
-    DEPENDENCIES+="
-        build+run:
-            musicbrainz? ( media-libs/libmusicbrainz:2 )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( MusicBrainz )
-fi
 
 MYOPTIONS+="
     flac         [[ description = [ Support FLAC (Free Lossless Audio Codec) in the AudioCD kioslave ] ]]
@@ -78,6 +64,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:mplayerthumbs? ( run: media/mplayer )
+        musicbrainz? ( media-libs/libmusicbrainz:3 )
     suggestion:
         kde_parts:kioslave? (
             media-sound/lame [[ description = [ Support MP3 in the AudioCD kioslave ] ]]
@@ -90,13 +77,14 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Flac
-    'kde_parts:ffmpegthumbs FFmpeg' # KDE 4.5
-    'kde_parts:ffmpegthumbs FFMPEG' # KDE 4.6
+    'kde_parts:ffmpegthumbs FFMPEG'
     'kde_parts:ffmpegthumbs Swscale'
     'kde_parts:juk Taglib'
     'kde_parts:kioslave Cdparanoia'
+    'musicbrainz MusicBrainz3'
     PulseAudio
     TunePimp
     'vorbis OggVorbis'
 )
+
 

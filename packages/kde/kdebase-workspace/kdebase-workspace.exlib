@@ -71,7 +71,7 @@ DEPENDENCIES="
         sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         x11-dri/mesa
-        x11-libs/dbusmenu-qt
+        x11-libs/dbusmenu-qt[>=0.6.0]
         x11-libs/libICE [[ note = ksmserver ]]
         x11-libs/libX11 [[ note = [ kdm ] ]]
         x11-libs/libXau [[ note = kdm ]]
@@ -89,10 +89,11 @@ DEPENDENCIES="
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
         x11-libs/libxkbfile
+        x11-libs/qt:4[>=4.7.0][opengl][webkit]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        networkmanager? ( net-apps/NetworkManager[>=0.6.5] )
+        networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.7.1]
@@ -122,42 +123,14 @@ if ever at_least scm ; then
     "
 fi
 
-if ever at_least 4.5.95 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/dbusmenu-qt[>=0.6.0]
-            x11-libs/qt:4[>=4.7.0][opengl][webkit]
-            networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # Create mobile barcodes from clipboard data "http://www.libdmtx.org"
-        -DWITH_Dmtx:BOOL=FALSE
-    )
-else
-    # Bluetooth has been moved to libbluedevil for KDE 4.6
-    MYOPTIONS+="bluetooth ${MYOPTIONS}"
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4[opengl][webkit]
-            bluetooth? ( net-wireless/bluez )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_QEdje=Off
-        # Use sys-auth/polkit-kde:1 instead
-        -DBUILD_PolicyKit-kde:BOOL=FALSE
-        -DWITH_PolkitQt:BOOL=FALSE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'bluetooth BlueZ'
-    )
-fi
-
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_USBIDS_DIR="/usr/share/misc"
     -DDISABLE_USBIDS_INSTALL=ON
     -DWITH_DBusMenuQt:BOOL=ON
+    # Create mobile barcodes from clipboard data "http://www.libdmtx.org"
+    -DWITH_Dmtx:BOOL=FALSE
     -DWITH_Fontconfig=ON
     -DWITH_Freetype=ON
     -DWITH_GLIB2=ON

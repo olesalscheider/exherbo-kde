@@ -5,7 +5,6 @@ require kde.org
 
 SUMMARY="KDE Software Development Kit"
 DESCRIPTION="
-$(ever at_least 4.5.95 || echo 'kbugbuster: a graphical frontend for the KDE bug reporting system')
 cervisia: CVS client part
 dolphin-plugins: scm plugins for Dolphin for git and svn
 kapptemplate: shell script to easy the beginning of new apps
@@ -16,7 +15,7 @@ kompare: A program to view the differences between files
 kspy: displays all used QObjects in an application
 kuiviewer: A KPart that lets you view .ui files
 lokalize: A computer-aided translation system
-$(ever at_least 4.5.95 && echo 'okteta: A binary file editor')
+okteta: A binary file editor
 poxml: auxillary programs for documentation translation
 scripts: various helper scripts (see scripts/README)
 scheck: An interface style to highlight accel and style guide conflicts
@@ -25,36 +24,9 @@ umbrello: A UML modeller
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 MY_KDE_PARTS="cervisia kapptemplate kate kcachegrind kdeaccounts-plugin
-kmtrace kompare kstartperf kuiviewer lokalize poxml scripts
+kmtrace kompare kstartperf kuiviewer lokalize okteta poxml scripts
 strigi-analyzer umbrello
 "
-
-if ever at_least 4.5.95; then
-    MY_KDE_PARTS+=" okteta"
-    DEPENDENCIES+="
-        build+run:
-            kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
-            kde_parts:okteta? (
-                app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]]
-                x11-misc/shared-mime-info[>=0.40]
-            )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_LibKonq:BOOL=TRUE
-        # kde_parts doesn't work with / and these plugins are very small and need no
-        # additional dependencies, so we hard enable those
-        -DBUILD_dolphin-plugins/git:BOOL=TRUE
-        -DBUILD_dolphin-plugins/svn:BOOL=TRUE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:okteta QCA2' )
-else
-    DESCRIPTION+="kbugbuster: a graphical frontend for the KDE bug reporting system"
-    MY_KDE_PARTS+=" dolphin-plugins kbugbuster"
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kbugbuster? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
-    "
-fi
 
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
@@ -68,6 +40,7 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
+        kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
@@ -75,6 +48,10 @@ DEPENDENCIES+="
         kde_parts:lokalize? (
             app-spell/hunspell
             x11-libs/qt:4[sql][sqlite]
+        )
+        kde_parts:okteta? (
+            app-crypt/qca:2 [[ note = [ Needed for most of the algorithms of the checksum tool ] ]]
+            x11-misc/shared-mime-info[>=0.40]
         )
         kde_parts:poxml? ( dev-java/antlr[=2*] )
         kde_parts:umbrello? (
@@ -92,8 +69,10 @@ DEPENDENCIES+="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:kdeaccounts-plugin KdepimLibs'
     'kde_parts:kioslave SVN'
     'kde_parts:lokalize HUNSPELL'
+    'kde_parts:okteta QCA2'
     #macro_log_feature(HAVE_ANTLR "Antlr" "Language tool for constructing recognizers, compilers, etc" "http://www.antlr2.org/" FALSE "2.x" "Used for the po2xml and swappo tools.")
     'kde_parts:poxml Antlr2'
     'kde_parts:umbrello Boost' 'kde_parts:umbrello LibXslt' 'kde_parts:umbrello LibXml2'
@@ -102,15 +81,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Kioslave to browse perldoc
     -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE
+    -DWITH_LibKonq:BOOL=TRUE
+    # kde_parts doesn't work with / and these plugins are very small and need no
+    # additional dependencies, so we hard enable those
+    -DBUILD_dolphin-plugins/git:BOOL=TRUE
+    -DBUILD_dolphin-plugins/svn:BOOL=TRUE
 )
-
-src_configure() {
-    if option kde_parts:kdeaccounts-plugin || { ! ever at_least 4.5.95 && option kde_parts:kbugbuster; }; then
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=TRUE )
-    else
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_KdepimLibs:BOOL=FALSE )
-    fi
-
-    kde_src_configure
-}
 
