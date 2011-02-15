@@ -52,12 +52,11 @@ DEPENDENCIES+="
         )
         kde_parts:printer-applet? (
             app-admin/system-config-printer
-             dev-lang/python:*
-             dev-python/pycups
-             dev-python/PyQt4[dbus]
-             dev-python/sip
-             kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE4 ]]
-             net-print/hal-cups-utils
+            dev-lang/python:*
+            dev-python/pycups
+            dev-python/PyQt4[dbus]
+            dev-python/sip
+            kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE4 ]]
         )
         kde_parts:superkaramba? (
             kde/kdebase-workspace:${SLOT}[>=${PV}]
