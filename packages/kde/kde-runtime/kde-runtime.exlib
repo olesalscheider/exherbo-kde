@@ -5,6 +5,49 @@
 require kde.org
 
 SUMMARY="Plugins and applications necessary for the running of KDE applications"
+DESCRIPTION="
+activitymanager: Plasmoid to manage Plasma desktop activities
+attica: Social Desktop KCM
+desktoptheme: Air and Oxygen Plasma themes
+drkonqi: KDE crash handler and automatic crash report generator
+kcmshell: KDE Control Modules loader
+kcontrol: The KDE Control Center
+kde-menu: Utility for querying the KDE Menu
+kdebugdialog: Utility for setting debug output options
+kdeeject: Script used by KDE to eject removable media
+kdesu: Graphical KDE frontend for su
+kdontchangethehostname: Informs KDE about a change in the hostname
+keditfiletype: Utility to change file and mimetype associations
+kfile: Utility for reading and writing file metadata
+kglobalaccel: KDE global shortcut daemon and dbus service
+khelpcenter: KDE Help Center
+kiconfinder: Icon finder
+kioclient: Command-line tool for network-transparent operations
+kioexec: KIO helper utility for legacy applications
+kioslave: Various KIO slaves
+kmimetypefinder: Utility to find mimetype of a given file
+knetattach: Utility to assist connecting network folders
+knewstuff: Utility for downloading KDE addons
+knotify: Notification daemon
+kpasswdserver: KIO helper utility for caching passwords
+kquitapp: Close a KDE application using D-Bus
+kreadconfig: Read/write configuration files from a script
+kstart: Start application s with special window properties
+ktimezoned: KDE timezone daemon
+ktraderclient: Query KDE trader system
+kuiserver: Display progress information
+kurifilter-plugins: URI filter and helper
+kwalletd: Password storage service
+nepomuk: Core services and service registry daemon for nepomuk
+phonon: Multimedia support
+plasma: Provide plasma capabilities inside KDE applications
+renamedlgplugins: Plugins for Konqueror's rename dialog
+solid-device-automounter: Media Automounter KCM
+solid-hardware: Query your hardware from the command line
+solid-networkstatus: Informs KDE applications about the network status
+solidautoeject: Used by solid to eject media
+soliduiserver: Hardware Detection daemon
+"
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="alsa networkmanager openexr samba pulseaudio

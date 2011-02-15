@@ -5,6 +5,17 @@
 require kde.org
 
 SUMMARY="Collection of applications used for file and Internet browsing"
+DESCRIPTION="
+dolphin: Easy to use file manager
+kdepasswd: Frontend to the Unix passwd command
+kdialog: Display dialog boxes from shell scripts
+keditbookmarks: Edit browser bookmarks
+kfind: File find utility
+konq-plugins: Various plugins to enhance konqueror functionality
+konqueror: Web browser and file manager
+nsplugins: Various tools used to utilize Netscape(R) browser plugins
+plasma: The folderview plasmoid
+"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="

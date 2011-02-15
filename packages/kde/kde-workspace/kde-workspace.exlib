@@ -5,6 +5,33 @@
 require python kde.org systemd-service
 
 SUMMARY="The interface and basic tools for the KDE workspace"
+DESCRIPTION="
+cursors: Custom KDE cursors
+freespacenotifier: Monitors free disk space on the home directory
+kcheckpass: Authentication program
+kcminit: Executes initialization services during startup
+kcontrol: The KDE Control Center
+kdm: Display manager
+khotkeys: Bind actions to triggers and conditions
+kinfocenter: Information Center
+klipper: X clipboard taskbar applet
+kmenuedit: Menu editor
+krunner: Quick launch applet
+kscreensaver: Screensaver system
+ksmserver: Session Manager
+ksplash: Splash screen
+kstartupconfig:
+kstyles: Styles for KDE widgets
+ksysguard: Task manager & system monitor
+ksystraycmd: Run any command in the system tray
+kwin: Window manager
+kwrited:
+plasma: Desktop framework
+powerdevil: KDE power management
+solid: Seamless Hardware Interaction
+statusnotifierwatcher: Module for the Status Notifier Specification
+systemsettings: Settings utility
+"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
