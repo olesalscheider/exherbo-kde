@@ -17,3 +17,4 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_KTEXTEDITOR:BOOL=FALSE # use ktexteditor from kdelibs
 )
+
