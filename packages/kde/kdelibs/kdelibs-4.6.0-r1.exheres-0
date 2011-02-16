@@ -7,5 +7,6 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    "${FILES}/${PNV}-0001-Workaround-for-the-hang-freeze-when-opening-VLC-s-fi.patch"
 )
 
