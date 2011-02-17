@@ -87,6 +87,8 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
     # Smoke is needed to build the language bindings for Ruby, C#, perl.
     # Python doesn't need smoke
     # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
+    # generator needs smoke
+    'ruby generator'
     'ruby smoke'
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
