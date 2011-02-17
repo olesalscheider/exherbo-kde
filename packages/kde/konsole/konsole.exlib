@@ -20,6 +20,10 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXpm
         x11-libs/libXrender
+        !kde/kdebase [[
+            description = [ konsole is no longer part of kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
