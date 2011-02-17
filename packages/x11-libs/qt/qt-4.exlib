@@ -63,7 +63,7 @@ fi
 
 MYOPTIONS+="
     platform: amd64 ia64 ppc64 x86
-    amd64_cpu_features: mmx sse sse2 3dnow
+    amd64_cpu_features: sse2 3dnow
     arm_cpu_features: neon
     x86_cpu_features: mmx sse sse2 3dnow
 "
@@ -325,10 +325,10 @@ qt-4_src_configure() {
     if option !amd64_cpu_features:3dnow && option !x86_cpu_features:3dnow; then
         myconf+=( -no-3dnow )
     fi
-    if option !amd64_cpu_features:mmx && option !x86_cpu_features:mmx ; then
+    if option !platform:amd64 && option !x86_cpu_features:mmx ; then
         myconf+=( -no-mmx )
     fi
-    if option !amd64_cpu_features:sse && option !x86_cpu_features:sse ; then
+    if option !platform:amd64 && option !x86_cpu_features:sse ; then
         myconf+=( -no-sse )
     fi
     if option !amd64_cpu_features:sse2 && option !x86_cpu_features:sse2 ; then
