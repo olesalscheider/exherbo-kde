@@ -7,8 +7,7 @@ require cmake
 
 SUMMARY="Qimageblitz is an interim image effect library that people can use until KDE 4.1"
 HOMEPAGE="http://websvn.kde.org/trunk/kdesupport/qimageblitz/"
-DOWNLOADS="mirror://exherbo/${PNV}.tar.bz2
-    http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2"
 SLOT="0"

@@ -34,6 +34,18 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
+        !kde/kde-baseapps [[
+            description = [ kde-baseapps replaces kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+        !kde/kate [[
+            description = [ kate is no longer part of kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+        !kde/konsole [[
+            description = [ konsole is no longer part of kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
     suggestion:
         sys-apps/eject
 "
@@ -54,15 +66,5 @@ if ever at_least scm; then
             tidy? ( app-text/tidy )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tidy LibTidy' )
-fi
-
-if ! ever at_least 4.5.95; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'webkit KWebKitPart' )
-    MYOPTIONS+="webkit"
-    DEPENDENCIES+="
-        build+run:
-            kde/qimageblitz[>=0.0.4] [[ note = [ required by dolphin ] ]]
-            webkit? ( kde/kwebkitpart )
-    "
 fi
 

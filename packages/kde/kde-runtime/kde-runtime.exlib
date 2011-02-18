@@ -1,34 +1,52 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
 
-SUMMARY="Programs and data needed at runtime by KDE 4 applications."
+SUMMARY="Plugins and applications necessary for the running of KDE applications"
 DESCRIPTION="
+activitymanager: Plasmoid to manage Plasma desktop activities
+attica: Social Desktop KCM
+desktoptheme: Air and Oxygen Plasma themes
+drkonqi: KDE crash handler and automatic crash report generator
 kcmshell: KDE Control Modules loader
-kdedglobalaccel:
+kcontrol: The KDE Control Center
+kde-menu: Utility for querying the KDE Menu
+kdebugdialog: Utility for setting debug output options
+kdeeject: Script used by KDE to eject removable media
+kdesu: Graphical KDE frontend for su
+kdontchangethehostname: Informs KDE about a change in the hostname
+keditfiletype: Utility to change file and mimetype associations
 kfile: Utility for reading and writing file metadata
+kglobalaccel: KDE global shortcut daemon and dbus service
 khelpcenter: KDE Help Center
 kiconfinder: Icon finder
-kioslaves: Various KIO slaves
+kioclient: Command-line tool for network-transparent operations
+kioexec: KIO helper utility for legacy applications
+kioslave: Various KIO slaves
 kmimetypefinder: Utility to find mimetype of a given file
+knetattach: Utility to assist connecting network folders
 knewstuff: Utility for downloading KDE addons
 knotify: Notification daemon
+kpasswdserver: KIO helper utility for caching passwords
 kquitapp: Close a KDE application using D-Bus
 kreadconfig: Read/write configuration files from a script
 kstart: Start application s with special window properties
+ktimezoned: KDE timezone daemon
 ktraderclient: Query KDE trader system
 kuiserver: Display progress information
+kurifilter-plugins: URI filter and helper
 kwalletd: Password storage service
 nepomuk: Core services and service registry daemon for nepomuk
 phonon: Multimedia support
-solid-hardware: Query your hardware from the command line
+plasma: Provide plasma capabilities inside KDE applications
 renamedlgplugins: Plugins for Konqueror's rename dialog
-"
-HOMEPAGE="
-    http://www.kde.org/
-    http://nepomuk.kde.org/
+solid-device-automounter: Media Automounter KCM
+solid-hardware: Query your hardware from the command line
+solid-networkstatus: Informs KDE applications about the network status
+solidautoeject: Used by solid to eject media
+soliduiserver: Hardware Detection daemon
 "
 
 LICENCES="GPL-2 LGPL-2.1"
@@ -65,8 +83,8 @@ DEPENDENCIES="
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
-        !kde/kde-runtime [[
-            description = [ kde-runtime replaces kdebase-runtime in future KDE SC releases ]
+        !kde/kdebase-runtime [[
+            description = [ kde-runtime replaces kdebase-runtime ]
             resolution = uninstall-blocked-after
         ]]
     run:
@@ -79,16 +97,15 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
-    -DWITH_Nepomuk:BOOL=ON
-    -DWITH_SharedDesktopOntologies:BOOL=ON
-    # QNtrack is currently unpackaged (2010-10-05)
-    -DWITH_QNtrack:BOOL=OFF
-    -DWITH_Xine:BOOL=OFF
+    -DWITH_Nepomuk:BOOL=TRUE
+    -DWITH_SharedDesktopOntologies:BOOL=TRUE
+    -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
+    -DWITH_Xine:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     ALSA
-    'jpeg-rotation Exiv2'
     NetworkManager
+    'jpeg-rotation Exiv2'
     OpenEXR
     Samba
     'sftp LibSSH'

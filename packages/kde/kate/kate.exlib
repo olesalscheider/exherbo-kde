@@ -1,0 +1,24 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Advanced editor component which is used in numerous KDE applications"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        x11-misc/shared-mime-info[>=0.30]
+        !kde/kdebase [[
+            description = [ kate is no longer part of kdebase in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DBUILD_KTEXTEDITOR:BOOL=FALSE # use ktexteditor from kdelibs
+)
+

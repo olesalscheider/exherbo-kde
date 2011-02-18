@@ -6,7 +6,7 @@ require kde
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
 
-if ever is_scm scm; then
+if ever is_scm; then
     SCM_REPOSITORY="git://anongit.kde.org/${MY_PN}.git"
     require scm-git
 else

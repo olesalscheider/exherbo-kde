@@ -1,0 +1,70 @@
+Upstream: Yes (pending)
+Source: Daniel Mierswa <impulze@impulze.org>
+Reason: do not hardcode usb.ids path
+
+See http://bugs.kde.org/show_bug.cgi?id=175104
+
+Index: ConfigureChecks.cmake
+===================================================================
+--- ./ConfigureChecks.cmake	(revision 1093709)
++++ ./ConfigureChecks.cmake	(working copy)
+@@ -2,6 +2,17 @@
+ include(CheckTypeSize)
+ include(FindPkgConfig)
+ 
++if ( KDE_USBIDS_DIR )
++		if ( IS_DIRECTORY KDE_USBIDS_DIR AND IS_ABSOLUTE KDE_USBIDS_DIR )
++			MESSAGE( SEND_ERROR "${KDE_USB_DIR} is not a directory or absolute" )
++		endif ( IS_DIRECTORY KDE_USBIDS_DIR AND IS_ABSOLUTE KDE_USBIDS_DIR )
++		SET( KDE_USBIDS "${KDE_USBIDS_DIR}/usb.ids" )
++else ( KDE_USBIDS_DIR )
++	SET( KDE_USBIDS "/usr/share/hwdata/usb.ids" ) # on fedora
++endif ( KDE_USBIDS_DIR )
++
++MESSAGE( STATUS "${KDE_USBIDS} will be used as usb device database" )
++
+ macro_optional_find_package(XKB) # kxkb, kdm
+ 
+ if (PAM_FOUND)
+Index: config-workspace.h.cmake
+===================================================================
+--- ./config-workspace.h.cmake	(revision 1093709)
++++ ./config-workspace.h.cmake	(working copy)
+@@ -126,6 +126,9 @@
+ /* KDE's static data directory */
+ #define KDE_DATADIR "${DATA_INSTALL_DIR}"
+ 
++/* path to usb.ids database */
++#define KDE_USBIDS "${KDE_USBIDS}"
++
+ /* Define where your java executable is */
+ #undef PATH_JAVA
+ 
+Index: kinfocenter/Modules/usbview/usbdb.cpp
+===================================================================
+--- ./kinfocenter/Modules/usbview/usbdb.cpp	(revision 1093709)
++++ ./kinfocenter/Modules/usbview/usbdb.cpp	(working copy)
+@@ -18,9 +18,10 @@
+ #include <QTextStream>
+ 
+ #include <kstandarddirs.h>
++#include <config-workspace.h>
+ 
+ USBDB::USBDB() {
+-	QString db = "/usr/share/hwdata/usb.ids"; /* on Fedora */
++	QString db = KDE_USBIDS;
+ 	if (!QFile::exists(db))
+ 		db = KStandardDirs::locate("data", "kcmusb/usb.ids");
+ 	if (db.isEmpty())
+Index: kinfocenter/Modules/usbview/CMakeLists.txt
+===================================================================
+--- ./kinfocenter/Modules/usbview/CMakeLists.txt	(revision 1093709)
++++ ./kinfocenter/Modules/usbview/CMakeLists.txt	(working copy)
+@@ -17,4 +17,6 @@
+ ########### install files ###############
+ 
+ install( FILES kcmusb.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+-install( FILES usb.ids  DESTINATION  ${DATA_INSTALL_DIR}/kcmusb )
++if ( NOT DISABLE_USBIDS_INSTALL )
++	install( FILES usb.ids  DESTINATION  ${DATA_INSTALL_DIR}/kcmusb )
++endif ( NOT DISABLE_USBIDS_INSTALL )

@@ -1,9 +1,0 @@
-# Copyright 2010 Yury G. Kudryashov
-# Distributed under the terms of the GNU General Public License v2
-
-require polkit-kde
-
-SUMMARY="KDE Polkit-1 authentication agent and configuration modules"
-
-PLATFORMS="~amd64 ~x86"
-

@@ -4,7 +4,7 @@
 #     Copyright 1999-2008 Gentoo Foundation.
 
 SCM_REPOSITORY="git://anongit.kde.org/strigi.git"
-SCM_GIT_SUBMODULES="
+SCM_EXTERNAL_REFS="
     strigiclient:strigiclient
     strigidaemon:strigidaemon
     strigiutils:strigiutils
@@ -19,20 +19,11 @@ SCM_SECONDARY_REPOSITORIES="
     libstreams
 "
 
-SCM_strigiclient_REPOSITORY="http://anongit.kde.org/strigiclient"
-SCM_strigiclient_REVISION="_"
-
-SCM_strigidaemon_REPOSITORY="http://anongit.kde.org/strigidaemon"
-SCM_strigidaemon_REVISION="_"
-
-SCM_strigiutils_REPOSITORY="http://anongit.kde.org/strigiutils"
-SCM_strigiutils_REVISION="_"
-
-SCM_libstreamanalyzer_REPOSITORY="http://anongit.kde.org/libstreamanalyzer"
-SCM_libstreamanalyzer_REVISION="_"
-
-SCM_libstreams_REPOSITORY="http://anongit.kde.org/libstreams"
-SCM_libstreams_REVISION="_"
+SCM_strigiclient_REPOSITORY="git://anongit.kde.org/strigiclient"
+SCM_strigidaemon_REPOSITORY="git://anongit.kde.org/strigidaemon"
+SCM_strigiutils_REPOSITORY="git://anongit.kde.org/strigiutils"
+SCM_libstreamanalyzer_REPOSITORY="git://anongit.kde.org/libstreamanalyzer"
+SCM_libstreams_REPOSITORY="git://anongit.kde.org/libstreams"
 
 require strigi scm-git
 

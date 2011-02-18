@@ -1,0 +1,56 @@
+# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Collection of applications used for file and Internet browsing"
+DESCRIPTION="
+dolphin: Easy to use file manager
+kdepasswd: Frontend to the Unix passwd command
+kdialog: Display dialog boxes from shell scripts
+keditbookmarks: Edit browser bookmarks
+kfind: File find utility
+konq-plugins: Various plugins to enhance konqueror functionality
+konqueror: Web browser and file manager
+nsplugins: Various tools used to utilize Netscape(R) browser plugins
+plasma: The folderview plasmoid
+"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+MYOPTIONS="
+    tidy [[ description = [ Build the CSS & HTML validator plugins ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        x11-apps/bdftopcf
+    build+run:
+        app-pim/strigi[>=0.6.3][dbus][qt4]
+        dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
+        dev-libs/soprano[>=2.5.63][virtuoso(+)]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kde-runtime:${SLOT}[>=${PV}]
+        kde/kde-workspace:${SLOT}[>=${PV}]
+        x11-libs/libXrender
+        x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
+        x11-libs/qt:4[glib][opengl]
+        tidy? ( app-text/tidy )
+        !kde/kdebase [[
+            description = [ kde-baseapps replaces kdebase ]
+            resolution = uninstall-blocked-after
+        ]]
+    suggestion:
+        sys-apps/eject
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'tidy LibTidy'
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_GLIB2:BOOL=TRUE
+    -DWITH_OpenGL:BOOL=TRUE
+    -DWITH_{Nepomuk,Soprano}:BOOL=TRUE
+)

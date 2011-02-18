@@ -1,0 +1,41 @@
+From aee05ba5b4c8ed1bd779870646722a284e8d397e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bo=20=C3=98rsted=20Andresen?= <zlin@exherbo.org>
+Date: Thu, 17 Feb 2011 18:33:45 +0100
+Subject: [PATCH] Make generator optional.
+
+Upstream: No.
+Reason: generator needs smoke. Ruby needs smoke. So we let the ruby option
+	decide whether generator and smoke gets built. smoke is already
+	optional. generator is not.
+
+	In kdebindings 4.7 generator is part of the smokegen module so it's
+	already fixed there.
+
+---
+ CMakeLists.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7b792bb..edeea44 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,7 +1,5 @@
+ project(kdebindings)
+ 
+-add_subdirectory(generator)
+-
+ # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules )
+ 
+@@ -11,6 +9,8 @@ include(KDE4Defaults)
+ include(MacroLibrary)
+ include(MacroOptionalAddBindings)
+ 
++macro_optional_add_subdirectory(generator)
++
+ add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -DQT3_SUPPORT)
+ include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
+ 
+-- 
+1.7.4.1
+

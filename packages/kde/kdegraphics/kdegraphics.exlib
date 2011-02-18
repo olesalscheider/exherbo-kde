@@ -53,7 +53,7 @@ DEPENDENCIES+="
         sys-devel/cmake[>=2.6.3] [[ note = [ Required to find OpenMP ] ]]
         kde_parts:kgamma? ( x11-proto/xf86vidmodeproto )
     build+run:
-        graphics/exiv2[>=0.19]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
+        graphics/exiv2[>=0.20]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/jpeg[>=6b]
         media-libs/lcms[>=1.14]
@@ -80,7 +80,10 @@ DEPENDENCIES+="
         )
         kde_parts:kolourpaint? ( kde/qimageblitz )
         kde_parts:ksaneplugin? ( media-gfx/sane-backends [[ note = [ libksane could be compiled without ksaneplugin but I don't see the point ] ]] )
-        kde_parts:ksnapshot? ( x11-libs/libX11 )
+        kde_parts:ksnapshot? (
+            x11-libs/libX11
+            x11-libs/libXfixes
+        )
         kde_parts:okular? (
             kde/qimageblitz
             media-libs/freetype:2
@@ -93,6 +96,7 @@ DEPENDENCIES+="
             tiff? ( media-libs/tiff )
         )
         kde_parts:strigi-analyzer? (
+            app-pim/strigi[>=0.6.3][dbus][qt4]
             tiff? ( media-libs/tiff )
         )
 "
@@ -100,14 +104,6 @@ DEPENDENCIES+="
 if ever at_least 4.5.95 ; then
     DEPENDENCIES+="
         build+run:
-            graphics/exiv2[>=0.20]  [[ note = [ thumbnailers/raw/ needs Exiv2, which is too small to make optional: Hard enabled ] ]]
-            kde_parts:ksnapshot? ( x11-libs/libXfixes )
-            kde_parts:strigi-analyzer? ( app-pim/strigi[>=0.6.3][dbus][qt4] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-pim/strigi[>=0.6.3][dbus][qt4]
     "
 fi
 

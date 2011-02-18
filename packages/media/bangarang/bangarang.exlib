@@ -26,7 +26,6 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         dev-libs/soprano
-        kde/kdebindings:4[>=4.5.0]
         kde/kdelibs:4[>=4.5.0][nepomuk(+)]
         media-libs/phonon
         media-libs/taglib

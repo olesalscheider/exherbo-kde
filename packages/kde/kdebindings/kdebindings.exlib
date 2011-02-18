@@ -1,4 +1,4 @@
-# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2010-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -42,29 +42,17 @@ DEPENDENCIES="
         x11-libs/qt:4[X][dbus][sql][webkit]
         python? (
             dev-lang/python:=
-            dev-python/sip[>=4.10]
-            dev-python/PyQt4[>=4.7][opengl][sql][webkit]
+            dev-python/sip[>=4.12.0]
+            dev-python/PyQt4[>=4.8.2][opengl][sql][webkit]
             media-libs/phonon[>=4.3.0]  [[ note = [ PyQt4 includes Phonon/Experimental headers ] ]]
         )
         ruby? ( dev-lang/ruby:1.8 )
 "
 
-if ever at_least 4.5.95 ; then
-    DEPENDENCIES+="
-        build+run:
-            python? (
-                dev-python/sip[>=4.12.0]
-                dev-python/PyQt4[>=4.8.2][opengl][sql][webkit]
-            )
-    "
-fi
-
 if ever at_least scm ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
 elif ever at_least 4.5.95 ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.5.0]"
-else
-    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.4.0]"
 fi
 
 # Note: ABI support for python & ruby should use:
@@ -99,6 +87,8 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
     # Smoke is needed to build the language bindings for Ruby, C#, perl.
     # Python doesn't need smoke
     # Kalyptus is needed to build Smoke, so keep smoke & kalyptus enabled/disabled together.
+    # generator needs smoke
+    'ruby generator'
     'ruby smoke'
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
