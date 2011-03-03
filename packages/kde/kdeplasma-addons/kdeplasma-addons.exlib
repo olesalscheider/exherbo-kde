@@ -11,13 +11,13 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 
 LICENCES="GPL-2"
 MY_KDE_PARTS="kdeobservatory"
-
 MYOPTIONS+="
     kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
     marble    [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
     qalculate [[ description = [ Build qalculate applet ] ]]
     kde_parts: ${MY_KDE_PARTS}
 "
+
 DEPENDENCIES+="
     build:
         dev-lang/python:*
