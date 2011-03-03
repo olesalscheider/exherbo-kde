@@ -40,7 +40,7 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde_parts:ark? (
-            app-arch/libarchive[>=2.7.0&<scm]
+            app-arch/libarchive[>=2.7.0]
             app-arch/xz
             kde/kdebase:${SLOT}[>=${PV}]    [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
         )
