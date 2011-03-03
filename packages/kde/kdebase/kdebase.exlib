@@ -12,6 +12,7 @@ kdialog: display dialog boxes from shell scripts
 keditbookmarks: Edit browser bookmarks
 kfind: File find utility
 konqueror: Web browser and file manager
+$(ever at_least 4.6.1 && echo 'konq-plugins: Plugins for Konqueror')
 konsole: Terminal
 kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
@@ -57,10 +58,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_XKB=ON
 )
 
-KDE_APPS_PREFIX="apps"
+ever at_least 4.6.1 || KDE_APPS_PREFIX="apps"
 
-if ever at_least scm; then
-    MYOPTIONS+=" tidy [[ description = [ Build the CSS & HTML validator plugins ] ]]"
+if ever at_least scm ; then
+    MYOPTIONS+=" tidy [[ description = [ Build the CSS & HTML validator plugins for konqueror ] ]]"
     DEPENDENCIES+="
         build+run:
             tidy? ( app-text/tidy )
