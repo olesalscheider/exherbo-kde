@@ -12,7 +12,6 @@ kdialog: display dialog boxes from shell scripts
 keditbookmarks: Edit browser bookmarks
 kfind: File find utility
 konqueror: Web browser and file manager
-$(ever at_least 4.6.1 && echo 'konq-plugins: Plugins for Konqueror')
 konsole: Terminal
 kwrite: Simple editor
 nsplugins: various tools used to utilize Netscape(R) browser plugins
