@@ -13,11 +13,14 @@ DOWNLOADS="http://download.akonadi-project.org/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
+MYOPTIONS="strigi [[ description = [ Use strigi as the search engine. Otherwise soprano is used ] ]]"
 
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.87]
     build+run:
+        strigi? ( app-pim/strigi )
+       !strigi? ( dev-libs/soprano )
         dev-db/mysql
         dev-libs/boost      [[ note = [ Akonadi uses the program_options library ] ]]
         dev-libs/libxslt
@@ -25,48 +28,16 @@ DEPENDENCIES="
         x11-misc/shared-mime-info[>=0.23]
 "
 
-
-
-if ever at_least 1.4.90 ; then
-    MYOPTIONS="
-        strigi [[ description = [ Use strigi as the search engine. Otherwise soprano is used. ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            strigi? ( app-pim/strigi )
-            !strigi? ( dev-libs/soprano )
-    "
-elif ever at_least 1.3.80 ; then
-    MYOPTIONS=""
-    DEPENDENCIES+="
-        build+run:
-            dev-db/sqlite[>=3.6.23]
-            dev-libs/soprano
-    "
-else
-    MYOPTIONS=""
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano
-    "
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DAKONADI_BUILD_TESTS:BOOL=TRUE
 )
 
 src_configure() {
-    if ever at_least 1.4.90; then
-        if option strigi; then
-            CMAKE_SRC_CONFIGURE_PARAMS+=( -DAKONADI_USE_STRIGI_SEARCH:BOOL=TRUE )
-        else
-            CMAKE_SRC_CONFIGURE_PARAMS+=( -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE )
-        fi
     CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DAKONADI_USE_STRIGI_SEARCH:BOOL=TRUE
         -DDATABASE_BACKEND=MYSQL
         -DWITH_SQLITE=FALSE
     )
-    fi
 
     cmake_src_configure
 }
