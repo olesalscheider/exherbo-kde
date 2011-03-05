@@ -57,10 +57,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_XKB=ON
 )
 
-KDE_APPS_PREFIX="apps"
+ever at_least 4.6.1 || KDE_APPS_PREFIX="apps"
 
-if ever at_least scm; then
-    MYOPTIONS+=" tidy [[ description = [ Build the CSS & HTML validator plugins ] ]]"
+if ever at_least scm ; then
+    MYOPTIONS+=" tidy [[ description = [ Build the CSS & HTML validator plugins for konqueror ] ]]"
     DEPENDENCIES+="
         build+run:
             tidy? ( app-text/tidy )

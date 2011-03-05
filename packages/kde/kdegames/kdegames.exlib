@@ -27,10 +27,10 @@ kbreakout kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube kli
 knetwalk kolf kollision konquest kpat kreversi kshisen ksirk kspaceduel ksquares ksudoku ktron
 ktuberling kubrick lskat palapeli
 "
-
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS}
 "
+
 DEPENDENCIES+="
     build+run:
         app-crypt/qca:2
