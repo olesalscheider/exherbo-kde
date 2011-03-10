@@ -1,9 +1,0 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-require konq-plugins
-
-PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-fix-compile-with-qt-4.7.patch )
-

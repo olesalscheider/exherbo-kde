@@ -1,0 +1,43 @@
+From b4ea250a4595657212657c8a034fda077dd16ecb Mon Sep 17 00:00:00 2001
+From: ingmarvanhassel <ingmarvanhassel@283d02a7-25f6-0310-bc7c-ecb5cbfe19da>
+Date: Thu, 3 Mar 2011 13:59:56 +0000
+Subject: [PATCH] Fix build with libarchive 3.0
+
+libarchive 3.0 no longer defines ARCHIVE_DEFAULT_BYTES_PER_BLOCK,
+http://code.google.com/p/libarchive/source/browse/trunk/libarchive/archive.h?r=2455#166
+
+All code examples that libarchive ships, as well as its own functionality
+tests hardcode this constant, too.
+
+git-svn-id: svn+ssh://svn.kde.org/home/kde/trunk/KDE/kdeutils@1223552 283d02a7-25f6-0310-bc7c-ecb5cbfe19da
+---
+ ark/plugins/libarchive/libarchivehandler.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+Upstream: Yes, in trunk and the 4.6 branch, should be in 4.6.2
+
+diff --git a/ark/plugins/libarchive/libarchivehandler.cpp b/ark/plugins/libarchive/libarchivehandler.cpp
+index c3a59e7..ff711f4 100644
+--- a/ark/plugins/libarchive/libarchivehandler.cpp
++++ b/ark/plugins/libarchive/libarchivehandler.cpp
+@@ -670,7 +670,7 @@ int LibArchiveInterface::extractionFlags() const
+ 
+ void LibArchiveInterface::copyData(const QString& filename, struct archive *dest, bool partialprogress)
+ {
+-    char buff[ARCHIVE_DEFAULT_BYTES_PER_BLOCK];
++    char buff[10240];
+     ssize_t readBytes;
+     QFile file(filename);
+ 
+@@ -700,7 +700,7 @@ void LibArchiveInterface::copyData(const QString& filename, struct archive *dest
+ 
+ void LibArchiveInterface::copyData(struct archive *source, struct archive *dest, bool partialprogress)
+ {
+-    char buff[ARCHIVE_DEFAULT_BYTES_PER_BLOCK];
++    char buff[10240];
+     ssize_t readBytes;
+ 
+     readBytes = archive_read_data(source, buff, sizeof(buff));
+-- 
+1.7.4.1
+

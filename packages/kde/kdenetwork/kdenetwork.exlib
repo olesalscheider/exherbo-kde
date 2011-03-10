@@ -33,6 +33,7 @@ MY_IM_PROTOCOLS+="
     groupwise [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
     ilbc [[ description = [ iLBC codec support for voice calls over Jabber ] requires = [ im_protocols: jingle ] ]]
     jingle [[ description = [ Voice calls over Jabber ] requires = [ im_protocols: xmpp ] ]]
+    yahoo [[ description = [ Add support for the Yahoo messenger protocol ] ]]
     wlm [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
     xmpp [[ description = [ Enable Kopete Jabber protocol ] ]]
 "
@@ -93,6 +94,7 @@ DEPENDENCIES+="
             im_protocols:gadu? ( net-libs/libgadu[>=1.8.0] [[ url = [ http://toxygen.net/libgadu/ ] ]] )
             im_protocols:groupwise? ( app-crypt/qca:2 )
             im_protocols:ilbc? ( media-plugins/msilbc )
+            im_protocols:yahoo? ( media-libs/jasper )
             im_protocols:wlm? (
                 dev-libs/boost
                 media-libs/giflib
@@ -167,7 +169,7 @@ src_configure() {
         pipes privacy texteffect translator urlpicpreview
     )
     # Kopete protocols with no extra dependencies
-    my_kopete_protocols=( bonjour irc oscar qq skype sms testbed winpopup yahoo )
+    my_kopete_protocols=( bonjour irc oscar qq skype sms testbed winpopup )
     for p in "${my_kopete_plugins[@]}" "${my_kopete_protocols[@]}"; do
         cmakeparams+=( -DWITH_${p}:BOOL=TRUE )
     done
@@ -238,6 +240,8 @@ src_configure() {
         $(cmake_with im_protocols:JINGLE) \
         $(cmake_with im_protocols:jingle Alsa) \
         $(cmake_with im_protocols:jingle Speex) \
+        $(cmake_with im_protocols:yahoo) \
+        $(cmake_with im_protocols:yahoo Jasper) \
         $(cmake_with im_protocols:wlm) \
         $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with kopete_plugins:otr) \
