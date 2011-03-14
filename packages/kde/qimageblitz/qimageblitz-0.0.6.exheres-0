@@ -12,18 +12,38 @@ DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
 LICENCES="GPL-2 LGPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="ppc_cpu_features: altivec
-    x86_cpu_features: 3dnow mmx sse sse2"
+MYOPTIONS="
+    platform: amd64
+    amd64_cpu_features: 3dnow sse2
+    ppc_cpu_features: altivec
+    x86_cpu_features: 3dnow mmx sse sse2
+    "
 
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4[X]"
 
-CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
-    'ppc_cpu_features:altivec ALTIVEC'
-    'x86_cpu_features:3dnow 3DNOW'
-    'x86_cpu_features:mmx MMX'
-    'x86_cpu_features:sse SSE'
-    'x86_cpu_features:sse2 SSE2'
-)
+src_configure() {
+    local myconf=()
+
+    if option platform:amd64 ; then
+        myconf+=(
+            -DENABLE_MMX:BOOL=TRUE
+            -DENABLE_SSE:BOOL=TRUE
+            $(cmake_enable amd64_cpu_features:3dnow 3DNOW)
+            $(cmake_enable amd64_cpu_features:sse2 SSE2)
+        )
+    else
+        myconf+=(
+            $(cmake_enable x86_cpu_features:3dnow 3DNOW)
+            $(cmake_enable x86_cpu_features:mmx MMX)
+            $(cmake_enable x86_cpu_features:sse SSE)
+            $(cmake_enable x86_cpu_features:sse2 SSE2)
+        )
+    fi
+
+    myconf+=( $(cmake_enable ppc_cpu_features:altivec ALTIVEC) )
+
+    ecmake "${myconf[@]}"
+}
 
