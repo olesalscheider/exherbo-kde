@@ -22,5 +22,9 @@ DEPENDENCIES="
         kde/kdebase:4 [[ note = [ KDiff3 contextmenu plugin for Konqueror ] ]]
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-docbook_fixes.patch
+)
+
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_LibKonq:BOOL=ON )
 
