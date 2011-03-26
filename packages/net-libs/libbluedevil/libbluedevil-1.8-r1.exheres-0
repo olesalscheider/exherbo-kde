@@ -23,7 +23,5 @@ DEPENDENCIES="
         net-wireless/bluez[>=4][alsa][pulseaudio(+)?]
 "
 
-BUGS_TO="replica@exherbo.org"
-
 WORK=${WORKBASE}/${MY_PNV}
 

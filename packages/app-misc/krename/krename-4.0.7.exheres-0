@@ -26,5 +26,3 @@ DEPENDENCIES="
         media-libs/taglib[>=1.5] [[ note = [ Automagic dependency ] ]]
 "
 
-BUGS_TO="replica@exherbo.org"
-
