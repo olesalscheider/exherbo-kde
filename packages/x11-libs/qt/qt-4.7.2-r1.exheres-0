@@ -12,5 +12,7 @@ http://labs.qt.nokia.com/2011/03/01/qt-4-7-2-has-been-released/
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-make-declarative-debug-work.patch
+    "${FILES}"/${PNV}-report-fraudulent-certs-QSslCertificate.patch
+    "${FILES}"/${PNV}-report-fraudulent-certs-QSslSocket.patch
 )
 
