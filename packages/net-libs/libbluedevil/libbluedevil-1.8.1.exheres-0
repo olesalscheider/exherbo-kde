@@ -3,11 +3,11 @@
 
 require cmake
 
-MY_PNV=${PN}-v${PV}-1
+MY_PNV=${PN}-v${PV}
 
 SUMMARY="BlueZ wrapper for the BlueDevil KDE Bluetooth stack"
-HOMEPAGE="http://www.gitorious.org/${PN}"
-DOWNLOADS="http://media.ereslibre.es/2010/11/${MY_PNV}.tar.bz2"
+HOMEPAGE="https://projects.kde.org/projects/playground/libs/${PN}"
+DOWNLOADS="http://media.ereslibre.es/2011/03/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
