@@ -23,5 +23,7 @@ DEPENDENCIES="
         net-wireless/bluez[>=4][alsa][pulseaudio(+)?]
 "
 
+BUGS_TO="mixi@user-helfen-usern.de"
+
 WORK="${WORKBASE}"/${MY_PNV}
 
