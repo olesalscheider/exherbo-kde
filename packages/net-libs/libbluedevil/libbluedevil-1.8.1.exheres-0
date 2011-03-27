@@ -23,5 +23,5 @@ DEPENDENCIES="
         net-wireless/bluez[>=4][alsa][pulseaudio(+)?]
 "
 
-WORK=${WORKBASE}/${MY_PNV}
+WORK="${WORKBASE}"/${MY_PNV}
 
