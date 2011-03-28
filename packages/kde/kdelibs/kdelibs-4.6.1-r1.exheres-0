@@ -7,5 +7,6 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    "${FILES}/${PNV}-CVE-2011-1168.patch"
 )
 
