@@ -29,8 +29,6 @@ DEPENDENCIES="
         wma?      ( media-plugins/gst-ffmpeg[>=0.10] )
 "
 
-BUGS_TO="replica@exherbo.org"
-
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gthread_init.patch )
 DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
 

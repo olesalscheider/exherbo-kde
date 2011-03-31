@@ -3,13 +3,14 @@
 
 require qt-creator
 
-DOWNLOADS="http://get.qt.nokia.com/${PN/-/}/${PNV}-src.tgz"
 PLATFORMS="~amd64 ~x86"
-UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PNV/-/}/index.html"
+UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-snapshot/index.html"
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.7][X][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.7.1][X][dbus][doc][sql][sqlite][webkit]
+    suggestion:
+        dev-util/valgrind [[ description = [ Integrate valgrind into the IDE to easily run memcheck ] ]]
 "
 
 WORK="${WORK}-src/"

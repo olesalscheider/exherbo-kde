@@ -4,7 +4,7 @@
 require qt-creator
 
 PLATFORMS="~amd64 ~x86"
-UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)-snapshot/index.html"
+UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)/index.html"
 
 DEPENDENCIES="
     build+run:

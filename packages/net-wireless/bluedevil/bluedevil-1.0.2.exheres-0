@@ -34,5 +34,3 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio )
 "
 
-BUGS_TO="replica@exherbo.org"
-
