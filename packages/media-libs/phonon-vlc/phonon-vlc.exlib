@@ -9,7 +9,7 @@ MY_PN=phonon-backend-vlc
 MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
-HOMEPAGE="http://www.videolan.org/vlc"
+HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/phonon-vlc/"
 DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-3"
