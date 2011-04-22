@@ -9,11 +9,13 @@ HOMEPAGE="http://people.canonical.com/~agateau/dbusmenu/ ${HOMEPAGE}"
 
 LICENCES="LGPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="doc"
 
 RESTRICT="test"
 
 DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
     build+run:
         x11-libs/qt:4[>=4.6.0]
 "
@@ -23,6 +25,10 @@ DEPENDENCIES="
 
 WORK=${WORKBASE}/lib${PNV}/
 
-# Tests both require X to run and are currently broken (2011-01-26)
+# Tests both require X to run and are currently broken (2011-04-13)
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'doc DOC'
+)
 

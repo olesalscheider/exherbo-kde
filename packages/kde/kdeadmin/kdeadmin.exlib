@@ -24,7 +24,7 @@ DEPENDENCIES="
         )
     run:
         kde_parts:kcron? (
-            sys-process/vixie-cron [[ note = [ Any cron that provides proper crontabs will probably work but we only have vixie-cron ] ]]
+            virtual/cron
         )
         kde_parts:system-config-printer-kde? (
             app-admin/system-config-printer

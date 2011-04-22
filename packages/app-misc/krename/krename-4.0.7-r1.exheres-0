@@ -14,15 +14,23 @@ HOMEPAGE="http://www.krename.net/"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
+MYOPTIONS="pdf [[ description = [ Build plugin to use information from PDFs via libpodofo to rename a file ] ]]"
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        app-text/podofo          [[ note = [ Automagic dependency ] ]]
         graphics/exiv2[>=0.13]   [[ note = [ Automagic dependency ] ]]
         kde/kdelibs:4
         media-libs/freetype:2    [[ note = [ Automagic dependency ] ]]
         media-libs/taglib[>=1.5] [[ note = [ Automagic dependency ] ]]
+        pdf? ( app-text/podofo )
 "
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'pdf LIBPODOFO'
+)
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}_add_common_names_to_FindLIBPODOFO.patch
+)
 

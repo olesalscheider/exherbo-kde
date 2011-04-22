@@ -9,8 +9,9 @@ rekonq is a KDE browser based on Webkit. Its code is based on Nokia
 QtDemoBrowser, just like Arora. Anyway its implementation is going to embrace
 KDE technologies to have a full-featured KDE web browser.
 "
+HOMEPAGE="http://rekonq.kde.org/"
 
-RESTRICT="test" # Tests fail to build
+RESTRICT="test" # the tests require a running X server
 
 LICENCES="GPL-3"
 SLOT="0"

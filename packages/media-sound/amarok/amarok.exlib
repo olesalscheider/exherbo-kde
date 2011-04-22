@@ -46,7 +46,6 @@ DEPENDENCIES="
         app-crypt/qca:2
         app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
         dev-libs/soprano[>=2.1.67]
-        kde/kdelibs:4[>=4.4.0]
         media-libs/taglib[>=1.6] [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
         x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
@@ -74,23 +73,32 @@ DEPENDENCIES="
 "
 
 if ever at_least scm ; then
-    MYOPTIONS+=" musicbrainz"
+    MYOPTIONS+="
+        musicbrainz
+        playdar [[ description = [ Enable support for playdar a tool to find music from multiple sources (local files, other computers on a network or internet services) ] ]]
+    "
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:4[>=4.4.99] [[ note = [ nfs and smb support depend on it ] ]]
             ipod? ( x11-libs/gdk-pixbuf:2.0 [[ description = [ Support for artwork on iPods ] ]] )
             musicbrainz? (
                 media/ffmpeg[>=0.5]
                 media-libs/libofa[>=0.9.0]
+            )
+            playdar? (
+                dev-libs/qjson[>=0.7] [[ note = [ the build scripts say >=0.5 while the README file says >=0.7 ] ]]
             )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'ipod GDKPixBuf'
         'musicbrainz FFmpeg'
         'musicbrainz LibOFA'
+        'playdar QJSON'
     )
 else
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:4[>=4.4.0]
             ipod? ( x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]] )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
