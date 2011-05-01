@@ -47,3 +47,18 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( CLUCENE DBUS 'exif EXIV2' FAM INOTIFY QT4 )
 
+if ever is_scm ; then
+    MYOPTIONS+=" ffmpeg [[ description = [ FFmpeg for indexing audio and video metadata ] ]]"
+    DEPENDENCIES+="
+        build+run:
+            ffmpeg? ( media/ffmpeg )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # Disable clucene version 1+ backend until a stable version is released
+        -DENABLE_CLUCENE_NG=OFF
+        # Disable xine in favor of FFmpeg
+        -DENABLE_XINE=OFF
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=( FFMPEG )
+fi
+
