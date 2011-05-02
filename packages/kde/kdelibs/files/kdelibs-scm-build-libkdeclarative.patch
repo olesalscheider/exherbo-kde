@@ -1,0 +1,35 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Reason: Always build libkdeclarative so plasma linking won't fail.
+Upstream: Reported, https://bugs.kde.org/show_bug.cgi?id=272280 
+
+From a88c9da064fc428243757dde358a614ccc716539 Mon Sep 17 00:00:00 2001
+From: Timo Gurr <tgurr@exherbo.org>
+Date: Mon, 2 May 2011 23:03:51 +0200
+Subject: [PATCH] Always build libkdeclarative so plasma linking won't fail.
+
+---
+ CMakeLists.txt |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1ec7dff..a5009c4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -326,6 +326,7 @@ endif(NOT WINCE)
+ add_subdirectory( dnssd )
+ add_subdirectory( kross )
+ add_subdirectory( security )
++add_subdirectory( experimental )
+ if(NOT WINCE)
+ add_subdirectory( plasma )
+ endif(NOT WINCE)
+@@ -363,6 +364,4 @@ install( EXPORT kdelibsToolsTargets   DESTINATION ${DATA_INSTALL_DIR}/cmake/modu
+ # the following will be the correct locations once cmake has the improved FIND_PACKAGE()
+ # install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KDELibsDependencies.cmake DESTINATION ${PLUGIN_INSTALL_DIR}/cmake RENAME KDE4Config.cmake)
+ 
+-macro_optional_add_subdirectory( experimental )
+-
+ macro_display_feature_log()
+-- 
+1.7.4.3
+
