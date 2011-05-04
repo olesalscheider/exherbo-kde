@@ -7,7 +7,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require multilib kde.org
+require multilib kde.org [ git=false ]
 
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
@@ -68,15 +68,12 @@ DEPENDENCIES+="
         dev-libs/soprano
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
-        kde/kdebase-runtime:${SLOT}[>=${PV}]
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
         kde_parts:kget? (
             app-crypt/gpgme
             app-text/shared-desktop-ontologies[>=0.4]
             dev-libs/boost
-            kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
-            kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
             sqlite? ( dev-db/sqlite:3 )
         )
         kde_parts:kopete? (
@@ -142,6 +139,26 @@ DEPENDENCIES+="
 
 # FIXME
 # Warning: kppp uses setuid
+
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-runtime:${SLOT}[>=${PV}]
+            kde_parts:kget? (
+                kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
+                kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdebase-runtime:${SLOT}[>=${PV}]
+            kde_parts:kget? (
+                kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
+                kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+            )
+    "
+fi
 
 src_prepare() {
     default
