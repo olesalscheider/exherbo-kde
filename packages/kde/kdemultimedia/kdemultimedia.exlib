@@ -2,17 +2,20 @@
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org [ git=false ]
 
 SUMMARY="KDE Multimedia"
 DESCRIPTION="
 * Dragonplayer: Dragon Player is a simple video player for KDE 4
+* ffmpegthumbs: A fast and light videothumbnailer
 * Juk: An audio jukebox that supports collections of MP3, Ogg Vorbis and FLAC files
-* KDE Multimedia KIO-slaves
+* kioslave: KIO Slave for accessing audio CDs
 * KMix: An application to allow you to change the volume of your sound card
 * KsCD: A small, fast, CDDB enabled audio CD player
 * libkcddb: Fetch and submit audio CD information over the internet
 * libkcompactdisc: Library for playing & ripping CDs
+* mplayerthumbs: A videothumbnailer, predecessor of ffmpegthumbs
+* strigi-analyzer: Support for strigi to be able to index audio and video metadata
 "
 HOMEPAGE="
     http://www.kde.org/
@@ -38,7 +41,6 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        kde/kdebase:${SLOT}[>=${PV}]
         media-libs/phonon
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
@@ -57,7 +59,6 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kmix? (
-            kde/kdebase-workspace:${SLOT}
             pulseaudio? (
                 dev-libs/glib:2
                 media-sound/pulseaudio[>=0.9.12]
@@ -87,4 +88,21 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'vorbis OggVorbis'
 )
 
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-baseapps:${SLOT}[>=${PV}]
+            kde_parts:kmix? (
+                kde/kde-workspace:${SLOT}[>=${PV}]
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdebase:${SLOT}[>=${PV}]
+            kde_parts:kmix? (
+                kde/kdebase-workspace:${SLOT}[>=${PV}]
+            )
+    "
+fi
 
