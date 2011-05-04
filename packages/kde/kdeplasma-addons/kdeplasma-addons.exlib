@@ -28,14 +28,12 @@ DEPENDENCIES+="
         dev-libs/boost
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
-        kde/kdebase-workspace:${SLOT}[>=${PV}]
-        kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of frame applet ] ]]
         kde/qimageblitz[>=0.0.4]
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
-        x11-misc/shared-mime-info
+        x11-misc/shared-mime-info[>=0.18]
         kde_parts:kdeobservatory? ( x11-libs/qwt )
         kimpanel? ( inputmethods/scim[>=1.4] )
         marble? ( kde/kdeedu:4[kde_parts:marble] )
@@ -56,4 +54,18 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenGL:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
 )
+
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-workspace:${SLOT}[>=${PV}]
+            kde/libkexiv2[>=0.2.0] [[ note = [ Needs libkexiv2 for automatic rotation of the frame applet ] ]]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdebase-workspace:${SLOT}[>=${PV}]
+            kde/kdegraphics:${SLOT}[>=${PV}] [[ note = [ Needs libkexiv2 for automatic rotation of the frame applet ] ]]
+    "
+fi
 
