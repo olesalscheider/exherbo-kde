@@ -5,5 +5,5 @@ require kdebindings
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-4.6.1-0001-Make-generator-optional.patch )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-4.6.2-0001-Make-generator-optional.patch )
 
