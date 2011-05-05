@@ -93,7 +93,7 @@ DEPENDENCIES="
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
+        networkmanager? ( net-apps/NetworkManager[>=0.7.0&<0.9] )
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.7.1]
