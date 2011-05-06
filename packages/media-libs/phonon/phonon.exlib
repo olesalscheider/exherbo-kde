@@ -7,7 +7,7 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require multilib cmake
+require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"

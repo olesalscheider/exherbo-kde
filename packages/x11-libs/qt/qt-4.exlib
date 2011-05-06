@@ -4,8 +4,6 @@
 # Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require multilib
-
 export_exlib_phases src_prepare src_configure src_install src_compile
 
 myexparam pn=${MY_PN:-${PN}}
@@ -171,7 +169,7 @@ qt4_build() {
 }
 
 qconf4() {
-    local x myarch myconf=() libdir=$(get_libdir) option_to_arch_map=(
+    local x myarch myconf=() option_to_arch_map=(
         #alpha arm mips s390 sparc
         #{hppa,sh}:generic
         amd64:x86_64
@@ -196,8 +194,8 @@ qconf4() {
         -bindir /usr/bin
         -docdir /usr/share/doc/${PNVR}
         -headerdir /usr/include/qt4
-        -libdir /usr/${libdir}/qt4
-        -plugindir /usr/${libdir}/qt4/plugins
+        -libdir /usr/${LIBDIR}/qt4
+        -plugindir /usr/${LIBDIR}/qt4/plugins
         -datadir /usr/share/qt4
         -translationdir /usr/share/qt4/translations
         -sysconfdir /etc/qt4
@@ -206,7 +204,7 @@ qconf4() {
     )
     if ever at_least 4.7 ; then
         myconf+=(
-            -importdir /usr/${libdir}/qt4/imports
+            -importdir /usr/${LIBDIR}/qt4/imports
         )
     fi
 
@@ -355,7 +353,7 @@ qt-4_src_configure() {
         -no-sql-ibase
         -no-sql-odbc
         $(qt4_enable mysql sql-mysql plugin "")
-        $(option mysql      && echo "-I/usr/include/mysql -L/usr/$(get_libdir)/mysql/")
+        $(option mysql      && echo "-I/usr/include/mysql -L/usr/${LIBDIR}/mysql/")
         $(qt4_enable postgresql sql-psql plugin "")
         $(option postgresql && echo '-I/usr/include/postgresql/server/')
         $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
@@ -395,12 +393,11 @@ qt-4_src_compile() {
 qt-4_src_install() {
     default
 
-    local lib libdir=$(get_libdir)
     # remove build dir from libraries
-    edo sed -i -e "s:${WORK}/lib:/usr/${libdir}/qt4:g" "${IMAGE}"/usr/${libdir}/qt4/{*.la,*.prl,pkgconfig/*.pc}
+    edo sed -i -e "s:${WORK}/lib:/usr/${LIBDIR}/qt4:g" "${IMAGE}"/usr/${LIBDIR}/qt4/{*.la,*.prl,pkgconfig/*.pc}
 
     # move pkgconfig files out of qt4/ dir
-    edo mv "${IMAGE}"/usr/${libdir}/qt4/pkgconfig "${IMAGE}"/usr/${libdir}/
+    edo mv "${IMAGE}"/usr/${LIBDIR}/qt4/pkgconfig "${IMAGE}"/usr/${LIBDIR}/
 
     # install symlinks to Qt4 versions of executables that Qt3 also provides. Some buildsystems would fail to find the Qt4 versions without these
     for i in assistant designer linguist lrelease lupdate moc qmake $(option qt3support && echo qtconfig) uic ; do
@@ -411,7 +408,7 @@ qt-4_src_install() {
     keepdir /etc/qt4
 
     hereenvd 44qt4 <<EOF
-LDPATH=/usr/$(get_libdir)/qt4
+LDPATH=/usr/${LIBDIR}/qt4
 EOF
 
     insinto /usr/share/pixmaps
@@ -443,8 +440,8 @@ MimeType=application/x-linguist;
 EOF
 
     if option phonon ; then
-        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/libphonon*
-        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/pkgconfig/phonon.pc
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/libphonon*
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/pkgconfig/phonon.pc
         edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
     fi
 
@@ -455,7 +452,7 @@ EOF
     fi
 
     if option gstreamer ; then
-        edo rm -rf "${IMAGE}"/usr/$(get_libdir)/qt4/plugins/phonon_backend
+        edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/plugins/phonon_backend
     fi
 }
 

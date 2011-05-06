@@ -1,7 +1,7 @@
 # Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require multilib sourceforge [ project=virtuoso suffix=tar.gz ]
+require sourceforge [ project=virtuoso suffix=tar.gz ]
 
 SUMMARY="A high-performance object-relational SQL database"
 DESCRIPTION="
@@ -64,8 +64,8 @@ src_install() {
     default
 
     edo rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,}
-    edo rmdir "${IMAGE}"/usr/$(get_libdir)/virtuoso/{hosting/,}
-    edo rm -r "${IMAGE}"/usr/$(get_libdir)/{jdbc-*,jena,sesame}/{*.jar,}
+    edo rmdir "${IMAGE}"/usr/${LIBDIR}/virtuoso/{hosting/,}
+    edo rm -r "${IMAGE}"/usr/${LIBDIR}/{jdbc-*,jena,sesame}/{*.jar,}
     edo mv -u "${IMAGE}"/usr/share/doc/virtuoso/* "${IMAGE}"/usr/share/doc/${PNVR}
     edo rm -r "${IMAGE}"/usr/share/doc/virtuoso
 }

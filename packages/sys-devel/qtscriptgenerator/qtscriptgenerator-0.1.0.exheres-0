@@ -59,7 +59,7 @@ src_install() {
     dobin "${WORK}/generator/generator"
 
     # doexe & co dereference symlinks, so only doexe the actual .so's, and put the symlinks in place manually
-    exeinto /usr/$(get_libdir)/qt4/plugins/script/
+    exeinto /usr/${LIBDIR}/qt4/plugins/script/
     doexe plugins/script/*.so.?.?.?
 
     for plugin in plugins/script/*.so.?.?.? ; do
@@ -67,7 +67,7 @@ src_install() {
         symlink=${plugin}
         for (( i=0; i<=2; i++ )); do
             symlink=${symlink%%.?}
-            dosym ${plugin} /usr/$(get_libdir)/qt4/plugins/script/${symlink}
+            dosym ${plugin} /usr/${LIBDIR}/qt4/plugins/script/${symlink}
         done
     done
 

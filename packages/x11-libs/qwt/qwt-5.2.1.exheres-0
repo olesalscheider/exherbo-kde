@@ -1,7 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require multilib qmake4 sourceforge
+require qmake4 sourceforge
 
 SUMMARY="Qt Widgets for Technical Applications"
 DESCRIPTION="
@@ -24,7 +24,7 @@ DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
 
 src_prepare() {
     cat > qwtconfig.pri <<-EOF
-target.path = /usr/$(get_libdir)
+target.path = /usr/${LIBDIR}
 headers.path = /usr/include/qwt5
 doc.path = /usr/share/doc/${PNVR}
 CONFIG += qt warn_on thread release

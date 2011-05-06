@@ -7,7 +7,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 #   Distributed under the terms of the GNU General Public License v2
 
-require multilib kde.org [ git=false ]
+require kde.org [ git=false ]
 
 SUMMARY="Networking applications from the official KDE 4 release."
 DESCRIPTION="
@@ -269,7 +269,7 @@ src_configure() {
         $(cmake_with kopete_plugins:wlm_voice WLM_MEDIASTREAMER) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
-        -DMOZPLUGIN_INSTALL_DIR=/usr/$(get_libdir)/xulrunner/plugins \
+        -DMOZPLUGIN_INSTALL_DIR=/usr/${LIBDIR}/xulrunner/plugins \
         -DWITH_GMP=OFF
 }
 
