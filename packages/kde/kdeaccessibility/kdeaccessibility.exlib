@@ -4,7 +4,6 @@
 
 require kde.org
 
-
 SUMMARY="KDE accessibility programs"
 DESCRIPTION="
 * Mono icon theme
@@ -22,25 +21,43 @@ http://kmag.sourceforge.net/
 LICENCES="GPL-2"
 MY_KDE_PARTS="iconthemes kaccessible kmag kmousetool kmouth jovie"
 
-MYOPTIONS+="
-    speechd [[ description = [ Speech Dispatcher for Jovie and Kaccessible ] ]]
-    speechd? ( ( kde_parts: jovie kaccessible ) [[ number-selected = at-least-one ]] )
-    kde_parts:
-        ${MY_KDE_PARTS}
-"
+if ever at_least 4.6.3; then
+    MYOPTIONS+="
+        speechd [[ description = [ Speech Dispatcher for Kaccessible ] requires = [ kde_parts: kaccessible ] ]]
+        kde_parts:
+            ${MY_KDE_PARTS}
+    "
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:jovie? ( app-speech/speechd )
+            kde_parts:kaccessible? (
+                speechd? ( app-speech/speechd )
+            )
+    "
+else
+    MYOPTIONS+="
+        speechd [[ description = [ Speech Dispatcher for Jovie and Kaccessible ] ]]
+        speechd? ( ( kde_parts: jovie kaccessible ) [[ number-selected = at-least-one ]] )
+        kde_parts:
+            ${MY_KDE_PARTS}
+    "
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:jovie? (
+                speechd? ( app-speech/speechd )
+                !speechd? ( app-speech/opentts )
+            )
+            kde_parts:kaccessible? (
+                speechd? ( app-speech/speechd )
+            )
+    "
+fi
 
 DEPENDENCIES+="
+    build:
+        kde_parts:kaccessible? ( dev-util/pkg-config )
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde_parts:jovie? (
-            speechd? ( app-speech/speechd )
-            !speechd? ( app-speech/opentts )
-        )
-        kde_parts:kaccessible? (
-            speechd? ( app-speech/speechd )
-            build:
-                dev-util/pkg-config
-        )
         kde_parts:kmag? ( x11-libs/qt:4[qt3support] )
         kde_parts:kmousetool? (
             media-libs/phonon
@@ -49,6 +66,28 @@ DEPENDENCIES+="
         )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( 'kde_parts:iconthemes IconThemes' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( Speechd "!speechd Opentts" )
+src_configure() {
+    local p cmakeparams=( $(cmake_build kde_parts:iconthemes IconThemes) )
+
+    if ever at_least 4.6.3; then
+        if option kde_parts:jovie || option speechd; then
+            cmakeparams+=( -DWITH_Speechd:BOOL=ON )
+        else
+            cmakeparams+=( -DWITH_Speechd:BOOL=OFF )
+        fi
+    else
+        cmakeparams+=(
+            $(cmake_with Speechd)
+            $(cmake_with "!speechd" Opentts)
+        )
+    fi
+
+    for p in ${MY_KDE_PARTS}; do
+        cmakeparams+=( $(cmake_build kde_parts:${p}) )
+    done
+
+    ecmake \
+        $(kde4_shared_cmake_params) \
+        "${cmakeparams[@]}"
+}
 
