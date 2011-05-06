@@ -23,7 +23,7 @@ case ${PV} in
          UPSTREAM_RELEASE_NOTES="" ;;
     2.[0-9].[0-9].@(8|9)*)
          DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
-    2.4.0)
+    2.4.1)
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
          UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/en/releases/${PV}" ;;
     *)   die "Set DOWNLOADS for ${PNVR}" ;;
@@ -32,80 +32,59 @@ esac
 LICENCES="GPL-2"
 SLOT="0"
 
-MYOPTIONS="ipod
+MYOPTIONS="
+    gpodder     [[ description = [ Enable gpodder.net Podcast Directory ] ]]
+    ipod        [[ description = [ Enable iPod support. Requires Glib,libgpod,gdk-pixbuf ] ]]
     lastfm      [[ description = [ Enable Last.Fm service, including scrobbling, song submissions, and suggested song dynamic playlists ] ]]
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
     mtp         [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]]
+    musicbrainz [[ description = [ Music lookup service using fingerprinting ] ]]
+    playdar     [[ description = [ Enable support for playdar a tool to find music from multiple sources (local files, other computers on a network or internet services) ] ]]
 "
 
 DEPENDENCIES="
     build:
-        dev-db/mysql[embedded-server]   [[ description = [ Linked statically, so a build dependency ] ]]
+        dev-db/mysql[embedded-server] [[ description = [ Linked statically, so a build dependency ] ]]
         sys-devel/gettext
     build+run:
         app-crypt/qca:2
-        app-pim/strigi[>=0.5.9][qt4] [[ note = [ Optional in trunk ] ]]
+        app-pim/strigi[>=0.5.9][qt4]  [[ note = [ Optional in trunk ] ]]
         dev-libs/soprano[>=2.1.67]
-        media-libs/taglib[>=1.6] [[ description = [ Read and write tags in audio files ] ]]
+        kde/kdelibs:4[>=4.4.99]       [[ note = [ nfs and smb support depend on it ] ]]
+        media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
-        x11-dri/mesa [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
+        x11-dri/mesa                  [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[>=4.6.0][X][dbus][opengl][qt3support][svg(+)][webkit]
+        gpodder? ( media-libs/Libmygpo-qt )
         ipod? (
             dev-libs/glib:2
-            media-libs/libgpod[>=0.7.0] [[ description = [ iPod support ] ]]
+            media-libs/libgpod[>=0.7.0]
+            x11-libs/gdk-pixbuf:2.0   [[ description = [ Support for artwork on iPods ] ]]
         )
         lastfm? ( media-libs/liblastfm[>=0.3.0] )
         mp3tunes? (
             dev-libs/glib:2
             dev-libs/libxml2
-            dev-libs/openssl [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
-            net-im/loudmouth[>=1] [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
-            net-misc/curl [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
+            dev-libs/openssl          [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
+            net-im/loudmouth[>=1]     [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
+            net-misc/curl             [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
             x11-libs/qt:4[glib]
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
+        musicbrainz? (
+            media/ffmpeg[>=0.5]
+            media-libs/libofa[>=0.9.0]
+        )
+        playdar? (
+            dev-libs/qjson[>=0.7]     [[ note = [ the build scripts say >=0.5 while the README file says >=0.7 ] ]]
+        )
     run:
         kde/oxygen-icons
     recommendation:
-        sys-devel/qtscriptgenerator [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
+        sys-devel/qtscriptgenerator   [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
     suggestion:
-        media-sound/moodbar [[ description = [ Generate .mood files needed by the moodbar ] ]]
+        media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
-
-if ever at_least scm ; then
-    MYOPTIONS+="
-        musicbrainz
-        playdar [[ description = [ Enable support for playdar a tool to find music from multiple sources (local files, other computers on a network or internet services) ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:4[>=4.4.99] [[ note = [ nfs and smb support depend on it ] ]]
-            ipod? ( x11-libs/gdk-pixbuf:2.0 [[ description = [ Support for artwork on iPods ] ]] )
-            musicbrainz? (
-                media/ffmpeg[>=0.5]
-                media-libs/libofa[>=0.9.0]
-            )
-            playdar? (
-                dev-libs/qjson[>=0.7] [[ note = [ the build scripts say >=0.5 while the README file says >=0.7 ] ]]
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'ipod GDKPixBuf'
-        'musicbrainz FFmpeg'
-        'musicbrainz LibOFA'
-        'playdar QJSON'
-    )
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:4[>=4.4.0]
-            ipod? ( x11-libs/gtk+:2[>=2.0] [[ description = [ Support for artwork on iPods ] ]] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        # Gdk: Artwork for ipod, via GdkPixbuf
-        'ipod Gdk'
-    )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
@@ -124,10 +103,15 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_BUILD_TESTS:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'gpodder Libmygpo-qt'
     IPOD
+    'ipod GDKPixBuf'
     'lastfm LibLastFm'
     Mtp
     MP3Tunes
+    'musicbrainz FFmpeg'
+    'musicbrainz LibOFA'
+    'playdar QJSON'
 )
 
 pkg_setup() {
