@@ -3,7 +3,7 @@
 
 SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
 
-require phonon-gstreamer scm-git
+require phonon-gstreamer [ phonon_ver="scm" ] scm-git
 
 PLATFORMS="~amd64 ~x86"
 
