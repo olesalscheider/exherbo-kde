@@ -21,10 +21,6 @@ DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
 
 src_install(){
     default
-    if ever at_least 2.0.1; then
-        dosym /usr/bin/qtcreator /usr/bin/qt-creator
-    else
-        dosym /usr/bin/qtcreator.bin /usr/bin/qt-creator
-    fi
+    dosym /usr/bin/qtcreator /usr/bin/qt-creator
 }
 
