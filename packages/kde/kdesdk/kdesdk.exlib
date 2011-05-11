@@ -1,7 +1,7 @@
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org [ git=false ]
 
 SUMMARY="KDE Software Development Kit"
 DESCRIPTION="
@@ -23,10 +23,14 @@ umbrello: A UML modeller
 "
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
-MY_KDE_PARTS="cervisia kapptemplate kate kcachegrind kdeaccounts-plugin
+MY_KDE_PARTS="cervisia kapptemplate kcachegrind kdeaccounts-plugin
 kmtrace kompare kstartperf kuiviewer lokalize okteta poxml scripts
 strigi-analyzer umbrello
 "
+
+if ! ever at_least 4.6.41; then
+    MY_KDE_PARTS+="kate"
+fi
 
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
@@ -40,9 +44,7 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
-        kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
         kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
@@ -67,6 +69,19 @@ DEPENDENCIES+="
             kde/kdebindings:${SLOT}[>=${PV}][python]
         )
 "
+
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
+            kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kdeaccounts-plugin KdepimLibs'
