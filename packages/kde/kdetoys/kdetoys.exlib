@@ -2,7 +2,7 @@
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org [ git=false ]
 
 SUMMARY="Simple Toys for KDE4"
 DESCRIPTION="
@@ -23,6 +23,17 @@ DEPENDENCIES="
             x11-libs/libX11
             x11-libs/libXext
         )
-        kde_parts:ktux? ( kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
 "
+
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ktux? ( kde/kde-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ktux? ( kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
+    "
+fi
 
