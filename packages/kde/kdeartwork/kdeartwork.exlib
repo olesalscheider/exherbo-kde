@@ -2,7 +2,7 @@
 # Copyright 2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org [ git=false ]
 
 SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
@@ -20,7 +20,6 @@ DEPENDENCIES="
         )
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdebase-workspace:${SLOT}[>=${PV}]
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/qt:4[opengl]
@@ -30,6 +29,18 @@ DEPENDENCIES="
             x11-apps/xscreensaver
         )
 "
+
+if ever at_least 4.6.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-workspace:${SLOT}[>=${PV}]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdebase-workspace:${SLOT}[>=${PV}]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
