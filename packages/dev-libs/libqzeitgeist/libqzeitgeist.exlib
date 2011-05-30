@@ -1,0 +1,22 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+fi
+
+require cmake
+
+SUMMARY="A Qt interface to the Zeitgeist event tracking system"
+HOMEPAGE="https://projects.kde.org/projects/kdesupport/${PN}"
+DOWNLOADS=""
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[>=4.7][dbus]
+"
