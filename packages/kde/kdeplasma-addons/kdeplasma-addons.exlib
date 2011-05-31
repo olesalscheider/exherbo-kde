@@ -59,7 +59,7 @@ if ever at_least 4.6.41; then
     DEPENDENCIES+="
         build+run:
             kde/kde-workspace:${SLOT}[>=${PV}]
-            kde/libkexiv2[>=0.2.0] [[ note = [ Needs libkexiv2 for automatic rotation of the frame applet ] ]]
+            kde/libkexiv2:${SLOT}[>=${PV}] [[ note = [ Automatic rotation of the frame applet ] ]]
     "
 else
     DEPENDENCIES+="
