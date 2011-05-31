@@ -26,17 +26,21 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         net-libs/cyrus-sasl
         office-libs/libical[>=0.42]
+        server-pim/akonadi[>=1.4.81]
         x11-libs/qt:4[>=4.6.0]
         x11-misc/shared-mime-info[>=0.30]
         ldap? ( net-directory/openldap )
 "
 
-if ever at_least scm ; then
-    DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
-elif ever at_least 4.5.95 ; then
-    DEPENDENCIES+=" build+run: server-pim/akonadi[>=1.4.81]"
+if ever at_least 4.6.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            server-pim/akonadi[>=1.5.52]
+            x11-libs/qt:4[>=4.7.0]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Prison:BOOL=FALSE )
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2=OFF )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
 
