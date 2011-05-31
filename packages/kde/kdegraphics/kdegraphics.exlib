@@ -92,6 +92,22 @@ DEPENDENCIES+="
             app-pim/strigi[>=0.6.3][dbus][qt4]
             tiff? ( media-libs/tiff )
         )
+        !kde/libkdcraw [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+        !kde/libkexiv2 [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+        !kde/libkipi [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+        !kde/libksane [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
