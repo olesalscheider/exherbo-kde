@@ -69,12 +69,11 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kmailcvt=ON
     -DBUILD_ksendemail=ON
-    -DWITH_IndicateQt=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
 
-if ever at_least 4.6.41; then
+if ever at_least 4.6.80; then
     DEPENDENCIES+="
         build:
             kde_parts:kleopatra? (
@@ -84,11 +83,17 @@ if ever at_least 4.6.41; then
             dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
             kde/kde-runtime:${SLOT}[>=${PV}]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DKDEPIM_BUILD_DESKTOP:BOOL=TRUE
+        -DKDEPIM_BUILD_MOBILE:BOOL=FALSE
+        -DKDEPIM_MOBILE_UI:BOOL=FALSE
+    )
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan2' )
 else
     DEPENDENCIES+="
         build+run:
             kde/kdebase-runtime:${SLOT}[>=${PV}]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_IndicateQt=OFF )
 fi
 
