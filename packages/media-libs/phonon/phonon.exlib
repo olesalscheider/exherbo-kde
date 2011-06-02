@@ -7,11 +7,17 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.bz2"
+fi
+
 require cmake
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
-DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -28,6 +34,7 @@ DEPENDENCIES="
         dev-util/pkg-config
         kde/automoc4[>=0.9.86]
     build+run:
+        dev-libs/libqzeitgeist
         x11-libs/qt:4[>=4.6.1][dbus][phonon]
         pulseaudio? (
             dev-libs/glib:2
@@ -47,6 +54,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'pulseaudio GLIB2' 'pulseaudio PulseAudio' )
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DPHONON_BUILD_DESIGNER_PLUGIN:BOOL=TRUE
     -DPHONON_BUILD_TESTS:BOOL=FALSE
-    -DWITH_QZeitgeist:BOOL=FALSE
+    -DWITH_QZeitgeist:BOOL=TRUE
 )
 

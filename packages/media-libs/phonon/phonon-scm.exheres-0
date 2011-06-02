@@ -6,11 +6,7 @@
 #     Based in part upon the respective ebuild in Gentoo which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-
-require phonon scm-git
-
-DOWNLOADS=""
+require phonon
 
 PLATFORMS="~amd64 ~x86"
 
