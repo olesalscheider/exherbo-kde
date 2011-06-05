@@ -44,11 +44,11 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        dev-db/mysql[embedded-server] [[ description = [ Linked statically, so a build dependency ] ]]
         sys-devel/gettext
     build+run:
         app-crypt/qca:2
         app-pim/strigi[>=0.5.9][qt4]  [[ note = [ Optional in trunk ] ]]
+        dev-db/mysql[>=5.5.13][embedded-server] [[ description = [ Amarok music library uses the MySQL shared embedded library ] ]]
         dev-libs/soprano[>=2.1.67]
         kde/kdelibs:4[>=4.4.99]       [[ note = [ nfs and smb support depend on it ] ]]
         media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
