@@ -1,0 +1,26 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdegraphics.exlib', which is:
+#     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="A handy utility primarily designed for taking screenshots "
+
+LICENCES="GPL-2"
+MYOPTIONS="kipi [[ description = [ Provides various image manipulation and export features via KDE Image Plugin Interface (KIPI) ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        x11-libs/libX11
+        x11-libs/libXfixes [[ note = [ Support for capturing the cursor ] ]]
+        kipi? ( graphics/kipi-plugins )
+        !kde/kdegraphics [[
+             description = [ kdegraphics got split into single packages ]
+             resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
+

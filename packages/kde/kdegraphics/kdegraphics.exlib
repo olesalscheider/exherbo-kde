@@ -96,6 +96,10 @@ DEPENDENCIES+="
             description = [ kdegraphics got split into single packages ]
             resolution = uninstall-blocked-after
         ]]
+        !kde/ksnapshot [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
         !kde/libkdcraw [[
             description = [ kdegraphics got split into single packages ]
             resolution = uninstall-blocked-after
