@@ -108,6 +108,10 @@ DEPENDENCIES+="
             description = [ kdegraphics got split into single packages ]
             resolution = uninstall-blocked-after
         ]]
+        !kde/okular [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )

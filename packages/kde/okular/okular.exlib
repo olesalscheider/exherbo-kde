@@ -1,0 +1,48 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdegraphics.exlib', which is:
+#     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="An universal document viewer for KDE"
+
+LICENCES="GPL-2"
+MYOPTIONS="
+    chm        [[ description = [ Support for Microsoft Compiled HTML Help format files ] ]]
+    djvu       [[ description = [ Support for DjVu formatted files ] ]]
+    epub       [[ description = [ Support for EPub documents ] ]]
+    odf        [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
+    pdf        [[ description = [ Support for PDF (Portable Document Format) files ] ]]
+    postscript [[ description = [ Support for PS (PostScript) files ] ]]
+    tiff       [[ description = [ Support for TIFF (Tagged Image File Format) files ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/qimageblitz
+        media-libs/freetype:2
+        chm? ( media-libs/chmlib )
+        djvu? ( app-text/djvu[>=3.5.17] )
+        epub? ( app-text/ebook-tools )
+        odf? ( app-crypt/qca:2 )
+        pdf? ( app-text/poppler[>=0.8][qt4] )
+        postscript? ( app-text/libspectre[>=0.2] )
+        tiff? ( media-libs/tiff )
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'CHM'
+    'djvu DjVuLibre'
+    'EPub'
+    'odf QCA2'
+    'pdf Poppler'
+    'postscript LibSpectre'
+    'TIFF'
+)
+
