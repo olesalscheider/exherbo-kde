@@ -1,0 +1,29 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdegraphics.exlib', which is:
+#     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Image viewer for KDE "
+HOMEPAGE="http://gwenview.sourceforge.net/"
+
+LICENCES="GPL-2"
+MYOPTIONS="kipi [[ description = [ Provides various image manipulation and export features via KDE Image Plugin Interface (KIPI) ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/soprano
+        graphics/exiv2[>=0.19]
+        kde/kde-baseapps [[ note = [ libkonq is required ] ]]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        media-libs/jpeg
+        kipi? ( graphics/kipi-plugins )
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
+

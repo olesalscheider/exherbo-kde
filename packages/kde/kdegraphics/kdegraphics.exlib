@@ -92,6 +92,10 @@ DEPENDENCIES+="
             app-pim/strigi[>=0.6.3][dbus][qt4]
             tiff? ( media-libs/tiff )
         )
+        !kde/gwenview [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
         !kde/libkdcraw [[
             description = [ kdegraphics got split into single packages ]
             resolution = uninstall-blocked-after
