@@ -1,0 +1,14 @@
+# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require calligra
+
+PLATFORMS="~amd64 ~x86"
+
+DOWNLOADS="mirror://kde/unstable/${PNV}/${PNV}.tar.bz2"
+
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news/koffice-$(ever replace_all -)-released/"
+
+# TODO: Check and adjust
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-0001-Crude-fix-for-automagic-dependencies.patch )
+
