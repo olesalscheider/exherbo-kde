@@ -25,11 +25,9 @@ WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
-# option=X enables: accessibility gif jpeg mng png svg tiff
-# TODO -X builds QtCore only, conflicts with other options
-MYOPTIONS="X dbus cups glib gstreamer opengl phonon
+# accessibility gif jpeg mng png svg tiff enabled by default
+MYOPTIONS="dbus cups glib gstreamer opengl phonon
     qt3support sql ssl webkit xinerama ${MYOPTIONS_PARTS}
-    ( opengl webkit xinerama ) [[ requires = X ]]
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
@@ -46,10 +44,10 @@ MYOPTIONS="X dbus cups glib gstreamer opengl phonon
 "
 if ever at_least 4.7 ; then
     MYOPTIONS+="
-        multimedia  [[ description = [ Build the QtMultimedia module ] requires = [ X ] ]]
-        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] requires = [ X ] ]]
+        multimedia  [[ description = [ Build the QtMultimedia module ] ]]
+        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
         pulseaudio
-        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] requires = [ X ] ]]
+        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     "
 else
     MYOPTIONS+="
@@ -72,23 +70,22 @@ DEPENDENCIES="
         x11-proto/inputproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
+        media-libs/fontconfig
+        media-libs/freetype:2
+        media-libs/jpeg
+        media-libs/libmng
+        media-libs/libpng
+        media-libs/tiff
         sys-libs/zlib
+        x11-libs/libSM
         x11-libs/libX11
+        x11-libs/libXcursor
         x11-libs/libXext
+        x11-libs/libXfixes
         x11-libs/libXi
-        X? (
-            media-libs/fontconfig
-            media-libs/freetype:2
-            media-libs/jpeg
-            media-libs/libmng
-            media-libs/libpng
-            media-libs/tiff
-            x11-libs/libSM
-            x11-libs/libXcursor
-            x11-libs/libXfixes
-            x11-libs/libXrandr[>=1.1]
-            x11-libs/libXrender[>=0.6]
-        )
+        x11-libs/libXrandr[>=1.1]
+        x11-libs/libXrender[>=0.6]
+
         cups? ( net-print/cups )
         dbus? ( sys-apps/dbus[>=1.0.2] )
         glib? ( dev-libs/glib:2 )
@@ -119,10 +116,10 @@ DEPENDENCIES="
 if ever at_least 4.7 ; then
     DEPENDENCIES+="
         build:
-            X? ( x11-proto/videoproto )
+            x11-proto/videoproto
         build+run:
+            x11-libs/libXv
             pulseaudio? ( media-sound/pulseaudio[>=0.9.10] )
-            X? ( x11-libs/libXv )
     "
 fi
 
@@ -276,15 +273,14 @@ qt-4_src_configure() {
     )
 
     myconf+=(
+        -accessibility
         -iconv
         -no-javascript-jit
         -no-nas-sound
         -no-nis
-        # This also enables tablet support
-        -xinput
         -system-zlib
+        -xinput
         -xmlpatterns
-        $(qt4_enable X accessibility)
         $(qt4_enable cups)
         $(qt4_enable dbus "" "" linked)
         $(qt4_enable glib)
@@ -302,20 +298,11 @@ qt-4_src_configure() {
     )
     if ever at_least 4.7 ; then
         myconf+=(
+            -declarative
+            -declarative-debug
             -no-egl
             -no-s60
         )
-        if option X ; then
-            myconf+=(
-                -declarative
-                -declarative-debug
-            )
-        else
-            myconf+=(
-                -no-declarative
-                -no-declarative-debug
-            )
-        fi
     fi
 
     # Avoid auto detection of CPU features:
@@ -338,36 +325,30 @@ qt-4_src_configure() {
     fi
 
     # X
-    local o prefix X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
-    if option !X; then
-        prefix="-no"
-        if ever at_least 4.7 ; then
-            myconf+=( ${prefix}-gui )
-        fi
-    fi
+    local o X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
     for o in ${X_options}; do
-        myconf+=( ${prefix}-${o} )
+        myconf+=( -${o} )
     done
 
     myconf+=(
         -no-sql-ibase
         -no-sql-odbc
+        -no-sql-sqlite2
         $(qt4_enable mysql sql-mysql plugin "")
         $(option mysql      && echo "-I/usr/include/mysql -L/usr/${LIBDIR}/mysql/")
         $(qt4_enable postgresql sql-psql plugin "")
         $(option postgresql && echo '-I/usr/include/postgresql/server/')
         $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
-        -no-sql-sqlite2
     )
 
     # media formats
     myconf+=(
-        $(qt4_enable X gif qt)
-        $(qt4_enable X libjpeg system)
-        $(qt4_enable X libmng system)
-        $(qt4_enable X libpng system)
-        $(qt4_enable X svg)
-        $(qt4_enable X libtiff system)
+        -qt-gif
+        -svg
+        -system-libjpeg
+        -system-libmng
+        -system-libpng
+        -system-libtiff
     )
 
     # optional parts
