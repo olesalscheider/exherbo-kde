@@ -16,6 +16,9 @@ DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
 BUGS_TO="kde@exherbo.org"
 
 UPSTREAM_CHANGELOG="http://qt.nokia.com/developer/changes/changes-${PV}"
+UPSTREAM_DOCUMENTATION="
+    http://doc.qt.nokia.com/$(ever range 1-2) [[ description = [ Qt Reference Documentation ] ]]
+"
 
 LICENCES="|| ( LGPL-2.1 GPL-3 )"
 
