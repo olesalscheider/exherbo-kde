@@ -1,10 +1,9 @@
 # Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="extragear/multimedia/${PN}"
+SCM_REPOSITORY="git://anongit.kde.org/${PN}"
 
-require scm-svn kde
+require scm-git kde
 
 SUMMARY="CD ripper and audio encoder frontend"
 HOMEPAGE="http://extragear.kde.org/"
