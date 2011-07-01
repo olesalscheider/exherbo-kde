@@ -23,5 +23,12 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.7.0][X][dbus][glib][webkit]
 "
 
+if ever at_least 0.7.50; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:4[>=4.6.90]
+    "
+fi
+
 BUGS_TO="kde@exherbo.org"
 
