@@ -14,24 +14,23 @@ DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 LICENCES="GPL-3"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="
-    pulseaudio [[ description = [ Support Bluetooth audio via PulseAudio in addition to ALSA ] ]]
-"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.4.0]
-        net-libs/libbluedevil[pulseaudio?]
-        net-wireless/openobex[bluetooth]
+        net-libs/libbluedevil
         x11-misc/shared-mime-info
     run:
         net-wireless/obex-data-server
         net-wireless/obexd
+        net-wireless/openobex[bluetooth]
         !net-wireless/kbluetooth [[
             description = [ kbluetooth is superseded by BlueDevil ]
             resolution = uninstall-blocked-after
         ]]
-        pulseaudio? ( media-sound/pulseaudio )
+    suggestion:
+        media-sound/pulseaudio [[ description = [ Required to use pulseaudio as the audio backend ] ]]
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
