@@ -1,4 +1,4 @@
-# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2008, 2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
@@ -11,17 +11,21 @@ DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
-MYOPTIONS="clucene dbus debug exif fam inotify qt4
+MYOPTIONS="dbus debug exif fam inotify
     clucene [[ description = [ Indexing support for strigi, using clucene ] ]]
     qt4 [[ description = [ Build strigiclient, a Qt4 GUI for strigi ]
            requires = dbus ]]
 "
 
+# There is an automagic dep on xattr, but the code has been disabled, so it doesn't actually link
+# against it (checked: 0.7.5)
 DEPENDENCIES="
     build:
         dev-cpp/cppunit
     build+run:
+        app-arch/bzip2
         dev-libs/libxml2
+        sys-libs/zlib
         clucene? ( dev-cpp/clucene[>=0.9.21b] )
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
@@ -47,7 +51,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( CLUCENE DBUS 'exif EXIV2' FAM INOTIFY QT4 )
 
-if ever is_scm ; then
+if ever at_least 0.7.5 ; then
     MYOPTIONS+=" ffmpeg [[ description = [ FFmpeg for indexing audio and video metadata ] ]]"
     DEPENDENCIES+="
         build+run:
