@@ -10,15 +10,13 @@ DOWNLOADS="ftp://ftp.kde.org/pub/kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 LICENCES="LGPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="
-    pulseaudio [[ description = [ Support Bluetooth audio via PulseAudio in addition to ALSA ] ]]
-"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4
     run:
-        net-wireless/bluez[>=4][alsa][pulseaudio(+)?]
+        net-wireless/bluez[>=4][alsa]
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
