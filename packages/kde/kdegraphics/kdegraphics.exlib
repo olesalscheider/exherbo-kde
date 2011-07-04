@@ -121,6 +121,12 @@ DEPENDENCIES+="
             resolution = uninstall-blocked-after
         ]]
 "
+if ever at_least 4.6.5; then
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi[>=0.6.3][dbus][qt4] [[ note = [ Automagic dependency of MobiPocket ] ]]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 
