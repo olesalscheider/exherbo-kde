@@ -35,7 +35,8 @@ DEPENDENCIES="
 BUGS_TO="kde@exherbo.org"
 
 src_test() {
-    sydboxcmd "net/whitelist/bind/unix-abstract:///tmp/dbus-*"
+    esandbox allow_net "unix-abstract:///tmp/dbus-*"
     default
+    esandbox disallow_net "unix-abstract:///tmp/dbus-*"
 }
 
