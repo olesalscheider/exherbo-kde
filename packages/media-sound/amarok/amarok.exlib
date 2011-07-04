@@ -54,7 +54,7 @@ DEPENDENCIES="
         media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
         x11-dri/mesa                  [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
-        x11-libs/qt:4[>=4.6.0][X][dbus][opengl][qt3support][svg(+)][webkit]
+        x11-libs/qt:4[>=4.6.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
         gpodder? ( media-libs/Libmygpo-qt )
         ipod? (
             dev-libs/glib:2

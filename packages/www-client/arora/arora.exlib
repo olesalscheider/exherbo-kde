@@ -29,7 +29,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         media-libs/phonon
-        x11-libs/qt:4[>=4.5.2][dbus][phonon][sql][sqlite][webkit][X]
+        x11-libs/qt:4[>=4.5.2][dbus][phonon][sql][sqlite][webkit][X(+)]
 "
 
 QMAKE4_SRC_CONFIGURE_PARAMS=( PREFIX=/usr )

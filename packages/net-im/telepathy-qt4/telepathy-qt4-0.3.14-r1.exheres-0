@@ -18,7 +18,7 @@ DEPENDENCIES="
         dev-lang/python:*[>=2.5.0]
     build+run:
         dev-libs/libxml2[>=2.7.7-r1]
-        x11-libs/qt:4[>=4.5.0][dbus][X]
+        x11-libs/qt:4[>=4.5.0][dbus][X(+)]
         media-libs/gstreamer[>=0.10.30]
         net-im/telepathy-farsight[>=0.0.15]
    test:

@@ -39,7 +39,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/qimageblitz
-        x11-libs/qt:4[X][dbus][sql][webkit]
+        x11-libs/qt:4[X(+)][dbus][sql][webkit]
         python? (
             dev-lang/python:=
             dev-python/sip[>=4.12.0]

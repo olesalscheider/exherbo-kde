@@ -14,7 +14,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.4.0]
-        x11-libs/qt:4[dbus][sql][X]
+        x11-libs/qt:4[dbus][sql][X(+)]
 "
 
 BUGS_TO="ingmar@exherbo.org"

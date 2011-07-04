@@ -19,7 +19,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.4.0][dbus][X]
+        x11-libs/qt:4[>=4.4.0][dbus][X(+)]
     suggestion:
         media-sound/mpd [[ description = [ ${PN} connects to an mpd daemon, either locally or on a remote host ] ]]
 "

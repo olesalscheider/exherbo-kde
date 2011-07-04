@@ -30,7 +30,7 @@ DEPENDENCIES="
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
-        qt4? ( x11-libs/qt:4[dbus][X] )
+        qt4? ( x11-libs/qt:4[dbus][X(+)] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(

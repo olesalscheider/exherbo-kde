@@ -38,7 +38,7 @@ DEPENDENCIES="
         x11-dri/mesa     [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libX11
         x11-libs/libXrandr
-        x11-libs/qt:4[X]
+        x11-libs/qt:4[X(+)]
         kipi_plugins:ipodexport? (
             dev-libs/glib:2
             media-libs/libgpod

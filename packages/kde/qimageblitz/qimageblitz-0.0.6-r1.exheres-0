@@ -21,7 +21,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[X]"
+        x11-libs/qt:4[X(+)]"
 
 src_configure() {
     local myconf=()

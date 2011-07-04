@@ -19,7 +19,7 @@ DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen[dot] )
     build+run:
-        x11-libs/qt:4[>=4.5.0][X]
+        x11-libs/qt:4[>=4.5.0][X(+)]
 "
 
 BUGS_TO="kde@exherbo.org"

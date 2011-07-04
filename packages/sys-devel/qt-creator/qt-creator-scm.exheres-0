@@ -12,7 +12,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.7][X][dbus][doc][sql][webkit]
+        x11-libs/qt:4[>=4.7][X(+)][dbus][doc][sql][webkit]
 "
 
 UPSTREAM_CHANGELOG=""

@@ -35,7 +35,7 @@ DEPENDENCIES="
         media-libs/libpng[>=1.2.7]
         media-libs/liblqr:1
         media-libs/tiff
-        x11-libs/qt:4[X][sql][sqlite]
+        x11-libs/qt:4[X(+)][sql][sqlite]
         doc? ( app-doc/doxygen )
         gphoto2? ( media-libs/libgphoto2[>=2.4.0] )
 "
