@@ -51,7 +51,7 @@ DEPENDENCIES="
 
 if ever at_least scm ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
-elif ever at_least 4.5.95 ; then
+else
     DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.5.0]"
 fi
 
