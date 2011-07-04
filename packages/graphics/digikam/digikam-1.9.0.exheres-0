@@ -1,5 +1,5 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -22,6 +22,8 @@ RESTRICT="test"
 # LensFun:      lensfun? ( media-libs/lensfun ) [[ url = http://lensfun.berlios.de/ ]]
 
 DEPENDENCIES="
+    build:
+        sys-devel/gettext
     build+run:
         dev-libs/glib:2
         kde/kdelibs:4[>=4.3][nepomuk(+)?]
