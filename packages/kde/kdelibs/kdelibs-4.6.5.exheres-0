@@ -7,5 +7,6 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    "${FILES}"/${PNV}-0001-Fix-regression-about-input-text-clearButton-stopping.patch
 )
 
