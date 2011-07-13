@@ -32,7 +32,7 @@ DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-gcc-4.4.0.patch" )
 src_prepare() {
     default
 
-    # Won't build with our seperate phonon
+    # Won't build with our separate phonon
     edo sed -e "/phonon/d" -i generator/generator.qrc qtbindings/qtbindings.pro
 }
 
