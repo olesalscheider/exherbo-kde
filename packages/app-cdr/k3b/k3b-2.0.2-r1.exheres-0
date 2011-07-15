@@ -7,3 +7,5 @@ DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-libavcodec-compat.patch" )
+

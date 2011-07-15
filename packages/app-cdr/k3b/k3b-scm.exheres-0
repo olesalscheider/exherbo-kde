@@ -9,3 +9,5 @@ DOWNLOADS=""
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-2.0.2-libavcodec-compat.patch" )
+
