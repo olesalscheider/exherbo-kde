@@ -36,6 +36,7 @@ MYOPTIONS+="
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
+    marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
     msword         [[ description = [ Support for Microsoft Word documents in Words ] requires = [ kde_parts: words ] ]]
     mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
@@ -91,6 +92,9 @@ DEPENDENCIES+="
         x11-libs/libXpm
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
+        kde_parts:braindump? (
+            x11-libs/qt:4[webkit] [[ note = [ The webshape plugin makes use of this, dep is automagic ] ]]
+            )
         kde_parts:karbon? (
             eps? ( media-gfx/pstoedit [[ note = [ Required for eps import (PS/PDF to SVG) ] ]] )
             pdf? (
@@ -139,6 +143,7 @@ DEPENDENCIES+="
             )
             wordperfect? ( office-libs/libwpd[>=0.8] )
         )
+        marble? ( kde/kdeedu[marble] )
         openexr? (
             media-libs/openexr
             media-libs/ilmbase
@@ -189,6 +194,7 @@ src_configure() {
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:mobile OpenSSL)
         $(cmake_with kde_parts:stage Okular)
+        $(cmake_with Marble)
         $(cmake_with msword GObject)
         $(cmake_with msword LIBGSF)
         $(cmake_with MySQL)
@@ -237,6 +243,6 @@ src_install() {
     cmake_src_install
 
     # FIXME should be fixed properly upstream
-    edo rm "${IMAGE}"/usr/share/applications/kde4/koffice.desktop
+    edo rm "${IMAGE}"/usr/share/applications/kde4/${PN}.desktop
 }
 
