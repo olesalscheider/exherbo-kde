@@ -58,6 +58,7 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
+        server-pim/akonadi[>=1.4.91]
         x11-libs/qt:4[dbus][sql]
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
@@ -65,6 +66,10 @@ DEPENDENCIES+="
             x11-libs/libXScrnSaver
         )
 "
+# Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
+# macro_log_feature(DBLATEX_EXECUTABLE "dblatex" "The DocBook to LaTeX converter" "http://dblatex.sourceforge.net/" FALSE
+#     "" "Required for generating Kontact-Touch license information.")
+# Since we don't care about that .pdf we ignore this
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kmailcvt=ON
@@ -73,6 +78,14 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
 
+if ever at_least 4.6.1; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
+            net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
+    "
+fi
+
 if ever at_least 4.6.80; then
     DEPENDENCIES+="
         build:
@@ -80,7 +93,6 @@ if ever at_least 4.6.80; then
                 dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
             )
         build+run:
-            dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
             kde/kde-runtime:${SLOT}[>=${PV}]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
