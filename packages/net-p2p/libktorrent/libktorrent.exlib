@@ -12,7 +12,12 @@ and plugins. The goal is to make libktorrent an independent library (though stil
 ktorrent), which can be used by other applications.
 "
 HOMEPAGE="http://ktorrent.org/"
-DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV}-3.tar.bz2"
+case ${PV} in
+    1.1.*)
+        DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV}.tar.bz2" ;;
+    1.0.*)
+        DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV}-3.tar.bz2" ;;
+esac
 
 LICENCES="|| ( LGPL-3 LGPL-2 )"
 SLOT="0"
@@ -29,8 +34,19 @@ DEPENDENCIES="
         app-crypt/qca:2
         dev-libs/boost
         dev-libs/gmp
-        kde/kdelibs:4[>=4.1.83]
 "
+
+case ${PV} in
+    1.1.1)
+        DEPENDENCIES+="
+                dev-lang/perl
+                kde/kdelibs:4[>=4.4]
+        " ;;
+    1.0.*)
+        DEPENDENCIES+="
+                kde/kdelibs:4[>=4.1.83]
+        " ;;
+esac
 
 BUGS_TO="kde@exherbo.org"
 
