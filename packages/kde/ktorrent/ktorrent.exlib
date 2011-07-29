@@ -20,12 +20,22 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/gmp
         kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
-        kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
         media-libs/phonon
         media-libs/taglib
         net-libs/GeoIP
-        net-p2p/libktorrent[>=1.0]
 "
+
+case ${PV} in
+    4.1.*)
+        DEPENDENCIES+="
+            dev-lang/perl
+            kde/kdelibs:${SLOT}[>=4.4][avahi?]
+            net-p2p/libktorrent[>=1.1.1]" ;;
+    4.0.*)
+        DEPENDENCIES+="
+            kde/kdelibs:${SLOT}[>=4.1.83][avahi?]
+            net-p2p/libktorrent[>=1.0]" ;;
+esac
 
 BUGS_TO="kde@exherbo.org"
 
