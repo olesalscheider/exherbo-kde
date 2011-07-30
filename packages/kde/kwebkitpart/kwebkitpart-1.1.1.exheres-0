@@ -1,0 +1,8 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kwebkitpart
+
+PLATFORMS="~amd64 ~x86"
+DOWNLOADS="http://dev.exherbo.org/~berniyh/${PNV}.tar.bz2"
+
