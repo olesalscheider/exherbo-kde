@@ -6,7 +6,6 @@ require kde.org [ git=true ]
 
 SUMMARY="KDE WebKit KPart"
 HOMEPAGE="https://projects.kde.org/projects/extragear/base/kwebkitpart"
-DOWNLOADS=""
 
 LICENCES="LGPL-2"
 SLOT="4"

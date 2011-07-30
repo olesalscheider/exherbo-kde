@@ -4,4 +4,5 @@
 require kwebkitpart
 
 PLATFORMS="~amd64 ~x86"
+DOWNLOADS=""
 
