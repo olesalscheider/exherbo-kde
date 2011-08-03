@@ -10,7 +10,7 @@ MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/phonon-vlc/"
-DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.bz2"
 
 LICENCES="LGPL-3"
 SLOT="0"
