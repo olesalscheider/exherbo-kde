@@ -1,0 +1,30 @@
+From c5baff2736eac94add37e45a12a3451bd5b52647 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bo=20=C3=98rsted=20Andresen?= <zlin@exherbo.org>
+Date: Thu, 4 Aug 2011 12:40:38 +0200
+Subject: [PATCH] The strigi searchclient requires Qt.
+
+Upstream: Reported on:
+
+http://sourceforge.net/tracker/?func=detail&aid=3366249&group_id=171000&atid=856302
+
+But with a slightly different fix attached. No response so far.
+
+---
+ strigiclient/lib/CMakeLists.txt |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/strigiclient/lib/CMakeLists.txt b/strigiclient/lib/CMakeLists.txt
+index ba07497..8643064 100644
+--- a/strigiclient/lib/CMakeLists.txt
++++ b/strigiclient/lib/CMakeLists.txt
+@@ -1,4 +1,6 @@
+ if(NOT WIN32)
+     add_subdirectory(htmlgui)
+ endif(NOT WIN32)
+-add_subdirectory(searchclient)
++if(QT4_FOUND)
++    add_subdirectory(searchclient)
++endif(QT4_FOUND)
+-- 
+1.7.6
+
