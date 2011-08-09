@@ -42,7 +42,7 @@ DEPENDENCIES+="
             dev-lang/python:=[>=2.6&<3.0]
             dev-python/PyQt4
             kde/kdebindings:${SLOT}[>=${PV}]
-            net-twisted/twisted
+            net-twisted/TwistedCore
         )
         kde_parts:kigo? (
             games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
