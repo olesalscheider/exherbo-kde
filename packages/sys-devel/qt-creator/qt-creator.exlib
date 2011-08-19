@@ -22,5 +22,17 @@ DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
 src_install(){
     default
     dosym /usr/bin/qtcreator /usr/bin/qt-creator
+
+    # create .desktop file
+    insinto /usr/share/applications
+    hereins qtcreator.desktop <<EOF
+[Desktop Entry]
+Type=Application
+Name=Qt Creator
+Comment=Complete IDE for Qt applications
+Exec=qtcreator
+Icon=qtcreator_logo_48
+Categories=Qt;Development;IDE;
+EOF
 }
 
