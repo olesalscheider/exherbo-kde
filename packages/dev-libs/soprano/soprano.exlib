@@ -13,7 +13,7 @@ solutions as backends through a simple plugin system. Soprano is targetted at
 desktop applications that need a RDF data storage solution. It has been
 optimized for easy usage and simplicity.
 '
-HOMEPAGE="http://sourceforge.net/projects/${PN}"
+HOMEPAGE="http://${PN}.sourceforge.net/"
 DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2.1"
