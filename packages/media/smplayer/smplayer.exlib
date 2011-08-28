@@ -15,11 +15,21 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4[X(+)]
-    run:
-        media/mplayer[>=1.0_rc3_p32769][ass][truetype]
     suggestion:
         x11-themes/smplayer-themes
 "
+
+if ever at_least scm; then
+    DEPENDENCIES+="
+    run:
+        || ( media/mplayer2[ass][truetype] media/mplayer[>=1.0_rc3_p32769][ass][truetype] )
+    "
+else
+    DEPENDENCIES+="
+    run:
+        media/mplayer[>=1.0_rc3_p32769][ass][truetype]
+    "
+fi
 
 EQMAKE4_SOURCES=( src/${PN}.pro )
 QMAKE4_SRC_CONFIGURE_PARAMS=( -o src/Makefile )
