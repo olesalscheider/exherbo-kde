@@ -1,0 +1,39 @@
+# Copyright 2011 Alex Elsayed
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="Basket is a hierarchical note-taking application"
+DESCRIPTION="
+This multi-purpose note-taking application helps you to:
+    * Easily take all sorts of notes
+    * Collect research results and share them
+    * Centralize your project data and reuse it
+    * Quickly organize your thoughts in idea boxes
+    * Keep track of your information in a smart way
+    * Make intelligent ToDo lists
+    * And a lot more...
+"
+HOMEPAGE="http://basket.kde.org"
+DOWNLOADS="http://basket.kde.org/downloads/?file=basket-1.81 -> basket-1.81.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    kparts [[ description = [ Build KParts to integrate with Kontact and other KDE apps ] ]]
+"
+
+# gpgme is automagic, make it mandatory for now
+DEPENDENCIES="
+    build+run:
+        app-crypt/gpgme
+        kde/kdelibs:=[>=4.6]
+        kde/qimageblitz
+        kparts? ( kde/kdepimlibs:=[>=4.6] )    
+"
+
+BUGS_TO="eternaleye@gmail.com"
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( "KPARTS" )
+
