@@ -41,24 +41,14 @@ MYOPTIONS="dbus cups glib gstreamer opengl phonon
                    requires    = [ glib phonon ] ]]
     gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
                    requires = glib ]]
+    multimedia  [[ description = [ Build the QtMultimedia module ] ]]
+    phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
+    pulseaudio
+    qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ requires    = [ ssl ]
                    description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
 "
-if ever at_least 4.7 ; then
-    MYOPTIONS+="
-        multimedia  [[ description = [ Build the QtMultimedia module ] ]]
-        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
-        pulseaudio
-        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
-    "
-else
-    MYOPTIONS+="
-        multimedia  [[ description = [ Build the QtMultimedia module ] ]]
-        phonon      [[ description = [ Multimedia API with support for multiple backends for playback ] ]]
-        qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
-    "
-fi
 
 MYOPTIONS+="
     platform: amd64 ia64 ppc64 x86
@@ -71,6 +61,7 @@ DEPENDENCIES="
     build:
         dev-util/pkg-config
         x11-proto/inputproto
+        x11-proto/videoproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
         media-libs/fontconfig
@@ -88,6 +79,7 @@ DEPENDENCIES="
         x11-libs/libXi
         x11-libs/libXrandr[>=1.1]
         x11-libs/libXrender[>=0.6]
+        x11-libs/libXv
 
         cups? ( net-print/cups )
         dbus? ( sys-apps/dbus[>=1.0.2] )
@@ -106,6 +98,7 @@ DEPENDENCIES="
         mysql? ( dev-db/mysql )
         opengl? ( x11-dri/mesa )
         postgresql? ( dev-db/postgresql )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.10] )
         sqlite? ( dev-db/sqlite:3 )
         ssl? ( dev-libs/openssl )
         xinerama? ( x11-libs/libXinerama )
@@ -115,16 +108,6 @@ DEPENDENCIES="
             gstreamer? ( media-libs/phonon[>=4.3.80][gstreamer] )
         )
 "
-
-if ever at_least 4.7 ; then
-    DEPENDENCIES+="
-        build:
-            x11-proto/videoproto
-        build+run:
-            x11-libs/libXv
-            pulseaudio? ( media-sound/pulseaudio[>=0.9.10] )
-    "
-fi
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
 
@@ -201,12 +184,8 @@ qconf4() {
         -sysconfdir /etc/qt4
         -examplesdir /usr/share/qt4/examples
         -demosdir /usr/share/qt4/demos
+        -importdir /usr/${LIBDIR}/qt4/imports
     )
-    if ever at_least 4.7 ; then
-        myconf+=(
-            -importdir /usr/${LIBDIR}/qt4/imports
-        )
-    fi
 
     edo ./configure "${myconf[@]}" "$@"
 }
@@ -242,20 +221,18 @@ qt-4_src_prepare() {
             -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
             -i "${WORK}"/qmake/Makefile.unix
 
-    if ever at_least 4.7 ; then
-        # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
-        edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
+    # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
+    edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
 
-        # No big chance to come across CoreWLAN on Linux but disable it anyway.
-        edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
+    # No big chance to come across CoreWLAN on Linux but disable it anyway.
+    edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
 
-        # There's no configure switch for pulseaudio, so we change the default from
-        # "auto" to an explicit "yes" or "no".
-        if option pulseaudio ; then
-            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
-        else
-            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
-        fi
+    # There's no configure switch for pulseaudio, so we change the default from
+    # "auto" to an explicit "yes" or "no".
+    if option pulseaudio ; then
+        edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
+    else
+        edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
     fi
 }
 
@@ -277,10 +254,14 @@ qt-4_src_configure() {
 
     myconf+=(
         -accessibility
+        -declarative
+        -declarative-debug
         -iconv
+        -no-egl
         -no-javascript-jit
         -no-nas-sound
         -no-nis
+        -no-s60
         -system-zlib
         -xinput
         -xmlpatterns
@@ -299,14 +280,6 @@ qt-4_src_configure() {
         $(qt4_enable webkit)
         $(qt4_enable xinerama)
     )
-    if ever at_least 4.7 ; then
-        myconf+=(
-            -declarative
-            -declarative-debug
-            -no-egl
-            -no-s60
-        )
-    fi
 
     # Avoid auto detection of CPU features:
     # 3dnow, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, iwmmxt, neon
