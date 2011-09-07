@@ -20,3 +20,12 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[>=4.7][dbus]
 "
+
+if ever at_least scm; then
+    DEPENDENCIES+="
+        build:
+            dev-libs/zeitgeist
+            kde/automoc4
+    "
+fi
+
