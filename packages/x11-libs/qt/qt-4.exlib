@@ -208,7 +208,7 @@ qconf4() {
         )
     fi
 
-    edo ./configure "${myconf[@]}" "$@" ${EXTRA_ECONF}
+    edo ./configure "${myconf[@]}" "$@"
 }
 
 qt-4_src_prepare() {
