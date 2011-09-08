@@ -123,14 +123,22 @@ DEPENDENCIES+="
             fftw? ( sci-libs/fftw[>=3] )
             glew? ( media-libs/glew )
             openjpeg? ( media-libs/OpenJPEG )
-            raw? ( kde/kdegraphics:4[>=4.3.0] [[ note = [ Krita needs kdraw for raw filter ] ]] )
+            raw? (
+                || (
+                    kde/kdegraphics:4[>=4.3.0]
+                    kde/libkdcraw:4
+                ) [[ note = [ Krita needs kdraw for raw filter ] ]]
+            )
             tiff? ( media-libs/tiff )
         )
         kde_parts:mobile? (
             dev-libs/openssl
         )
         kde_parts:stage? (
-            kde/kdegraphics:4[>=4.3.0][kde_parts:okular] [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
+            || (
+                kde/kdegraphics:4[>=4.3.0][kde_parts:okular]
+                kde/okular:4
+            ) [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
         kde_parts:tables? (
             sci-libs/eigen:2[>=2.0]
