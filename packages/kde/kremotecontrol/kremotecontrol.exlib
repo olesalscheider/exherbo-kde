@@ -1,0 +1,27 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeutils.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDE frontend for remote controls"
+HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        x11-libs/libX11
+        x11-libs/qt [[ note = [ needs QtXmlPatterns ] ]]
+        !kde/kdeutils [[
+            description = [ kdeutils got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+    run:
+        app-misc/lirc
+"
+
