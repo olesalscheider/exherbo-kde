@@ -1,0 +1,34 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeutils.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDiskFree displays the available free disk space"
+HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+
+LICENCES="GPL-2"
+MYOPTIONS="python [[ description = [ Python bindings for SuperKaramba ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/qimageblitz
+        x11-libs/libICE
+        x11-libs/libSM
+        x11-libs/libX11
+        x11-libs/libXau
+        x11-libs/libXdmcp
+        x11-libs/libXext
+        x11-libs/libXft
+        x11-libs/libXpm
+        x11-libs/libXrender
+        python? ( dev-lang/python:= )
+        !kde/kdeutils [[
+            description = [ kdeutils got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
