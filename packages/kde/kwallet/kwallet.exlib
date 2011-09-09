@@ -1,0 +1,22 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeutils.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDE wallet management tool"
+HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        !kde/kdeutils [[
+            description = [ kdeutils got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
