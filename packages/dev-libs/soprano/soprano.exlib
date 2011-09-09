@@ -28,12 +28,23 @@ DEPENDENCIES="
         x11-libs/qt:4[dbus][>=4.5.0]
         dev-libs/rasqal[>=0.9.15]
         dev-libs/redland[>=1.0.6]
-        media-libs/raptor[>=1.4.16]
         clucene? ( dev-cpp/clucene[>=0.9.19] )
         virtuoso? ( dev-db/libiodbc )
     run:
         virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )
 "
+
+if ever at_least 2.7.0; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/raptor[>=2.0.4]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            media-libs/raptor[>=1.4.16]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DSOPRANO_DISABLE_SESAME2_BACKEND:BOOL=TRUE
