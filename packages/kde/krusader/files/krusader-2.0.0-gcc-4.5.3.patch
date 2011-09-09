@@ -1,0 +1,36 @@
+Source: upstream, 7429ec2e1a43a5d2d0c883311b181a8d3ea53dc6 and a48c6a78bc1491b9c2c76ef12f15183d0713a4fb
+Reason: build with gcc-4.5.3
+
+--- krusader-2.0.0-orig/krusader/MountMan/kmountmangui.h	2011-09-09 16:15:02.068954145 +0200
++++ krusader-2.0.0/krusader/MountMan/kmountmangui.h	2011-09-09 16:16:53.727550407 +0200
+@@ -112,7 +112,7 @@
+ /////////////////////////////////////////////////////////////////
+ class fsData {
+ public:
+-   fsData() : Name( 0 ), Type( 0 ), MntPoint( 0 ), TotalBlks( 0 ),
++   fsData() : Name(), Type(), MntPoint(), TotalBlks( 0 ),
+    FreeBlks( 0 ), Mounted( false ) {}
+ 
+    // get information
+--- krusader-2.0.0-orig/krusader/Panel/krvfsmodel.cpp	2011-09-09 16:30:11.427521961 +0200
++++ krusader-2.0.0/krusader/Panel/krvfsmodel.cpp	2011-09-09 16:30:44.197109990 +0200
+@@ -609,7 +609,7 @@
+ 				return compareTexts(file1->vfile_getName(), file2->vfile_getName(), sp->properties(), sp->isAscending(), true);
+ 			return compareTexts( sp->data(), sp2->data(), sp->properties(), sp->isAscending(), true );
+ 	}
+-	file1->vfile_getName() < file2->vfile_getName();
++	return file1->vfile_getName() < file2->vfile_getName();
+ }
+ 
+ bool itemGreaterThan( SortProps *sp, SortProps *sp2 )
+--- krusader-2.0.0-orig/krusader/Search/krsearchdialog.h	2011-09-09 16:52:36.140616628 +0200
++++ krusader-2.0.0/krusader/Search/krsearchdialog.h	2011-09-09 16:58:19.426300941 +0200
+@@ -62,7 +62,7 @@
+ class KrSearchDialog : public QDialog  {
+    Q_OBJECT
+ public: 
+-  KrSearchDialog(QString profile = 0, QWidget* parent = 0 );
++  KrSearchDialog(QString profile = QString(), QWidget* parent = 0 );
+ 
+   void prepareGUI();
+     
