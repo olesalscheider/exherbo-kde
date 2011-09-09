@@ -1,0 +1,42 @@
+# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeutils.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Ark is KDE's file archiver"
+HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-arch/libarchive[>=2.7.0]
+        app-arch/xz
+        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        !kde/kdeutils [[
+            description = [ kdeutils got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+    suggestion:
+        app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
+        app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
+"
+
+# Required for unit tests, disabled below
+#   build+test:
+#       dev-libs/qjson [[ note = [ This is a test dep but the tests get built during the compile
+#           phase, also we could disable it ] ]]
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_BZip2:BOOL=TRUE
+    -DWITH_LibArchive:BOOL=TRUE
+    -DWITH_LibKonq:BOOL=TRUE
+    -DWITH_LibLZMA:BOOL=TRUE
+    -DWITH_QJSON:BOOL=FALSE
+    -DWITH_ZLIB:BOOL=TRUE
+)
+
