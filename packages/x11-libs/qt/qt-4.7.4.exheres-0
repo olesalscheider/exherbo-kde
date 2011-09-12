@@ -6,11 +6,5 @@ require qt-4 [ pn='qt-everywhere-opensource-src' ]
 
 PLATFORMS="~amd64 ~ppc64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="
-http://labs.qt.nokia.com/2011/05/04/qt-4-7-3-and-qt-mobility-1-1-3-have-been-released/
-"
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-make-declarative-debug-work.patch
-)
+UPSTREAM_RELEASE_NOTES="http://labs.qt.nokia.com/2011/09/01/qt-4-7-4-released/"
 
