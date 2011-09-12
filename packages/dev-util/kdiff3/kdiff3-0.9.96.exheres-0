@@ -18,13 +18,12 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:4
-        kde/kdebase:4 [[ note = [ KDiff3 contextmenu plugin for Konqueror ] ]]
+        kde/kdelibs:4[>=4.6]
+        || (
+            kde/kde-baseapps:4
+            kde/kdebase:4[>=4.6]
+        ) [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
 "
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-docbook_fixes.patch
-)
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_LibKonq:BOOL=ON )
 
