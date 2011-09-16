@@ -24,7 +24,7 @@ MYOPTIONS="debug ffmpeg flac mp3 musepack musicbrainz vorbis
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:4[>=4.3.85]
+        kde/kdelibs:4[>=4.4.0]
         kde/kdemultimedia:4 [[ note = [ KCddb is used to retrieve audio CD meta data from the internet ] ]]
         media-libs/libdvdread[>=1.0]
         media-libs/libsamplerate
@@ -83,3 +83,9 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'vorbis K3B_BUILD_OGGVORBIS_ENCODER_PLUGIN'
 )
 
+if ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:4[>=4.7.0]
+    "
+fi
