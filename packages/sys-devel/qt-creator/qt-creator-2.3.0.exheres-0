@@ -8,10 +8,15 @@ UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)/inde
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[>=4.7][X(+)][dbus][doc][sql][sqlite][webkit]
+        x11-libs/qt:4[>=4.7.4][X(+)][dbus][sql][sqlite][webkit]
 "
 
 WORK="${WORK}-src/"
 
 QMAKE4_SRC_CONFIGURE_PARAMS=( SUPPORT_QT_S60=1 SUPPORT_QT_QML=1 )
+
+src_compile() {
+    default
+    emake docs
+}
 
