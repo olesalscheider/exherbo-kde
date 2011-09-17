@@ -402,6 +402,12 @@ EOF
         edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
     fi
 
+    if option doc ; then
+        # Remove empty doc directories.
+        #FIXME: see QTBUG-21273
+        edo rmdir "${IMAGE}"/usr/share/doc/${PNVR}/html/scripts
+    fi
+
     if option examples ; then
         # The examples might add some empty dirs. Since the examples are additional documentation,
         # there shouldn't be any empty dirs we might want to keep, so we remove them all in one go.
