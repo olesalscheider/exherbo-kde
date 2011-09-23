@@ -32,15 +32,20 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
-if ever at_least 4.6.80 ; then
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
+
+if ever at_least 4.7.1; then
+    MYOPTIONS+="
+        barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
+    "
     DEPENDENCIES+="
         build+run:
             server-pim/akonadi[>=1.5.52]
             x11-libs/qt:4[>=4.7.0]
+            barcodes? ( kde/prison )
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Prison:BOOL=FALSE )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
 fi
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Ldap )
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
 
