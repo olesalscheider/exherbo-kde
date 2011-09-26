@@ -27,7 +27,6 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
-        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
         kde/kdelibs:${SLOT}[>=${PV}]
