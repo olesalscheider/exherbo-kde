@@ -1,0 +1,22 @@
+# Copyright 2011 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE Memory Enhancement Game"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+#FIXME: replacing kde-baseapps with sjfonts is preferred by upstream. See README.packagers
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kde-baseapps::${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
+        media-libs/phonon
+        !kde/kdeedu [[
+            description = [ blinken is no longer part of kdeedu in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
