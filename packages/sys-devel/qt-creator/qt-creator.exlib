@@ -31,7 +31,7 @@ Type=Application
 Name=Qt Creator
 Comment=Complete IDE for Qt applications
 Exec=qtcreator
-Icon=qtcreator_logo_48
+Icon=qtcreator
 Categories=Qt;Development;IDE;
 EOF
 }
