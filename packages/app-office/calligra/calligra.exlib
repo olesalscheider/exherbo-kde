@@ -19,9 +19,6 @@ Management:
 * Braindump: Mindmapping tool
 * Plan: Project planning
 * Kexi: Integrated data management
-Advanced plugins:
-* KChart: Graphical data visualization
-* KFormula: Mathematical formulas
 "
 
 HOMEPAGE="http://www.calligra-suite.org/"
@@ -29,7 +26,7 @@ DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MY_KDE_PARTS="active braindump flow karbon kchart kexi kformula krita mobile plan stage tables words"
+MY_KDE_PARTS="active braindump flow karbon kexi krita mobile plan stage tables words"
 
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
@@ -56,8 +53,6 @@ MYOPTIONS+="
     openjpeg? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
     kde_parts: ${MY_KDE_PARTS}
-
-    plan [[ requires = [ kde_parts: kchart ] ]]
 
     pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
@@ -108,6 +103,7 @@ DEPENDENCIES+="
         )
         kde_parts:kexi? (
             dev-db/sqlite:3[>=3.6.23] [[ note = [ 3.6.16 is required but this is recommended ] ]]
+            x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
             postgresql? (
