@@ -1,0 +1,24 @@
+# Copyright 2011 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE Frontend to Mathematical Software"
+
+LICENCES="GPL-2"
+MYOPTIONS="R"
+
+DEPENDENCIES="
+    build+run:
+        app-text/libspectre
+        kde/kdelibs:${SLOT}[>=${PV}]
+        R? ( sci-lang/R )
+        !kde/kdeedu [[
+            description = [ cantor is no longer part of kdeedu in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( R )
+
