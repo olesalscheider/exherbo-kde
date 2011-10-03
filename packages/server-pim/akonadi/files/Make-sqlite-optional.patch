@@ -1,5 +1,5 @@
 Source: Bernd Steinhauser
-Upstream: No
+Upstream: Yes. Should be in v1.6.2. git id: ba44048eab3735eb2bd69fc2fa41065bf32a3013
 Reason: sqlite is an automagic dependency and we don't support the sqlite backend.
 
 From 12a1bedc121beda347bb16b29f5a01d7b8fb9459 Mon Sep 17 00:00:00 2001
