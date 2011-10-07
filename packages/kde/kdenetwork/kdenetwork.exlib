@@ -160,6 +160,17 @@ else
     "
 fi
 
+if ever at_least 4.7.1; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kget? (
+                media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
+            )
+        suggestion:
+            net-fs/samba [[ description = [ Network file sharing ] ]]
+    "
+fi
+
 src_prepare() {
     default
 
@@ -241,6 +252,15 @@ src_configure() {
         $(cmake_with im_protocols:ilbc msiLBC)
         $(cmake_with vnc LibVNCServer)
     )
+
+    if ever at_least 4.7.1; then
+        #avoid installing samba with PackageKit
+        cmakeparams+=( -DWITH_SAMBA_INSTALL=OFF )
+
+        if option kde_parts:kget; then
+            cmakeparams+=( -DWITH_LibMms:BOOL=TRUE )
+        fi
+    fi
 
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \
