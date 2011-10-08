@@ -35,10 +35,6 @@ DEPENDENCIES="
         )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PN}-0.8.80-openconnect-use-macro_optional_find_package.patch"
-)
-
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DDBUS_SYSTEM_POLICY_DIR=/etc/dbus-1/system.d
     # Add wicd, networkmanager options when wicd works:
