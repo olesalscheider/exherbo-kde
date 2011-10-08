@@ -52,10 +52,29 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenGL:BOOL=ON
     -DWITH_QCA2:BOOL=ON
-    # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
-    # If OpenAL isn't enabled, then enabling sndfile doesn't do anything
-    -DWITH_OpenAL:BOOL=OFF
-    -DWITH_SndFile:BOOL=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
+
+if ever at_least 4.7.1; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:granatier? ( media-libs/openal )
+            kde_parts:kgoldrunner? (
+                media-libs/libsndfile
+                media-libs/openal
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kde_parts:granatier OpenAL'
+        'kde_parts:kgoldrunner SndFile'
+        'kde_parts:kgoldrunner OpenAL'
+    )
+else
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
+        # If OpenAL isn't enabled, then enabling sndfile doesn't do anything
+        -DWITH_OpenAL:BOOL=OFF
+        -DWITH_SndFile:BOOL=OFF
+    )
+fi
 
