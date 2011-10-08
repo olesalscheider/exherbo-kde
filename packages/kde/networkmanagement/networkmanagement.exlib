@@ -16,7 +16,9 @@ HOMEPAGE="http://plasma.kde.org/"
 
 LICENCES="GPL-3 LGPL-3"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="
+    openconnect [[ description = [ Adds support for connections to a Cisco AnyConnect VPN ] ]]
+"
 
 RESTRICT="test"
 
@@ -27,12 +29,25 @@ DEPENDENCIES="
         net-apps/NetworkManager[>=0.9]
         net-misc/mobile-broadband-provider-info
         x11-libs/qt:4[>=4.6.0-rc1]
+        openconnect? (
+            dev-libs/openssl
+            net-apps/openconnect
+        )
 "
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-0.8.80-openconnect-use-macro_optional_find_package.patch"
+)
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DDBUS_SYSTEM_POLICY_DIR=/etc/dbus-1/system.d
     # Add wicd, networkmanager options when wicd works:
     #-DI_KNOW_WICD_BACKEND_IS_BROKEN_AND_I_LIKE_TO_HURT_MYSELF:BOOL:TRUE
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'openconnect OpenConnect'
+    'openconnect OpenSSL'
 )
 
 src_install() {
