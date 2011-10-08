@@ -40,7 +40,6 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde_parts:ark? (
-            app-arch/libarchive[>=2.7.0]
             app-arch/xz
         )
         kde_parts:kcalc? ( dev-libs/gmp )
@@ -107,6 +106,22 @@ else
             kde_parts:superkaramba? ( kde/kdebase-workspace:${SLOT}[>=${PV}] )
     "
 fi
+
+if ever at_least 4.7.1; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ark? ( app-arch/libarchive[>=2.8.0] )
+            kde_parts:kcalc? ( dev-libs/gmp )
+            kde_parts:kremotecontrol? ( x11-libs/libXtst )
+            kde_parts:superkaramba? ( kde/qimageblitz )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ark? ( app-arch/libarchive[>=2.7.0] )
+    "
+fi
+
 # This dependency was added in 4.5 but since all KDE tests are restricted we don't build unit tests.
 #   build+test:
 #       kde_parts:ark? (
