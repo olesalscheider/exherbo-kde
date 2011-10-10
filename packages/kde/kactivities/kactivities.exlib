@@ -1,0 +1,21 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE activity manager and libraries"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-text/shared-desktop-ontologies
+        dev-libs/soprano
+        kde/kdelibs:${SLOT}[>=${PV}]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Nepomuk:BOOL=TRUE
+)
+
