@@ -166,6 +166,13 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'qalculate Qalculate'
 )
 
+if ever at_least 4.7.41; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kactivities:${SLOT}[>=${PV}]
+    "
+fi
+
 src_prepare() {
     default
 
