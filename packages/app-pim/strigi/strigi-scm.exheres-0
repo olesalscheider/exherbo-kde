@@ -31,5 +31,3 @@ DOWNLOADS=""
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-The-strigi-searchclient-requires-Qt.patch )
-

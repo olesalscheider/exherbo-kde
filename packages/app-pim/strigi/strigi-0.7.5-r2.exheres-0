@@ -6,8 +6,6 @@
 
 require strigi
 
-DOWNLOADS="http://www.vandenoever.info/software/${PN}/${PNV}.tar.bz2"
-
 PLATFORMS="~amd64 ~x86"
 
 # FIXME indexertest fails with option !clucene
