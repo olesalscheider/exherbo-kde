@@ -1,0 +1,35 @@
+Source: upstream
+Reason: needed to build against cups-1.5
+
+commit b265438a4694cfdd301fa473fadc139ea3ad4d34
+Author: craig <craig@11d20701-8431-0410-a711-e3c959e3b870>
+Date:   Thu Jun 9 18:37:10 2011 +0000
+
+    #10037: Add ppd include for cups 1.5
+    
+    git-svn-id: svn://scribus.net/branches/Version135/Scribus@16647 11d20701-8431-0410-a711-e3c959e3b870
+
+diff --git a/scribus/cupsoptions.cpp b/scribus/cupsoptions.cpp
+index 134bead..34edc06 100644
+--- a/scribus/cupsoptions.cpp
++++ b/scribus/cupsoptions.cpp
+@@ -42,6 +42,7 @@ for which a new license (GPL+exception) is in place.
+ #include "scconfig.h"
+ #ifdef HAVE_CUPS
+ #include <cups/cups.h>
++#include <cups/ppd.h>
+ #endif
+ #include "util_icon.h"
+ 
+diff --git a/scribus/util_printer.cpp b/scribus/util_printer.cpp
+index 8d08cba..1b173cd 100644
+--- a/scribus/util_printer.cpp
++++ b/scribus/util_printer.cpp
+@@ -9,6 +9,7 @@ for which a new license (GPL+exception) is in place.
+ 
+ #if defined( HAVE_CUPS )
+  #include <cups/cups.h>
++ #include <cups/ppd.h>
+ #elif defined(_WIN32)
+  #include <windows.h>
+  #include <winspool.h>

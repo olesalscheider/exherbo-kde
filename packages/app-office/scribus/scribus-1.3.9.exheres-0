@@ -71,6 +71,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ASPELL'
 )
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/$PNV-cups.patch )
+
 src_prepare() {
     default
 
