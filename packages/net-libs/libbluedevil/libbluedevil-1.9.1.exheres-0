@@ -5,7 +5,7 @@ require cmake
 
 SUMMARY="BlueZ wrapper for the BlueDevil KDE Bluetooth stack"
 HOMEPAGE="https://projects.kde.org/projects/playground/libs/${PN}"
-DOWNLOADS="ftp://ftp.kde.org/pub/kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="ftp://ftp.kde.org/pub/kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
