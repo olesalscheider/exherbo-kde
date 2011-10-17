@@ -5,7 +5,7 @@
 
 require kde.org
 
-SUMMARY="KDiskFree displays the available free disk space"
+SUMMARY="Easily create interactive desktop widgets"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
 
 LICENCES="GPL-2"
