@@ -70,14 +70,16 @@ DEPENDENCIES+="
         )
 "
 
-if ever at_least 4.6.41; then
+if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
+            dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
             kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
     "
 else
     DEPENDENCIES+="
         build+run:
+            dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
             kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
             kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
     "
