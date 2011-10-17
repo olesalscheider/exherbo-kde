@@ -1,0 +1,33 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+if ever is_scm ; then
+    SCM_REPOSITORY="git://gitorious.org/${PN}/${PN}.git"
+    require scm-git
+fi
+
+require cmake sourceforge
+
+SUMMARY="A Qt-based library that maps JSON data to QVariant objects"
+DESCRIPTION="
+JSON is a lightweight data-interchange format. It can represents integer, real
+number, string, an ordered sequence of value, and a collection of name/value
+pairs. QJson is a qt-based library that maps JSON data to QVariant objects.
+"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+"
+
+if ! ever is_scm ; then
+    WORK=${WORKBASE}/${PN}
+fi
+
+# FIXME No target to run tests, even when they're built
+CMAKE_SRC_CONFIGURE_PARAMS=( -DKDE4_BUILD_TESTS:BOOL=TRUE )
+
