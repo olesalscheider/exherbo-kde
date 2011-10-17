@@ -26,17 +26,25 @@ DEPENDENCIES="
         app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
 "
 
-# Required for unit tests, disabled below
-#   build+test:
-#       dev-libs/qjson [[ note = [ This is a test dep but the tests get built during the compile
-#           phase, also we could disable it ] ]]
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_BZip2:BOOL=TRUE
     -DWITH_LibArchive:BOOL=TRUE
     -DWITH_LibKonq:BOOL=TRUE
     -DWITH_LibLZMA:BOOL=TRUE
-    -DWITH_QJSON:BOOL=FALSE
     -DWITH_ZLIB:BOOL=TRUE
 )
+
+if ever at_least 4.7.41; then
+    DEPENDENCIES+="
+        build+test:
+            dev-libs/qjson[>=scm] [[ note = [ This is a test dep but the tests get built during the compile phase ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_qjson:BOOL=TRUE )
+else
+    DEPENDENCIES+="
+        build+test:
+            dev-libs/qjson[<0.7.2] [[ note = [ This is a test dep but the tests get built during the compile phase ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QJSON:BOOL=TRUE )
+fi
 
