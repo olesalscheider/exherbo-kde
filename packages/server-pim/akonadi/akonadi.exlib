@@ -5,40 +5,38 @@
 # Based in part upon the respective ebuild in Gentoo which is:
 # Copyright 1999-2008 Gentoo Foundation
 
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/${PN}/src/${PNV}.tar.bz2"
+fi
+
 require cmake
 
 SUMMARY="The server part of Akonadi"
-HOMEPAGE="http://www.akonadi-project.org/"
-DOWNLOADS="http://download.akonadi-project.org/${PNV}.tar.bz2"
+HOMEPAGE="http://www.akonadi-project.org"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS="strigi [[ description = [ Use strigi as the search engine. Otherwise soprano is used ] ]]"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.87]
     build+run:
-        strigi? ( app-pim/strigi )
-       !strigi? ( dev-libs/soprano )
         dev-db/mysql
         dev-libs/boost      [[ note = [ Akonadi uses the program_options library ] ]]
         dev-libs/libxslt
+        dev-libs/soprano
         x11-libs/qt:4[>=4.6.0][dbus][mysql][sql]
         x11-misc/shared-mime-info[>=0.23]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DAKONADI_BUILD_QSQLITE:BOOL=FALSE
     -DAKONADI_BUILD_TESTS:BOOL=TRUE
+    -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE
+    -DDATABASE_BACKEND:STRING=MYSQL
 )
-
-src_configure() {
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DAKONADI_USE_STRIGI_SEARCH:BOOL=TRUE
-        -DDATABASE_BACKEND=MYSQL
-        -DWITH_SQLITE=FALSE
-    )
-
-    cmake_src_configure
-}
 
