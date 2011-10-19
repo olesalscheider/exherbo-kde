@@ -1,0 +1,32 @@
+Source: Bernd Steinhauser
+Upstream: Yes. Should be in v1.6.2. git id: ba44048eab3735eb2bd69fc2fa41065bf32a3013
+Reason: sqlite is an automagic dependency and we don't support the sqlite backend.
+
+From 12a1bedc121beda347bb16b29f5a01d7b8fb9459 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Fri, 28 Jan 2011 21:24:52 +0100
+Subject: [PATCH] Make sqlite optional.
+
+---
+ CMakeLists.txt |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f6ea490..60f5843 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -185,7 +185,10 @@ else()
+ endif()
+ 
+ set(SQLITE_MIN_VERSION 3.6.23)
+-find_package(Sqlite)
++option(WITH_SQLITE "Search for Sqlite" TRUE)
++if(WITH_SQLITE)
++  find_package(Sqlite)
++endif(WITH_SQLITE)
+ macro_log_feature(SQLITE_FOUND "Sqlite" "Sqlite database library" "http://www.sqlite.org" ${SQLITE_REQUIRED} "${SQLITE_MIN_VERSION}" "")
+ 
+ ############### Compilers flags ###############
+-- 
+1.7.3.5
+
