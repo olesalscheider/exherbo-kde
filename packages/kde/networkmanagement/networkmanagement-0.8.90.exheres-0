@@ -5,7 +5,3 @@ require networkmanagement
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/${PNV}-openconnect-use-macro_optional_find_package.patch"
-)
-
