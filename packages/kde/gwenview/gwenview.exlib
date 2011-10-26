@@ -15,7 +15,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/soprano
         graphics/exiv2[>=0.19]
-        kde/kde-baseapps [[ note = [ libkonq is required ] ]]
+        kde/kde-baseapps:4[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/jpeg
         kipi? ( graphics/kipi-plugins )
