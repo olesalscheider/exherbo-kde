@@ -1,0 +1,31 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Thumbnailers for various graphics file formats"
+
+LICENCES="GPL-2 LGPL-2"
+MYOPTIONS="
+    raw
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        raw? (
+            kde/libkdcraw:${SLOT}[>=${PV}]
+            kde/libkexiv2:${SLOT}[>=${PV}]
+        )
+
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'raw Kdcraw'
+    'raw Kexiv2'
+)
+
