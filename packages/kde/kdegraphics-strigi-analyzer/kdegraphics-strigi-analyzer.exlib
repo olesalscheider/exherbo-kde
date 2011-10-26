@@ -1,0 +1,28 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Strigi analyzers for various graphics file formats"
+
+LICENCES="GPL-2 LGPL-2"
+# not enabled upstream: dds, exr, pnm, raw, rgb, xps
+MYOPTIONS="
+    tiff    [[ description = [ Support for TIFF (Tagged Image File Format) files ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        tiff? ( media-libs/tiff )
+
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'TIFF'
+)
+
