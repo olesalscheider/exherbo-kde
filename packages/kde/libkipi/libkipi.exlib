@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="An interface to use kipi-plugins from a KDE image management program like digiKam"
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 LGPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
