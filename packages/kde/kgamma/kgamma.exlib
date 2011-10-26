@@ -1,0 +1,22 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="K control module to regulate the screen's gamma correction"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/libX11
+        x11-libs/libXxf86vm
+        kde/kdelibs:${SLOT}[>=${PV}]
+
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
