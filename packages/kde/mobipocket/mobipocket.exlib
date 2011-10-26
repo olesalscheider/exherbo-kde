@@ -1,0 +1,21 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A collection of plugins to handle mobipocket files"
+
+LICENCES="GPL-2"
+MYOPTIONS="
+    kde_parts:
+        okular
+        strigi-analyzer
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde_parts:okular? ( kde/okular:${SLOT}[>=${PV}] )
+        kde_parts:strigi-analyzer? ( app-pim/strigi )
+"
+
