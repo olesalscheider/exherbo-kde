@@ -1,0 +1,20 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Pick colours from your screen"
+
+LICENCES="as-is"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
+
+        !kde/kdegraphics [[
+            description = [ kdegraphics got split into single packages ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
