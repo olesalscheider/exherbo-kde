@@ -5,7 +5,11 @@ require kde.org
 
 SUMMARY="A C++ interface around LibRaw library used to decode RAW picture files"
 
-LICENCES="GPL-2"
+LICENCES="
+    BSD-3 [[ note = [ cmake scripts ] ]]
+    GPL-2
+    LGPL-2
+"
 MYOPTIONS=""
 
 DEPENDENCIES="
