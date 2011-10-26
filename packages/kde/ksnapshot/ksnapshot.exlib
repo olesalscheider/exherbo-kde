@@ -15,6 +15,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         x11-libs/libX11
         x11-libs/libXfixes [[ note = [ Support for capturing the cursor ] ]]
+        x11-libs/libXext [[ note = [ searches for include/X11/shape.h; automagic ] ]]
         kipi? ( graphics/kipi-plugins )
         !kde/kdegraphics [[
              description = [ kdegraphics got split into single packages ]
