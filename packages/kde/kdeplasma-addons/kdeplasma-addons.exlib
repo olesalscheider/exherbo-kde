@@ -55,7 +55,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QCA2:BOOL=TRUE
 )
 
-if ever at_least 4.6.41; then
+if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
             kde/kde-workspace:${SLOT}[>=${PV}]
