@@ -1,0 +1,23 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+
+require cmake scm-git
+
+SUMMARY="Qt-only wrapper for NetworkManager API"
+HOMEPAGE="https://projects.kde.org/projects/playground/base/${PN}"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        net-apps/NetworkManager
+        net-libs/libmm-qt
+        x11-libs/qt:4[dbus]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
