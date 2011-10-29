@@ -11,7 +11,7 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.bz2"
+    DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.xz"
 fi
 
 require cmake
@@ -31,6 +31,7 @@ pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
 
 DEPENDENCIES="
     build:
+        app-arch/xz
         dev-util/pkg-config
         kde/automoc4[>=0.9.86]
     build+run:
