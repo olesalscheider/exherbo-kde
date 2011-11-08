@@ -9,5 +9,6 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
     "${FILES}"/${PNV}-0001-Fix-regression-about-input-text-clearButton-stopping.patch
     "${FILES}"/0001-Make-KDEPIM-4.6-compile-with-master.patch
+    "${FILES}"/${PN}-kssl-input-validation.patch
 )
 
