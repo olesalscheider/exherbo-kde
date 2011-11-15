@@ -22,7 +22,7 @@ RESTRICT="test"
 DEPENDENCIES="
     build+run:
         dev-libs/libxml2[>=2.4.0]
-        dev-libs/openssl
+        dev-libs/openssl[>=0.9.7i]
 "
 
 
@@ -68,16 +68,5 @@ src_install() {
     edo rm -r "${IMAGE}"/usr/${LIBDIR}/{jdbc-*,jena,sesame}/{*.jar,}
     edo mv -u "${IMAGE}"/usr/share/doc/virtuoso/* "${IMAGE}"/usr/share/doc/${PNVR}
     edo rm -r "${IMAGE}"/usr/share/doc/virtuoso
-}
-
-pkg_postinst() {
-    if [[ "${REPLACING_IDS}" == *${PN}-5* ]]; then
-        ewarn "You are upgrading from virtuoso-5.*"
-        ewarn "The database format has changed"
-        ewarn "You should"
-        ewarn "   1. Stop nepomuk"
-        ewarn "   2. run migration script from dev-db/virtuosoconverter"
-        ewarn "   3. Start nepomuk again"
-    fi
 }
 
