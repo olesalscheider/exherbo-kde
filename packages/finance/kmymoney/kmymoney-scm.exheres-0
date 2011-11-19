@@ -1,10 +1,9 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-SCM_SUBPATH="extragear/office/${PN}/"
+SCM_REPOSITORY="git://anongit.kde.org/${PN}"
 
-require kde scm-svn
+require kde scm-git
 
 SUMMARY="Personal finance manager for KDE"
 DESCRIPTION="
