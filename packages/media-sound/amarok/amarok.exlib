@@ -21,7 +21,7 @@ http://amarok.kde.org/wiki/Moodbar#Moodbar_File_Generation_Script [[
 case ${PV} in
     scm) DOWNLOADS=""
          UPSTREAM_RELEASE_NOTES="" ;;
-    2.[0-9].[0-9].@(8|9)*)
+    2.[0-9].@(8|9)*)
          DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2" ;;
     2.4.@(1|3))
          DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
@@ -48,12 +48,10 @@ DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         dev-db/mysql[>=5.5.13][embedded-server] [[ description = [ Amarok music library uses the MySQL shared embedded library ] ]]
-        kde/kdelibs:4[>=4.4.99]       [[ note = [ nfs and smb support depend on it ] ]]
         media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
         x11-dri/mesa                  [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
         x11-libs/qt:4[>=4.6.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
-        gpodder? ( media-libs/Libmygpo-qt )
         ipod? (
             dev-libs/glib:2
             media-libs/libgpod[>=0.7.0]
@@ -84,6 +82,20 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
 
+if ever at_least 2.4.90; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:4[>=4.6.0]       [[ note = [ nfs and smb support depend on it ] ]]
+            gpodder? ( media-libs/Libmygpo-qt[>=1.0.5] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:4[>=4.4.99]       [[ note = [ nfs and smb support depend on it ] ]]
+            gpodder? ( media-libs/Libmygpo-qt[>=1.0.2] )
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
     -DWITH_UTILITIES=ON # small and no new deps
@@ -97,8 +109,14 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Needs Google Mock
     -DKDE4_BUILD_TESTS:BOOL=FALSE
 )
+
+if ever at_least 2.4.90; then
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gpodder Mygpo-qt' )
+else
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gpodder Libmygpo-qt' )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'gpodder Libmygpo-qt'
     IPOD
     'ipod GDKPixBuf'
     'lastfm LibLastFm'
