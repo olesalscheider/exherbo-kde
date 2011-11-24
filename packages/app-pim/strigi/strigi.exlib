@@ -3,11 +3,10 @@
 # Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require cmake
+require cmake sourceforge
 
 SUMMARY="Fast crawling desktop search engine with Qt4 GUI"
-HOMEPAGE="http://www.vandenoever.info/software/${PN}"
-DOWNLOADS="${HOMEPAGE}/${PNV}.tar.bz2"
+DOWNLOADS="http://dev.exherbo.org/~tgurr/distfiles/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
@@ -27,7 +26,7 @@ DEPENDENCIES="
         app-arch/bzip2
         dev-libs/libxml2
         sys-libs/zlib
-        clucene? ( dev-cpp/clucene[>=0.9.21b] )
+        clucene? ( dev-cpp/clucene[>=2.3.3.4] )
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
@@ -50,10 +49,10 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_CPPUNIT=ON
     # Analyzers, stream don't use this atm
     -DENABLE_LOG4CXX=OFF
-    # Disable clucene version 1+ backend until a stable version is released
-    -DENABLE_CLUCENE_NG=OFF
+    # Disable older clucene backend in favor of the new one
+    -DENABLE_CLUCENE=OFF
     # Disable xine in favor of FFmpeg
     -DENABLE_XINE=OFF
 )
-CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( CLUCENE DBUS 'exif EXIV2' FAM FFMPEG INOTIFY QT4 )
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( 'clucene CLUCENE_NG' DBUS 'exif EXIV2' FAM FFMPEG INOTIFY QT4 )
 

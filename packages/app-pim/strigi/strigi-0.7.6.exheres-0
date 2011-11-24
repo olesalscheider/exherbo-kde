@@ -16,5 +16,6 @@ RESTRICT=test
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-The-strigi-searchclient-requires-Qt.patch
     "${FILES}"/0002-Fix-crash-on-assert-when-file-grows-while-reading-it.patch
+    "${FILES}"/0003-Revert-patch-that-breaks-parsing-of-PDF-files.patch
 )
 
