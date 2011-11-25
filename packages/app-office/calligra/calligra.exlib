@@ -35,7 +35,6 @@ MYOPTIONS+="
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
-    msword         [[ description = [ Support for Microsoft Word documents in Words ] requires = [ kde_parts: words ] ]]
     mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
     openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
     openjpeg       [[ description = [ Support for the JPEG 2000 image format ] ]]
@@ -102,7 +101,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
-            dev-db/sqlite:3[>=3.6.23] [[ note = [ 3.6.16 is required but this is recommended ] ]]
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.9 is recommended ] ]]
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
@@ -141,10 +140,6 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:words? (
-            msword? (
-                dev-libs/glib:2
-                office-libs/libgsf[>=1]
-            )
             wordperfect? ( office-libs/libwpd[>=0.8] )
         )
         marble? ( kde/kdeedu[kde_parts:marble] )
@@ -199,8 +194,6 @@ src_configure() {
         $(cmake_with kde_parts:mobile OpenSSL)
         $(cmake_with kde_parts:stage Okular)
         $(cmake_with Marble)
-        $(cmake_with msword GObject)
-        $(cmake_with msword LIBGSF)
         $(cmake_with MySQL)
         $(cmake_with OpenEXR)
         $(cmake_with pdf Poppler)
@@ -217,7 +210,7 @@ src_configure() {
         cmakeparams+=( -DWITH_Eigen2=OFF )
     fi
 
-    if option msword || option mdb || option kde_parts:krita; then
+    if option mdb || option kde_parts:krita; then
         cmakeparams+=( -DWITH_GLIB2=ON )
     else
         cmakeparams+=( -DWITH_GLIB2=OFF )
