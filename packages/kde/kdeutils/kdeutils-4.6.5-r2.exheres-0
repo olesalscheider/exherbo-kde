@@ -8,5 +8,6 @@ PLATFORMS="~amd64 ~x86"
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-0001-SVN-commit-1240907-by-rkcosta.patch
     -p4 "${FILES}"/${PNV}-kcalc_kbd_input.patch
+    -p1 "${FILES}"/fix-ark-directory-traversal-issue.patch
 )
 
