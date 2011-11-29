@@ -8,11 +8,6 @@ require strigi
 
 PLATFORMS="~amd64 ~x86"
 
-# FIXME indexertest fails with option !clucene
-# FIXME indextest fails with: symbol lookup error: /usr/lib64/libldap-2.4.so.2: undefined symbol: ldap_int_tls_destroy
-# Probably depends on having kdepimlibs[ldap]
-RESTRICT=test
-
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-The-strigi-searchclient-requires-Qt.patch
     "${FILES}"/0002-Fix-crash-on-assert-when-file-grows-while-reading-it.patch
