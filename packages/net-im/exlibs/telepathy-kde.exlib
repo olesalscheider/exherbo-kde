@@ -1,0 +1,32 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+myexparam kde_ver_min=
+myexparam telepathy_qt_ver_min=
+myexparam -b needs_telepathy_qt=true
+myexparam project=${PN/-kde}
+
+HOMEPAGE="https://projects.kde.org/projects/playground/network/telepathy/$(exparam project)"
+DOWNLOADS="mirror://kde/unstable/telepathy-kde/${PV}/src/${PNV}.tar.bz2"
+
+test -n "$(exparam kde_ver_min)" && KDE_VER_STRING="[>=$(exparam kde_ver_min)]"
+test -n "$(exparam telepathy_qt_ver_min)" && TELEPATHY_QT_VER_STRING="[>=$(exparam telepathy_qt_ver_min)]"
+exparam -b needs_telepathy_qt && TELEPATHY_QT_STRING="net-im/telepathy-qt4${TELEPATHY_QT_VER_STRING}"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4${KDE_VER_STRING}
+        ${TELEPATHY_QT_STRING}
+    run:
+        net-im/telepathy-mission-control
+    recommendation:
+        net-im/telepathy-gabble [[ description = [ Required for XMPP instant messaging support ] ]]
+    suggestion:
+        net-im/telepathy-haze [[ description = [ Required for all instant messaging protocols
+                                                 supported by libpurple ] ]]
+        net-im/telepathy-idle [[ description = [ Required for IRC support ] ]]
+        net-im/telepathy-salut [[ description = [ Required for salut support ] ]]
+"
+
