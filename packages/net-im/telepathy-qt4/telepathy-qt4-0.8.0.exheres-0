@@ -18,7 +18,7 @@ DEPENDENCIES="
         dev-util/pkg-config[>=0.21]
         dev-lang/python:*[>=2.5.0]
     build+run:
-        dev-libs/glib
+        dev-libs/glib:2
         dev-libs/libxml2[>=2.7.7-r1]
         x11-libs/qt:4[>=4.6.0][dbus][X(+)]
         media-libs/gstreamer[>=0.10.30]
@@ -27,7 +27,7 @@ DEPENDENCIES="
    test:
        (
             dev-python/dbus-python[>=0.83.1]
-            net-im/telepathy-glib[>=0.11.16]
+            net-im/telepathy-glib[>=0.15.1]
             x11-libs/qt:4[glib]
        ) [[ note = [ Run more tests ] ]]
 "
