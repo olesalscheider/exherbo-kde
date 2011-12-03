@@ -24,6 +24,7 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-arch/bzip2
+        dev-libs/boost
         dev-libs/libxml2
         sys-libs/zlib
         clucene? ( dev-cpp/clucene[>=2.3.3.4] )
@@ -36,7 +37,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     # Strigi needs either expat or libxml2.  However libxml2 seems to be required in both cases,
-    # linking to 2 xml parsers is just silly, so we disable expat.
+    # linking to two xml parsers is just silly, so we disable expat.
     -DENABLE_EXPAT=OFF
     # Always enabled, the only reliable way to check for files changed
     -DENABLE_POLLING=ON
