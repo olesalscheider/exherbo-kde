@@ -18,6 +18,7 @@ DEPENDENCIES="
         kde/kde-baseapps:4[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/jpeg
+        media-libs/phonon
         kipi? ( graphics/kipi-plugins )
         !kde/kdegraphics [[
             description = [ kdegraphics got split into single packages ]
