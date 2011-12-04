@@ -9,13 +9,12 @@ LICENCES="GPL-2"
 MYOPTIONS="
     kde_parts:
         okular
-        strigi-analyzer
 "
 
 DEPENDENCIES="
     build+run:
+        app-pim/strigi [[ note = [ Can be made optional; pointless since kdelibs depends on it ] ]]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:okular? ( kde/okular:${SLOT}[>=${PV}] )
-        kde_parts:strigi-analyzer? ( app-pim/strigi )
 "
 
