@@ -20,10 +20,12 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        app-arch/bzip2
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/qimageblitz
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
+        media-libs/phonon
         sys-libs/zlib [[ note = [ Support for Plucker files in Okular ] ]]
         chm? ( media-libs/chmlib )
         djvu? ( app-text/djvu[>=3.5.17] )
