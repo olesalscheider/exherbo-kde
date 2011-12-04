@@ -5,3 +5,7 @@ require akonadi
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-Don-t-try-to-find-BoostConfig.cmake.-The-variables-n.patch
+)
+
