@@ -8,7 +8,7 @@ require kde.org
 SUMMARY="Image viewer for KDE "
 HOMEPAGE="http://gwenview.sourceforge.net/"
 
-LICENCES="GPL-2"
+LICENCES="FDL-1.2 GPL-2"
 MYOPTIONS="kipi [[ description = [ Provides various image manipulation and export features via KDE Image Plugin Interface (KIPI) ] ]]"
 
 DEPENDENCIES="

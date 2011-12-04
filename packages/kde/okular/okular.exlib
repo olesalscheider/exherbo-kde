@@ -7,7 +7,7 @@ require kde.org
 
 SUMMARY="An universal document viewer for KDE"
 
-LICENCES="GPL-2"
+LICENCES="FDL-1.2 GPL-2 LGPL-2"
 MYOPTIONS="
     chm        [[ description = [ Support for Microsoft Compiled HTML Help format files ] ]]
     djvu       [[ description = [ Support for DjVu formatted files ] ]]

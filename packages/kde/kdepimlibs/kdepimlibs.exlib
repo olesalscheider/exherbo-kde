@@ -10,7 +10,7 @@ This package contains Personal Information Management libraries and data files n
 "
 HOMEPAGE="http://kdepim.kde.org/"
 
-LICENCES="GPL-2 LGPL-2.1"
+LICENCES="BSD-2 GPL-2 LGPL-2.1"
 MYOPTIONS="ldap"
 
 DEPENDENCIES="
