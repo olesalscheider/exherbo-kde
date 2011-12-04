@@ -24,9 +24,10 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         dev-libs/soprano[>=2.3.70]
         kde/kdelibs:${SLOT}[>=${PV}]
+        media-libs/phonon
         net-libs/cyrus-sasl
         office-libs/libical[>=0.42]
-        server-pim/akonadi[>=1.4.81]
+        server-pim/akonadi[>=1.5.52]
         x11-libs/qt:4[>=4.6.0]
         x11-misc/shared-mime-info[>=0.30]
         ldap? ( net-directory/openldap )
