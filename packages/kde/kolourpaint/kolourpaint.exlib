@@ -10,8 +10,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/qimageblitz
         kde/kdelibs:${SLOT}[>=${PV}]
+        kde/qimageblitz
 
         !kde/kdegraphics [[
             description = [ kdegraphics got split into single packages ]

@@ -10,9 +10,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        kde/kdelibs:${SLOT}[>=${PV}]
         x11-libs/libX11
         x11-libs/libXxf86vm
-        kde/kdelibs:${SLOT}[>=${PV}]
 
         !kde/kdegraphics [[
             description = [ kdegraphics got split into single packages ]
