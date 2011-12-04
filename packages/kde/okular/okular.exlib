@@ -11,8 +11,8 @@ LICENCES="GPL-2"
 MYOPTIONS="
     chm        [[ description = [ Support for Microsoft Compiled HTML Help format files ] ]]
     djvu       [[ description = [ Support for DjVu formatted files ] ]]
+    encrypted  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     epub       [[ description = [ Support for EPub documents ] ]]
-    odf        [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     pdf        [[ description = [ Support for PDF (Portable Document Format) files ] ]]
     postscript [[ description = [ Support for PS (PostScript) files ] ]]
     tiff       [[ description = [ Support for TIFF (Tagged Image File Format) files ] ]]
@@ -22,11 +22,13 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/qimageblitz
-        media-libs/freetype:2
+        media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
+        media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
+        sys-libs/zlib [[ note = [ Support for Plucker files in Okular ] ]]
         chm? ( media-libs/chmlib )
         djvu? ( app-text/djvu[>=3.5.17] )
+        encrypted? ( app-crypt/qca:2 )
         epub? ( app-text/ebook-tools )
-        odf? ( app-crypt/qca:2 )
         pdf? ( app-text/poppler[>=0.8][qt4] )
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
@@ -40,7 +42,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'CHM'
     'djvu DjVuLibre'
     'EPub'
-    'odf QCA2'
+    'encrypted QCA2'
     'pdf Poppler'
     'postscript LibSpectre'
     'TIFF'
