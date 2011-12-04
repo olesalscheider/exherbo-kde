@@ -13,6 +13,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        app-pim/strigi
         kde/kdelibs:${SLOT}[>=${PV}]
         tiff? ( media-libs/tiff )
 
