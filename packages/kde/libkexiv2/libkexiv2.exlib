@@ -10,7 +10,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        graphics/exiv2[>=0.20]
+        graphics/exiv2[>=0.21]
         kde/kdelibs:${SLOT}[>=${PV}]
         !kde/kdegraphics [[
             description = [ kdegraphics got split into single packages ]
