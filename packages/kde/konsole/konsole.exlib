@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="KDE's terminal emulator"
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2 LGPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
