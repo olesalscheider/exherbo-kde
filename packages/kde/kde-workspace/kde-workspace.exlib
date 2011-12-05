@@ -71,6 +71,7 @@ DEPENDENCIES="
         sys-apps/pciutils
         sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
+        sys-libs/zlib
         x11-dri/mesa
         x11-libs/dbusmenu-qt[>=0.6.0]
         x11-libs/libICE [[ note = ksmserver ]]
