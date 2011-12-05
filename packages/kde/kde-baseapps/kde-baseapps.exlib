@@ -27,11 +27,13 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
+        app-pim/strigi
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kde-workspace:${SLOT}[>=${PV}]
+        sys-libs/zlib
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
