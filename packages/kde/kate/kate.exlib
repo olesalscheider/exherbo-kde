@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="Advanced editor component which is used in numerous KDE applications"
 
-LICENCES="GPL-2"
+LICENCES="LGPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
