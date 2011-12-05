@@ -30,5 +30,12 @@ if ever at_least 0.7.50; then
     "
 fi
 
+if ever at_least 0.8.55; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[>=4.8.0_rc1]
+    "
+fi
+
 BUGS_TO="kde@exherbo.org"
 
