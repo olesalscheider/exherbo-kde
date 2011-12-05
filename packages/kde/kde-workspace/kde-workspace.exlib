@@ -33,7 +33,7 @@ statusnotifierwatcher: Module for the Status Notifier Specification
 systemsettings: Settings utility
 "
 
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)

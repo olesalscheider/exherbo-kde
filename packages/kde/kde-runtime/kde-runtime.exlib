@@ -49,7 +49,7 @@ solidautoeject: Used by solid to eject media
 soliduiserver: Hardware Detection daemon
 "
 
-LICENCES="GPL-2 LGPL-2.1"
+LICENCES="GPL-2 LGPL-2.1 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS="alsa networkmanager openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
