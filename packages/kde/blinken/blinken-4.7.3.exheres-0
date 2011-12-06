@@ -3,5 +3,5 @@
 
 require blinken
 
-PLATFORMS=""
+PLATFORMS="~amd64"
 
