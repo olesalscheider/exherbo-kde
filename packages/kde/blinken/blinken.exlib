@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="KDE Memory Enhancement Game"
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2"
 MYOPTIONS=""
 
 #FIXME: replacing kde-baseapps with sjfonts is preferred by upstream. See README.packagers
