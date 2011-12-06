@@ -12,11 +12,12 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kde-baseapps::${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
         media-libs/phonon
         !kde/kdeedu [[
             description = [ blinken is no longer part of kdeedu in future KDE SC releases ]
             resolution = uninstall-blocked-after
         ]]
+    run:
+        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
 
