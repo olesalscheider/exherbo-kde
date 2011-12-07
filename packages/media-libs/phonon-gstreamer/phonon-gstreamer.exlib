@@ -27,6 +27,7 @@ DEPENDENCIES="
         media-plugins/gst-plugins-base:0.10
         sys-sound/alsa-lib
         x11-dri/mesa
+        x11-libs/qt:4[opengl]
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
