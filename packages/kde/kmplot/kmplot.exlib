@@ -1,0 +1,20 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Mathematical Function Plotter"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        
+        !kde/kdeedu [[
+            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
