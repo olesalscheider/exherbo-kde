@@ -1,0 +1,21 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE program to learn the alphabet"
+
+LICENCES="GPL-2 FDL-1.2 LGPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        
+        !kde/kdeedu [[
+            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
