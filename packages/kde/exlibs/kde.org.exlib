@@ -90,6 +90,54 @@ DEPENDENCIES="
         x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X(+)]
 "
 
+KDE_BLOCKERS="
+    kde/kdegraphics:
+        kde/gwenview
+        kde/ksnapshot
+        kde/libkdcraw
+        kde/libkexiv2
+        kde/libkipi
+        kde/libksane
+        kde/okular
+"
+kde_blocker_dependencies() {
+    local parent block=()
+    while [[ -n $@ ]]; do
+        case "${1}" in
+            ${CATEGORY}/${PN}:)
+                shift
+                while [[ -n ${1} && ${1} != *: ]]; do
+                    block+=( ${1} )
+                    shift
+                done
+                DEPENDENCIES+="
+                    build+run:
+                        ( ${block[@]/#/!} ) [[
+                            *description = [ ${CATEGORY}/${PN} has been split into these packages in newer releases ]
+                            *resolution = uninstall-blocked-after
+                        ]]
+                "
+                return
+                ;;
+            *:)
+                parent=${1%:}
+                ;;
+            ${CATEGORY}/${PN})
+                DEPENDENCIES+="
+                    build+run:
+                        !${parent} [[
+                            description = [ ${CATEGORY}/${PN} was part of ${parent} in previous releases ]
+                            resolution = uninstall-blocked-after
+                        ]]
+                "
+                return
+                ;;
+        esac
+        shift
+    done
+}
+kde_blocker_dependencies ${KDE_BLOCKERS}
+
 kde.org_src_install() {
     cmake_src_install
 
