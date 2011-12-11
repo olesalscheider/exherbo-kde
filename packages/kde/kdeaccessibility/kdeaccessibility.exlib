@@ -18,7 +18,7 @@ http://accessibility.kde.org/
 http://kmag.sourceforge.net/
 "
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2"
 MY_KDE_PARTS="iconthemes kaccessible kmag kmousetool kmouth jovie"
 MYOPTIONS="
     speechd [[ description = [ Speech Dispatcher for Kaccessible ] requires = [ kde_parts: kaccessible ] ]]
