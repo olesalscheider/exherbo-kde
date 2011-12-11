@@ -22,11 +22,6 @@ DEPENDENCIES="
         sci-libs/libqalculate[>=0.9.5] [[ note = [ qalculate could be made optional ] ]]
         x11-libs/qt:4[opengl]
         gsl-solver? ( sci-libs/gsl[>=1.8] )
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gsl-solver GSL' )

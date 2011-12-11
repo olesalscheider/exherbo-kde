@@ -18,7 +18,6 @@ MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kuser? (
             kde/kdepimlibs:${SLOT}[>=${PV}]
         )
@@ -44,4 +43,16 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde SIP'
     'kde_parts:system-config-printer-kde SystemConfigPrinter'
 )
+
+if ever at_least 4.7.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
+    "
+fi
 

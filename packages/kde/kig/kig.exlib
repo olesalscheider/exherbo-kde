@@ -15,11 +15,6 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
 
         python? ( dev-libs/boost[>=1.31.0] )
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
     run:
         dev-lang/python:* [[ note = [ The pykig.py program is built unconditionally ] ]]
 "

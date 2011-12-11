@@ -44,7 +44,6 @@ DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
         kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
@@ -73,6 +72,7 @@ DEPENDENCIES+="
 if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
             dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
             kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
     "
@@ -81,6 +81,7 @@ else
         build+run:
             dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
             kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
             !kde/kate [[
                 description = [ kde/kate has been split out of kdesdk in newer releases ]

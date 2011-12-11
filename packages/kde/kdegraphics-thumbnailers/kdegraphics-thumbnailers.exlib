@@ -12,16 +12,11 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         raw? (
             kde/libkdcraw:${SLOT}[>=${PV}]
             kde/libkexiv2:${SLOT}[>=${PV}]
         )
-
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(

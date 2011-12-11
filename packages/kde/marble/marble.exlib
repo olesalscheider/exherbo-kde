@@ -35,11 +35,6 @@ DEPENDENCIES="
             dev-python/PyQt4[>=4.8.4]
             dev-python/sip[>=4.12.2]
         )
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

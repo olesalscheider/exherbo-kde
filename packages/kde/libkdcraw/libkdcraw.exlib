@@ -14,13 +14,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/jpeg
         media-libs/lcms
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

@@ -30,7 +30,7 @@ DEPENDENCIES="
         app-pim/strigi
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kde-workspace:${SLOT}[>=${PV}]
         sys-libs/zlib
@@ -38,10 +38,6 @@ DEPENDENCIES="
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
         tidy? ( app-text/tidy )
-        !kde/kdebase [[
-            description = [ kde-baseapps replaces kdebase ]
-            resolution = uninstall-blocked-after
-        ]]
     suggestion:
         sys-apps/eject
 "

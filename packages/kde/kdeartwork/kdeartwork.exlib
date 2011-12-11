@@ -19,7 +19,6 @@ DEPENDENCIES="
             sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
         )
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
         x11-dri/mesa
         x11-libs/libX11
         x11-libs/qt:4[opengl]
@@ -34,11 +33,13 @@ if ever at_least 4.6.41; then
     DEPENDENCIES+="
         build+run:
             kde/kde-workspace:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.7.0]
     "
 else
     DEPENDENCIES+="
         build+run:
             kde/kdebase-workspace:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.6.0]
     "
 fi
 

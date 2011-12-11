@@ -22,14 +22,10 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         app-text/libspectre
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         analitza? ( kde/kalgebra )
         qalculate? ( sci-libs/libqalculate )
         R? ( sci-lang/R )
-        !kde/kdeedu [[
-            description = [ cantor is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
     suggestion:
         sci-apps/maxima
         sci-apps/octave

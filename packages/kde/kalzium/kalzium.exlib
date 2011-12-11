@@ -20,7 +20,7 @@ DEPENDENCIES="
         3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
 
     build+run:
-        kde/kdelibs:${SLOT}[>=4.6.80]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         x11-libs/qt:4[opengl]
         3dviewer? (
             sci-chemistry/avogadro[>=1.0]
@@ -30,11 +30,6 @@ DEPENDENCIES="
             dev-lang/ocaml
             dev-ml/facile
         )
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

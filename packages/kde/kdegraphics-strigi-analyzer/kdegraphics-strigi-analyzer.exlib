@@ -14,13 +14,8 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         app-pim/strigi
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         tiff? ( media-libs/tiff )
-
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(

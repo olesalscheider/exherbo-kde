@@ -20,10 +20,6 @@ DEPENDENCIES="
         x11-dri/mesa
         x11-libs/qt:4[opengl]
         console-interface? ( sys-libs/readline )
-        !kde/kdeedu [[
-            description = [ blinken is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
     run:
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "

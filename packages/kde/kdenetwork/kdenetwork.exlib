@@ -66,7 +66,6 @@ DEPENDENCIES+="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
         dev-libs/soprano
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
@@ -144,6 +143,7 @@ if ever at_least 4.6.41; then
     DEPENDENCIES+="
         build+run:
             kde/kde-runtime:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:kget? (
                 kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
@@ -153,6 +153,7 @@ else
     DEPENDENCIES+="
         build+run:
             kde/kdebase-runtime:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:kget? (
                 kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]

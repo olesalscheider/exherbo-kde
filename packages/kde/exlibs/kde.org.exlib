@@ -246,6 +246,7 @@ KDE_BLOCKERS="
         kde/kdf
         kde/kfloppy
         kde/kgpg
+        kde/kremotecontrol
         kde/ktimer
         kde/kwallet
         kde/printer-applet

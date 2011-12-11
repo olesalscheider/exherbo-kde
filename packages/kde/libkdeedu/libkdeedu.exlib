@@ -10,12 +10,6 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
-
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
-
+        kde/kdelibs:${SLOT}[>=4.7.0]
 "
 

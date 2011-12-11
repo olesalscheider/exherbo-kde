@@ -37,7 +37,6 @@ MYOPTIONS="
 DEPENDENCIES+="
     build+run:
        !kde/filelight [[ description = [ filelight is now a part of ${CATEGORY}/${PN} ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde_parts:ark? (
             app-arch/xz
@@ -68,22 +67,6 @@ DEPENDENCIES+="
             x11-libs/libXrender
             python? ( dev-lang/python:= )
         )
-        (
-            !kde/ark
-            !kde/filelight
-            !kde/kcalc
-            !kde/kcharselect
-            !kde/kdf
-            !kde/kfloppy
-            !kde/kgpg
-            !kde/ktimer
-            !kde/kwallet
-            !kde/superkaramba
-            !kde/sweeper
-        ) [[
-            description = [ kdeutils got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
     suggestion:
         kde_parts:ark? (
             app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
@@ -110,6 +93,7 @@ fi
 if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:ark? ( app-arch/libarchive[>=2.8.0] )
             kde_parts:kcalc? ( dev-libs/gmp )
             kde_parts:kremotecontrol? ( x11-libs/libXtst )
@@ -118,6 +102,7 @@ if ever at_least 4.7.1; then
 else
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:ark? ( app-arch/libarchive[>=2.7.0] )
     "
 fi

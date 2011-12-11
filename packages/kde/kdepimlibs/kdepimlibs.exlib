@@ -23,7 +23,6 @@ DEPENDENCIES="
         dev-libs/boost[>=1.34.0]
         dev-libs/libgpg-error
         dev-libs/soprano[>=2.3.70]
-        kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon
         net-libs/cyrus-sasl
         office-libs/libical[>=0.42]
@@ -41,11 +40,17 @@ if ever at_least 4.7.1; then
     "
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
             server-pim/akonadi[>=1.5.52]
             x11-libs/qt:4[>=4.7.0]
             barcodes? ( kde/prison )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
+    "
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )

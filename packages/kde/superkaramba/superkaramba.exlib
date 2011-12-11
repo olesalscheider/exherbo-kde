@@ -14,7 +14,7 @@ MYOPTIONS="python [[ description = [ Python bindings for SuperKaramba ] ]]"
 DEPENDENCIES="
     build+run:
         kde/kde-workspace:${SLOT}[>=${PV}]
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/qimageblitz
         x11-libs/libICE
         x11-libs/libSM
@@ -26,9 +26,5 @@ DEPENDENCIES="
         x11-libs/libXpm
         x11-libs/libXrender
         python? ( dev-lang/python:= )
-        !kde/kdeutils [[
-            description = [ kdeutils got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 

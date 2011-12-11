@@ -12,7 +12,7 @@ DEPENDENCIES="
     build+run:
         app-text/shared-desktop-ontologies
         dev-libs/soprano
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

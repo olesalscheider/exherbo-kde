@@ -101,10 +101,6 @@ DEPENDENCIES="
         )
         qalculate? ( sci-libs/libqalculate[>=0.9.5] )
         xinerama? ( x11-libs/libXinerama )
-        !kde/kde-workspace [[
-            description = [ kde-workspace replaces kdebase-workspace in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
     run:
         x11-apps/setxkbmap
         x11-apps/xinit [[ note = kdm ]]

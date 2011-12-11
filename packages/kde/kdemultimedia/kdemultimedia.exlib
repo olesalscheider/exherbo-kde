@@ -92,6 +92,7 @@ if ever at_least 4.6.41; then
     DEPENDENCIES+="
         build+run:
             kde/kde-baseapps:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:kmix? (
                 kde/kde-workspace:${SLOT}[>=${PV}]
             )
@@ -100,6 +101,7 @@ else
     DEPENDENCIES+="
         build+run:
             kde/kdebase:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:kmix? (
                 kde/kdebase-workspace:${SLOT}[>=${PV}]
             )

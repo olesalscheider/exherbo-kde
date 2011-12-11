@@ -10,16 +10,11 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         sci-libs/eigen[>=2.0.3]
         sys-libs/zlib
         x11-dri/mesa
         x11-libs/qt[opengl]
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

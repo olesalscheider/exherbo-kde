@@ -10,7 +10,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
@@ -20,10 +20,6 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXpm
         x11-libs/libXrender
-        !kde/kdebase [[
-            description = [ konsole is no longer part of kdebase in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

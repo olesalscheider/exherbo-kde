@@ -13,10 +13,5 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkdeedu
         media-libs/phonon
-        
-        !kde/kdeedu [[
-            description = [ ${PN} is no longer part of kdeedu in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 

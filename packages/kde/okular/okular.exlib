@@ -21,7 +21,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         app-arch/bzip2
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/qimageblitz
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
@@ -34,10 +34,6 @@ DEPENDENCIES="
         pdf? ( app-text/poppler[>=0.8][qt4] )
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
