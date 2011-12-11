@@ -24,7 +24,6 @@ DEPENDENCIES="
         dev-libs/boost[>=1.34.0]
         dev-libs/libxml2
         dev-libs/soprano[>=2.3.70]  [[ note = [ raptorparser plugin enabled ] ]]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
         server-pim/akonadi[>=1.4.91]
         x11-misc/shared-mime-info[>=0.30]
 "
@@ -35,6 +34,7 @@ if ever at_least 4.7.1; then
             app-text/shared-desktop-ontologies[>=0.6.51]
             kde/kde-runtime:${SLOT}[>=${PV}]
             kde/kdelibs:${SLOT}[>=4.7.0]
+            kde/kdepimlibs:${SLOT}[>=4.6.41]
     "
 else
     DEPENDENCIES+="
@@ -42,6 +42,7 @@ else
             app-text/shared-desktop-ontologies[>=0.2]
             kde/kdebase-runtime:${SLOT}[>=${PV}]
             kde/kdelibs:${SLOT}[>=4.6.0]
+            kde/kdepimlibs:${SLOT}[>=${PV}]
     "
 fi
 
