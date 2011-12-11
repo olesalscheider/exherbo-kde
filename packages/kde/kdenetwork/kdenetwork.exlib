@@ -23,7 +23,9 @@ HOMEPAGE="
     http://kopete.kde.org/
 "
 
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]
+"
 # Only plugins and protocols with external dependencies are made optional
 # krfb from 4.6 contains an internal copy of libvncserver -> Deactivated for KDE 4.6
 MY_KDE_PARTS+="filesharing kdnssd kget kopete kppp krdc"
@@ -139,7 +141,7 @@ DEPENDENCIES+="
 # FIXME
 # Warning: kppp uses setuid
 
-if ever at_least 4.6.41; then
+if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
             kde/kde-runtime:${SLOT}[>=${PV}]
@@ -147,7 +149,10 @@ if ever at_least 4.6.41; then
             kde_parts:kget? (
                 kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+                media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
             )
+        suggestion:
+            net-fs/samba [[ description = [ Network file sharing ] ]]
     "
 else
     DEPENDENCIES+="
@@ -158,17 +163,6 @@ else
                 kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
             )
-    "
-fi
-
-if ever at_least 4.7.1; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kget? (
-                media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
-            )
-        suggestion:
-            net-fs/samba [[ description = [ Network file sharing ] ]]
     "
 fi
 
@@ -260,6 +254,8 @@ src_configure() {
 
         if option kde_parts:kget; then
             cmakeparams+=( -DWITH_LibMms:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_LibMms:BOOL=FALSE )
         fi
     fi
 
