@@ -54,7 +54,6 @@ DEPENDENCIES+="
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.3.70]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         server-pim/akonadi[>=1.4.91]
         sys-libs/zlib
@@ -88,13 +87,14 @@ fi
 if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build:
-            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:kleopatra? (
                 dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
             )
         build+run:
             app-text/shared-desktop-ontologies[>=0.6.51]
             kde/kde-runtime:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.7.0]
+            kde/kdepimlibs:${SLOT}[>=4.6.41]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DKDEPIM_BUILD_DESKTOP:BOOL=TRUE
@@ -108,6 +108,7 @@ else
             app-text/shared-desktop-ontologies[>=0.2]
             kde/kdebase-runtime:${SLOT}[>=${PV}]
             kde/kdelibs:${SLOT}[>=4.6.0]
+            kde/kdepimlibs:${SLOT}[>=${PV}]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_IndicateQt=OFF )
 fi
