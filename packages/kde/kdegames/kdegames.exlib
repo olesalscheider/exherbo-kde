@@ -20,7 +20,7 @@ DESCRIPTION="
 "
 
 HOMEPAGE="http://games.kde.org/"
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
 
 MY_KDE_PARTS="bomber bovo granatier kajongg kapman katomic kbattleship kblackbox kblocks kbounce
 kbreakout kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube klickety klines kmahjongg kmines
