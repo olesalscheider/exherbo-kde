@@ -82,6 +82,10 @@ else
             dev-lang/perl:*[>=5.8] [[ description = [ For kio_perldoc ] ]]
             kde/kdebase:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
             kde_parts:kate? ( x11-misc/shared-mime-info[>=0.30] )
+            !kde/kate [[
+                description = [ kde/kate has been split out of kdesdk in newer releases ]
+                resolution = uninstall-blocked-after
+            ]]
     "
 fi
 

@@ -38,10 +38,6 @@ DEPENDENCIES="
             description = [ kde-baseapps replaces kdebase in future KDE SC releases ]
             resolution = uninstall-blocked-after
         ]]
-        !kde/kate [[
-            description = [ kate is no longer part of kdebase in future KDE SC releases ]
-            resolution = uninstall-blocked-after
-        ]]
         !kde/konsole [[
             description = [ konsole is no longer part of kdebase in future KDE SC releases ]
             resolution = uninstall-blocked-after
