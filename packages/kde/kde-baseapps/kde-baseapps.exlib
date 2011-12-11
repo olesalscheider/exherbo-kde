@@ -30,7 +30,7 @@ DEPENDENCIES="
         app-pim/strigi
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
-        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdelibs:${SLOT}[>=4.7.3]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kde-workspace:${SLOT}[>=${PV}]
         sys-libs/zlib
