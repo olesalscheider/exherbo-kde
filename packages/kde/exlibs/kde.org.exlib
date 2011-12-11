@@ -1,4 +1,6 @@
 # Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 #
 # Based in part upon 'kde4-base.eclass', 'kde4-functions.eclass', 'kde4-meta.eclass'
@@ -90,15 +92,165 @@ DEPENDENCIES="
         x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X(+)]
 "
 
+# This list also includes splits for future releases, still it might be subject to changes
 KDE_BLOCKERS="
+    kde/kdeaccessibility:
+        kde/jovie
+        kde/kaccessible
+        kde/kmag
+        kde/kmousetool
+        kde/kmouth
+    kde/kdeadmin:
+        kde/kcron
+        kde/ksystemlog
+        kde/kuser
+        kde/system-config-printer-kde
+    kde/kdebase:
+        kde/kactivities
+        kde/kde-baseapps
+        kde/konsole
+    kde/kdebase-runtime:
+        kde/kde-runtime
+    kde/kdebase-workspace:
+        kde/kde-workspace
+    kde/kdebindings:
+        kde/kimono
+        kde/korundum
+        kde/kross
+        kde/perlkde
+        kde/perlqt
+        kde/pykde4
+        kde/qtruby
+        kde/qyoto
+        kde/smokegen
+        kde/smokekde
+        kde/smokeqt
+    kde/kdeedu:
+        kde/blinken
+        kde/cantor
+        kde/kalgebra
+        kde/kalzium
+        kde/kanagram
+        kde/kbruch
+        kde/kgeography
+        kde/khangman
+        kde/kig
+        kde/kiten
+        kde/klettres
+        kde/kmplot
+        kde/kstars
+        kde/ktouch
+        kde/kturtle
+        kde/kwordquiz
+        kde/libkdeedu
+        kde/marble
+        kde/parley
+        kde/rocs
+        kde/step
+    kde/kdegames:
+        kde/bomber
+        kde/bovo
+        kde/granatier
+        kde/kajongg
+        kde/kapman
+        kde/katomic
+        kde/kbattleship
+        kde/kblackbox
+        kde/kblocks
+        kde/kbounce
+        kde/kbreakout
+        kde/kdiamond
+        kde/kfourinline
+        kde/kgoldrunner
+        kde/kigo
+        kde/killbots
+        kde/kiriki
+        kde/kjumpingcube
+        kde/klickety
+        kde/klines
+        kde/kmahjongg
+        kde/kmines
+        kde/knetwalk
+        kde/kolf
+        kde/kollision
+        kde/konquest
+        kde/kpat
+        kde/kreversi
+        kde/kshisen
+        kde/ksirk
+        kde/kspaceduel
+        kde/ksquares
+        kde/ksudoku
+        kde/ktron
+        kde/ktuberling
+        kde/kubrick
+        kde/lskat
+        kde/palapeli
     kde/kdegraphics:
         kde/gwenview
+        kde/kamera
+        kde/kcolorchooser
+        kde/kdegraphics-strigi-analyzer
+        kde/kdegraphics-thumbnailers
+        kde/kgamma
+        kde/kolourpoint
+        kde/kruler
+        kde/ksaneplugin
         kde/ksnapshot
         kde/libkdcraw
         kde/libkexiv2
         kde/libkipi
         kde/libksane
+        kde/mobipocket
         kde/okular
+        kde/svgpart
+    kde/kdemultimedia:
+        kde/dragonplayer
+        kde/ffmpegthumbs
+        kde/juk
+        kde/kmix
+        kde/kscd
+        kde/libkcddb
+        kde/libkcompactdisc
+        kde/mplayerthumbs
+    kde/kdenetwork:
+        kde/filesharing
+        kde/kdnssd
+        kde/kget
+        kde/kopete
+        kde/kppp
+        kde/krdc
+        kde/krfb
+    kde/kdesdk:
+        kde/cervisia
+        kde/kapptemplate
+        kde/kcachegrind
+        kde/kdeaccounts-plugin
+        kde/kmtrace
+        kde/kompare
+        kde/kstartperf
+        kde/kuiviewer
+        kde/lokalize
+        kde/okteta
+        kde/poxml
+        kde/umbrello
+    kde/kdetoys:
+        kde/amor
+        kde/kteatime
+        kde/ktux
+    kde/kdeutils:
+        kde/ark
+        kde/filelight
+        kde/kcalc
+        kde/kcharselect
+        kde/kdf
+        kde/kfloppy
+        kde/kgpg
+        kde/ktimer
+        kde/kwallet
+        kde/printer-applet
+        kde/superkaramba
+        kde/sweeper
 "
 kde_blocker_dependencies() {
     local parent block=()
