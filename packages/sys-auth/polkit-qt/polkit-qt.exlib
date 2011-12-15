@@ -17,35 +17,23 @@ else
 fi
 
 SUMMARY="A library that allows developer to access PolicyKit-1 API with a nice Qt-style API"
-HOMEPAGE="http://www.kde.org"
+HOMEPAGE="https://projects.kde.org/projects/kdesupport/${MY_PN}"
 
 LICENCES="LGPL-2.1"
 SLOT="1"
 MYOPTIONS="examples"
 
-if ever at_least 0.99.0; then
-    DEPENDENCIES="
-        build:
-            kde/automoc4
-        build+run:
-            dev-libs/glib:2
-            sys-auth/polkit:1[>=0.99]
-            x11-libs/qt:4[>=4.4.0]
-        suggestion:
-            sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-            sys-auth/polkit-kde-kcmodules[>=0.98.1] [[ description = [ KDE settings GUI for PolicyKit ] ]]
-    "
-else
-    DEPENDENCIES="
-        build:
-            kde/automoc4
-        build+run:
-            sys-auth/polkit:1[>=0.95]
-            x11-libs/qt:4[>=4.4.0]
-        suggestion:
-            sys-auth/polkit-kde[>=0.95.1] [[ description = [ KDE GUI for PolicyKit ] ]]
-    "
-fi
+DEPENDENCIES="
+    build:
+        kde/automoc4
+    build+run:
+        dev-libs/glib:2
+        sys-auth/polkit:1[>=0.99]
+        x11-libs/qt:4[>=4.4.0]
+    suggestion:
+        sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+        sys-auth/polkit-kde-kcmodules[>=0.98.1] [[ description = [ KDE settings GUI for PolicyKit ] ]]
+"
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DSYSCONF_INSTALL_DIR:PATH=/etc/ -DBUILD_TEST:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( EXAMPLES )
