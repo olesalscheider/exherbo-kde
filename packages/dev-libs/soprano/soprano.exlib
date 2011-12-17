@@ -34,10 +34,10 @@ DEPENDENCIES="
         virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )
 "
 
-if ever at_least 2.7.0; then
+if ever at_least 2.7.4; then
     DEPENDENCIES+="
         build+run:
-            media-libs/raptor[>=2.0.4]
+            media-libs/raptor[>=2.0.0]
     "
 else
     DEPENDENCIES+="
