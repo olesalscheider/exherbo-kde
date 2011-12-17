@@ -7,5 +7,6 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    "${FILES}"/0001-KLocale-Fix-readNumber-and-readMoney-for-lenient-gro.patch
 )
 
