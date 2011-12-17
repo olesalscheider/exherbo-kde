@@ -66,7 +66,7 @@ DEPENDENCIES="
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
         dev-libs/libqzeitgeist [[ description = [ Provides Zeitgeist resource tracking integration for the activitymanager ] ]]
-        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdelibs:${SLOT}[>=4.7.4]
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
