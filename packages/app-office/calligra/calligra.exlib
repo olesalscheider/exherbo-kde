@@ -21,7 +21,7 @@ Management:
 * Kexi: Integrated data management
 "
 
-HOMEPAGE="http://www.calligra-suite.org/"
+HOMEPAGE="http://www.calligra.org/"
 DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
@@ -75,7 +75,7 @@ DEPENDENCIES+="
         media-libs/phonon [[ note = [ Used by stage ] ]]
         sys-libs/zlib
         x11-dri/mesa [[ note = [ Required for opengl support (Krita and Flake) ] ]]
-        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support]
+        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11

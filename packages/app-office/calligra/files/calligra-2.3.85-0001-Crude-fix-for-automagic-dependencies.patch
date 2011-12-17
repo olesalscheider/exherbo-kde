@@ -2,7 +2,7 @@ Source: Bo Ørsted Andresen
 Upstream: No.
 Reason: Fix automagic dependencies.
 
-From cdf7244e1c6b94b00b7249b8273dbe911bd7440a Mon Sep 17 00:00:00 2001
+From e67a154a942ba81e586b496d15f6c4067e59e003 Mon Sep 17 00:00:00 2001
 From: Bernd Steinhauser <berniyh@exherbo.org>
 Date: Tue, 14 Jun 2011 22:38:36 +0200
 Subject: [PATCH] Crude fix for automagic dependencies.
@@ -57,12 +57,12 @@ index 9e48942..3d3694d 100644
     add_subdirectory(xbase)
  ENDIF(XBASE_FOUND)
 diff --git a/krita/plugins/extensions/CMakeLists.txt b/krita/plugins/extensions/CMakeLists.txt
-index 3f4bb4b..4ba478e 100644
+index 8d00486..0bd8418 100644
 --- a/krita/plugins/extensions/CMakeLists.txt
 +++ b/krita/plugins/extensions/CMakeLists.txt
-@@ -25,13 +25,13 @@ if(OPENEXR_FOUND)
+@@ -25,13 +25,13 @@ if(OPENCTL_FOUND AND OPENEXR_FOUND)
    add_subdirectory( painterlyframework )
- endif(OPENEXR_FOUND)
+ endif(OPENCTL_FOUND AND OPENEXR_FOUND)
  
 -find_package(OpenShiva)
 -find_package(QtShiva )
@@ -81,5 +81,5 @@ index 3f4bb4b..4ba478e 100644
 +macro_log_feature(QTSHIVA_FOUND "QtShiva" "Qt bindings for the OpenShiva interpreter (part of libQtGTL)" "http://www.opengtl.org" FALSE "" "Required for Shiva based Generators and Filters")
  
 -- 
-1.7.5.4
+1.7.7.4
 
