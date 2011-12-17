@@ -4,5 +4,4 @@
 require konversation
 
 PLATFORMS="~amd64 ~x86"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
 
