@@ -1,0 +1,23 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Interactive geometry program for KDE"
+
+LICENCES="GPL-2 FDL-1.2 BSD-3"
+MYOPTIONS="
+    python [[ description = [ Enable python scripting support ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+
+        python? ( dev-libs/boost[>=1.31.0] )
+    run:
+        dev-lang/python:* [[ note = [ The pykig.py program is built unconditionally ] ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'python BoostPython' )
+

@@ -1,0 +1,16 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Scanner Service"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/libksane:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
+"
+

@@ -28,9 +28,16 @@ DEPENDENCIES="
         dev-libs/glib:2
         kde/kdelibs:4[>=4.3][nepomuk(+)?]
         kde/kdepimlibs:4 [[ note = [ addressbook support ] ]]
-        kde/kdegraphics:4[>=4.1.96][kde_parts:gwenview] [[
-            note = [ For libkexiv2, libkdcraw, libkipi ]
-        ]]
+        || (
+            (
+                kde/libkdcraw
+                kde/libkexiv2
+                kde/libkipi
+            )
+            kde/kdegraphics:4[>=4.1.96][kde_parts:gwenview] [[
+                note = [ For libkexiv2, libkdcraw, libkipi ]
+            ]]
+        )
         media-libs/jasper[>=1.7.0]
         media-libs/jpeg
         media-libs/lcms

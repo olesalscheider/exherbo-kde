@@ -1,0 +1,11 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require rocs
+
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-Don-t-try-to-find-BoostConfig.cmake.patch
+)
+

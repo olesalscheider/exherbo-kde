@@ -1,0 +1,42 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon kdeedu.exlib, which is:
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Periodic Table of Elements"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS="
+    3dviewer [[ description = [ Build the molecule editor ] ]]
+    solver [[ description = [ Build the equation solver ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
+
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        x11-libs/qt:4[opengl]
+        3dviewer? (
+            sci-chemistry/avogadro[>=1.0]
+            sci-chemistry/openbabel[>=2.2]
+        )
+        solver? (
+            dev-lang/ocaml
+            dev-ml/facile
+        )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    '3dviewer Avogadro'
+    '3dviewer Eigen2'
+    '3dviewer OpenBabel2'
+    'solver OCaml'
+    'solver Libfacile'
+)
+

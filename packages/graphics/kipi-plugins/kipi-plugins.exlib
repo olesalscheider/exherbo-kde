@@ -28,9 +28,16 @@ DEPENDENCIES="
         dev-libs/libxml2 [[ description = [ Htmlexport ] ]]
         dev-libs/libxslt [[ description = [ Htmlexport ] ]]
         kde/kdelibs:4
-        kde/kdegraphics:4[>=4.1.85][kde_parts:gwenview] [[
-            note = [ We need LibKExiv2, a wrapper around the Exiv2 library ]
-        ]]
+        || (
+            (
+                kde/libkdcraw
+                kde/libkexiv2
+                kde/libkipi
+            )
+            kde/kdegraphics:4[>=4.1.85][kde_parts:gwenview] [[
+                note = [ We need LibKExiv2, a wrapper around the Exiv2 library ]
+            ]]
+        )
         kde/kdepimlibs:4
         media-libs/jpeg
         media-libs/libpng[>=1.2.7]
@@ -46,7 +53,10 @@ DEPENDENCIES="
         )
         kipi_plugins:removeredeyes? ( media-libs/opencv )
         kipi_plugins:sane? (
-            kde/kdegraphics:4[>=4.1.85][kde_parts:ksaneplugin]
+            || (
+                kde/ksaneplugin
+                kde/kdegraphics:4[>=4.1.85][kde_parts:ksaneplugin]
+            )
             media-gfx/sane-backends
         )
 "

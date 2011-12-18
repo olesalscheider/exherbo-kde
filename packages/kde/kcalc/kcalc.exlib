@@ -14,10 +14,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-libs/gmp
-        kde/kdelibs:${SLOT}[>=${PV}]
-        !kde/kdeutils [[
-            description = [ kdeutils got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
+        kde/kdelibs:${SLOT}[>=4.7.0]
 "
 

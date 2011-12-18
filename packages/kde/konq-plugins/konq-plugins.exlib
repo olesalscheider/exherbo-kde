@@ -34,7 +34,10 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        kde/kdebase:${SLOT}[>=4.4]
+        || (
+            kde/kde-baseapps:${SLOT}
+            kde/kdebase:${SLOT}[>=4.4]
+        )
         tidy? ( app-text/tidy )
         webkit? ( kde/kwebkitpart )
 "

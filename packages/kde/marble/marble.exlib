@@ -1,0 +1,56 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon kdeedu.exlib, which is:
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE EDU: Virtual Globe and World Atlas"
+
+LICENCES="
+    FDL-1.2 LGPL-2.1
+    BSD-3 [[ note = [ CMake scripts ] ]]    
+    CCPL-Attribution-3.0 [[ note = [ City files taken from geonames.org ] ]]
+    public-domain [[ note = [ boundaryplacemarks.kml from the CIA World Factbook ] ]]
+"
+MYOPTIONS="
+    python [[ description = [ Experimental python scripting support ] ]]
+"
+
+# marble provides a qt-only mode which does not need kdelibs. Currently, we enforce the kde mode.
+#
+# FIXME: There are automagic dependencies on liblocation (maemo) and qtmobility in
+# src/plugins/positionprovider
+# Currently, we don't have packages for these, but a patch should be submitted upstream to make
+# detection optional.
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        x11-libs/qt[sql][webkit]
+        python? (
+            dev-lang/python:=
+            dev-python/PyQt4[>=4.8.4]
+            dev-python/sip[>=4.12.2]
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
+    -DHAVE_LIBGPS=OFF
+
+    -DWITH_DESIGNER_PLUGIN=ON
+)
+
+src_configure() {
+    if option python; then
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DEXPERIMENTAL_PYTHON_BINDINGS=TRUE )
+    else
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DEXPERIMENTAL_PYTHON_BINDINGS=FALSE )
+    fi
+
+    kde_src_configure
+}
+

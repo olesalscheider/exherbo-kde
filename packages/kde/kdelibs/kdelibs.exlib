@@ -12,8 +12,6 @@ HOMEPAGE="http://techbase.kde.org/Projects/kdelibs"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="acl avahi doc fam jpeg2000 openexr policykit spell
-    ppc_cpu_features: altivec
-    x86_cpu_features: mmx sse sse2
 "
 
 DEPENDENCIES="
@@ -30,7 +28,6 @@ DEPENDENCIES="
         app-arch/xz
         app-crypt/qca:2
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        app-text/shared-desktop-ontologies[>=0.5]
         dev-libs/attica[>=0.1.90]
         dev-libs/pcre
         dev-libs/libxml2
@@ -61,8 +58,7 @@ DEPENDENCIES="
         x11-libs/libXScrnSaver
         x11-libs/libXt
         x11-libs/libXtst
-        x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma needs webkit ] ]]
-        x11-misc/shared-mime-info[>=0.30]
+        x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
         acl? (
             sys-apps/acl
             sys-apps/attr
@@ -133,20 +129,42 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ENCHANT'
 )
 
-if ever is_scm ; then
+if ever at_least 4.7.1; then
+    MYOPTIONS+="
+        upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
+    "
     DEPENDENCIES+="
         build+run:
             app-text/shared-desktop-ontologies[>=0.6.50]
-            dev-libs/grantlee[>=0.1.0]
             x11-misc/shared-mime-info[>=0.60]
+            upnp? ( net-libs/hupnp )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'upnp HUpnp' )
+else
+    DEPENDENCIES+="
+        build+run:
+            app-text/shared-desktop-ontologies[>=0.5]
+            x11-misc/shared-mime-info[>=0.30]
+    "
+fi
+
+#FIXME: grantlee only needed for tests, which we do not run
+if ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/grantlee[>=0.1.0]
         recommendation:
             policykit? (
                 sys-auth/polkit-kde-agent[~scm]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
                 sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
             )
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_HUpnp:BOOL=FALSE )
 fi
+
+MYOPTIONS+="
+    ppc_cpu_features: altivec
+    x86_cpu_features: mmx sse sse2
+"
 
 src_prepare() {
     default

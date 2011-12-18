@@ -13,12 +13,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepimlibs:${SLOT}[>=${PV}]
-        !kde/kdeutils [[
-            description = [ kdeutils got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
     run:
         app-crypt/gnupg
 "

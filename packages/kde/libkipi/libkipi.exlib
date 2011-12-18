@@ -5,14 +5,11 @@ require kde.org
 
 SUMMARY="An interface to use kipi-plugins from a KDE image management program like digiKam"
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 LGPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
+        kde/kdelibs:${SLOT}[>=4.7.0]
 "
+

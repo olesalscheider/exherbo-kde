@@ -49,7 +49,7 @@ solidautoeject: Used by solid to eject media
 soliduiserver: Hardware Detection daemon
 "
 
-LICENCES="GPL-2 LGPL-2.1"
+LICENCES="GPL-2 LGPL-2.1 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS="alsa networkmanager openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
@@ -58,19 +58,21 @@ MYOPTIONS="alsa networkmanager openexr samba pulseaudio
 
 DEPENDENCIES="
     build:
+        app-doc/doxygen
         dev-cpp/cppunit
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        app-text/shared-desktop-ontologies[>=0.5]
+        app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
-        dev-libs/soprano[>=2.5.63][virtuoso]
+        dev-libs/soprano[>=2.6.50][virtuoso]
         dev-libs/libqzeitgeist [[ description = [ Provides Zeitgeist resource tracking integration for the activitymanager ] ]]
-        kde/kdelibs:${SLOT}[>=${PV}]
-        media-libs/phonon[>=4.4.3]
+        kde/kdelibs:${SLOT}[>=4.7.4]
+        media-libs/jpeg
+        media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
-        x11-libs/qt:4[phonon]
+        x11-libs/qt:4[phonon][webkit]
         x11-misc/shared-mime-info[>=0.40]
         alsa? ( sys-sound/alsa-lib[>=1.0.14a] )
         jpeg-rotation? ( graphics/exiv2 )
@@ -84,10 +86,6 @@ DEPENDENCIES="
         samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
-        !kde/kdebase-runtime [[
-            description = [ kde-runtime replaces kdebase-runtime ]
-            resolution = uninstall-blocked-after
-        ]]
     run:
         kde/oxygen-icons
     suggestion:

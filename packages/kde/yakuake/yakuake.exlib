@@ -22,7 +22,9 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kdelibs:${SLOT}[>=4.3.0]
-        kde/kdebase:${SLOT}[>=4.3.0]
-
+        || (
+            kde/kde-baseapps:${SLOT}
+            kde/kdebase:${SLOT}[>=4.3.0]
+        )
 "
 

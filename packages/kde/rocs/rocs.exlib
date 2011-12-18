@@ -1,0 +1,16 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE EDU: Graph Theory IDE"
+
+LICENCES="GPL-2 FDL-1.2 LGPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/boost[>=1.43.0] [[ note = [ rocs can be compiled with older boost installation, but 1.43.0 is necessary to aquire full functionality ] ]]
+        kde/kdelibs:${SLOT}[>=4.7.0]
+"
+

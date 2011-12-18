@@ -1,0 +1,30 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Desktop Planetarium"
+
+LICENCES="GPL-2 FDL-1.2 BSD-3"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        sci-libs/eigen[>=2.0.3]
+        sys-libs/zlib
+        x11-dri/mesa
+        x11-libs/qt[opengl]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Package Unwritten, http://indi.sf.net; Support for the FITS (Flexible Image Transport System) data format in KStars.
+    -DWITH_CFitsio=OFF
+    # Package Unwritten, http://www.indilib.org; Support for controlling astronomical devices with KStars.
+    -DWITH_INDI=OFF
+    # Hard-enable OpenGL since it is not optional on Exherbo anyway
+    -DWITH_OpenGL=ON
+    # Package Unwritten, http://xplanet.sourceforge.net/; Renders an image of all the major planets and most satellites
+    -DWITH_Xplanet=OFF
+)
+

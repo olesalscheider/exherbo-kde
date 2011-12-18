@@ -23,7 +23,9 @@ HOMEPAGE="
     http://kopete.kde.org/
 "
 
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]
+"
 # Only plugins and protocols with external dependencies are made optional
 # krfb from 4.6 contains an internal copy of libvncserver -> Deactivated for KDE 4.6
 MY_KDE_PARTS+="filesharing kdnssd kget kopete kppp krdc"
@@ -66,7 +68,6 @@ DEPENDENCIES+="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
         dev-libs/soprano
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
@@ -140,19 +141,24 @@ DEPENDENCIES+="
 # FIXME
 # Warning: kppp uses setuid
 
-if ever at_least 4.6.41; then
+if ever at_least 4.7.1; then
     DEPENDENCIES+="
         build+run:
             kde/kde-runtime:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:kget? (
                 kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+                media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
             )
+        suggestion:
+            net-fs/samba [[ description = [ Network file sharing ] ]]
     "
 else
     DEPENDENCIES+="
         build+run:
             kde/kdebase-runtime:${SLOT}[>=${PV}]
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:kget? (
                 kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
                 kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
@@ -241,6 +247,17 @@ src_configure() {
         $(cmake_with im_protocols:ilbc msiLBC)
         $(cmake_with vnc LibVNCServer)
     )
+
+    if ever at_least 4.7.1; then
+        #avoid installing samba with PackageKit
+        cmakeparams+=( -DWITH_SAMBA_INSTALL=OFF )
+
+        if option kde_parts:kget; then
+            cmakeparams+=( -DWITH_LibMms:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_LibMms:BOOL=FALSE )
+        fi
+    fi
 
     #   $(cmake_with im_protocols:meanwhile) \
     #   $(cmake_with im_protocols:meanwhile LibMeanwhile) \

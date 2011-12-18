@@ -1,0 +1,37 @@
+# Copyright 2011 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE Frontend to Mathematical Software"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS="
+    analitza [[ description = [ Build the analitza (kalgebra) backend ] ]]
+    qalculate [[ description = [ Build the qalculate backend ] ]]
+    R [[ description = [ Build the R backend ] ]]
+    ( analitza qalculate R ) [[ number-selected = at-least-one ]]
+"
+
+# FIXME: Find out what a module is used for and provide a usable description
+# cantor needs one of these backends to be usable:
+# Octave: http://www.octave.org/
+# Sage: http://www.sagemath.org/
+# Maxima: http://maxima.sourceforge.net/
+
+DEPENDENCIES="
+    build+run:
+        app-text/libspectre
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        analitza? ( kde/kalgebra )
+        qalculate? ( sci-libs/libqalculate )
+        R? ( sci-lang/R )
+    suggestion:
+        sci-apps/maxima
+        sci-apps/octave
+        sci-apps/sage
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Analitza Qalculate 'R R' )
+

@@ -5,15 +5,16 @@ require kde.org
 
 SUMMARY="Provides a QWidget that contains all the logic needed to interface a sacanner"
 
-LICENCES="GPL-2"
+LICENCES="
+    GPL-2
+    LGPL-2.1
+    TWAIN [[ note = [ ksanetwain/twain.h ] ]]
+"
 MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         media-gfx/sane-backends
-        !kde/kdegraphics [[
-            description = [ kdegraphics got split into single packages ]
-            resolution = uninstall-blocked-after
-        ]]
 "
+

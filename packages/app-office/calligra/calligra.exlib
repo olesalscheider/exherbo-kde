@@ -120,8 +120,8 @@ DEPENDENCIES+="
             openjpeg? ( media-libs/OpenJPEG )
             raw? (
                 || (
-                    kde/kdegraphics:4[>=4.3.0]
                     kde/libkdcraw:4
+                    kde/kdegraphics:4[>=4.3.0]
                 ) [[ note = [ Krita needs kdraw for raw filter ] ]]
             )
             tiff? ( media-libs/tiff )
@@ -131,8 +131,8 @@ DEPENDENCIES+="
         )
         kde_parts:stage? (
             || (
-                kde/kdegraphics:4[>=4.3.0][kde_parts:okular]
                 kde/okular:4
+                kde/kdegraphics:4[>=4.3.0][kde_parts:okular]
             ) [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
         kde_parts:tables? (
@@ -142,7 +142,12 @@ DEPENDENCIES+="
         kde_parts:words? (
             wordperfect? ( office-libs/libwpd[>=0.8] )
         )
-        marble? ( kde/kdeedu[kde_parts:marble] )
+        marble? (
+            || (
+                kde/marble
+                kde/kdeedu[kde_parts:marble]
+            )
+        )
         openexr? (
             media-libs/openexr
             media-libs/ilmbase

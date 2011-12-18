@@ -18,7 +18,6 @@ MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:amor? (
             x11-libs/libX11
             x11-libs/libXext
@@ -28,11 +27,13 @@ DEPENDENCIES="
 if ever at_least 4.6.41; then
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:ktux? ( kde/kde-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
     "
 else
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
             kde_parts:ktux? ( kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = KScreensaver ]] )
     "
 fi

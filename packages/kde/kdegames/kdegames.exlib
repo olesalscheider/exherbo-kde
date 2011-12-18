@@ -20,7 +20,7 @@ DESCRIPTION="
 "
 
 HOMEPAGE="http://games.kde.org/"
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
 
 MY_KDE_PARTS="bomber bovo granatier kajongg kapman katomic kbattleship kblackbox kblocks kbounce
 kbreakout kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube klickety klines kmahjongg kmines
@@ -34,7 +34,6 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build+run:
         app-crypt/qca:2
-        kde/kdelibs:${SLOT}[>=${PV}]
         media-libs/phonon
         x11-libs/qt:4[>=4.6.0][opengl][phonon]
         kde_parts:kajongg? (
@@ -52,10 +51,34 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenGL:BOOL=ON
     -DWITH_QCA2:BOOL=ON
-    # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
-    # If OpenAL isn't enabled, then enabling sndfile doesn't do anything
-    -DWITH_OpenAL:BOOL=OFF
-    -DWITH_SndFile:BOOL=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
+
+if ever at_least 4.7.1; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
+            kde_parts:granatier? ( media-libs/openal )
+            kde_parts:kgoldrunner? (
+                media-libs/libsndfile
+                media-libs/openal
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'kde_parts:granatier OpenAL'
+        'kde_parts:kgoldrunner SndFile'
+        'kde_parts:kgoldrunner OpenAL'
+    )
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
+        # If OpenAL isn't enabled, then enabling sndfile doesn't do anything
+        -DWITH_OpenAL:BOOL=OFF
+        -DWITH_SndFile:BOOL=OFF
+    )
+fi
 

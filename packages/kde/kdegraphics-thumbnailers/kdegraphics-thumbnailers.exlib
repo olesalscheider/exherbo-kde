@@ -1,0 +1,26 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Thumbnailers for various graphics file formats"
+
+LICENCES="GPL-2 LGPL-2"
+MYOPTIONS="
+    raw
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        raw? (
+            kde/libkdcraw:${SLOT}[>=${PV}]
+            kde/libkexiv2:${SLOT}[>=${PV}]
+        )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'raw Kdcraw'
+    'raw Kexiv2'
+)
+

@@ -18,7 +18,7 @@ http://accessibility.kde.org/
 http://kmag.sourceforge.net/
 "
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 FDL-1.2"
 MY_KDE_PARTS="iconthemes kaccessible kmag kmousetool kmouth jovie"
 MYOPTIONS="
     speechd [[ description = [ Speech Dispatcher for Kaccessible ] requires = [ kde_parts: kaccessible ] ]]
@@ -29,7 +29,6 @@ DEPENDENCIES="
     build:
         kde_parts:kaccessible? ( dev-util/pkg-config )
     build+run:
-        kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:jovie? ( app-speech/speechd )
         kde_parts:kaccessible? (
             speechd? ( app-speech/speechd )
@@ -41,6 +40,18 @@ DEPENDENCIES="
             x11-libs/libXtst
         )
 "
+
+if ever at_least 4.7.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.6.0]
+    "
+fi
 
 src_configure() {
     local p cmakeparams=( $(cmake_build kde_parts:iconthemes IconThemes) )

@@ -1,0 +1,28 @@
+# Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE EDU: Interactive Physics Simulator"
+
+LICENCES="GPL-2 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]
+"
+MYOPTIONS="
+    gsl-solver [[ description = [ Build a GSL-powered solver ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        dev-lang/python:* [[ note = [ Needed by xml data translation ] ]]
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        sci-libs/eigen[>=2.0.3]
+        sci-libs/libqalculate[>=0.9.5] [[ note = [ qalculate could be made optional ] ]]
+        x11-libs/qt:4[opengl]
+        gsl-solver? ( sci-libs/gsl[>=1.8] )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gsl-solver GSL' )
+
