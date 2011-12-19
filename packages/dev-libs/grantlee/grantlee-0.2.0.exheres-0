@@ -9,7 +9,7 @@ DOWNLOADS="http://downloads.${PN}.org/${PNV}.tar.gz"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="doc"
 
 # Tests want to connect to a running X server

@@ -3,5 +3,5 @@
 
 require kiten
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
