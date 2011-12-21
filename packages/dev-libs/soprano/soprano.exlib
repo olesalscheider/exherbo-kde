@@ -27,7 +27,6 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[dbus][>=4.5.0]
         dev-libs/rasqal[>=0.9.15]
-        dev-libs/redland[>=1.0.6]
         clucene? ( dev-cpp/clucene[>=0.9.19] )
         virtuoso? ( dev-db/libiodbc )
     run:
@@ -37,12 +36,14 @@ DEPENDENCIES="
 if ever at_least 2.7.4; then
     DEPENDENCIES+="
         build+run:
+            dev-libs/redland[>=1.0.13]
             media-libs/raptor[>=2.0.0]
     "
 else
     DEPENDENCIES+="
         build+run:
-            media-libs/raptor[>=1.4.16]
+            dev-libs/redland[>=1.0.6&<1.0.13]
+            media-libs/raptor[>=1.4.16&<2.0.0]
     "
 fi
 
