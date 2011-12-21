@@ -4,13 +4,14 @@
 if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/libqzeitgeist/0.8.0/src/libqzeitgeist-0.8.0.tar.bz2"
 fi
 
 require cmake
 
 SUMMARY="A Qt interface to the Zeitgeist event tracking system"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/${PN}"
-DOWNLOADS=""
 
 LICENCES="LGPL-2.1"
 SLOT="0"
