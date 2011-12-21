@@ -1,7 +1,9 @@
 # Copyright 2010 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
-require phonon-vlc [ phonon_ver="4.5.0" ]
+require phonon-vlc [ phonon_ver="4.6.0" ]
 
 PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/phonon-vlc-0.4.1-fix-phonon-detection.patch )
 
