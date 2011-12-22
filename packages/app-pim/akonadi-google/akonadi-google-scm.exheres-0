@@ -1,0 +1,33 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://anongit.kde.org/akonadi-google"
+require scm-git cmake
+
+SUMMARY="An Akonadi Resource for accessing Google services, like Google Calendar and Google Contacts"
+HOMEPAGE="https://projects.kde.org/projects/playground/pim/akonadi-google"
+DOWNLOADS=""
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt
+    build+run:
+        dev-libs/qjson
+        kde/kdelibs:4[>=4.6.0]
+        kde/kdepimlibs:4[>=4.5.63]
+        x11-libs/qt:4[>=4.7.0][webkit]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DBUILD_calendar:BOOL=TRUE
+    -DBUILD_contacts:BOOL=TRUE
+    -DBUILD_tasks:BOOL=TRUE
+)
+
