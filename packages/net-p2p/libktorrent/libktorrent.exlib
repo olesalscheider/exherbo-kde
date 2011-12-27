@@ -37,7 +37,7 @@ DEPENDENCIES="
 "
 
 case ${PV} in
-    1.1.1)
+    1.1.*)
         DEPENDENCIES+="
                 dev-lang/perl
                 kde/kdelibs:4[>=4.4]
