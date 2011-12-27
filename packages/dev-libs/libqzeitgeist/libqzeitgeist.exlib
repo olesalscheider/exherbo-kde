@@ -19,6 +19,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        dev-lang/python
         dev-libs/zeitgeist
         kde/automoc4
     build+run:
