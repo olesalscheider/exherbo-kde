@@ -1,0 +1,23 @@
+Source: written by Modestas Vainius, from debian, found on amarok-devel ml
+Upstream: not in Git
+Reason: kdelibs-4.6 doesn't have entities of all contributors. This prevents
+        amarok to build the documentation sucessfully.
+
+Reference: http://mail.kde.org/pipermail/amarok-devel/2011-December/009692.html
+
+From: Modestas Vainius <modax@debian.org>
+Subject: fix doc/nl build with kde sc 4.6
+
+Embedded Thom Castermans entity inline as it does not exist in kdelibs 4.6.
+
+--- a/doc/nl/index.docbook
++++ b/doc/nl/index.docbook
+@@ -2,6 +2,8 @@
+ <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+   <!ENTITY % addindex "IGNORE">
+   <!ENTITY % Dutch "INCLUDE">
++  <!ENTITY Thom.Castermans '<othercredit role="translator"><firstname>Thom</firstname><surname>Castermans</surname><affiliation><address><email>thomcastermans@kde.nl</email></address></affiliation><contrib>Vertaler/Nalezer</contrib></othercredit>'>
++  <!ENTITY vertaling.thom "<para>Dit document is vertaald in het Nederlands door &Thom.Castermans;.</para>">
+ ]>
+ <book lang="&language;">
+ <bookinfo>
