@@ -23,6 +23,8 @@ LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS=" doc
 pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
+zeitgeist [[ description = [ Enables multimedia applications to let Zeitgeist
+                           log playback activity ] ]]
 (
     gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
@@ -36,8 +38,8 @@ DEPENDENCIES="
         kde/automoc4[>=0.9.86]
         doc? ( app-doc/doxygen )
     build+run:
-        dev-libs/libqzeitgeist[>=0.8]
         x11-libs/qt:4[>=4.6.1][dbus][phonon]
+        zeitgeist? ( dev-libs/libqzeitgeist[>=0.8] )
         pulseaudio? (
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.21]
@@ -48,9 +50,12 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'doc PHONON_BUILD_DOC' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'pulseaudio GLIB2' 'pulseaudio PulseAudio' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+        'pulseaudio GLIB2'
+        'pulseaudio PulseAudio'
+        'zeitgeist QZeitgeist'
+)
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DPHONON_BUILD_DESIGNER_PLUGIN:BOOL=TRUE
-    -DWITH_QZeitgeist:BOOL=TRUE
 )
 
