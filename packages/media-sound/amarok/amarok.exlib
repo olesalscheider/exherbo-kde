@@ -68,7 +68,7 @@ DEPENDENCIES="
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
         musicbrainz? (
-            media/ffmpeg[>=0.6]
+            virtual/ffmpeg
             media-libs/libofa[>=0.9.0]
         )
         playdar? (
