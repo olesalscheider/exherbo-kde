@@ -31,7 +31,7 @@ DEPENDENCIES="
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
-        ffmpeg? ( media/ffmpeg )
+        ffmpeg? ( virtual/ffmpeg )
         qt4? ( x11-libs/qt:4[dbus][X(+)] )
 "
 
