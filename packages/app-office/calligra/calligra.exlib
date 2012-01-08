@@ -61,6 +61,7 @@ MYOPTIONS+="
 #   - Kexi Web Forms: Require pionet and google ctemplate
 DEPENDENCIES+="
     build+run:
+        dev-libs/attica [[ note = [ Can be made optional, but it's small and useful and does not pull in additional dependencies ] ]]
         dev-libs/boost
         dev-lang/perl:*
         dev-libs/libxml2 [[ note = [ Required by the xlsltfilter and used by calligra mobile ] ]]
@@ -101,6 +102,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
+            dev-libs/icu
             dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.9 is recommended ] ]]
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             mdb? ( dev-libs/glib:2 )
