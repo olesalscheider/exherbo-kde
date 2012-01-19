@@ -40,6 +40,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS="ieee1394 lm_sensors networkmanager python wicd xinerama
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
+    opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
     qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
     ppc_cpu_features: altivec
@@ -158,6 +159,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'ieee1394 RAW1394'
     'lm_sensors Sensors'
     NetworkManager
+    OpenGLES
     'python PythonLibrary'
     'python PyKDE4'
     'python PyQt4'
@@ -179,6 +181,14 @@ src_prepare() {
     edo sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
             -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
             -i CMakeLists.txt
+}
+
+src_configure() {
+    if option opengles; then
+        CMAKE_SRC_CONFIGURE_PARAMS+=( -DKWIN_BUILD_WITH_OPENGLES=TRUE )
+    fi
+
+    kde_src_configure
 }
 
 src_install() {
