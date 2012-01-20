@@ -48,5 +48,12 @@ if ever at_least 4.7.1; then
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
 fi
 
+if ever at_least 4.8.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
 
