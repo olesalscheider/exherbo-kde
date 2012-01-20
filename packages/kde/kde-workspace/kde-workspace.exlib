@@ -168,7 +168,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 if ever at_least 4.7.41; then
     DEPENDENCIES+="
         build+run:
-            kde/kactivities:${SLOT}[>=${PV}]
+            kde/kactivities:${SLOT}[>=4.8.0]
     "
 fi
 
