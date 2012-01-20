@@ -93,6 +93,14 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
+if ever at_least 4.8.0; then
+    DEPENDENCIES+="
+        build+run:
+            app-crypt/qca:2
+            kde/kdelibs:${SLOT}[>=4.8.0]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
     -DWITH_Nepomuk:BOOL=TRUE
