@@ -42,6 +42,13 @@ DEPENDENCIES="
         sys-apps/eject
 "
 
+if ever at_least 4.8.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.8.0]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'tidy LibTidy'
 )
