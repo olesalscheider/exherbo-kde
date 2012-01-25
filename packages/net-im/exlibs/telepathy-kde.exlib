@@ -11,12 +11,15 @@ DOWNLOADS="mirror://kde/unstable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
 
 test -n "$(exparam kde_ver_min)" && KDE_VER_STRING="[>=$(exparam kde_ver_min)]"
 test -n "$(exparam telepathy_qt_ver_min)" && TELEPATHY_QT_VER_STRING="[>=$(exparam telepathy_qt_ver_min)]"
+[ "${CATEGORY}/${PN}" != "net-im/ktp-common-internals" ] &&
+    COMMON_INTERNALS_STRING="net-im/ktp-common-internals[~${PV}]"
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4${KDE_VER_STRING}
         net-im/telepathy-qt${TELEPATHY_QT_VER_STRING}
 
+        ${COMMON_INTERNALS_STRING}
     run:
         net-im/telepathy-mission-control
     recommendation:
