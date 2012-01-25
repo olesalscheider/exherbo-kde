@@ -1,7 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require telepathy-kde [ kde_ver_min="4.6.0" telepathy_qt_ver_min="0.7.1" ]
+require telepathy-kde [ kde_ver_min="4.6.0" ]
 
 SUMMARY="The telepathy-kde contact plasmoid"
 
@@ -11,4 +11,8 @@ PLATFORMS="~amd64"
 MYOPTIONS=""
 
 BUGS_TO="mixi@exherbo.org"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-fix-pofiles-build-issue.patch
+)
 
