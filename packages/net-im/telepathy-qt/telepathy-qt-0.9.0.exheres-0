@@ -27,7 +27,7 @@ DEPENDENCIES="
    test:
        (
             dev-python/dbus-python[>=0.83.1]
-            net-im/telepathy-glib[>=0.15.1]
+            net-im/telepathy-glib[>=0.17.2]
             x11-libs/qt:4[glib]
        ) [[ note = [ Run more tests ] ]]
 "
