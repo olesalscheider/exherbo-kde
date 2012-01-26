@@ -34,12 +34,10 @@ DEPENDENCIES+="
         x11-libs/qt:4[opengl][webkit]
         x11-misc/shared-mime-info[>=0.18]
         kde_parts:kdeobservatory? ( x11-libs/qwt )
-        kimpanel? ( inputmethods/scim[>=1.4] )
         qalculate? ( sci-libs/libqalculate )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kimpanel SCIM'
     Marble
     Qalculate
 )
@@ -76,5 +74,24 @@ else
             kde/kdelibs:${SLOT}[>=4.6.0]
             marble? ( kde/kdeedu:4[kde_parts:marble] )
     "
+fi
+
+if ever at_least 4.8.0; then
+    LICENCES+=" BSD-2"
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/dbusmenu-qt
+            kimpanel? ( inputmethods/ibus )
+    "
+    # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
+    # kimpanel has been aktivated
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_scim=Off )
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kimpanel ibus' )
+else
+    DEPENDENCIES+="
+        build+run:
+            kimpanel? ( inputmethods/scim[>=1.4] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kimpanel SCIM' )
 fi
 
