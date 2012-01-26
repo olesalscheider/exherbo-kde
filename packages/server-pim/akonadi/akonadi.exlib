@@ -40,3 +40,13 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DDATABASE_BACKEND:STRING=MYSQL
 )
 
+src_prepare() {
+    # these tests need dbus
+    edo sed -e '/add_server_test(imapstreamparsertest.cpp akonadiprivate)/d' \
+            -e '/add_server_test(akdbustest.cpp akonadiprivate)/d' \
+            -e '/add_server_test(akstandarddirstest.cpp akonadiprivate)/d' \
+            -e '/add_server_test(handlertest.cpp akonadiprivate)/d' \
+            -e '/add_server_test(dbconfigtest.cpp akonadiprivate)/d' \
+            -i server/tests/unittest/CMakeLists.txt
+}
+
