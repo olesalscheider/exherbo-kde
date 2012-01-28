@@ -14,7 +14,11 @@ DOWNLOADS=""
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="
+    calendar [[ description = [ allows you to export scheduled transactions to an iCal file ] ]]
+    kbanking [[ description = [ enables online banking over HBCI ] ]]
+    ofx
+"
 
 # Tries to connect to a running X server
 RESTRICT="test"
@@ -30,22 +34,24 @@ DEPENDENCIES="
         dev-libs/gmp
         dev-libs/libxml2:2.0
         finance/libalkimia[>=4.3.2]
-        finance/libofx[>=0.9.4]
         gnome-bindings/glibmm:2.4
         kde/kdelibs:4[>=4.3.5]
         kde/kdepimlibs:4
-        office-libs/libical[>=0.33]
         x11-misc/shared-mime-info
         x11-libs/qt:4[dbus]
+        calendar? ( office-libs/libical[>=0.33] )
+        kbanking? (
+            dev-libs/aqbanking[>=5.0.0]
+            sys-libs/gwenhywfar[qt4][>=4.0.0]
+        )
+        ofx? ( finance/libofx[>=0.9.4] )
 "
-
-#FIXME Automagic
-#Gwenhywfar
-#AqBanking
 
 BUGS_TO="kde@exherbo.org"
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DUSE_OFX_DIRECTCONNECT:BOOL=TRUE
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+    'calendar LIBICAL'
+    'kbanking KBANKING'
+    'ofx LIBOFX'
 )
 
