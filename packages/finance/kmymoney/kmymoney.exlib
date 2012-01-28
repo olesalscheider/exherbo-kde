@@ -1,4 +1,5 @@
 # Copyright 2009 Ingmar Vanhassel
+# Copyright 2012 Heiko Becker <heiko@shruuf.de>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde sourceforge [ project=kmymoney2 ]
@@ -10,7 +11,9 @@ Quicken and supports different account types, categorisation of expenses, QIF im
 multiple currencies, and online banking.
 "
 HOMEPAGE+=" http://kmymoney2.sf.net/"
-DOWNLOADS=""
+if ever is_scm; then
+    DOWNLOADS=""
+fi
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -46,6 +49,18 @@ DEPENDENCIES="
         )
         ofx? ( finance/libofx[>=0.9.4] )
 "
+
+if ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            finance/libalkimia[>=4.3.2]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            finance/libalkimia[>=4.3.1]
+    "
+fi
 
 BUGS_TO="kde@exherbo.org"
 
