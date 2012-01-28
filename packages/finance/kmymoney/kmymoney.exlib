@@ -27,17 +27,16 @@ DEPENDENCIES="
         dev-cpp/libxml++:2.6
         dev-libs/boost[>=1.33.1]
         dev-libs/glib:2
+        dev-libs/gmp
         dev-libs/libxml2:2.0
-        finance/libalkimia
-        finance/libofx
+        finance/libalkimia[>=4.3.2]
+        finance/libofx[>=0.9.4]
         gnome-bindings/glibmm:2.4
-        kde/kdelibs:4
+        kde/kdelibs:4[>=4.3.5]
         kde/kdepimlibs:4
-        media-libs/jpeg
-        media-libs/libpng
-        office-libs/libical
+        office-libs/libical[>=0.33]
         x11-misc/shared-mime-info
-        x11-libs/qt:4[qt3support][sql][sqlite]
+        x11-libs/qt:4[dbus]
 "
 
 #FIXME Automagic
