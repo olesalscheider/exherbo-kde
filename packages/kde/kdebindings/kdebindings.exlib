@@ -52,7 +52,7 @@ DEPENDENCIES="
 if ever at_least scm ; then
     DEPENDENCIES+=" build+run: server-pim/akonadi[>=scm]"
 else
-    DEPENDENCIES+=" build+run: server-pim/akonadi[~>1.5.0]"
+    DEPENDENCIES+=" build+run: server-pim/akonadi[>=1.5.0]"
 fi
 
 # Note: ABI support for python & ruby should use:
