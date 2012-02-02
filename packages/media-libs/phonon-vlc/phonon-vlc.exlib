@@ -20,7 +20,7 @@ DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.86]
     build+run:
-        media/vlc[>=1.1.1]
+        media/vlc[>=1.1.1][dbus]
         media-libs/phonon[>=$(exparam phonon_ver)]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
