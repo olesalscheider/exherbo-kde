@@ -46,6 +46,13 @@ else
     "
 fi
 
+if ever at_least 4.8.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:${SLOT}[>=4.7.41]
+    "
+fi
+
 # Currently disabled (resources/CMakeLists.txt)
 # OpenChange -- http://www.openchange.org -- "Needed to support OpenChange / Exchange servers"
 
