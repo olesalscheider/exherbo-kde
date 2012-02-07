@@ -113,3 +113,12 @@ else
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_IndicateQt=OFF )
 fi
 
+if ever at_least 4.8.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:${SLOT}[>=4.7.80]
+    "
+    # Currently not available
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Prison=OFF )
+fi
+
