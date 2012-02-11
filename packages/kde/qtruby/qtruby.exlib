@@ -1,0 +1,25 @@
+# Copyright 2012 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Ruby bindings for Qt"
+
+LICENCES="GPL-2 LGPL-2.1"
+
+MYOPTIONS="webkit [[ description = [ Ruby bindings for QtWebkit ] ]]"
+DEPENDENCIES="
+    build+run:
+        dev-lang/ruby:=
+        kde/smokeqt:4[opengl][webkit?]
+        media-libs/phonon
+        x11-libs/qt:4[dbus][webkit?]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Phonon:BOOL=True
+    -DWITH_QScintilla:BOOL=FALSE
+    -DWITH_Qwt5:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS+=( '!webkit DISABLE_QtWebKit' )
+
