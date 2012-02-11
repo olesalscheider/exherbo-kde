@@ -66,7 +66,10 @@ DEPENDENCIES+="
     suggestion:
         kde_parts:lokalize? (
             dev-python/dbus-python
-            kde/kdebindings:${SLOT}[>=${PV}][python]
+            || (
+                kde/pykde4:${SLOT}[>=${PV}]
+                kde/kdebindings:${SLOT}[>=${PV}][python]
+            )
         )
 "
 
