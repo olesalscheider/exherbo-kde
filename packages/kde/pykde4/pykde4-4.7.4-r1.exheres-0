@@ -1,54 +1,7 @@
-# Copyright 2012 Aleksandar Petrinic <petrinic@gmail.com>
+# Copyright 2012 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org python [ python_dep=2.6 ]
+require pykde4
 
-SUMMARY="Python bindings for Kde4"
-DESCRIPTION="
-It's implemented as a set of Python modules: kdecore, kdeui, kio, kutils,
-kparts, khtml. The modules correspond to libraries in the kdelibs package.
-PyKDE supports nearly all classes and methods in these libraries - over 600
-classes and more than 10,000 methods.
-"
-
-LICENCES="GPL-2 LGPL-2"
 PLATFORMS="~amd64"
-MYOPTIONS=""
-
-DEPENDENCIES="
-    build+run:
-        !kde/pykde4:0 [[
-            description = [ SLOT should have been 4 ]
-            resolution = uninstall-blocked-after
-        ]]
-        dev-libs/soprano[>=2.0]
-        dev-python/PyQt4[>=4.8.2][webkit]
-        dev-python/sip[>=4.12.0]
-        kde/kdelibs:4[>=4.7.0]
-        kde/kdepimlibs:4[>=4.7.0]
-        media-libs/phonon[>=4.3.80]
-        x11-libs/qt:4[>=4.7.0][webkit]
-"
-
-BUGS_TO="petrinic@gmail.com"
-
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_KdepimLibs:BOOL=TRUE
-    -DWITH_Nepomuk:BOOL=TRUE
-    -DWITH_Soprano:BOOL=TRUE
-    -DWITH_PolkitQt:BOOL=FALSE
-)
-
-src_install() {
-    kde.org_src_install
-    edo pushd "${WORK}"/docs
-    dodoc -r html/
-    popd
-}
-
-# The tests are meant to be performed after the installation, so they are
-# useless now.
-#src_test() {
-#    edo python importTest.py
-#}
 
