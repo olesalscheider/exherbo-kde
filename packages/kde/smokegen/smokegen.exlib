@@ -1,0 +1,22 @@
+# Copyright 2012 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Scripting Meta Object Kompiler Engine Generator"
+DESCRIPTION="
+A general purpose C++ parser with a plugin infrastructure enabling 'generators'
+to be written, which can do various things with the C++ AST. It is currently
+used for generating the various SMOKE libraries. This repo also hosts the
+smokebase library, which is used by language bindings to interface with the
+SMOKE libraries, and the smokeapi introspection tool.
+"
+
+LICENCES="GPL-2 LGPL-2.1"
+
+MYOPTIONS=""
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[dbus]
+"
+
