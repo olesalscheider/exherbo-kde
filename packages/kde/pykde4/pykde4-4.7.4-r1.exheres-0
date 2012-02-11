@@ -12,12 +12,15 @@ classes and more than 10,000 methods.
 "
 
 LICENCES="GPL-2 LGPL-2"
-SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        !kde/pykde4:0 [[
+            description = [ SLOT should have been 4 ]
+            resolution = uninstall-blocked-after
+        ]]
         dev-libs/soprano[>=2.0]
         dev-python/PyQt4[>=4.8.4]
         dev-python/sip[>=4.12.2]
