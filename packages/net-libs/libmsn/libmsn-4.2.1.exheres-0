@@ -18,5 +18,4 @@ DEPENDENCIES="
         dev-libs/openssl
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-openssl-1.patch )
 
