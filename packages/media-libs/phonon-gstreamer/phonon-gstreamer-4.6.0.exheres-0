@@ -5,5 +5,3 @@ require phonon-gstreamer [ phonon_ver="4.6.0" ]
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/phonon-gstreamer-4.5.1-fix-phonon-detection.patch )
-
