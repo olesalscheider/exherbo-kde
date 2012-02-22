@@ -1,0 +1,45 @@
+# Copyright 2009 Sterling X. Winter <sterling.winter@gmail.com>
+# Copyright 2012 Ivan Dives
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=smplayer suffix=tar.gz ]
+
+SUMMARY="Icon themes for SMPlayer"
+DESCRIPTION="
+Supplemental SMPlayer icon themes:
+  * blackPanther-Light
+  * blackPanther-Real
+  * blackPanther-VistaLike
+  * Breathless
+  * Gartoon
+  * Gnome
+  * Noia
+  * Nuvola
+  * Oxygen
+  * Oxygen-Air
+  * Oxygen-Refit
+  * Silk
+  * Tango
+This is the theme set with OSI-approved licenses. This non-free theme can be downloaded from the SMPlayer website:
+  * Kids
+"
+
+LICENCES="
+    CCPL-Attribution-2.5 [[ note = [ Silk ] ]]
+    CCPL-Attribution-ShareAlike-3.0 [[ note = [ Oxygen Oxygen-Air ] ]]
+    GPL-2 [[ note = [ blackPanter-Light blackPanter-Real blackPanter-VistaLike Gartoon Gnome ] ]]
+    LGPL-3 [[ note = [ Gnome Noia Nuvola Oxygen-Refit ] ]]
+    public-domain [[ note = [ Tango ] ]]
+"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    run:
+        media/smplayer
+"
+
+DEFAULT_SRC_INSTALL_PARAMS=( "PREFIX=/usr" )
+
+src_compile() { :; }
+
