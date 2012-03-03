@@ -5,5 +5,3 @@ require phonon-vlc [ phonon_ver="4.6.0" ]
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/phonon-vlc-0.4.1-fix-phonon-detection.patch )
-

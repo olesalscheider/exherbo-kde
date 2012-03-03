@@ -10,7 +10,7 @@ MY_PNV=${MY_PN}-${PV}
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/phonon-vlc/"
-DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.xz"
 
 LICENCES="LGPL-3"
 SLOT="0"
@@ -18,9 +18,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        app-arch/xz
         kde/automoc4[>=0.9.86]
     build+run:
-        media/vlc[>=1.1.1][dbus]
+        media/vlc[>=1.1.10][dbus]
         media-libs/phonon[>=$(exparam phonon_ver)]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
