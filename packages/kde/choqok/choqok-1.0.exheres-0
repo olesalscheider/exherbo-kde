@@ -1,7 +1,7 @@
 # Copyright 2009, 2010, 2011 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde sourceforge
 
 SUMMARY="A Free/Open Source micro-blogging client for K Desktop Environment"
 DESCRIPTION="
@@ -10,7 +10,6 @@ Environment. It currently supports the Twitter.com and Identi.ca services. The
 name comes from an ancient Persian word that means sparrow.
 "
 HOMEPAGE="http://choqok.gnufolks.org/"
-DOWNLOADS="http://choqok.gnufolks.org/pkgs/${PNV}.tar.bz2"
 
 LICENCES="GPL-3"
 SLOT="0"
