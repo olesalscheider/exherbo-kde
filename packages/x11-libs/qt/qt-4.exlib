@@ -68,44 +68,44 @@ DEPENDENCIES="
         x11-proto/videoproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
-        media-libs/fontconfig[multibuild_c:*(?)?]
-        media-libs/freetype:2[multibuild_c:*(?)?]
-        media-libs/jpeg[multibuild_c:*(?)?]
-        media-libs/libmng[multibuild_c:*(?)?]
-        media-libs/libpng[multibuild_c:*(?)?]
-        media-libs/tiff[multibuild_c:*(?)?]
-        sys-libs/zlib[multibuild_c:*(?)?]
-        x11-libs/libSM[multibuild_c:*(?)?]
-        x11-libs/libX11[multibuild_c:*(?)?]
-        x11-libs/libXcursor[multibuild_c:*(?)?]
-        x11-libs/libXext[multibuild_c:*(?)?]
-        x11-libs/libXfixes[multibuild_c:*(?)?]
-        x11-libs/libXi[multibuild_c:*(?)?]
-        x11-libs/libXrandr[>=1.1][multibuild_c:*(?)?]
-        x11-libs/libXrender[>=0.6][multibuild_c:*(?)?]
-        x11-libs/libXv[multibuild_c:*(?)?]
+        media-libs/fontconfig[multibuild_c:*(-)?]
+        media-libs/freetype:2[multibuild_c:*(-)?]
+        media-libs/jpeg[multibuild_c:*(-)?]
+        media-libs/libmng[multibuild_c:*(-)?]
+        media-libs/libpng[multibuild_c:*(-)?]
+        media-libs/tiff[multibuild_c:*(-)?]
+        sys-libs/zlib[multibuild_c:*(-)?]
+        x11-libs/libSM[multibuild_c:*(-)?]
+        x11-libs/libX11[multibuild_c:*(-)?]
+        x11-libs/libXcursor[multibuild_c:*(-)?]
+        x11-libs/libXext[multibuild_c:*(-)?]
+        x11-libs/libXfixes[multibuild_c:*(-)?]
+        x11-libs/libXi[multibuild_c:*(-)?]
+        x11-libs/libXrandr[>=1.1][multibuild_c:*(-)?]
+        x11-libs/libXrender[>=0.6][multibuild_c:*(-)?]
+        x11-libs/libXv[multibuild_c:*(-)?]
 
-        cups? ( net-print/cups[multibuild_c:*(?)?] )
-        dbus? ( sys-apps/dbus[>=1.0.2][multibuild_c:*(?)?] )
-        glib? ( dev-libs/glib:2[multibuild_c:*(?)?] )
+        cups? ( net-print/cups[multibuild_c:*(-)?] )
+        dbus? ( sys-apps/dbus[>=1.0.2][multibuild_c:*(-)?] )
+        glib? ( dev-libs/glib:2[multibuild_c:*(-)?] )
         gstreamer? (
-            dev-libs/libxml2[multibuild_c:*(?)?]
-            media-libs/gstreamer[>=0.10][multibuild_c:*(?)?]
-            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:alsa][multibuild_c:*(?)?]
-            media-plugins/gst-plugins-good[>=0.10][multibuild_c:*(?)?]  [[ description = [ Needed for Phonon video functionality ] ]]
+            dev-libs/libxml2[multibuild_c:*(-)?]
+            media-libs/gstreamer[>=0.10][multibuild_c:*(-)?]
+            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:alsa][multibuild_c:*(-)?]
+            media-plugins/gst-plugins-good[>=0.10][multibuild_c:*(-)?]  [[ description = [ Needed for Phonon video functionality ] ]]
         )
         gtk? (
-            x11-libs/gtk+:2[>=2.10][multibuild_c:*(?)?]
-            dev-libs/atk[multibuild_c:*(?)?]
+            x11-libs/gtk+:2[>=2.10][multibuild_c:*(-)?]
+            dev-libs/atk[multibuild_c:*(-)?]
         )
-        multimedia? ( sys-sound/alsa-lib[multibuild_c:*(?)?] )
-        mysql? ( dev-db/mysql[multibuild_c:*(?)?] )
-        opengl? ( x11-dri/mesa[multibuild_c:*(?)?] )
-        postgresql? ( dev-db/postgresql[multibuild_c:*(?)?] )
-        pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(?)?] )
-        sqlite? ( dev-db/sqlite:3[multibuild_c:*(?)?] )
-        ssl? ( dev-libs/openssl[multibuild_c:*(?)?] )
-        xinerama? ( x11-libs/libXinerama[multibuild_c:*(?)?] )
+        multimedia? ( sys-sound/alsa-lib[multibuild_c:*(-)?] )
+        mysql? ( dev-db/mysql[multibuild_c:*(-)?] )
+        opengl? ( x11-dri/mesa[multibuild_c:*(-)?] )
+        postgresql? ( dev-db/postgresql[multibuild_c:*(-)?] )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
+        sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
+        ssl? ( dev-libs/openssl[multibuild_c:*(-)?] )
+        xinerama? ( x11-libs/libXinerama[multibuild_c:*(-)?] )
     post:
         phonon? (
             media-libs/phonon[>=4.3.80]
