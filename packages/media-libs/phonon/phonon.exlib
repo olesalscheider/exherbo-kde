@@ -21,14 +21,14 @@ HOMEPAGE="http://phonon.kde.org"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS=" doc
-pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
-zeitgeist [[ description = [ Enables multimedia applications to let Zeitgeist
-                           log playback activity ] ]]
-(
-    gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
-    vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
-) [[ number-selected = at-least-one ]]
+MYOPTIONS="doc
+    pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
+    zeitgeist  [[ description = [ Enables multimedia applications to let Zeitgeist log playback activity ] ]]
+
+    (
+        gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
+        vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
+    ) [[ number-selected = at-least-one ]]
 "
 
 DEPENDENCIES="
