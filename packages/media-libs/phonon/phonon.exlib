@@ -14,7 +14,7 @@ else
     DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.xz"
 fi
 
-require cmake
+require cmake [[ out_of_source=false ]] easy-multibuild
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -29,6 +29,8 @@ MYOPTIONS="doc
         gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
         vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
     ) [[ number-selected = at-least-one ]]
+
+    multibuild_c: 32 64
 "
 
 DEPENDENCIES="
@@ -38,11 +40,13 @@ DEPENDENCIES="
         kde/automoc4[>=0.9.86]
         doc? ( app-doc/doxygen )
     build+run:
-        x11-libs/qt:4[>=4.6.1][dbus][phonon]
+        x11-libs/qt:4[>=4.7.4-r1][dbus][multibuild_c:*(-)?][phonon] [[
+            note = [ Requires >=4.6.1 but 4.7.4-r1 added some multilib fixes that are needed when multibuild is enabled ]
+        ]]
         zeitgeist? ( dev-libs/libqzeitgeist[>=0.8] )
         pulseaudio? (
             dev-libs/glib:2
-            media-sound/pulseaudio[>=0.9.21]
+            media-sound/pulseaudio[>=0.9.21][multibuild_c:*(-)?]
         )
     post:
         gstreamer? ( media-libs/phonon-gstreamer )
@@ -58,4 +62,20 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DPHONON_BUILD_DESIGNER_PLUGIN:BOOL=TRUE
 )
+
+configure_one_multibuild() {
+    cmake_src_configure
+}
+
+compile_one_multibuild() {
+    cmake_src_compile
+}
+
+test_one_multibuild() {
+    cmake_src_test
+}
+
+install_one_multibuild() {
+    cmake_src_install
+}
 
