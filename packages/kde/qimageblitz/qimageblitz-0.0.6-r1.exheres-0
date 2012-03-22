@@ -14,7 +14,7 @@ SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     platform: amd64
-    amd64_cpu_features: 3dnow sse2
+    amd64_cpu_features: 3dnow
     ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2
     "
@@ -30,8 +30,8 @@ src_configure() {
         myconf+=(
             -DENABLE_MMX:BOOL=TRUE
             -DENABLE_SSE:BOOL=TRUE
+            -DENABLE_SSE2:BOOL=TRUE
             $(cmake_enable amd64_cpu_features:3dnow 3DNOW)
-            $(cmake_enable amd64_cpu_features:sse2 SSE2)
         )
     else
         myconf+=(
