@@ -21,11 +21,11 @@ DEPENDENCIES="
 "
 #   Tests require qjson, but are useless currently; see note below
 #   test:
-#       dev-libs/qjson[>=0.7.1]
+#       dev-libs/qjson[>=0.5]
 
 WORK=${WORKBASE}/lib${PNV}/
 
-# Tests both require X to run and are currently broken (2011-04-13)
+# Tests require X to run
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
