@@ -175,11 +175,19 @@ qconf4() {
             break
         fi
     done
-    option platform:amd64 && [[ "${MULTIBUILD_TARGET}" == "32" ]] && myarch=i386
+
+    if option platform:amd64 ; then
+        if [[ "${MULTIBUILD_TARGET}" == "32" ]] ; then
+            myarch=i386
+        elif option multibuild_c:32 ; then
+            myconf+=( -multilib-arch i386 )
+        fi
+    fi
+
     [[ -z ${myarch} ]] && die "Your platform is not supported by qt-4.exlib. Please file a bug."
 
     # paths
-    myconf=(
+    myconf+=(
         -arch ${myarch}
         -platform $(qt4_mkspecs_dir)
         -prefix /usr
