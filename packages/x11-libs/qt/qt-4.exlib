@@ -101,7 +101,7 @@ DEPENDENCIES="
         multimedia? ( sys-sound/alsa-lib[multibuild_c:*(-)?] )
         mysql? ( dev-db/mysql[multibuild_c:*(-)?] )
         opengl? ( x11-dri/mesa[multibuild_c:*(-)?] )
-        postgresql? ( dev-db/postgresql[multibuild_c:*(-)?] )
+        postgresql? ( dev-db/postgresql )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
         ssl? ( dev-libs/openssl[multibuild_c:*(-)?] )
