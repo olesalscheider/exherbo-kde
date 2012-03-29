@@ -107,10 +107,7 @@ DEPENDENCIES="
         ssl? ( dev-libs/openssl[multibuild_c:*(-)?] )
         xinerama? ( x11-libs/libXinerama[multibuild_c:*(-)?] )
     post:
-        phonon? (
-            media-libs/phonon[>=4.3.80]
-            gstreamer? ( media-libs/phonon[>=4.3.80][gstreamer] )
-        )
+        phonon? ( media-libs/phonon[>=4.3.80][gstreamer?][multibuild_c:*(-)?] )
 "
 
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
