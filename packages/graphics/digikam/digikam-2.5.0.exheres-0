@@ -1,0 +1,110 @@
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2012 Xavier Barrachina <xabarci@doctor.upv.es>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde
+
+SUMMARY="An advanced digital photo management application"
+HOMEPAGE="http://www.digikam.org/"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
+
+BUGS_TO="kde@exherbo.org"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="doc gphoto2 nepomuk
+kipi_plugins:
+    acquireimages      [[ description = [ A tool to acquire images using flat scanner. ] ]]
+    expoblending       [[ description = [ A tool to create pseudo HDR image with a stack of bracketed images. ] ]]
+    ipodexport         [[ description = [ A tool to export pictures to an Ipod device. ] ]]
+"
+
+RESTRICT="test"
+
+# TODO: create a clapack exheres in order to build without the internal copy.
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        app-crypt/qca:2
+        dev-db/mysql
+        dev-libs/boost
+        dev-libs/expat   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
+        dev-libs/glib:2
+        dev-libs/libxml2 [[ description = [ Htmlexport ] ]]
+        dev-libs/libxslt [[ description = [ Htmlexport ] ]]
+        dev-libs/qjson[>=0.7] [[ note = [ For libmediawiki ] ]]
+        kde/kdelibs:4[>=4.3]
+        kde/kdepimlibs:4 [[ note = [ addressbook support ] ]]
+        kde/libkdcraw
+        kde/libkexiv2
+        kde/libkipi
+        kde/marble[>=4.7] [[ note = [ For LibKGeoMap ] ]]
+        media-libs/jasper[>=1.7.0]
+        media-libs/jpeg
+        media-libs/lcms
+        media-libs/lensfun [[ description = [ To support LensCorrection editor ] ]]
+        media-libs/liblqr:1 [[ description = [ For Liquid Rescale tool ] ]]
+        media-libs/libpgf
+        media-libs/libpng[>=1.2.7]
+        media-libs/opencv[>=2.0.0] [[ note = [ For Libkface ] ]]
+        media-libs/tiff
+        x11-dri/mesa       [[ description = [ For Slideshow and ImageViewer ] ]]
+        x11-libs/libX11    [[ description = [ For Slideshow and ImageViewer ] ]]
+        x11-libs/libXrandr [[ description = [ For Slideshow and ImageViewer ] ]]
+        x11-libs/qt:4[opengl][sql][sqlite]
+        doc? ( app-doc/doxygen )
+        gphoto2? ( media-libs/libgphoto2[>=2.4.0] )
+        kipi_plugins:acquireimages? ( kde/libksane )
+        kipi_plugins:expoblending? ( sys-devel/gcc[openmp] )
+        kipi_plugins:ipodexport? (
+            media-libs/libgpod
+            x11-libs/gtk+:2
+        )
+        nepomuk? ( kde/kde-runtime[>=4.7] )
+    run:
+        media-gfx/enblend-enfuse[>=3.0]
+        media-gfx/hugin[>=0.8]
+        media-gfx/ImageMagick[>=5.5.4]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DENABLE_INTERNALMYSQL=no
+    -DWITH_KdepimLibs:BOOL=TRUE
+
+    # Liquid rescale image editor tool and lens correction tool, they're either on, or uses internal copies
+    -DWITH_GLIB2:BOOL=TRUE
+    -DWITH_LensFun:BOOL=TRUE
+    -DWITH_Lqr-1:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'doc Doxygen'
+    Gphoto2
+    'kipi_plugins:AcquireImages KSane'
+    'kipi_plugins:ipodexport Gdk'
+    'kipi_plugins:ipodexport GObject'
+    'kipi_plugins:ipodexport Ipod'
+    Nepomuk
+)
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-boost-1.48.patch
+    "${FILES}"/${PNV}-libkipi.patch
+)
+
+src_compile() {
+    cmake_src_compile
+    option doc && edo cmake_run emake doc
+}
+
+src_install() {
+    cmake_src_install
+    if option doc; then
+        insinto /usr/share/doc/${PNVR}
+        cmake_run doins -r api/html
+    fi
+}
+
