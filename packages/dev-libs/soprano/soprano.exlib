@@ -3,7 +3,7 @@
 # Based in part upon 'soprano-2.0.2.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require cmake [ out_of_source=false ]
+require cmake [ api=2 out_of_source=false ]
 
 SUMMARY="Soprano is a library which provides a nice Qt interface to RDF storage solutions."
 DESCRIPTION='
