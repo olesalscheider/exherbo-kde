@@ -3,7 +3,7 @@
 # Based in part upon 'kvirc-4.0_pre3154.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require cmake
+require cmake [ api=2 ]
 
 export_exlib_phases src_prepare src_install
 
@@ -99,7 +99,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
 )
 
 kvirc_src_prepare() {
-    edo sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" -i src/kvirc/ui/kvi_frame.cpp
+    edo sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" \
+            -i "${CMAKE_SOURCE}"/src/kvirc/ui/kvi_frame.cpp
 }
 
 kvirc_src_install() {
