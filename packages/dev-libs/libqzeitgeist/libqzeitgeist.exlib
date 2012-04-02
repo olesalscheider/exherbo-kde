@@ -5,7 +5,7 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/libqzeitgeist/0.8.0/src/libqzeitgeist-0.8.0.tar.bz2"
+    DOWNLOADS="mirror://kde/stable/libqzeitgeist/${PV}/src/${PNV}.tar.bz2"
 fi
 
 require cmake [ api=2 ]
@@ -19,7 +19,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        dev-lang/python
+        dev-lang/python:*
         dev-libs/zeitgeist
         kde/automoc4
     build+run:
