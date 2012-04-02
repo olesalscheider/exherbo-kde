@@ -6,7 +6,7 @@ if ever is_scm ; then
     require scm-git
 fi
 
-require cmake sourceforge
+require sourceforge cmake [ api=2 ]
 
 SUMMARY="A Qt-based library that maps JSON data to QVariant objects"
 DESCRIPTION="
@@ -25,7 +25,7 @@ DEPENDENCIES="
 "
 
 if ! ever is_scm ; then
-    WORK=${WORKBASE}/${PN}
+    CMAKE_SOURCE=${WORKBASE}/${PN}
 fi
 
 # FIXME No target to run tests, even when they're built
