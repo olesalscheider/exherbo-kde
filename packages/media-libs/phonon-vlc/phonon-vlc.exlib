@@ -1,7 +1,7 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 myexparam phonon_ver
 
@@ -26,5 +26,5 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
 
-WORK="${WORKBASE}"/${MY_PNV}
+CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
 
