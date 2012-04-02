@@ -8,7 +8,7 @@ else
     DOWNLOADS="mirror://kde/stable/libqzeitgeist/0.8.0/src/libqzeitgeist-0.8.0.tar.bz2"
 fi
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="A Qt interface to the Zeitgeist event tracking system"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/${PN}"
