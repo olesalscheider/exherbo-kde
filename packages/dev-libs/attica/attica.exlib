@@ -1,7 +1,7 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
 HOMEPAGE="http://www.kde.org/"
