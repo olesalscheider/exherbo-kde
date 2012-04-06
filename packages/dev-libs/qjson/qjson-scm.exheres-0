@@ -5,3 +5,8 @@ require qjson
 
 PLATFORMS="~amd64 ~x86"
 
+src_unpack() {
+    scm_src_unpack
+    cmake_src_unpack
+}
+
