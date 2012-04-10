@@ -56,6 +56,10 @@ DEPENDENCIES="
         x11-libs/libX11    [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libXrandr [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/qt:4[opengl][sql][sqlite]
+        !graphics/kipi-plugins [[
+            description = [ ${PNV} includes kipi-plugins ]
+            resolution = uninstall-blocked-after
+        ]]
         doc? ( app-doc/doxygen )
         gphoto2? ( media-libs/libgphoto2[>=2.4.0] )
         kipi_plugins:acquireimages? ( kde/libksane )
@@ -82,12 +86,12 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'doc Doxygen'
-    Gphoto2
-    'kipi_plugins:AcquireImages KSane'
+    'gphoto2 Gphoto2'
+    'kipi_plugins:acquireimages KSane'
     'kipi_plugins:ipodexport Gdk'
     'kipi_plugins:ipodexport GObject'
     'kipi_plugins:ipodexport Ipod'
-    Nepomuk
+    'nepomuk Nepomuk'
 )
 
 DEFAULT_SRC_PREPARE_PATCHES=(
@@ -97,6 +101,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 
 src_compile() {
     cmake_src_compile
+
     option doc && edo cmake_run emake doc
 }
 
