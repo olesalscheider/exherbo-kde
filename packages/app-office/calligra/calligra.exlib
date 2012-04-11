@@ -9,7 +9,7 @@ SUMMARY="Collection of office applications for the K Desktop Environment"
 DESCRIPTION="
 Office productivity:
 * Words: Word processor
-* Tables: Spreadsheet calculator
+* Sheets: Spreadsheet calculator
 * Stage: Presentation program
 Graphics:
 * Karbon: Vector graphics
@@ -23,10 +23,11 @@ Management:
 
 HOMEPAGE="http://www.calligra.org/"
 DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}news/${PN}-$(ever replace - ${PV})-released/"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MY_KDE_PARTS="active braindump flow karbon kexi krita mobile plan stage tables words"
+MY_KDE_PARTS="active braindump flow karbon kexi krita mobile plan sheets stage words"
 
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
@@ -41,7 +42,7 @@ MYOPTIONS+="
     pdf            [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
     postgresql     [[ description = [ Support for PostgreSQL databases in Kexi ] ]]
     raw            [[ description = [ Support for the RAW filter in Krita ] ]]
-    solver         [[ description = [ Solver plugin for Tables ] requires = [ kde_parts: tables ] ]]
+    solver         [[ description = [ Solver plugin for Sheets ] requires = [ kde_parts: sheets ] ]]
     spacenavigator [[ description = [ Space navigator 3D mouse device plugin ] ]]
     tiff           [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
     wordperfect    [[ description = [ WordPerfect Document support for Words and Graphics support for Karbon ] ]]
@@ -57,8 +58,6 @@ MYOPTIONS+="
     wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
 "
 
-# TODO:
-#   - Kexi Web Forms: Require pionet and google ctemplate
 DEPENDENCIES+="
     build+run:
         dev-libs/attica [[ note = [ Can be made optional, but it's small and useful and does not pull in additional dependencies ] ]]
@@ -68,7 +67,7 @@ DEPENDENCIES+="
         dev-libs/libxslt [[ note = [ Required by the xsltfilter ] ]]
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
         kde/kdelibs:4[>=4.3.0]
-        kde/kdepimlibs:4[>=4.3.0] [[ note = [ Required by plan and KDE address book integration ] ]]
+        kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
         media-libs/lcms[>=1.18] [[ note = [ Required for color management and Krita ] ]]
@@ -87,6 +86,10 @@ DEPENDENCIES+="
         x11-libs/libXpm
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
+        kde_parts:active? (
+            kde/kdelibs:4[>=4.8.0]
+            x11-libs/qt:4[>=4.7.0]
+        )
         kde_parts:braindump? (
             x11-libs/qt:4[webkit] [[ note = [ The webshape plugin makes use of this, dep is automagic ] ]]
             )
@@ -103,7 +106,7 @@ DEPENDENCIES+="
         )
         kde_parts:kexi? (
             dev-libs/icu
-            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.9 is recommended ] ]]
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.10 is recommended ] ]]
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
@@ -137,7 +140,7 @@ DEPENDENCIES+="
                 kde/kdegraphics:4[>=4.3.0][kde_parts:okular]
             ) [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
-        kde_parts:tables? (
+        kde_parts:sheets? (
             sci-libs/eigen:2[>=2.0]
             solver? ( sci-libs/gsl[>=1.7] )
         )
@@ -154,7 +157,7 @@ DEPENDENCIES+="
             media-libs/openexr
             media-libs/ilmbase
             )
-        pdf? ( app-text/poppler[>=0.6][qt4] [[ note = [ Karbon-import and Krita PDF filter ] ]] )
+        pdf? ( app-text/poppler[>=0.12.1][qt4] [[ note = [ Karbon-import and Krita PDF filter ] ]] )
         spacenavigator? ( sci-libs/libspnav )
         !kde/koffice [[
             description = [ Install the same files ]
@@ -162,7 +165,7 @@ DEPENDENCIES+="
         ]]
 "
 
-# Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.2.1
+# Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.4.1
 RESTRICT="test"
 
 # FIXME: Is the apidox custom target useful now?
@@ -172,22 +175,15 @@ src_configure() {
         $(kde4_shared_cmake_params)
         -DTINY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
-        -DWITH_CreateResources:BOOL=FALSE # Recommended at runtime for KOffice for optional extra resources. Package unwritten
-        -DWITH_DCMTK:BOOL=FALSE # filters/words/ in koffice 2.3 (trunk), http://dicom.offis.de/dcmtk.php.en, Required for processing DICOM structured reports, Package unwritten 
         -DWITH_LCMS2:BOOL=FALSE # krita in koffice 2.3 has support for lcms:2, but we don't have that and it still supports lcms:1
-        -DWITH_WEBFORMS:BOOL=FALSE # webforms support for kexi, requires:
-        # PionNet "Pion Network Library" "C++ development library for implementing lightweight HTTP interfaces" "http://www.pion.org/projects/pion-network-library"
-        # GOOGLE_CTEMPLATE_FOUND "Google Ctemplate" "Simple but powerful template language for C++" "http://code.google.com/p/google-ctemplate/"
-        # pionnet and google ctemplate unwritten
         -DWITH_FreeTDS:BOOL=FALSE # kexi/migration/, http://www.freetds.org/, support for Sybase db. Package unwritten.
         -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db. Package unwritten.
-        -DWITH_LibRCPS:BOOL=FALSE # "Resource Constrained Project Scheduling Library" "http://www.librcps.org" >=0.3 "Required by Plan RCPS Plugin". Package unwritten.
         -DWITH_KdepimLibs=ON
         -DWITH_LibXml2=ON
         -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
-        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.12]. Package unwritten.
+        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
         -DWITH_{Open,Qt}Shiva:BOOL=OFF # krita/plugins/extensions/. Packages unwritten.
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
@@ -196,7 +192,6 @@ src_configure() {
         $(cmake_with eps Pstoedit)
         $(cmake_with fftw FFTW3)
         $(cmake_with GLEW)
-        $(cmake_with kde_parts:krita Blitz)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:mobile OpenSSL)
         $(cmake_with kde_parts:stage Okular)
@@ -211,7 +206,7 @@ src_configure() {
         $(cmake_with TIFF)
     )
 
-    if option kde_parts:krita || option kde_parts:tables; then
+    if option kde_parts:krita || option kde_parts:sheets; then
         cmakeparams+=( -DWITH_Eigen2=ON )
     else
         cmakeparams+=( -DWITH_Eigen2=OFF )
