@@ -18,15 +18,21 @@ DEPENDENCIES="
         sys-devel/gdb[python] [[ description = [ For debugging with Qt Creator ] ]]
 "
 
-UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)/index.html"
-UPSTREAM_CHANGELOG="http://qt.gitorious.org/qt-creator/qt-creator/blobs/master/dist/changes-\
-$(ever range 1-3 ${PV})"
+if ever at_least scm ; then
+    UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-snapshot/index.html"
+    UPSTREAM_CHANGELOG=""
+else
+    UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-$(ever range 1-2)/index.html"
+    UPSTREAM_CHANGELOG="http://qt.gitorious.org/${PN}/${PN}/blobs/master/dist/changes-$(ever range 1-3 ${PV})"
+fi
 
 BUGS_TO="kimrhh@exherbo.org"
 
 EQMAKE4_SOURCES="qtcreator.pro"
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}/usr/" )
-WORK="${WORK}-src/"
+if ! ever is_scm ; then
+    WORK="${WORK}-src/"
+fi
 QMAKE4_SRC_CONFIGURE_PARAMS=( IDE_LIBRARY_BASENAME=${LIBDIR} SUPPORT_QT_S60=1 SUPPORT_QT_QML=1 )
 
 src_compile() {
