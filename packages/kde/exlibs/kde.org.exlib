@@ -17,7 +17,11 @@
 # Canonical KDE packages go in packages/kde/${PN}
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
-require kde
+if [[ ${CATEGORY} == kde ]] && ever at_least 4.8.2; then
+    require kde [ api=2 ]
+else
+    require kde
+fi
 
 export_exlib_phases src_install
 
