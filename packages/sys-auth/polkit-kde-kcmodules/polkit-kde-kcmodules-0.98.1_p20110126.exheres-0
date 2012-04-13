@@ -5,6 +5,6 @@ require polkit-kde-kcmodules
 
 PLATFORMS="~amd64 ~x86"
 
-WORK=${WORKBASE}
+CMAKE_SOURCE=${WORKBASE}
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-r9814f614.patch )
