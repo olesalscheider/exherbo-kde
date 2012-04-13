@@ -36,7 +36,6 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/gmp
         dev-libs/libxml2:2.0
-        finance/libalkimia[>=4.3.2]
         gnome-bindings/glibmm:2.4
         kde/kdelibs:4[>=4.3.5]
         kde/kdepimlibs:4
