@@ -33,6 +33,7 @@ MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
+    freetds        [[ description = [ Support for MS SQL and Sybase databases in Kexi ] ]]
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
@@ -108,6 +109,7 @@ DEPENDENCIES+="
             dev-libs/icu
             dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.10 is recommended ] ]]
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
+            freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
             postgresql? (
@@ -176,7 +178,6 @@ src_configure() {
         -DTINY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DWITH_LCMS2:BOOL=FALSE # krita in koffice 2.3 has support for lcms:2, but we don't have that and it still supports lcms:1
-        -DWITH_FreeTDS:BOOL=FALSE # kexi/migration/, http://www.freetds.org/, support for Sybase db. Package unwritten.
         -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db. Package unwritten.
         -DWITH_KdepimLibs=ON
         -DWITH_LibXml2=ON
@@ -191,6 +192,7 @@ src_configure() {
         $(cmake_with encrypted QCA2)
         $(cmake_with eps Pstoedit)
         $(cmake_with fftw FFTW3)
+        $(cmake_with FreeTDS)
         $(cmake_with GLEW)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:mobile OpenSSL)
