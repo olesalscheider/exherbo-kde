@@ -1,8 +1,6 @@
 # Copyright 2010 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
-
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
 
@@ -13,6 +11,8 @@ else
     DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
     WORK=${WORKBASE}/${MY_PNV}
 fi
+
+require kde [ api=2 ]
 
 SUMMARY="KDE daemon providing a Polkit-1 based authentication UI"
 HOMEPAGE="http://projects.kde.org/projects/extragear/base/${MY_PN}"
