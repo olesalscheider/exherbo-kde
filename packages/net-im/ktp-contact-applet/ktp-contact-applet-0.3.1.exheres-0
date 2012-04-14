@@ -12,7 +12,3 @@ MYOPTIONS=""
 
 BUGS_TO="mixi@exherbo.org"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-fix-pofiles-build-issue.patch
-)
-
