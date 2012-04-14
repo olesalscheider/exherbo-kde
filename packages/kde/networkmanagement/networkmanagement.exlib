@@ -30,7 +30,7 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.6.0-rc1]
         openconnect? (
             dev-libs/openssl
-            net-apps/openconnect
+            net-apps/openconnect[>=3.03]
         )
 "
 

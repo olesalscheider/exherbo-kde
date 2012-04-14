@@ -1,0 +1,32 @@
+# Copyright 2012 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="SMOKE bindings for libraries created by the KDE community"
+
+LICENCES="GPL-2 LGPL-2.1"
+
+MYOPTIONS="okular [[ description = [ SMOKE bindings for Okular ] ]]"
+DEPENDENCIES="
+    build+run:
+        dev-libs/attica
+        dev-libs/soprano
+        kde/kate:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
+        kde/smokegen:${SLOT}[>=${PV}]
+        kde/smokeqt:${SLOT}[>=${PV}]
+        server-pim/akonadi
+        x11-libs/qt:4[dbus]
+        okular? ( kde/okular:${SLOT}[>=${PV}] )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Akonadi:BOOL=True
+    -DWITH_LibAttica:BOOL=True
+    -DWITH_{Nepomuk,Soprano}:BOOL=True
+    -DWITH_KdepimLibs:BOOL=True
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Okular )
+

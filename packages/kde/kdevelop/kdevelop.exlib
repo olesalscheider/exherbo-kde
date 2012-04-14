@@ -27,7 +27,12 @@ DEPENDENCIES="
         kde/kdevplatform:${SLOT}[>=${PLATFORM_PV}]
         kde/kdelibs:${SLOT}[>=4.5.0]
         || (
-            kde/kde-workspace:${SLOT}
+            (
+                kde/kde-workspace:${SLOT}
+                kde/kate:${SLOT} [[
+                    note = [ kate should be a run dependency but we can't express that in this nested block ]
+                ]]
+            )
             kde/kdebase-workspace:${SLOT}[>=4.2.0]
         )
         x11-libs/qt:4[>=4.5.2][webkit]

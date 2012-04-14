@@ -1,0 +1,45 @@
+# Copyright 2009, 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="A high-level binding for Telepathy, similar to telepathy-glib but for Qt 4"
+HOMEPAGE="http://telepathy.freedesktop.org/"
+DOWNLOADS="${HOMEPAGE}/releases/${PN}/${PNV}.tar.gz"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        app-doc/doxygen
+        dev-util/pkg-config[>=0.21]
+        dev-lang/python:*[>=2.5.0]
+    build+run:
+        dev-libs/glib:2
+        dev-libs/libxml2[>=2.7.7-r1]
+        x11-libs/qt:4[>=4.6.0][dbus][X(+)]
+        media-libs/gstreamer[>=0.10.30]
+        net-im/telepathy-farsight[>=0.0.15]
+        sys-apps/dbus
+   test:
+       (
+            dev-python/dbus-python[>=0.83.1]
+            net-im/telepathy-glib[>=0.17.2]
+            x11-libs/qt:4[glib]
+       ) [[ note = [ Run more tests ] ]]
+"
+
+# to build an audio/video calling example
+# telepathy-farsight >= 0.0.4 gstreamer-0.10 gstreamer-interfaces-0.10
+
+BUGS_TO="kde@exherbo.org"
+
+src_test() {
+    esandbox allow_net "unix-abstract:///tmp/dbus-*"
+    default
+    esandbox disallow_net "unix-abstract:///tmp/dbus-*"
+}
+

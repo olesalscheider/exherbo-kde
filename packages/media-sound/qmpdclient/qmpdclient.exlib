@@ -2,7 +2,7 @@
 # Copyright 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 export_exlib_phases src_install
 
@@ -30,6 +30,6 @@ qmpdclient_src_install() {
     cmake_src_install
 
     insinto /usr/share/QMPDClient/iconsets
-    doins -r "${WORK}"/icons/oxygen
+    doins -r "${CMAKE_SOURCE}"/icons/oxygen
 }
 

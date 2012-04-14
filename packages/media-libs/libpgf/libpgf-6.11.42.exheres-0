@@ -1,0 +1,26 @@
+# Copyright 2012 Xavier Barrachina <xabarci@doctor.upv.es>
+# Distributed under the terms of the GNU General Public License v2
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ] sourceforge [ pnv=${PNV}-src suffix=zip project=${PN} ]
+
+SUMMARY="Library for PGF image format"
+DESCRIPTION="Based on discrete, fast wavelet transform with progressive coding features. Supports lossless and lossy compression."
+HOMEPAGE="http://www.libpgf.org/"
+
+LICENCES="LGPL"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen[dot] )
+"
+
+WORK=${WORKBASE}/${PN}
+
+
+default_src_prepare() {
+    edo sed -e "s:test \$DOXYGEN && \$DOT:$(option doc && echo true || echo false):" \
+            -i configure.ac
+}

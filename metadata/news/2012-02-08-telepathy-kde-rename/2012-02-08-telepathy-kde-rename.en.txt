@@ -1,0 +1,37 @@
+Title: telepathy-kde-* has been renamed to ktp-*
+Author: Johannes Nixdorf <mixi@exherbo.org>
+Content-Type: text/plain
+Posted: 2012-02-08
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: net-im/telepathy-kde-accounts-kcm
+Display-If-Installed: net-im/telepathy-kde-approver
+Display-If-Installed: net-im/telepathy-kde-auth-handler
+Display-If-Installed: net-im/telepathy-kde-contact-applet
+Display-If-Installed: net-im/telepathy-kde-contact-list
+Display-If-Installed: net-im/telepathy-kde-filetransfer-handler
+Display-If-Installed: net-im/telepathy-kde-integration-module
+Display-If-Installed: net-im/telepathy-kde-presence-applet
+Display-If-Installed: net-im/telepathy-kde-presence-dataengine
+Display-If-Installed: net-im/telepathy-kde-send-file
+Display-If-Installed: net-im/telepathy-kde-text-ui
+
+Upstream has renamed telepathy-kde to ktp, so we are following their naming
+scheme.
+
+Please uninstall telepathy-kde-* and afterwards install ktp-* following this
+list of replaced packages:
+
+    * net-im/telepathy-kde-accounts-kcm -> net-im/ktp-accounts-kcm
+    * net-im/telepathy-kde-approver -> net-im/ktp-approver
+    * net-im/telepathy-kde-auth-handler -> net-im/ktp-auth-handler
+    * net-im/telepathy-kde-contact-applet -> net-im/ktp-contact-applet
+    * net-im/telepathy-kde-contact-list -> net-im/ktp-contact-list
+    * net-im/telepathy-kde-filetransfer-handler ->
+          net-im/ktp-filetransfer-handler
+    * net-im/telepathy-kde-presence-applet -> net-im/ktp-presence-applet
+    * net-im/telepathy-kde-send-file -> net-im/ktp-send-file
+    * net-im/telepathy-kde-text-ui -> net-im/ktp-text-ui
+
+After removing the old packages nothing should depend upon
+net-im/telepathy-kde-presence-dataengine and it is safe to remove it.

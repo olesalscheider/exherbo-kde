@@ -116,7 +116,12 @@ DEPENDENCIES="
         x11-apps/xset
         wicd? ( net-misc/wicd )
     post:
-        python? ( kde/kdebindings:4[python] )
+        python? (
+            || (
+                kde/pykde4:4
+                kde/kdebindings:4[python]
+            )
+        )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )

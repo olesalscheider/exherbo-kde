@@ -20,8 +20,8 @@ DEPENDENCIES="
         media-libs/libdiscid
         media-libs/taglib
     suggestion:
-        media-libs/flac          [[ note = [ Encode flac files ] ]]
-        media-sound/lame         [[ note = [ Encode mp3 files ] ]]
-        media-sound/vorbis-tools [[ note = [ Encode ogg vorbis files ] ]]
+        media-libs/flac          [[ description = [ Encode flac files ] ]]
+        media-sound/lame         [[ description = [ Encode mp3 files ] ]]
+        media-sound/vorbis-tools [[ description = [ Encode ogg vorbis files ] ]]
 "
 

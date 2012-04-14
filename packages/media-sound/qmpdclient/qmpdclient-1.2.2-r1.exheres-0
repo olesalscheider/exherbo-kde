@@ -5,5 +5,5 @@ require qmpdclient
 
 PLATFORMS="~amd64 ~x86"
 
-WORK=${WORKBASE}/${PN}
+CMAKE_SOURCE=${WORKBASE}/${PN}
 

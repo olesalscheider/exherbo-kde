@@ -1,0 +1,32 @@
+# Copyright 2012 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Ruby bindings for KDE"
+
+LICENCES="GPL-2 LGPL-2.1"
+
+MYOPTIONS="okular [[ description = [ Ruby bindings for Okular ] ]]"
+DEPENDENCIES="
+    build+run:
+        dev-lang/ruby:=
+        dev-libs/soprano
+        kde/kate:4[>=${PV}]
+        kde/kdelibs:4[>=${PV}]
+        kde/kdepimlibs:4[>=${PV}]
+        kde/qtruby:4[>=${PV}]
+        kde/smokegen:4[>=${PV}]
+        kde/smokekde:4[>=${PV}][okular?]
+        server-pim/akonadi
+        x11-libs/qt:4[dbus]
+        okular? ( kde/okular:4[>=${PV}] )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_Akonadi:BOOL=True
+    -DWITH_Kdepimlibs:BOOL=True
+    -DWITH_{Nepomuk,Soprano}:BOOL=True
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Okular )
+

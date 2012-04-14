@@ -1,7 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@user-helfen-usern.de>
 # Distributed unter the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 myexparam phonon_ver
 
@@ -10,29 +10,28 @@ MY_PN=phonon-backend-gstreamer
 SUMMARY="A GStreamer-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 if ! ever is_scm ; then
-    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PN}-${PV}.tar.bz2"
-    WORK="${WORKBASE}/${MY_PN}-${PV}"
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PN}-${PV}.tar.xz"
+    CMAKE_SOURCE="${WORKBASE}/${MY_PN}-${PV}"
+    DEPENDENCIES="
+        build:
+            app-arch/xz
+    "
 fi
 
 LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS=""
 
-DEPENDENCIES="
+DEPENDENCIES+="
     build+run:
         dev-libs/glib:2
         dev-libs/libxml2:2.0
         media-libs/gstreamer:0.10
         media-libs/phonon[>=$(exparam phonon_ver)]
         media-plugins/gst-plugins-base:0.10
-        sys-sound/alsa-lib
         x11-dri/mesa
         x11-libs/qt:4[opengl]
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
-
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DWITH_Alsa:BOOL=TRUE
-)
 

@@ -40,7 +40,10 @@ DEPENDENCIES+="
             dev-db/sqlite:3
             dev-lang/python:=[>=2.6&<3.0]
             dev-python/PyQt4
-            kde/kdebindings:${SLOT}[>=${PV}]
+            || (
+                kde/pykde4:${SLOT}[>=${PV}]
+                kde/kdebindings:${SLOT}[>=${PV}]
+            )
             net-twisted/TwistedCore
         )
         kde_parts:kigo? (

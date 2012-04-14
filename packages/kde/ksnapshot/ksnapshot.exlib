@@ -16,7 +16,7 @@ DEPENDENCIES="
         x11-libs/libX11
         x11-libs/libXfixes [[ note = [ Support for capturing the cursor ] ]]
         x11-libs/libXext [[ note = [ searches for include/X11/shape.h; automagic ] ]]
-        kipi? ( graphics/kipi-plugins )
+        kipi? ( graphics/digikam[>=2.5.0] )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )

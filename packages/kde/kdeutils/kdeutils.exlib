@@ -51,7 +51,10 @@ DEPENDENCIES+="
             dev-python/pycups
             dev-python/PyQt4[dbus]
             dev-python/sip
-            kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE4 ]]
+            || (
+                kde/pykde4:${SLOT}[>=${PV}]
+                kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE4 ]]
+            )
         )
         kde_parts:superkaramba? (
             kde/qimageblitz

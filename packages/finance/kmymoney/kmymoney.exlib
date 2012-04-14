@@ -1,0 +1,71 @@
+# Copyright 2009 Ingmar Vanhassel
+# Copyright 2012 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde sourceforge [ project=kmymoney2 ]
+
+SUMMARY="Personal finance manager for KDE"
+DESCRIPTION="
+KMyMoney is the personal finance manager for KDE. It operates in a manner similar to MS Money and
+Quicken and supports different account types, categorisation of expenses, QIF import/export,
+multiple currencies, and online banking.
+"
+HOMEPAGE+=" http://kmymoney2.sf.net/"
+if ever is_scm; then
+    DOWNLOADS=""
+fi
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="
+    calendar [[ description = [ allows you to export scheduled transactions to an iCal file ] ]]
+    kbanking [[ description = [ enables online banking over HBCI ] ]]
+    ofx
+"
+
+# Tries to connect to a running X server
+RESTRICT="test"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        app-crypt/gpgme
+        dev-cpp/libxml++:2.6
+        dev-libs/boost[>=1.33.1]
+        dev-libs/glib:2
+        dev-libs/gmp
+        dev-libs/libxml2:2.0
+        gnome-bindings/glibmm:2.4
+        kde/kdelibs:4[>=4.3.5]
+        kde/kdepimlibs:4
+        x11-misc/shared-mime-info
+        x11-libs/qt:4[dbus]
+        calendar? ( office-libs/libical[>=0.33] )
+        kbanking? (
+            dev-libs/aqbanking[>=5.0.0]
+            sys-libs/gwenhywfar[qt4][>=4.0.0]
+        )
+        ofx? ( finance/libofx[>=0.9.4] )
+"
+
+if ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            finance/libalkimia[>=4.3.2]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            finance/libalkimia[>=4.3.1]
+    "
+fi
+
+BUGS_TO="kde@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
+    'calendar LIBICAL'
+    'kbanking KBANKING'
+    'ofx LIBOFX'
+)
+
