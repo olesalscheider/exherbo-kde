@@ -22,6 +22,13 @@ DEPENDENCIES="
         x11-libs/libXrender
 "
 
+if ever at_least 4.7.80; then
+    DEPENDENCIES="
+        build+run:
+            kde/kde-baseapps:${SLOT}[>=4.7.0]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_XKB=ON
 )
