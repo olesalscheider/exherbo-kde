@@ -52,20 +52,6 @@ fi
 
 if ever at_least 4.8.2; then
     KDE_DOWNLOADS_SUFFIX=xz
-
-    export_exlib_phases src_unpack
-
-    kde.org_src_unpack() {
-        local f
-        for f in ${ARCHIVES}; do
-            if [[ ${f} == *.tar.xz ]]; then
-                edo tar xJf "${FETCHEDDIR}/${f}" --no-same-owner
-            else
-                unpack "${f}"
-            fi
-        done
-        edo mkdir -p "${WORK}"
-    }
 else
     KDE_DOWNLOADS_SUFFIX=bz2
 fi
