@@ -93,12 +93,13 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least 4.8.0; then
+if ever at_least 4.8.2; then
     DEPENDENCIES+="
         build+run:
-            app-crypt/qca:2
-            kde/kdelibs:${SLOT}[>=4.8.0]
+            app-crypt/qca:2[>=2.0.0]
+            kde/kdelibs:${SLOT}[>=4.8.2]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QCA2:BOOL=TRUE )
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -106,7 +107,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk:BOOL=TRUE
     -DWITH_SharedDesktopOntologies:BOOL=TRUE
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
-    -DWITH_QZeitgeist:BOOL=FALSE # it doesn't work with libqzeitgeist 0.8.0 and is removed on master
+    -DWITH_QZeitgeist:BOOL=FALSE # it doesn't work with libqzeitgeist 0.8.0 and is removed on master and in KDE >= 4.8.2
     -DWITH_Xine:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
