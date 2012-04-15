@@ -23,7 +23,6 @@ DEPENDENCIES="
     build+run:
         app-text/libspectre
         kde/kdelibs:${SLOT}[>=4.7.0]
-        analitza? ( kde/kalgebra )
         qalculate? ( sci-libs/libqalculate )
         R? ( sci-lang/R )
     suggestion:
@@ -31,6 +30,18 @@ DEPENDENCIES="
         sci-apps/octave
         sci-apps/sage
 "
+
+if ever at_least 4.8.2; then
+    DEPENDENCIES="
+        build+run:
+            analitza? ( kde/analitza )
+    "
+else
+    DEPENDENCIES="
+        build+run:
+            analitza? ( kde/kalgebra )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Analitza Qalculate 'R R' )
