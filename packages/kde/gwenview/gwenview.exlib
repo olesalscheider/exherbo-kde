@@ -16,10 +16,10 @@ DEPENDENCIES="
         dev-libs/soprano
         graphics/exiv2[>=0.19]
         kde/kde-baseapps:4[>=${PV}] [[ note = [ libkonq is required ] ]]
-        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
         media-libs/jpeg
         media-libs/phonon
-        kipi? ( graphics/kipi-plugins )
+        kipi? ( graphics/digikam )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
