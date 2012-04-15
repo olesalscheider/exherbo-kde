@@ -1,14 +1,18 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+if ever at_least 4.8.2; then
+    KDEMODULE=kdegraphics-${PN}
+    WORK=${WORKBASE}/kdegraphics-${PNV}
+fi
 require kde.org
 
 SUMMARY="A collection of plugins to handle mobipocket files"
 
 LICENCES="GPL-2"
+MY_KDE_PARTS="okular"
 MYOPTIONS="
-    kde_parts:
-        okular
+    kde_parts: ${MY_KDE_PARTS}
 "
 
 DEPENDENCIES="
