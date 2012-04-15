@@ -56,7 +56,7 @@ DEPENDENCIES+="
         kde_parts:gwenview? (
             dev-libs/soprano
             graphics/exiv2[>=0.17] [[ note = [ strictly speaking only 0.13 is required, but 0.17 is recommended by upstream ] ]]
-            kipi? ( graphics/kipi-plugins )
+            kipi? ( graphics/digikam )
         )
         kde_parts:kamera? ( media-libs/libgphoto2 )
         kde_parts:kgamma? (
@@ -75,7 +75,7 @@ DEPENDENCIES+="
         kde_parts:ksnapshot? (
             x11-libs/libX11
             x11-libs/libXfixes
-            kipi? ( graphics/kipi-plugins )
+            kipi? ( graphics/digikam )
         )
         kde_parts:okular? (
             kde/qimageblitz
