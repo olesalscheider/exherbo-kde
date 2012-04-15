@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="Pick colours from your screen"
 
-LICENCES="as-is"
+LICENCES="MIT"
 MYOPTIONS=""
 
 DEPENDENCIES="
