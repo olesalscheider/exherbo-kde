@@ -5,6 +5,8 @@
 
 require kde.org
 
+export_exlib_phases src_prepare
+
 SUMMARY="A handy utility primarily designed for taking screenshots "
 
 LICENCES="FDL-1.2 GPL-2 LGPL-2"
@@ -20,4 +22,9 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
+
+ksnapshot_src_prepare() {
+    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    default
+}
 
