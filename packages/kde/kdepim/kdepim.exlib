@@ -113,12 +113,14 @@ else
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_IndicateQt=OFF )
 fi
 
-if ever at_least 4.8.0; then
+if ever at_least 4.8.2; then
+    MYOPTIONS="barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
+        ${MYOPTIONS}"
     DEPENDENCIES+="
         build+run:
-            kde/kdepimlibs:${SLOT}[>=4.7.80]
+            kde/kdepimlibs:${SLOT}[>=4.8.2]
+            barcodes? ( kde/prison )
     "
-    # Currently not available
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Prison=OFF )
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
 fi
 
