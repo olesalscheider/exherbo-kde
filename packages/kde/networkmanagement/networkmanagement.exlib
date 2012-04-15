@@ -22,6 +22,8 @@ MYOPTIONS="
 RESTRICT="test"
 
 DEPENDENCIES="
+    build:
+        dev-util/pkg-config
     build+run:
         dev-libs/glib:2
         kde/kdeutils:4[kde_parts:kwallet]

@@ -3,7 +3,7 @@
 
 require telepathy-kde [ kde_ver_min="4.6.0" ]
 
-SUMMARY="The telepathy-kde contact plasmoid"
+SUMMARY="Plasma applet for managing your Telepathy account presence"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -11,8 +11,4 @@ PLATFORMS="~amd64"
 MYOPTIONS=""
 
 BUGS_TO="mixi@exherbo.org"
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-fix-pofiles-build-issue.patch
-)
 
