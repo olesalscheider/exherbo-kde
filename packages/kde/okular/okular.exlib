@@ -36,6 +36,9 @@ DEPENDENCIES="
         tiff? ( media-libs/tiff )
 "
 
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DWITH_QImageBlitz:BOOL=TRUE
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'CHM'
     'djvu DjVuLibre'
