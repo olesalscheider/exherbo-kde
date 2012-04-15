@@ -1,0 +1,19 @@
+# Copyright 2012 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Library for adding mathematical features to your program"
+
+LICENCES="GPL-2 LGPL-2 BSD-3 [[ note = [ cmake scripts ] ]]"
+MYOPTIONS="
+    console-interface [[ description = [ Provide a console interface for kalgebra ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        console-interface? ( sys-libs/readline )
+"
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'console-interface Readline' )
+
