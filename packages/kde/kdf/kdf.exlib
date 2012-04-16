@@ -7,6 +7,12 @@ require kde.org
 
 SUMMARY="KDiskFree displays the available free disk space"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+KDiskFree displays the available file devices (hard drive partitions, floppy
+and CD/DVD drives, etc.) along with information on their capacity, free space,
+type and mount point. It also allows you to mount and unmount drives and view
+them in a file manager.
+"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
