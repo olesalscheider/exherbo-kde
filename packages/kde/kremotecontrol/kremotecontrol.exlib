@@ -7,16 +7,20 @@ require kde.org
 
 SUMMARY="KDE frontend for remote controls"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+KRemoteControl (formerly known as KDELirc) is a KDE frontend for your remote
+controls. It allows to configure actions for button presses on remotes. All
+types of remotes supported by the Solid module in the KDE platform are also
+supported by KRemoteControl (e.g. with the Linux Infrared Remote Control
+system (LIRC) as backend).
+"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kde-workspace:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=4.7.0]
-        x11-libs/libX11
-        x11-libs/qt [[ note = [ needs QtXmlPatterns ] ]]
     run:
         app-misc/lirc
 "
