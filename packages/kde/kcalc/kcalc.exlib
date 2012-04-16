@@ -7,6 +7,10 @@ require kde.org
 
 SUMMARY="KDE scientific calculator"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+KCalc is a calculator which offers many more mathematical functions than meet
+the eye on a first glance.
+"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
