@@ -7,6 +7,11 @@ require kde.org
 
 SUMMARY="Graphical interface for GnuPG"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+With KGpg you will be able to encrypt and decrypt your files and emails,
+allowing much more secure communications. A mini howto on encryption with gpg
+is available on gnupg's web site.
+"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
