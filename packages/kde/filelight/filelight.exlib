@@ -7,6 +7,12 @@ require kde.org
 
 SUMMARY="Tool to analyze disk usage graphically"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+Filelight allows you to quickly understand exactly where your diskspace is
+being used by graphically representing your file system as a set of concentric
+segmented-rings. You can use it to locate hotspots of disk usage and then
+manipulate those areas using a file manager.
+"
 
 LICENCES="GPL-3"
 MYOPTIONS=""
