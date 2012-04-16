@@ -6,6 +6,15 @@
 require kde.org
 
 SUMMARY="Ark is KDE's file archiver"
+DESCRIPTION="
+Ark is a program for managing various archive formats within the KDE
+environment. Archives can be viewed, extracted, created and modified
+from within Ark. The program can handle various formats such as tar,
+gzip, bzip2, zip, rar and lha (if appropriate command-line programs
+are installed). Ark can work closely with Konqueror in the KDE
+environment to handle archives, if you install the Konqueror
+Integration plugin available in the kdeaddons package.
+"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
 
 LICENCES="GPL-2"
@@ -13,7 +22,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        app-arch/libarchive[>=2.7.0]
+        app-arch/libarchive[>=2.8.0]
         app-arch/xz
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
@@ -28,19 +37,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibKonq:BOOL=TRUE
     -DWITH_LibLZMA:BOOL=TRUE
     -DWITH_ZLIB:BOOL=TRUE
+    -DWITH_QJSON:BOOL=FALSE
 )
-
-if ever at_least 4.7.41; then
-    DEPENDENCIES+="
-        build+test:
-            dev-libs/qjson[>=scm] [[ note = [ This is a test dep but the tests get built during the compile phase ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_qjson:BOOL=TRUE )
-else
-    DEPENDENCIES+="
-        build+test:
-            dev-libs/qjson[<0.7.2] [[ note = [ This is a test dep but the tests get built during the compile phase ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QJSON:BOOL=TRUE )
-fi
 
