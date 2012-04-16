@@ -7,6 +7,10 @@ require kde.org
 
 SUMMARY="Select special characters from any fonts and put them into the clipboard"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
+DESCRIPTION="
+KCharSelect is a tool to select special characters from all installed fonts and
+copy them into the clipboard.
+"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
