@@ -47,7 +47,7 @@ DEPENDENCIES+="
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
         kde_parts:dragonplayer? ( media-libs/phonon[>=4.3.0] )
-        kde_parts:ffmpegthumbs? ( media/ffmpeg )
+        kde_parts:ffmpegthumbs? ( media/ffmpeg [[ note = [ probably could use virtual/ffmpeg, at least in KDE >= 4.8.2 ] ]] )
         kde_parts:juk? (
             media-libs/taglib[>=1.6]
             tunepimp? ( media-libs/tunepimp )
@@ -76,12 +76,12 @@ DEPENDENCIES+="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_PHONON_SUPPORT:BOOL=TRUE
-    -DWITH_Xine:BOOL=FALSE
+    -DWITH_Xine:BOOL=FALSE # Xine is gone in KDE >= 4.8.2
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Flac
     'kde_parts:ffmpegthumbs FFMPEG'
-    'kde_parts:ffmpegthumbs Swscale'
+    'kde_parts:ffmpegthumbs Swscale' # separate swscale check is gone in KDE >= 4.8.2. part of the ffmpeg check
     'kde_parts:juk Taglib'
     'kde_parts:kioslave Cdparanoia'
     'musicbrainz MusicBrainz3'
