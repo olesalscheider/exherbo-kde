@@ -12,14 +12,14 @@ DEPENDENCIES="
     build+run:
         dev-libs/attica
         dev-libs/soprano
-        kde/kate:${SLOT}[>=${PV}]
+        kde/kate:${SLOT}[>=4.7.4]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
-        kde/smokegen:${SLOT}[>=${PV}]
-        kde/smokeqt:${SLOT}[>=${PV}]
+        kde/smokegen:${SLOT}[>=4.7.4]
+        kde/smokeqt:${SLOT}[>=4.7.4]
         server-pim/akonadi
         x11-libs/qt:4[dbus]
-        okular? ( kde/okular:${SLOT}[>=${PV}] )
+        okular? ( kde/okular:${SLOT}[>=4.7.4] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
