@@ -31,10 +31,6 @@ DEPENDENCIES="
             dev-python/pycups
             dev-python/PyQt4[dbus]
             dev-python/sip
-            || (
-                kde/pykde4:${SLOT}[>=${PV}]
-                kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE ]]
-            )
         )
 "
 
@@ -50,12 +46,23 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 if ever at_least 4.7.0; then
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs:${SLOT}[>=4.7.0]
+            kde/kdelibs:${SLOT}[>=4.7.4]
+        run:
+            kde_parts:system-config-printer-kde? (
+                kde/pykde4:${SLOT}[>=4.7.4]
+            )
     "
 else
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.6.0]
+        run:
+            kde_parts:system-config-printer-kde? (
+                || (
+                    kde/pykde4:${SLOT}[>=${PV}]
+                    kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE ]]
+                )
+            )
     "
 fi
 
