@@ -1,0 +1,24 @@
+# Copyright 2012 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeaccessibility.exlib', which is:
+#     Copyright 2010 Yury G. Kudryashov and 2010-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Clicks the mouse for you"
+DESCRIPTION="A Linux-based KDE program. It clicks the mouse for you, so you don't have to.
+KMouseTool works with any mouse or pointing device."
+
+HOMEPAGE="http://www.kde.org/applications/utilities/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        x11-libs/libXext
+        x11-libs/libXtst
+"
+
