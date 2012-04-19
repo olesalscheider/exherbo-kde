@@ -12,15 +12,15 @@ DEPENDENCIES="
     build+run:
         dev-lang/ruby:=
         dev-libs/soprano
-        kde/kate:4[>=${PV}]
+        kde/kate:4[>=4.7.4]
         kde/kdelibs:4[>=${PV}]
         kde/kdepimlibs:4[>=${PV}]
-        kde/qtruby:4[>=${PV}]
-        kde/smokegen:4[>=${PV}]
-        kde/smokekde:4[>=${PV}][okular?]
+        kde/qtruby:4[>=4.7.4]
+        kde/smokegen:4[>=4.7.4]
+        kde/smokekde:4[>=4.7.4][okular?]
         server-pim/akonadi
         x11-libs/qt:4[dbus]
-        okular? ( kde/okular:4[>=${PV}] )
+        okular? ( kde/okular:4[>=4.7.4] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
