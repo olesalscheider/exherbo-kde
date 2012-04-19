@@ -40,9 +40,9 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 
 src_install() {
     kde.org_src_install
-    edo pushd "${WORK}"/docs
+    edo pushd "${CMAKE_SOURCE:-${WORK}}"/docs
     dodoc -r html/
-    popd
+    edo popd
 }
 
 # The tests are meant to be performed after the installation, so they are
