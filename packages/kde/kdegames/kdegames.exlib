@@ -40,10 +40,6 @@ DEPENDENCIES+="
             dev-db/sqlite:3
             dev-lang/python:=[>=2.6&<3.0]
             dev-python/PyQt4
-            || (
-                kde/pykde4:${SLOT}[>=${PV}]
-                kde/kdebindings:${SLOT}[>=${PV}]
-            )
             net-twisted/TwistedCore
         )
         kde_parts:kigo? (
@@ -57,11 +53,18 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kajongg PythonInterp' )
 
-if ever at_least 4.7.1; then
+if ever at_least 4.8.2; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kpat? ( x11-misc/shared-mime-info )
+    "
+fi
+if ever at_least 4.7.4; then
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.7.0]
             kde_parts:granatier? ( media-libs/openal )
+            kde_parts:kajongg? ( kde/pykde4:${SLOT}[>=4.7.4] )
             kde_parts:kgoldrunner? (
                 media-libs/libsndfile
                 media-libs/openal
@@ -76,6 +79,7 @@ else
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.6.0]
+            kde_parts:kajongg? ( kde/kdebindings:${SLOT}[>=${PV}] )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         # Granatier can use OpenAL as a sound backend. If OpenAL is deactivated it uses phonon.
