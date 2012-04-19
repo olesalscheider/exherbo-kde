@@ -64,21 +64,23 @@ DEPENDENCIES+="
     run:
         kde_parts:cervisia? ( dev-scm/cvs )
     suggestion:
-        kde_parts:lokalize? (
-            dev-python/dbus-python
-            || (
-                kde/pykde4:${SLOT}[>=${PV}]
-                kde/kdebindings:${SLOT}[>=${PV}][python]
-            )
-        )
+        kde_parts:lokalize? ( dev-python/dbus-python )
 "
 
-if ever at_least 4.7.1; then
+if ever at_least 4.8.2; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:umbrello? ( sys-devel/cmake[>=2.8] )
+    "
+fi
+if ever at_least 4.7.4; then
     DEPENDENCIES+="
         build+run:
             dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
             kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
             kde/kdelibs:${SLOT}[>=4.7.0]
+        suggestion:
+            kde_parts:lokalize? ( kde/pykde4:${SLOT}[>=4.7.4] )
     "
 else
     DEPENDENCIES+="
@@ -91,6 +93,8 @@ else
                 description = [ kde/kate has been split out of kdesdk in newer releases ]
                 resolution = uninstall-blocked-after
             ]]
+        suggestion:
+            kde_parts:lokalize? ( kde/kdebindings:${SLOT}[>=${PV}][python] )
     "
 fi
 
@@ -110,7 +114,9 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibKonq:BOOL=TRUE
     # kde_parts doesn't work with / and these plugins are very small and need no
     # additional dependencies, so we hard enable those
+    -DBUILD_dolphin-plugins/bazaar:BOOL=TRUE
     -DBUILD_dolphin-plugins/git:BOOL=TRUE
+    -DBUILD_dolphin-plugins/hg:BOOL=TRUE
     -DBUILD_dolphin-plugins/svn:BOOL=TRUE
 )
 
