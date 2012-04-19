@@ -81,11 +81,14 @@ if ever at_least 4.8.0; then
     DEPENDENCIES+="
         build+run:
             x11-libs/dbusmenu-qt
-            kimpanel? ( inputmethods/ibus )
+            kimpanel? (
+                dev-libs/glib:2
+                inputmethods/ibus
+            )
     "
     # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
     # kimpanel has been aktivated
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_scim=Off )
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_scim=Off -DWITH_DBusMenuQt:BOOL=TRUE )
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kimpanel ibus' )
 else
     DEPENDENCIES+="
