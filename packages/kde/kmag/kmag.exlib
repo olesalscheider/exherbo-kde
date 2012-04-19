@@ -1,0 +1,22 @@
+# Copyright 2012 Heiko Becker <heiko@shruuf.de>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdeaccessibility.exlib', which is:
+#     Copyright 2010 Yury G. Kudryashov and 2010-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Screen Magnifier"
+DESCRIPTION="A small utility for Linux to magnify a part of the screen. KMag is very useful for
+people with visual disabilities and for those working in the fields of image analysis, web
+development etc."
+
+HOMEPAGE="http://www.kde.org/applications/utilities/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+"
+
