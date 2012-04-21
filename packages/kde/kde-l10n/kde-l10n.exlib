@@ -4,8 +4,9 @@
 myexparam langs
 myexparam base_uri="mirror://kde/stable/${PV}/src/${PN}"
 
+ever at_least 4.8.2 && api=2 || api=1
 require kde.org [ git=false ] \
-           l10n [ base_uri="$(exparam base_uri)" langs="$(exparam langs)" ]
+           l10n [ api=${api} base_uri="$(exparam base_uri)" langs="$(exparam langs)" ]
 
 SUMMARY="KDE localisation package"
 LICENCES="GPL-2"

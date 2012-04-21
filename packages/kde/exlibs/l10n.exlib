@@ -4,14 +4,21 @@
 
 export_exlib_phases src_configure src_compile src_install
 
+myexparam api=1
 myexparam langs
 myexparam base_uri
+
+if ever at_least 4.8.2; then
+    KDE_DOWNLOADS_SUFFIX=xz
+else
+    KDE_DOWNLOADS_SUFFIX=bz2
+fi
 
 set_kde_l10n_downloads() {
     local localisation base_uri=$(exparam base_uri)
     [[ -z ${base_uri} ]] && return
     for localisation in $(exparam langs); do
-        echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.tar.bz2 ) "
+        echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.tar.${KDE_DOWNLOADS_SUFFIX} ) "
     done
 }
 
@@ -26,15 +33,32 @@ DEPENDENCIES="
 WORK="${WORKBASE}"
 
 for_all_enabled_linguas_run() {
-    local lingua separator ECMAKE_BUILD_DIR WORK
+    local cmake_api lingua separator WORK
+
+    exparam -v cmake_api api
+    case ${cmake_api} in
+        1) local ECMAKE_BUILD_DIR ;;
+        2) local CMAKE_SOURCES ;;
+        *) die "cmake api ${cmake_api} is unsupported" ;;
+    esac
 
     ever is_scm && separator=/ || separator=-
     for lingua in "${WORKBASE}"/${PN}${separator}*; do
         # The relevant directories for this lingua for ecmake()
-        ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
-        WORK=${lingua}
+        case ${cmake_api} in
+            1)
+                ECMAKE_BUILD_DIR="${WORKBASE}"/build/${lingua##*/}
+                WORK=${lingua}
+                edo pushd "${lingua}"
+                ;;
+            2)
+                WORK="${WORKBASE}"/build/${lingua##*/}
+                CMAKE_SOURCE=${lingua}
+                [[ ! -d ${WORK} ]] && edo mkdir -p "${WORK}"
+                edo pushd "${WORK}"
+                ;;
+        esac
 
-        edo pushd "${lingua}"
         edo "${@}"
         edo popd
     done
@@ -46,7 +70,13 @@ l10n_src_configure() {
 }
 
 l10n_src_compile() {
-    for_all_enabled_linguas_run cmake_src_compile
+    local cmake_api
+    exparam -v cmake_api api
+    case ${cmake_api} in
+        1) for_all_enabled_linguas_run cmake_src_compile ;;
+        2) for_all_enabled_linguas_run default ;;
+        *) die "cmake api ${cmake_api} is unsupported" ;;
+    esac
 }
 
 l10n_src_install() {
