@@ -1,0 +1,34 @@
+Title: KDE 4.8 split packages
+Author: Bo Ørsted Andresen <zlin@exherbo.org>
+Content-Type: text/plain
+Posted: 2012-04-22
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/kdeaccessibility
+Display-If-Installed: kde/kdeutils
+
+KDE 4.8.2 has two packages additionally split compared to KDE 4.7.4:
+  - kde/kdeaccessibility
+  - kde/kdeutils
+
+The easiest way to handle this is:
+
+1) Upgrade KDE normally ignoring those two packages:
+  cave resolve kde-split
+
+2) Check which kde_parts were enabled for those two packages:
+  cave show kde/kdeaccessibility kde/kdeutils
+
+3) Get the list of newly available split packages:
+  cave show 'kdeaccessibility-split*' 'kdeutils-split*'
+
+4) Manually install the split packages you want by comparing the
+above lists and permitting uninstall of the blocked packages, e.g.:
+  cave resolve --permit-uninstall kde/kdeaccessibility \
+               kmag \
+               --permit-uninstall kde/kdeutils \
+	       ark filelight kgpg kwallet
+
+If you are still on KDE 4.6.x or older consult the exherbo-dev mailing list on
+split kde 4.7 unmasking instead.
+
