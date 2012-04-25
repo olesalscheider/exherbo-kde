@@ -23,6 +23,7 @@ Management:
 
 HOMEPAGE="http://www.calligra.org/"
 DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.bz2"
+REMOTE_IDS="freshmeat:${PN}"
 UPSTREAM_RELEASE_NOTES="${HOMEPAGE}news/${PN}-$(ever replace - ${PV})-released/"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
