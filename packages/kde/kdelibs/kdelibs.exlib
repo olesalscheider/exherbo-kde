@@ -90,6 +90,9 @@ DEPENDENCIES="
             sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
         )
 "
+# FIXME: solid has an optional runtime dependency upon media-player-info: macro_log_feature(MEDIAPLAYERINFO_PATH "media-player-info"
+#        "Enables identification and querying of portable media players" "http://www.freedesktop.org/wiki/Software/media-player-info"
+#        FALSE "" "Runtime-only dependency of the udev solid backend. Support for m-p-i is included even if not found during build"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_PLATFORM_PROFILE=Desktop # this is the default profile as of KDE 4.5
