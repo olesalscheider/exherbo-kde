@@ -171,11 +171,11 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'qalculate Qalculate'
 )
 
-if ever at_least 4.7.41; then
+if ever at_least 4.8.3; then
     DEPENDENCIES+="
         build+run:
             kde/kactivities:${SLOT}[>=4.8.0]
-            kde/kdelibs:${SLOT}[>=4.8.2]
+            kde/kdelibs:${SLOT}[>=4.8.3]
     "
 fi
 
