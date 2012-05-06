@@ -3,6 +3,8 @@
 
 require kde.org
 
+export_exlib_phases src_prepare
+
 SUMMARY="KDE Personal Information Management"
 DESCRIPTION="
 akregator: Feed reader
@@ -82,14 +84,19 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kleopatra Assuan2'
 )
 
-if ever at_least 4.8.2; then
+if ever at_least 4.8.3; then
     MYOPTIONS="barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
         ${MYOPTIONS}"
     DEPENDENCIES+="
         build+run:
-            kde/kdepimlibs:${SLOT}[>=4.8.2]
+            kde/kdepimlibs:${SLOT}[>=4.8.3]
             barcodes? ( kde/prison )
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
 fi
+
+kdepim_src_prepare() {
+    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    default
+}
 
