@@ -1,11 +1,17 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
+fi
+
 require cmake [ api=2 ]
 
 SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
-HOMEPAGE="http://www.kde.org/"
-DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
+HOMEPAGE="http://www.kde.org"
 
 LICENCES="|| ( LGPL-3 LGPL-2.1 )"
 SLOT="0"
