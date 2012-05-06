@@ -35,26 +35,26 @@ MYOPTIONS+="
         kontact [[ requires = [ kde_parts: korganizer ] ]]
 "
 
-# 4.4.10 (temporarily) introduces:
-# option(KONTACT_ENABLE_MIXEDMODE_SUMMARY_PLUGINS "Build the Special Dates and
-#    Planner plugins for Kontact." FALSE)
-# "We have too many bad bugs with these summaries that can't be fixed until KDEPIM4.6,
-# so we had no choice but to disable them" - I'm with upstream about this. WK.
-
 DEPENDENCIES+="
     build:
         dev-libs/libxslt
         kde_parts:kleopatra? (
-            dev-libs/libassuan[>=1.0.4] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
+            dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
         )
     build+run:
         app-crypt/gpgme
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.6.51]
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
+        dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.3.70]
+        kde/kde-runtime:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
+        kde/kdepimlibs:${SLOT}[>=4.6.41]
+        net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         server-pim/akonadi[>=1.4.91]
         sys-libs/zlib
         x11-libs/qt:4[dbus][sql]
@@ -72,46 +72,15 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_kmailcvt=ON
     -DBUILD_ksendemail=ON
+    -DKDEPIM_BUILD_DESKTOP:BOOL=TRUE
+    -DKDEPIM_BUILD_MOBILE:BOOL=FALSE
+    -DKDEPIM_MOBILE_UI:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan' )
-
-if ever at_least 4.6.1; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
-            net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
-    "
-fi
-
-if ever at_least 4.7.1; then
-    DEPENDENCIES+="
-        build:
-            kde_parts:kleopatra? (
-                dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
-            )
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.6.51]
-            kde/kde-runtime:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.7.0]
-            kde/kdepimlibs:${SLOT}[>=4.6.41]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DKDEPIM_BUILD_DESKTOP:BOOL=TRUE
-        -DKDEPIM_BUILD_MOBILE:BOOL=FALSE
-        -DKDEPIM_MOBILE_UI:BOOL=FALSE
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kleopatra Assuan2' )
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.2]
-            kde/kdebase-runtime:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.6.0]
-            kde/kdepimlibs:${SLOT}[>=${PV}]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_IndicateQt=OFF )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'kde_parts:kleopatra Assuan'
+    'kde_parts:kleopatra Assuan2'
+)
 
 if ever at_least 4.8.2; then
     MYOPTIONS="barcodes [[ description = [ Show mobile barcodes for contacts ] ]]

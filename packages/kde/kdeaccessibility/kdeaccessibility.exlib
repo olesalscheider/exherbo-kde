@@ -29,6 +29,7 @@ DEPENDENCIES="
     build:
         kde_parts:kaccessible? ( dev-util/pkg-config )
     build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde_parts:jovie? ( app-speech/speechd )
         kde_parts:kaccessible? (
             speechd? ( app-speech/speechd )
@@ -40,18 +41,6 @@ DEPENDENCIES="
             x11-libs/libXtst
         )
 "
-
-if ever at_least 4.7.0; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.7.0]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.6.0]
-    "
-fi
 
 src_configure() {
     local p cmakeparams=( $(cmake_build kde_parts:iconthemes IconThemes) )

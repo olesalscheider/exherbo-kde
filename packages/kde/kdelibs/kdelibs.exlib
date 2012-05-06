@@ -12,6 +12,7 @@ HOMEPAGE="http://techbase.kde.org/Projects/kdelibs"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS="acl avahi doc fam jpeg2000 openexr policykit spell
+    upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
 "
 
 DEPENDENCIES="
@@ -28,6 +29,7 @@ DEPENDENCIES="
         app-arch/xz
         app-crypt/qca:2
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.90]
         dev-libs/pcre
         dev-libs/libxml2
@@ -59,6 +61,7 @@ DEPENDENCIES="
         x11-libs/libXt
         x11-libs/libXtst
         x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+        x11-misc/shared-mime-info[>=0.60]
         acl? (
             sys-apps/acl
             sys-apps/attr
@@ -75,6 +78,7 @@ DEPENDENCIES="
             app-spell/aspell
             app-spell/enchant
         )
+        upnp? ( net-libs/hupnp )
     run:
         x11-apps/iceauth
         x11-apps/rgb
@@ -127,26 +131,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'policykit PolkitQt-1'
     'spell ASPELL'
     'spell ENCHANT'
+    'upnp HUpnp'
 )
-
-if ever at_least 4.7.1; then
-    MYOPTIONS+="
-        upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.6.50]
-            x11-misc/shared-mime-info[>=0.60]
-            upnp? ( net-libs/hupnp )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'upnp HUpnp' )
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.5]
-            x11-misc/shared-mime-info[>=0.30]
-    "
-fi
 
 #FIXME: grantlee only needed for tests, which we do not run
 if ever is_scm ; then
@@ -169,12 +155,6 @@ MYOPTIONS+="
 src_prepare() {
     ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
     default
-
-    # Kate tests need a tarball from SVN
-    if ! ever at_least 4.6.41; then
-        edo sed -e '/^[^#]*add_custom_target[([:space:]]*check/s/^/# DONOTRUN /' \
-                -i kate/CMakeLists.txt
-    fi
 }
 
 src_compile() {

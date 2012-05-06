@@ -68,6 +68,8 @@ DEPENDENCIES+="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-libs/openssl
         dev-libs/soprano
+        kde/kde-runtime:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepimlibs:${SLOT}
 
         kde_parts:kdnssd? ( kde/kdelibs:${SLOT}[avahi] )
@@ -75,6 +77,9 @@ DEPENDENCIES+="
             app-crypt/gpgme
             app-text/shared-desktop-ontologies[>=0.4]
             dev-libs/boost
+            kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
+            kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
+            media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
             sqlite? ( dev-db/sqlite:3 )
         )
         kde_parts:kopete? (
@@ -127,6 +132,7 @@ DEPENDENCIES+="
             vnc? ( net-libs/libvncserver[>=0.9] )
         )
     suggestion:
+        net-fs/samba [[ description = [ Network file sharing ] ]]
         kde_parts:kopete? (
             im_protocols:xmpp? (
                 app-crypt/qca-ossl:2 [[ description = [ Necessary to make SSL secured xmpp connections with kopete ] ]]
@@ -140,31 +146,6 @@ DEPENDENCIES+="
 
 # FIXME
 # Warning: kppp uses setuid
-
-if ever at_least 4.7.1; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kde-runtime:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.7.0]
-            kde_parts:kget? (
-                kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = Konqueror ]]
-                kde/kde-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
-                media-libs/libmms [[ description = [ Mms streams in KGet ] ]]
-            )
-        suggestion:
-            net-fs/samba [[ description = [ Network file sharing ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdebase-runtime:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.6.0]
-            kde_parts:kget? (
-                kde/kdebase:${SLOT}[>=${PV}] [[ note = Konqueror ]]
-                kde/kdebase-workspace:${SLOT}[>=${PV}] [[ note = Plasma ]]
-            )
-    "
-fi
 
 src_prepare() {
     ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
@@ -249,15 +230,13 @@ src_configure() {
         $(cmake_with vnc LibVNCServer)
     )
 
-    if ever at_least 4.7.1; then
-        #avoid installing samba with PackageKit
-        cmakeparams+=( -DWITH_SAMBA_INSTALL=OFF )
+    #avoid installing samba with PackageKit
+    cmakeparams+=( -DWITH_SAMBA_INSTALL=OFF )
 
-        if option kde_parts:kget; then
-            cmakeparams+=( -DWITH_LibMms:BOOL=TRUE )
-        else
-            cmakeparams+=( -DWITH_LibMms:BOOL=FALSE )
-        fi
+    if option kde_parts:kget; then
+        cmakeparams+=( -DWITH_LibMms:BOOL=TRUE )
+    else
+        cmakeparams+=( -DWITH_LibMms:BOOL=FALSE )
     fi
 
     #   $(cmake_with im_protocols:meanwhile) \

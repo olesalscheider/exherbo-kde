@@ -18,6 +18,7 @@ MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build+run:
+        kde/kdelibs:${SLOT}[>=4.7.4]
         kde_parts:kuser? (
             kde/kdepimlibs:${SLOT}[>=${PV}]
         )
@@ -31,6 +32,7 @@ DEPENDENCIES="
             dev-python/pycups
             dev-python/PyQt4[dbus]
             dev-python/sip
+            kde/pykde4:${SLOT}[>=4.7.4]
         )
 "
 
@@ -42,27 +44,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:system-config-printer-kde SIP'
     'kde_parts:system-config-printer-kde SystemConfigPrinter'
 )
-
-if ever at_least 4.7.0; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.7.4]
-        run:
-            kde_parts:system-config-printer-kde? (
-                kde/pykde4:${SLOT}[>=4.7.4]
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.6.0]
-        run:
-            kde_parts:system-config-printer-kde? (
-                || (
-                    kde/pykde4:${SLOT}[>=${PV}]
-                    kde/kdebindings:${SLOT}[>=${PV}][python] [[ note = PyKDE ]]
-                )
-            )
-    "
-fi
 

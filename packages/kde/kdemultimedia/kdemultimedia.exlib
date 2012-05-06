@@ -43,6 +43,8 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build+run:
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        kde/kde-baseapps:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
@@ -61,6 +63,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kmix? (
+            kde/kde-workspace:${SLOT}[>=${PV}]
             pulseaudio? (
                 dev-libs/glib:2
                 media-sound/pulseaudio[>=0.9.12]
@@ -89,24 +92,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     TunePimp
     'vorbis OggVorbis'
 )
-
-if ever at_least 4.6.41; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kde-baseapps:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.7.0]
-            kde_parts:kmix? (
-                kde/kde-workspace:${SLOT}[>=${PV}]
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdebase:${SLOT}[>=${PV}]
-            kde/kdelibs:${SLOT}[>=4.6.0]
-            kde_parts:kmix? (
-                kde/kdebase-workspace:${SLOT}[>=${PV}]
-            )
-    "
-fi
 
