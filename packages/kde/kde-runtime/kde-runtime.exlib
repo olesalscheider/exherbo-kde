@@ -97,7 +97,7 @@ if ever at_least 4.8.2; then
     DEPENDENCIES+="
         build+run:
             app-crypt/qca:2[>=2.0.0]
-            kde/kdelibs:${SLOT}[>=4.8.2]
+            kde/kdelibs:${SLOT}[>=4.8.3]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QCA2:BOOL=TRUE )
 fi
