@@ -17,16 +17,26 @@
 # Canonical KDE packages go in packages/kde/${PN}
 # Other KDE apps go into their respective categories, with a 'KDE' tag
 
+export_exlib_phases src_install
+
+myexparam -b upstream_release_notes=true
+myexparam -b git=true
+
+if ever is_scm; then
+    if exparam -b git ; then
+        SCM_REPOSITORY="git://anongit.kde.org/${PN}"
+        require scm-git
+    else
+        SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+        require scm-svn
+    fi
+fi
+
 if [[ ${CATEGORY} == kde ]] && ever at_least 4.8.2; then
     require kde [ api=2 ]
 else
     require kde
 fi
-
-export_exlib_phases src_install
-
-myexparam -b upstream_release_notes=true
-myexparam -b git=true
 
 # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
@@ -59,11 +69,7 @@ fi
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
     scm)
-        if exparam -b git ; then
-            SCM_REPOSITORY="git://anongit.kde.org/${PN}"
-            require scm-git
-        else
-            SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
+        if ! exparam -b git ; then
             case ${KDEMODULE} in
                 oxygen-icons)
                     SCM_SUBPATH="kdesupport/${KDEMODULE}"
@@ -77,7 +83,6 @@ case ${PV} in
                     SCM_SUBPATH="KDE/${KDEMODULE}"
                     ;;
             esac
-            require scm-svn
         fi
         DOWNLOADS=""
         ;;
