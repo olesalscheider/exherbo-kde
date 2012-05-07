@@ -17,6 +17,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/jpeg
         media-libs/lcms
+        sys-devel/gcc:*[openmp]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
