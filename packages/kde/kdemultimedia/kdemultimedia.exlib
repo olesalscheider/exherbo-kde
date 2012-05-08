@@ -93,3 +93,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'vorbis OggVorbis'
 )
 
+if ever at_least 4.8.3; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kmix? ( media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]] )
+    "
+fi
+
