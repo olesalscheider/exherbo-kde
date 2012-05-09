@@ -14,11 +14,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        kde/kde-workspace:4
         kde/kdelibs:4
         x11-libs/qt:4
-        || (
-            kde/kde-workspace:4
-            kde/kdebase-workspace:4
-        )
 "
 

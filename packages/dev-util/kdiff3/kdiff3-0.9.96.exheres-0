@@ -18,11 +18,8 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
         kde/kdelibs:4[>=4.6]
-        || (
-            kde/kde-baseapps:4
-            kde/kdebase:4[>=4.6]
-        ) [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_LibKonq:BOOL=ON )

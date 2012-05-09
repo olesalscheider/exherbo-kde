@@ -126,12 +126,7 @@ DEPENDENCIES+="
             fftw? ( sci-libs/fftw[>=3] )
             glew? ( media-libs/glew )
             openjpeg? ( media-libs/OpenJPEG )
-            raw? (
-                || (
-                    kde/libkdcraw:4
-                    kde/kdegraphics:4[>=4.3.0]
-                ) [[ note = [ Krita needs kdraw for raw filter ] ]]
-            )
+            raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
         )
         kde_parts:mobile? (

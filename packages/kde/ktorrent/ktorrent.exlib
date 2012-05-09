@@ -19,10 +19,7 @@ DEPENDENCIES="
         app-crypt/qca:2
         dev-libs/boost
         dev-libs/gmp:=
-        || (
-            kde/kde-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
-            kde/kdebase-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
-        )
+        kde/kde-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         media-libs/phonon
         media-libs/taglib
         net-libs/GeoIP

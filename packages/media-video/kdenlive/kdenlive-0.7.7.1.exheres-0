@@ -24,9 +24,6 @@ DEPENDENCIES="
         media/mlt[>=0.4.0][ffmpeg][sdl][qt4][xml]
         x11-misc/shared-mime-info[>=0.23]
     run:
-        || (
-            kde/kde-runtime
-            kde/kdebase-runtime[nepomuk(+)?]
-        )
+        kde/kde-runtime
 "
 
