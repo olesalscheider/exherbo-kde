@@ -72,7 +72,7 @@ DEPENDENCIES+="
         kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
-        media-libs/lcms[>=1.18] [[ note = [ Required for color management and Krita ] ]]
+        media-libs/lcms2[>=2.0] [[ note = [ Required for color management and Krita ] ]]
         media-libs/libpng
         media-libs/phonon [[ note = [ Used by stage ] ]]
         sys-libs/zlib
@@ -178,7 +178,9 @@ src_configure() {
         $(kde4_shared_cmake_params)
         -DTINY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
-        -DWITH_LCMS2:BOOL=FALSE # krita in koffice 2.3 has support for lcms:2, but we don't have that and it still supports lcms:1
+        -DWITH_LCMS:BOOL=FALSE # lcms:1 isn't supported by calligra anymore, they just forgot to
+                               # remove the check for the package before the release
+        -DWITH_LCMS2:BOOL=TRUE
         -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db. Package unwritten.
         -DWITH_KdepimLibs=ON
         -DWITH_LibXml2=ON
