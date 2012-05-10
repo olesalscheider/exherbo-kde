@@ -9,7 +9,7 @@ if ever is_scm; then
     require scm-git
 else
     DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
-    WORK=${WORKBASE}/${MY_PNV}
+    CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 fi
 
 require kde [ api=2 ]
