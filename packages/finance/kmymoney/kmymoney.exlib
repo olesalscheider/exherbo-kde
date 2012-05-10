@@ -34,7 +34,7 @@ DEPENDENCIES="
         dev-cpp/libxml++:2.6
         dev-libs/boost[>=1.33.1]
         dev-libs/glib:2
-        dev-libs/gmp
+        dev-libs/gmp:=
         dev-libs/libxml2:2.0
         gnome-bindings/glibmm:2.4
         kde/kdelibs:4[>=4.3.5]

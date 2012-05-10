@@ -43,7 +43,7 @@ DEPENDENCIES+="
             app-arch/xz
             kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
         )
-        kde_parts:kcalc? ( dev-libs/gmp )
+        kde_parts:kcalc? ( dev-libs/gmp:= )
         kde_parts:kremotecontrol? (
             kde/kde-workspace:${SLOT}[>=${PV}]
             x11-libs/libXtst

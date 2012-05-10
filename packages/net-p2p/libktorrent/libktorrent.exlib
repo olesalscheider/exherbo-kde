@@ -33,7 +33,7 @@ DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         dev-libs/boost
-        dev-libs/gmp
+        dev-libs/gmp:=
 "
 
 case ${PV} in

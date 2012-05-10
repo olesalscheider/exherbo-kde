@@ -17,7 +17,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        dev-libs/gmp
+        dev-libs/gmp:=
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
 

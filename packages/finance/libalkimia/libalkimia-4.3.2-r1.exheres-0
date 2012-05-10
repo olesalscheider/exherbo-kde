@@ -22,6 +22,6 @@ DEPENDENCIES="
     build:
         dev-util/pkg-config
     build+run:
-        dev-libs/gmp
+        dev-libs/gmp:=
         kde/kdelibs:4
 "
