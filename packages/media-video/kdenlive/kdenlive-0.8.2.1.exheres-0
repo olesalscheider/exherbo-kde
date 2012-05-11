@@ -21,7 +21,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs[nepomuk(+)?]
         media/ffmpeg
-        media/mlt[>=0.4.0][ffmpeg][sdl][qt4][xml]
+        media/mlt[>=0.7.6][ffmpeg][sdl][qt4][xml]
         x11-misc/shared-mime-info[>=0.23]
     run:
         kde/kde-runtime
