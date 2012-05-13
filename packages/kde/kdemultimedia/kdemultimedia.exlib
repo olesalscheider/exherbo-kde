@@ -49,7 +49,6 @@ DEPENDENCIES+="
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
         kde_parts:dragonplayer? ( media-libs/phonon[>=4.3.0] )
-        kde_parts:ffmpegthumbs? ( media/ffmpeg [[ note = [ probably could use virtual/ffmpeg, at least in KDE >= 4.8.2 ] ]] )
         kde_parts:juk? (
             media-libs/taglib[>=1.6]
             tunepimp? ( media-libs/tunepimp )
@@ -92,6 +91,19 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     TunePimp
     'vorbis OggVorbis'
 )
+
+if ever at_least 4.8.2; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ffmpegthumbs? ( virtual/ffmpeg )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:ffmpegthumbs? ( media/ffmpeg )
+    "
+
+fi
 
 if ever at_least 4.8.3; then
     DEPENDENCIES+="
