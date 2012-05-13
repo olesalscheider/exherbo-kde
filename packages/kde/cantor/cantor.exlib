@@ -32,12 +32,12 @@ DEPENDENCIES="
 "
 
 if ever at_least 4.8.2; then
-    DEPENDENCIES="
+    DEPENDENCIES+="
         build+run:
             analitza? ( kde/analitza )
     "
 else
-    DEPENDENCIES="
+    DEPENDENCIES+="
         build+run:
             analitza? ( kde/kalgebra )
     "
