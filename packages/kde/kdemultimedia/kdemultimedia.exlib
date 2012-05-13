@@ -69,7 +69,7 @@ DEPENDENCIES+="
                 media-sound/pulseaudio[>=0.9.12]
             )
         )
-        kde_parts:mplayerthumbs? ( run: media/mplayer )
+        kde_parts:mplayerthumbs? ( run: || ( media/mplayer media/mplayer2[>=2.0-r11] ) )
         musicbrainz? ( media-libs/libmusicbrainz:3 )
     suggestion:
         kde_parts:kioslave? (
