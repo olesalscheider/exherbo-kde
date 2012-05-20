@@ -20,12 +20,18 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/gmp:=
         kde/kde-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
+        kde/kdepimlibs:${SLOT} [[ note = [ needed for syndication support ] ]]
         media-libs/phonon
         media-libs/taglib
         net-libs/GeoIP
 "
 
 case ${PV} in
+    4.2.*)
+        DEPENDENCIES+="
+            dev-lang/perl
+            kde/kdelibs:${SLOT}[>=4.4][avahi?]
+            net-p2p/libktorrent[>=1.2.0]" ;;
     4.1.*)
         DEPENDENCIES+="
             dev-lang/perl

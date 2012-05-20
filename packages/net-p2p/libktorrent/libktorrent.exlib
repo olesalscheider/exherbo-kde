@@ -13,6 +13,8 @@ ktorrent), which can be used by other applications.
 "
 HOMEPAGE="http://ktorrent.org/"
 case ${PV} in
+    1.2.*)
+        DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV}.tar.bz2" ;;
     1.1.*)
         DOWNLOADS="${HOMEPAGE}/downloads/4.${PV#*.}/${PNV}.tar.bz2" ;;
     1.0.*)
@@ -37,6 +39,11 @@ DEPENDENCIES="
 "
 
 case ${PV} in
+    1.2.*)
+        DEPENDENCIES+="
+                dev-lang/perl
+                kde/kdelibs:4[>=4.4]
+        " ;;
     1.1.*)
         DEPENDENCIES+="
                 dev-lang/perl
