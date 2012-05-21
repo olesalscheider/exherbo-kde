@@ -1,8 +1,0 @@
-# Copyright 2010 Kim Højgaard-Hansen <kimrhh@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-require qt-creator
-
-PLATFORMS="~amd64 ~x86"
-UPSTREAM_DOCUMENTATION="http://doc.trolltech.com/${PN/-/}-snapshot/index.html"
-
