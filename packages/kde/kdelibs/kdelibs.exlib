@@ -43,7 +43,7 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/phonon[>=4.3.80]
         sys-apps/dbus[X(-)]
-        sys-fs/udev
+        || ( sys-apps/systemd sys-fs/udev )
         sys-libs/zlib
         x11-libs/dbusmenu-qt
         x11-libs/libICE
