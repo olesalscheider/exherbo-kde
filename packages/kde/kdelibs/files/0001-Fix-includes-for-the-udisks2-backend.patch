@@ -1,0 +1,67 @@
+From ab5be18b982492d0af5610e2c97476c940430a81 Mon Sep 17 00:00:00 2001
+From: "Wulf C. Krueger" <philantrop@exherbo.org>
+Date: Sun, 27 May 2012 16:54:07 +0200
+Subject: [PATCH] Fix includes for the udisks2 backend.
+
+---
+ solid/solid/backends/udisks2/udisksopticaldisc.cpp  |    2 +-
+ solid/solid/backends/udisks2/udisksopticaldisc.h    |    2 +-
+ solid/solid/backends/udisks2/udisksstoragedrive.cpp |    2 +-
+ solid/solid/backends/udisks2/udisksstoragedrive.h   |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/solid/solid/backends/udisks2/udisksopticaldisc.cpp b/solid/solid/backends/udisks2/udisksopticaldisc.cpp
+index 478c930..650f0f7 100644
+--- a/solid/solid/backends/udisks2/udisksopticaldisc.cpp
++++ b/solid/solid/backends/udisks2/udisksopticaldisc.cpp
+@@ -27,7 +27,7 @@
+ #include <QtCore/QFile>
+ #include <QtDBus/QDBusConnection>
+ 
+-#include "../shared/udevqtclient.h"
++#include "../shared/udevqt.h"
+ 
+ #include "udisks2.h"
+ #include "udisksopticaldisc.h"
+diff --git a/solid/solid/backends/udisks2/udisksopticaldisc.h b/solid/solid/backends/udisks2/udisksopticaldisc.h
+index 5b80995..0cdcc66 100644
+--- a/solid/solid/backends/udisks2/udisksopticaldisc.h
++++ b/solid/solid/backends/udisks2/udisksopticaldisc.h
+@@ -24,7 +24,7 @@
+ 
+ #include <solid/ifaces/opticaldisc.h>
+ 
+-#include "../shared/udevqtdevice.h"
++#include "../shared/udevqt.h"
+ 
+ #include "udisksstoragevolume.h"
+ #include "udisksdevice.h"
+diff --git a/solid/solid/backends/udisks2/udisksstoragedrive.cpp b/solid/solid/backends/udisks2/udisksstoragedrive.cpp
+index c79ac20..e382154 100644
+--- a/solid/solid/backends/udisks2/udisksstoragedrive.cpp
++++ b/solid/solid/backends/udisks2/udisksstoragedrive.cpp
+@@ -21,7 +21,7 @@
+ 
+ #include "udisksstoragedrive.h"
+ 
+-#include "../shared/udevqtclient.h"
++#include "../shared/udevqt.h"
+ 
+ #include <QtCore/QDebug>
+ #include <QtCore/QFile>
+diff --git a/solid/solid/backends/udisks2/udisksstoragedrive.h b/solid/solid/backends/udisks2/udisksstoragedrive.h
+index 9c87a23..d8c1046 100644
+--- a/solid/solid/backends/udisks2/udisksstoragedrive.h
++++ b/solid/solid/backends/udisks2/udisksstoragedrive.h
+@@ -24,7 +24,7 @@
+ 
+ #include <ifaces/storagedrive.h>
+ 
+-#include "../shared/udevqtdevice.h"
++#include "../shared/udevqt.h"
+ 
+ #include "udisksblock.h"
+ 
+-- 
+1.7.10.3
+
