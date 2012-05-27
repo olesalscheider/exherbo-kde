@@ -12,7 +12,7 @@ else
     CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
 fi
 
-require cmake [ api=2 ]
+require cmake [ api=2 ] gtk-icon-cache
 
 SUMMARY="A GStreamer-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
