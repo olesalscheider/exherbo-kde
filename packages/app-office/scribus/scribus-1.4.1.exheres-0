@@ -71,6 +71,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ASPELL'
 )
 
+WORK="${WORKBASE}/Scribus"
+
 src_prepare() {
     default
 
