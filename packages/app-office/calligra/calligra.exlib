@@ -133,10 +133,7 @@ DEPENDENCIES+="
             dev-libs/openssl
         )
         kde_parts:stage? (
-            || (
-                kde/okular:4
-                kde/kdegraphics:4[>=4.3.0][kde_parts:okular]
-            ) [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
+            kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
         kde_parts:sheets? (
             sci-libs/eigen:2[>=2.0]
