@@ -48,13 +48,13 @@ DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         dev-db/mysql[>=5.5.13][embedded-server] [[ description = [ Amarok music library uses the MySQL shared embedded library ] ]]
-        media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
+        kde/kdelibs:4[>=4.6.0]       [[ note = [ nfs and smb support depend on it ] ]]
         media-plugins/taglib-extras[>=1.0.1]
-        x11-dri/mesa                  [[ description = [ Support for gl-accellerated visualisation rendering ] ]]
+        x11-dri/mesa                  [[ description = [ Required for a hardware accelerated spectrum analyzer ] ]]
         x11-libs/qt:4[>=4.6.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
+        gpodder? ( media-libs/libmygpo-qt[>=1.0.5] )
         ipod? (
             dev-libs/glib:2
-            media-libs/libgpod[>=0.7.0]
             x11-libs/gdk-pixbuf:2.0   [[ description = [ Support for artwork on iPods ] ]]
         )
         lastfm? ( media-libs/liblastfm[>=0.3.0] )
@@ -82,17 +82,17 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
 
-if ever at_least 2.4.90; then
+if ever at_least 2.5.90; then
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs:4[>=4.6.0]       [[ note = [ nfs and smb support depend on it ] ]]
-            gpodder? ( media-libs/libmygpo-qt[>=1.0.5] )
+            media-libs/taglib[>=1.7]      [[ description = [ Read and write tags in audio files ] ]]
+            ipod? ( media-libs/libgpod[>=0.8.2] )
     "
 else
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs:4[>=4.4.99]       [[ note = [ nfs and smb support depend on it ] ]]
-            gpodder? ( media-libs/libmygpo-qt[>=1.0.2] )
+            media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
+            ipod? ( media-libs/libgpod[>=0.7.0] )
     "
 fi
 
@@ -110,13 +110,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_BUILD_TESTS:BOOL=FALSE
 )
 
-if ever at_least 2.4.90; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gpodder Mygpo-qt' )
-else
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gpodder Libmygpo-qt' )
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'gpodder Mygpo-qt'
     IPOD
     'ipod GDKPixBuf'
     'lastfm LibLastFm'
