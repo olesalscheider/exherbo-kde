@@ -22,6 +22,6 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
     run:
-        app-misc/lirc
+        remote/lirc
 "
 
