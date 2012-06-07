@@ -13,13 +13,17 @@ myexparam pv=${MY_PV:-${PV}}
 MY_PNV=$(exparam pn)-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
-HOMEPAGE="http://qt.nokia.com/"
-DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
+HOMEPAGE="http://qt-project.org/"
+if ever at_least 4.8.1 ; then
+    DOWNLOADS="http://releases.qt-project.org/qt4/source/${MY_PNV}.tar.gz"
+else
+    DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
+fi
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_CHANGELOG="http://qt.nokia.com/developer/changes/changes-${PV}"
+UPSTREAM_CHANGELOG="http://qt.nokia.com/products/changes/changes-${PV}"
 UPSTREAM_DOCUMENTATION="
-    http://doc.qt.nokia.com/$(ever range 1-2) [[ description = [ Qt Reference Documentation ] ]]
+    http://qt-project.org/doc/qt-$(ever range 1-2)/ [[ description = [ Qt Reference Documentation ] ]]
 "
 
 LICENCES="|| ( LGPL-2.1 GPL-3 )"
@@ -125,7 +129,9 @@ qt4_mkspecs_dir() {
         if option platform:ppc64; then
             spec+="-64"
         elif option platform:amd64; then
-            spec+="-${MULTIBUILD_TARGET}"
+            if [[ ${MULTIBUILD_TARGET} -eq 32 ]]; then
+                spec+="-${MULTIBUILD_TARGET}"
+            fi
         fi
     else
         die "Unknown compiler ${CXX}"
@@ -239,6 +245,18 @@ qt-4_src_prepare() {
     else
         edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
     fi
+
+    if ever at_least 4.8.1; then
+        # Disable WebKit tests since they need access to the xserver
+        edo sed -e 's|exists($$PWD/WebKit/qt/tests): SUBDIRS += WebKit/qt/tests||' \
+                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pro
+        # Fix WebKit with gcc-4.6, -Werror
+        edo sed -e '/QMAKE_CXXFLAGS\s*+=/ s:-Werror::g' \
+                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pri
+        # Fix webkit version number for pkg-config
+        edo sed -e 's/^isEmpty(QT_BUILD_TREE)://' \
+                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro
+    fi
 }
 
 configure_one_multibuild() {
@@ -327,13 +345,19 @@ configure_one_multibuild() {
 
     # media formats
     myconf+=(
-        -qt-gif
         -svg
         -system-libjpeg
         -system-libmng
         -system-libpng
         -system-libtiff
     )
+
+    # qt 4.8 only has -no-gif to disable gif
+    if ! ever at_least 4.8.1; then
+        myconf+=(
+            -qt-gif
+        )
+    fi
 
     # optional parts
     myconf+=(
@@ -354,6 +378,11 @@ configure_one_multibuild() {
             -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
             -e "s:X11R6/::" \
             -i "${WORK}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf
+
+    # use gcc for linking
+    if ever at_least 4.8.1; then
+        unset LD
+    fi
 
     qconf4 "${myconf[@]}"
 

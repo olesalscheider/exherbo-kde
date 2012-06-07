@@ -1,0 +1,15 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+#           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-4 [ pn='qt-everywhere-opensource-src' ]
+
+PLATFORMS="~amd64 ~ppc64 ~x86"
+
+UPSTREAM_RELEASE_NOTES="http://blog.qt.nokia.com/2012/05/22/qt-4-8-2-and-visual-studio-add-in-1-1-11-released"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
+    "${FILES}"/qt-webkit-4.8.1+glib-2.31.patch
+)
+
