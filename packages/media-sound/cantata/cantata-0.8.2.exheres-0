@@ -44,24 +44,12 @@ DEPENDENCIES="
         )
 "
 
-src_configure() {
-    local mycmakeparams=()
-
-    if ! option replaygain; then
-        # find_package(SPEEXDSP) is only called if ffmpeg and mpg123 have been found.
-        # Therefore disabling gives an error is not actually necessary.
-        mycmakeparams+=(
-            -DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=True
-            -DCMAKE_DISABLE_FIND_PACKAGE_MPG123=True
-            -DCMAKE_DISABLE_FIND_PACKAGE_SPEEXDSP=True
-        )
-    fi
-    if ! option mtp; then
-        mycmakeparams+=(
-            -DCMAKE_DISABLE_FIND_PACKAGE_Mtp=TRUE
-        )
-    fi
-
-    ecmake "${mycmakeparams[@]}"
-}
+# find_package(SPEEXDSP) is only called if ffmpeg and mpg123 have been found.
+# Therefore disabling gives an error and is not actually necessary.
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'replaygain FFMPEG'
+    'replaygain MPG123'
+    'replaygain SPEEXDSP'
+    Mtp
+)
 
