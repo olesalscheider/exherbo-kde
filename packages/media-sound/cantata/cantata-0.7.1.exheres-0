@@ -1,0 +1,66 @@
+# Copyright 2012 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ] googlecode
+
+SUMMARY="KDE4 client for the music player daemon (mpd)"
+DESCRIPTION="
+Cantata is a KDE4 client for the music player daemon (mpd). It supports:
+* Configurable interface
+* Library
+* Dynamic playlists
+* Saving internet radio streams
+* Lyrics
+* Info about titles can be fetched from wikipedia using webkit
+* mpd statistics
+* Handling of usb and mtp devices to copy from or onto external devices
+"
+HOMEPAGE="http://code.google.com/p/cantata"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    mtp [[ description = [ Support handling of external MTP devices (i.e. portable media players) ] ]]
+    replaygain [[ description = [ Support replaygain via mpg123 and ffmpeg ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        dev-libs/soprano
+        kde/kdelibs:4 [[ note = [ Could be made optional, at the cost of several features ] ]]
+        media-libs/taglib[>=1.6]
+        media-plugins/taglib-extras[>=1.0] [[ note = [ Could be made optional, but I don't see the point ] ]]
+        x11-libs/qt:4[webkit] [[ note = [ webkit can be made optional but it only makes sense if kde
+            support is made optional as well (which is possible), since kdelibs depends on qt[webkit] ] ]]
+        mtp? ( media-libs/libmtp )
+        replaygain? (
+            media/ffmpeg
+            media-libs/speex
+            media-sound/mpg123
+        )
+"
+
+src_configure() {
+    local mycmakeparams=()
+
+    if ! option replaygain; then
+        # find_package(SPEEXDSP) is only called if ffmpeg and mpg123 have been found.
+        # Therefore disabling gives an error is not actually necessary.
+        mycmakeparams+=(
+            -DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=True
+            -DCMAKE_DISABLE_FIND_PACKAGE_MPG123=True
+            -DCMAKE_DISABLE_FIND_PACKAGE_SPEEXDSP=True
+        )
+    fi
+    if ! option mtp; then
+        mycmakeparams+=(
+            -DCMAKE_DISABLE_FIND_PACKAGE_Mtp=TRUE
+        )
+    fi
+
+    ecmake "${mycmakeparams[@]}"
+}
+
