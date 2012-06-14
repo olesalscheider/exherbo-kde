@@ -24,12 +24,13 @@ DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
 
 src_prepare() {
     cat > qwtconfig.pri <<-EOF
-target.path = /usr/${LIBDIR}
-headers.path = /usr/include/qwt5
-doc.path = /usr/share/doc/${PNVR}
-CONFIG += qt warn_on thread release
-CONFIG += QwtDll QwtPlot QwtWidgets QwtDesigner
-VERSION = ${PV}
+QWT_INSTALL_DOCS      = /usr/share/doc/${PNVR}
+QWT_INSTALL_HEADERS   = /usr/include/qwt6
+QWT_INSTALL_LIBS      = /usr/${LIBDIR}
+QWT_INSTALL_PLUGINS   = /usr/${LIBDIR}/qt4/plugins/designer
+QWT_INSTALL_FEATURES  = /usr/${LIBDIR}/qt4/features
+QWT_CONFIG += QwtDll QwtPlot QwtWidgets QwtSvg QwtMathML QwtDesigner
+QWT_VERSION = ${PV}
 EOF
 }
 
