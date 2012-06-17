@@ -11,5 +11,6 @@ UPSTREAM_RELEASE_NOTES="http://blog.qt.nokia.com/2012/05/22/qt-4-8-2-and-visual-
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PNV}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
     "${FILES}"/qt-webkit-4.8.1+glib-2.31.patch
+    "${FILES}"/qt-webkit-4.8.1-no-use-ld-gold.patch
 )
 
