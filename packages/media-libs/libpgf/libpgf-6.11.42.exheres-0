@@ -9,7 +9,7 @@ HOMEPAGE="http://www.libpgf.org/"
 
 LICENCES="LGPL"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="doc"
 
 DEPENDENCIES="
