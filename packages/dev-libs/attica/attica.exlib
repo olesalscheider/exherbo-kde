@@ -24,6 +24,5 @@ DEPENDENCIES="
 
 BUGS_TO="kde@exherbo.org"
 
-# Tests cause a build failure in lib/tests/persontest.cpp (2012-03-23)
-CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=FALSE )
+CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
 
