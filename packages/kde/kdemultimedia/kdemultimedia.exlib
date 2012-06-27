@@ -95,7 +95,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 if ever at_least 4.8.2; then
     DEPENDENCIES+="
         build+run:
-            kde_parts:ffmpegthumbs? ( virtual/ffmpeg )
+            kde_parts:ffmpegthumbs? ( || ( media/ffmpeg media/libav ) )
     "
 else
     DEPENDENCIES+="

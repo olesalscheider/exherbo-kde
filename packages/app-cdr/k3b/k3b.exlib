@@ -31,7 +31,7 @@ DEPENDENCIES="
         media-libs/libsndfile
         media-libs/taglib[>=1.4.0]
         x11-libs/qt:4[X(+)][qt3support]
-        ffmpeg? ( virtual/ffmpeg )
+        ffmpeg? ( || ( media/ffmpeg media/libav ) )
         flac? ( media-libs/flac [[ note = [ Flac with C++ bindings ] ]] )
         mp3? (
             media-libs/libmad
