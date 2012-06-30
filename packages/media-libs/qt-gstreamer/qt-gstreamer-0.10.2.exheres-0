@@ -1,0 +1,45 @@
+# Copyright 2012 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 cmake_minimum_version="2.8.6" ]
+
+SUMMARY="C++ bindings for GStreamer with a Qt-style API"
+HOMEPAGE="http://gstreamer.freedesktop.org/wiki/QtGStreamer"
+DOWNLOADS="http://gstreamer.freedesktop.org/src/${PN}/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        dev-libs/boost[>=1.39]
+        dev-libs/glib:2
+        media-libs/gstreamer[>=0.10.33]
+        media-plugins/gst-plugins-base[>=0.10.33]
+        sys-devel/bison
+        sys-devel/flex
+        x11-dri/mesa
+        x11-libs/qt:4[opengl][>=4.7]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DQTGSTREAMER_CODEGEN:BOOL=TRUE
+    -DQTGSTREAMER_TESTS:BOOL=TRUE
+)
+
+src_compile() {
+    default
+    option doc && emake doc
+}
+
+src_install() {
+    default
+    option doc && dodoc -r doc
+}
+
