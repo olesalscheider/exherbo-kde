@@ -22,18 +22,20 @@ DEPENDENCIES="
         dev-libs/libxml2[>=2.7.7-r1]
         x11-libs/qt:4[>=4.6.0][dbus][X(+)]
         media-libs/gstreamer[>=0.10.30]
-        net-im/telepathy-farsight[>=0.0.15]
+        net-im/farstream[>=0.1.0]
+        net-im/telepathy-farstream[>=0.4.0]
         sys-apps/dbus
    test:
        (
             dev-python/dbus-python[>=0.83.1]
-            net-im/telepathy-glib[>=0.17.2]
+            net-im/telepathy-glib[>=0.17.5]
             x11-libs/qt:4[glib]
        ) [[ note = [ Run more tests ] ]]
 "
 
-# to build an audio/video calling example
-# telepathy-farsight >= 0.0.4 gstreamer-0.10 gstreamer-interfaces-0.10
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-fix-build-with-gcc-4.7.patch
+)
 
 BUGS_TO="kde@exherbo.org"
 
