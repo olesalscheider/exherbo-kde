@@ -1,0 +1,46 @@
+# Copyright 2012 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 ]
+
+SUMMARY="Qt bindings for telepathy logger"
+HOMEPAGE="https://projects.kde.org/projects/kdereview/${PN}"
+DOWNLOADS="mirror://kde/unstable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        dev-lang/python:=[>=2.5]
+        dev-libs/dbus-glib
+        dev-libs/glib:2
+        dev-libs/libxml2
+        media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
+        net-im/telepathy-glib[>=0.13.0]
+        net-im/telepathy-logger:=
+        net-im/telepathy-qt[>=0.9.1]
+        sys-apps/dbus
+        sys-devel/bison
+        sys-devel/flex
+        x11-libs/qt:4[glib][>=4.5.0]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
+src_compile() {
+    default
+
+    option doc && emake doxygen-doc
+}
+
+src_install() {
+    default
+
+    option doc && dodoc -r doc/*
+}
+
