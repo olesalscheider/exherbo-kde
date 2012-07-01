@@ -1,5 +1,7 @@
-upstream bug report: https://bugs.webkit.org/show_bug.cgi?id=89312
-patch is taken from Gentoo's ebuild
+Source: Rex Dieter <rdieter@fedoraproject.org>, http://pkgs.fedoraproject.org/gitweb/?p=qtwebkit.git;a=commitdiff;h=23b0fc519fd59974e79c17a7bd66e5d09fb0800c
+	Patch is taken from Gentoo's ebuild
+Upstream: Reported at https://bugs.webkit.org/show_bug.cgi?id=89312
+Reason: Newer GCCs bail when passed -fuse-ld. Also packages should not pick gold if it isn't selected.
 
 diff -urN qt-everywhere-opensource-src-4.8.1.orig/src/3rdparty/webkit/Source/common.pri qt-everywhere-opensource-src-4.8.1/src/3rdparty/webkit/Source/common.pri
 --- qt-everywhere-opensource-src-4.8.1.orig/src/3rdparty/webkit/Source/common.pri	2012-04-28 12:39:16.884473572 +0200
