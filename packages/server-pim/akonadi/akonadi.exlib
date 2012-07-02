@@ -12,7 +12,7 @@ else
     DOWNLOADS="mirror://kde/stable/${PN}/src/${PNV}.tar.bz2"
 fi
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="The server part of Akonadi"
 HOMEPAGE="http://www.akonadi-project.org"
@@ -53,6 +53,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 
 src_prepare() {
     # these tests need dbus
+    edo cd "${CMAKE_SOURCE}"
     edo sed -e '/add_server_test(imapstreamparsertest.cpp akonadiprivate)/d' \
             -e '/add_server_test(akdbustest.cpp akonadiprivate)/d' \
             -e '/add_server_test(akstandarddirstest.cpp akonadiprivate)/d' \
