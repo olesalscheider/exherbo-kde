@@ -1,0 +1,26 @@
+Source: https://bugs.kde.org/show_bug.cgi?id=300731
+Reason: fix build with ffmpeg[>=0.11]
+Upstream: no
+
+diff --git a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+index 0c5f366..9154d8e 100644
+--- a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
++++ b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+@@ -88,7 +88,7 @@ bool K3bFFMpegFile::open()
+     close();
+ 
+     // open the file
+-    int err = ::av_open_input_file( &d->formatContext, m_filename.toLocal8Bit(), 0, 0, 0 );
++    int err = ::avformat_open_input( &d->formatContext, m_filename.toLocal8Bit(), 0, 0 );
+     if( err < 0 ) {
+         kDebug() << "(K3bFFMpegFile) unable to open " << m_filename << " with error " << err;
+         return false;
+@@ -143,7 +143,7 @@ bool K3bFFMpegFile::open()
+     }
+ 
+     // dump some debugging info
+-    ::dump_format( d->formatContext, 0, m_filename.toLocal8Bit(), 0 );
++    ::av_dump_format( d->formatContext, 0, m_filename.toLocal8Bit(), 0 );
+ 
+     return true;
+ }
