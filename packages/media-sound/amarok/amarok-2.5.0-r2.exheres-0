@@ -5,7 +5,10 @@ require amarok
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/doc_build_on_kde4.6.patch )
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/doc_build_on_kde4.6.patch
+    "${FILES}/${PNV}-fix-ffmpeg.patch"
+)
 
 pkg_postinst() {
     elog "Amarok doesn't currently generate .mood files for the moodbar so they must be"
