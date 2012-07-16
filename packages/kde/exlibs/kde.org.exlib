@@ -25,6 +25,7 @@ myexparam -b git=true
 if ever is_scm; then
     if exparam -b git ; then
         SCM_REPOSITORY="git://anongit.kde.org/${PN}"
+        SCM_BRANCH="KDE/4.9"
         require scm-git
     else
         SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
