@@ -221,7 +221,8 @@ KDE_BLOCKERS="
         kde/okular
         kde/svgpart
     kde/kdemultimedia:
-        kde/dragonplayer
+        kde/audiocd-kio
+        kde/dragon
         kde/ffmpegthumbs
         kde/juk
         kde/kmix
