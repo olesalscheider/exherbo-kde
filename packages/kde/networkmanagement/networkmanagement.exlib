@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2012 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 if ever is_scm; then
@@ -35,7 +35,7 @@ DEPENDENCIES="
            )
         openconnect? (
             dev-libs/openssl
-            net-apps/openconnect[>=3.03]
+            net-apps/openconnect[>=3.99]
         )
 "
 
