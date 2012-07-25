@@ -6,7 +6,7 @@ require kdelibs
 PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS+="
-    http://dev.exherbo.org/~tgurr/distfiles/${PN}/${PN}-4.8.3_udisks2-r1.tar.bz2
+    http://dev.exherbo.org/~tgurr/distfiles/${PN}/${PN}-4.8.3_udisks2-r2.tar.bz2
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
