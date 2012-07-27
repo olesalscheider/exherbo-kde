@@ -19,7 +19,7 @@ HOMEPAGE="http://code.google.com/p/cantata"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     mtp [[ description = [ Support handling of external MTP devices (i.e. portable media players) ] ]]
     replaygain [[ description = [ Support replaygain via mpg123 and ffmpeg ] ]]
