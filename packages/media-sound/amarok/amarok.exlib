@@ -68,7 +68,6 @@ DEPENDENCIES="
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
         musicbrainz? (
-            || ( media/ffmpeg media/libav )
             media-libs/libofa[>=0.9.0]
         )
         playdar? (
@@ -82,17 +81,20 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
 
-if ever at_least 2.5.90; then
+if ever at_least 2.5.96; then
     DEPENDENCIES+="
         build+run:
             media-libs/taglib[>=1.7]      [[ description = [ Read and write tags in audio files ] ]]
             ipod? ( media-libs/libgpod[>=0.8.2] )
+            musicbrainz? ( || ( media/ffmpeg[>=0.7] media/libav ) )
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SPECTRUM_ANALYZER=ON )
 else
     DEPENDENCIES+="
         build+run:
             media-libs/taglib[>=1.6]      [[ description = [ Read and write tags in audio files ] ]]
             ipod? ( media-libs/libgpod[>=0.7.0] )
+            musicbrainz? ( || ( media/ffmpeg media/libav ) )
     "
 fi
 
