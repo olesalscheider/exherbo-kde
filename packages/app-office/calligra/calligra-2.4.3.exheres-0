@@ -7,6 +7,6 @@ PLATFORMS="~amd64 ~x86"
 
 # TODO: Check and adjust
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-0001-Crude-fix-for-automagic-dependencies.patch
+    "${FILES}"/${PN}-2.4.2-0001-Crude-fix-for-automagic-dependencies.patch
 )
 
