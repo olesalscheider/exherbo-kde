@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2011-2012 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
@@ -51,7 +51,7 @@ REMOTE_IDS="freshmeat:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.5.0|4.6.0|4.8.0|4.8.2)
+        4.5.0|4.6.0|4.8.0|4.8.2|4.9.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
         4.@(3|4|5|6|7|8).@(1|2|3|4|5|6|7|8|9|10|11.1))
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
