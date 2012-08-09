@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
@@ -90,9 +90,19 @@ DEPENDENCIES="
             sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
         )
 "
+
+if ever at_least 4.9.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            app-text/shared-desktop-ontologies[>=0.10]
+            dev-libs/soprano[>=2.7.56][virtuoso(-)]"
+fi
+
 # FIXME: solid has an optional runtime dependency upon media-player-info: macro_log_feature(MEDIAPLAYERINFO_PATH "media-player-info"
 #        "Enables identification and querying of portable media players" "http://www.freedesktop.org/wiki/Software/media-player-info"
 #        FALSE "" "Runtime-only dependency of the udev solid backend. Support for m-p-i is included even if not found during build"
+
+
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_PLATFORM_PROFILE=Desktop # this is the default profile as of KDE 4.5
