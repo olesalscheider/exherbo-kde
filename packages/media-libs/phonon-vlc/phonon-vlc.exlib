@@ -25,7 +25,7 @@ DEPENDENCIES="
         app-arch/xz
         kde/automoc4[>=0.9.86]
     build+run:
-        media/vlc[>=1.1.10][dbus]
+        media/vlc[>=2.0.1][dbus]
         media-libs/phonon[>=4.6.0]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
