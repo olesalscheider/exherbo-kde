@@ -66,7 +66,7 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
-        kde/kdelibs:${SLOT}[>=4.8.3]
+        kde/kdelibs:${SLOT}[>=4.8.5]
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
