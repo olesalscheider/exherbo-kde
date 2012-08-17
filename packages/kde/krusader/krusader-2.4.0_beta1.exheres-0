@@ -31,7 +31,3 @@ CMAKE_SOURCE=${WORKBASE}/${PNV/_/-}
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc-4.7.0.patch )
 
-src_prepare() {
-    edo cd "${CMAKE_SOURCE}"
-    default
-}
