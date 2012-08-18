@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KDEMODULE=kdegraphics-${PN}
+WORK=${WORKBASE}/${KDEMODULE}-${PV}
 
 require kde.org
 
@@ -19,6 +20,6 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=${PV}]
         kde_parts:okular? ( kde/okular:${SLOT}[>=${PV}] )
 "
-
-WORK=${WORKBASE}/${KDEMODULE}-${PV}
+# macro_display_feature_log() displays okular in spite of setting -DBUILD_okular:BOOL=false, but
+# the build works as expected
 
