@@ -56,7 +56,7 @@ DEPENDENCIES+="
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
-        kde/kdepimlibs:${SLOT}[>=4.8.3]
+        kde/kdepimlibs:${SLOT}[>=4.8.5]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         server-pim/akonadi[>=1.4.91]
         sys-libs/zlib
