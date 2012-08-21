@@ -5,8 +5,6 @@
 
 require sourceforge cmake [ api=2 ]
 
-export_exlib_phases src_prepare
-
 SUMMARY="Fast crawling desktop search engine with Qt4 GUI"
 DOWNLOADS="http://dev.exherbo.org/~philantrop/distfiles/${PNV}.tar.bz2"
 
