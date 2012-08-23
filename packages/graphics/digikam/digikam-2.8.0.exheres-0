@@ -94,11 +94,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'nepomuk Nepomuk'
 )
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-boost-1.48.patch
-    "${FILES}"/${PNV}-libkipi.patch
-)
-
 src_compile() {
     cmake_src_compile
 
