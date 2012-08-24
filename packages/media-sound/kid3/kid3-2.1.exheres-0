@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake kde sourceforge [ suffix=tar.gz ]
@@ -16,8 +16,8 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
+    chromaprint [[ description = [ Support for import from MusicBrainz Fingerprint ] ]]
     id3         [[ description = [ Support for ID3v1 and ID3v2 tags ] ]]
-    tunepimp    [[ description = [ Provides MusicBrainz support ] ]]
 "
 
 DEPENDENCIES="
@@ -28,14 +28,19 @@ DEPENDENCIES="
         media-libs/phonon
         media-libs/taglib[>=1.4]
         x11-libs/qt:4[dbus]
+        chromaprint? (
+            media/ffmpeg
+            media-libs/chromaprint
+        )
         id3? ( media-libs/id3lib )
-        tunepimp? ( media-libs/tunepimp )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DWITH_KDE:BOOL=TRUE
+    -DWITH_DBUS:BOOL=TRUE
+    -DWITH_PHONON:BOOL=TRUE
     -DWITH_TAGLIB:BOOL=TRUE
     -DWITH_MP4V2:BOOL=FALSE
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'id3 ID3LIB' 'TUNEPIMP' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'id3 ID3LIB' 'chromaprint CHROMAPRINT' )
 
