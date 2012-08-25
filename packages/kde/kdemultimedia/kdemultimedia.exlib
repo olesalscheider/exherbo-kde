@@ -64,7 +64,6 @@ DEPENDENCIES+="
         )
         kde_parts:kmix? (
             kde/kde-workspace:${SLOT}[>=${PV}]
-            media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
             pulseaudio? (
                 dev-libs/glib:2
                 media-sound/pulseaudio[>=0.9.12]
@@ -80,6 +79,7 @@ DEPENDENCIES+="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_PHONON_SUPPORT:BOOL=TRUE
+    -DWITH_Canberra:BOOL=FALSE # Upstream suddenly considered it as under development for 4.8.*
     -DWITH_Xine:BOOL=FALSE # Xine is gone in KDE >= 4.8.2
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

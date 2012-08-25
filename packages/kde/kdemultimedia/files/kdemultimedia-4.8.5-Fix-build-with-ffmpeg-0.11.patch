@@ -1,0 +1,33 @@
+Upstream: Backported from 4.9 branch
+
+From 4f03b20614c122e3e14473d42a000c0bffdce39c Mon Sep 17 00:00:00 2001
+From: Christoph Feck <christoph@maxiom.de>
+Date: Tue, 29 May 2012 09:53:18 -0400
+Subject: [PATCH] Two deprecated calls have been removed from ffmpeg 0.11.
+
+BUG:300732
+---
+ ffmpegthumbnailer/moviedecoder.cpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/ffmpegthumbnailer/moviedecoder.cpp b/ffmpegthumbnailer/moviedecoder.cpp
+index cba86d6..3a87f5c 100644
+--- a/ffmpegthumbs/ffmpegthumbnailer/moviedecoder.cpp
++++ b/ffmpegthumbs/ffmpegthumbnailer/moviedecoder.cpp
+@@ -52,12 +52,11 @@ MovieDecoder::~MovieDecoder()
+ void MovieDecoder::initialize(const QString& filename)
+ {
+     av_register_all();
+-    avcodec_init();
+     avcodec_register_all();
+ 
+     QFileInfo fileInfo(filename);
+ 
+-    if ((!m_FormatContextWasGiven) && av_open_input_file(&m_pFormatContext, fileInfo.absoluteFilePath().toUtf8().data(), NULL, 0, NULL) != 0) {
++    if ((!m_FormatContextWasGiven) && avformat_open_input(&m_pFormatContext, fileInfo.absoluteFilePath().toLocal8Bit().data(), NULL, NULL) != 0) {
+         kDebug() <<  "Could not open input file: " << fileInfo.absoluteFilePath();
+         return;
+     }
+-- 
+1.7.12
+

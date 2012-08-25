@@ -5,3 +5,8 @@ require kdemultimedia
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Fix-automagic-dependency.patch
+    "${FILES}"/${PNV}-Fix-build-with-ffmpeg-0.11.patch
+)
+
