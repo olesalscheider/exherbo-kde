@@ -1,9 +1,0 @@
-# Copyright 2011 Heiko Becker <heiko@shruuf.de>
-# Distributed under the terms of the GNU General Public License v2
-
-require ksnapshot
-
-PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES=( -p2 "${FILES}"/${PN}-4.6.2-0001-Fix-automagic-dependency-upon-Kipi-Plugins.patch )
-

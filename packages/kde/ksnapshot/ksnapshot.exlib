@@ -24,7 +24,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 
 ksnapshot_src_prepare() {
-    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    edo cd "${CMAKE_SOURCE}"
     default
 }
 
