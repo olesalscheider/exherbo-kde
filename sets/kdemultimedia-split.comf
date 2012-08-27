@@ -1,0 +1,10 @@
+# kdemultimedia split packages
+?: kde/audiocd-kio
+?: kde/dragon
+?: kde/ffmpegthumbs
+?: kde/juk
+?: kde/kmix
+?: kde/kscd
+?: kde/libkcddb
+?: kde/libkcompactdisc
+?: kde/mplayerthumbs
