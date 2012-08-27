@@ -91,6 +91,15 @@ DEPENDENCIES="
     suggestion:
         net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
 "
+
+if ever at_least 4.9.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs
+            kde/nepomuk-core"
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
+fi
+
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
