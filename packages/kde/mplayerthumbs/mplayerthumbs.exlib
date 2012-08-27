@@ -1,0 +1,31 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="MPlayer based thumbnail generator for video files"
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
+
+LICENCES="GPL-2 LGPL-2.1"
+SLOT="4"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        x11-libs/qt:4[phonon]
+    run:
+        || (
+            media/mplayer
+            media/mplayer2[>=2.0-r11]
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_PHONON_SUPPORT:BOOL=TRUE
+)
+
