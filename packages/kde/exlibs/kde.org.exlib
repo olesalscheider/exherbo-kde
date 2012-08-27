@@ -57,8 +57,6 @@ if exparam -b upstream_release_notes ; then
     esac
 fi
 
-KDE_DOWNLOADS_SUFFIX=xz
-
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
     scm)
@@ -81,18 +79,18 @@ case ${PV} in
         ;;
 
     4.@(4|5).@(80|85|90|92|95|96|98)) # Betas, RCs
-        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.${KDE_DOWNLOADS_SUFFIX}"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(5).@(9)*) # Weekly SVN snapshots
         case ${PV} in
             4.3.91) K_SVN_REV="979380" ;;
             *) die "Set K_SVN_REV for ${PV}" ;;
         esac
-        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.${KDE_DOWNLOADS_SUFFIX}"}"
+        DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}svn${K_SVN_REV}.tar.xz"}"
         WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
     4.4.@(6|7|8|9|10|11.1)) # newer KDEPim 4.4.x releases
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.${KDE_DOWNLOADS_SUFFIX}"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.${KDE_DOWNLOADS_SUFFIX}"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
 
 DEPENDENCIES="
