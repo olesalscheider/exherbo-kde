@@ -1,0 +1,26 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE CDDB library"
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
+
+LICENCES="GPL-2 LGPL-2.1 BSD-3 [[ note = [ cmake scripts ] ]]"
+SLOT="4"
+MYOPTIONS="musicbrainz [[ description = [ Music metadata lookup for KDE multimedia applications ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kde-baseapps:${SLOT}[>=${PV}]
+        media-libs/phonon
+        x11-libs/qt:4[phonon]
+        musicbrainz? ( media-libs/libmusicbrainz:5 )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'musicbrainz MusicBrainz5' )
+
