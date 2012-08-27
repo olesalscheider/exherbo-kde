@@ -1,0 +1,37 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Kioslave for accessing audio CDs"
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
+
+LICENCES="GPL-2 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
+SLOT="4"
+MYOPTIONS="flac vorbis"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/libkcddb:${SLOT}
+        kde/libkcompactdisc:${SLOT}
+        media/cdparanoia
+        media-libs/phonon
+        x11-libs/qt:4[phonon]
+        flac? ( media-libs/flac[>=1.1.2] )
+        vorbis? (
+            media-libs/libogg
+            media-libs/libvorbis
+        )
+    suggestion:
+        media-sound/lame [[ description = [ Support MP3 in the AudioCD kioslave ] ]]
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Flac
+    'vorbis OggVorbis'
+)
+
