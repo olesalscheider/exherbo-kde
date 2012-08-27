@@ -1,0 +1,22 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A multimedia player where the focus is on simplicity, instead of features"
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
+
+LICENCES="GPL-2 FDL-1.2"
+SLOT="4"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        media-libs/phonon
+        x11-libs/qt:4[phonon]
+"
+
