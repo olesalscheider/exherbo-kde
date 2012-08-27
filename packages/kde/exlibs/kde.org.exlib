@@ -33,11 +33,7 @@ if ever is_scm; then
     fi
 fi
 
-if [[ ${CATEGORY} == kde ]] && ever at_least 4.8.2; then
-    require kde [ api=2 ]
-else
-    require kde
-fi
+require kde [ api=2 ]
 
 # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
 RESTRICT=test
