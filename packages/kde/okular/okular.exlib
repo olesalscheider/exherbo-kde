@@ -31,7 +31,7 @@ DEPENDENCIES="
         djvu? ( app-text/djvu[>=3.5.17] )
         encrypted? ( app-crypt/qca:2 )
         epub? ( app-text/ebook-tools )
-        pdf? ( app-text/poppler[>=0.8][qt4] )
+        pdf? ( app-text/poppler[>=0.12.1][qt4] )
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
 "
