@@ -20,3 +20,8 @@ DEPENDENCIES="
         kde/kdelibs:4[>=${PV}]
 "
 
+# override cmake_src_prepare
+src_prepare() {
+    default
+}
+
