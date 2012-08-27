@@ -1,4 +1,4 @@
-# Copyright 2009, 2010 Ingmar Vanhassel
+# Copyright 2009, 2010, 2012 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 if ever is_scm ; then
@@ -19,7 +19,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4
+        x11-libs/qt:4[>=4.7.0]
 "
 
 BUGS_TO="kde@exherbo.org"
