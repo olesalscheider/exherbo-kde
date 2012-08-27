@@ -10,7 +10,7 @@ KDE Plasmoids module is a collection of additional Plasma data engines and widge
 "
 
 LICENCES="GPL-2 BSD-2"
-MY_KDE_PARTS="kdeobservatory"
+MY_KDE_PARTS="kdeobservatory microblog"
 MYOPTIONS+="
     kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
     marble    [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
@@ -23,9 +23,9 @@ DEPENDENCIES+="
         dev-lang/python:*
         sci-libs/eigen:2[>=2.0.3]
     build+run:
-        app-crypt/qca:2 [[ note = [ dataengines/microblog/ ] ]]
         dev-libs/attica[>=0.1.1]
         dev-libs/boost
+        dev-libs/qjson [[ note = [ dataengines/microblog, runners/youtube ] ]]
         kde/kde-workspace:${SLOT}
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepimlibs:${SLOT}
@@ -38,6 +38,10 @@ DEPENDENCIES+="
         x11-libs/qt:4[opengl][webkit]
         x11-misc/shared-mime-info[>=0.18]
         kde_parts:kdeobservatory? ( x11-libs/qwt )
+        kde_parts:microblog? (
+            app-crypt/qca:2 [[ note = [ dataengines/microblog/ ] ]]
+            sys-auth/qoauth
+        )
         kimpanel? (
             dev-libs/glib:2
             inputmethods/ibus
@@ -49,6 +53,7 @@ DEPENDENCIES+="
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Marble
     Qalculate
+    'kde_parts:microblog QtOAuth'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # We need to hardcode KDE4Workspace_DIR because switching from kde-4.6 to
