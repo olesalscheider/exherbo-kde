@@ -9,6 +9,7 @@ LICENCES="
     GPL-2
     LGPL-2.1
     TWAIN [[ note = [ ksanetwain/twain.h ] ]]
+    BSD-3 [[ note = [ cmake scripts ] ]]
 "
 MYOPTIONS=""
 
