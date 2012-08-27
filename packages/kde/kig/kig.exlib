@@ -13,7 +13,6 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-
         python? ( dev-libs/boost[>=1.31.0] )
     run:
         dev-lang/python:* [[ note = [ The pykig.py program is built unconditionally ] ]]
