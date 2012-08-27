@@ -1,4 +1,5 @@
 # Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -16,9 +17,15 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/jpeg
-        media-libs/lcms
         sys-devel/gcc:*[openmp]
 "
+
+if ever at_least 4.9.0 ; then
+    DEPENDENCIES+=" build+run: media-libs/lcms2"
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_LCMS2:BOOL=TRUE )
+else
+    DEPENDENCIES+=" build+run: media-libs/lcms"
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenMP:BOOL=TRUE
