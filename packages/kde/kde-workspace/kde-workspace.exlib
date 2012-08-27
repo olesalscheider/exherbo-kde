@@ -98,11 +98,9 @@ DEPENDENCIES="
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
+        networkmanager? ( net-apps/NetworkManager[>=0.7.0&<0.9] )
         python? (
             dev-lang/python:=
-            dev-python/PyQt4[>=4.4.0]
-            dev-python/sip[>=4.7.1]
         )
         qalculate? ( sci-libs/libqalculate[>=0.9.5] )
         xinerama? ( x11-libs/libXinerama )
@@ -124,6 +122,20 @@ DEPENDENCIES="
             )
         )
 "
+
+if ! ever at_least 4.9.0 ; then
+    DEPENDENCIES="
+    build+run:
+        python? (
+            dev-python/PyQt4[>=4.4.0]
+            dev-python/sip[>=4.7.1]
+        )"
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS=+(
+        'python PyKDE4'
+        'python PyQt4'
+        'python SIP'
+    )
+fi
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
@@ -166,9 +178,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     NetworkManager
     OpenGLES
     'python PythonLibrary'
-    'python PyKDE4'
-    'python PyQt4'
-    'python SIP'
     'qalculate Qalculate'
      XINERAMA
 )
