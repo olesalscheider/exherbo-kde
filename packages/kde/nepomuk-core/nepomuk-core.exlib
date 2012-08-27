@@ -1,0 +1,18 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Central services like file indexing, file system monitoring, query, storage, and corresponding client libraries"
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-pim/strigi[>=0.7.3]
+        app-text/shared-desktop-ontologies[>=0.10]
+        dev-libs/soprano[>=2.7.56][virtuoso]
+        kde/kdelibs:${SLOT}[>=4.7.0]
+"
+
