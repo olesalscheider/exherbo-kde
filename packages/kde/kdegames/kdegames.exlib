@@ -1,5 +1,5 @@
 # Copyright 2008 Arne Janbu <arnej@ampheus.de>
-# Copyright 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Copyright 2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
@@ -53,7 +53,9 @@ DEPENDENCIES+="
             games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
         )
         kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
+        kde_parts:kpat? ( x11-misc/shared-mime-info )
 "
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_OpenGL:BOOL=ON
     -DWITH_QCA2:BOOL=ON
@@ -64,11 +66,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kgoldrunner OpenAL'
     'kde_parts:kgoldrunner SndFile'
 )
-
-if ever at_least 4.8.2; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kpat? ( x11-misc/shared-mime-info )
-    "
-fi
 

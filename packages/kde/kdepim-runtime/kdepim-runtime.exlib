@@ -1,4 +1,4 @@
-# Copyright 2009 Ingmar Vanhassel
+# Copyright 2009, 2012 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -26,18 +26,11 @@ DEPENDENCIES="
         dev-libs/libxml2
         dev-libs/soprano[>=2.3.70]  [[ note = [ raptorparser plugin enabled ] ]]
         kde/kde-runtime:${SLOT}[>=${PV}]
-        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdelibs:${SLOT}[>=4.7.41]
         kde/kdepimlibs:${SLOT}[>=4.6.41]
         server-pim/akonadi[>=1.4.91]
         x11-misc/shared-mime-info[>=0.30]
 "
-
-if ever at_least 4.8.0; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs:${SLOT}[>=4.7.41]
-    "
-fi
 
 # Currently disabled (resources/CMakeLists.txt)
 # OpenChange -- http://www.openchange.org -- "Needed to support OpenChange / Exchange servers"

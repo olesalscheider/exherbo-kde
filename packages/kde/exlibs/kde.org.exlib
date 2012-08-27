@@ -61,11 +61,7 @@ if exparam -b upstream_release_notes ; then
     esac
 fi
 
-if ever at_least 4.8.2; then
-    KDE_DOWNLOADS_SUFFIX=xz
-else
-    KDE_DOWNLOADS_SUFFIX=bz2
-fi
+KDE_DOWNLOADS_SUFFIX=xz
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in

@@ -156,16 +156,12 @@ MYOPTIONS+="
 "
 
 src_prepare() {
-    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    edo cd "${CMAKE_SOURCE}"
     default
 }
 
 src_compile() {
-    if ever at_least 4.8.2; then
-        default
-    else
-        cmake_src_compile
-    fi
+    default
 
     if option doc; then
         edo pushd "${WORK}/doc/api"

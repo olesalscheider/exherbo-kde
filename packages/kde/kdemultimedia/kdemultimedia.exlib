@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -49,6 +49,7 @@ DEPENDENCIES+="
         sys-sound/alsa-lib [[ note = [ required by kmix and libkcompactdisc ] ]]
         x11-libs/qt:4[phonon]
         kde_parts:dragonplayer? ( media-libs/phonon[>=4.3.0] )
+        kde_parts:ffmpegthumbs? ( || ( media/ffmpeg media/libav ) )
         kde_parts:juk? (
             media-libs/taglib[>=1.6]
             tunepimp? ( media-libs/tunepimp )
@@ -63,6 +64,7 @@ DEPENDENCIES+="
         )
         kde_parts:kmix? (
             kde/kde-workspace:${SLOT}[>=${PV}]
+            media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
             pulseaudio? (
                 dev-libs/glib:2
                 media-sound/pulseaudio[>=0.9.12]
@@ -91,24 +93,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     TunePimp
     'vorbis OggVorbis'
 )
-
-if ever at_least 4.8.2; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:ffmpegthumbs? ( || ( media/ffmpeg media/libav ) )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:ffmpegthumbs? ( media/ffmpeg )
-    "
-
-fi
-
-if ever at_least 4.8.3; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kmix? ( media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]] )
-    "
-fi
 

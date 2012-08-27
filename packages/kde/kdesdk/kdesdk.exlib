@@ -56,6 +56,7 @@ DEPENDENCIES+="
         )
         kde_parts:poxml? ( dev-java/antlr[=2*] )
         kde_parts:umbrello? (
+            sys-devel/cmake[>=2.8]
             dev-libs/boost[>=1.33.1]
             dev-libs/libxslt
             dev-libs/libxml2
@@ -68,13 +69,6 @@ DEPENDENCIES+="
             kde/pykde4:${SLOT}[>=4.7.4]
         )
 "
-
-if ever at_least 4.8.2; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:umbrello? ( sys-devel/cmake[>=2.8] )
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kdeaccounts-plugin KdepimLibs'

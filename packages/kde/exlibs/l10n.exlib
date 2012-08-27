@@ -1,4 +1,4 @@
-# Copyright 2008-2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008-2009, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -8,11 +8,7 @@ myexparam api=1
 myexparam langs
 myexparam base_uri
 
-if ever at_least 4.8.2; then
-    KDE_DOWNLOADS_SUFFIX=xz
-else
-    KDE_DOWNLOADS_SUFFIX=bz2
-fi
+KDE_DOWNLOADS_SUFFIX=xz
 
 set_kde_l10n_downloads() {
     local localisation base_uri=$(exparam base_uri)

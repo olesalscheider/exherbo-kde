@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2010-2011 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
@@ -9,7 +9,7 @@ DESCRIPTION="
 KDE Plasmoids module is a collection of additional Plasma data engines and widgets (applets).
 "
 
-LICENCES="GPL-2"
+LICENCES="GPL-2 BSD-2"
 MY_KDE_PARTS="kdeobservatory"
 MYOPTIONS+="
     kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
@@ -32,11 +32,16 @@ DEPENDENCIES+="
         kde/libkexiv2:${SLOT} [[ note = [ Automatic rotation of the frame applet ] ]]
         kde/qimageblitz[>=0.0.4]
         x11-dri/mesa
+        x11-libs/dbusmenu-qt
         x11-libs/libX11
         x11-libs/libXrender
         x11-libs/qt:4[opengl][webkit]
         x11-misc/shared-mime-info[>=0.18]
         kde_parts:kdeobservatory? ( x11-libs/qwt )
+        kimpanel? (
+            dev-libs/glib:2
+            inputmethods/ibus
+        )
         marble? ( kde/marble:4 )
         qalculate? ( sci-libs/libqalculate )
 "
@@ -52,6 +57,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # the wrong dir ( to be more specific it will pick up
     # /usr/${LIBDIR}/cmake/KDE4Workspace-4.6.5/ )
     -DKDE4Workspace_DIR:STRING=/usr/${LIBDIR}/cmake/KDE4Workspace/
+    -DWITH_DBusMenuQt:BOOL=TRUE
     -DWITH_KDE4Workspace:BOOL=TRUE
     -DWITH_KdepimLibs:BOOL=TRUE
     -DWITH_Kexiv2:BOOL=TRUE
@@ -59,27 +65,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Nepomuk:BOOL=ON
     -DWITH_OpenGL:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
+    # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
+    # kimpanel has been activated
+    -DBUILD_scim=Off
 )
 
-if ever at_least 4.8.0; then
-    LICENCES+=" BSD-2"
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/dbusmenu-qt
-            kimpanel? (
-                dev-libs/glib:2
-                inputmethods/ibus
-            )
-    "
-    # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
-    # kimpanel has been aktivated
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_scim=Off -DWITH_DBusMenuQt:BOOL=TRUE )
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kimpanel ibus' )
-else
-    DEPENDENCIES+="
-        build+run:
-            kimpanel? ( inputmethods/scim[>=1.4] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kimpanel SCIM' )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kimpanel ibus' )
 

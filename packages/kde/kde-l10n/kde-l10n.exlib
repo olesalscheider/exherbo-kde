@@ -1,10 +1,11 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 myexparam langs
 myexparam base_uri="mirror://kde/stable/${PV}/src/${PN}"
 
-ever at_least 4.8.2 && api=2 || api=1
+api=2
+
 require kde.org [ git=false ] \
            l10n [ api=${api} base_uri="$(exparam base_uri)" langs="$(exparam langs)" ]
 

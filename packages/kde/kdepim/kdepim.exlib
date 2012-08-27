@@ -32,6 +32,7 @@ MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kont
 korganizer ktimetracker strigi-analyzer"
 
 MYOPTIONS+="
+    barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -55,11 +56,12 @@ DEPENDENCIES+="
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
-        kde/kdepimlibs:${SLOT}[>=4.6.41]
+        kde/kdepimlibs:${SLOT}[>=4.8.3]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         server-pim/akonadi[>=1.4.91]
         sys-libs/zlib
         x11-libs/qt:4[dbus][sql]
+        barcodes? ( kde/prison )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -80,23 +82,13 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'barcodes Prison'
     'kde_parts:kleopatra Assuan'
     'kde_parts:kleopatra Assuan2'
 )
 
-if ever at_least 4.8.3; then
-    MYOPTIONS="barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
-        ${MYOPTIONS}"
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs:${SLOT}[>=4.8.3]
-            barcodes? ( kde/prison )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' )
-fi
-
 kdepim_src_prepare() {
-    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    edo cd "${CMAKE_SOURCE}"
     default
 }
 

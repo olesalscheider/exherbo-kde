@@ -10,8 +10,11 @@ LICENCES="GPL-2 FDL-1.2 LGPL-2
 "
 
 MYOPTIONS=""
+
+# FIXME: automagic dependency upon QtMathML Widget - http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html
 DEPENDENCIES="
     build+run:
+        kde/analitza
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkdeedu
         media-libs/phonon
@@ -20,21 +23,4 @@ DEPENDENCIES="
     run:
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
-
-if ever at_least 4.8.2; then
-    # FIXME: automagic dependency upon QtMathML Widget - http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html
-    DEPENDENCIES+="
-        build+run:
-            kde/analitza
-    "
-else
-    MYOPTIONS+="
-        console-interface [[ description = [ Provide a console interface for kalgebra ] ]]
-    "
-    DEPENDENCIES+="
-        build+run:
-            console-interface? ( sys-libs/readline )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'console-interface Readline' )
-fi
 

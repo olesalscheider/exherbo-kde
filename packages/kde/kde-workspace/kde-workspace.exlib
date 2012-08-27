@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2011 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
@@ -59,7 +59,8 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libusb:0.1
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
-        kde/kdelibs:${SLOT}[>=4.7.4]
+        kde/kactivities:${SLOT}[>=4.8.0]
+        kde/kdelibs:${SLOT}[>=4.8.3]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         kde/kde-runtime:${SLOT}[>=${PV}]
@@ -171,16 +172,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'qalculate Qalculate'
 )
 
-if ever at_least 4.8.3; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kactivities:${SLOT}[>=4.8.0]
-            kde/kdelibs:${SLOT}[>=4.8.3]
-    "
-fi
-
 src_prepare() {
-    ever at_least 4.8.2 && edo cd "${CMAKE_SOURCE}"
+    edo cd "${CMAKE_SOURCE}"
     default
 
     # We sed out the CMake check for PyKDE4, to avoid a circular dependency on kde/kdebindings:4, which provides PyKDE4
