@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="A wrapper around Exiv2 library to manipulate pictures metadata as EXIF IPTC and XMP"
 
-LICENCES="GPL-2 LGPL-2"
+LICENCES="GPL-2 LGPL-2 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS=""
 
 DEPENDENCIES="
