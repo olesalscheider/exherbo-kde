@@ -36,6 +36,13 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
+if ever at_least 4.9.0 ; then
+    DEPENDENCIES+="
+        app-text/shared-desktop-ontologies[>=0.10]
+        server-pim/akonadi[>=1.8.0]"
+
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' Ldap )
 
