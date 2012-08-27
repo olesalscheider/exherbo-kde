@@ -1,0 +1,9 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ git=false ]
+
+SUMMARY="Additional themes, widgets, screensavers, sounds, wallpapers, etc for the KDE base system"
+
+LICENCES="GPL-2"
+
