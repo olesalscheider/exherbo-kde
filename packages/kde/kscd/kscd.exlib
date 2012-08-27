@@ -10,7 +10,6 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 BSD-3 [[ note = [ cmake scripts ] ]]"
-SLOT="4"
 MYOPTIONS=""
 
 DEPENDENCIES="
