@@ -83,7 +83,7 @@ DEPENDENCIES="
         x11-apps/iceauth
         x11-apps/rgb
     recommendation:
-        sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
+        sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
         policykit? (
             sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
