@@ -59,8 +59,8 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libusb:0.1
         dev-libs/soprano[>=2.5.63][virtuoso(+)]
-        kde/kactivities:${SLOT}[>=4.8.0]
-        kde/kdelibs:${SLOT}[>=4.8.5]
+        kde/kactivities:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         kde/kde-runtime:${SLOT}[>=${PV}]
