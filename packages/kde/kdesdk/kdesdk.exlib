@@ -12,23 +12,26 @@ kate: A fast and advanced text editor, extensible with nice plugins
 kcachegrind: A Profiling Visualisation Tool
 kmtrace: converts glibc's mtrace log into a full backtrace
 kompare: A program to view the differences between files
-kspy: displays all used QObjects in an application
 kuiviewer: A KPart that lets you view .ui files
 lokalize: A computer-aided translation system
 okteta: A binary file editor
 poxml: auxillary programs for documentation translation
 scripts: various helper scripts (see scripts/README)
-scheck: An interface style to highlight accel and style guide conflicts
 umbrello: A UML modeller
 "
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2
     BSD-3 [[ note = [ cmake scripts ] ]]
 "
-MY_KDE_PARTS="cervisia kapptemplate kcachegrind kdeaccounts-plugin
-kmtrace kompare kstartperf kuiviewer lokalize okteta poxml scripts
+MY_KDE_PARTS+="cervisia kapptemplate kcachegrind kmtrace kompare
+kstartperf kuiviewer lokalize okteta poxml scripts
 strigi-analyzer umbrello
 "
+if ever at_least 4.9.0; then
+    MY_KDE_PARTS+=" thumbnailers"
+else
+    MY_KDE_PARTS+=" kdeaccounts-plugin"
+fi
 
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
@@ -44,7 +47,6 @@ DEPENDENCIES+="
         dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
         kde_parts:kioslave? ( dev-scm/subversion[>=1.4] )
         kde_parts:lokalize? (
             app-spell/hunspell
@@ -70,8 +72,21 @@ DEPENDENCIES+="
         )
 "
 
+if ever at_least 4.9.0; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:scripts? ( sys-devel/cmake[>=2.8] )
+            kde_parts:thumbnailers? ( sys-devel/gettext )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
+        "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kdeaccounts-plugin KdepimLibs' )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'kde_parts:kdeaccounts-plugin KdepimLibs'
     'kde_parts:kioslave SVN'
     'kde_parts:lokalize HUNSPELL'
     'kde_parts:okteta QCA2'
@@ -86,8 +101,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibKonq:BOOL=TRUE
     # kde_parts doesn't work with / and these plugins are very small and need no
     # additional dependencies, so we hard enable those
-    -DBUILD_dolphin-plugins/bazaar:BOOL=TRUE
-    -DBUILD_dolphin-plugins/git:BOOL=TRUE
+    -DBUILD_dolphin-plugins/bazaar:BOOL=TRUE # those four cmake switches are gone in KDE >=4.9.0
+    -DBUILD_dolphin-plugins/git:BOOL=TRUE    # and plugins are built if WITH_LibKonq=TRUE
     -DBUILD_dolphin-plugins/hg:BOOL=TRUE
     -DBUILD_dolphin-plugins/svn:BOOL=TRUE
 )
