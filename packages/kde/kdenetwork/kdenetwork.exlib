@@ -48,6 +48,7 @@ MY_KOPETE_PLUGINS+="
                  description = [ Voice clips support in Windows Live Messenger Kopete plugin ] ]]
 "
 
+ever at_least 4.9.0 && MYOPTIONS+=" telepathy"
 MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] requires = [ kde_parts: kget ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
@@ -144,6 +145,8 @@ DEPENDENCIES+="
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 
+ever at_least 4.9.0 && DEPENDENCIES+=" build+run: telepathy? ( net-libs/telepathy-qt[>=0.9] )"
+
 # FIXME
 # Warning: kppp uses setuid
 
@@ -179,13 +182,16 @@ src_configure() {
         cmakeparams+=( -DWITH_${p}:BOOL=TRUE )
     done
 
+    # telepathy is no longer experimental from 4.9.0 upwards
+    if ! ever at_least 4.9.0 ; then
+        cmakeparams+=( -DWITH_telepathy=OFF )
+    fi
+
     # This isn't optional for kdelibs:4
     cmakeparams+=( -DWITH_OpenSSL=TRUE -DWITH_JPEG=TRUE )
 
     # the following do not work
-    # telepathy qt4 can be enabled in KDE 4.6.0 by enabling -DBUILD_EXPERIMENTAL_TUBES_SUPPORT but
-    # it's highly discouraged
-    cmakeparams+=( -DWITH_telepathy=OFF -DWITH_Decibel=OFF -DWITH_KTorrent:BOOL=OFF )
+    cmakeparams+=( -DWITH_Decibel=OFF -DWITH_KTorrent:BOOL=OFF )
 
     # These are missing required dependencies
     cmakeparams+=( -DWITH_meanwhile=OFF -DWITH_LibMeanwhile=OFF ) # net-libs/meanwhile, http://meanwhile.sf.net
@@ -266,6 +272,7 @@ src_configure() {
         $(cmake_with kopete_plugins:wlm_voice WLM_MEDIASTREAMER) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
+        $(ever at_least 4.9.0 && cmake_with telepathy TelepathyQt4) \
         -DMOZPLUGIN_INSTALL_DIR=/usr/${LIBDIR}/xulrunner/plugins \
         -DWITH_GMP=OFF
 }
