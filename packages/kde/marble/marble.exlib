@@ -20,11 +20,6 @@ MYOPTIONS="
 "
 
 # marble provides a qt-only mode which does not need kdelibs. Currently, we enforce the kde mode.
-#
-# FIXME: There are automagic dependencies on liblocation (maemo) and qtmobility in
-# src/plugins/positionprovider
-# Currently, we don't have packages for these, but a patch should be submitted upstream to make
-# detection optional.
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
@@ -39,7 +34,11 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
-    -DHAVE_LIBGPS=OFF
+    -DWITH_libgps=OFF
+    -DWITH_liblocation=OFF
+    -DWITH_QtLocation=OFF
+    # plugin to display ESRI Shapefiles via libshp http://shapelib.maptools.org/
+    -DWITH_libshp=OFF
 
     -DWITH_DESIGNER_PLUGIN=ON
 )
