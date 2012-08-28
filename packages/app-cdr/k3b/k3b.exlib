@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -25,7 +25,10 @@ MYOPTIONS="debug ffmpeg flac mp3 musepack musicbrainz vorbis
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.4.0]
-        kde/kdemultimedia:4 [[ note = [ KCddb is used to retrieve audio CD meta data from the internet ] ]]
+        || (
+            kde/libkcddb:4
+            kde/kdemultimedia:4
+        ) [[ note = [ KCddb is used to retrieve audio CD meta data from the internet ] ]]
         media-libs/libdvdread[>=1.0]
         media-libs/libsamplerate
         media-libs/libsndfile
