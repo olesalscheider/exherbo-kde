@@ -145,7 +145,7 @@ DEPENDENCIES+="
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
 
-ever at_least 4.9.0 && DEPENDENCIES+=" build+run: telepathy? ( net-libs/telepathy-qt[>=0.9] )"
+ever at_least 4.9.0 && DEPENDENCIES+=" build+run: telepathy? ( net-im/telepathy-qt[>=0.9] )"
 
 # FIXME
 # Warning: kppp uses setuid
