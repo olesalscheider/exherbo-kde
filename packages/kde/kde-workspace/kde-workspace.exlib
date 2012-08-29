@@ -124,7 +124,7 @@ DEPENDENCIES="
 "
 
 if ! ever at_least 4.9.0 ; then
-    DEPENDENCIES="
+    DEPENDENCIES+="
     build+run:
         python? (
             dev-python/PyQt4[>=4.4.0]
