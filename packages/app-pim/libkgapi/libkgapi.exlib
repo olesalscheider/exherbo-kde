@@ -1,0 +1,32 @@
+# Copyright 2011, 2012 Johannes Nixdorf <mixi@exherbo.org>
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 ]
+
+if ever is_scm; then
+    SCM_REPOSITORY="git://anongit.kde.org/libkgapi"
+    require scm-git
+else
+    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+fi
+
+SUMMARY="An Akonadi Resource for accessing Google services, like Google Calendar and Google Contacts"
+HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt
+    build+run:
+        dev-libs/qjson
+        kde/kdelibs:4[>=4.6.0]
+        kde/kdepimlibs:4[>=4.5.63]
+        x11-libs/qt:4[>=4.7.0][webkit]
+"
+
+BUGS_TO="kde@exherbo.org"
+
