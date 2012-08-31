@@ -1,4 +1,4 @@
-# Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require sourceforge [ pnv=${PNV/_/-} ] kde [ api=2 ]
@@ -25,7 +25,12 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         sys-devel/gettext
+    build+run:
+        kde/kdelibs:4
+        kde/kde-baseapps:4
 "
+
+BUGS_TO="kde@exherbo.org"
 
 CMAKE_SOURCE=${WORKBASE}/${PNV/_/-}
 
