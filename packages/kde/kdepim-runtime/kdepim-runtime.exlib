@@ -40,17 +40,12 @@ if ever at_least 4.9.0 ; then
             dev-libs/qjson
             server-pim/akonadi[>=1.8.0]"
     CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # Next parameter doesn't exist unless libkolab is found, pass it anyway since we DO want it
-        # used when libkolab is found, to make libkolab not automagic
-        -DBUILD_kolabproxy:BOOL=FALSE
+        -DCMAKE_DISABLE_FIND_PACKAGE_Libkolab:BOOL=TRUE
         # Google Calendar, Contacts
         -DBUILD_calendar:BOOL=TRUE
         -DBUILD_contacts:BOOL=TRUE
     )
 fi
-
-# Currently searched for, won't be used since we pass -DBUILD_kolabproxy=FALSE, also non-existant in Exherbo:
-# find_package(Libkolab 0.2)
 
 # Currently disabled (resources/CMakeLists.txt)
 # OpenChange -- http://www.openchange.org -- "Needed to support OpenChange / Exchange servers"
