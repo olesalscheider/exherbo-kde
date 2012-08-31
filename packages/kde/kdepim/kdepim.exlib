@@ -54,9 +54,9 @@ DEPENDENCIES+="
         dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/soprano[>=2.3.70]
         kde/kde-runtime:${SLOT}[>=${PV}]
-        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
-        kde/kdepimlibs:${SLOT}[>=4.8.5]
+        kde/kdepimlibs:${SLOT}[>=${PV}]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         server-pim/akonadi[>=1.4.91]
         sys-libs/zlib
@@ -68,6 +68,15 @@ DEPENDENCIES+="
             x11-libs/libXScrnSaver
         )
 "
+
+if ever at_least 4.9.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            app-text/shared-desktop-ontologies[>=0.10]
+            kde/nepomuk-core:${SLOT}[>=${PV}]
+            server-pim/akonadi[>=1.8.0]"
+fi
+
 # Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
 # macro_log_feature(DBLATEX_EXECUTABLE "dblatex" "The DocBook to LaTeX converter" "http://dblatex.sourceforge.net/" FALSE
 #     "" "Required for generating Kontact-Touch license information.")
