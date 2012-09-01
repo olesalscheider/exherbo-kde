@@ -28,7 +28,7 @@ UPSTREAM_RELEASE_NOTES="${HOMEPAGE}news/${PN}-$(ever replace - ${PV})-released/"
 
 LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
-MY_KDE_PARTS="active braindump flow karbon kexi krita mobile plan sheets stage words"
+MY_KDE_PARTS="active braindump flow karbon kexi krita plan sheets stage words"
 
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
@@ -38,6 +38,8 @@ MYOPTIONS+="
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
+    mpxj           [[ description = [ Support for importing mpxj files (i.e. Microsoft Project Exchange, Microsoft Project, Planner) in Plan ] requires = [ kde_parts: plan ] ]]
+    msworks        [[ description = [ Support for Microsoft Works files in Words ] requires = [ kde_parts: words ] ]]
     mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
     openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
     openjpeg       [[ description = [ Support for the JPEG 2000 image format ] ]]
@@ -61,12 +63,12 @@ MYOPTIONS+="
 "
 
 DEPENDENCIES+="
+    build:
+        mpxj? ( virtual/jdk )
     build+run:
         dev-libs/attica [[ note = [ Can be made optional, but it's small and useful and does not pull in additional dependencies ] ]]
         dev-libs/boost
         dev-lang/perl:*
-        dev-libs/libxml2 [[ note = [ Required by the xlsltfilter and used by calligra mobile ] ]]
-        dev-libs/libxslt [[ note = [ Required by the xsltfilter ] ]]
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
         kde/kdelibs:4[>=4.3.0]
         kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
@@ -102,13 +104,13 @@ DEPENDENCIES+="
                 openjpeg? ( media-libs/OpenJPEG )
             )
             wordperfect? (
-                office-libs/libwpd[>=0.8]
+                office-libs/libwpd[>=0.9]
                 office-libs/libwpg[>=0.1]
             )
         )
         kde_parts:kexi? (
             dev-libs/icu
-            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.10 is recommended ] ]]
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 is recommended ] ]]
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
@@ -129,9 +131,6 @@ DEPENDENCIES+="
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
         )
-        kde_parts:mobile? (
-            dev-libs/openssl
-        )
         kde_parts:stage? (
             kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
@@ -140,7 +139,8 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:words? (
-            wordperfect? ( office-libs/libwpd[>=0.8] )
+            wordperfect? ( office-libs/libwpd[>=0.9] )
+            msworks? ( office-libs/libwps[>=0.2] )
         )
         marble? (
             || (
@@ -158,6 +158,8 @@ DEPENDENCIES+="
             description = [ Install the same files ]
             resolution = uninstall-blocked-after
         ]]
+    run:
+        mpxj? ( virtual/jre )
 "
 
 # Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.4.1
@@ -170,17 +172,14 @@ src_configure() {
         $(kde4_shared_cmake_params)
         -DTINY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
-        -DWITH_LCMS:BOOL=FALSE # lcms:1 isn't supported by calligra anymore, they just forgot to
-                               # remove the check for the package before the release
         -DWITH_LCMS2:BOOL=TRUE
         -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db. Package unwritten.
         -DWITH_KdepimLibs=ON
-        -DWITH_LibXml2=ON
-        -DWITH_LibXslt=ON
         -DWITH_OpenGL=ON
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
         -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
         -DWITH_{Open,Qt}Shiva:BOOL=OFF # krita/plugins/extensions/. Packages unwritten.
+        -DWITH_LibVisio=OFF # Required by the Flow visio import filter. Package unwritten.
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
         $(cmake_build kde_parts:plan kdgantt)
@@ -190,9 +189,10 @@ src_configure() {
         $(cmake_with FreeTDS)
         $(cmake_with GLEW)
         $(cmake_with kde_parts:krita Exiv2)
-        $(cmake_with kde_parts:mobile OpenSSL)
         $(cmake_with kde_parts:stage Okular)
         $(cmake_with Marble)
+        $(cmake_with mpxj JNI)
+        $(cmake_with msworks LibWPS)
         $(cmake_with MySQL)
         $(cmake_with OpenEXR)
         $(cmake_with pdf Poppler)
