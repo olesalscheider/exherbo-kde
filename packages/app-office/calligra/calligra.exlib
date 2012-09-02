@@ -49,6 +49,7 @@ MYOPTIONS+="
     solver         [[ description = [ Solver plugin for Sheets ] requires = [ kde_parts: sheets ] ]]
     spacenavigator [[ description = [ Space navigator 3D mouse device plugin ] ]]
     tiff           [[ description = [ Support for TIFF (Tagged Image File Format) files in Krita ] ]]
+    visio          [[ description = [ Support for importing files from MS Visio in Flow ] requires = [ kde_parts: flow ] ]]
     wordperfect    [[ description = [ WordPerfect Document support for Words and Graphics support for Karbon ] ]]
 
     ( mdb mysql postgresql ) [[ requires = [ kde_parts: kexi ] ]]
@@ -96,7 +97,14 @@ DEPENDENCIES+="
         )
         kde_parts:braindump? (
             x11-libs/qt:4[webkit] [[ note = [ The webshape plugin makes use of this, dep is automagic ] ]]
+        )
+        kde_parts:flow? (
+            visio? (
+                office-libs/libvisio [[ note = [ unwritten, http://www.freedesktop.org/wiki/Software/libvisio ] ]]
+                office-libs/libwpd[>=0.9]
+                office-libs/libwpg[>=0.2]
             )
+        )
         kde_parts:karbon? (
             eps? ( media-gfx/pstoedit [[ note = [ Required for eps import (PS/PDF to SVG) ] ]] )
             pdf? (
@@ -105,7 +113,7 @@ DEPENDENCIES+="
             )
             wordperfect? (
                 office-libs/libwpd[>=0.9]
-                office-libs/libwpg[>=0.1]
+                office-libs/libwpg[>=0.2]
             )
         )
         kde_parts:kexi? (
@@ -200,6 +208,7 @@ src_configure() {
         $(cmake_with raw Kdcraw)
         $(cmake_with solver GSL)
         $(cmake_with spacenavigator Spnav)
+        $(cmake_with visio LibVisio)
         $(cmake_with TIFF)
     )
 
