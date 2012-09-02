@@ -59,7 +59,6 @@ DEPENDENCIES="
             media-libs/libgpod[>=0.8.2]
             x11-libs/gdk-pixbuf:2.0   [[ description = [ Support for artwork on iPods ] ]]
         )
-        lastfm? ( media-libs/liblastfm[>=0.3.0&<1.0] )
         mp3tunes? (
             dev-libs/glib:2
             dev-libs/libxml2
@@ -83,6 +82,18 @@ DEPENDENCIES="
     suggestion:
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
+
+if ever at_least scm; then
+    DEPENDENCIES+="
+        build+run:
+            lastfm? ( media-libs/liblastfm[>=1.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            lastfm? ( media-libs/liblastfm[>=0.3.0&<1.0] )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
