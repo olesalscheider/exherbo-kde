@@ -15,6 +15,8 @@ HOMEPAGE="http://kdepim.kde.org/akonadi/"
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MYOPTIONS=""
+ever at_least 4.9.0 && MYOPTIONS+=" google [[ description = [ Access Google Calendar and Contacts
+                                                              via Akonadi ] ]]"
 
 DEPENDENCIES="
     build:
@@ -35,15 +37,19 @@ DEPENDENCIES="
 if ever at_least 4.9.0 ; then
     DEPENDENCIES+="
         build+run:
-            app-pim/libkgapi[>=0.4.0]
             app-text/shared-desktop-ontologies[>=0.10]
-            dev-libs/qjson
-            server-pim/akonadi[>=1.8.0]"
+            server-pim/akonadi[>=1.8.0]
+            google? (
+                app-pim/libkgapi[>=0.4.0]
+                dev-libs/qjson
+            )"
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+        'google calendar'
+        'google contacts'
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'google LibKGAPI' )
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DCMAKE_DISABLE_FIND_PACKAGE_Libkolab:BOOL=TRUE
-        # Google Calendar, Contacts
-        -DBUILD_calendar:BOOL=TRUE
-        -DBUILD_contacts:BOOL=TRUE
     )
 fi
 
