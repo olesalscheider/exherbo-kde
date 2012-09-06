@@ -57,7 +57,7 @@ MYOPTIONS+="
 
     openjpeg? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
-    kde_parts: ${MY_KDE_PARTS}
+    kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
 
     pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
