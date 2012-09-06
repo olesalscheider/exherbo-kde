@@ -5,7 +5,7 @@
 
 myexparam api=1
 
-require flag-o-matic cmake [ api=$(exparam api) cmake_minimum_version='2.6.8' ]
+require flag-o-matic cmake [ api=$(exparam api) ]
 
 export_exlib_phases pkg_setup src_configure
 
