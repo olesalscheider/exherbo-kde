@@ -1,9 +1,0 @@
-# Copyright 2010 Ingmar Vanhassel
-# Distributed under the terms of the GNU General Public License v2
-
-require libktorrent
-
-PLATFORMS="~amd64 ~x86"
-
-WORK=${WORKBASE}/${PNV}-3
-
