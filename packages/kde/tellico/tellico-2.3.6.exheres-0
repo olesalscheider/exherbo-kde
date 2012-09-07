@@ -1,0 +1,61 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde
+
+SUMMARY="A collection manager for KDE"
+DESCRIPTION="
+Tellico makes it easy to track your books, videos, music, even your wine and anything else. A simple
+and intuitive interface shows cover images, groupings, and any detail you want. Grab information
+from many popular Internet sites, including IMDB.com, Amazon.com, and most libraries.
+"
+HOMEPAGE="http://tellico-project.org/"
+DOWNLOADS="http://tellico-project.org/files/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    pdf     [[ description = [ Support for reading PDFs and PDF/XMP metadata ] ]]
+    scanner [[ description = [ Support adding scanned images to a collection ]  ]]"
+
+REMOTE_IDS="freecode:tellico"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        dev-libs/libxml2
+        dev-libs/libxslt
+        dev-libs/qjson
+        dev-libs/soprano
+        kde/kdelibs:4[>=4.2.0]
+        kde/kdepimlibs:4[>=4.2.0]
+        kde/libkcddb:4[>=4.2.0]
+        kde/nepomuk-core:4[>=4.2.0]
+        kde/qimageblitz
+        media-libs/taglib
+        x11-libs/qt:4
+        pdf? (
+            app-text/poppler[qt4]
+            media-libs/exempi[>=2.0]
+        )
+        scanner? ( kde/libksane:4[>=4.2.0] )
+"
+
+BUGS_TO="kde@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DENABLE_{AMAZON,IMDB,CDTEXT}:BOOL=TRUE
+    -DENABLE_WEBCAM:BOOL=FALSE
+    -DWITH_Taglib:BOOL=TRUE
+    -DWITH_QJSON:BOOL=TRUE
+    # Searching z39.50 databases
+    -DWITH_Yaz:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'pdf PopplerQt4'
+    'pdf Exempi'
+    'scanner KSane'
+)
+
