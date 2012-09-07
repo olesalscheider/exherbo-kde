@@ -50,6 +50,7 @@ if ever at_least 4.9.0 ; then
     CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'google LibKGAPI' )
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DCMAKE_DISABLE_FIND_PACKAGE_Libkolab:BOOL=TRUE
+        -DCMAKE_DISABLE_FIND_PACKAGE_Libkolabxml:BOOL=TRUE
     )
 fi
 
