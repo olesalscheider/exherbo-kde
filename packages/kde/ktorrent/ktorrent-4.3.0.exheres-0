@@ -5,5 +5,3 @@ require ktorrent
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/cmake_boost_fix.patch )
-
