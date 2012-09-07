@@ -26,6 +26,7 @@ DEPENDENCIES="
         media-libs/taglib
         net-p2p/libktorrent[>=1.2.0]
         net-libs/GeoIP
+        x11-libs/qt:4[>=4.7.0][qt3support]
 "
 
 BUGS_TO="kde@exherbo.org"
