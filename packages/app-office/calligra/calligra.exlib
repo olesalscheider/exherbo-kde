@@ -186,7 +186,7 @@ src_configure() {
         -DWITH_OpenGL=ON
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
         -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
-        -DWITH_{Open,Qt}Shiva:BOOL=OFF # krita/plugins/extensions/. Packages unwritten.
+        -DCMAKE_DISABLE_FIND_PACKAGE_{Open,Qt}Shiva:BOOL=TRUE # krita/plugins/extensions/. Packages unwritten.
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
         $(cmake_build kde_parts:plan kdgantt)

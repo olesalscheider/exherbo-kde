@@ -5,8 +5,3 @@ require calligra
 
 PLATFORMS="~amd64 ~x86"
 
-# TODO: Check and adjust
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-2.5.0-0001-Crude-fix-for-automagic-dependencies.patch
-)
-
