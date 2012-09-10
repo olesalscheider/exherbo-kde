@@ -4,5 +4,5 @@
 require kwebkitpart
 
 PLATFORMS="~amd64 ~x86"
-DOWNLOADS="http://dev.exherbo.org/~mixi/distfiles/${PNV}.tar.xz"
+DOWNLOADS="http://dev.exherbo.org/~berniyh/${PNV}.tar.xz"
 
