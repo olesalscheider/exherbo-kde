@@ -1,0 +1,7 @@
+# Copyright 2012 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qupzilla
+
+PLATFORMS="~amd64"
+

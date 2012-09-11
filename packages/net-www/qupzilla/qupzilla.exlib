@@ -1,0 +1,34 @@
+# Copyright 2012 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+MY_USER=QupZilla
+MY_PNV=${MY_USER}-${PV}
+
+require github [[ user=${MY_USER} suffix=tar.gz ]] qmake4
+
+SUMMARY="QupZilla is modern web browser based on WebKit core and Qt Framework"
+HOMEPAGE="http://www.qupzilla.com"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt[>=4.7.0][dbus][sql][webkit]
+    run:
+        kde/oxygen-icons [[ note = [ Used in preferences ] ]]
+"
+
+EQMAKE4_SOURCES=( ${MY_USER}.pro )
+
+src_configure() {
+    # At the moment, "kde support" only means that the oxygen icons are used which make some things
+    # look nicer, therefore we hard enable it. Nepomuk support is planned, then it might get
+    # optional.
+    export KDE=True
+    export USE_LIBPATH=/usr/${LIBDIR}
+
+    qmake4_src_configure
+}
+
