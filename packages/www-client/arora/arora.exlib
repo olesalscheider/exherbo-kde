@@ -36,5 +36,5 @@ QMAKE4_SRC_CONFIGURE_PARAMS=( PREFIX=/usr )
 
 BUGS_TO="kde@exherbo.org"
 
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 

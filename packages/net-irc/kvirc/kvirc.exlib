@@ -22,7 +22,7 @@ DOWNLOADS="ftp://ftp.${PN}.de/pub/${PN}/${PV}/source/${PNV}.tar.bz2"
 # from BUGS_TO and if things break, I won't fix them but nuke kvirc. So if you care
 # about kvirc, keep an eye on it.
 BUGS_TO=""
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/docu/ [[ lang = en ]]"
 LICENCES="kvirc"

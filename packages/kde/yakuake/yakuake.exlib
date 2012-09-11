@@ -14,7 +14,7 @@ MYOPTIONS=""
 
 BUGS_TO="kimrhh@exherbo.org"
 UPSTREAM_CHANGELOG="http://websvn.kde.org/trunk/extragear/utils/yakuake/ChangeLog?view=markup"
-REMOTE_IDS="freshmeat:yakuake"
+REMOTE_IDS="freecode:yakuake"
 UPSTREAM_RELEASE_NOTES="http://developer.berlios.de/project/shownotes.php?group_id=7376&release_id=14724"
 
 DEPENDENCIES="

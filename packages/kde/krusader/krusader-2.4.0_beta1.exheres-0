@@ -15,7 +15,7 @@ gzip, rar, ace, arj, and rpm. It can also handle other KIOSlaves such as smb://
 or fish://."
 HOMEPAGE="http://www.krusader.org"
 
-REMOTE_IDS+=" freshmeat:${PN}"
+REMOTE_IDS+=" freecode:${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"

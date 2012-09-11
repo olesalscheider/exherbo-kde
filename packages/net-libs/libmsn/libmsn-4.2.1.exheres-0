@@ -6,7 +6,7 @@ require sourceforge cmake [ api=2 ]
 SUMMARY="A library for connecting to Microsoft's MSN Messenger service"
 HOMEPAGE="http://sourceforge.net/projects/${PN}"
 
-REMOTE_IDS+=" freshmeat:${PN}"
+REMOTE_IDS+=" freecode:${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"

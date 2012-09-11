@@ -10,7 +10,7 @@ Speex, TrueAudio and WavPack files (e.g. full albums) without typing the same
 information again and again and have control over both ID3v1 and ID3v2 tags,
 then Kid3 is the program you are looking for."
 
-REMOTE_IDS+=" freshmeat:${PN}"
+REMOTE_IDS+=" freecode:${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"

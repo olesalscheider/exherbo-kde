@@ -43,7 +43,7 @@ HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 SLOT="4"
 
 BUGS_TO="kde@exherbo.org"
-REMOTE_IDS="freshmeat:kde"
+REMOTE_IDS="freecode:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in

@@ -11,7 +11,7 @@ you to keep track of your expenses and incomes, categorize them, and build repor
 HOMEPAGE="http://skrooge.org/"
 DOWNLOADS="${HOMEPAGE}/files/${PNV}.tar.bz2"
 
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 UPSTREAM_DOCUMENTATION="http://docs.kde.org/development/en/extragear-office/skrooge/index.html [[ lang = en ]]"
 

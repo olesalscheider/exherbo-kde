@@ -16,7 +16,7 @@ separations, Spot Colors, ICC color management and versatile PDF creation.
 HOMEPAGE="http://www.scribus.net/"
 DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 UPSTREAM_CHANGELOG="http://bugs.scribus.net/changelog_page.php [[ lang = en ]]"
 UPSTREAM_DOCUMENTATION="http://docs.scribus.net/ [[ lang = en ]]"
