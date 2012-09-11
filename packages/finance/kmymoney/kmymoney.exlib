@@ -10,11 +10,12 @@ KMyMoney is the personal finance manager for KDE. It operates in a manner simila
 Quicken and supports different account types, categorisation of expenses, QIF import/export,
 multiple currencies, and online banking.
 "
-HOMEPAGE+=" http://kmymoney2.sf.net/"
+
 if ever is_scm; then
     DOWNLOADS=""
 fi
-
+UPSTREAM_CHANGELOG="${HOMEPAGE}ChangeLog-${PV}.txt"
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}release-${PV}.html"
 LICENCES="GPL-2"
 SLOT="0"
 MYOPTIONS="
