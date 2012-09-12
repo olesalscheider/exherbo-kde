@@ -7,6 +7,8 @@ SUMMARY="Qt bindings for telepathy logger"
 HOMEPAGE="https://projects.kde.org/projects/kdereview/${PN}"
 DOWNLOADS="mirror://kde/unstable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
 
+BUGS_TO="mixi@exherbo.org"
+
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
@@ -30,7 +32,9 @@ DEPENDENCIES="
         x11-libs/qt:4[glib][>=4.5.0]
 "
 
-BUGS_TO="mixi@exherbo.org"
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DBUILD_SHARED_LIBS:BOOL=TRUE
+)
 
 src_compile() {
     default
