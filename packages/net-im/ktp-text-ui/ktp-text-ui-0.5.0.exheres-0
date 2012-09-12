@@ -17,3 +17,5 @@ DEPENDENCIES+="
 
 BUGS_TO="mixi@exherbo.org"
 
+RESTRICT="test" # tests are missing some files (last checked 0.5.0)
+
