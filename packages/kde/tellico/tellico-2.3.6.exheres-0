@@ -19,6 +19,8 @@ MYOPTIONS="
     pdf     [[ description = [ Support for reading PDFs and PDF/XMP metadata ] ]]
     scanner [[ description = [ Support adding scanned images to a collection ]  ]]"
 
+RESTRICT="test"
+
 REMOTE_IDS="freecode:tellico"
 
 DEPENDENCIES="
