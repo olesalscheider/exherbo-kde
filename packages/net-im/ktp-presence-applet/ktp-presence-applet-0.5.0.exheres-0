@@ -5,7 +5,7 @@ require telepathy-kde [ kde_ver_min="4.6.0" ]
 
 SUMMARY="Plasma applet for managing your Telepathy account presence"
 
-LICENCES="GPL-2"
+LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
