@@ -293,6 +293,7 @@ configure_one_multibuild() {
         $(qt4_enable glib)
         $(qt4_enable gstreamer gstreamer)
         $(qt4_enable gstreamer phonon-backend)
+        $(option gstreamer || echo -DENABLE_VIDEO=0)
         $(qt4_enable gtk gtkstyle)
         $(qt4_enable multimedia)
         $(qt4_enable multimedia audio-backend)
