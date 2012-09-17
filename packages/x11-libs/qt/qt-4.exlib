@@ -21,7 +21,12 @@ else
 fi
 BUGS_TO="kde@exherbo.org"
 
-UPSTREAM_CHANGELOG="http://qt.nokia.com/products/changes/changes-${PV}"
+if ever at_least 4.8.3 ; then
+    UPSTREAM_CHANGELOG="${HOMEPAGE}uploads/community_updates/changes-${PV}"
+else
+    UPSTREAM_CHANGELOG="http://qt.nokia.com/products/changes/changes-${PV}"
+fi
+
 UPSTREAM_DOCUMENTATION="
     http://qt-project.org/doc/qt-$(ever range 1-2)/ [[ description = [ Qt Reference Documentation ] ]]
 "
