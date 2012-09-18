@@ -15,7 +15,6 @@ Cantata is a KDE4 client for the music player daemon (mpd). It supports:
 * mpd statistics
 * Handling of usb and mtp devices to copy from or onto external devices
 "
-HOMEPAGE="http://code.google.com/p/cantata"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -44,12 +43,10 @@ DEPENDENCIES="
         )
 "
 
-# find_package(SPEEXDSP) is only called if ffmpeg and mpg123 have been found.
-# Therefore disabling gives an error and is not actually necessary.
-CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES+=(
     'replaygain FFMPEG'
     'replaygain MPG123'
     'replaygain SPEEXDSP'
-    Mtp
+    MTP
 )
 
