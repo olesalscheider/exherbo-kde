@@ -231,8 +231,6 @@ qt-4_src_prepare() {
             -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
             -i "${WORK}"/mkspecs/common/g++.conf
 
-    edo sed -i -e "s:X11R6/::" "${WORK}"/mkspecs/common/linux.conf
-
     edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
             -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
             -i "${WORK}"/qmake/Makefile.unix
