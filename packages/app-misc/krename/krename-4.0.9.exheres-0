@@ -1,7 +1,7 @@
 # Copyright 2011 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake sourceforge
+require cmake [ api=2 ] sourceforge
 
 SUMMARY="Powerful batch renamer for KDE"
 DESCRIPTION="
