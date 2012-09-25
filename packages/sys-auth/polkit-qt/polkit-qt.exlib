@@ -1,7 +1,7 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
@@ -13,7 +13,7 @@ if ever at_least scm; then
 else
     DOWNLOADS="mirror://kde/stable/apps/KDE4.x/admin/${MY_PNV}.tar.bz2"
 
-    WORK="${WORKBASE}"/${MY_PNV}
+    CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 fi
 
 SUMMARY="A library that allows developer to access PolicyKit-1 API with a nice Qt-style API"
