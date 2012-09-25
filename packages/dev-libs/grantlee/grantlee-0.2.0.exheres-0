@@ -1,7 +1,7 @@
 # Copyright 2010 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="A plugin based String Template system written using the Qt framework"
 HOMEPAGE="http://www.${PN}.org"
@@ -25,10 +25,10 @@ DEPENDENCIES="
 BUGS_TO="kde@exherbo.org"
 
 src_compile() {
-    cmake_src_compile
+    default
 
     if option doc ; then
-        cmake_run emake docs
+        emake docs
     fi
 }
 
@@ -37,7 +37,7 @@ src_install() {
 
     if option doc ; then
         insinto /usr/share/doc/${PNVR}/
-        doins -r "${ECMAKE_BUILD_DIR}"/apidox
+        doins -r "${WORK}"/apidox
     fi
 }
 
