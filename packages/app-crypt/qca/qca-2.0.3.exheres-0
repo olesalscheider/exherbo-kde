@@ -17,6 +17,7 @@ DEPENDENCIES="
         x11-libs/qt:4
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc47.patch )
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --hates=build
     --hates=host
@@ -32,8 +33,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --qtdir=/usr
 )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc47.patch )
 
 src_prepare() {
     default
