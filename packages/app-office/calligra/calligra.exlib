@@ -175,6 +175,8 @@ RESTRICT="test"
 
 # FIXME: Is the apidox custom target useful now?
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}_Fix-compilation_with_latest_lcms.patch )
+
 src_configure() {
     local p cmakeparams=(
         $(kde4_shared_cmake_params)

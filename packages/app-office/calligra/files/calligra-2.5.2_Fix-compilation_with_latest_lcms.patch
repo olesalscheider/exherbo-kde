@@ -1,0 +1,23 @@
+Upstream: yes
+
+From: Boudewijn Rempt <boud@valdyas.org>
+Date: Tue, 04 Sep 2012 13:14:51 +0000
+Subject: Fix compilation with latest lcms2.4 rc
+X-Git-Url: http://quickgit.kde.org/?p=calligra.git&amp;a=commitdiff&amp;h=4169d04e1a254fdd82d35c9e02a74a1f2b0fee5f
+---
+Fix compilation with latest lcms2.4 rc
+---
+
+
+--- a/plugins/colorengines/lcms2/colorspaces/xyz_f32/XyzF32ColorSpace.h
++++ b/plugins/colorengines/lcms2/colorspaces/xyz_f32/XyzF32ColorSpace.h
+@@ -22,6 +22,8 @@
+ 
+ #include <LcmsColorSpace.h>
+ #include <KoColorSpaceTraits.h>
++
++#define TYPE_XYZA_FLT         (FLOAT_SH(1)|COLORSPACE_SH(PT_XYZ)|EXTRA_SH(1)|CHANNELS_SH(3)|BYTES_SH(4))
+ 
+ #include <KoColorModelStandardIds.h>
+ 
+
