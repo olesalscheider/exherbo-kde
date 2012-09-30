@@ -23,7 +23,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:4
         || (
-            ( kde/libkcddb:${SLOT} kde/libkcompactdisc:${SLOT} )
+            ( kde/libkcddb:4 kde/libkcompactdisc:4 )
             kde/kdemultimedia:4
         )
         media/cdparanoia
