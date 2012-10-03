@@ -1,0 +1,24 @@
+# Copyright 2012 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+if ever is_scm; then
+    SCM_BRANCH="master"
+fi
+
+SUMMARY="Provides KIO Access to MTP devices using the mtp:/ protocol"
+DESCRIPTION="
+This KIO slave enables KDE applications to access files stored on devices
+that provide access to them via the MTP protocol.
+"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        media-libs/libmtp[>=1.1.3]
+"
+
