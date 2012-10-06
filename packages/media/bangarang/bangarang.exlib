@@ -2,13 +2,13 @@
 # Copyright 2011 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde [ api=2 ] googlecode [ project="bangarangissuetracking" suffix="tar.gz" ]
-
 if ever is_scm ; then
     DOWNLOADS=""
-    SCM_REPOSITORY="git://gitorious.org/bangarang/bangarang.git"
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 fi
+
+require kde [ api=2 ] googlecode [ project="bangarangissuetracking" suffix="tar.gz" ]
 
 SUMMARY="A KDE media player"
 HOMEPAGE="http://bangarangkde.wordpress.com/"
