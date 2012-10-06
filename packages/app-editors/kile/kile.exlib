@@ -2,7 +2,13 @@
 # Copyright 2011 Bernd Steinhauser
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge
+if ever is_scm ; then
+    DOWNLOADS=""
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+fi
+
+require kde [ api=2 ] sourceforge
 
 SUMMARY="A user friendly TeX/LaTeX editor for the KDE desktop environment"
 DESCRIPTION="
@@ -42,6 +48,6 @@ DEFAULT_SRC_INSTALL_EXTRA_DOCS=( kile-remote-control.txt )
 src_prepare() {
     default
     edo sed -e '/^INSTALL.*KILE_SPECIAL_DOC_DIR/s/^/# default_src_install() installs these: /' \
-            -i CMakeLists.txt
+            -i "${CMAKE_SOURCE}"/CMakeLists.txt
 }
 

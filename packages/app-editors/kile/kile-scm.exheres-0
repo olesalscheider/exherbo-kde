@@ -1,11 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-
-require kile scm-git
-
-DOWNLOADS=""
+require kile
 
 PLATFORMS="~amd64 ~x86"
 
