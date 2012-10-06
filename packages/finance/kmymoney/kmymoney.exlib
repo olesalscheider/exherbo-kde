@@ -2,7 +2,7 @@
 # Copyright 2012 Heiko Becker <heiko@shruuf.de>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge [ project=kmymoney2 ]
+require kde [ api=2 ] sourceforge [ project=kmymoney2 ]
 
 SUMMARY="Personal finance manager for KDE"
 DESCRIPTION="
