@@ -2,7 +2,7 @@
 # Copyright 2011 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde googlecode [ project="bangarangissuetracking" suffix="tar.gz" ]
+require kde [ api=2 ] googlecode [ project="bangarangissuetracking" suffix="tar.gz" ]
 
 if ever is_scm ; then
     DOWNLOADS=""
@@ -28,6 +28,6 @@ DEPENDENCIES="
 "
 
 if ! ever is_scm ; then
-    WORK=${WORKBASE}/${PN}-${PN}
+    CMAKE_SOURCE=${WORKBASE}/${PN}-${PN}
 fi
 
