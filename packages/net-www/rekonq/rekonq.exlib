@@ -1,7 +1,13 @@
 # Copyright 2010, 2012 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
+    DOWNLOADS=""
+fi
+
+require kde [ api=2 ] sourceforge
 
 SUMMARY="A KDE browser based on Webkit"
 DESCRIPTION="

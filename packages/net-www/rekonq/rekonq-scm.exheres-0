@@ -1,10 +1,7 @@
 # Copyright 2010 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/rekonq.git"
+require rekonq
 
-require rekonq scm-git
-
-DOWNLOADS=""
 PLATFORMS="~amd64"
 
