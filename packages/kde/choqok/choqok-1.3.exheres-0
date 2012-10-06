@@ -1,7 +1,7 @@
 # Copyright 2009, 2010, 2011 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge
+require kde [ api=2 ] sourceforge
 
 SUMMARY="A Free/Open Source micro-blogging client for K Desktop Environment"
 DESCRIPTION="
