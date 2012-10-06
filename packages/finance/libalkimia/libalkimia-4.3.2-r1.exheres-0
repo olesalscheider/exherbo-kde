@@ -3,7 +3,7 @@
 # Based in part upon 'libalkimia-4.3.1.ebuild' from Gentoo, which is:
 #     Copyright 1999-2011 Gentoo Foundation
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="Library with common classes and functionality used by KDE finance applications"
 DESCRIPTION="libalkimia is a library with common classes and functionality used by finance
