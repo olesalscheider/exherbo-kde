@@ -1,7 +1,12 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake kde
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/amarok.git"
+    require scm-git
+fi
+
+require kde [ api=2 ]
 
 SUMMARY="Amarok - the audio player for KDE"
 DESCRIPTION="
