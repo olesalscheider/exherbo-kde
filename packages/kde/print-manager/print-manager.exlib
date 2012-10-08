@@ -1,0 +1,18 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# print-manager will be a part of KDE 4.10
+require kde.org
+
+SUMMARY="Printing Management for KDE"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        net-print/cups[>=1.4]
+"
+
