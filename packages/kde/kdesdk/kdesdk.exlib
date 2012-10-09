@@ -25,13 +25,8 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2
 "
 MY_KDE_PARTS+="cervisia kapptemplate kcachegrind kmtrace kompare
 kstartperf kuiviewer lokalize okteta poxml scripts
-strigi-analyzer umbrello
+strigi-analyzer thumbnailers umbrello
 "
-if ever at_least 4.9.0; then
-    MY_KDE_PARTS+=" thumbnailers"
-else
-    MY_KDE_PARTS+=" kdeaccounts-plugin"
-fi
 
 MYOPTIONS+="
     kde_parts: ${MY_KDE_PARTS} kioslave"
@@ -57,6 +52,7 @@ DEPENDENCIES+="
             x11-misc/shared-mime-info[>=0.40]
         )
         kde_parts:poxml? ( dev-java/antlr[=2*] )
+        kde_parts:thumbnailers? ( sys-devel/gettext )
         kde_parts:umbrello? (
             sys-devel/cmake[>=2.8]
             dev-libs/boost[>=1.33.1]
@@ -72,20 +68,6 @@ DEPENDENCIES+="
         )
 "
 
-if ever at_least 4.9.0; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:scripts? ( sys-devel/cmake[>=2.8] )
-            kde_parts:thumbnailers? ( sys-devel/gettext )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kdeaccounts-plugin? ( kde/kdepimlibs:${SLOT}[>=${PV}] )
-        "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'kde_parts:kdeaccounts-plugin KdepimLibs' )
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'
     'kde_parts:lokalize HUNSPELL'
@@ -98,12 +80,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Kioslave to browse perldoc
     -DWITH_Perl:BOOL=TRUE -DBUILD_perldoc:BOOL=TRUE
+    # also enables dolphin-{bazaar,git,hg,svn}-plugins, which are small and
+    # need no additional dependencies, so we also hard enable those
     -DWITH_LibKonq:BOOL=TRUE
-    # kde_parts doesn't work with / and these plugins are very small and need no
-    # additional dependencies, so we hard enable those
-    -DBUILD_dolphin-plugins/bazaar:BOOL=TRUE # those four cmake switches are gone in KDE >=4.9.0
-    -DBUILD_dolphin-plugins/git:BOOL=TRUE    # and plugins are built if WITH_LibKonq=TRUE
-    -DBUILD_dolphin-plugins/hg:BOOL=TRUE
-    -DBUILD_dolphin-plugins/svn:BOOL=TRUE
 )
 

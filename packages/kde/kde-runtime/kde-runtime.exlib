@@ -67,6 +67,8 @@ DEPENDENCIES="
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
         kde/kdelibs:${SLOT}[>=4.8.5]
+        kde/kdepimlibs
+        kde/nepomuk-core
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -92,24 +94,13 @@ DEPENDENCIES="
         net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
 "
 
-if ever at_least 4.9.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs
-            kde/nepomuk-core"
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
-fi
-
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DSHAREDDESKTOPONTOLOGIES_ROOT_DIR="/usr/share/ontology"
-    -DWITH_Nepomuk:BOOL=TRUE
-    -DWITH_SharedDesktopOntologies:BOOL=TRUE
+    -DWITH_NepomukCore:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
-    -DWITH_QZeitgeist:BOOL=FALSE # it doesn't work with libqzeitgeist 0.8.0 and is removed on master and in KDE >= 4.8.2
     -DWITH_Xine:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(

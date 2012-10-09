@@ -123,20 +123,6 @@ DEPENDENCIES="
         )
 "
 
-if ! ever at_least 4.9.0 ; then
-    DEPENDENCIES+="
-    build+run:
-        python? (
-            dev-python/PyQt4[>=4.4.0]
-            dev-python/sip[>=4.7.1]
-        )"
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'python PyKDE4'
-        'python PyQt4'
-        'python SIP'
-    )
-fi
-
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(

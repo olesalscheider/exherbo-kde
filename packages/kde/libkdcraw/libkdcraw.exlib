@@ -17,17 +17,12 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/jpeg
+        media-libs/lcms2
         sys-devel/gcc:*[openmp]
 "
 
-if ever at_least 4.9.0 ; then
-    DEPENDENCIES+=" build+run: media-libs/lcms2"
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_LCMS2:BOOL=TRUE )
-else
-    DEPENDENCIES+=" build+run: media-libs/lcms"
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DENABLE_LCMS2:BOOL=TRUE
     -DWITH_OpenMP:BOOL=TRUE
 )
 

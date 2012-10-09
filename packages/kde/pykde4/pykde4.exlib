@@ -21,20 +21,13 @@ DEPENDENCIES="
             resolution = uninstall-blocked-after
         ]]
         dev-libs/soprano[>=2.0]
-        dev-python/PyQt4[>=4.8.2][webkit]
-        dev-python/sip[>=4.12.0]
+        dev-python/PyQt4[>=4.9][webkit]
+        dev-python/sip[>=4.13.1]
         kde/kdelibs:4[>=4.7.0]
         kde/kdepimlibs:4[>=4.7.0]
         media-libs/phonon[>=4.3.80]
         x11-libs/qt:4[>=4.7.0][webkit]
 "
-
-if ever at_least 4.9.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-python/sip[>=4.13.1]
-            dev-python/PyQt4[>=4.9][webkit]"
-fi
 
 BUGS_TO="petrinic@gmail.com"
 
