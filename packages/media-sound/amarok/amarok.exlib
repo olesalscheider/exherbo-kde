@@ -85,10 +85,7 @@ DEPENDENCIES="
     recommendation:
         sys-devel/qtscriptgenerator   [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
     suggestion:
-        || (
-            kde/audiocd-kio
-            kde/kdemultimedia[kde_parts:kioslave]
-        ) [[ description = [ Used to play audio CDs ] ]]
+        kde/audiocd-kio [[ description = [ Used to play audio CDs ] ]]
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
 

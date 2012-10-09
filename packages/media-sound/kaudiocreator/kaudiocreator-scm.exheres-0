@@ -16,10 +16,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
-        || (
-            ( kde/libkcddb:${SLOT} kde/libkcompactdisc:${SLOT} )
-            kde/kdemultimedia:${SLOT}
-        )
+        kde/libkcddb:${SLOT}
+        kde/libkcompactdisc:${SLOT}
         media-libs/libdiscid
         media-libs/taglib
     suggestion:

@@ -22,10 +22,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4
-        || (
-            ( kde/libkcddb:4 kde/libkcompactdisc:4 )
-            kde/kdemultimedia:4
-        )
+        kde/libkcddb:4
+        kde/libkcompactdisc:4
         media/cdparanoia
     suggestion:
         media-libs/flac          [[ note = [ Encode flac files ] ]]
