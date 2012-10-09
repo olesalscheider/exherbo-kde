@@ -50,7 +50,7 @@ MY_KOPETE_PLUGINS+="
 
 MYOPTIONS+="
     sqlite [[ description = [ SQLite Backend for the KGet History Plugin ] requires = [ kde_parts: kget ] ]]
-    telepathy
+    telepathy [[ description = [ Support for Telepathy Tubes to provide a user-to-user network layer ] ]]
     vnc [[ description = [ VNC (Virtual Network Computing) support for Krdc ] ]]
 
     vnc [[ requires = [ kde_parts: krdc ] ]]
