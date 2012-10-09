@@ -168,8 +168,9 @@ src_compile() {
     default
 
     if option doc; then
-        edo pushd "${WORK}/doc/api"
-        edo ./doxygen.sh "${WORK}"
+        edo mkdir "${WORK}"/doc/api
+        edo pushd "${WORK}"/doc/api
+        edo "${CMAKE_SOURCE}"/doc/api/doxygen.sh "${CMAKE_SOURCE}"
         edo popd
     fi
 }
@@ -178,7 +179,7 @@ src_install() {
     kde.org_src_install
 
     if option doc; then
-        edo pushd "${WORK}/doc/api"
+        edo pushd "${WORK}"/doc/api
         insinto /usr/share/doc/${PNVR}/apidocs
         doins -r ${PNV}-apidocs/*
         edo popd
