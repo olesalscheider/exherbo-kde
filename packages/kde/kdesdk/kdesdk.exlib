@@ -54,7 +54,6 @@ DEPENDENCIES+="
         kde_parts:poxml? ( dev-java/antlr[=2*] )
         kde_parts:thumbnailers? ( sys-devel/gettext )
         kde_parts:umbrello? (
-            sys-devel/cmake[>=2.8]
             dev-libs/boost[>=1.33.1]
             dev-libs/libxslt
             dev-libs/libxml2
