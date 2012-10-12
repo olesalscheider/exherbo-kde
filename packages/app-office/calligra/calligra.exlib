@@ -30,6 +30,11 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="active braindump flow karbon kexi krita plan sheets stage words"
 
+if ever at_least 2.5.90; then
+    MYOPTIONS+="
+        kactivities [[ description = [ Support for KDE's activities system ] ]]
+    "
+fi
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
@@ -170,12 +175,20 @@ DEPENDENCIES+="
         mpxj? ( virtual/jre )
 "
 
+if ever at_least 2.5.90; then
+    DEPENDENCIES+="
+        media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
+        kactivities? ( kde/kactivities[=scm] [[ note = [ Needs version 6.1.0 (=KDE 4.10), no release yet ] ]] )
+        kde_parts:words? (
+            dev-libs/icu
+        )
+    "
+fi
+
 # Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.4.1
 RESTRICT="test"
 
 # FIXME: Is the apidox custom target useful now?
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}_Fix-compilation_with_latest_lcms.patch )
 
 src_configure() {
     local p cmakeparams=(
@@ -212,6 +225,15 @@ src_configure() {
         $(cmake_with visio LibVisio)
         $(cmake_with TIFF)
     )
+
+    if ever at_least 2.5.90; then
+        cmakeparams+=(
+            -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
+            -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
+            -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
+            $(cmake_with KActivities)
+        )
+    fi
 
     if option kde_parts:krita || option kde_parts:sheets; then
         cmakeparams+=( -DWITH_Eigen2=ON )

@@ -4,6 +4,5 @@
 require calligra
 
 PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}_Fix-compilation_with_latest_lcms.patch )
+DOWNLOADS="mirror://kde/unstable/${PNV}/${PNV}.tar.bz2"
 
