@@ -1,0 +1,26 @@
+# Copyright 2012 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kde-l10n.exlib', which is:
+#     Copyright 2008-2012 Ingmar Vanhassel
+
+myexparam langs
+myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}"
+
+require kde [ api=2 ] \
+        l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.bz2 ]
+
+SUMMARY="Calligra localisation package"
+HOMEPAGE="http://www.calligra.org/"
+LICENCES="FDL-1.2 GPL-2"
+SLOT="2"
+
+DEPENDENCIES="
+    build:
+        kde/kdelibs:4
+"
+
+# override cmake_src_prepare
+src_prepare() {
+    default
+}
+
