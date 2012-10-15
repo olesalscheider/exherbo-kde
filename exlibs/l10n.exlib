@@ -7,12 +7,13 @@ export_exlib_phases src_configure src_compile src_install
 myexparam api=1
 myexparam langs
 myexparam base_uri
+myexparam suffix=tar.xz
 
 set_kde_l10n_downloads() {
     local localisation base_uri=$(exparam base_uri)
     [[ -z ${base_uri} ]] && return
     for localisation in $(exparam langs); do
-        echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.tar.xz ) "
+        echo -n "linguas:${localisation}? ( ${base_uri}/${PN}-${localisation}-${PV}.$(exparam suffix) ) "
     done
 }
 
