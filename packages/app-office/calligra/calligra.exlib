@@ -173,6 +173,8 @@ DEPENDENCIES+="
         ]]
     run:
         mpxj? ( virtual/jre )
+    suggestion:
+        app-office/calligra-l10n:${SLOT}[>=${PV}] [[ description = [ Localisation files ] ]]
 "
 
 if ever at_least 2.5.90; then
