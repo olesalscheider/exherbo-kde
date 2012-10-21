@@ -14,3 +14,10 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
 
+if ever at_least 4.9.80; then
+    DEPENDENCIES+="
+        build+run:
+            graphics/exiv2[>=0.21][xmp]
+    "
+fi
+
