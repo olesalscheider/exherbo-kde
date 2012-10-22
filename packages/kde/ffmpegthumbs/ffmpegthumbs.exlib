@@ -22,10 +22,5 @@ DEPENDENCIES="
             media/ffmpeg
             media/libav
         )
-    run:
-        || (
-            media/mplayer
-            media/mplayer2[>=2.0-r11]
-        )
 "
 
