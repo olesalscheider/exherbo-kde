@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require calligra-l10n [ langs="ca ca@valencia da de el en_GB es et fi fr gl hu it kk nb nds nl pl
-    pt pt_BR ru sk sv uk zh_CN zh_TW" base_uri="mirror://kde/unstable/${PN%-l10n}-${PV}/${PN}" ]
+    pt pt_BR sk sv uk zh_CN zh_TW" base_uri="mirror://kde/unstable/${PN%-l10n}-${PV}/${PN}" ]
 
 PLATFORMS="~amd64"
 
