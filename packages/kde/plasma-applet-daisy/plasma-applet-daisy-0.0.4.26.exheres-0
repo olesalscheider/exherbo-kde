@@ -11,6 +11,6 @@ LICENCES="GPL-2"
 PLATFORMS="~amd64 ~x86"
 WORK="${WORK}/applet/"
 DEPENDENCIES="
-    kde/kdebase-workspace   
+    kde/kde-workspace   
 "
 
