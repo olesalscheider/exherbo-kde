@@ -5,5 +5,3 @@ require pykde4
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-new-sip.patch )
-
