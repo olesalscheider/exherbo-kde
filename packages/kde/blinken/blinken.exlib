@@ -8,12 +8,11 @@ SUMMARY="KDE Memory Enhancement Game"
 LICENCES="GPL-2 FDL-1.2"
 MYOPTIONS=""
 
-#FIXME: replacing kde-baseapps with sjfonts is preferred by upstream. See README.packagers
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
     run:
-        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
+        fonts/sjfonts
 "
 
