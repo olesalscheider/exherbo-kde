@@ -72,7 +72,7 @@ MYOPTIONS+="
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
         x11-proto/inputproto
         x11-proto/videoproto
         xinerama? ( x11-proto/xineramaproto )
