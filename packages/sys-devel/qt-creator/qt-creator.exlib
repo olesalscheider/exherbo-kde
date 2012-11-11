@@ -26,7 +26,7 @@ else
     UPSTREAM_CHANGELOG="http://qt.gitorious.org/${PN}/${PN}/blobs/master/dist/changes-$(ever range 1-3 ${PV})"
 fi
 
-BUGS_TO="kimrhh@exherbo.org"
+BUGS_TO="kimrhh@exherbo.org heirecka@exherbo.org"
 
 ever is_scm || WORK="${WORK}-src/"
 EQMAKE4_SOURCES="qtcreator.pro"
