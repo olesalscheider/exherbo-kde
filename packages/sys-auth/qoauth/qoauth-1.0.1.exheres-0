@@ -9,7 +9,7 @@ DOWNLOADS="http://files.ayoy.net/${PN}/${PV}/${PNV}-src.tar.bz2"
 
 LICENCES="LGPL-3"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 RESTRICT="test" # lots of sydbox violations
