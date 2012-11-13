@@ -7,5 +7,12 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    -p0 "${FILES}/${PN}-kstandarddirs.patch"
 )
+
+src_install() {
+    default
+    dodir /etc/kde
+    keepdir /etc/kde
+}
 
