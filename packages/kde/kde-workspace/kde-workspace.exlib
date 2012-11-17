@@ -6,6 +6,7 @@ require python kde.org systemd-service
 
 SUMMARY="The interface and basic tools for the KDE workspace"
 DESCRIPTION="
+appmenu: Application menu inside the window decoration
 cursors: Custom KDE cursors
 freespacenotifier: Monitors free disk space on the home directory
 kcheckpass: Authentication program
@@ -123,6 +124,15 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.9.80; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/libxcb [[ note = kwin ]]
+            x11-utils/xcb-util-image [[ note = kwin ]]
+            x11-utils/xcb-util-renderutil [[ note = kwin ]]
+    "
+fi
+
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -130,7 +140,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DDISABLE_USBIDS_INSTALL:BOOL=TRUE
     -DWITH_Akonadi:BOOL=TRUE # Optional, but we hard-enable this
     -DWITH_Boost:BOOL=TRUE # Optional, but we hard-enable this. For Plasma DataEngines (Akonadi,RSS, Calendar)
-    -DWITH_Prison:BOOL=FALSE # Create mobile barcodes from clipboard data "http://projects.kde.org/prison"
     -DWITH_Fontconfig:BOOL=TRUE
     -DWITH_Freetype:BOOL=TRUE
     -DWITH_GLIB2:BOOL=TRUE
