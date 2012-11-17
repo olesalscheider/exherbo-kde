@@ -22,5 +22,3 @@ DEPENDENCIES="
         kde/kdelibs:4[>=4.6]
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_LibKonq:BOOL=ON )
-
