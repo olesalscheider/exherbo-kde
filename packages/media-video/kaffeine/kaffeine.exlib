@@ -1,4 +1,5 @@
 # Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2012 Friedrich Kröner <friedrich@mailstation.de>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde
@@ -14,9 +15,11 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.2.0]
-        media-libs/phonon[xine]
-        media-libs/xine-lib
+        media/vlc[>=1.2]
         x11-libs/libXScrnSaver
-        x11-libs/qt:4[>=4.4.0][phonon]
+        x11-libs/qt:4[>=4.4.0][phonon][sql][sqlite]
+    suggestion:
+        media/vlc[dvb] [[
+            description = [ Required for digital television support ]
+        ]]
 "
-
