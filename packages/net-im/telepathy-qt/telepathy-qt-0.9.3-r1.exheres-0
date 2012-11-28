@@ -27,8 +27,8 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libxml2[>=2.7.7-r1]
         x11-libs/qt:4[>=4.6.0][dbus][X(+)]
-        media-libs/gstreamer[>=0.10.30]
-        net-im/farstream[>=0.1.0]
+        media-libs/gstreamer:0.10[>=0.10.30]
+        net-im/farstream:0.1[>=0.1.0]
         net-im/telepathy-farstream[>=0.4.0]
         sys-apps/dbus
    test:
