@@ -288,6 +288,7 @@ configure_one_multibuild() {
         -no-nas-sound
         -no-nis
         -no-s60
+        $(ever at_least 4.8.4 && echo -system-proxies)
         -system-zlib
         -xinput
         -xmlpatterns
@@ -396,7 +397,7 @@ configure_one_multibuild() {
 }
 
 compile_one_multibuild() {
-    # http://bugreports.qt.nokia.com/browse/QTBUG-5471
+    # http://bugreports.qt-project.org/browse/QTBUG-5471
     LD_LIBRARY_PATH="${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/lib" default
 }
 
@@ -479,7 +480,7 @@ EOF
     if option doc ; then
         # Remove empty doc directories.
         #FIXME: see QTBUG-21273
-        edo rmdir "${IMAGE}"/usr/share/doc/${PNVR}/html/scripts
+        ($ ! ever at_least 4.8.4 && edo rmdir "${IMAGE}"/usr/share/doc/${PNVR}/html/scripts)
     fi
 
     if option examples ; then
