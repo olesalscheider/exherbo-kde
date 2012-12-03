@@ -52,8 +52,8 @@ DEPENDENCIES+="
         kde_parts:kigo? (
             games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
         )
-        kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
         kde_parts:kpat? ( x11-misc/shared-mime-info )
+        kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
