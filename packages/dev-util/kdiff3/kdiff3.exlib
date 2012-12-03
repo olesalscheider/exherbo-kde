@@ -1,0 +1,23 @@
+# Copyright 2009 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kde sourceforge [ suffix=tar.gz ]
+
+SUMMARY="3-way diff & merge program"
+DESCRIPTION="
+KDiff3 is a program that compares two or three text input files or directories,
+shows the differences line by line and character by character, provides an
+automatic merge facility and an integrated editor for comfortable solving of
+merge conflicts, and has an intuitive graphical user interface.
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
+        kde/kdelibs:4[>=4.6]
+"
+
