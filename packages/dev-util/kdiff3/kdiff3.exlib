@@ -1,7 +1,13 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge [ suffix=tar.gz ]
+if ever is_scm ; then
+    SCM_REPOSITORY="git://git.code.sf.net/p/${PN}/code"
+    require scm-git
+    DOWNLOADS=""
+fi
+
+require kde sourceforge [ suffix=tar.gz ]   
 
 SUMMARY="3-way diff & merge program"
 DESCRIPTION="
@@ -20,4 +26,9 @@ DEPENDENCIES="
         kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
         kde/kdelibs:4[>=4.6]
 "
+
+src_unpack() {
+   ever is_scm && WORK="${WORK}/kdiff3" && scm_src_unpack 
+   ever is_scm || default
+}
 
