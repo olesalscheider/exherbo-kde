@@ -28,15 +28,22 @@ knavalbattle knetwalk kolf kollision konquest kpat kreversi kshisen ksirk ksnake
 ksquares ksudoku ktuberling kubrick lskat palapeli
 "
 MYOPTIONS+="
+    opengl [[ description = [ OpenGL support needed for kubrick, optionally enable 3-dimensional (k)sudokus ] ]]
     kde_parts: ${MY_KDE_PARTS}
+    kde_parts: kubrick [[ requires = opengl ]]
+    opengl? ( ( kde_parts: ksudoku kubrick ) [[ number-selected = at-least-one ]] )
 "
 
 DEPENDENCIES+="
     build+run:
-        app-crypt/qca:2
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
-        x11-libs/qt:4[>=4.6.0][opengl][phonon]
+        x11-libs/qt:4[>=4.6.0][phonon]
+        opengl? (
+            x11-dri/glu
+            x11-dri/mesa
+            x11-libs/qt:4[opengl]
+        )
         kde_parts:granatier? ( media-libs/openal )
         kde_parts:kajongg? (
             dev-db/sqlite:3
@@ -53,17 +60,16 @@ DEPENDENCIES+="
             games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
         )
         kde_parts:kpat? ( x11-misc/shared-mime-info )
+        kde_parts:ksirk? ( app-crypt/qca:2[>=2.0.0] )
         kde_parts:palapeli? ( x11-misc/shared-mime-info[>=0.23] )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_OpenGL:BOOL=ON
-    -DWITH_QCA2:BOOL=ON
-)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'opengl OpenGL'
     'kde_parts:granatier OpenAL'
     'kde_parts:kajongg PythonInterp'
     'kde_parts:kgoldrunner OpenAL'
     'kde_parts:kgoldrunner SndFile'
+    'kde_parts:ksirk QCA2'
 )
 
