@@ -5,3 +5,8 @@ require kde-baseapps
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-0001-Fix-incorrect-usage-of-list-iterators.patch
+    "${FILES}"/${PNV}-0001-Fix-keyboard-focus-handling-after-renaming-items-inl.patch
+)
+
