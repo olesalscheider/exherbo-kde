@@ -1,0 +1,17 @@
+# Copyright 2012 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Library containing the Nepomuk widgets"
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/soprano
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/nepomuk-core:4[>=${PV}]
+"
+
