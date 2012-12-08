@@ -7,7 +7,7 @@ if ever is_scm ; then
     DOWNLOADS=""
 fi
 
-require kde sourceforge [ suffix=tar.gz ]   
+require kde sourceforge [ suffix=tar.gz ]
 
 SUMMARY="3-way diff & merge program"
 DESCRIPTION="
@@ -28,7 +28,7 @@ DEPENDENCIES="
 "
 
 src_unpack() {
-   ever is_scm && WORK="${WORK}/kdiff3" && scm_src_unpack 
+   ever is_scm && WORK="${WORK}/kdiff3" && scm_src_unpack
    ever is_scm || default
 }
 
