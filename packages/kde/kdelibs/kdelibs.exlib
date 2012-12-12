@@ -83,7 +83,6 @@ DEPENDENCIES="
         x11-apps/iceauth
         x11-apps/rgb
     recommendation:
-        sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
         policykit? (
             sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
@@ -133,6 +132,20 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ENCHANT'
     'upnp HUpnp'
 )
+
+if ever at_least 4.10.0 ; then
+    DEPENDENCIES+="
+        recommendation:
+            sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=TRUE )
+else
+    DEPENDENCIES+="
+        recommendation:
+            sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=FALSE )
+fi
 
 #FIXME: grantlee only needed for tests, which we do not run
 if ever is_scm ; then
