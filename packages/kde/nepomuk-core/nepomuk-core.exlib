@@ -1,4 +1,5 @@
 # Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2012 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -7,12 +8,40 @@ SUMMARY="Central services like file indexing, file system monitoring, query, sto
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS=""
+if ever at_least 4.9.90; then
+    MYOPTIONS+="
+        exif   [[ description = [ Adds support for extracting metadata from EXIF headers ] ]]
+        ffmpeg [[ description = [ Adds support for extracting audio and video metadata ] ]]
+        pdf    [[ description = [ Adds support for extracting metadata from pdf files ] ]]
+        taglib [[ description = [ Adds support for extracting metadata from music files ] ]]
+    "
+fi
 
 DEPENDENCIES="
     build+run:
-        app-pim/strigi[>=0.7.3]
         app-text/shared-desktop-ontologies[>=0.10]
         dev-libs/soprano[>=2.7.56][virtuoso]
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
+
+if ever at_least 4.9.90; then
+    DEPENDENCIES+="
+        build+run:
+            exif? ( graphics/exiv2[>=0.12] )
+            ffmpeg? ( media/ffmpeg )
+            pdf? ( app-text/poppler[>=0.12.1][qt4] )
+            taglib? ( media-libs/taglib )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+        'exif Exiv2'
+        'ffmpeg FFmpeg'
+        'pdf PopplerQt4'
+        'taglib Taglib'
+    )
+else
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi[>=0.7.3]
+    "
+fi
 
