@@ -36,7 +36,15 @@ DEPENDENCIES="
         tiff? ( media-libs/tiff )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
+if ever at_least 4.9.90; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kactivities:4[>=4.9.90]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_ActiveApp:BOOL=FALSE )
+fi
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QImageBlitz:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
@@ -48,10 +56,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'postscript LibSpectre'
     'TIFF'
 )
-
-if ever at_least 4.9.80; then
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_ActiveApp:BOOL=FALSE
-    )
-fi
 
