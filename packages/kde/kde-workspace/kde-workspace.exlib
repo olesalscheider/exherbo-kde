@@ -25,10 +25,12 @@ kstartupconfig:
 kstyles: Styles for KDE widgets
 ksysguard: Task manager & system monitor
 ksystraycmd: Run any command in the system tray
+ktouchpadenabler: daemon listening to XF86XK_TouchpadToggle
 kwin: Window manager
 kwrited:
 plasma: Desktop framework
 powerdevil: KDE power management
+screenlocker: a new screen locking mechanism based on QtQuick
 solid: Seamless Hardware Interaction
 statusnotifierwatcher: Module for the Status Notifier Specification
 systemsettings: Settings utility
@@ -59,7 +61,6 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/glib:2
         dev-libs/libusb:0.1
-        dev-libs/soprano[>=2.5.63][virtuoso(+)]
         kde/kactivities:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]
@@ -94,7 +95,6 @@ DEPENDENCIES="
         x11-libs/libXtst [[ note = kcontrol ]]
         x11-libs/libXxf86misc [[ note = krunner ]]
         x11-libs/libxkbfile
-        x11-libs/qt:4[>=4.7.0][opengl][webkit]
         barcodes? ( kde/prison ) [[ note = klipper ]]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
@@ -124,12 +124,24 @@ DEPENDENCIES="
         )
 "
 
-if ever at_least 4.9.80; then
+if ever at_least 4.9.90; then
     DEPENDENCIES+="
         build+run:
+            dev-libs/soprano[>=2.7.56][virtuoso(+)]
+            dev-libs/qjson  [[ note = [ chromium bookmarks runner, hard enable since it's small and
+                                        already needed for kdepimlibs ] ]]
+            kde/nepomuk-core:4[>=4.9.90]
             x11-libs/libxcb [[ note = kwin ]]
+            x11-libs/libXi  [[ note = ktouchpadenabler ]]
+            x11-libs/qt:4[>=4.8.0][opengl][webkit]
             x11-utils/xcb-util-image [[ note = kwin ]]
             x11-utils/xcb-util-renderutil [[ note = kwin ]]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/soprano[>=2.5.63][virtuoso(+)]
+            x11-libs/qt:4[>=4.7.0][opengl][webkit]
     "
 fi
 
