@@ -15,7 +15,13 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_Nepomuk:BOOL=TRUE
-)
+if ever at_least 4.9.90; then
+    DEPENDENCIES+="
+        build+run:
+            kde/nepomuk-core:4[>=4.9.90]
+            x11-libs/qt:4
+    "
+else
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk:BOOL=TRUE )
+fi
 
