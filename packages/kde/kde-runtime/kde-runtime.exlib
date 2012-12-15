@@ -97,11 +97,14 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
+if ! ever at_least 4.9.90; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xine:BOOL=FALSE )
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_NepomukCore:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
-    -DWITH_Xine:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     ALSA
