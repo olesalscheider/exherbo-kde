@@ -22,5 +22,14 @@ DEPENDENCIES="
         kipi? ( graphics/digikam )
 "
 
+if ever at_least 4.9.90; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kactivities:4[>=4.9.90]
+            media-libs/lcms2
+            media-libs/libpng
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 
