@@ -6,5 +6,5 @@ Conflicts=gdm.service lxdm.service slim.service xdm.service
 ExecStart=/usr/bin/kdm -nodaemon
 
 [Install]
-Alias=displaymanager.service
+Alias=display-manager.service
 WantedBy=graphical.target
