@@ -53,12 +53,8 @@ DEPENDENCIES="
     build+run:
         app-crypt/qca:2
         dev-db/mysql[>=5.5.13][embedded-server] [[ description = [ Amarok music library uses the MySQL shared embedded library ] ]]
-        kde/kdelibs:4[>=4.6.0]       [[ note = [ nfs and smb support depend on it ] ]]
-        media-libs/taglib[>=1.7]      [[ description = [ Read and write tags in audio files ] ]]
         media-plugins/taglib-extras[>=1.0.1]
         x11-dri/mesa                  [[ description = [ Required for a hardware accelerated spectrum analyzer ] ]]
-        x11-libs/qt:4[>=4.6.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
-        gpodder? ( media-libs/libmygpo-qt[>=1.0.5] )
         ipod? (
             dev-libs/glib:2
             media-libs/libgpod[>=0.8.2]
@@ -89,14 +85,26 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
 "
 
-if ever at_least scm; then
+if ever at_least 2.6.90; then
     DEPENDENCIES+="
         build+run:
-            lastfm? ( media-libs/liblastfm[>=1.0] )
+            dev-libs/soprano            [[ note = [ nepomuk collection, possibly optional ] ]]
+            kde/kdelibs:4[>=4.8.4]      [[ note = [ nfs and smb support depend on it ] ]]
+            kde/nepomuk-core:4[>=4.9.0] [[ note = [ nepomuk collection, possibly optional ] ]]
+            media-libs/taglib[>=1.8]    [[ description = [ Read and write tags in audio files ] ]]
+            x11-libs/qt:4[>=4.8.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
+            gpodder? ( media-libs/libmygpo-qt[>=1.0.6] )
+            lastfm? ( media-libs/liblastfm[>=1.0.3] )
+        suggestion:
+            net-downloader/clamz [[ description = [ Download songs from the integrated Amazon MP3 store ] ]]
     "
 else
     DEPENDENCIES+="
         build+run:
+            kde/kdelibs:4[>=4.6.0]      [[ note = [ nfs and smb support depend on it ] ]]
+            media-libs/taglib[>=1.7]    [[ description = [ Read and write tags in audio files ] ]]
+            x11-libs/qt:4[>=4.6.0][X(+)][dbus][opengl][qt3support][svg(+)][webkit]
+            gpodder? ( media-libs/libmygpo-qt[>=1.0.5] )
             lastfm? ( media-libs/liblastfm[>=0.3.0&<1.0] )
     "
 fi
