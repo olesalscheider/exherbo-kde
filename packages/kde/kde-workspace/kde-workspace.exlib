@@ -40,7 +40,7 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="ieee1394 lm_sensors networkmanager python wicd xinerama
+MYOPTIONS="ieee1394 lm_sensors python wicd xinerama
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
@@ -99,7 +99,6 @@ DEPENDENCIES="
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        networkmanager? ( net-apps/NetworkManager[>=0.7.0&<0.9] )
         python? (
             dev-lang/python:=
         )
@@ -182,7 +181,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'consolekit CkConnector'
     'ieee1394 RAW1394'
     'lm_sensors Sensors'
-    NetworkManager
     OpenGLES
     'python PythonLibrary'
     'qalculate Qalculate'
