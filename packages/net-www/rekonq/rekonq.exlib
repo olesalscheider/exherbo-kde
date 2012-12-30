@@ -17,8 +17,6 @@ KDE technologies to have a full-featured KDE web browser.
 "
 HOMEPAGE="http://rekonq.kde.org/"
 
-RESTRICT="test" # the tests require a running X server
-
 LICENCES="GPL-3 FDL-1.2"
 SLOT="0"
 MYOPTIONS="opera [[ description = [ Support for opera sync handler ] ]]"
@@ -26,7 +24,7 @@ MYOPTIONS="opera [[ description = [ Support for opera sync handler ] ]]"
 DEPENDENCIES="
     build+run:
         dev-libs/soprano
-        kde/kdelibs:4[>=4.8.3]
+        kde/kdelibs:4[>=4.9.0]
         kde/nepomuk-core
         x11-libs/qt:4[>=4.8.0][X(+)][dbus][glib][webkit]
         opera? (
