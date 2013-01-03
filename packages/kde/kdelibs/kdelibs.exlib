@@ -77,7 +77,6 @@ DEPENDENCIES="
             app-spell/aspell
             app-spell/enchant
         )
-        upnp? ( net-libs/hupnp )
     run:
         x11-apps/iceauth
         x11-apps/rgb
@@ -102,7 +101,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_DISTRIBUTION_TEXT="Exherbo"
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DWITH_BZip2=ON
-    -DWITH_DNSSD=OFF
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
     -DWITH_Libintl=ON
@@ -132,12 +130,14 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'upnp HUpnp'
 )
 
-if ever at_least 4.9.90 ; then
+if ever at_least 4.9.98 ; then
     DEPENDENCIES+="
         build:
-            sys-devel/cmake[>=2.8.8]
+            sys-devel/cmake[>=2.8.9]
         build+run:
-            x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit] [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+            x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit]
+                    [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+            upnp? ( net-libs/hupnp[>=0.9.1] )
         recommendation:
             sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
     "
@@ -145,11 +145,16 @@ if ever at_least 4.9.90 ; then
 else
     DEPENDENCIES+="
         build+run:
-            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit] [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit]
+                    [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+            upnp? ( net-libs/hupnp )
         recommendation:
             sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=FALSE )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_DNSSD=OFF
+        -DWITH_SOLID_UDISKS2:BOOL=FALSE
+    )
 fi
 
 #FIXME: grantlee only needed for tests, which we do not run
