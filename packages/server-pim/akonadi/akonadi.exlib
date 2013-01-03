@@ -33,6 +33,13 @@ DEPENDENCIES="
         x11-misc/shared-mime-info[>=0.23]
 "
 
+if ever at_least 1.9.0; then
+    DEPENDENCIES+="
+        build:
+            sys-devel/cmake[>=2.8.8] [[ note = [ If we build with Qt5 we need at least 2.8.9 ] ]]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DAKONADI_BUILD_QSQLITE:BOOL=FALSE
     -DAKONADI_BUILD_TESTS:BOOL=TRUE
