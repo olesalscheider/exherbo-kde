@@ -66,7 +66,6 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
-        kde/kdelibs:${SLOT}[>=4.8.5]
         kde/kdepimlibs
         kde/nepomuk-core
         media-libs/jpeg
@@ -97,7 +96,16 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ! ever at_least 4.9.90; then
+if ever at_least 4.9.97; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.9.95]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.8.5]
+    "
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xine:BOOL=FALSE )
 fi
 
