@@ -136,12 +136,14 @@ if ever at_least 4.9.90; then
             x11-utils/xcb-util-image [[ note = kwin ]]
             x11-utils/xcb-util-renderutil [[ note = kwin ]]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
 else
     DEPENDENCIES+="
         build+run:
             dev-libs/soprano[>=2.5.63][virtuoso(+)]
             x11-libs/qt:4[>=4.7.0][opengl][webkit]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk:BOOL=TRUE )
 fi
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
@@ -154,7 +156,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Fontconfig:BOOL=TRUE
     -DWITH_Freetype:BOOL=TRUE
     -DWITH_GLIB2:BOOL=TRUE
-    -DWITH_{Nepomuk,Soprano}:BOOL=TRUE
+    -DWITH_Soprano:BOOL=TRUE
     -DWITH_OpenGL:BOOL=TRUE
     -DWITH_PCIUTILS:BOOL=TRUE
     -DWITH_USB:BOOL=TRUE # Logitech USB mouse support in kcontrol
