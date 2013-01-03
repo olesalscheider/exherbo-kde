@@ -32,12 +32,13 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
-if ever at_least 4.9.90; then
+if ever at_least 4.9.98; then
     DEPENDENCIES+="
         build+run:
             dev-libs/qjson
             dev-libs/soprano[>=2.7.56]
-            kde/kdelibs:${SLOT}[>=4.9.0]
+            kde/kdelibs:${SLOT}[>=4.9.4]
+            kde/nepomuk-core:${SLOT}
             server-pim/akonadi[>=1.8.51]
             x11-libs/qt:4[>=4.8.0]
     "
