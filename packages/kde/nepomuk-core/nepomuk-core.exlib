@@ -8,7 +8,7 @@ SUMMARY="Central services like file indexing, file system monitoring, query, sto
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS=""
-if ever at_least 4.9.90; then
+if ever at_least 4.9.97; then
     MYOPTIONS+="
         exif   [[ description = [ Adds support for extracting metadata from EXIF headers ] ]]
         ffmpeg [[ description = [ Adds support for extracting audio and video metadata ] ]]
@@ -20,13 +20,13 @@ fi
 DEPENDENCIES="
     build+run:
         app-text/shared-desktop-ontologies[>=0.10]
-        dev-libs/soprano[>=2.7.56][virtuoso]
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
 
-if ever at_least 4.9.90; then
+if ever at_least 4.9.97; then
     DEPENDENCIES+="
         build+run:
+            dev-libs/soprano[>=2.9.0][virtuoso]
             exif? ( graphics/exiv2[>=0.12] )
             ffmpeg? ( media/ffmpeg )
             pdf? ( app-text/poppler[>=0.12.1][qt4] )
@@ -34,14 +34,15 @@ if ever at_least 4.9.90; then
     "
     CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'exif Exiv2'
-        'ffmpeg FFmpeg'
+        FFmpeg
         'pdf PopplerQt4'
-        'taglib Taglib'
+        Taglib
     )
 else
     DEPENDENCIES+="
         build+run:
             app-pim/strigi[>=0.7.3]
+            dev-libs/soprano[>=2.7.56][virtuoso]
     "
 fi
 
