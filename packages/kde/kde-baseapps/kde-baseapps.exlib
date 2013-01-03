@@ -38,13 +38,14 @@ DEPENDENCIES="
         tidy? ( app-text/tidy )
 "
 
-if ever at_least 4.9.90; then
+if ever at_least 4.9.97; then
     DEPENDENCIES+="
         build+run:
             dev-libs/soprano[>=2.7.56][virtuoso(+)]
             kde/kactivities:4[>=4.9.90] [[ note = [ needed for activities integration in dolphin ] ]]
             kde/kdelibs:${SLOT}[>=4.9.90]
-            kde/nepomuk-core:4[>=4.9.90]
+            kde/nepomuk-core:${SLOT}[>=4.9.90]
+            kde/nepomuk-widgets:${SLOT}
     "
 else
     DEPENDENCIES+="
