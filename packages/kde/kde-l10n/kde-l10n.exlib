@@ -1,8 +1,15 @@
 # Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+case "$(ever range 3)" in
+    80|85|90|92|95|96|97|98) # Betas, RCs
+        stability=unstable ;;
+    *)
+        stability=stable ;;
+esac
+
 myexparam langs
-myexparam base_uri="mirror://kde/stable/${PV}/src/${PN}"
+myexparam base_uri="mirror://kde/${stability}/${PV}/src/${PN}"
 
 api=2
 
