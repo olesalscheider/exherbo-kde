@@ -5,7 +5,6 @@
 require kde.org
 
 SUMMARY="Printing Management for KDE"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
