@@ -14,10 +14,10 @@ DEPENDENCIES="
         media-libs/phonon
 "
 
-if ever at_least 4.9.90; then
+if ever at_least 4.9.97 ; then
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs:${SLOT}[>=4.9.0]
+            kde/kdelibs:${SLOT}[>=4.9.95]
             x11-libs/libxkbfile
             x11-libs/qt:4[opengl][sql]
     "
