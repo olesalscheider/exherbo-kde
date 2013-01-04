@@ -7,7 +7,9 @@ require kde.org [ git=false ]
 SUMMARY="KDE Artwork"
 DESCRIPTION="themes, screensaver, sounds, wallpapers, widget styles and window styles"
 
-LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+LICENCES="
+    GPL-2 LGPL-2.1 FDL-1.2
+    CCPL-Attribution-3.0 [[ note = [ Icons from slim-glow theme ] ]]"
 MYOPTIONS="
     autorotate [[ description = [ Auto-rotate photos in kslideshow ] ]]
     xscreensaver [[ description = [ Support xscreensaver screensavers ] ]]
