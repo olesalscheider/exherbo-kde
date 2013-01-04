@@ -28,3 +28,9 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Xplanet=OFF
 )
 
+if ever at_least 4.9.97 ; then
+    # Package Unwritten, http://www.atnf.csiro.au/people/mcalabre/WCS/; Support for world coordinate
+    # systems in FITS header
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_WCSLIB=OFF )
+fi
+
