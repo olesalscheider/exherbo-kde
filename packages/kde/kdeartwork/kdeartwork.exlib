@@ -18,7 +18,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build:
         xscreensaver? (
-            sci-libs/eigen [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
+            sci-libs/eigen:2 [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
         )
     build+run:
         kde/kde-workspace:${SLOT}[>=${PV}]
