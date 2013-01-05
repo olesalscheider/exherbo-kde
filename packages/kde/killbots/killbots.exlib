@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A simple game of evading killer robots"
+DESCRIPTION="
+Who created the robots and why they have been programmed to destroy, no one knows. All that is known
+is that the robots are numerous and their sole objective is to destroy you. Fortunately for you,
+their creator has focused on quantity rather than quality and as a result the robots are severely
+lacking in intelligence. Your superior wit and a fancy teleportation device are your only weapons
+against the never-ending stream of mindless automatons."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
