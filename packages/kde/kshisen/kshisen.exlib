@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Shisen-Sho Mahjongg-like Tile Game"
+DESCRIPTION="
+A solitaire-like game played using the standard set of Mahjong tiles. Unlike Mahjong however,
+KShisen has only one layer of scrambled tiles."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        kde/libkmahjongg:${SLOT}
+"
+
