@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="World domination strategy game"
+DESCRIPTION="
+A computerized version of the well known strategic board game Risk. The goal of the game is
+simply to conquer the world by attacking your neighbors with your armies."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2[>=2.0.0] [[ note = [ Build Ksirk Jabber support's GroupWise and Jabberprotocols ] ]]
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        media-libs/phonon
+"
+# NOTE: contains a copy of iris (http://delta.affinix.com/iris/) which has no releases so far
+
