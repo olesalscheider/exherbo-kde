@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Miniature golf"
+DESCRIPTION="
+The game is played from an overhead view, with a short bar representing the golf club. Kolf features
+many different types of objects, such water hazards, slopes, sand traps, and black holes (warps),
+among others."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2 LGPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        media-libs/phonon
+"
+# NOTE: Annoyingly upstream bundles an old, modified copy of dev-libs/Box2D
+
