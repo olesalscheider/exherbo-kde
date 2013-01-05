@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A clone of the well known game Pac-Man"
+DESCRIPTION="
+You must run through the maze to eat all pills without being captured by a ghost. By eating an
+energizer, Kapman gets the ability to eat ghosts for a few seconds. When a stage is cleared of
+pills and energizer the player is taken to the next stage with slightly increased game speed."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        media-libs/phonon
+"
+
