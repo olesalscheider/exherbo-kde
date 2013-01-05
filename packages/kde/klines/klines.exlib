@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A game about balls and how to get rid of them"
+DESCRIPTION="
+It's a simple but highly addictive one player game. The player has to move the colored balls
+around the game board, gathering them into the lines of the same color by five. Once the line
+is complete it is removed from the board, therefore freeing precious space. In the same time
+the new balls keep arriving by three after each move, filling up the game board."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
