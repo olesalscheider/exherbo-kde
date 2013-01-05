@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Reversi Board Game"
+DESCRIPTION="
+KReversi is a simple one player strategy game played against the computer. If a player's piece is
+captured by an opposing player, that piece is turned over to reveal the color of that player. A
+winner is declared when one player has more pieces of his own color on the board and there are no
+more possible moves."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
