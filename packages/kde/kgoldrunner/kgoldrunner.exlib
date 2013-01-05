@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A game of action and puzzle solving"
+DESCRIPTION="
+It's an action game where the hero runs through a maze, climbs stairs, dig holes and dodges enemies in
+order to collect all the gold nuggets and escape to the next level. Your enemies are also after the
+gold. Worse still, they are after you!"
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
