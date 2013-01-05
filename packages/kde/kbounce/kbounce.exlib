@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Ball Bouncing Game"
+DESCRIPTION="
+A single player arcade game with the elements of puzzle. It is played on a field, surrounded by
+wall, with two or more balls bouncing around within the walls. The object of the game is to build
+new walls to decrease the size of the active field."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        media-libs/phonon
+"
+
