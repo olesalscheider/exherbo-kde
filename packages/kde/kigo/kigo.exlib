@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Go board game"
+DESCRIPTION="
+An open-source implementation of the popular Go game. Go is a strategic board game for two
+players. It is also known as igo (Japanese), weiqi or wei ch'i (Chinese) or baduk (Korean).
+Go is noted for being rich in strategic complexity despite its simple rules."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}
+"
+
