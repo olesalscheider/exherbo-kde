@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Galactic Strategy Game"
+DESCRIPTION="
+Konquest is the KDE version of Gnu-Lactic Konquest. Players conquer other planets by sending
+ships to them. The goal is to build an interstellar empire and ultimately conquer all other
+player's planets."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}
+"
+
