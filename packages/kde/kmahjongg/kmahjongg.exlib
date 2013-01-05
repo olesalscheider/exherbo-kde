@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Mahjongg Solitaire"
+DESCRIPTION="
+In KMahjongg the tiles are scrambled and staked on top of each other to resemble a certain shape.
+The player is then expected to remove all the tiles off the game board by locating each tile's
+matching pair."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        kde/libkmahjongg:${SLOT}
+"
+
