@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Patience card game"
+DESCRIPTION="
+A relaxing card sorting game. To win the game a player has to arrange a single deck of cards
+in certain order amongst each other."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        media-libs/phonon
+        x11-misc/shared-mime-info
+"
+
