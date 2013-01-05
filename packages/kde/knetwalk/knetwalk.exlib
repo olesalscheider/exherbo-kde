@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Network construction game"
+DESCRIPTION="
+A small game where you have to build up a computer network by rotating the wires to connect the
+terminals to the server. When the network is build, a highscore-list comes up where competitions
+can be fought out."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
