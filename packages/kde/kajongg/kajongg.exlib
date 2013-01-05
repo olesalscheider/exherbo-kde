@@ -1,0 +1,28 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Classic Mah Jongg for four players"
+DESCRIPTION="
+Kajongg is the ancient Chinese board game for 4 players. Kajongg can be used in two different ways:
+Scoring a manual game where you play as always and use Kajongg for the computation of scores and
+for bookkeeping. Or you can use Kajongg to play against any combination of other human players or
+computer players."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-db/sqlite:3
+        dev-lang/python:=[>=2.6&<3.0]
+        dev-python/PyQt4[sql]
+        kde/kdelibs:${SLOT}
+        kde/pykde4:${SLOT}[>=4.7.4]
+        net-twisted/TwistedCore
+    run:
+        kde/libkmahjongg:${SLOT}
+"
+
