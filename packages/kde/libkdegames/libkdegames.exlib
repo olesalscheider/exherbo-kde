@@ -1,0 +1,29 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Common code and data for many KDE games"
+
+LICENCES="GPL-2 FDL-1.2
+    GPL-3           [[ note = [ penguins carddeck ] ]]
+    CC-PublicDomain [[ note = [ nicu-{ornamental,white} carddeck ] ]]
+    MIT             [[ note = [ konqi-modern carddeck ] ]]
+"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        (
+            media-libs/libsndfile[>=0.21]
+            media-libs/openal
+        ) [[ note = [ could both be optional and phonon could be used as a fallback, but upstream
+                      doesn't recommend it ] ]]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_OpenAL:BOOL=TRUE
+    -DWITH_SndFile:BOOL=TRUE
+)
+
