@@ -7,7 +7,7 @@ if ever is_scm ; then
     DOWNLOADS=""
 fi
 
-require kde sourceforge [ suffix=tar.gz ]
+require kde [ api=2 ] sourceforge [ suffix=tar.gz ]
 
 SUMMARY="3-way diff & merge program"
 DESCRIPTION="
@@ -26,9 +26,7 @@ DEPENDENCIES="
         kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
         kde/kdelibs:4[>=4.6]
 "
-
-src_unpack() {
-   ever is_scm && WORK="${WORK}/kdiff3" && scm_src_unpack
-   ever is_scm || default
-}
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+fi
 
