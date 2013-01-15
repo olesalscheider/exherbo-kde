@@ -16,3 +16,6 @@ MYOPTIONS=""
 
 BUGS_TO="mixi@exherbo.org"
 
+# NOTE: temporarily work around version 0.5.2.1
+CMAKE_SOURCE=${WORKBASE}/${PN}-$(ever range 1-3)
+
