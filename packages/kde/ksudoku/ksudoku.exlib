@@ -1,0 +1,25 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="KDE sudoku game"
+DESCRIPTION="
+A logic-based symbol placement puzzle. The player has to fill a grid so that each column, row as
+well as each square block on the game field contains only one instance of each symbol."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+        (
+            x11-dri/glu
+            x11-dri/mesa
+            x11-libs/qt:4[opengl]
+        ) [[ note = [ Roxdoku 3D sudoku support ] ]]
+"
+
