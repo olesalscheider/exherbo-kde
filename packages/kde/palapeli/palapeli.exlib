@@ -1,0 +1,25 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Jigsaw puzzle game"
+DESCRIPTION="
+A single-player jigsaw puzzle game. Unlike other games in that genre, you are not limited to
+aligning pieces on imaginary grids. The pieces are freely moveable. Also, Palapeli features
+real persistency, i.e. everything you do is saved on your disk immediately."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2i LGPL-2"
+MYOPTIONS="irregular-grid"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}
+        x11-misc/shared-mime-info[>=0.23]
+        irregular-grid? (
+            sci-libs/qhull
+        )
+"
+
