@@ -1,0 +1,19 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A simple tron clone"
+DESCRIPTION="You can play KSnakeDuel against the computer or a friend. The aim of the game is to live longer than
+your opponent. To do that, avoid running into a wall, your own tail and that of your opponent."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}[>=4.9.0]
+"
+
