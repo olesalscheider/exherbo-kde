@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="An implementation of the game squares for KDE4"
+DESCRIPTION="
+It's a game modeled after the well known pen and paper based game of Dots and Boxes. Each
+player takes it in turns to draw a line between two adjacent dots on the board. The objective
+is to complete more squares than your opponents."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}
+"
+
