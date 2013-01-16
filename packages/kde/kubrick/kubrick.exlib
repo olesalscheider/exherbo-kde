@@ -1,0 +1,25 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="3D game based on Rubik's Cube"
+DESCRIPTION="
+The cube sizes range from 2x2x2 up to 6x6x6, or you can play with irregular \"bricks\" such as
+5x3x2 or \"mats\" such as 6x4x1 or 2x2x1. The game has a selection of puzzles at several levels
+of difficulty, as well as demos of pretty patterns and solution moves, or you can make up your
+own puzzles."
+HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/libkdegames:${SLOT}
+        x11-dri/glu
+        x11-dri/mesa
+        x11-libs/qt:4[opengl]
+"
+
