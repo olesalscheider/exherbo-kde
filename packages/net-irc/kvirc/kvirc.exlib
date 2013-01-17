@@ -100,7 +100,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
 
 kvirc_src_prepare() {
     edo sed -e "/#define KVI_DEFAULT_FRAME_CAPTION/s/KVI_VERSION/& \" r${MY_UPSTREAM_REVISION}\"/" \
-            -i "${CMAKE_SOURCE}"/src/kvirc/ui/kvi_frame.cpp
+            -i "${CMAKE_SOURCE}"/src/kvirc/ui/KviMainWindow.cpp
 }
 
 kvirc_src_install() {
