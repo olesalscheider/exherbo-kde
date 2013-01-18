@@ -97,7 +97,6 @@ DEPENDENCIES+="
             x11-libs/libXScrnSaver
             im_protocols:gadu? ( net-im/libgadu[>=1.8.0] [[ url = [ http://toxygen.net/libgadu/ ] ]] )
             im_protocols:groupwise? ( app-crypt/qca:2 )
-            im_protocols:ilbc? ( media-plugins/msilbc )
             im_protocols:yahoo? ( media-libs/jasper )
             im_protocols:wlm? (
                 dev-libs/boost
@@ -112,7 +111,6 @@ DEPENDENCIES+="
                 app-crypt/qca:2
                 net-dns/libidn
                 im_protocols:jingle? (
-                    media-libs/speex
                     net-libs/ortp[>=0.13]
                     sys-sound/alsa-lib
                 )
@@ -145,6 +143,24 @@ DEPENDENCIES+="
         )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
+
+if ever at_least 4.9.98 ; then
+    DEPENDENCIES+="
+        run:
+            kde_parts:kopete? (
+                im_protocols:ilbc? ( media-plugins/msilbc )
+                im_protocols:jingle? ( media-libs/speex )
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:kopete? (
+                im_protocols:ilbc? ( media-plugins/msilbc )
+                im_protocols:jingle? ( media-libs/speex )
+            )
+    "
+fi
 
 # FIXME
 # Warning: kppp uses setuid
