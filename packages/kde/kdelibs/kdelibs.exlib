@@ -101,6 +101,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_DISTRIBUTION_TEXT="Exherbo"
     -DSYSCONF_INSTALL_DIR="/etc/"
     -DWITH_BZip2=ON
+    -DWITH_DNSSD=OFF
     -DWITH_GSSAPI=OFF # Kerberos
     -DWITH_HSPELL=OFF
     -DWITH_Libintl=ON
@@ -151,10 +152,7 @@ else
         recommendation:
             sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_DNSSD=OFF
-        -DWITH_SOLID_UDISKS2:BOOL=FALSE
-    )
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=FALSE )
 fi
 
 #FIXME: grantlee only needed for tests, which we do not run
