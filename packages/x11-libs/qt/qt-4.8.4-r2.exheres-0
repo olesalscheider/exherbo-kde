@@ -11,5 +11,6 @@ UPSTREAM_RELEASE_NOTES="http://qt.digia.com/Release-Notes/Release-Notes-Qt-484"
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PNV}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
     "${FILES}"/qt-webkit-4.8.1-no-use-ld-gold.patch
+    "${FILES}"/${PNV}-fix-qvmemetadata-crash.patch
 )
 
