@@ -4,5 +4,4 @@
 require calligra
 
 PLATFORMS="~amd64 ~x86"
-DOWNLOADS="mirror://kde/unstable/${PNV}/${PNV}.tar.bz2"
 

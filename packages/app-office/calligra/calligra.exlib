@@ -9,6 +9,7 @@ SUMMARY="Collection of office applications for the K Desktop Environment"
 DESCRIPTION="
 Office productivity:
 * Words: Word processor
+* Author: Supports a writer in the creation of books (since 2.6.0, based on Words)
 * Sheets: Spreadsheet calculator
 * Stage: Presentation program
 Graphics:
@@ -82,7 +83,7 @@ DEPENDENCIES+="
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
         media-libs/lcms2[>=2.0] [[ note = [ Required for color management and Krita ] ]]
         media-libs/libpng
-        media-libs/phonon [[ note = [ Used by stage ] ]]
+        media-libs/phonon [[ note = [ Used by stage, videoshape plugin ] ]]
         sys-libs/zlib
         x11-dri/mesa [[ note = [ Required for opengl support (Krita and Flake) ] ]]
         x11-libs/libICE
@@ -122,7 +123,7 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
-            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 is recommended ] ]]
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 (.15 for 2.6.0) is recommended ] ]]
             dev-libs/icu
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
@@ -173,14 +174,18 @@ DEPENDENCIES+="
     suggestion:
         app-office/calligra-l10n:${SLOT}[>=${PV}] [[ description = [ Localisation files ] ]]
 "
+# plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
+# http://www.librcps.org/
 
-if ever at_least 2.5.90; then
+if ever at_least 2.5.94; then
     DEPENDENCIES+="
         media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
-        kactivities? ( kde/kactivities[=scm] [[ note = [ Needs version 6.1.0 (=KDE 4.10), no release yet ] ]] )
+        x11-libs/qt:4[>=4.7.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
+        kactivities? ( kde/kactivities[>=4.9.98] )
         kde_parts:words? (
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 (.15 for 2.5.94) is recommended ] ]]
             dev-libs/icu
-        )
+        ) [[ note = [ Needed for bibliography, dep of common libcalligradb, also used by kexi ] ]]
     "
 fi
 
@@ -227,6 +232,7 @@ src_configure() {
 
     if ever at_least 2.5.90; then
         cmakeparams+=(
+            -DPACKAGERS_BUILD:BOOL=FALSE # Support multiple CPU arches in one binary - if Vc is present, see README.PACKAGERS
             -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
             -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
             -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
