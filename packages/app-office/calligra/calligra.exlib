@@ -72,9 +72,9 @@ DEPENDENCIES+="
     build:
         mpxj? ( virtual/jdk )
     build+run:
+        dev-lang/perl:*
         dev-libs/attica [[ note = [ Can be made optional, but it's small and useful and does not pull in additional dependencies ] ]]
         dev-libs/boost
-        dev-lang/perl:*
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
         kde/kdelibs:4[>=4.3.0]
         kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
@@ -85,7 +85,6 @@ DEPENDENCIES+="
         media-libs/phonon [[ note = [ Used by stage ] ]]
         sys-libs/zlib
         x11-dri/mesa [[ note = [ Required for opengl support (Krita and Flake) ] ]]
-        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
@@ -94,6 +93,7 @@ DEPENDENCIES+="
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXpm
+        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
         kde_parts:active? (
@@ -122,8 +122,8 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
-            dev-libs/icu
             dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 is recommended ] ]]
+            dev-libs/icu
             x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
@@ -144,27 +144,24 @@ DEPENDENCIES+="
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
         )
-        kde_parts:stage? (
-            kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
-        )
         kde_parts:sheets? (
             sci-libs/eigen:2[>=2.0]
             solver? ( sci-libs/gsl[>=1.7] )
+        )
+        kde_parts:stage? (
+            kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
         kde_parts:words? (
             wordperfect? ( office-libs/libwpd[>=0.9] )
             msworks? ( office-libs/libwps[>=0.2] )
         )
         marble? (
-            || (
-                kde/marble
-                kde/kdeedu[kde_parts:marble]
-            )
+            kde/marble
         )
         openexr? (
-            media-libs/openexr
             media-libs/ilmbase
-            )
+            media-libs/openexr
+        )
         pdf? ( app-text/poppler[>=0.12.1][qt4] [[ note = [ Karbon-import and Krita PDF filter ] ]] )
         spacenavigator? ( sci-libs/libspnav )
         !kde/koffice [[
