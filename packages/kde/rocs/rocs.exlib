@@ -12,5 +12,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost[>=1.43.0] [[ note = [ rocs can be compiled with boost >= 1.39, but 1.43.0 is necessary to aquire full functionality ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
+    run:
+        kde/kate:${SLOT}
 "
 
