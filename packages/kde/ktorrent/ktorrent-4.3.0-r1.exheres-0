@@ -5,3 +5,7 @@ require ktorrent
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/26403c5499c4b03c46e291967a7d59f4effc4a23.patch
+)
+
