@@ -96,10 +96,12 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least 4.9.97; then
+if ever at_least 4.10.0; then
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.9.95]
+            kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
+                build with <4.10.0 ] ]]
     "
 else
     DEPENDENCIES+="
