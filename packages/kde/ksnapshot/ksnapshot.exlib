@@ -14,8 +14,8 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         x11-libs/libX11
-        x11-libs/libXfixes [[ note = [ Support for capturing the cursor ] ]]
         x11-libs/libXext [[ note = [ searches for include/X11/shape.h; automagic ] ]]
+        x11-libs/libXfixes [[ note = [ Support for capturing the cursor ] ]]
         kipi? ( graphics/digikam[>=2.5.0] )
 "
 

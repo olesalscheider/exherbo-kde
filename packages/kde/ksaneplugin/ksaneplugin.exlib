@@ -10,7 +10,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/libksane:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/libksane:${SLOT}[>=${PV}]
 "
 
