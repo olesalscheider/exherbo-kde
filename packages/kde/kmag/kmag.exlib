@@ -20,3 +20,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
 
+# optional dep on  QAccessibilityClient, which is unpackaged
+# https://projects.kde.org/projects/playground/accessibility/libkdeaccessibility
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QAccessibilityClient:BOOL=FALSE )
+
