@@ -126,9 +126,9 @@ DEPENDENCIES="
 if ever at_least 4.9.90; then
     DEPENDENCIES+="
         build+run:
-            dev-libs/soprano[>=2.7.56][virtuoso(+)]
             dev-libs/qjson  [[ note = [ chromium bookmarks runner, hard enable since it's small and
                                         already needed for kdepimlibs ] ]]
+            dev-libs/soprano[>=2.7.56][virtuoso(+)]
             kde/nepomuk-core:4[>=4.9.90]
             x11-libs/libxcb [[ note = kwin ]]
             x11-libs/libXi  [[ note = ktouchpadenabler ]]
@@ -136,7 +136,10 @@ if ever at_least 4.9.90; then
             x11-utils/xcb-util-image [[ note = kwin ]]
             x11-utils/xcb-util-renderutil [[ note = kwin ]]
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_NepomukCore:BOOL=TRUE
+        -DKWIN_BUILD_KAPPMENU:BOOL=TRUE
+    )
 else
     DEPENDENCIES+="
         build+run:
