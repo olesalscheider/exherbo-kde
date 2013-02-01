@@ -16,3 +16,14 @@ DEPENDENCIES="
         kde/kate:${SLOT}
 "
 
+if ever at_least 4.10.0 ; then
+    DEPENDENCIES+="
+        build:
+            sys-devel/cmake[>=2.8.8]
+        build+run:
+            dev-libs/boost[>=1.49.0] [[ note = [ rocs can be compiled with boost[>=1.43], but 1.49.0
+                is necessary for DOT file support ] ]]
+            x11-libs/qt:4[webkit]
+    "
+fi
+
