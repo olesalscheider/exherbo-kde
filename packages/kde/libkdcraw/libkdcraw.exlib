@@ -12,6 +12,9 @@ LICENCES="
     LGPL-2
 "
 MYOPTIONS=""
+if ever at_least 4.10.0 ; then
+    MYOPTIONS+="jpeg2000 rawspeed [[ description = [ Support for the RawSpeed Codec ] ]]"
+fi
 
 DEPENDENCIES="
     build+run:
@@ -20,6 +23,15 @@ DEPENDENCIES="
         media-libs/lcms2
         sys-devel/gcc:*[openmp]
 "
+
+if ever at_least 4.10.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/jpeg[>=8]
+            jpeg2000? ( media-libs/jasper )
+            rawspeed? ( dev-libs/libxml2:2.0 )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_LCMS2:BOOL=TRUE
