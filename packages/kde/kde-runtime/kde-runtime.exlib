@@ -66,8 +66,8 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
-        kde/kdepimlibs
-        kde/nepomuk-core
+        kde/kdepimlibs:${SLOT}
+        kde/nepomuk-core:${SLOT}
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -88,7 +88,7 @@ DEPENDENCIES="
         sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
     run:
-        kde/oxygen-icons
+        kde/oxygen-icons:${SLOT}
     suggestion:
         net/cagibi [[ description = [ Discovers UPnP devices/services in the network ] ]]
 "
