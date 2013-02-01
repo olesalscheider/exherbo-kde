@@ -11,7 +11,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/libkdeedu[>=4.7.0]
+        kde/libkdeedu:${SLOT}[>=4.7.0]
         media-libs/phonon
 "
 

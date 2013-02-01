@@ -12,7 +12,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/attica
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/libkdeedu
+        kde/libkdeedu:${SLOT}
         x11-libs/libXrender
         html-export? (
             dev-libs/libxslt
