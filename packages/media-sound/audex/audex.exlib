@@ -1,10 +1,9 @@
-# Copyright 2011-2012 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2011-2013 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 if ever is_scm ; then
-    SCM_REPOSITORY="svn://anonsvn.kde.org/home/kde/"
-    SCM_SUBPATH="playground/multimedia/${PN}"
-    require scm-svn
+    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+    require scm-git
 else
     DOWNLOADS="http://kde.maniatek.com/${PN}/files/${PNV/_beta/b}.tar.xz"
 fi
