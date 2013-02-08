@@ -135,6 +135,8 @@ if ever at_least 4.9.90; then
             x11-libs/qt:4[>=4.8.0][opengl][webkit]
             x11-utils/xcb-util-image [[ note = kwin ]]
             x11-utils/xcb-util-renderutil [[ note = kwin ]]
+        recommendation:
+            x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_NepomukCore:BOOL=TRUE
