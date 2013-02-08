@@ -1,0 +1,16 @@
+# Copyright 2013 Friedrich Kröner <friedrich@mailstation.de>
+# Distributed under the terms of the GNU General Public License v2
+
+require launchpad [ branch=trunk suffix=tar.bz2 ] cmake [ api=2 ]
+
+SUMMARY="Enables the export of menus via DBus for Qt applications"
+
+LICENCES="LGPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[>=4.8.0]
+        x11-libs/dbusmenu-qt[>=0.9.0]
+"
