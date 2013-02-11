@@ -30,6 +30,7 @@ DEPENDENCIES="
         dev-lang/perl
         dev-libs/boost
         dev-libs/gmp:=
+        dev-libs/libgcrypt
         kde/kdelibs:4[>=4.4]
 "
 
