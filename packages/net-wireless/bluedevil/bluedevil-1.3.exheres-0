@@ -1,7 +1,7 @@
 # Copyright 2010 Sterling X. Winter <replica@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="KDE Bluetooth stack, successor to kbluetooth"
 DESCRIPTION="
