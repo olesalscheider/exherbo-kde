@@ -1,7 +1,7 @@
 # Copyright 2008 Daniel Mierswa <impulze@impulze.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="KTorrent - The KDE BitTorrent client"
 DESCRIPTION="A rich featured BitTorrent client for KDE"
@@ -19,19 +19,17 @@ DEPENDENCIES="
         app-crypt/qca:2
         dev-libs/boost
         dev-libs/gmp:=
+        kde/kde-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         kde/kdelibs:${SLOT}[>=4.4][avahi?]
         kde/kdepimlibs:${SLOT} [[ note = [ needed for syndication support ] ]]
-        kde/kde-workspace:${SLOT} [[ note = [ libtaskmanager needed for the plasmoid ] ]]
         media-libs/phonon
         media-libs/taglib
-        net-p2p/libktorrent[>=1.3.0]
         net-libs/GeoIP
+        net-p2p/libktorrent[>=1.3.0]
         x11-libs/qt:4[>=4.7.0][qt3support]
 "
 
 BUGS_TO="kde@exherbo.org"
-
-WORK="${WORKBASE}/${PNV/_}"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DENABLE_BWSCHEDULER_PLUGIN=ON
