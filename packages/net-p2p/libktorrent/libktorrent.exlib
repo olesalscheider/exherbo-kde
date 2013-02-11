@@ -1,7 +1,7 @@
 # Copyright 2010, 2012 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 export_exlib_phases src_compile src_install
 
@@ -35,13 +35,11 @@ DEPENDENCIES="
 
 BUGS_TO="kde@exherbo.org"
 
-WORK="${WORKBASE}/${PNV/_}"
-
 libktorrent_src_compile() {
-    cmake_src_compile
+    default
 
     if option doc ; then
-        cmake_run emake docs
+        emake docs
     fi
 }
 
@@ -50,7 +48,7 @@ libktorrent_src_install() {
 
     if option doc ; then
         insinto /usr/share/doc/${PNVR}/
-        doins -r "${ECMAKE_BUILD_DIR}"/apidocs/html
+        doins -r "${WORK}"/apidocs/html
     fi
 }
 

@@ -5,5 +5,3 @@ require libktorrent
 
 PLATFORMS="~amd64 ~x86"
 
-WORK=${WORKBASE}/${PNV}
-
