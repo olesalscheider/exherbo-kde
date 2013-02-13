@@ -1,0 +1,39 @@
+# Copyright 2013 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ]
+
+HOMEPAGE="https://projects.kde.org/projects/extragear/base/kde-gtk-config/"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+SUMMARY="GTK2 and GTK3 Configurator for KDE."
+DESCRIPTION="
+Configuration dialog to adapt GTK applications appearance to your taste under
+KDE. Among its many features, it lets you:
+- Choose which theme is used for GTK2 and GTK3 applications.
+- Tweak some GTK applications behaviour.
+- Select what icon theme to use in GTK applications.
+- Select GTK applications default fonts.
+- Easily browse and install new GTK2 and GTK3 themes.
+"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/atk
+        dev-libs/glib:2
+        kde/kdelibs:4
+        sys-devel/gettext
+        x11-libs/cairo
+        x11-libs/gdk-pixbuf:2.0
+        x11-libs/gtk+:2
+        x11-libs/gtk+:3
+        x11-libs/pango
+"
+
+BUGS_TO="kimrhh@exherbo.org"
+
