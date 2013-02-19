@@ -35,14 +35,19 @@ DEPENDENCIES="
         id3? ( media-libs/id3lib )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Support-building-with-ffmpeg-0.11.patch )
-
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DWITH_KDE:BOOL=TRUE
     -DWITH_DBUS:BOOL=TRUE
     -DWITH_PHONON:BOOL=TRUE
     -DWITH_TAGLIB:BOOL=TRUE
     -DWITH_MP4V2:BOOL=FALSE
+    # gstreamer can be used instead of ffmpeg for chromaprint decoding, seems pointless to add
+    # options for that, so if chromaprint is enabled, force ffmpeg on
+    -DWITH_GSTREAMER:BOOL=FALSE
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'id3 ID3LIB' 'chromaprint CHROMAPRINT' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+    'id3 ID3LIB'
+    'chromaprint CHROMAPRINT'
+    'chromaprint FFMPEG'
+)
 
