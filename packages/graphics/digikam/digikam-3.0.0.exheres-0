@@ -7,7 +7,7 @@ require kde
 
 SUMMARY="An advanced digital photo management application"
 HOMEPAGE="http://www.digikam.org/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2 mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 
 BUGS_TO="kde@exherbo.org"
 
@@ -18,7 +18,9 @@ MYOPTIONS="doc gphoto2 nepomuk
 kipi_plugins:
     acquireimages      [[ description = [ A tool to acquire images using flat scanner. ] ]]
     expoblending       [[ description = [ A tool to create pseudo HDR image with a stack of bracketed images. ] ]]
+    imgur              [[ description = [ A tool to export images to Imgur web service. ] ]]
     ipodexport         [[ description = [ A tool to export pictures to an Ipod device. ] ]]
+    videoslideshow     [[ description = [ A tool to export slideshows to video. ] ]]
 "
 
 RESTRICT="test"
@@ -32,52 +34,66 @@ DEPENDENCIES="
         app-crypt/qca:2
         dev-db/mysql
         dev-libs/boost
-        dev-libs/expat   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
+        dev-libs/expat[>=2.0.1]   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
         dev-libs/glib:2
-        dev-libs/libxml2 [[ description = [ Htmlexport ] ]]
-        dev-libs/libxslt [[ description = [ Htmlexport ] ]]
+        dev-libs/libxml2[>=2.7] [[ description = [ Htmlexport ] ]]
+        dev-libs/libxslt[>=1.1] [[ description = [ Htmlexport ] ]]
         dev-libs/qjson[>=0.7] [[ note = [ For libmediawiki ] ]]
-        kde/kdelibs:4[>=4.3]
-        kde/kdepimlibs:4 [[ note = [ addressbook support ] ]]
-        kde/libkdcraw
-        kde/libkexiv2
-        kde/libkipi
+        kde/kdelibs:4[>=4.4]
+        kde/kdepimlibs:4[>=4.4] [[ note = [ addressbook support ] ]]
+        kde/libkdcraw[>=4.10.0]
+        kde/libkexiv2[>=4.7.0]
+        kde/libkipi[>=4.10.0]
         kde/marble[>=4.7] [[ note = [ For LibKGeoMap ] ]]
         media-libs/jasper[>=1.7.0]
-        media-libs/jpeg
-        media-libs/lcms
-        media-libs/lensfun [[ description = [ To support LensCorrection editor ] ]]
-        media-libs/liblqr:1 [[ description = [ For Liquid Rescale tool ] ]]
-        media-libs/libpgf
+        media-libs/jpeg[>=6b]
+        media-libs/lcms[>=1]
+        media-libs/lensfun[>=0.2.6] [[ description = [ To support LensCorrection editor ] ]]
+        media-libs/liblqr:1[>=0.4.1] [[ description = [ For Liquid Rescale tool ] ]]
+        media-libs/libpgf[>=6.11.24]
         media-libs/libpng[>=1.2.7]
         media-libs/opencv[>=2.0.0] [[ note = [ For Libkface ] ]]
-        media-libs/tiff
-        x11-dri/mesa       [[ description = [ For Slideshow and ImageViewer ] ]]
-        x11-libs/libX11    [[ description = [ For Slideshow and ImageViewer ] ]]
+        media-libs/tiff[>=3.8.2] [[ note = [ Can work with >=3.6.x but >=3.8.2 recommended ] ]]
+        x11-dri/mesa[>=7.0.4]       [[ description = [ For Slideshow and ImageViewer ] ]]
+        x11-libs/libX11[>=1.1.5]    [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libXrandr [[ description = [ For Slideshow and ImageViewer ] ]]
-        x11-libs/qt:4[opengl][sql][sqlite]
+        x11-libs/qt:4[>=4.6][opengl][sql][sqlite]
         !graphics/kipi-plugins [[
             description = [ ${PNV} includes kipi-plugins ]
             resolution = uninstall-blocked-after
         ]]
         doc? ( app-doc/doxygen )
-        gphoto2? ( media-libs/libgphoto2[>=2.4.0] )
-        kipi_plugins:acquireimages? ( kde/libksane )
-        kipi_plugins:expoblending? ( sys-devel/gcc[openmp] )
+        gphoto2? (
+            dev-libs/libusb[>=1.0.0]
+            media-libs/libgphoto2[>=2.4.0]
+        )
+        kipi_plugins:acquireimages? ( kde/libksane[>=0.3.0] )
+        kipi_plugins:expoblending? ( sys-devel/gcc[>=4.3.0][openmp] )
+        kipi_plugins:imgur? ( sys-auth/kqoauth[>=0.97] )
         kipi_plugins:ipodexport? (
-            media-libs/libgpod
+            media-libs/libgpod[>=0.7.0]
             x11-libs/gtk+:2
         )
-        nepomuk? ( kde/kde-runtime[>=4.7] )
+        kipi_plugins:videoslideshow? (
+            media-gfx/ImageMagick[>=5.5.4]
+            media-libs/qt-gstreamer
+        )
+        nepomuk? (
+            app-text/shared-desktop-ontologies[>=0.6.50]
+            kde/kde-runtime[>=4.7]
+        )
     run:
         media-gfx/enblend-enfuse[>=3.0]
         media-gfx/hugin[>=0.8]
         media-gfx/ImageMagick[>=5.5.4]
+    suggestion:
+        kde/ffmpegthumbs [[ description = [ For thumbnails of videos. ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_INTERNALMYSQL=no
     -DWITH_KdepimLibs:BOOL=TRUE
+    -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS:BOOL=FALSE
 
     # Liquid rescale image editor tool and lens correction tool, they're either on, or uses internal copies
     -DWITH_GLIB2:BOOL=TRUE
@@ -88,9 +104,12 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'doc Doxygen'
     'gphoto2 Gphoto2'
     'kipi_plugins:acquireimages KSane'
+    'kipi_plugins:imgur QtKOAuth'
     'kipi_plugins:ipodexport Gdk'
     'kipi_plugins:ipodexport GObject'
     'kipi_plugins:ipodexport Ipod'
+    'kipi_plugins:videoslideshow QtGStreamer'
+    'kipi_plugins:videoslideshow ImageMagick'
     'nepomuk Nepomuk'
 )
 
