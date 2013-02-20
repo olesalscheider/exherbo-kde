@@ -1,0 +1,323 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2008-2009, 2010 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation
+
+require qt easy-multibuild
+
+export_exlib_phases src_prepare src_install
+
+SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
+DESCRIPTION="Contains the following modules:
+- QtCore: non-graphical classes used by other modules
+- QtConcurrent: Classes for writing multi-threaded programs w/o using low-level threading primitives
+- QtDBus: Classes for inter-process communication over the D-Bus protocol
+- QtGui: Base classes for graphical user interface (GUI) components
+- QtNetwork: Classes to make network programming easier and more portable
+- QtOpenGL: OpenGL support classes
+- QtPrintSupport: Classes to make printing easier and more portable
+- QtSql: Classes for database integration using SQL
+- QtTest: Classes for unit testing Qt applications and libraries
+- QtWidgets: Classes to extend Qt GUI with C++ widgets (belonged to QtGui in 4.x)
+- QtXml: C++ implementations of SAX and DOM"
+
+MYOPTIONS_PARTS="doc examples"
+SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
+# accessibility gif jpeg png enabled by default
+MYOPTIONS="cups glib kms opengles sql
+    ${MYOPTIONS_PARTS}
+    ( ${SQL_BACKENDS} ) [[ requires = sql ]]
+    sql? (
+        ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
+    )
+    glib        [[ description = [ Add support for the glib eventloop ] ]]
+    gtk         [[ description = [ Enable GTK+ style support, this will install a Qt4 style that renders using GTK+, to blend in with a GTK+ desktop ]
+                   requires    = glib ]]
+    kms         [[ description = [ KMS platform plugin to run a single-window per screen without X11 ]
+                   requires = opengles ]]
+    opengles    [[ description = [ Use OpenGL ES2 rather than standard desktop OpenGL ] ]]
+    pulseaudio
+    sql         [[ description = [ Build the QtSQL module ] ]]
+    ( multibuild_c: 32 64 )
+    ( platform: amd64 ia64 ppc64 x86 )
+"
+
+MYOPTIONS+="
+    platform: amd64 ia64 ppc64 x86
+    amd64_cpu_features: sse3 ssse3 sse4.1 sse4.2 avx avx2
+    arm_cpu_features: neon
+    x86_cpu_features: mmx sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        dev-libs/icu[multibuild_c:*(-)?]
+        dev-libs/openssl[multibuild_c:*(-)?]
+        dev-libs/pcre[multibuild_c:*(-)?]
+        media-libs/fontconfig[multibuild_c:*(-)?]
+        media-libs/freetype:2[multibuild_c:*(-)?]
+        media-libs/jpeg[multibuild_c:*(-)?]
+        media-libs/libpng[multibuild_c:*(-)?]
+        sys-apps/dbus[>=1.0.2][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
+        sys-libs/zlib[multibuild_c:*(-)?]
+        x11-dri/mesa[multibuild_c:*(-)?]
+        x11-libs/libX11[multibuild_c:*(-)?]
+        x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
+        x11-libs/libXext[multibuild_c:*(-)?]
+        x11-libs/libXi[multibuild_c:*(-)?]
+        x11-libs/libXrender[multibuild_c:*(-)?]
+        x11-utils/xcb-util-image[multibuild_c:*(-)?]
+        x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
+        x11-utils/xcb-util-renderutil
+        x11-utils/xcb-util-wm[multibuild_c:*(-)?]
+        glib? ( dev-libs/glib:2[multibuild_c:*(-)?] )
+        gtk? (
+            dev-libs/atk[multibuild_c:*(-)?]
+            x11-libs/gtk+:2[>=2.10][multibuild_c:*(-)?]
+        )
+        kms? (
+            sys-apps/systemd[multibuild_c:*(-)?]   [[ note = udev ]]
+            x11-dri/libdrm[multibuild_c:*(-)?]
+        )
+        mysql? ( dev-db/mysql[multibuild_c:*(-)?] )
+        postgresql? ( dev-db/postgresql )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
+        sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
+"
+
+# Packages that need QtSQL should depend on x11-libs/qtbase:5[sql]
+# option='sql' needs at least one SQL plugin, any-of mysql, postgresql, sqlite, (firebird, odbc)
+
+qconf5() {
+    local x myarch myconf=() option_to_arch_map=(
+        #alpha arm mips s390 sparc
+        #{hppa,sh}:generic
+        amd64:x86_64
+        ia64
+        #ppc:powerpc
+        ppc64:powerpc
+        x86:i386
+    )
+    for x in "${option_to_arch_map[@]}"; do
+        if option platform:${x%:*}; then
+            myarch="${x#*:}"
+            break
+        fi
+    done
+
+    if option platform:amd64 ; then
+        if [[ "${MULTIBUILD_TARGET}" == "32" ]] ; then
+            myarch=i386
+        fi
+    fi
+
+    [[ -z ${myarch} ]] && die "Your platform is not supported by qt-4.exlib. Please file a bug."
+
+    # paths
+    myconf+=(
+        -arch ${myarch}
+        -platform $(qt_mkspecs_dir)
+        -prefix /usr
+        -bindir /usr/${LIBDIR}/qt5/bin
+        -docdir /usr/share/doc/qt-${PVR}
+        -headerdir /usr/include/qt5
+        -libdir /usr/${LIBDIR}
+        -archdatadir /usr/share/qt5
+        -plugindir /usr/${LIBDIR}/qt5/plugins
+        -libexecdir /usr/${LIBDIR}/qt5/libexec
+        -datadir /usr/share/qt5
+        -qmldir /usr/${LIBDIR}/qt5/qml
+        -translationdir /usr/share/qt5/translations
+        -sysconfdir /etc/qt5
+        -examplesdir /usr/share/qt5/examples
+        -importdir /usr/${LIBDIR}/qt5/imports
+        -testsdir /usr/share/qt5/tests
+    )
+
+    edo "${ECONF_SOURCE:-.}"/configure "${myconf[@]}" "$@"
+}
+
+qtbase_src_prepare() {
+    default
+
+    # Don't prestrip.
+    edo sed -e "/^CONFIG +=/s:$: nostrip:" -i qmake/qmake.pro
+    edo sed -e "/^QMAKE_SWITCHES=/s:$:CONFIG+=nostrip:" -i configure
+
+    edo sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CPPFLAGS} ${CFLAGS} ${ASFLAGS}:" \
+            -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS}:" \
+            -i "${WORK}"/mkspecs/common/g++-base.conf
+
+    edo sed -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+            -i "${WORK}"/mkspecs/common/g++-unix.conf
+
+    edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
+            -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
+            -i "${WORK}"/qmake/Makefile.unix
+
+    # No big chance to come across CoreWLAN on Linux but disable it anyway.
+    edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
+
+    # There's no configure switch for pulseaudio, so we change the default from
+    # "auto" to an explicit "yes" or "no".
+    if option pulseaudio ; then
+        edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
+    else
+        edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
+    fi
+}
+
+configure_one_multibuild() {
+    local myconf=(
+        -confirm-license
+        -opensource
+        -release
+        -verbose
+
+        -accessibility
+        -audio-backend
+        -c++11
+        -dbus-linked
+        -egl
+        -iconv
+        -icu
+        -largefile
+        -no-eglfs    # EGL Full Screen/Single Surface, probably only useful on embedded devices
+        -no-directfb
+        -no-linuxfb
+        -no-javascript-jit
+        -no-nis
+        -no-rpath
+        -no-separate-debug-info
+        -openssl
+        -pch
+        -reduce-relocations
+        -system-libjpeg
+        -system-libpng
+        -system-pcre
+        -system-proxies
+        -system-zlib
+        -widgets
+        -xcb
+        -xinput2
+        $(qt_enable cups)
+        $(qt_enable glib)
+        $(qt_enable gtk gtkstyle)
+        $(qt_enable kms)
+        $(option opengles && echo -opengl es2 || echo -opengl desktop)
+    )
+
+    # Avoid auto detection of CPU features:
+    # mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2, iwmmxt, neon
+    # Note: iwmmxt breaks build, at least on 4.7
+    # Always enable mmx, sse and sse2 on amd64
+    if option !platform:amd64 && option !x86_cpu_features:mmx ; then
+        myconf+=( -no-mmx )
+    fi
+    if option !platform:amd64 && option !x86_cpu_features:sse ; then
+        myconf+=( -no-sse )
+    fi
+    if option !platform:amd64 && option !x86_cpu_features:sse2 ; then
+        myconf+=( -no-sse2 )
+    fi
+    for feature in sse3 ssse3 sse4.1 sse4.2 avx avx2 ; do
+        if option !amd64_cpu_features:${feature} && option !x86_cpu_features:${feature} ; then
+            myconf+=( -no-${feature} )
+        fi
+    done
+    if option !arm_cpu_features:neon ; then
+        myconf+=( -no-neon)
+    fi
+
+    # X
+    local o X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
+    for o in ${X_options}; do
+        myconf+=( -${o} )
+    done
+
+    myconf+=(
+        -no-sql-db2       # IBM DB2 (version 7.1 and above)
+        -no-sql-ibase     # Borland InterBase
+        -no-sql-oci       # Open Database Connectivity (ODBC) (e.g. MS SQL Server)
+        -no-sql-odbc      # Oracle Call Interface Driver
+        -no-sql-sqlite2   # SQLite version 2
+        -no-sql-symbian   # SQLite version 3 for Symbian SQL Database
+        -no-sql-symsql    # SQLite version 3 for Symbian SQL Database
+        -no-sql-tds       # Sybase Adaptive Server
+        $(qt_enable mysql sql-mysql plugin "")
+        $(option mysql      && echo "-I/usr/include/mysql -L/usr/${LIBDIR}/mysql/")
+        $(qt_enable postgresql sql-psql plugin "")
+        $(option postgresql && echo '-I/usr/include/postgresql/server/')
+        $(qt_enable sqlite sql-sqlite plugin "" -system-sqlite)
+    )
+
+    # optional parts
+    myconf+=(
+        -make libs
+        -make tools
+        $(qt_build examples)
+    )
+
+    # Set {C,CXX,LD}FLAGS.
+    # Do not link with -rpath (Gentoo bug #75181).
+    edo sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+            -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+            -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+            -e "/CONFIG/s:$: nostrip:" \
+            -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
+            -e "s:X11R6/::" \
+            -i "${WORK}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf
+
+    # use gcc for linking
+        unset LD
+
+    qconf5 "${myconf[@]}"
+
+    edo sed -e "s:CXXFLAGS.*=:CXXFLAGS=${CPPFLAGS} ${CXXFLAGS} ${ASFLAGS} :" \
+            -e "s:LFLAGS.*=:LFLAGS=${CFLAGS} ${LDFLAGS} :" \
+            -i "${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}"/qmake/Makefile
+}
+
+install_one_multibuild() {
+    default
+
+    # TODO: does anything need other 32bit binaries?
+
+    # qmake per chost for non-default target
+    if ! multibuild_default_target C ; then
+        dodir /usr/${CHOST}/bin
+        edo mv "${IMAGE}"/usr/{,${CHOST}/}bin/qmake
+    fi
+
+    # remove build dir from libraries
+    edo sed -i -e "s:${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/lib:/usr/${LIBDIR}/qt5:g" "${IMAGE}"/usr/${LIBDIR}/{*.la,*.prl,pkgconfig/*.pc}
+
+    # construct ldpath for all targets
+    ldpath="/usr/${LIBDIR}/qt5${ldpath:+:${ldpath}}"
+}
+
+qtbase_src_install() {
+    local ldpath
+
+    easy-multibuild_src_install
+
+    # install qdoc in /usr/bin as it doesn't collide with qt:4 and it's qdoc3
+    edo mkdir "${IMAGE}"/usr/bin
+    dobin "${IMAGE}"/usr/${LIBDIR}/qt5/bin/qdoc
+
+    hereenvd 44qt5 <<EOF
+LDPATH=${ldpath}
+EOF
+
+    if option examples ; then
+        # The examples might add some empty dirs. Since the examples are additional documentation,
+        # there shouldn't be any empty dirs we might want to keep, so we remove them all in
+        # one go.
+        edo find "${IMAGE}"/usr/share/qt5/examples -type d -empty -delete
+    fi
+}
+
