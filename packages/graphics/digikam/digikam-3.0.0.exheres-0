@@ -3,7 +3,7 @@
 # Copyright 2012 Xavier Barrachina <xabarci@doctor.upv.es>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="An advanced digital photo management application"
 HOMEPAGE="http://www.digikam.org/"
@@ -114,16 +114,15 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 )
 
 src_compile() {
-    cmake_src_compile
-
-    option doc && edo cmake_run emake doc
+    default
+    option doc && emake doc
 }
 
 src_install() {
     cmake_src_install
     if option doc; then
         insinto /usr/share/doc/${PNVR}
-        cmake_run doins -r api/html
+        doins -r api/html
     fi
 
     # Prevent collisions with /usr/share/locale/*/LC_MESSAGES/libkipi.mo
