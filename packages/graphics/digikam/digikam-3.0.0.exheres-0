@@ -125,5 +125,10 @@ src_install() {
         insinto /usr/share/doc/${PNVR}
         cmake_run doins -r api/html
     fi
+
+    # Prevent collisions with /usr/share/locale/*/LC_MESSAGES/libkipi.mo
+    # which is already provided by kde-l10n...
+    edo rm "${IMAGE}"/usr/share/locale/*/LC_MESSAGES/libkipi.mo
+    edo find "${IMAGE}"/usr/share/locale -type d -empty -delete
 }
 
