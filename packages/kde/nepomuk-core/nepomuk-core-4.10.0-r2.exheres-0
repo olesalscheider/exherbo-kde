@@ -6,7 +6,7 @@ require nepomuk-core
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/$PNV-fileindexer-initialize-objects-in-co.patch
-    "${FILES}"/$PNV-Revert-BasicIndexingQueue-Use-stacks-instead-of-queu.patch
+    "${FILES}"/${PNV}-fileindexer-initialize-objects-in-co.patch
+    "${FILES}"/${PNV}-Revert-BasicIndexingQueue-Use-stacks-instead-of-queu.patch
 )
 
