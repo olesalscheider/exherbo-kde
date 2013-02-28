@@ -24,8 +24,8 @@ MYOPTIONS="opera [[ description = [ Support for opera sync handler ] ]]"
 DEPENDENCIES="
     build+run:
         dev-libs/soprano
-        kde/kdelibs:4[>=4.9.0]
-        kde/nepomuk-core:4
+        kde/kdelibs:4[>=4.8.4]
+        kde/nepomuk-core:4[>=4.10.0]
         x11-libs/qt:4[>=4.8.0][X(+)][dbus][glib][webkit]
         opera? (
             app-crypt/qca:2
