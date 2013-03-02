@@ -27,7 +27,7 @@ DEPENDENCIES="
     build+run:
         x11-libs/qt:4[dbus][>=4.5.0]
         dev-libs/rasqal[>=0.9.15]
-        clucene? ( dev-cpp/clucene[>=0.9.19] )
+        clucene? ( dev-cpp/clucene:1[>=0.9.19] )
         virtuoso? ( dev-db/libiodbc )
     run:
         virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )

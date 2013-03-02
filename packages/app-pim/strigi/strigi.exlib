@@ -27,7 +27,7 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/libxml2
         sys-libs/zlib
-        clucene? ( dev-cpp/clucene[>=2.3.3.4] )
+        clucene? ( dev-cpp/clucene:1[>=2.3.3.4] )
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
