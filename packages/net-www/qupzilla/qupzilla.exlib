@@ -15,7 +15,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt[>=4.7.0][dbus][sql][webkit]
+        x11-libs/qt:4[>=4.7.0][dbus][sql][webkit]
     run:
         kde/oxygen-icons [[ note = [ Used in preferences ] ]]
 "

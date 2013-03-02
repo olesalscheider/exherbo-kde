@@ -24,7 +24,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
-        x11-libs/qt[sql][webkit]
+        x11-libs/qt:4[sql][webkit]
         python? (
             dev-lang/python:=
             dev-python/PyQt4[>=4.8.4]

@@ -14,7 +14,7 @@ DEPENDENCIES="
         sci-libs/eigen:2[>=2.0.3]
         sys-libs/zlib
         x11-dri/mesa
-        x11-libs/qt[opengl]
+        x11-libs/qt:4[opengl]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
