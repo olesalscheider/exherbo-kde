@@ -40,7 +40,7 @@ DEPENDENCIES="
         x11-libs/qt:4
         pdf? (
             app-text/poppler[qt4]
-            media-libs/exempi[>=2.0]
+            media-libs/exempi:2.0[>=2.0]
         )
         scanner? ( kde/libksane:4[>=4.2.0] )
 "
