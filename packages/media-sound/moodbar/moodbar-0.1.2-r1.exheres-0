@@ -15,16 +15,16 @@ DEPENDENCIES="
         dev-util/pkg-config
     build+run:
         media-libs/gstreamer:0.10
-        media-plugins/gst-plugins-base[>=0.10]
-        media-plugins/gst-plugins-good[>=0.10]
+        media-plugins/gst-plugins-base:0.10[>=0.10]
+        media-plugins/gst-plugins-good:0.10[>=0.10]
         sci-libs/fftw[>=3.0]
 
-        flac?     ( media-plugins/gst-plugins-good[>=0.10][gstreamer_plugins:flac]    )
-        mp3?      ( media-plugins/gst-plugins-ugly[>=0.10][gstreamer_plugins:mad]     )
-        mp4?      ( media-plugins/gst-plugins-bad[>=0.10][gstreamer_plugins:faad]     )
-        musepack? ( media-plugins/gst-plugins-bad[>=0.10][gstreamer_plugins:musepack] )
+        flac?     ( media-plugins/gst-plugins-good:0.10[>=0.10][gstreamer_plugins:flac]    )
+        mp3?      ( media-plugins/gst-plugins-ugly:0.10[>=0.10][gstreamer_plugins:mad]     )
+        mp4?      ( media-plugins/gst-plugins-bad:0[>=0.10][gstreamer_plugins:faad]     )
+        musepack? ( media-plugins/gst-plugins-bad:0[>=0.10][gstreamer_plugins:musepack] )
         ogg?      (
-            media-plugins/gst-plugins-base[>=0.10][gstreamer_plugins:ogg][gstreamer_plugins:vorbis]
+            media-plugins/gst-plugins-base:0.10[>=0.10][gstreamer_plugins:ogg][gstreamer_plugins:vorbis]
         )
         wma?      ( media-plugins/gst-ffmpeg[>=0.10] )
 "

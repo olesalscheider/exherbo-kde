@@ -18,8 +18,8 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost[>=1.39]
         dev-libs/glib:2
-        media-libs/gstreamer[>=0.10.33]
-        media-plugins/gst-plugins-base[>=0.10.33]
+        media-libs/gstreamer:0.10[>=0.10.33]
+        media-plugins/gst-plugins-base:0.10[>=0.10.33]
         sys-devel/bison
         sys-devel/flex
         x11-dri/mesa
