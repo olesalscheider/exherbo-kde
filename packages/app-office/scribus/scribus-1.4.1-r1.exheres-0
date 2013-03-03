@@ -37,7 +37,7 @@ DEPENDENCIES="
         dev-libs/boost
         dev-libs/libxml2[>=2.6.0]
         media-libs/fontconfig[>=2.0]
-        media-libs/freetype[>=2.3.11]
+        media-libs/freetype:2[>=2.3.11]
         media-libs/jpeg
         media-libs/lcms[>=1.15]
         media-libs/libpng
