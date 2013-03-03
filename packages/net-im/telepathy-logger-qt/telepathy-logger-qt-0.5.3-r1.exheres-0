@@ -19,7 +19,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         dev-lang/python:=[>=2.5]
-        dev-libs/dbus-glib
+        dev-libs/dbus-glib:1
         dev-libs/glib:2
         dev-libs/libxml2
         media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
