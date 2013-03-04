@@ -1,0 +1,54 @@
+# Copyright 2013 Ali Polatel <alip@exherbo.org>
+# Based in part upon acetoneiso-2.3.ebuild which is:
+#   Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+require flag-o-matic qmake4
+
+MY_P=${PN}_${PV}
+
+SUMMARY="Feature-rich and complete software application to manage CD/DVD images"
+DESCRIPTION="
+AcetoneISO, is a feature-rich and complete software application to manage CD/DVD
+images. Thanks to powerful open source tools such as fuseiso, AcetoneISO will
+let You mount typical proprietary images formats of the Windows world such as
+ISO BIN NRG MDF IMG and do plenty of other things.
+"
+HOMEPAGE="http://www.acetoneteam.org/"
+DOWNLOADS="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        sys-fs/fuseiso
+        media-libs/phonon
+        x11-libs/qt:4[dbus][phonon][webkit]
+"
+
+BUGS_TO="alip@exherbo.org"
+
+WORK="${WORKBASE}/${MY_P}/${PN}"
+DEFAULT_SRC_INSTALL_EXTRA_DOCS=( ../AUTHORS ../CHANGELOG ../FEATURES ../README )
+
+src_prepare() {
+    default
+
+    edo sed -i \
+            -e 's:unrar-nonfree:unrar:g' \
+            sources/compress.h locale/*.ts
+    edo sed -i \
+            -e 's:include <Phonon/:include <:' \
+            sources/*
+
+}
+
+src_configure() {
+    append-flags -I/usr/include/KDE/Phonon
+
+    qmake4_src_configure
+}
+
