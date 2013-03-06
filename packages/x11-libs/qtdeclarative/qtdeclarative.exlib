@@ -1,0 +1,41 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: QtQml, QtQuick aka QtQuick2"
+DESCRIPTION="The Qt Quick module is the standard library for writing QML applications. While the
+Qt QML module provides the QML engine and language infrastructure, the Qt Quick module provides
+all the basic elements necessary for creating user interfaces with QML. It provides a visual canvas and
+includes types for creating and animating visual components, receiving user input, creating data
+models and views and delayed object instantiation."
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+    build+run:
+        x11-libs/qtbase:${SLOT}[>=${PV}][sql]  [[ note = [ QML and user-specific local storage via
+                                                          SQLite. potentially optional -> remove from
+                                                          imports/imports.pro ] ]]
+        x11-libs/qtjsbackend:${SLOT}[>=${PV}]
+        x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
+"
+
+src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        dodoc doc/{qtqml,qtquick}.qch
+        docinto html
+        dodoc -r doc/{qtqml,qtquick}
+    fi
+}
+
