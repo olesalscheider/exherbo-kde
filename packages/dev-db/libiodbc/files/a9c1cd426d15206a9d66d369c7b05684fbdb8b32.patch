@@ -1,0 +1,25 @@
+From a9c1cd426d15206a9d66d369c7b05684fbdb8b32 Mon Sep 17 00:00:00 2001
+From: iODBC Maintainer <iodbc@openlinksw.com>
+Date: Tue, 8 Jan 2013 12:48:32 +0100
+Subject: [PATCH] Fixed deprecated macro
+
+---
+ configure.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.in b/configure.in
+index aca5767..fcd4c34 100644
+--- a/configure.in
++++ b/configure.in
+@@ -87,7 +87,7 @@ AC_INIT([iODBC Driver Manager],
+ AC_CONFIG_SRCDIR([include/isql.h])
+ AC_CONFIG_AUX_DIR(admin)
+ AC_CONFIG_MACRO_DIR(admin)
+-AM_CONFIG_HEADER(include/config.h)
++AC_CONFIG_HEADER(include/config.h)
+ AM_INIT_AUTOMAKE(AC_PACKAGE_TARNAME, AC_PACKAGE_VERSION)
+ AC_CANONICAL_HOST
+ AM_MAINTAINER_MODE
+-- 
+1.7.10
+
