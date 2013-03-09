@@ -18,6 +18,17 @@ DEPENDENCIES="
         sys-devel/gdb[python] [[ description = [ For debugging with Qt Creator ] ]]
 "
 
+if ever at_least 2.7.0-rc ; then
+    DEPENDENCIES+="
+        build:
+            virtual/pkg-config
+        build+run:
+            dev-libs/botan:1.10[>=1.10.0]
+    "
+fi
+
+RESTRICT="test" # far to many tests need a running X server, disable building them below
+
 if ever at_least scm ; then
     UPSTREAM_DOCUMENTATION="http://doc-snapshot.qt-project.org/${PN/-/}-master/index.html"
     UPSTREAM_CHANGELOG=""
@@ -33,6 +44,13 @@ EQMAKE4_SOURCES="qtcreator.pro"
 
 QMAKE4_SRC_CONFIGURE_PARAMS=( IDE_LIBRARY_BASENAME=${LIBDIR} SUPPORT_QT_QML=1 )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}"/usr/ )
+
+if ever at_least 2.7.0 ; then
+    QMAKE4_SRC_CONFIGURE_PARAMS+=(
+        USE_SYSTEM_BOTAN=1
+        BUILD_TESTS=0
+    )
+fi
 
 src_compile() {
     default
