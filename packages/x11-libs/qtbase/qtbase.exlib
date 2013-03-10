@@ -285,14 +285,6 @@ configure_one_multibuild() {
 install_one_multibuild() {
     default
 
-    # TODO: does anything need other 32bit binaries?
-
-    # qmake per chost for non-default target
-    if ! multibuild_default_target C ; then
-        dodir /usr/${CHOST}/bin
-        edo mv "${IMAGE}"/usr/{,${CHOST}/}bin/qmake
-    fi
-
     # remove build dir from libraries
     edo sed -i -e "s:${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/lib:/usr/${LIBDIR}/qt5:g" "${IMAGE}"/usr/${LIBDIR}/{*.la,*.prl,pkgconfig/*.pc}
 
