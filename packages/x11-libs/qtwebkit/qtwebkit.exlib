@@ -1,0 +1,55 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qt-4.exlib', which is:
+#     Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+#     Copyright 2008-2009, 2010 Ingmar Vanhassel
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: QtWebkit"
+
+MYOPTIONS="gstreamer"
+
+DEPENDENCIES="
+    build:
+        dev-lang/perl:*
+        dev-lang/python:*
+        dev-lang/ruby:*
+        dev-util/gperf
+        sys-devel/bison
+        sys-devel/flex
+        virtual/pkg-config
+    build+run:
+        dev-db/sqlite:3
+        dev-libs/glib:2
+        dev-libs/libxml2:2.0
+        dev-libs/libxslt
+        media-libs/fontconfig
+        media-libs/jpeg
+        media-libs/libpng
+        media-libs/libwebp
+        x11-dri/mesa
+        x11-libs/libXcomposite
+        x11-libs/libXrender
+        x11-libs/qtbase:${SLOT}[>=${PV}][sql][sqlite]
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
+        gstreamer? (
+            media-libs/gstreamer:0.10[>=0.10]
+            media-plugins/gst-plugins-base:0.10[>=0.10]
+        )
+"
+
+EQMAKE4_SOURCES=( WebKit.pro )
+
+src_configure() {
+    local conf_enable,conf_disable
+
+    conf_enable="3d-rendering accelerated-2d-canvas ftpdir fullscreen-api inspector \
+        javascript-debugger mathml netscape-plugin-api sql-database svg webgl xslt \
+        $(option gstreamer && echo video)"
+
+    conf_disable="battery-status gamepad geolocation $(option gstreamer || echo video)"
+
+    eqmake4 CONFIG+=use_system_icu WEBKIT_CONFIG+="${conf_enable}" WEBKIT_CONFIG-="${conf_disable}"
+}
+
