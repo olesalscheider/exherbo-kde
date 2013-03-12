@@ -1,0 +1,33 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: QtSvg"
+DESCRIPTION="Scalable Vector Graphics (SVG) is an XML-based language for describing
+two-dimensional vector graphics. Qt provides classes for rendering and displaying
+SVG drawings in widgets and on other paint devices."
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+"
+
+src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        dodoc doc/${PN}.qch
+        docinto html
+        dodoc -r doc/${PN}
+    fi
+}
+
