@@ -1,0 +1,37 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: Qt Graphical Effects"
+DESCRIPTION="This module provides a set of QML types for adding visually impressive and
+configurable effects to user interfaces. Effects are visual items that can be added
+to Qt Quick user interface as UI components."
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+    run:
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
+        x11-libs/qtjsbackend:${SLOT}[>=${PV}]
+        x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
+"
+
+src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        option doc && dodoc doc/${PN}.qch
+        docinto html
+        dodoc -r doc/${PN}
+    fi
+}
+
