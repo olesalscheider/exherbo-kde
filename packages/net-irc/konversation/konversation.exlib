@@ -1,12 +1,15 @@
 # Copyright 2008,2009,2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ever is_scm ; then
-    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-    require scm-git
-else
-    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
-fi
+case ${PV} in
+    scm)
+        SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
+        require scm-git ;;
+    1.[5-9]-@(beta|rc)*)
+        DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz" ;;
+    *)
+        DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz" ;;
+esac
 
 require kde [ api=2 ]
 
@@ -26,6 +29,13 @@ DEPENDENCIES="
     suggestion:
         dev-lang/python:* [[ description = [ Provides scripting support ] ]]
 "
+
+if ever at_least 1.5-rc1 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:4[>=4.6.0]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_QCA2:BOOL=TRUE )
 
