@@ -22,7 +22,17 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.7.0]
 "
 
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        build:
+            kde/extra-cmake-modules[=scm]
+    "
+fi
+
 BUGS_TO="kde@exherbo.org"
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DATTICA_ENABLE_TESTS:BOOL=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_Qt5Core:BOOL=TRUE
+)
 
