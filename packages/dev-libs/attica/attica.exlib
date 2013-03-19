@@ -15,11 +15,14 @@ HOMEPAGE="http://www.kde.org"
 
 LICENCES="|| ( LGPL-3 LGPL-2.1 )"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
 DEPENDENCIES="
+    build:
+        qt5? ( kde/extra-cmake-modules[>=0.0.6] )
     build+run:
-        x11-libs/qt:4[>=4.7.0]
+        qt5? ( x11-libs/qtbase:5 )
+       !qt5? ( x11-libs/qt:4[>=4.7.0] )
 "
 
 if ever at_least scm ; then
@@ -31,8 +34,6 @@ fi
 
 BUGS_TO="kde@exherbo.org"
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DATTICA_ENABLE_TESTS:BOOL=TRUE
-    -DCMAKE_DISABLE_FIND_PACKAGE_Qt5Core:BOOL=TRUE
-)
+CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'qt5 Qt5Core' )
 
