@@ -4,7 +4,7 @@
 require kde [ api=2 ]
 
 HOMEPAGE="https://projects.kde.org/projects/extragear/base/kde-gtk-config/"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 
 SUMMARY="GTK2 and GTK3 Configurator for KDE."
 DESCRIPTION="
