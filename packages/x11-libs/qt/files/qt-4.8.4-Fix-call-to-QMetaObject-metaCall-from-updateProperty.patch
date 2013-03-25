@@ -1,4 +1,4 @@
-Upstream: Currently under review https://codereview.qt-project.org/#change,46616
+Upstream: yes, http://qt.gitorious.org/qt/qt/commit/5b285845a3c3478a4008b7e3416c3912c69fd20b
 Reason: This keeps plasma-desktop from crashing, see https://bugs.kde.org/show_bug.cgi?id=311751
 
 From 03e96961b0f4fc2c290271c6e50a11aa334a40ff Mon Sep 17 00:00:00 2001
