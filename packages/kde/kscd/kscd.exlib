@@ -15,11 +15,16 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/libkcddb:${SLOT}
-        kde/libkcompactdisc:${SLOT}
         media-libs/libmusicbrainz:3
         media-libs/phonon
         sys-sound/alsa-lib
         x11-libs/qt:4[phonon]
 "
+
+if ! ever at_least 4.10.1 ; then
+    DEPENDENCIES="
+    build+run:
+        kde/libkcddb:${SLOT}
+        kde/libkcompactdisc:${SLOT}"
+fi
 
