@@ -17,5 +17,8 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         kde/libkdegames:${SLOT}
+    run:
+        games-board/gnugo [[ description = [ Needs a Go engine that supports the GnuGo Text Protocol (GTP) ] ]]
+
 "
 
