@@ -1,7 +1,0 @@
-# Copyright 2011 Heiko Becker <heiko@shruuf.de>
-# Distributed under the terms of the GNU General Public License v2
-
-require kremotecontrol
-
-PLATFORMS="~amd64 ~x86"
-
