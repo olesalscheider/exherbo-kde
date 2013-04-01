@@ -21,8 +21,8 @@ RESTRICT="test"
 DEPENDENCIES="
     build:
         app-doc/doxygen
-        dev-util/pkg-config[>=0.21]
         dev-lang/python:*[>=2.5.0]
+        virtual/pkg-config[>=0.21]
     build+run:
         dev-libs/glib:2
         dev-libs/libxml2:2.0[>=2.7.7-r1]

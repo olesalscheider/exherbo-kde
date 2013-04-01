@@ -36,9 +36,9 @@ MYOPTIONS="doc
 DEPENDENCIES="
     build:
         app-arch/xz
-        dev-util/pkg-config
         kde/automoc4[>=0.9.86]
         doc? ( app-doc/doxygen )
+        virtual/pkg-config
     build+run:
         x11-libs/qt:4[>=4.7.4-r1][dbus][multibuild_c:*(-)?][phonon] [[
             note = [ Requires >=4.6.1 but 4.7.4-r1 added some multilib fixes that are needed when multibuild is enabled ]

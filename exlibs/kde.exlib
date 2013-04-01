@@ -18,8 +18,8 @@ MYOPTIONS="debug"
 exparam -b dependencies &&
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
         kde/automoc4[>=0.9.88]
+        virtual/pkg-config
 "
 
 kde4_shared_cmake_params() {
