@@ -14,7 +14,7 @@ MYOPTIONS=""
 # FIXME: automagic dependency upon QtMathML Widget - http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html
 DEPENDENCIES="
     build+run:
-        kde/analitza
+        kde/analitza:${SLOT}
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkdeedu:${SLOT}
         media-libs/phonon

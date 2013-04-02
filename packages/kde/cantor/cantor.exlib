@@ -23,7 +23,7 @@ DEPENDENCIES="
     build+run:
         app-text/libspectre
         kde/kdelibs:${SLOT}[>=4.7.0]
-        analitza? ( kde/analitza )
+        analitza? ( kde/analitza:${SLOT} )
         qalculate? ( sci-libs/libqalculate )
         R? ( sci-lang/R )
     suggestion:
