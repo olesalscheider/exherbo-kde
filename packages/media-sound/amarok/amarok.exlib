@@ -68,9 +68,9 @@ DEPENDENCIES="
         lastfm? ( media-libs/liblastfm[>=1.0.3] )
         mp3tunes? (
             dev-libs/glib:2
-            dev-libs/libxml2
+            dev-libs/libxml2:2.0
             dev-libs/openssl          [[ note = [ either libgcrypt or openssl works but everyone has openssl anyway ] ]]
-            net-im/loudmouth[>=1]     [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
+            net-im/loudmouth:1[>=1]     [[ description = [ mp3tunes.com integration (including synchronisation) ] ]]
             net-misc/curl             [[ description = [ Provides the necessary network libraries required by mp3tunes.com ] ]]
             x11-libs/qt:4[glib]
         )
@@ -83,11 +83,11 @@ DEPENDENCIES="
             dev-libs/qjson[>=0.7]     [[ note = [ the build scripts say >=0.5 while the README file says >=0.7 ] ]]
         )
     run:
-        kde/oxygen-icons
+        kde/oxygen-icons:4
     recommendation:
         sys-devel/qtscriptgenerator   [[ description = [ Run amarok scripts (fetch lyrics, replay gain) ] ]]
     suggestion:
-        kde/audiocd-kio [[ description = [ Used to play audio CDs ] ]]
+        kde/audiocd-kio:4 [[ description = [ Used to play audio CDs ] ]]
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
         net-downloader/clamz [[ description = [ Download songs from the integrated Amazon MP3 store ] ]]
 "
