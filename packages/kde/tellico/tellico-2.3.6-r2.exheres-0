@@ -27,7 +27,7 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         dev-libs/libxslt
         dev-libs/qjson
         dev-libs/soprano

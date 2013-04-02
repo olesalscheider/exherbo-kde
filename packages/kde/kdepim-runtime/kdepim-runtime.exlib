@@ -23,7 +23,7 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         app-text/shared-desktop-ontologies[>=0.10]
         dev-libs/boost[>=1.34.0]
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepimlibs:${SLOT}[>=${PV}]

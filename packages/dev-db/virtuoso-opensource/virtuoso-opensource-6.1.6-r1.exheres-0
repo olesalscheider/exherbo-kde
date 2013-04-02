@@ -21,7 +21,7 @@ RESTRICT="test"
 # build: htmldoc for pdf docs
 DEPENDENCIES="
     build+run:
-        dev-libs/libxml2[>=2.4.0]
+        dev-libs/libxml2:2.0[>=2.4.0]
         dev-libs/openssl[>=0.9.7i]
 "
 

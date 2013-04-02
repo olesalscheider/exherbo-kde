@@ -123,7 +123,7 @@ DEPENDENCIES+="
             kopete_plugins:otr? ( net-libs/libotr[>=3.2.0] )
             kopete_plugins:statistics? ( dev-db/sqlite:3 )
             kopete_plugins:webpresence? (
-                dev-libs/libxml2
+                dev-libs/libxml2:2.0
                 dev-libs/libxslt
             )
         )

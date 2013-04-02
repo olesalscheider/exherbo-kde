@@ -98,7 +98,7 @@ DEPENDENCIES="
         dbus? ( sys-apps/dbus[>=1.0.2][multibuild_c:*(-)?] )
         glib? ( dev-libs/glib:2[multibuild_c:*(-)?] )
         gstreamer? (
-            dev-libs/libxml2[multibuild_c:*(-)?]
+            dev-libs/libxml2:2.0[multibuild_c:*(-)?]
             media-libs/gstreamer:0.10[>=0.10][multibuild_c:*(-)?]
             media-plugins/gst-plugins-base:0.10[>=0.10][gstreamer_plugins:alsa][multibuild_c:*(-)?]
             media-plugins/gst-plugins-good:0.10[>=0.10][multibuild_c:*(-)?]  [[ description = [ Needed for Phonon video functionality ] ]]

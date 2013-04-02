@@ -50,7 +50,7 @@ DEPENDENCIES+="
         app-text/shared-desktop-ontologies[>=0.10]
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
         dev-libs/libgpg-error
-        dev-libs/libxml2 [[ note = [ akonadi/xml/ ] ]]
+        dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]

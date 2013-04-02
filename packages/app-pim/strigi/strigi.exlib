@@ -25,7 +25,7 @@ DEPENDENCIES="
     build+run:
         app-arch/bzip2
         dev-libs/boost
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         sys-libs/zlib
         clucene? ( dev-cpp/clucene:1[>=2.3.3.4] )
         dbus? ( sys-apps/dbus )

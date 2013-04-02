@@ -16,7 +16,7 @@ DEPENDENCIES="
         x11-libs/libXrender
         html-export? (
             dev-libs/libxslt
-            dev-libs/libxml2
+            dev-libs/libxml2:2.0
         )
 "
 

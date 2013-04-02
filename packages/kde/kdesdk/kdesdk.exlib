@@ -55,7 +55,7 @@ DEPENDENCIES+="
         kde_parts:thumbnailers? ( sys-devel/gettext )
         kde_parts:umbrello? (
             dev-libs/boost[>=1.33.1]
-            dev-libs/libxml2
+            dev-libs/libxml2:2.0
             dev-libs/libxslt
         )
     run:
