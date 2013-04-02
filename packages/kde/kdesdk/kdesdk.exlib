@@ -38,7 +38,6 @@ DEPENDENCIES+="
             dev-libs/libxslt [[ note = [ Needed for building Akonadi resources ] ]]
         )
     build+run:
-        app-pim/strigi[>=0.6.3][dbus][qt4]
         dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ For Dolphin VCS plugins ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
@@ -66,6 +65,18 @@ DEPENDENCIES+="
             kde/pykde4:${SLOT}[>=4.7.4]
         )
 "
+
+if ever at_least 4.10.2 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde_parts:strigi-analyzer? ( app-pim/strigi[>=0.6.3][dbus][qt4] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi[>=0.6.3][dbus][qt4]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'
