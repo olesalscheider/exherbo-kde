@@ -1,0 +1,60 @@
+Upstream: yes, see below
+
+From 2573a6678d3415d7de8024a417d8f2e92b8c7611 Mon Sep 17 00:00:00 2001
+From: Montel Laurent <montel@kde.org>
+Date: Wed, 3 Apr 2013 08:01:08 +0200
+Subject: [PATCH] Fix Bug 316256 - Kleopatra in KDEPIM 4.10.1 fails to build
+
+BUG: 316256
+FIXED-IN: 4.10.3
+
+Apply patch from Sven-Hendrik Haase
+It compiles here, and for him.
+So I hope that it will fix this bug.
+---
+ kleopatra/models/keylistmodel.cpp             | 2 +-
+ kleopatra/uiserver/assuanserverconnection.cpp | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/kleopatra/models/keylistmodel.cpp b/kleopatra/models/keylistmodel.cpp
+index 26c65c7..4ade983 100644
+--- a/kleopatra/models/keylistmodel.cpp
++++ b/kleopatra/models/keylistmodel.cpp
+@@ -55,13 +55,13 @@
+ 
+ #include <gpgme++/key.h>
+ 
+-#include <boost/bind.hpp>
+ 
+ #ifdef _WIN32_WCE
+ #define BOOST_ALL_NO_LIB
+ #endif
+ 
+ #ifndef Q_MOC_RUN // QTBUG-22829
++#include <boost/bind.hpp>
+ #include <boost/graph/topological_sort.hpp>
+ #include <boost/graph/adjacency_list.hpp>
+ #endif
+diff --git a/kleopatra/uiserver/assuanserverconnection.cpp b/kleopatra/uiserver/assuanserverconnection.cpp
+index d0580db..de43e21 100644
+--- a/kleopatra/uiserver/assuanserverconnection.cpp
++++ b/kleopatra/uiserver/assuanserverconnection.cpp
+@@ -78,6 +78,7 @@
+ 
+ #include <kleo-assuan.h>
+ 
++#ifndef Q_MOC_RUN // QTBUG-22829
+ #include <boost/type_traits/remove_pointer.hpp>
+ #ifndef _WIN32_WCE
+ #include <boost/lexical_cast.hpp>
+@@ -85,6 +86,7 @@
+ #include <boost/bind.hpp>
+ #include <boost/mem_fn.hpp>
+ #include <boost/mpl/if.hpp>
++#endif
+ 
+ #include <vector>
+ #include <map>
+-- 
+1.8.2
+

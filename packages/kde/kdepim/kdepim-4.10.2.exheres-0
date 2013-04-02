@@ -5,3 +5,8 @@ require kdepim
 
 PLATFORMS="~amd64 ~x86"
 
+# Upstream commits d2dd42 and 942c9b don't fix the issue for boost[=1.53.0]
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-0001-kleopatra-Build-with-boost-1.53.patch
+)
+
