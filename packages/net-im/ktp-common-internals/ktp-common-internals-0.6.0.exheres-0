@@ -8,7 +8,26 @@ SUMMARY="Re-used KDE Telepathy Parts"
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
+MYOPTIONS="doc"
+
+DEPENDENCIES+="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        net-im/telepathy-logger-qt
+"
 
 BUGS_TO="mixi@exherbo.org"
+
+src_compile() {
+    default
+
+    option doc && emake apidox
+}
+
+src_install() {
+    default
+
+    option doc && dodoc -r KTp/docs/html/*
+}
 
