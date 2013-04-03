@@ -5,7 +5,7 @@ require cmake [ api=2 ]
 
 SUMMARY="Qt bindings for telepathy logger"
 HOMEPAGE="https://projects.kde.org/projects/kdereview/${PN}"
-DOWNLOADS="mirror://kde/unstable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
 
 BUGS_TO="mixi@exherbo.org"
 
@@ -23,7 +23,7 @@ DEPENDENCIES="
         dev-libs/glib:2
         dev-libs/libxml2
         media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
-        net-im/telepathy-glib[>=0.13.0]
+        net-im/telepathy-glib[>=0.16.0]
         net-im/telepathy-logger:=
         net-im/telepathy-qt[>=0.9.1]
         sys-apps/dbus
