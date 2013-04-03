@@ -10,5 +10,10 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
+DEPENDENCIES="
+    build+run:
+        net-im/telepathy-logger-qt[>=0.5.60]
+"
+
 BUGS_TO="mixi@exherbo.org"
 
