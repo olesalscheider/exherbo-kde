@@ -7,7 +7,7 @@ myexparam kde_ver_min=
 myexparam telepathy_qt_ver_min="0.8.9"
 
 HOMEPAGE="https://projects.kde.org/projects/extragear/network/telepathy/${PN}"
-DOWNLOADS="mirror://kde/unstable/kde-telepathy/$(ever range 1-3)/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/kde-telepathy/$(ever range 1-3)/src/${PNV}.tar.bz2"
 
 test -n "$(exparam kde_ver_min)" && KDE_VER_STRING="[>=$(exparam kde_ver_min)]"
 test -n "$(exparam telepathy_qt_ver_min)" && TELEPATHY_QT_VER_STRING="[>=$(exparam telepathy_qt_ver_min)]"
