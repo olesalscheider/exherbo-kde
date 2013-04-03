@@ -1,0 +1,24 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde [ kde_ver_min="4.7.0" telepathy_qt_ver_min="0.8.90" ]
+
+SUMMARY="The telepathy-kde plasma desktop applets"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        !net-im/ktp-contact-applet [[
+            description = [ was merged to this package ]
+            resolution = uninstall-blocked-after
+        ]]
+        !net-im/ktp-presence-applet [[
+            description = [ was merged to this packag ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
