@@ -12,7 +12,8 @@ MYOPTIONS=""
 
 DEPENDENCIES+="
     build+run:
-        net-im/telepathy-logger-qt
+        net-im/telepathy-logger-qt[>=0.5.60]
+        x11-libs/qt:4[webkit]
 "
 
 BUGS_TO="mixi@exherbo.org"
