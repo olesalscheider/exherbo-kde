@@ -12,7 +12,8 @@ MYOPTIONS=""
 
 DEPENDENCIES+="
     build+run:
-        dev-libs/qjson
+        app-crypt/qca:2
+        dev-libs/qjson[>=0.5]
 "
 
 BUGS_TO="mixi@exherbo.org"
