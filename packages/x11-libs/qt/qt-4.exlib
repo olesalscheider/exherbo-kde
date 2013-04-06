@@ -4,7 +4,7 @@
 # Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require easy-multibuild freedesktop-desktop
+require qt [ pn='qt-everywhere-opensource-src' ] easy-multibuild freedesktop-desktop
 
 export_exlib_phases src_prepare src_install
 
@@ -13,29 +13,8 @@ myexparam pv=${MY_PV:-${PV}}
 MY_PNV=$(exparam pn)-$(exparam pv)
 
 SUMMARY="Qt Cross-platform application framework for desktop and embedded development"
-HOMEPAGE="http://qt-project.org/"
-if ever at_least 4.8.1 ; then
-    DOWNLOADS="http://releases.qt-project.org/qt4/source/${MY_PNV}.tar.gz"
-else
-    DOWNLOADS="http://download.qt.nokia.com/qt/source/${MY_PNV}.tar.gz"
-fi
-BUGS_TO="kde@exherbo.org"
-
-if ever at_least 4.8.3 ; then
-    UPSTREAM_CHANGELOG="${HOMEPAGE}uploads/community_updates/changes-${PV}"
-else
-    UPSTREAM_CHANGELOG="http://qt.nokia.com/products/changes/changes-${PV}"
-fi
-
-UPSTREAM_DOCUMENTATION="
-    http://qt-project.org/doc/qt-$(ever range 1-2)/ [[ description = [ Qt Reference Documentation ] ]]
-"
 
 LICENCES="|| ( LGPL-2.1 GPL-3 )"
-
-SLOT=$(ever major)
-
-WORK=${WORKBASE}/${MY_PNV}
 
 MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
@@ -119,53 +98,8 @@ DEPENDENCIES="
         phonon? ( media-libs/phonon[>=4.3.80][gstreamer?][multibuild_c:*(-)?] )
 "
 
-DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}" )
-
 # Packages that need QtSQL should depend on x11-libs/qt:4[sql]
 # option='sql' needs at least one SQL plugin, any-of mysql, postgresql, sqlite, (firebird, odbc)
-
-qt4_mkspecs_dir() {
-     # Allows us to define which mkspecs dir we want to use.
-    local spec
-
-    spec="linux"
-    if [[ ${CXX} == *g++* ]]; then
-        spec+="-g++"
-        if option platform:ppc64; then
-            spec+="-64"
-        elif option platform:amd64; then
-            if [[ ${MULTIBUILD_TARGET} -eq 32 ]]; then
-                spec+="-${MULTIBUILD_TARGET}"
-            fi
-        fi
-    else
-        die "Unknown compiler ${CXX}"
-    fi
-
-    echo "${spec}"
-}
-
-qt4_enable() {
-    local opt="${1}" feature="${2:-${1}}"
-    local prefix="${3:+-}${3}" postfix="${4:+-}${4}"
-    (( ${#} >= 4 )) && shift 4 || shift ${#}
-
-    if option "${opt}"; then
-        echo "${prefix}-${feature}${postfix}" "${@}"
-    else
-        echo "-no-${feature}"
-    fi
-}
-
-qt4_build() {
-    local opt="${1}" feature="${2:-${1}}"
-
-    if option "${opt}" ; then
-        echo "-make ${feature}"
-    else
-        echo "-nomake ${feature}"
-    fi
-}
 
 qconf4() {
     local x myarch myconf=() option_to_arch_map=(
@@ -197,7 +131,7 @@ qconf4() {
     # paths
     myconf+=(
         -arch ${myarch}
-        -platform $(qt4_mkspecs_dir)
+        -platform $(qt_mkspecs_dir)
         -prefix /usr
         -bindir /usr/bin
         -docdir /usr/share/doc/${PNVR}
@@ -292,21 +226,21 @@ configure_one_multibuild() {
         -system-zlib
         -xinput
         -xmlpatterns
-        $(qt4_enable cups)
-        $(qt4_enable dbus "" "" linked)
-        $(qt4_enable glib)
-        $(qt4_enable gstreamer gstreamer)
-        $(qt4_enable gstreamer phonon-backend)
+        $(qt_enable cups)
+        $(qt_enable dbus "" "" linked)
+        $(qt_enable glib)
+        $(qt_enable gstreamer gstreamer)
+        $(qt_enable gstreamer phonon-backend)
         $(option gstreamer || echo -DENABLE_VIDEO=0)
-        $(qt4_enable gtk gtkstyle)
-        $(qt4_enable multimedia)
-        $(qt4_enable multimedia audio-backend)
-        $(qt4_enable opengl)
-        $(qt4_enable qt3support)
-        $(qt4_enable phonon)
-        $(qt4_enable ssl openssl)
-        $(qt4_enable webkit)
-        $(qt4_enable xinerama)
+        $(qt_enable gtk gtkstyle)
+        $(qt_enable multimedia)
+        $(qt_enable multimedia audio-backend)
+        $(qt_enable opengl)
+        $(qt_enable qt3support)
+        $(qt_enable phonon)
+        $(qt_enable ssl openssl)
+        $(qt_enable webkit)
+        $(qt_enable xinerama)
     )
 
     # Avoid auto detection of CPU features:
@@ -346,11 +280,11 @@ configure_one_multibuild() {
         -no-sql-symbian   # SQLite version 3 for Symbian SQL Database
         -no-sql-symsql    # SQLite version 3 for Symbian SQL Database
         -no-sql-tds       # Sybase Adaptive Server
-        $(qt4_enable mysql sql-mysql plugin "")
+        $(qt_enable mysql sql-mysql plugin "")
         $(option mysql      && echo "-I/usr/include/mysql -L/usr/${LIBDIR}/mysql/")
-        $(qt4_enable postgresql sql-psql plugin "")
+        $(qt_enable postgresql sql-psql plugin "")
         $(option postgresql && echo '-I/usr/include/postgresql/server/')
-        $(qt4_enable sqlite sql-sqlite plugin "" -system-sqlite)
+        $(qt_enable sqlite sql-sqlite plugin "" -system-sqlite)
     )
 
     # media formats
@@ -374,9 +308,9 @@ configure_one_multibuild() {
         -make libs
         -make tools
         -make translations
-        $(qt4_build demos)
-        $(qt4_build doc docs)
-        $(qt4_build examples)
+        $(qt_build demos)
+        $(qt_build doc docs)
+        $(qt_build examples)
     )
 
     # Set {C,CXX,LD}FLAGS.
@@ -387,7 +321,7 @@ configure_one_multibuild() {
             -e "/CONFIG/s:$: nostrip:" \
             -e "s:QMAKE_RPATH.*=.*:QMAKE_RPATH=:" \
             -e "s:X11R6/::" \
-            -i "${WORK}"/mkspecs/$(qt4_mkspecs_dir)/qmake.conf
+            -i "${WORK}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf
 
     # use gcc for linking
     if ever at_least 4.8.1; then

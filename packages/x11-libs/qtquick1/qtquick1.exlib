@@ -1,0 +1,18 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: QtQuick1"
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+    build+run:
+        x11-libs/qtscript:${SLOT}[>=${PV}]
+        x11-libs/qttools:${SLOT}[>=${PV}]
+        x11-libs/qtwebkit:${SLOT}[>=${PV}]
+"
+

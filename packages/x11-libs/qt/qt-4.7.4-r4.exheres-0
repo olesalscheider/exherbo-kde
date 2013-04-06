@@ -2,7 +2,7 @@
 #           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt-4 [ pn='qt-everywhere-opensource-src' ]
+require qt-4
 
 PLATFORMS="~amd64 ~ppc64 ~x86"
 

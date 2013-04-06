@@ -1,0 +1,32 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: QtScript"
+DESCRIPTION="Classes for making Qt applications scriptable with ECMAScript. Provided for Qt 4.x
+compatibility. For new code the QJS* classes in the QtQml module should be used."
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+"
+
+src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        dodoc doc/${PN}.qch
+        docinto html
+        dodoc -r doc/${PN}
+    fi
+}
+

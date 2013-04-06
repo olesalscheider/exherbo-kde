@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: Qt Documentation"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qttools[>=${PV}]
+"
+
+src_compile() {
+    emake docs
+}
+
+src_install() {
+    dodoc doc/qtdoc.qch
+}
+
