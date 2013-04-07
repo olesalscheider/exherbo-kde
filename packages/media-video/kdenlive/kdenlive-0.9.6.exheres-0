@@ -16,14 +16,14 @@ MYOPTIONS="v4l"
 DEPENDENCIES="
     build+run:
         dev-libs/qjson [[ note = [  Build the rotoscoping filter and allow Freesound.org queries ] ]]
-        kde/kdelibs[>=4.3.0]
+        kde/kdelibs:4[>=4.3.0]
         media/ffmpeg
-        media/mlt[>=0.8.6][ffmpeg][sdl][qt4][xml]
+        media/mlt[>=0.8.8][ffmpeg][sdl][qt4][xml]
         x11-libs/qt:4[>=4.5.0][dbus][opengl]
         x11-misc/shared-mime-info[>=0.23]
         v4l? ( media-libs/v4l-utils )
     run:
-        kde/kde-runtime
+        kde/kde-runtime:4
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( V4L )
