@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require calligra-l10n [ langs="bs ca ca@valencia da de el en_GB es et fi fr gl hu it kk nb nds nl
-    pl pt pt_BR ru sk sl sv uk zh_CN zh_TW" ]
+    pl pt pt_BR ru sk sl sv tr uk zh_CN zh_TW" ]
 
 PLATFORMS="~amd64"
 
