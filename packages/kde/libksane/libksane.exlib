@@ -3,7 +3,7 @@
 
 require kde.org
 
-SUMMARY="Provides a QWidget that contains all the logic needed to interface a sacanner"
+SUMMARY="Provides a QWidget that contains all the logic needed to interface a scanner"
 
 LICENCES="
     GPL-2
