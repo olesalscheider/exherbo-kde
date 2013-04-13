@@ -73,7 +73,7 @@ DEPENDENCIES="
         x11-libs/libXrender[multibuild_c:*(-)?]
         x11-utils/xcb-util-image[multibuild_c:*(-)?]
         x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
-        x11-utils/xcb-util-renderutil
+        x11-utils/xcb-util-renderutil[multibuild_c:*(-)?]
         x11-utils/xcb-util-wm[multibuild_c:*(-)?]
         glib? ( dev-libs/glib:2[multibuild_c:*(-)?] )
         gtk? (
