@@ -5,10 +5,10 @@ require cmake [ api=2 ] freedesktop-desktop gtk-icon-cache
 
 SUMMARY="ELF Library Viewer lists what libraries a given program or shared library links to"
 DESCRIPTION="
-shows a list of libraries that a given application or library depends on. This is done recursively
-depends on. This is done recursively as well, so instead of the flat list given by tools like
-ldd(1), you can tell what libraries are depended upon directly, and indirectly. You could use this
-to determine what library is causing link errors for your application, for instance.
+Shows a list of libraries that a given application or library depends on. This is done recursively
+as well, so instead of the flat list given by tools like ldd(1), you can tell what libraries are
+depended upon directly, and indirectly. You could use this to determine what library is causing
+link errors for your application, for instance.
 "
 HOMEPAGE="http://www.purinchu.net/software/${PN}.php"
 DOWNLOADS="http://www.purinchu.net/software/${PNV}.tar.bz2"
