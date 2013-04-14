@@ -22,7 +22,7 @@ DEPENDENCIES="
 DEPENDENCIES+="
 run:
     || (
-        media/mplayer2[ass][truetype]
+        media/mplayer2[ass][truetype(+)]
         media/mplayer[ass][truetype]
     )
 "
