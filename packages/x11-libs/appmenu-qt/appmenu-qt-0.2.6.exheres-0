@@ -7,7 +7,7 @@ SUMMARY="Enables the export of menus via DBus for Qt applications"
 
 LICENCES="LGPL-3"
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DEPENDENCIES="
     build+run:
