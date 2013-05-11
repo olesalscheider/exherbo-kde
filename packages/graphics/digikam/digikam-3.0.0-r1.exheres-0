@@ -64,8 +64,8 @@ DEPENDENCIES="
         ]]
         doc? ( app-doc/doxygen )
         gphoto2? (
-            dev-libs/libusb[>=1.0.0]
             media-libs/libgphoto2[>=2.4.0]
+            virtual/usb:1
         )
         kipi_plugins:acquireimages? ( kde/libksane[>=0.3.0] )
         kipi_plugins:expoblending? ( sys-devel/gcc[>=4.3.0][openmp] )
