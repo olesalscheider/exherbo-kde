@@ -1,21 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/soprano.git"
-
-require soprano scm-git
-
-DOWNLOADS=""
+require soprano
 
 PLATFORMS="~amd64 ~x86"
-
-# FIXME: Test failures:
-# redlandmemorymodeltest redlandpersistentmodeltest sopranodclienttest localsocketmultithreadtest
-# sopranodsocketclienttest sopranodbusclienttest sopranodbusmultithreadtest
-RESTRICT=test
-
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    # tests are RESTRICTed
-    -DSOPRANO_BUILD_TESTS:BOOL=FALSE
-)
 

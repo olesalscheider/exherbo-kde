@@ -5,6 +5,3 @@ require soprano
 
 PLATFORMS="~amd64 ~x86"
 
-# FIXME: Test failures, network sandboxing violations
-RESTRICT=test
-
