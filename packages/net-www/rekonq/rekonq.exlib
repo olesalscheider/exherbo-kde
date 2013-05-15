@@ -7,7 +7,7 @@ if ever is_scm ; then
     DOWNLOADS=""
 fi
 
-require kde [ api=2 ] sourceforge
+require cmake [ cmake_minimum_version=2.8.9 ] kde [ api=2 ] sourceforge
 
 SUMMARY="A KDE browser based on Webkit"
 DESCRIPTION="
@@ -24,6 +24,7 @@ MYOPTIONS="opera [[ description = [ Support for opera sync handler ] ]]"
 DEPENDENCIES="
     build+run:
         dev-libs/soprano
+        kde/kactivities[>=4.10.0]
         kde/kdelibs:4[>=4.8.4]
         kde/nepomuk-core:4[>=4.10.0]
         x11-libs/qt:4[>=4.8.0][X(+)][dbus][glib][webkit]
