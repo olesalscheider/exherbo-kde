@@ -361,6 +361,7 @@ install_one_multibuild() {
         edo rm -rf "${IMAGE}"/usr/${LIBDIR}/qt4/libphonon*
         edo rm -rf "${IMAGE}"/usr/${LIBDIR}/pkgconfig/phonon.pc
         edo rm -rf "${IMAGE}"/usr/include/qt4/phonon
+        edo rm "${IMAGE}"/usr/${LIBDIR}/qt4/plugins/designer/libphononwidgets.so
     fi
 
     if option gstreamer ; then
