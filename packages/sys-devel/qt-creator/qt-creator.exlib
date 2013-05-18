@@ -12,20 +12,14 @@ SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
+        dev-libs/botan:1.10[>=1.10.0]
         x11-libs/qt:4[>=4.8.0][X(+)][dbus][sql][sqlite][webkit]
     suggestion:
         sys-devel/gdb[python] [[ description = [ For debugging with Qt Creator ] ]]
 "
-
-if ever at_least 2.7.0-rc ; then
-    DEPENDENCIES+="
-        build:
-            virtual/pkg-config
-        build+run:
-            dev-libs/botan:1.10[>=1.10.0]
-    "
-fi
 
 RESTRICT="test" # far to many tests need a running X server, disable building them below
 
@@ -42,15 +36,13 @@ BUGS_TO="kimrhh@exherbo.org heirecka@exherbo.org"
 ever is_scm || WORK="${WORK}-src/"
 EQMAKE4_SOURCES="qtcreator.pro"
 
-QMAKE4_SRC_CONFIGURE_PARAMS=( IDE_LIBRARY_BASENAME=${LIBDIR} SUPPORT_QT_QML=1 )
+QMAKE4_SRC_CONFIGURE_PARAMS=(
+    BUILD_TESTS=0
+    IDE_LIBRARY_BASENAME=${LIBDIR}
+    SUPPORT_QT_QML=1
+    USE_SYSTEM_BOTAN=1
+)
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}"/usr/ )
-
-if ever at_least 2.7.0 ; then
-    QMAKE4_SRC_CONFIGURE_PARAMS+=(
-        USE_SYSTEM_BOTAN=1
-        BUILD_TESTS=0
-    )
-fi
 
 src_compile() {
     default
