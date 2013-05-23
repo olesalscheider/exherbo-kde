@@ -31,17 +31,13 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="active braindump flow karbon kexi krita plan sheets stage words"
 
-if ever at_least 2.5.90; then
-    MYOPTIONS+="
-        kactivities [[ description = [ Support for KDE's activities system ] ]]
-    "
-fi
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
     freetds        [[ description = [ Support for MS SQL and Sybase databases in Kexi ] ]]
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
+    kactivities    [[ description = [ Support for KDE's activities system ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
     mpxj           [[ description = [ Support for importing mpxj files (i.e. Microsoft Project Exchange, Microsoft Project, Planner) in Plan ] requires = [ kde_parts: plan ] ]]
@@ -81,7 +77,7 @@ DEPENDENCIES+="
         kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
-        media-libs/lcms2[>=2.0] [[ note = [ Required for color management and Krita ] ]]
+        media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
         media-libs/libpng
         media-libs/phonon [[ note = [ Used by stage, videoshape plugin ] ]]
         sys-libs/zlib
@@ -94,9 +90,10 @@ DEPENDENCIES+="
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXpm
-        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
+        x11-libs/qt:4[>=4.7.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
+        kactivities? ( kde/kactivities[>=4.9.98] )
         kde_parts:active? (
             kde/kdelibs:4[>=4.8.0]
             x11-libs/qt:4[>=4.7.0]
@@ -153,6 +150,10 @@ DEPENDENCIES+="
             kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
         )
         kde_parts:words? (
+            (
+                dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.15 is recommended ] ]]
+                dev-libs/icu
+            ) [[ note = [ Needed for bibliography, dep of common libcalligradb, also used by kexi ] ]]
             wordperfect? ( office-libs/libwpd[>=0.9] )
             msworks? ( office-libs/libwps[>=0.2] )
         )
@@ -177,18 +178,6 @@ DEPENDENCIES+="
 # plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
 # http://www.librcps.org/
 
-if ever at_least 2.5.94; then
-    DEPENDENCIES+="
-        media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
-        x11-libs/qt:4[>=4.7.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
-        kactivities? ( kde/kactivities[>=4.9.98] )
-        kde_parts:words? (
-            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 (.15 for 2.5.94) is recommended ] ]]
-            dev-libs/icu
-        ) [[ note = [ Needed for bibliography, dep of common libcalligradb, also used by kexi ] ]]
-    "
-fi
-
 # Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.4.1
 RESTRICT="test"
 
@@ -199,21 +188,26 @@ src_configure() {
         $(kde4_shared_cmake_params)
         -DTINY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
+        -DPACKAGERS_BUILD:BOOL=FALSE # Support multiple CPU arches in one binary - if Vc is present, see README.PACKAGERS
         -DWITH_LCMS2:BOOL=TRUE
         -DWITH_XBase:BOOL=FALSE # kexi/migration/, http://linux.techass.com/projects/xdb/, support for xbase db. Package unwritten.
         -DWITH_KdepimLibs=ON
         -DWITH_OpenGL=ON
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
+        -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
+        -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
         -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
         -DCMAKE_DISABLE_FIND_PACKAGE_{Open,Qt}Shiva:BOOL=TRUE # krita/plugins/extensions/. Packages unwritten.
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
+        -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
         $(cmake_build kde_parts:plan kdgantt)
         $(cmake_with encrypted QCA2)
         $(cmake_with eps Pstoedit)
         $(cmake_with fftw FFTW3)
         $(cmake_with FreeTDS)
         $(cmake_with GLEW)
+        $(cmake_with KActivities)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:stage Okular)
         $(cmake_with Marble)
@@ -229,16 +223,6 @@ src_configure() {
         $(cmake_with visio LibVisio)
         $(cmake_with TIFF)
     )
-
-    if ever at_least 2.5.90; then
-        cmakeparams+=(
-            -DPACKAGERS_BUILD:BOOL=FALSE # Support multiple CPU arches in one binary - if Vc is present, see README.PACKAGERS
-            -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
-            -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
-            -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
-            $(cmake_with KActivities)
-        )
-    fi
 
     if option kde_parts:krita || option kde_parts:sheets; then
         cmakeparams+=( -DWITH_Eigen2=ON )
