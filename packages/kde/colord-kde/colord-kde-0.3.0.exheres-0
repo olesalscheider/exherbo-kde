@@ -1,0 +1,7 @@
+# Copyright 2013 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require colord-kde
+
+PLATFORMS="~amd64"
+
