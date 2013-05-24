@@ -1,0 +1,17 @@
+Source: Heiko Becker
+Upstream: mailed the author
+Reason: fix build with freetype
+
+Index: src/CMakeLists.txt
+===================================================================
+--- a/src/CMakeLists.txt	(revision 245)
++++ b/src/CMakeLists.txt	(working copy)
+@@ -18,7 +18,7 @@
+ ENDIF(LIBPODOFO_FOUND)
+ 
+ IF(FREETYPE_FOUND)
+-  INCLUDE_DIRECTORIES( ${FREETYPE_INCLUDE_DIR} )
++  INCLUDE_DIRECTORIES( ${FREETYPE_INCLUDE_DIRS} )
+ ENDIF(FREETYPE_FOUND)
+ 
+ ADD_DEFINITIONS(${TAGLIB_CFLAGS} ${EXIV2_CFLAGS} ${LIBPODOFO_CFLAGS} ${KDE4_DEFINITIONS} )

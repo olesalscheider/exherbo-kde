@@ -32,5 +32,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}_add_common_names_to_FindLIBPODOFO.patch
+    "${FILES}"/${PNV}_fix-build-with-freetype.patch
 )
 
