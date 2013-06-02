@@ -1,24 +1,21 @@
-Upstream: submitted through https://git.reviewboard.kde.org/r/108806/
-Reason: Fix build
-
-From 0fef83d5154088859844f74bd8a8d9cffb134d48 Mon Sep 17 00:00:00 2001
-From: Heiko Becker <heirecka@exherbo.org>
-Date: Wed, 6 Feb 2013 14:40:46 +0100
+From 5a51bb646efb340150380ef31a9e598e090fa36d Mon Sep 17 00:00:00 2001
+From: "Wulf C. Krueger" <philantrop@exherbo.org>
+Date: Mon, 3 Jun 2013 00:15:00 +0200
 Subject: [PATCH] Use standard cmake module to find boost_python
 
 ---
- CMakeLists.txt                      |   9 +--
+ CMakeLists.txt                      |   9 +-
  KigConfigureChecks.cmake            |   4 +-
- cmake/COPYING-CMAKE-SCRIPTS         |  22 ------
- cmake/FindBoostPython.cmake         | 153 ------------------------------------
- cmake/modules/FindBoostPython.cmake | 134 -------------------------------
- 5 files changed, 3 insertions(+), 319 deletions(-)
+ cmake/COPYING-CMAKE-SCRIPTS         |  22 -----
+ cmake/FindBoostPython.cmake         | 163 ------------------------------------
+ cmake/modules/FindBoostPython.cmake | 134 -----------------------------
+ 5 files changed, 3 insertions(+), 329 deletions(-)
  delete mode 100644 cmake/COPYING-CMAKE-SCRIPTS
  delete mode 100644 cmake/FindBoostPython.cmake
  delete mode 100644 cmake/modules/FindBoostPython.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index aa4cc11..c8a2d68 100644
+index e27b470..b6a7eb7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,10 +1,5 @@
@@ -32,16 +29,16 @@ index aa4cc11..c8a2d68 100644
  # search packages used by KDE
  find_package(KDE4 4.3.80 REQUIRED)
  if(WIN32)
-@@ -30,7 +25,7 @@ include_directories (${QDBUS_INCLUDE_DIRS}  ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_D
+@@ -29,7 +24,7 @@ add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -DQT_USE_FAST_CONCATENATI
+ include_directories (${QDBUS_INCLUDE_DIRS}  ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
  
  # ...to here
- 
 -find_package(BoostPython)
 +find_package(Boost COMPONENTS python)
  
  kde4_no_enable_final(kig)
  
-@@ -193,7 +188,7 @@ kde4_add_plugin(kigpart ${kigpart_PART_SRCS})
+@@ -200,7 +195,7 @@ kde4_add_plugin(kigpart ${kigpart_PART_SRCS})
  
  target_link_libraries(kigpart ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} )
  if(BOOST_PYTHON_FOUND)
@@ -102,10 +99,10 @@ index 4b41776..0000000
 -THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 diff --git a/cmake/FindBoostPython.cmake b/cmake/FindBoostPython.cmake
 deleted file mode 100644
-index 6d5f05e..0000000
+index 50339fd..0000000
 --- a/cmake/FindBoostPython.cmake
 +++ /dev/null
-@@ -1,153 +0,0 @@
+@@ -1,163 +0,0 @@
 -# - Try to find the a valid boost+python combination
 -# Once done this will define
 -#
@@ -140,6 +137,15 @@ index 6d5f05e..0000000
 -set(PYTHON_LIBRARY_DIRS "/usr/lib${LIB_SUFFIX};/usr/local/lib${LIB_SUFFIX};/usr/lib${LIB_SUFFIX}/$pyver/config")
 -set(PYTHON_LIBS "boost_python-gcc-mt;boost_python-mt;boost_python-gcc-mt-1_33;boost_python-gcc-mt-1_33_1;boost_python;boost_python-gcc-mt-1_32;boost_python")
 -
+-if(WIN32)
+-    set(PythonLibs_FIND_VERSION 2.7.0)
+-    find_package(PythonLibs)
+-    find_package(Boost COMPONENTS python QUIET)
+-    if(PYTHONLIBS_FOUND AND Boost_FOUND)
+-        set(BOOST_PYTHON_INCLUDES ${PYTHON_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+-        set(BOOST_PYTHON_LIBS ${Boost_PYTHON_LIBRARY} ${PYTHON_LIBRARIES})
+-    endif(PYTHONLIBS_FOUND AND Boost_FOUND)
+-else(WIN32)
 -# 1st: check for boost/shared_ptr.hpp
 -check_include_file_cxx(boost/shared_ptr.hpp HAVE_BOOST_SHARED_PTR_HPP)
 -
@@ -241,6 +247,7 @@ index 6d5f05e..0000000
 -  set(CMAKE_CXX_FLAGS ${_save_CMAKE_CXX_FLAGS})
 -
 -endif(HAVE_BOOST_SHARED_PTR_HPP AND NOT _found)
+-endif(WIN32)
 -
 -if(BOOST_PYTHON_INCLUDES AND BOOST_PYTHON_LIBS)
 -  set(BOOST_PYTHON_FOUND TRUE)
@@ -400,5 +407,5 @@ index 72aae54..0000000
 -
 -mark_as_advanced(BOOST_PYTHON_INCLUDES BOOST_PYTHON_LIBS)
 -- 
-1.8.1.2
+1.8.3
 
