@@ -84,7 +84,7 @@ DEPENDENCIES="
             media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
             media-sound/pulseaudio[>=0.9.16]
         )
-        samba? ( net-fs/samba ) [[ description = [ samba kioslave ] ]]
+        samba? ( net-fs/samba:= ) [[ description = [ samba kioslave ] ]]
         sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
     run:
