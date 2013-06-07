@@ -14,7 +14,7 @@ friendly interface, Scribus supports professional publishing features, such as C
 separations, Spot Colors, ICC color management and versatile PDF creation.
 "
 HOMEPAGE="http://www.scribus.net/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.xz"
 
 REMOTE_IDS="freecode:${PN}"
 
@@ -71,7 +71,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ASPELL'
 )
 
-CMAKE_SOURCE=${WORKBASE}/Scribus
+CMAKE_SOURCE=${WORKBASE}/${PNV}
 
 src_prepare() {
     edo sed -i -e '/CMAKE_VERBOSE_MAKEFILE/d' "${CMAKE_SOURCE}"/CMakeLists.txt
