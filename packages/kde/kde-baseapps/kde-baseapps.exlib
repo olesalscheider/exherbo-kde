@@ -35,7 +35,12 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
-        tidy? ( app-text/tidy )
+        tidy? (
+            || (
+                app-text/tidy
+                app-text/tidy-html5
+            )
+        )
 "
 
 if ever at_least 4.9.97; then
