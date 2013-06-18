@@ -1,0 +1,27 @@
+# Copyright 2009, 2010, 2011 Ingmar Vanhassel
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ] sourceforge
+
+SUMMARY="A Free/Open Source micro-blogging client for K Desktop Environment"
+DESCRIPTION="
+choqoK is a quick and efficient micro-blogging client for the K Desktop
+Environment. It currently supports the Twitter.com and Identi.ca services. The
+name comes from an ancient Persian word that means sparrow.
+"
+HOMEPAGE="http://choqok.gnufolks.org/"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/qca:2
+        dev-libs/qjson
+        kde/kdelibs:4[>=4.4.0]
+        sys-auth/qoauth
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DQTINDICATE_DISABLE:BOOL=TRUE )
+
