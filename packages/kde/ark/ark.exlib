@@ -28,7 +28,10 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
     suggestion:
         app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
-        app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
+        app-arch/unrar:4 [[
+            description = [ Support unpacking .rar files in ark ]
+            note = [ ark doesn't (yet) work with unrar >= 5 ]
+        ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
@@ -39,4 +42,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_ZLIB:BOOL=TRUE
     -DWITH_QJSON:BOOL=FALSE
 )
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Use-the-unrar4-executable.patch )
 
