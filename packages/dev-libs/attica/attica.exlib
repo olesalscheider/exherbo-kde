@@ -35,11 +35,5 @@ fi
 BUGS_TO="kde@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
-
-src_prepare() {
-    option qt5 && CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT4_BUILD:BOOL=FALSE ) \
-               || CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT4_BUILD:BOOL=TRUE )
-
-    default
-}
+CMAKE_SRC_CONFIGURE_OPTIONS+=( '!qt5 QT4_BUILD' )
 
