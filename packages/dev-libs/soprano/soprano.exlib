@@ -26,6 +26,7 @@ MYOPTIONS="
     doc
     virtuoso [[ description = [ Enable the virtuoso backend, the fastest backend ] ]]
 "
+ever is_scm && MYOPTIONS+="qt5 [[ description = [ Build against Qt5 instead of Qt4. ] ]]"
 
 DEPENDENCIES="
     build:
@@ -34,12 +35,26 @@ DEPENDENCIES="
         dev-libs/rasqal[>=0.9.15]
         dev-libs/redland[>=1.0.13]
         media-libs/raptor[>=2.0.0]
-        x11-libs/qt:4[dbus][>=4.5.0]
         clucene? ( dev-cpp/clucene:1[>=0.9.19] )
         virtuoso? ( dev-db/libiodbc )
     run:
         virtuoso? ( dev-db/virtuoso-opensource[>=6.1.0] )
 "
+
+if ever is_scm; then
+    DEPENDENCIES+="
+        build:
+            sys-devel/cmake[>=2.8.9]
+        build+run:
+            qt5? ( x11-libs/qtbase:5 )
+           !qt5? ( x11-libs/qt:4[dbus][>=4.5.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[dbus][>=4.5.0]
+    "
+fi
 
 # FIXME: Test failures, network sandboxing violations
 RESTRICT="test"
@@ -53,7 +68,9 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'doc SOPRANO_BUILD_API_DOCS'
     '!virtuoso SOPRANO_DISABLE_VIRTUOSO_BACKEND'
 )
-
+if ever is_scm; then
+    CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
+fi
 
 src_install() {
     cmake_src_install
