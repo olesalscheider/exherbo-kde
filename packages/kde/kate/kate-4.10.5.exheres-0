@@ -5,5 +5,3 @@ require kate
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/changeset_rd2e34218068432ba9c312591067e53eda67cb68a.diff )
-
