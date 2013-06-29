@@ -15,6 +15,7 @@ DEPENDENCIES="
         kde/kate:4[>=4.7.4]
         kde/kdelibs:4[>=${PV}]
         kde/kdepimlibs:4[>=${PV}]
+        kde/nepomuk-core[>=${PV}]
         kde/qtruby:4[>=4.7.4]
         kde/smokegen:4[>=4.7.4]
         kde/smokekde:4[>=4.7.4][okular?]
