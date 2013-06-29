@@ -22,10 +22,3 @@ DEPENDENCIES="
         x11-libs/libXpm
 "
 
-if ! ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/libXrender
-    "
-fi
-

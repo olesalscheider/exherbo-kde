@@ -18,13 +18,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-libs/gmp:=
+        dev-libs/mpfr:=
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
-
-if ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/mpfr:=
-    "
-fi
 

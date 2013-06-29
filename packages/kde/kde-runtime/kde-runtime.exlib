@@ -66,8 +66,10 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
+        kde/kdelibs:${SLOT}[>=4.9.95]
         kde/kdepimlibs:${SLOT}
-        kde/nepomuk-core:${SLOT}
+        kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
+                build with <4.10.0 ] ]]
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -95,21 +97,6 @@ DEPENDENCIES="
 
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
-
-if ever at_least 4.10.0; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.9.95]
-            kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
-                build with <4.10.0 ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.8.5]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xine:BOOL=FALSE )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_NepomukCore:BOOL=TRUE

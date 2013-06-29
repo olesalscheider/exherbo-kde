@@ -9,21 +9,14 @@ LICENCES="GPL-2 FDL-1.2 LGPL-2 LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        sys-devel/cmake[>=2.8.8]
     build+run:
-        dev-libs/boost[>=1.43.0] [[ note = [ rocs can be compiled with boost >= 1.39, but 1.43.0 is necessary to aquire full functionality ] ]]
+        dev-libs/boost[>=1.49.0] [[ note = [ rocs can be compiled with boost[>=1.43], but 1.49.0
+                is necessary for DOT file support ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
+        x11-libs/qt:4[webkit]
     run:
         kde/kate:${SLOT}
 "
-
-if ever at_least 4.10.0 ; then
-    DEPENDENCIES+="
-        build:
-            sys-devel/cmake[>=2.8.8]
-        build+run:
-            dev-libs/boost[>=1.49.0] [[ note = [ rocs can be compiled with boost[>=1.43], but 1.49.0
-                is necessary for DOT file support ] ]]
-            x11-libs/qt:4[webkit]
-    "
-fi
 

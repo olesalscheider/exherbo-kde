@@ -51,6 +51,7 @@ DEPENDENCIES+="
             x11-misc/shared-mime-info[>=0.40]
         )
         kde_parts:poxml? ( dev-java/antlr[=2*] )
+        kde_parts:strigi-analyzer? ( app-pim/strigi[>=0.6.3][dbus][qt4] )
         kde_parts:thumbnailers? ( sys-devel/gettext )
         kde_parts:umbrello? (
             dev-libs/boost[>=1.33.1]
@@ -65,18 +66,6 @@ DEPENDENCIES+="
             kde/pykde4:${SLOT}[>=4.7.4]
         )
 "
-
-if ever at_least 4.10.2 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:strigi-analyzer? ( app-pim/strigi[>=0.6.3][dbus][qt4] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-pim/strigi[>=0.6.3][dbus][qt4]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'kde_parts:kioslave SVN'

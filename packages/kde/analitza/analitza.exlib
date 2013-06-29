@@ -13,16 +13,10 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
+        x11-dri/glu
+        x11-dri/mesa
+        x11-libs/qt:4[opengl]
         console-interface? ( sys-libs/readline )
 "
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'console-interface Readline' )
-
-if ever at_least 4.9.97 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-dri/glu
-            x11-dri/mesa
-            x11-libs/qt:4[opengl]
-    "
-fi
 

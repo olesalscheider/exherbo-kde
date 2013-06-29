@@ -42,23 +42,13 @@ DEPENDENCIES+="
             app-crypt/qca:2 [[ note = [ dataengines/microblog/ ] ]]
             sys-auth/qoauth
         )
-        kimpanel? ( dev-libs/glib:2 )
+        kimpanel? (
+            dev-libs/glib:2
+            inputmethods/ibus[>=1.4.2]
+        )
         marble? ( kde/marble:4 )
         qalculate? ( sci-libs/libqalculate )
 "
-
-if ever at_least 4.9.98 ; then
-    DEPENDENCIES+="
-        build+run:
-            kimpanel? ( inputmethods/ibus[>=1.4.2] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kimpanel? ( inputmethods/ibus )
-    "
-fi
-
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Marble

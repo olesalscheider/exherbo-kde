@@ -6,40 +6,33 @@ require kde.org
 SUMMARY="Advanced editor component which is used in numerous KDE applications"
 
 LICENCES="LGPL-2"
-MYOPTIONS=""
-ever at_least 4.9.90 && MYOPTIONS+=" python"
+MYOPTIONS="python"
 
 DEPENDENCIES="
     build+run:
+        dev-libs/qjson[>=0.5] [[ note = [ project plugin ] ]]
+        kde/kactivities:4[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.3]
         x11-misc/shared-mime-info[>=0.30]
+        python? (
+            dev-lang/python:=[>=2.5]
+            dev-python/PyQt4[>=4.3.1]
+            dev-python/sip[>=4.7.1]
+        )
         !kde/kdesdk[<4.7.0] [[
             description = [ kde/kate was part of kde/kdesdk in previous releases ]
             resolution = uninstall-blocked-after
         ]]
 "
 
-if ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/qjson[>=0.5] [[ note = [ project plugin ] ]]
-            kde/kactivities:4[>=4.9.90]
-            python? (
-                dev-lang/python:=[>=2.5]
-                dev-python/PyQt4[>=4.3.1]
-                dev-python/sip[>=4.7.1]
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'python PyKDE4'
         'python PyQt4'
         'python PythonLibrary'
         'python SIP'
-    )
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_project:BOOL=TRUE )
-fi
-
+)
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_KTEXTEDITOR:BOOL=FALSE # use ktexteditor from kdelibs
+    -DBUILD_project:BOOL=TRUE
 )
 

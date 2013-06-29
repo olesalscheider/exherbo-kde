@@ -25,6 +25,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
         x11-libs/qt:4[sql][webkit]
+        x11-misc/shared-mime-info[>=0.40]
         python? (
             dev-lang/python:=
             dev-python/PyQt4[>=4.8.4]
@@ -39,24 +40,14 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QtLocation=OFF
     # plugin to display ESRI Shapefiles via libshp http://shapelib.maptools.org/
     -DWITH_libshp=OFF
-
+    # unwritten, retrieves the current geographic position from available WLAN networks
+    # http://sourceforge.net/projects/libwlocate/
+    -DWITH_libwlocate=OFF
+    # unwritten, build APRS plugin with support for serial port input;
+    # http://code.google.com/p/qextserialport/
+    -DWITH_QextSerialPort=OFF
     -DWITH_DESIGNER_PLUGIN=ON
 )
-
-if ever at_least 4.9.97 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-misc/shared-mime-info[>=0.40]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # unwritten, retrieves the current geographic position from available WLAN networks
-        # http://sourceforge.net/projects/libwlocate/
-        -DWITH_libwlocate=OFF
-        # unwritten, build APRS plugin with support for serial port input;
-        # http://code.google.com/p/qextserialport/
-        -DWITH_QextSerialPort=OFF
-    )
-fi
 
 src_configure() {
     if option python; then

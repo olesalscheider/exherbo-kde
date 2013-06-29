@@ -13,16 +13,8 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies
         dev-libs/soprano
         kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/nepomuk-core:4[>=4.9.90]
+        x11-libs/libX11
+        x11-libs/qt:4[opengl][sql]
 "
-
-if ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            kde/nepomuk-core:4[>=4.9.90]
-            x11-libs/libX11
-            x11-libs/qt:4[opengl][sql]
-    "
-else
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Nepomuk:BOOL=TRUE )
-fi
 

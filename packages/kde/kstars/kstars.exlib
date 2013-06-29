@@ -24,13 +24,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_INDI=OFF
     # Hard-enable OpenGL since it is not optional on Exherbo anyway
     -DWITH_OpenGL=ON
+    # Package Unwritten, http://www.atnf.csiro.au/people/mcalabre/WCS/; Support for world coordinate
+    # systems in FITS header
+    -DWITH_WCSLIB=OFF
     # Package Unwritten, http://xplanet.sourceforge.net/; Renders an image of all the major planets and most satellites
     -DWITH_Xplanet=OFF
 )
-
-if ever at_least 4.9.97 ; then
-    # Package Unwritten, http://www.atnf.csiro.au/people/mcalabre/WCS/; Support for world coordinate
-    # systems in FITS header
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_WCSLIB=OFF )
-fi
 

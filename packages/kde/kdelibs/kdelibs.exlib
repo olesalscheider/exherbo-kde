@@ -21,6 +21,7 @@ DEPENDENCIES="
         app-text/docbook-xsl-stylesheets
         dev-cpp/cppunit
         dev-lang/perl:*
+        sys-devel/cmake[>=2.8.9]
         sys-devel/gettext
         x11-proto/xf86vidmodeproto
         doc? ( app-doc/doxygen )
@@ -60,7 +61,9 @@ DEPENDENCIES="
         x11-libs/libXScrnSaver
         x11-libs/libXt
         x11-libs/libXtst
-        x11-misc/shared-mime-info[>=0.60]
+        x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit]
+            [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+         x11-misc/shared-mime-info[>=0.60]
         acl? (
             sys-apps/acl
             sys-apps/attr
@@ -77,10 +80,12 @@ DEPENDENCIES="
             app-spell/aspell
             app-spell/enchant
         )
+        upnp? ( net-libs/hupnp[>=0.9.1] )
     run:
         x11-apps/iceauth
         x11-apps/rgb
     recommendation:
+        sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
         policykit? (
             sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
@@ -110,6 +115,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_SharedDesktopOntologies:BOOL=TRUE
     -DWITH_Soprano:BOOL=TRUE
+    -DWITH_SOLID_UDISKS2:BOOL=TRUE
     -DWITH_UDev:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
@@ -130,30 +136,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ENCHANT'
     'upnp HUpnp'
 )
-
-if ever at_least 4.9.98 ; then
-    DEPENDENCIES+="
-        build:
-            sys-devel/cmake[>=2.8.9]
-        build+run:
-            x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit]
-                    [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
-            upnp? ( net-libs/hupnp[>=0.9.1] )
-        recommendation:
-            sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=TRUE )
-else
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4[>=4.7.0][opengl][phonon][webkit]
-                    [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
-            upnp? ( net-libs/hupnp )
-        recommendation:
-            sys-apps/udisks:0 [[ description = [ Enable auto-mounting support ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOLID_UDISKS2:BOOL=FALSE )
-fi
 
 #FIXME: grantlee only needed for tests, which we do not run
 if ever is_scm ; then

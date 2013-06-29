@@ -21,10 +21,3 @@ DEPENDENCIES="
         x11-libs/qt:4[phonon]
 "
 
-if ! ever at_least 4.10.1 ; then
-    DEPENDENCIES="
-    build+run:
-        kde/libkcddb:${SLOT}
-        kde/libkcompactdisc:${SLOT}"
-fi
-

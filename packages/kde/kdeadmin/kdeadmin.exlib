@@ -9,13 +9,10 @@ DESCRIPTION="
 * ksystemlog: System log viewer tool
 * kuser: User and group manager
 * strigi-analyzer: Strigi plugin for rpm files
-* system-config-printer-kde: Port of Red Hat's Gnome system-config-printer to KDE (replaced with
-  kde/print-manager in KDE 4.10)
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 MY_KDE_PARTS="kcron ksystemlog kuser"
-! ever at_least 4.10.0 && MY_KDE_PARTS+=" system-config-printer-kde"
 MYOPTIONS="kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
@@ -29,27 +26,4 @@ DEPENDENCIES="
             virtual/cron
         )
 "
-
-if ! ever at_least 4.10.0 ; then
-    DEPENDENCIES+="
-        run:
-            kde_parts:system-config-printer-kde? (
-                app-admin/system-config-printer
-                dev-lang/python:*
-                dev-python/pycups
-                dev-python/PyQt4[dbus]
-                dev-python/sip
-                kde/pykde4:${SLOT}[>=4.7.4]
-            )
-    "
-
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'kde_parts:system-config-printer-kde PyCups'
-        'kde_parts:system-config-printer-kde PyKDE4'
-        'kde_parts:system-config-printer-kde PyQt4'
-        'kde_parts:system-config-printer-kde PythonLibrary'
-        'kde_parts:system-config-printer-kde SIP'
-        'kde_parts:system-config-printer-kde SystemConfigPrinter'
-    )
-fi
 

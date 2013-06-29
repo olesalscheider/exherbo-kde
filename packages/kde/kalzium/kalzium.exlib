@@ -30,15 +30,10 @@ DEPENDENCIES="
             dev-lang/ocaml
             dev-ml/facile
         )
-"
-
-if ever at_least 4.9.90 ; then
-    DEPENDENCIES+="
-        suggestion:
-            x11-misc/chemical-mime-data [[ description = [ Needed to open CML molecules from the
+    suggestion:
+        x11-misc/chemical-mime-data [[ description = [ Needed to open CML molecules from the
                 file manager ] ]]
-    "
-fi
+"
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     '3dviewer Avogadro'

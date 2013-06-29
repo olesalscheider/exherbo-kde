@@ -21,6 +21,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         app-arch/bzip2
+        kde/kactivities:4[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/qimageblitz
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
@@ -36,15 +37,8 @@ DEPENDENCIES="
         tiff? ( media-libs/tiff )
 "
 
-if ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kactivities:4[>=4.9.90]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_ActiveApp:BOOL=FALSE )
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_ActiveApp:BOOL=FALSE
     -DWITH_QImageBlitz:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(

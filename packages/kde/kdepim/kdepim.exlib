@@ -49,14 +49,18 @@ DEPENDENCIES+="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         app-text/shared-desktop-ontologies[>=0.10]
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
+        dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
+        dev-libs/soprano[>=2.7.56]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/nepomuk-core:${SLOT}[>=${PV}]
+        kde/nepomuk-widgets:${SLOT}[>=4.9.90]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
+        server-pim/akonadi[>=1.8.51]
         sys-libs/zlib
         x11-libs/qt:4[dbus][sql]
         barcodes? ( kde/prison )
@@ -66,23 +70,6 @@ DEPENDENCIES+="
             x11-libs/libXScrnSaver
         )
 "
-
-if ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
-            dev-libs/soprano[>=2.7.56]
-            kde/nepomuk-widgets:4[>=4.9.90]
-            server-pim/akonadi[>=1.8.51]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/grantlee [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
-            dev-libs/soprano[>=2.3.70]
-            server-pim/akonadi[>=1.8.0]
-    "
-fi
 
 # Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
 # macro_log_feature(DBLATEX_EXECUTABLE "dblatex" "The DocBook to LaTeX converter" "http://dblatex.sourceforge.net/" FALSE

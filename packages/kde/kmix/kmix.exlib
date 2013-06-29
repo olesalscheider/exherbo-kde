@@ -18,23 +18,14 @@ DEPENDENCIES="
         kde/kde-baseapps:${SLOT}[>=${PV}]
         kde/kde-workspace:${SLOT}[>=${PV}]
         media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
+        media-libs/phonon
         sys-sound/alsa-lib
+        x11-libs/qt:4[phonon]
         pulseaudio? (
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.12]
         )
 "
-
-if  ever at_least 4.9.90; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4
-    "
-    DEPENDENCIES+="
-        media-libs/phonon
-        x11-libs/qt:4[phonon]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     PulseAudio

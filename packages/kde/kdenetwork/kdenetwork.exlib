@@ -131,6 +131,11 @@ DEPENDENCIES+="
             vnc? ( net-libs/libvncserver[>=0.9] )
         )
         telepathy? ( net-im/telepathy-qt[>=0.9] )
+    run:
+        kde_parts:kopete? (
+            im_protocols:ilbc? ( media-plugins/msilbc )
+            im_protocols:jingle? ( media-libs/speex )
+        )
     suggestion:
         net-fs/samba [[ description = [ Network file sharing ] ]]
         kde_parts:kopete? (
@@ -143,24 +148,6 @@ DEPENDENCIES+="
         )
 "
 #       kde_parts:kopete? ( im_protocols:meanwhile? ( net-libs/meanwhile ) )
-
-if ever at_least 4.9.98 ; then
-    DEPENDENCIES+="
-        run:
-            kde_parts:kopete? (
-                im_protocols:ilbc? ( media-plugins/msilbc )
-                im_protocols:jingle? ( media-libs/speex )
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:kopete? (
-                im_protocols:ilbc? ( media-plugins/msilbc )
-                im_protocols:jingle? ( media-libs/speex )
-            )
-    "
-fi
 
 # FIXME
 # Warning: kppp uses setuid
