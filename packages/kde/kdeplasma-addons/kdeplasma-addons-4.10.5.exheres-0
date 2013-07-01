@@ -5,5 +5,3 @@ require kdeplasma-addons
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-use-KRandom-avoid-modulo-bias.patch )
-
