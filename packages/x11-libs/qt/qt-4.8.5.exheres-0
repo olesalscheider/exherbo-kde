@@ -6,14 +6,10 @@ require qt-4
 
 PLATFORMS="~amd64 ~ppc64 ~x86"
 
-UPSTREAM_RELEASE_NOTES="http://qt.digia.com/Release-Notes/Release-Notes-Qt-484"
+UPSTREAM_RELEASE_NOTES="http://blog.qt.digia.com/blog/2013/07/02/qt-4-8-5-released/"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PNV}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
     "${FILES}"/qt-webkit-4.8.1-no-use-ld-gold.patch
-    "${FILES}"/${PNV}-Change-all-shmget-calls-to-user-only-memory.patch
-    "${FILES}"/${PNV}-Fix-binary-incompatibility-between-openssl-versions.patch
-    "${FILES}"/${PNV}-SSL-certificates-blacklist-mis-issued-Turktrust-cert.patch
-    "${FILES}"/${PNV}-Fix-call-to-QMetaObject-metaCall-from-updateProperty.patch
 )
 
