@@ -183,17 +183,15 @@ qt-4_src_prepare() {
         edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
     fi
 
-    if ever at_least 4.8.1; then
-        # Disable WebKit tests since they need access to the xserver
-        edo sed -e 's|exists($$PWD/WebKit/qt/tests): SUBDIRS += WebKit/qt/tests||' \
-                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pro
-        # Fix WebKit with gcc-4.6, -Werror
-        edo sed -e '/QMAKE_CXXFLAGS\s*+=/ s:-Werror::g' \
-                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pri
-        # Fix webkit version number for pkg-config
-        edo sed -e 's/^isEmpty(QT_BUILD_TREE)://' \
-                -i "${WORK}"/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro
-    fi
+    # Disable WebKit tests since they need access to the xserver
+    edo sed -e 's|exists($$PWD/WebKit/qt/tests): SUBDIRS += WebKit/qt/tests||' \
+            -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pro
+    # Fix WebKit with gcc-4.6, -Werror
+    edo sed -e '/QMAKE_CXXFLAGS\s*+=/ s:-Werror::g' \
+            -i "${WORK}"/src/3rdparty/webkit/Source/WebKit.pri
+    # Fix webkit version number for pkg-config
+    edo sed -e 's/^isEmpty(QT_BUILD_TREE)://' \
+            -i "${WORK}"/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro
 }
 
 configure_one_multibuild() {
@@ -222,7 +220,7 @@ configure_one_multibuild() {
         -no-nas-sound
         -no-nis
         -no-s60
-        $(ever at_least 4.8.4 && echo -system-proxies)
+        -system-proxies
         -system-zlib
         -xinput
         -xmlpatterns
@@ -296,13 +294,6 @@ configure_one_multibuild() {
         -system-libtiff
     )
 
-    # qt 4.8 only has -no-gif to disable gif
-    if ! ever at_least 4.8.1; then
-        myconf+=(
-            -qt-gif
-        )
-    fi
-
     # optional parts
     myconf+=(
         -make libs
@@ -324,9 +315,7 @@ configure_one_multibuild() {
             -i "${WORK}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf
 
     # use gcc for linking
-    if ever at_least 4.8.1; then
-        unset LD
-    fi
+    unset LD
 
     qconf4 "${myconf[@]}"
 
@@ -416,12 +405,6 @@ Icon=linguist
 Categories=Qt;Development;Translation;
 MimeType=application/x-linguist;
 EOF
-
-    if option doc ; then
-        # Remove empty doc directories.
-        #FIXME: see QTBUG-21273
-        ($ ! ever at_least 4.8.4 && edo rmdir "${IMAGE}"/usr/share/doc/${PNVR}/html/scripts)
-    fi
 
     if option examples ; then
         # The examples might add some empty dirs. Since the examples are additional documentation,
