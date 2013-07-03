@@ -4,7 +4,7 @@
 # Based in part upon 'qt-4.3.4-r1.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require qt [ pn='qt-everywhere-opensource-src' ] easy-multibuild freedesktop-desktop
+require qt [ pn='qt-everywhere-opensource-src' ] easy-multibuild freedesktop-desktop flag-o-matic
 
 export_exlib_phases src_prepare src_install
 
@@ -169,6 +169,10 @@ qt-4_src_prepare() {
             -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
             -i "${WORK}"/qmake/Makefile.unix
 
+    edo find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
+            sed -i -e "/bin\/qmake/ s: \"\$SRCDIR/: \
+            'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:"
+
     # Disable the Internet Connection Daemon (ICD) by default (otherwise auto-magic)
     edo sed -e "/^CFG_ICD=/s:auto:no:" -i configure
 
@@ -257,6 +261,7 @@ configure_one_multibuild() {
     for feature in 3dnow sse3 ssse3 sse4.1 sse4.2 avx ; do
         if option !amd64_cpu_features:${feature} && option !x86_cpu_features:${feature} ; then
             myconf+=( -no-${feature} )
+            append-flags -mno-${feature}
         fi
     done
     if option !arm_cpu_features:neon ; then
