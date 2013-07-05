@@ -198,7 +198,8 @@ src_prepare() {
             -i CMakeLists.txt
 
     # Optionally disabling building of krandr
-    option kde_parts:krandr || edo sed -e '/add_subdirectory( randr )/d' -i kcontrol/CMakeLists.txt
+    option kde_parts:krandr || edo sed -e '/add_subdirectory( randr )/d' -i kcontrol/CMakeLists.txt \
+                                       -e '/^. krandrstartup/d' -i startkde.cmake
 }
 
 src_configure() {
