@@ -46,6 +46,8 @@ MYOPTIONS="ieee1394 lm_sensors python wicd xinerama
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
     qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
     wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
+    kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
+                                         (deprecated, will be replaced by kde/kscreen) ] ]]
     ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -106,6 +108,13 @@ DEPENDENCIES="
         barcodes? ( kde/prison ) [[ note = klipper ]]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
+        kde_parts:krandr? (
+            !kde/kscreen [[
+                description = [ krandr (deprecated) provides the same functionality as kscreen
+                                 and conflicts with it when plugging in a new screen ]
+                resolution = manual
+            ]]
+        )
         lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
         python? (
             dev-lang/python:=
@@ -187,6 +196,9 @@ src_prepare() {
     edo sed -e '/^if/s/AND PYKDE4_FOUND//' -e '/^endif/s/AND PYKDE4_FOUND//' \
             -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
             -i CMakeLists.txt
+
+    # Optionally disabling building of krandr
+    option kde_parts:krandr || edo sed -e '/add_subdirectory( randr )/d' -i kcontrol/CMakeLists.txt
 }
 
 src_configure() {
