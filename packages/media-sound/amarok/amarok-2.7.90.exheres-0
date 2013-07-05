@@ -1,0 +1,13 @@
+# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require amarok
+
+PLATFORMS="~amd64 ~x86"
+
+pkg_postinst() {
+    elog "Amarok doesn't currently generate .mood files for the moodbar so they must be"
+    elog "generated manually. Scripts to help with this can be found here:"
+    elog "    http://amarok.kde.org/wiki/Moodbar#Moodbar_File_Generation_Script"
+}
+
