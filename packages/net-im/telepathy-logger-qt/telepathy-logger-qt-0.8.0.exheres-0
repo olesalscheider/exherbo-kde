@@ -4,8 +4,8 @@
 require cmake [ api=2 ]
 
 SUMMARY="Qt bindings for telepathy logger"
-HOMEPAGE="https://projects.kde.org/projects/kdereview/${PN}"
-DOWNLOADS="mirror://kde/stable/kde-telepathy/${PV}/src/${PNV}.tar.bz2"
+HOMEPAGE="https://projects.kde.org/projects/extragear/network/telepathy/${PN}"
+DOWNLOADS="mirror://kde/stable/telepathy-logger-qt/${PV}/src/${PNV}.tar.bz2"
 
 BUGS_TO="mixi@exherbo.org"
 
