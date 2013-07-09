@@ -31,7 +31,6 @@ DEPENDENCIES="
         app-crypt/qca:2
         app-pim/strigi[>=0.6.3][dbus][qt4]
         app-text/shared-desktop-ontologies[>=0.10]
-        dev-libs/attica[>=0.1.90]
         dev-libs/pcre
         dev-libs/libxml2:2.0
         dev-libs/libxslt
@@ -92,6 +91,16 @@ DEPENDENCIES="
             sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
         )
 "
+
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        dev-libs/attica[>=0.4.2]
+    "
+else
+    DEPENDENCIES+="
+        dev-libs/attica[>=0.1.90]
+    "
+fi
 
 # FIXME: solid has an optional runtime dependency upon media-player-info: macro_log_feature(MEDIAPLAYERINFO_PATH "media-player-info"
 #        "Enables identification and querying of portable media players" "http://www.freedesktop.org/wiki/Software/media-player-info"
