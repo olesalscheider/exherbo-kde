@@ -10,7 +10,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kde-baseapps:${SLOT}[>=4.7.0]
+        kde/kde-baseapps:${SLOT}[>=4.7.0] [[ note = [ LibKonq, required for drag-n-drop menus ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
         x11-libs/libICE
         x11-libs/libSM
