@@ -31,7 +31,7 @@ kwrited:
 plasma: Desktop framework
 powerdevil: KDE power management
 screenlocker: a new screen locking mechanism based on QtQuick
-solid: Seamless Hardware Interaction
+solid: Seamless Hardware Interaction (only solid-actions-kcm left in 4.11.x)
 statusnotifierwatcher: Module for the Status Notifier Specification
 systemsettings: Settings utility
 "
@@ -40,14 +40,16 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
 # afs - option(KDE4_AFS "Compile KDM with AFS support" OFF) - requires kerberos
 # captury; media-libs/libcaptury - Provides for video recording desktop effects in kwin <http://ninchens.de/projects/captury>
 # kerberos - option(KDE4_KERBEROS4 "Compile KDM with Kerberos v4 support" OFF)
-MYOPTIONS="ieee1394 lm_sensors python wicd xinerama
+MYOPTIONS="ieee1394 lm_sensors python xinerama
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
-    consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, NetworkManager, etc. you'll probably want this. ] ]]
+    consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, etc. you'll probably want this. ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
-    qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
-    wicd       [[ description = [ Wicd wired and wireless network manager integration ] ]]
-    kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
-                                         (deprecated, will be replaced by kde/kscreen) ] ]]
+    qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]"
+ever at_least 4.10.90 && MYOPTIONS+=" wayland" \
+                      || MYOPTIONS+=" wicd [[ description = [ Wicd wired and wireless network manager integration ] ]]"
+
+MYOPTIONS+=" kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
+                                                 (deprecated, will be replaced by kde/kscreen) ] ]]
     ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
@@ -130,7 +132,6 @@ DEPENDENCIES="
         x11-apps/xprop
         x11-apps/xsetroot
         x11-apps/xset
-        wicd? ( net-misc/wicd )
     post:
         python? (
             || (
@@ -141,6 +142,31 @@ DEPENDENCIES="
     recommendation:
         x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]]
 "
+
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/boost[>=1.34]
+            sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]
+            wayland? (
+                sys-libs/wayland
+                x11-dri/mesa[wayland]
+            )
+        recommendation:
+            wayland? ( compositor/weston )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Wayland )
+else
+    DEPENDENCIES+="
+        build+run:
+            wicd? ( net-misc/wicd )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_Googlegadgets:BOOL=FALSE # Extra plasma functionality
+        -DWITH_NetworkManager:BOOL=FALSE # doesn't add useful functionality, use networkmanagement
+    )
+fi
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
@@ -162,12 +188,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE4_{KRB5AUTH,RPCAUTH}:BOOL=FALSE
     -DKDE4_XDMCP:BOOL=TRUE
     -DWITH_Xmms:BOOL=FALSE
-    -DWITH_NetworkManager:BOOL=FALSE # doesn't add useful functionality, use networkmanagement
     -DWITH_KdepimLibs:BOOL=TRUE # Plasma RSS data engine
-    -DWITH_Googlegadgets:BOOL=FALSE # Extra plasma functionality
     -DWITH_libgps:BOOL=FALSE # GPS support for geolocation" "http://gpsd.berlios.de/"
 )
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( python wicd )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( python )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
