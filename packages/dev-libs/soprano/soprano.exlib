@@ -56,7 +56,7 @@ else
     "
 fi
 
-# FIXME: Test failures, network sandboxing violations
+# FIXME: Test failures, network sandboxing violations (last checked: 2.9.3)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
