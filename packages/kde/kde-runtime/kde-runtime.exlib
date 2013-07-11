@@ -22,6 +22,7 @@ kfile: Utility for reading and writing file metadata
 kglobalaccel: KDE global shortcut daemon and dbus service
 khelpcenter: KDE Help Center
 kiconfinder: Icon finder
+kimgo: WebP image format plugin (since 4.11)
 kioclient: Command-line tool for network-transparent operations
 kioexec: KIO helper utility for legacy applications
 kioslave: Various KIO slaves
@@ -55,6 +56,7 @@ MYOPTIONS="alsa networkmanager openexr samba pulseaudio
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
 "
+ever at_least 4.10.90 && MYOPTIONS+=" webp [[ description = [ Support for Google's WebP image format ] ]]"
 
 DEPENDENCIES="
     build:
@@ -98,6 +100,14 @@ DEPENDENCIES="
 
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
+
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            webp? ( media-libs/libwebp )
+    "
+    CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webp FOUND_WEBP' )
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_NepomukCore:BOOL=TRUE
