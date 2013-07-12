@@ -1,0 +1,39 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdenetwork.exlib', which is:
+#     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Remote Desktop Client"
+DESCRIPTION="KRDC is a client application that allows you to view or even control
+the desktop session on another machine that is running a compatible server. VNC
+and RDP is supported."
+
+HOMEPAGE+=" http://kde.org/applications/internet/${PN}/"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+
+MYOPTIONS="
+    telepathy [[ description = [ Support for Telepathy Tubes to provide a user-to-user network layer ] ]]
+    vnc       [[ description = [ Support for VNC (Virtual Network Computing) client support ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        telepathy? ( net-im/telepathy-qt[>=0.9] )
+        vnc? (
+            media-libs/jpeg
+            net-libs/libvncserver[>=0.9.8]
+        )
+    suggestion:
+        net-remote/FreeRDP [[ description = [ Necessary to make RDP connections with krdc ] ]]
+"
+
+# NX support is disabled by upstream
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'telepathy TelepathyQt4'
+    'vnc LibVNCServer'
+)
+
