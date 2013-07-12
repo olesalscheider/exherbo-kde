@@ -1,0 +1,9 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 6d8b1f22cb1e5788058fe1a772b2aa68559c19c8
+
+require kdenetwork-filesharing
+
+PLATFORMS="~amd64"
+

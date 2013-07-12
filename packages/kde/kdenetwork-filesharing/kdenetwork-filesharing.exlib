@@ -1,0 +1,25 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdenetwork.exlib', which is:
+#     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KControl filesharing module for samba"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+    suggestion:
+        net-fs/samba [[ description = [ Network file sharing ] ]]
+"
+
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-exclude-installSamba-from-the-build-if-SAMBA_INSTALL.patch )
+
+# avoid installing samba with PackageKit
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DSAMBA_INSTALL=OFF )
+

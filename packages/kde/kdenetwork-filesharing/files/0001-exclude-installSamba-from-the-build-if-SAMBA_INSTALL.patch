@@ -1,0 +1,49 @@
+Upstream: no
+
+From cfbb10c539fa8033d35df1d4208d07fe89c5c4ef Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Fri, 12 Jul 2013 10:57:30 +0200
+Subject: [PATCH] exclude installSamba() from the build if SAMBA_INSTALL=OFF
+
+---
+ samba/filepropertiesplugin/sambausershareplugin.cpp | 2 ++
+ samba/filepropertiesplugin/sambausershareplugin.h   | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/samba/filepropertiesplugin/sambausershareplugin.cpp b/samba/filepropertiesplugin/sambausershareplugin.cpp
+index 7bcddd9..058f6e0 100644
+--- a/samba/filepropertiesplugin/sambausershareplugin.cpp
++++ b/samba/filepropertiesplugin/sambausershareplugin.cpp
+@@ -115,6 +115,7 @@ SambaUserSharePlugin::~SambaUserSharePlugin()
+ {
+ }
+ 
++#ifdef SAMBA_INSTALL
+ void SambaUserSharePlugin::installSamba()
+ {
+     unsigned int xid = 0;
+@@ -131,6 +132,7 @@ void SambaUserSharePlugin::installSamba()
+     }
+     QDBusReply<int> reply = device.call("InstallPackageNames", xid, packages, interaction);
+ }
++#endif
+ 
+ void SambaUserSharePlugin::setupModel()
+ {
+diff --git a/samba/filepropertiesplugin/sambausershareplugin.h b/samba/filepropertiesplugin/sambausershareplugin.h
+index 7c0c260..f5ae65f 100644
+--- a/samba/filepropertiesplugin/sambausershareplugin.h
++++ b/samba/filepropertiesplugin/sambausershareplugin.h
+@@ -42,7 +42,9 @@ public:
+ private Q_SLOTS:
+     void load();
+     void toggleShareStatus(bool checked);
++#ifdef SAMBA_INSTALL
+     void installSamba();
++#endif
+     void checkShareName(const QString &name);
+ 
+ private:
+-- 
+1.8.3.2
+
