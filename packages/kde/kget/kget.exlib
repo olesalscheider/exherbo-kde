@@ -1,0 +1,46 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdenetwork.exlib', which is:
+#     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="A versatile and user-friendly download manager."
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+
+MYOPTIONS="
+    bittorrent [[ description = [ Support for downloading torrents via libktorrent ] ]]
+    sqlite     [[ description = [ SQLite Backend for the KGet History Plugin ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        app-crypt/gpgme
+        app-crypt/qca:2[>=2.0.0]
+        app-text/shared-desktop-ontologies[>=0.4]
+        dev-libs/boost
+        dev-libs/soprano
+        kde/kde-baseapps:${SLOT}    [[ note = [ libkonq ] ]]
+        kde/kde-workspace:${SLOT}   [[ note = [ allow shutdown after download ] ]]
+        kde/kdelibs:${SLOT}
+        kde/nepomuk-core:${SLOT}
+        kde/nepomuk-widgets:${SLOT}
+        media-libs/libmms           [[ description = [ Mms streams in KGet ] ]]
+        bittorrent? ( net-p2p/libktorrent )
+        sqlite? (
+            dev-db/sqlite:3
+            x11-libs/qt:4[sql]
+        )
+"
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_LibMms:BOOL=TRUE
+    -DWITH_NepomukCore:BOOL=TRUE
+    -DWITH_NepomukWidgets:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    'bittorrent KTorrent'
+    Sqlite
+)
+
