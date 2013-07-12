@@ -228,7 +228,8 @@ KDE_BLOCKERS="
         kde/libkcompactdisc
         kde/mplayerthumbs
     kde/kdenetwork:
-        kde/filesharing
+        kde/kdenetwork-filesharing
+        kde/kdenetwork-strigi-analyzers
         kde/kdnssd
         kde/kget
         kde/kopete
