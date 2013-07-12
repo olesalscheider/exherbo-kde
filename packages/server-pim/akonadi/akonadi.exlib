@@ -25,23 +25,18 @@ ever at_least 1.9.80 && MYOPTIONS+="qt5 [[ description = [ Build against Qt5 ins
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.87]
+        sys-devel/cmake[>=2.8.8]
     build+run:
         dev-db/mysql
         dev-libs/boost      [[ note = [ Akonadi uses the program_options library ] ]]
         dev-libs/libxslt
         dev-libs/soprano[>=2.7.56]
-        x11-libs/qt:4[>=4.6.0][dbus][mysql][sql]
         x11-misc/shared-mime-info[>=0.23]
     test:
         dev-libs/libxml2:2.0 [[ note = [ xmllint is needed to run two tests ] ]]
 "
 
-if ever at_least 1.9.0; then
-    DEPENDENCIES+="
-        build:
-            sys-devel/cmake[>=2.8.8]
-    "
-elif ever at_least 1.9.80; then
+if ever at_least 1.9.80; then
     DEPENDENCIES+="
         build:
             qt5? ( sys-devel/cmake[>=2.8.9] )
