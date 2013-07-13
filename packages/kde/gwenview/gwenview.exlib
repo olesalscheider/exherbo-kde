@@ -25,5 +25,13 @@ DEPENDENCIES="
         kipi? ( graphics/digikam )
 "
 
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/soprano
+            kde/nepomuk-core
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 
