@@ -1,0 +1,19 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDE SDK plugins for the thumbnailing system"
+
+LICENCES="GPL-2
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        sys-devel/gettext
+"
+
