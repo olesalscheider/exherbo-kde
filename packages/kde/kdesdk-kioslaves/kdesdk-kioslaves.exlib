@@ -1,0 +1,26 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDE SDK kioslaves"
+
+LICENCES="GPL-2 LGPL-2.1
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+MYOPTIONS="subversion"
+
+DEPENDENCIES="
+    build+run:
+        dev-lang/perl:*[>=5.10] [[ description = [ For kio_perldoc ] ]]
+        kde/kdelibs:${SLOT}
+        subversion? ( dev-scm/subversion )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DBUILD_perldoc:BOOL=TRUE
+    -DWITH_Perl:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'subversion SVN' )
+

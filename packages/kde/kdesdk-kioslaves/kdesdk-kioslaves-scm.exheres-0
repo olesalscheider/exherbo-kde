@@ -1,0 +1,9 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 06ed2ca72ffc82a924b27cfe84fa25b2d15fb745
+
+require kdesdk-kioslaves
+
+PLATFORMS="~amd64"
+
