@@ -1,0 +1,18 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="KDE SDK related analyzer plugins for strigi"
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-pim/strigi
+        kde/kdelibs:${SLOT}
+"
+
