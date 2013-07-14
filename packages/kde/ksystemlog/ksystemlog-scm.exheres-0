@@ -1,0 +1,9 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 1826c1694ec13f0333730cc596fc0ffc96ee8382
+
+require ksystemlog
+
+PLATFORMS="~amd64"
+
