@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Small utilities for developers using KDE/Qt libs/frameworks"
+DESCRIPTION="
+kmtrace: converts glibc's mtrace log into a full backtrace
+kpartloader: Test application for KParts
+kprofilemethod: Macros help profiling using QTime
+kstartperf: measures startup time for KDE applications
+kuiviewer: A KPart that lets you view .ui files"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+"
+
