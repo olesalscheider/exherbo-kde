@@ -1,0 +1,22 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Diff/Patch Frontend"
+DESCRIPTION="Kompare is a GUI front-end program that enables differences between source
+files to be viewed and merged. It can be used to compare differences on files or the
+contents of folders, and it supports a variety of diff formats and provide many options
+to customize the information level displayed."
+HOMEPAGE+=" http://www.kde.org/applications/development/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+    "
+
