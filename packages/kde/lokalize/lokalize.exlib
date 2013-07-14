@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="A computer-aided translation system"
+DESCRIPTION="It focuses on productivity and quality assurance. It is targeted for
+software translation and also integrates external conversion tools for freelance
+office document translation."
+HOMEPAGE+=" http://www.kde.org/applications/development/${PN}/"
+
+LICENCES="GPL-2 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-spell/hunspell
+        kde/kdelibs:${SLOT}
+        x11-libs/qt:4[sql]
+"
+
