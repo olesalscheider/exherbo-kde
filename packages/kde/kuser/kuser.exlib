@@ -1,0 +1,18 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A tool for managing users and groups on your system"
+
+HOMEPAGE+=" http://www.kde.org/applications/system/${PN}/"
+
+LICENCES="GPL-2 GPL-3 FDL-1.2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}
+"
+

@@ -1,0 +1,9 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 0f28867d1cf62f300a4aeb2d23e00745464fe23f
+
+require kuser
+
+PLATFORMS="~amd64"
+
