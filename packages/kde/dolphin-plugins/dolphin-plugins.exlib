@@ -1,0 +1,27 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="SCM plugins for Dolphin for git, svn, mercurial and bazaar"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kde-baseapps:${SLOT} [[ note = libkonq ]]
+        kde/kdelibs:${SLOT}[>=4.7.0]
+    run:
+        kde/kompare:${SLOT}
+    suggestion:
+        dev-scm/bzr
+        dev-scm/git
+        dev-scm/mercurial
+        dev-scm/subversion
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_LibKonq:BOOL=TRUE )
+
