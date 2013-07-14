@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdesdk.exlib', which is:
+#     Copyright 2008-2011 Bo Ørsted Andresen
+
+require kde.org
+
+SUMMARY="Translates DocBook XML files using gettext po files"
+
+LICENCES="GPL-2 FDL-1.2
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+
+MYOPTIONS="tools [[ description = [ Build the po2xml and swappo tools ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        sys-devel/gettext
+        tools? ( dev-java/antlr[=2*] )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tools Antlr2' )
+
