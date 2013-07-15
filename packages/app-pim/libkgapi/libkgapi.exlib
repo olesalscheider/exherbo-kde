@@ -16,11 +16,13 @@ HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="doc examples"
 
 DEPENDENCIES="
     build:
+        dev-libs/boost
         dev-libs/libxslt
+        doc? ( app-doc/doxygen )
     build+run:
         dev-libs/qjson
         kde/kdelibs:4[>=4.6.0]
@@ -29,4 +31,31 @@ DEPENDENCIES="
 "
 
 BUGS_TO="kde@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples KGAPI_BUILD_EXAMPLES' )
+# needed to build kdepim-runtime[=4.10.x][google]
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DKGAPI_DISABLE_DEPRECATED:BOOL=FALSE )
+
+src_compile() {
+    default
+
+    if option doc ; then
+        edo doxygen "${CMAKE_SOURCE}"/doc/api/Doxyfile.local
+    fi
+}
+
+src_install() {
+    default
+
+    if option examples ; then
+        edo pushd "${CMAKE_SOURCE}"
+        dodoc -r examples
+        edo popd
+    fi
+
+    if option doc ; then
+        docinto html
+        dodoc -r html/*
+    fi
+}
 
