@@ -20,3 +20,10 @@ DEPENDENCIES="
         kde/kate:${SLOT}
 "
 
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        dev-libs/grantlee
+        kde/kdelibs:${SLOT}[>=4.8.0]
+    "
+fi
+
