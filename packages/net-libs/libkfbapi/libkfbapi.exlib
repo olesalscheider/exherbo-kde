@@ -1,0 +1,23 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ]
+
+SUMMARY="A library for accessing Facebook services"
+
+HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt
+    build+run:
+        dev-libs/qjson[>=0.7]
+        kde/kdelibs:4
+        kde/kdepimlibs:4[>=4.5.63]
+"
+
