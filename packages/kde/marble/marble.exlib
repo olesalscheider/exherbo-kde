@@ -33,6 +33,15 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.10.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[sql][webkit]
+    "
+    # quazip, unwritten, reading and displaying .kmz files, http://quazip.sourceforge.net/
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_quazip:BOOL=FALSE )
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
     -DWITH_libgps=OFF
