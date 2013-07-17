@@ -1,0 +1,9 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: c30f3c14eb006337e29ef67a7920ff036c6c3fa8
+
+require kdenetwork-strigi-analyzers
+
+PLATFORMS="~amd64"
+
