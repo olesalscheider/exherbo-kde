@@ -5,3 +5,7 @@ require akonadi
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-1.9.2-boost-1.53-workaround.patch
+)
+

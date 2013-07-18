@@ -1,0 +1,17 @@
+Source: http://trac.macports.org/browser/trunk/dports/devel/akonadi/files/patch-akapplication.diff?rev=103809
+Upstream: https://bugreports.qt-project.org/browse/QTBUG-22829
+Reason: Workaround Qt bug resulting in compile failure with boost 1.53
+
+--- a/shared/akapplication.h.orig	2013-03-02 20:51:18.000000000 +0900
++++ b/shared/akapplication.h	2013-03-07 11:46:06.000000000 +0900
+@@ -23,8 +23,10 @@
+ #include <QtCore/QObject>
+ 
+ #ifndef _WIN32_WCE
++#ifndef Q_MOC_RUN
+ #include <boost/program_options.hpp>
+ #endif
++#endif
+ 
+ class QCoreApplication;
+ class QApplication;
