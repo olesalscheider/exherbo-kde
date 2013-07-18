@@ -1,7 +1,6 @@
 # Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# print-manager will be a part of KDE 4.10
 require kde.org
 
 SUMMARY="Printing Management for KDE"
@@ -14,4 +13,10 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         net-print/cups[>=1.4]
 "
+
+if ever at_least 4.10.95 ; then
+    DEPENDENCIES+="
+        net-print/cups[>=1.5]
+    "
+fi
 
