@@ -238,13 +238,14 @@ KDE_BLOCKERS="
         kde/krfb
     kde/kdesdk:
         kde/cervisia
+        kde/dolphin-plugins
         kde/kapptemplate
         kde/kcachegrind
-        kde/kdeaccounts-plugin
-        kde/kmtrace
+        kde/kde-dev-utils
+        kde/kdesdk-kioslaves
+        kde/kdesdk-strigi-analyzers
+        kde/kdesdk-thumbnailers
         kde/kompare
-        kde/kstartperf
-        kde/kuiviewer
         kde/lokalize
         kde/okteta
         kde/poxml
