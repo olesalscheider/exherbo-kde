@@ -11,7 +11,7 @@ for bookkeeping. Or you can use Kajongg to play against any combination of other
 computer players."
 HOMEPAGE+=" http://kde.org/applications/games/${PN}/"
 
-LICENCES="GPL-2 FDL-1.2"
+LICENCES="GPL-2 FDL-1.2 BSD-3"
 MYOPTIONS=""
 
 DEPENDENCIES="
