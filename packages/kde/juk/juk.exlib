@@ -16,7 +16,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
-        media-libs/taglib[>=1.6]
+        media-libs/taglib[>=1.6] [[ note = [ unreleased 1.9 is needed for Opus support ] ]]
         x11-libs/qt:4[phonon]
         tunepimp? ( media-libs/tunepimp )
 "
