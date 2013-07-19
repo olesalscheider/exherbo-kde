@@ -66,6 +66,7 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
+        kde/kactivities:${SLOT}
         kde/kdelibs:${SLOT}[>=4.9.95]
         kde/kdepimlibs:${SLOT}
         kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
