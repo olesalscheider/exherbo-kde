@@ -1,7 +1,0 @@
-# Copyright 2010 Timo Gurr <tgurr@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-require polkit-kde-kcmodules
-
-PLATFORMS="~amd64 ~x86"
-
