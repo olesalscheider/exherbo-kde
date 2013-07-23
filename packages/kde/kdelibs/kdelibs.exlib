@@ -153,7 +153,6 @@ if ever is_scm ; then
         recommendation:
             policykit? (
                 sys-auth/polkit-kde-agent[~scm]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-                sys-auth/polkit-kde-kcmodules[~scm] [[ description = [ KDE settings GUI for PolicyKit ] ]]
             )
     "
 fi
