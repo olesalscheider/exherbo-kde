@@ -88,7 +88,6 @@ DEPENDENCIES="
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
         policykit? (
             sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-            sys-auth/polkit-kde-kcmodules[>=0.98.1_p20110126] [[ description = [ KDE settings GUI for PolicyKit ] ]]
         )
 "
 

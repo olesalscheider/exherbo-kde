@@ -32,7 +32,6 @@ DEPENDENCIES="
         x11-libs/qt:4[>=4.4.0]
     suggestion:
         sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-        sys-auth/polkit-kde-kcmodules[>=0.98.1] [[ description = [ KDE settings GUI for PolicyKit ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
