@@ -29,7 +29,7 @@ DEPENDENCIES="
         kde/kde-workspace:4
         kde/kdelibs:4
         kde/kwallet:4[>=4.8.2]
-        net-apps/NetworkManager[>=0.9]
+        net-apps/NetworkManager[>=0.9.8]
         net-misc/mobile-broadband-provider-info
         x11-libs/qt:4[>=4.6.0-rc1]
         openconnect? (
