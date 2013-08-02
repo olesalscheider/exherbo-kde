@@ -20,7 +20,7 @@ HOMEPAGE="http://www.akonadi-project.org"
 LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS=""
-ever at_least 1.9.80 && MYOPTIONS+="qt5 [[ description = [ Build against Qt5 instead of Qt4. ] ]]"
+ever at_least 1.10.1 && MYOPTIONS+="qt5 [[ description = [ Build against Qt5 instead of Qt4. ] ]]"
 
 DEPENDENCIES="
     build:
@@ -36,13 +36,13 @@ DEPENDENCIES="
         dev-libs/libxml2:2.0 [[ note = [ xmllint is needed to run two tests ] ]]
 "
 
-if ever at_least 1.9.80; then
+if ever at_least 1.10.1; then
     DEPENDENCIES+="
         build:
             qt5? ( sys-devel/cmake[>=2.8.9] )
         build+run:
             qt5? ( x11-libs/qtbase:5[mysql][sql] )
-           !qt5? ( x11-libs/qt:4[>=4.6.0][dbus][mysql][sql] )
+           !qt5? ( x11-libs/qt:4[>=4.8.0][dbus][mysql][sql] )
     "
 else
     DEPENDENCIES+="
@@ -57,7 +57,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE
     -DDATABASE_BACKEND:STRING=MYSQL
 )
-if ever at_least 1.9.80; then
+if ever at_least 1.10.1; then
     CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
 else
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT5_BUILD:BOOL=FALSE )
