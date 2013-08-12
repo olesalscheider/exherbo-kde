@@ -1,0 +1,22 @@
+# Copyright 2013 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+MYPNV="${PN}-gpl-${PV}"
+require sourceforge [ project="pyqt/${PN}2/${PNV}" pnv=${MYPNV} suffix=tar.gz ] qmake4
+
+SUMMARY="QScintilla is a port to Qt of the Scintilla editing component."
+HOMEPAGE="http://www.riverbankcomputing.com/software/qscintilla/"
+
+LICENCES="GPL-2 GPL-3"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4
+"
+WORK="${WORKBASE}/${MY_PNV}"
+EQMAKE4_SOURCES="${WORK}/${PN}-gpl-${PV}/Qt4Qt5/qscintilla.pro"
+BUGS_TO="kimrhh@exherbo.org"
+
