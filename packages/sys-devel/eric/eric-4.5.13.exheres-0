@@ -1,0 +1,42 @@
+# Copyright 2013 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project="eric-ide" pn=eric4 suffix="tar.gz" ] python [ python_dep=2.6 ]
+
+SUMMARY="Eric is a Python IDE written using PyQt and QScintilla."
+DESCRIPTION="
+Eric is a Python IDE written using PyQt and QScintilla. It provides
+various features such as any number of open editors, an integrated
+(remote) debugger, project management facilities, unit test,
+refactoring and much more.
+"
+HOMEPAGE="http://eric-ide.python-projects.org/"
+
+LICENCES="GPL-2 GPL-3"
+SLOT="4"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-editors/QScintilla[python][>=2.3.0]
+        dev-python/PyQt4[>=4.6.0]
+        dev-python/sip
+        x11-libs/qt:4[>=4.6.0]
+"
+
+BUGS_TO="kimrhh@exherbo.org"
+
+MYPNV="${PN}4-${PV}"
+WORK="${WORKBASE}"/${MYPNV}
+
+src_compile() {
+    edo python install.py -c -i "${IMAGE}" -d "$(python_get_sitedir)" -b /usr/bin
+}
+
+src_install() {
+    default
+    #FIXME: add i18n support
+    edo rmdir "${IMAGE}/$(python_get_sitedir)"/eric4/i18n
+}
+
