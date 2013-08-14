@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 MYPNV="${PN}-gpl-${PV}"
-require sourceforge [ project="pyqt/${PN}2/${PNV}" pnv=${MYPNV} suffix=tar.gz ] qmake4
+require sourceforge [ project="pyqt/${PN}2/${PNV}" pnv=${MYPNV} suffix=tar.gz ] qmake4 python
 
 SUMMARY="QScintilla is a port to Qt of the Scintilla editing component."
 HOMEPAGE="http://www.riverbankcomputing.com/software/qscintilla/"
@@ -10,13 +10,40 @@ HOMEPAGE="http://www.riverbankcomputing.com/software/qscintilla/"
 LICENCES="GPL-2 GPL-3"
 SLOT="0"
 PLATFORMS="~x86"
-MYOPTIONS=""
+MYOPTIONS="python [[ description = [ Build the Python bindings for QScintilla ] ]]"
 
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4
+        python? ( dev-python/PyQt4 )
 "
-WORK="${WORKBASE}/${MY_PNV}"
-EQMAKE4_SOURCES="${WORK}/${PN}-gpl-${PV}/Qt4Qt5/qscintilla.pro"
+WORK="${WORKBASE}/${MYPNV}"
+EQMAKE4_SOURCES="${WORK}"/Qt4Qt5/qscintilla.pro
 BUGS_TO="kimrhh@exherbo.org"
+
+src_compile() {
+    default
+    if option python; then
+        edo cd "${WORK}"/Python
+        edo mkdir -p "${IMAGE}"/usr/share/sip/PyQt4 "${IMAGE}"/usr/share/qt4/api
+
+        edo python configure.py \
+            -d "${IMAGE}"/$(python_get_sitedir)/PyQt4 \
+            --pyqt-sipdir=/usr/share/sip \
+            --qsci-incdir="${WORK}"/Qt4Qt5 \
+            --qsci-libdir="${WORK}" \
+            --qsci-sipdir="${IMAGE}"/usr/share/sip/PyQt4 \
+            --apidir="${IMAGE}"/usr/share/qt4/api
+
+        emake
+    fi
+}
+
+src_install() {
+    default
+    if option python; then
+        edo cd "${WORK}"/Python
+        emake install
+    fi
+}
 
