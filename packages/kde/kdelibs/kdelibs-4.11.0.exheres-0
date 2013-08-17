@@ -1,0 +1,19 @@
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdelibs
+
+PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PN}-4.6.0-CMake-strict-dependencies.patch"
+    -p0 "${FILES}/${PN}-kstandarddirs.patch"
+    -p1 "${FILES}"/0001-FindSamba.cmake-help-find-samba4-more-reliably.patch
+)
+
+src_install() {
+    default
+    dodir /etc/kde
+    keepdir /etc/kde
+}
+
