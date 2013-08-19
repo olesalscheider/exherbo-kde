@@ -59,6 +59,10 @@ DEPENDENCIES="
         media-libs/taglib[>=1.8]      [[ description = [ Read and write tags in audio files ]
                                          note = [ unreleased 1.9 is required for support of opus files metadata ] ]]
         media-plugins/taglib-extras[>=1.0.1]
+        x11-dri/mesa                  [[ description = [  Audio analyzer visualisation ] ]]
+        x11-libs/qt:4[>=4.8.3][X(+)][dbus][qt3support][svg(+)][webkit]
+        x11-misc/shared-mime-info     [[ note = [ Amazon downloader ] ]]
+        gpodder? ( media-libs/libmygpo-qt[>=1.0.7] )
         ipod? (
             dev-libs/glib:2
             media-libs/libgpod[>=0.8.2]
@@ -90,22 +94,6 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
         net-downloader/clamz [[ description = [ Download songs from the integrated Amazon MP3 store ] ]]
 "
-
-if ever at_least 2.7.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-dri/mesa     [[ description = [  Audio analyzer visualisation ] ]]
-            x11-libs/qt:4[>=4.8.2][X(+)][dbus][qt3support][svg(+)][webkit]
-            x11-misc/shared-mime-info     [[ note = [ Amazon downloader ] ]]
-            gpodder? ( media-libs/libmygpo-qt[>=1.0.7] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4[>=4.8.0][X(+)][dbus][qt3support][svg(+)][webkit]
-            gpodder? ( media-libs/libmygpo-qt[>=1.0.6] )
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
