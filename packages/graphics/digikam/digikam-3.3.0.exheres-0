@@ -14,7 +14,7 @@ BUGS_TO="kde@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="doc gphoto2 nepomuk
+MYOPTIONS="doc gphoto2
 kipi_plugins:
     acquireimages      [[ description = [ A tool to acquire images using flat scanner. ] ]]
     expoblending       [[ description = [ A tool to create pseudo HDR image with a stack of bracketed images. ] ]]
@@ -22,10 +22,10 @@ kipi_plugins:
     ipodexport         [[ description = [ A tool to export pictures to an Ipod device. ] ]]
     videoslideshow     [[ description = [ A tool to export slideshows to video. ] ]]
 "
+# Disabled by upstream for the time being
+# nepomuk
 
 RESTRICT="test"
-
-# TODO: create a clapack exheres in order to build without the internal copy.
 
 DEPENDENCIES="
     build:
@@ -35,7 +35,6 @@ DEPENDENCIES="
         dev-db/mysql
         dev-libs/boost
         dev-libs/expat[>=2.0.1]   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
-        dev-libs/glib:2
         dev-libs/libxml2[>=2.7] [[ description = [ Htmlexport ] ]]
         dev-libs/libxslt[>=1.1] [[ description = [ Htmlexport ] ]]
         dev-libs/qjson[>=0.7] [[ note = [ For libmediawiki ] ]]
@@ -52,8 +51,9 @@ DEPENDENCIES="
         media-libs/liblqr:1[>=0.4.1] [[ description = [ For Liquid Rescale tool ] ]]
         media-libs/libpgf[>=6.11.24]
         media-libs/libpng[>=1.2.7]
-        media-libs/opencv[>=2.0.0] [[ note = [ For Libkface ] ]]
+        media-libs/opencv[>=2.4.4] [[ note = [ For Libkface ] ]]
         media-libs/tiff[>=3.8.2] [[ note = [ Can work with >=3.6.x but >=3.8.2 recommended ] ]]
+        sci-libs/eigen:3
         x11-dri/mesa[>=7.0.4]       [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libX11[>=1.1.5]    [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libXrandr [[ description = [ For Slideshow and ImageViewer ] ]]
@@ -78,10 +78,6 @@ DEPENDENCIES="
             media-gfx/ImageMagick[>=5.5.4]
             media-libs/qt-gstreamer
         )
-        nepomuk? (
-            app-text/shared-desktop-ontologies[>=0.6.50]
-            kde/kde-runtime[>=4.7]
-        )
     run:
         media-gfx/enblend-enfuse[>=3.0]
         media-gfx/hugin[>=0.8]
@@ -90,15 +86,21 @@ DEPENDENCIES="
         kde/ffmpegthumbs [[ description = [ For thumbnails of videos. ] ]]
 "
 
+# Disabled by upstream for the time being
+#        nepomuk? (
+#            app-text/shared-desktop-ontologies[>=0.6.50]
+#            kde/kde-runtime[>=4.7]
+#        )
+
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_INTERNALMYSQL=no
     -DWITH_KdepimLibs:BOOL=TRUE
     -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS:BOOL=FALSE
 
     # Liquid rescale image editor tool and lens correction tool, they're either on, or uses internal copies
-    -DWITH_GLIB2:BOOL=TRUE
     -DWITH_LensFun:BOOL=TRUE
     -DWITH_Lqr-1:BOOL=TRUE
+    -DWITH_Sqlite2:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'doc Doxygen'
@@ -110,8 +112,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'kipi_plugins:ipodexport Ipod'
     'kipi_plugins:videoslideshow QtGStreamer'
     'kipi_plugins:videoslideshow ImageMagick'
-    'nepomuk Nepomuk'
 )
+
+# Disabled by upstream for the time being
+#    'nepomuk Nepomuk'
 
 src_compile() {
     default
