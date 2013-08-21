@@ -142,9 +142,6 @@ src_configure() {
         $(cmake_with im_protocols:googletalk Expat) \
         $(cmake_with im_protocols:googletalk SSL) \
         $(cmake_with im_protocols:groupwise) \
-        #$(cmake_with im_protocols:JINGLE) \
-        #$(cmake_with im_protocols:jingle Alsa) \
-        #$(cmake_with im_protocols:jingle Speex) \
         $(cmake_with im_protocols:meanwhile) \
         $(cmake_with im_protocols:meanwhile GLIB2) \
         $(cmake_with im_protocols:meanwhile LibMeanwhile) \
@@ -159,6 +156,8 @@ src_configure() {
         $(cmake_with kopete_plugins:webpresence LibXml2) \
         $(cmake_with kopete_plugins:webpresence LibXslt) \
         $(cmake_with kopete_plugins:wlm_voice WLM_MEDIASTREAMER)
-
+        #$(cmake_with im_protocols:JINGLE) \
+        #$(cmake_with im_protocols:jingle Alsa) \
+        #$(cmake_with im_protocols:jingle Speex) \
 }
 
