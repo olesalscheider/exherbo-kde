@@ -5,7 +5,7 @@ require kde [ api=2 ]
 
 SUMMARY="KDE's screen management software"
 HOMEPAGE="https://projects.kde.org/projects/kdereview/${PN}"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2 LGPL-2.1"
 SLOT="0"
@@ -25,7 +25,7 @@ DEPENDENCIES="
         ]]
 "
 
-# Tests need a running X server (1.0)
+# Tests need a running X server (1.0.1)
 RESTRICT=test
 
 BUGS_TO="heirecka@exherbo.org"
