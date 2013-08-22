@@ -7,5 +7,5 @@ PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
-UPSTREAM_RELEASE_NOTES="http://milianw.de/blog/kdevelop-42-available/"
+UPSTREAM_RELEASE_NOTES="http://www.kdevelop.org/45/kdevelop-451-released"
 

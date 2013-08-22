@@ -25,12 +25,15 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kde-workspace:${SLOT}
-        kde/kdelibs:${SLOT}[>=4.5.0]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdevplatform:${SLOT}[>=${PLATFORM_PV}]
         x11-libs/qt:4[>=4.5.2][webkit]
         x11-misc/shared-mime-info
         okteta? (
-            kde/kdesdk:${SLOT}[>=4.6.0][kde_parts:okteta]
+            || (
+                kde/okteta:${SLOT}
+                kde/kdesdk:${SLOT}[>=4.6.0][kde_parts:okteta]
+            )
         )
     run:
         kde/kate:${SLOT}
