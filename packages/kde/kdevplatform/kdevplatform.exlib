@@ -21,7 +21,8 @@ DEPENDENCIES="
         dev-libs/boost[>=1.35.0] [[ note = [ Needs multiindex ] ]]
         sys-devel/gettext
     build+run:
-        kde/kdelibs:${SLOT}[>=4.5.0]
+        dev-libs/grantlee[>=0.1.7]
+        kde/kdelibs:${SLOT}[>=4.7.0]
         sys-libs/zlib
         x11-libs/qt:4[webkit]
         reviewboard? ( dev-libs/qjson[>=0.7.0] )
