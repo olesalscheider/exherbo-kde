@@ -1,7 +1,7 @@
 # Copyright 2012 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require calligra-l10n [ langs="bs ca cs da de el en_GB es et fi fr gl hu it kk nb nds nl
+require calligra-l10n [ langs="bs ca cs da de el es et fi fr gl hu it kk nb nds nl
     pl pt pt_BR ru sk sl sv tr uk zh_CN zh_TW" ]
 
 PLATFORMS="~amd64"

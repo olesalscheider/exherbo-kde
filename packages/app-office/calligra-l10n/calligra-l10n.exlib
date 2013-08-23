@@ -7,7 +7,7 @@ myexparam langs
 myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}"
 
 require kde [ api=2 ] \
-        l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.bz2 ]
+        l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.xz ]
 
 SUMMARY="Calligra localisation package"
 HOMEPAGE="http://www.calligra.org/"
