@@ -106,6 +106,7 @@ DEPENDENCIES="
         x11-libs/libxkbfile
         x11-libs/qt:4[>=4.8.0][opengl][webkit]
         x11-utils/xcb-util-image [[ note = kwin ]]
+        x11-utils/xcb-util-keysyms [[ note = kwin ]]
         x11-utils/xcb-util-renderutil [[ note = kwin ]]
         barcodes? ( kde/prison ) [[ note = klipper ]]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
