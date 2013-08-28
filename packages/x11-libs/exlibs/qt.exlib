@@ -13,8 +13,6 @@ BASE_URI="http://download.qt-project.org/official_releases/qt/$(ever range 1-2)/
 
 if ever at_least 5.1.0 ; then
     DOWNLOADS="${BASE_URI}submodules/${MY_PNV}.tar.gz"
-elif ever at_least 5.0.1 ; then
-    DOWNLOADS="${BASE_URI}submodules_tar/${MY_PNV}.tar.gz"
 else
     DOWNLOADS="${BASE_URI}${MY_PNV}.tar.gz"
     UPSTREAM_CHANGELOG="${BASE_URI}changes-${PV}"

@@ -63,13 +63,14 @@ DEPENDENCIES="
         media-libs/freetype:2[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
         media-libs/libpng[multibuild_c:*(-)?]
-        sys-apps/dbus[>=1.0.2][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
+        sys-apps/dbus[>=1.2.0][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
         x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
         x11-libs/libXext[multibuild_c:*(-)?]
         x11-libs/libXi[multibuild_c:*(-)?]
+        x11-libs/libxkbcommon[multibuild_c:*(-)?]
         x11-libs/libXrender[multibuild_c:*(-)?]
         x11-utils/xcb-util-image[multibuild_c:*(-)?]
         x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
@@ -92,6 +93,9 @@ DEPENDENCIES="
 
 # Packages that need QtSQL should depend on x11-libs/qtbase:5[sql]
 # option='sql' needs at least one SQL plugin, any-of mysql, postgresql, sqlite, (firebird, odbc)
+
+# Tests need a running X server and network access (last checked: 5.1.1)
+RESTRICT="test"
 
 qconf5() {
     local x myarch myconf=() option_to_arch_map=(
@@ -183,7 +187,6 @@ configure_one_multibuild() {
         -audio-backend
         -c++11
         -dbus-linked
-        -egl
         -iconv
         -icu
         -largefile
@@ -201,6 +204,7 @@ configure_one_multibuild() {
         -system-libpng
         -system-pcre
         -system-proxies
+        -system-xkbcommon
         -system-zlib
         -widgets
         -xcb
@@ -209,6 +213,7 @@ configure_one_multibuild() {
         $(qt_enable glib)
         $(qt_enable gtk gtkstyle)
         $(qt_enable kms)
+        $(qt_enable opengles egl)
         $(option opengles && echo -opengl es2 || echo -opengl desktop)
     )
 
@@ -261,6 +266,7 @@ configure_one_multibuild() {
         -make libs
         -make tools
         $(qt_build examples)
+        $(expecting_tests && echo "-make tests" || echo "-nomake tests")
     )
 
     # Set {C,CXX,LD}FLAGS.
@@ -343,5 +349,8 @@ EOF
             dodoc -r "${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}"/doc/${i}
         done
     fi
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
 }
 
