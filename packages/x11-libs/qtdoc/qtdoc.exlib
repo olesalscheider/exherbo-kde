@@ -9,7 +9,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qttools[>=${PV}]
+        x11-libs/qttools:${SLOT}[>=${PV}]
 "
 
 src_compile() {
