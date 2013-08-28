@@ -29,5 +29,8 @@ src_install() {
         docinto html
         dodoc -r doc/${PN}
     fi
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
 }
 
