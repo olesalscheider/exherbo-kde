@@ -10,3 +10,10 @@ MYOPTIONS=""
 # TODO: bundles v8, check if a external version could be used
 DEPENDENCIES=""
 
+src_install() {
+    default
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
+}
+
