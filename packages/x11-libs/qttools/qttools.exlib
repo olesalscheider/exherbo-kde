@@ -15,9 +15,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qtbase[>=${PV}][sql][sqlite] [[ note = [ assistant ] ]]
-        x11-libs/qtdeclarative[>=${PV}]       [[ note = [ linguist ] ]]
-        x11-libs/qtwebkit[>=${PV}]            [[ note = [ assistant, designer ] ]]
+        x11-libs/qtbase:${SLOT}[>=${PV}][sql][sqlite] [[ note = [ assistant ] ]]
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}]       [[ note = [ linguist ] ]]
+        x11-libs/qtwebkit:${SLOT}[>=${PV}]            [[ note = [ assistant, designer ] ]]
 "
 # TODO: check if it can be built with external clucene instead of the bundled one
 
@@ -33,5 +33,8 @@ src_install() {
         [[ -e "${IMAGE}"/usr/${LIBDIR}/qt5/bin/${i} ]] || die "/usr/${LIBDIR}/qt5/bin/${i} does not exist in ${IMAGE}"
         dosym /usr/${LIBDIR}/qt5/bin/${i} /usr/bin/${i}5
     done
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
 }
 
