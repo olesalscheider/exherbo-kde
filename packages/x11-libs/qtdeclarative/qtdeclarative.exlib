@@ -17,8 +17,8 @@ DEPENDENCIES="
         doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
     build+run:
         x11-libs/qtbase:${SLOT}[>=${PV}][sql]  [[ note = [ QML and user-specific local storage via
-                                                          SQLite. potentially optional -> remove from
-                                                          imports/imports.pro ] ]]
+                                                           SQLite. potentially optional -> remove from
+                                                           imports/imports.pro ] ]]
         x11-libs/qtjsbackend:${SLOT}[>=${PV}]
         x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
 "
@@ -37,5 +37,8 @@ src_install() {
         docinto html
         dodoc -r doc/{qtqml,qtquick}
     fi
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
 }
 
