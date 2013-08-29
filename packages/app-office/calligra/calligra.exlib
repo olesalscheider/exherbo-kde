@@ -100,7 +100,7 @@ DEPENDENCIES+="
         )
         kde_parts:flow? (
             visio? (
-                office-libs/libvisio [[ note = [ unwritten, http://www.freedesktop.org/wiki/Software/libvisio ] ]]
+                media-libs/libvisio
                 office-libs/libwpd[>=0.9]
                 office-libs/libwpg[>=0.2]
             )
