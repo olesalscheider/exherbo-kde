@@ -1,0 +1,71 @@
+# Copyright 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=virtuoso suffix=tar.gz ]
+
+SUMMARY="A high-performance object-relational SQL database"
+DESCRIPTION="
+Virtuoso is a scalable cross-platform server that combines SQL/RDF/XML
+Data Management with Web Application Server and Web Services Platform
+functionality.
+"
+HOMEPAGE="http://virtuoso.openlinksw.com/wiki/main/ ${HOMEPAGE}"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+RESTRICT="test"
+
+# build: htmldoc for pdf docs
+DEPENDENCIES="
+    build+run:
+        dev-libs/libxml2:2.0[>=2.4.0]
+        dev-libs/openssl[>=0.9.7i]
+"
+
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --with-layout=Gentoo
+    --localstatedir=/var
+
+    --enable-shared
+    # There're more internel copies (libpcre), not all of those have ./configure options.
+    # See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508048#44
+    --without-internal-zlib
+
+    --program-transform-name='s/isql[-]*\(w\)*/isql\1-vt/'
+
+    --disable-imagemagick
+    --enable-openssl
+    --with-readline
+
+    # installed by default but they're huge (an extra 110MB), unnecessary for soprano, they break parallel make
+    --disable-all-vads
+    # upstream enables these by default
+    --disable-hslookup
+    --disable-wbxml2
+
+    # Don't build virtuoso-iodbc-t because soprano/nepomuk doesn't need it
+    # Currently virtuoso fails to find system libiodbc correctly
+    --without-iodbc
+
+    # we don't immediately need these
+    --disable-krb
+    --disable-openldap
+    --disable-rendezvous
+    # hosting
+    --disable-{mono,php5,perl,python,ruby}
+    --without-jdk{2,3,4}
+)
+
+src_install() {
+    default
+
+    edo rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,}
+    edo rmdir "${IMAGE}"/usr/${LIBDIR}/virtuoso/{hosting/,}
+    edo rm -r "${IMAGE}"/usr/${LIBDIR}/{jdbc-*,jena,sesame}/{*.jar,}
+    edo mv -u "${IMAGE}"/usr/share/doc/virtuoso/* "${IMAGE}"/usr/share/doc/${PNVR}
+    edo rm -r "${IMAGE}"/usr/share/doc/virtuoso
+}
+
