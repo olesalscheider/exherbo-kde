@@ -58,13 +58,14 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-{mono,php5,perl,python,ruby}
     --without-jdk{2,3,4}
 )
+ever at_least 6.1.7 && DEFAULT_SRC_CONFIGURE_PARAMS+=( --without-jdk4_1 )
 
 src_install() {
     default
 
     edo rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,}
     edo rmdir "${IMAGE}"/usr/${LIBDIR}/virtuoso/{hosting/,}
-    edo rm -r "${IMAGE}"/usr/${LIBDIR}/{jdbc-*,jena,sesame}/{*.jar,}
+    edo rm -r "${IMAGE}"/usr/${LIBDIR}/{jdbc-*,jena*,sesame}/{*.jar,}
     edo mv -u "${IMAGE}"/usr/share/doc/virtuoso/* "${IMAGE}"/usr/share/doc/${PNVR}
     edo rm -r "${IMAGE}"/usr/share/doc/virtuoso
 }
