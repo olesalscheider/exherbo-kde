@@ -1,34 +1,61 @@
-# Copyright 2012 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2012-2013 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 MY_USER=QupZilla
 MY_PNV=${MY_USER}-${PV}
 
-require github [[ user=${MY_USER} suffix=tar.gz ]] qmake4
+require github [[ user=${MY_USER} suffix=tar.gz rev=v${PV} ]] qmake4
 
 SUMMARY="QupZilla is modern web browser based on WebKit core and Qt Framework"
 HOMEPAGE="http://www.qupzilla.com"
 
 LICENCES="GPL-3"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="
+    bash-completion
+    gnome [[ description = [ Support for storing passwords in Gnome keyring ] ]]
+    kde [[ description = [ Support for storing passwords in kwallet ] ]]
+    zsh-completion
+"
 
+# TODO: qupzilla can be built (and run?) with Qt5 (needs app-spell/hunspell as well)
+#       qupzilla can be built with wayland support and without X11
 DEPENDENCIES="
+    build:
+        dev-util/pkg-config
     build+run:
+        x11-libs/libX11
         x11-libs/qt:4[>=4.7.0][dbus][sql][webkit]
+        gnome? ( gnome-desktop/gnome-keyring )
+        kde? ( kde/kdelibs )
     run:
         kde/oxygen-icons [[ note = [ Used in preferences ] ]]
 "
 
+WORK="${WORKBASE}"/${PNV}
 EQMAKE4_SOURCES=( ${MY_USER}.pro )
 
 src_configure() {
-    # At the moment, "kde support" only means that the oxygen icons are used which make some things
-    # look nicer, therefore we hard enable it. Nepomuk support is planned, then it might get
-    # optional.
-    export KDE=True
+    option kde && export KDE_INTEGRATION=True || export KDE_INTEGRATION=False
+    option gnome && export GNOME_INTEGRATION=True || export GNOME_INTEGRATION=False
+
     export USE_LIBPATH=/usr/${LIBDIR}
 
     qmake4_src_configure
+}
+
+src_install() {
+    default
+
+    if ! option bash-completion; then
+        rm "${IMAGE}"/usr/share/bash-completion/completions/qupzilla
+        rmdir "${IMAGE}"/usr/share/bash-completion/{completions,}
+    fi
+
+    if option zsh-completion; then
+        dodir /usr/share/zsh/site-functions/
+        insinto /usr/share/zsh/site-functions/
+        newins linux/completion/zsh_completion.sh _qupzilla
+    fi
 }
 
