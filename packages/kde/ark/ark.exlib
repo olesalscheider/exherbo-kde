@@ -34,6 +34,8 @@ DEPENDENCIES="
         ]]
 "
 
+RESTRICT="-test"
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_BZip2:BOOL=TRUE
     -DWITH_LibArchive:BOOL=TRUE
