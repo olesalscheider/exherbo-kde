@@ -3,10 +3,11 @@
 # Based in part upon 'strigi-0.5.10.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require sourceforge cmake [ api=2 ]
+require cmake [ api=2 cmake_minimum_version="2.8.9" ]
 
 SUMMARY="Fast crawling desktop search engine with Qt4 GUI"
-DOWNLOADS="http://dev.exherbo.org/~philantrop/distfiles/${PNV}.tar.bz2"
+HOMEPAGE="http://www.vandenoever.info/"
+DOWNLOADS="${HOMEPAGE}software/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="0"
@@ -17,14 +18,11 @@ MYOPTIONS="dbus debug exif fam inotify
            requires = dbus ]]
 "
 
-# There is an automagic dep on xattr, but the code has been disabled, so it doesn't actually link
-# against it (checked: 0.7.7)
 DEPENDENCIES="
     build:
-        dev-cpp/cppunit
+        virtual/pkg-config
     build+run:
         app-arch/bzip2
-        dev-libs/boost
         dev-libs/libxml2:2.0
         sys-libs/zlib
         clucene? ( dev-cpp/clucene:1[>=2.3.3.4] )
@@ -33,21 +31,15 @@ DEPENDENCIES="
         fam? ( app-admin/gamin )
         ffmpeg? ( || ( media/ffmpeg media/libav ) )
         qt4? ( x11-libs/qt:4[dbus][X(+)] )
+    test:
+        dev-cpp/cppunit
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
-    # Strigi needs either expat or libxml2.  However libxml2 seems to be required in both cases,
-    # linking to two xml parsers is just silly, so we disable expat.
-    -DENABLE_EXPAT=OFF
     # Always enabled, the only reliable way to check for files changed
     -DENABLE_POLLING=ON
     -DFORCE_DEPS=ON
     -DENABLE_REGENERATEXSD=OFF
-    # Only the clucene backend works well and fast enough, so we disable hyperestraier, sqlite
-    -DENABLE_HYPERESTRAIER=OFF
-    -DENABLE_SQLITE=OFF
-    # Used for tests
-    -DENABLE_CPPUNIT=ON
     # Analyzers, stream don't use this atm
     -DENABLE_LOG4CXX=OFF
     # Disable older clucene backend in favor of the new one
@@ -56,4 +48,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_XINE=OFF
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( 'clucene CLUCENE_NG' DBUS 'exif EXIV2' FAM FFMPEG INOTIFY QT4 )
+CMAKE_SRC_CONFIGURE_TESTS=(
+    '-DCMAKE_DISABLE_FIND_PACKAGE_CppUnit=OFF -DCMAKE_DISABLE_FIND_PACKAGE_CppUnit=ON'
+)
 

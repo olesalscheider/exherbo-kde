@@ -8,8 +8,3 @@ require strigi
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-gcc47-fix-unistd.h-header-required-unconditionally-f.patch
-    "${FILES}"/${PNV}-Let-the-strigi-ffmpeg-plugin-compile-on-modern-ffmpe.patch
-)
-
