@@ -20,7 +20,7 @@ MYOPTIONS_PARTS="demos doc examples" # tools
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
 # accessibility gif jpeg mng png svg tiff enabled by default
 MYOPTIONS="dbus cups glib gstreamer opengl phonon
-    qt3support sql ssl webkit xinerama ${MYOPTIONS_PARTS}
+    qt3support sql webkit xinerama ${MYOPTIONS_PARTS}
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
         ( ${SQL_BACKENDS} ) [[ number-selected = at-least-one ]]
@@ -36,8 +36,7 @@ MYOPTIONS="dbus cups glib gstreamer opengl phonon
     pulseaudio
     qt3support  [[ description = [ A module consisting of classes that ease porting from Qt3 to Qt4 ] ]]
     sql         [[ description = [ Build the QtSQL module ] ]]
-    webkit      [[ requires    = [ ssl ]
-                   description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
+    webkit      [[ description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
     ( multibuild_c: 32 64 )
     ( platform: amd64 ia64 ppc64 x86 )
 "
@@ -56,6 +55,7 @@ DEPENDENCIES="
         x11-proto/videoproto
         xinerama? ( x11-proto/xineramaproto )
     build+run:
+        dev-libs/openssl[multibuild_c:*(-)?]
         media-libs/fontconfig[multibuild_c:*(-)?]
         media-libs/freetype:2[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
@@ -92,7 +92,6 @@ DEPENDENCIES="
         postgresql? ( dev-db/postgresql )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
-        ssl? ( dev-libs/openssl[multibuild_c:*(-)?] )
         xinerama? ( x11-libs/libXinerama[multibuild_c:*(-)?] )
     post:
         phonon? ( media-libs/phonon[>=4.3.80][gstreamer?][multibuild_c:*(-)?] )
@@ -224,6 +223,7 @@ configure_one_multibuild() {
         -no-nas-sound
         -no-nis
         -no-s60
+        -openssl-linked
         -system-proxies
         -system-zlib
         -xinput
@@ -240,7 +240,6 @@ configure_one_multibuild() {
         $(qt_enable opengl)
         $(qt_enable qt3support)
         $(qt_enable phonon)
-        $(qt_enable ssl openssl)
         $(qt_enable webkit)
         $(qt_enable xinerama)
     )
