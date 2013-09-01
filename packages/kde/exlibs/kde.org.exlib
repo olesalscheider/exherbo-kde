@@ -102,7 +102,7 @@ esac
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl][svg(+)][X(+)]
+        x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl(+)][svg(+)][X(+)]
 "
 
 # This list also includes splits for future releases, still it might be subject to changes
