@@ -1,0 +1,35 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: Qt X11 Extras"
+DESCRIPTION="Qt X11 Extras enables the Qt programmer to write applications for
+the Linux/X11 platform."
+
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+"
+
+src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        dodoc doc/${PN}.qch
+        docinto html
+        dodoc -r doc/${PN}
+    fi
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
+}
+
