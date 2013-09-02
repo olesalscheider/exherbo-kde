@@ -75,7 +75,7 @@ if ever at_least 4.10.90 ; then
         build+run:
             app-text/shared-desktop-ontologies[>=0.11]
             dev-libs/soprano[>=2.9.0]
-            kde/kactivities[>=4.10.90]
+            kde/kactivities:${SLOT}[>=4.10.90]
             server-pim/akonadi[>=1.9.51]
             grammar? ( office-libs/link-grammar )
     "
