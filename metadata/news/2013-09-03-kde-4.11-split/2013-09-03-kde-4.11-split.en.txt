@@ -1,0 +1,49 @@
+Title: KDE 4.11.x split packages
+Author: Heiko Becker <heirecka@exherbo.org>
+Content-Type: text/plain
+Posted: 2013-09-03
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/kdeadmin
+Display-If-Installed: kde/kdenetwork
+Display-If-Installed: kde/kdesdk
+Display-If-Installed: kde/kdetoys
+
+KDE 4.11.x has four packages additionally split compared to KDE 4.10.x
+  - kde/kdeadmin
+  - kde/kdenetwork
+  - kde/kdesdk
+  - kde/kdetoys
+
+The easiest way to handle this is:
+
+1) Upgrade KDE normally ignoring those four packages:
+  cave resolve kde-split
+
+2) Check which kde_parts were enabled for those four monolithic packages:
+  cave show kde/kdeadmin kde/kdenetwork kde/kdesdk kde/kdetoys
+
+3) Get the list of newly available split packages:
+  cave show kdeadmin-split\* kdenetwork-split\* kdesdk-split\* kdetoys-split\*
+
+4) Manually install the split packages you want by comparing the
+above lists and permitting uninstall of the blocked packages, e.g.:
+  cave resolve --permit-uninstall kde/kdeadmin \
+               ksystemlog \
+               --permit-uninstall kde/kdenetwork \
+	           kopete kget \
+               --permit-uninstall kde/kdesdk \
+               lokalize okteta umbrello \
+               --permit-uninstall kde/kdetyos \
+               kteatime
+
+Packages from those sets that get installed without being added to world will
+become part of the kde-split set which you probably want in world.
+
+Note that some of the split packages are named
+"<monolithic_package_name>-<kde_parts>" like kdenetwork-filesharing or
+kdesdk-thumbnailers. Furthermore kmtrace, kstartperf and kuiviewer were
+combined into kde-dev-utils.
+
+scripts was renamed to kde-dev-scripts which we don't package at the moment.
+Feel free to package it if you need it.
