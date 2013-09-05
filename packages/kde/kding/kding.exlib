@@ -1,7 +1,7 @@
 # Copyright 2009, 2010 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge
+require kde [ api=2 ] sourceforge
 
 SUMMARY="KDing - dictionary lookup program"
 DESCRIPTION="
@@ -24,3 +24,4 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( -p0 "${FILES}"/${PNV}-dtd.patch )
+
