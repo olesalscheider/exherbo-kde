@@ -3,7 +3,7 @@
 
 require qt qmake4 [ slot=5 ]
 
-SUMMARY="Qt Cross-platform application framework: Various image format plguins"
+SUMMARY="Qt Cross-platform application framework: Various image format plugins"
 DESCRIPTION="Supports MNG, TGA, TIFF and WBMP".
 
 MYOPTIONS="doc"
