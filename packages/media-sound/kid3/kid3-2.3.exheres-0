@@ -1,7 +1,7 @@
 # Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde sourceforge [ suffix=tar.gz ]
+require kde [ api=2 ] sourceforge [ suffix=tar.gz ]
 
 SUMMARY="A KDE music tagger"
 DESCRIPTION="
@@ -27,6 +27,7 @@ DEPENDENCIES="
         media-libs/libvorbis
         media-libs/phonon
         media-libs/taglib[>=1.4]
+        sys-libs/zlib
         x11-libs/qt:4[dbus]
         chromaprint? (
             media/ffmpeg
@@ -36,6 +37,7 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Might be optional, would be interesting if we want to build against Qt5.
     -DWITH_KDE:BOOL=TRUE
     -DWITH_DBUS:BOOL=TRUE
     -DWITH_PHONON:BOOL=TRUE
@@ -44,10 +46,15 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     # gstreamer can be used instead of ffmpeg for chromaprint decoding, seems pointless to add
     # options for that, so if chromaprint is enabled, force ffmpeg on
     -DWITH_GSTREAMER:BOOL=FALSE
+    # QAudioDecoder from QtMultimedia[>=5] can also be used for chromaprint
+    # decoding. Given that we build the KDE version we cannot use that with
+    # KDE-4.x.
+    -DWITH_QAUDIODECODER:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'id3 ID3LIB'
     'chromaprint CHROMAPRINT'
     'chromaprint FFMPEG'
+    'chromaprint CHROMAPRINT_FFMPEG'
 )
 
