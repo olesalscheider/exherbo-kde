@@ -23,7 +23,6 @@ MYOPTIONS=""
 
 DEPENDENCIES+="
     build:
-        app-arch/xz
         kde/automoc4[>=0.9.86]
     build+run:
         dev-libs/glib:2

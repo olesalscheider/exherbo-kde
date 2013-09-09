@@ -35,7 +35,6 @@ MYOPTIONS="doc
 
 DEPENDENCIES="
     build:
-        app-arch/xz
         kde/automoc4[>=0.9.86]
         doc? ( app-doc/doxygen )
         virtual/pkg-config
