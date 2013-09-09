@@ -23,10 +23,9 @@ DEPENDENCIES="
         dev-libs/boost[>=1.34.0]
         dev-libs/soprano[>=2.0]
         (
-            dev-python/PyQt4[>=4.9&<4.10.3][webkit]
-            dev-python/sip[>=4.14&<4.15]
-        ) [[ note = [ Doesn't build with newer versions. Remove if
-                      https://bugs.kde.org/show_bug.cgi?id=323899 is resolved. ] ]]
+            dev-python/PyQt4[>=4.9][webkit]
+            dev-python/sip[>=4.15.2_pre20130908]
+        ) [[ note = [ See https://bugs.kde.org/show_bug.cgi?id=323899 ] ]]
         kde/kdelibs:4[>=4.9.4]
         kde/kdepimlibs:4[>=4.7.0]
         media-libs/phonon[>=4.3.80]
