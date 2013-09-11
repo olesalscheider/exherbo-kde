@@ -1,9 +1,9 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-
-require libnm-qt scm-git
+require libnm-qt
 
 PLATFORMS="~amd64"
+
+DOWNLOADS="mirror://kde/unstable/networkmanagement/${PV}/src/${PNV}.tar.xz"
 
