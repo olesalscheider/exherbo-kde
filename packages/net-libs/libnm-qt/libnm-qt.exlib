@@ -8,11 +8,12 @@ HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
         virtual/pkg-config
+        doc? ( app-doc/doxygen )
     build+run:
         net-apps/NetworkManager[>=0.9.8.0]
         net-libs/libmm-qt
@@ -20,4 +21,19 @@ DEPENDENCIES="
 "
 
 BUGS_TO="mixi@exherbo.org"
+
+src_compile() {
+    default
+
+    option doc && emake apidox
+}
+
+src_install() {
+    cmake_src_install
+
+    if option doc ; then
+        docinto html
+        dodoc -r doc/html/*
+    fi
+}
 
