@@ -1,9 +1,9 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-
-require libmm-qt scm-git
+require libmm-qt
 
 PLATFORMS="~amd64"
+
+DOWNLOADS="mirror://kde/unstable/modemmanager-qt/${PV}/src/${PNV}.tar.xz"
 

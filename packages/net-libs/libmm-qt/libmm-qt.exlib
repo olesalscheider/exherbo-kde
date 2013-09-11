@@ -1,12 +1,10 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-
-require cmake scm-git
+require cmake [ api=2 ]
 
 SUMMARY="Qt-only wrapper for ModemManager DBus API"
-HOMEPAGE="https://projects.kde.org/projects/playground/base/${PN}"
+HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"
