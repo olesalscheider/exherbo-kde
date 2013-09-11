@@ -11,8 +11,10 @@ SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
-        net-apps/NetworkManager
+        net-apps/NetworkManager[>=0.9.8.0]
         net-libs/libmm-qt
         x11-libs/qt:4[dbus]
 "
