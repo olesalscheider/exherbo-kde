@@ -7,7 +7,7 @@ require kde [ api=2 ]
 
 SUMMARY="An advanced digital photo management application"
 HOMEPAGE="http://www.digikam.org/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2 mirror://kde/stable/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 
 BUGS_TO="kde@exherbo.org"
 
@@ -35,15 +35,15 @@ DEPENDENCIES="
         dev-db/mysql
         dev-libs/boost
         dev-libs/expat[>=2.0.1]   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
-        dev-libs/libxml2[>=2.7] [[ description = [ Htmlexport ] ]]
+        dev-libs/libxml2:2.0[>=2.7] [[ description = [ Htmlexport ] ]]
         dev-libs/libxslt[>=1.1] [[ description = [ Htmlexport ] ]]
         dev-libs/qjson[>=0.7] [[ note = [ For libmediawiki ] ]]
         kde/kdelibs:4[>=4.4]
         kde/kdepimlibs:4[>=4.4] [[ note = [ addressbook support ] ]]
-        kde/libkdcraw[>=4.10.0]
-        kde/libkexiv2[>=4.7.0]
-        kde/libkipi[>=4.10.0]
-        kde/marble[>=4.7] [[ note = [ For LibKGeoMap ] ]]
+        kde/libkdcraw:4[>=4.10.0]
+        kde/libkexiv2:4[>=4.7.0]
+        kde/libkipi:4[>=4.10.0]
+        kde/marble:4[>=4.7] [[ note = [ For LibKGeoMap ] ]]
         media-libs/jasper[>=1.7.0]
         media-libs/jpeg[>=6b]
         media-libs/lcms[>=1]
@@ -67,8 +67,8 @@ DEPENDENCIES="
             media-libs/libgphoto2[>=2.4.0]
             virtual/usb:1
         )
-        kipi_plugins:acquireimages? ( kde/libksane[>=0.3.0] )
-        kipi_plugins:expoblending? ( sys-devel/gcc[>=4.3.0][openmp] )
+        kipi_plugins:acquireimages? ( kde/libksane:4[>=0.3.0] )
+        kipi_plugins:expoblending? ( sys-devel/gcc:*[>=4.4.0][openmp] )
         kipi_plugins:imgur? ( sys-auth/kqoauth[>=0.97] )
         kipi_plugins:ipodexport? (
             media-libs/libgpod[>=0.7.0]
@@ -83,7 +83,7 @@ DEPENDENCIES="
         media-gfx/hugin[>=0.8]
         media-gfx/ImageMagick[>=5.5.4]
     suggestion:
-        kde/ffmpegthumbs [[ description = [ For thumbnails of videos. ] ]]
+        kde/ffmpegthumbs:4 [[ description = [ For thumbnails of videos. ] ]]
 "
 
 # Disabled by upstream for the time being
