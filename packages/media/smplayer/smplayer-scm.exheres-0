@@ -1,7 +1,7 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="https://smplayer.svn.sourceforge.net/svnroot/${PN}/${PN}"
+SCM_REPOSITORY="https://svn.code.sf.net/p/${PN}/code/${PN}/trunk"
 
 require scm-svn smplayer
 
