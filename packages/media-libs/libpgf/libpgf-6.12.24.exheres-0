@@ -1,13 +1,14 @@
 # Copyright 2012 Xavier Barrachina <xabarci@doctor.upv.es>
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ] sourceforge [ pnv=${PNV}-src suffix=zip project=${PN} ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 1.11 ] ] sourceforge [ pnv=${PNV}-src suffix=tar.gz project=${PN} ]
 
 SUMMARY="Library for PGF image format"
-DESCRIPTION="Based on discrete, fast wavelet transform with progressive coding features. Supports lossless and lossy compression."
+DESCRIPTION="Based on discrete, fast wavelet transform with progressive coding
+features. Supports lossless and lossy compression."
 HOMEPAGE="http://www.libpgf.org/"
 
-LICENCES="LGPL"
+LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="doc"
@@ -18,7 +19,6 @@ DEPENDENCIES="
 "
 
 WORK=${WORKBASE}/${PN}
-
 
 default_src_prepare() {
     edo sed -e "s:test \$DOXYGEN && \$DOT:$(option doc && echo true || echo false):" \
