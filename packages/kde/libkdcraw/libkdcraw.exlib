@@ -11,23 +11,14 @@ LICENCES="
     GPL-2
     LGPL-2
 "
-MYOPTIONS="
-    jpeg2000
-    rawspeed [[ description = [ Support for the RawSpeed Codec ] ]]
-"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        media-libs/jpeg[>=8]
-        media-libs/lcms2
+        media-libs/libraw[>=0.15]
         sys-devel/gcc:*[openmp]
-        jpeg2000? ( media-libs/jasper )
-        rawspeed? ( dev-libs/libxml2:2.0 )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DENABLE_LCMS2:BOOL=TRUE
-    -DWITH_OpenMP:BOOL=TRUE
-)
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenMP:BOOL=TRUE )
 
