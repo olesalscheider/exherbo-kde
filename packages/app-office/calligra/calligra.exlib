@@ -70,7 +70,7 @@ DEPENDENCIES+="
         dev-lang/perl:*
         dev-libs/boost
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
-        kde/kactivities[>=4.9.98]
+        kde/kactivities:4[>=4.9.98]
         kde/kdelibs:4[>=4.6.4]
         kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
@@ -158,7 +158,7 @@ DEPENDENCIES+="
             msworks? ( office-libs/libwps[>=0.2] )
         )
         marble? (
-            kde/marble
+            kde/marble:4
         )
         openexr? (
             media-libs/ilmbase
@@ -171,7 +171,7 @@ DEPENDENCIES+="
             resolution = uninstall-blocked-after
         ]]
     run:
-        mpxj? ( virtual/jre )
+        mpxj? ( virtual/jre:* )
     suggestion:
         app-office/calligra-l10n:${SLOT}[>=${PV}] [[ description = [ Localisation files ] ]]
 "
