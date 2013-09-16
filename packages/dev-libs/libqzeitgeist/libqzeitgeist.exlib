@@ -20,7 +20,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         dev-lang/python:*
-        dev-libs/zeitgeist
+        dev-libs/zeitgeist:2.0
         kde/automoc4
     build+run:
         x11-libs/qt:4[>=4.7][dbus]
