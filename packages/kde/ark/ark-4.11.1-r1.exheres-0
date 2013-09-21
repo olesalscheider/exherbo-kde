@@ -5,3 +5,5 @@ require ark
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Fix-unrar-5-support.patch )
+
