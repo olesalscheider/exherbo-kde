@@ -9,7 +9,7 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
-        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+        doc? ( x11-libs/qttools:${SLOT} )
     build+run:
         x11-libs/qtscript:${SLOT}[>=${PV}]
         x11-libs/qttools:${SLOT}[>=${PV}]

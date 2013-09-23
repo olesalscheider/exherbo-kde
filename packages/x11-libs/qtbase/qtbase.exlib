@@ -54,7 +54,7 @@ MYOPTIONS+="
 DEPENDENCIES="
     build:
         virtual/pkg-config
-        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )   [[ note = [ qhelpgenerator is needed ] ]]
+        doc? ( x11-libs/qttools:${SLOT} )   [[ note = [ qhelpgenerator is needed ] ]]
     build+run:
         dev-libs/icu[multibuild_c:*(-)?]
         dev-libs/openssl[multibuild_c:*(-)?]

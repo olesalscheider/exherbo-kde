@@ -12,7 +12,7 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
-        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+        doc? ( x11-libs/qttools:${SLOT} )
 "
 
 src_compile() {

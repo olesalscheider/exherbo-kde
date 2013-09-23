@@ -13,7 +13,7 @@ MYOPTIONS="alsa doc openal pulseaudio"
 DEPENDENCIES="
     build:
         virtual/pkg-config
-        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+        doc? ( x11-libs/qttools:${SLOT} )
     build+run:
         media-libs/gstreamer:0.10
         media-plugins/gst-plugins-bad:0

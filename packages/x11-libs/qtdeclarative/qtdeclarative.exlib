@@ -14,7 +14,7 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
-        doc? ( x11-libs/qttools:${SLOT}[>=${PV}] )
+        doc? ( x11-libs/qttools:${SLOT} )
     build+run:
         x11-libs/qtbase:${SLOT}[>=${PV}][sql]  [[ note = [ QML and user-specific local storage via
                                                            SQLite. potentially optional -> remove from
