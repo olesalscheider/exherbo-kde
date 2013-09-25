@@ -1,0 +1,19 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde [ kde_ver_min="4.4.75" ]
+
+SUMMARY="Provide UI/KWallet Integration For Passwords and SSL Errors on Account Connect"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES+="
+    build+run:
+        app-crypt/qca:2
+        dev-libs/qjson[>=0.5]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
