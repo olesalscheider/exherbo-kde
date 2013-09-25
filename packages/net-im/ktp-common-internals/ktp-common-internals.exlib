@@ -1,0 +1,32 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde [ telepathy_qt_ver_min=0.9.2.1 ]
+
+SUMMARY="Re-used KDE Telepathy Parts"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS="doc"
+
+DEPENDENCIES+="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        net-im/telepathy-logger-qt
+"
+
+BUGS_TO="mixi@exherbo.org"
+
+src_compile() {
+    default
+
+    option doc && emake apidox
+}
+
+src_install() {
+    default
+
+    option doc && dodoc -r KTp/docs/html/*
+}
+
