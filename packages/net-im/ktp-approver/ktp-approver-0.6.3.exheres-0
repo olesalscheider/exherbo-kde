@@ -1,14 +1,7 @@
 # Copyright 2011 Johannes Nixdorf
 # Distributed under the terms of the GNU General Public License v2
 
-require telepathy-kde
+require ktp-approver
 
-SUMMARY="KDE Channel Approver for Telepathy"
-
-LICENCES="LGPL-2.1"
-SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
-
-BUGS_TO="mixi@exherbo.org"
 
