@@ -1,13 +1,15 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require telepathy-kde [ telepathy_qt_ver_min=0.9.2.1 ]
+require telepathy-kde [ telepathy_qt_ver_min=0.9.2.1 kde_ver_min=4.8.0 ]
 
 SUMMARY="Re-used KDE Telepathy Parts"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS="doc"
+ever at_least 0.6.80 \
+    && MYOPTIONS+=" contact-aggregation [[ description = [ Support aggregation of contacts from multiple sources ] ]]"
 
 DEPENDENCIES+="
     build:
@@ -16,7 +18,23 @@ DEPENDENCIES+="
         net-im/telepathy-logger-qt
 "
 
+if ever at_least 0.6.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            contact-aggregation? (
+                app-text/shared-desktop-ontologies[>=0.6.50]
+                dev-libs/soprano
+                kde/libkpeople
+                kde/nepomuk-core:4
+            )
+    "
+fi
+
 BUGS_TO="mixi@exherbo.org"
+
+if ever at_least 0.6.80 ; then
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'contact-aggregation KPeople' )
+fi
 
 src_compile() {
     default
