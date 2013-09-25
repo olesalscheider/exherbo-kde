@@ -8,11 +8,30 @@ SUMMARY="KCM Module for configuring Telepathy Instant Messaging Accounts"
 LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS=""
+ever at_least 0.6.80 && \
+    MYOPTIONS+=" sms [[ description = [ enable SMS messaging via libmm-qt ] ]]"
 
-DEPENDENCIES="
-    build+run:
-        net-im/telepathy-logger-qt
-"
+if ever at_least 0.6.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            sms? ( net-libs/libmm-qt[>=0.5.1] )
+    "
+else
+    DEPENDENCIES="
+        build+run:
+            net-im/telepathy-logger-qt
+    "
+fi
 
 BUGS_TO="mixi@exherbo.org"
+
+src_prepare() {
+    cmake_src_prepare
+
+    # CMAKE_DISABLE_FIND_PACKAGE doesn't work because libmm-qt is searched with pkg-config
+    if ever at_least 0.6.80 ; then
+        option sms || edo sed -e "/^add_subdirectory (pintxo)/d" \
+                              -i plugins/CMakeLists.txt
+    fi
+}
 
