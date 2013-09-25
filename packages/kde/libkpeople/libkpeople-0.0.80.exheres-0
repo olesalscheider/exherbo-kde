@@ -1,0 +1,47 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ]
+
+SUMMARY="Metacontact aggregation library"
+HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
+    build+run:
+        app-text/shared-desktop-ontologies[>=0.7.0]
+        dev-libs/soprano
+        kde/kdelibs:4[>=4.10.1]
+        kde/nepomuk-core
+"
+
+BUGS_TO="heirecka@exherbo.org"
+
+# needs a running nepomuserver
+RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_EXAMPLES:BOOL=OFF )
+
+src_compile() {
+    default
+
+    if option doc ; then
+        edo doxygen "${CMAKE_SOURCE}"/Mainpage.dox
+    fi
+}
+
+src_install() {
+    default
+
+    if option doc ; then
+        dodoc -r html
+    fi
+}
+
