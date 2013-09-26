@@ -1,0 +1,13 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde [ kde_ver_min="4.7.0" ]
+
+SUMMARY="A File manager plugin to launch a file transfer job with a specified contact"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+BUGS_TO="mixi@exherbo.org"
+
