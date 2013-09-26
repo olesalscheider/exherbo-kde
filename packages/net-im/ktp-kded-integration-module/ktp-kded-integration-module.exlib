@@ -1,0 +1,17 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde
+
+SUMMARY="A kded module for telepathy-kde integration"
+DESCRIPTION="
+This module sits in KDED and takes care of various bits of system
+integration like setting user to auto-away or handling connection errors.
+"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+BUGS_TO="mixi@exherbo.org"
+
