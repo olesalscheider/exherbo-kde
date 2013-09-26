@@ -1,14 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require telepathy-kde [ kde_ver_min="4.6.0" telepathy_qt_ver_min="0.9.1" ]
+require ktp-filetransfer-handler
 
-SUMMARY="The telepathy-kde file transfer handler"
-
-LICENCES="GPL-2"
-SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
-
-BUGS_TO="mixi@exherbo.org"
 
