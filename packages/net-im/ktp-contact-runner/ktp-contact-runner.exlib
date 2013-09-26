@@ -1,0 +1,13 @@
+# Copyright 2012 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require telepathy-kde [ telepathy_qt_ver_min="0.9.1" ]
+
+SUMMARY="KRunner plugin for KDE Telepathy."
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS=""
+
+BUGS_TO="mixi@exherbo.org"
+
