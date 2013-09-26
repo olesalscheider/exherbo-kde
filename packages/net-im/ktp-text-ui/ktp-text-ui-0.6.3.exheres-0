@@ -1,22 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require telepathy-kde [ kde_ver_min="4.4.75" telepathy_qt_ver_min="0.9.1" ]
+require ktp-text-ui
 
-SUMMARY="The telepathy-kde handler for Text Chats"
-
-LICENCES="GPL-2"
-SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
-
-DEPENDENCIES+="
-    build+run:
-        net-im/telepathy-logger-qt[>=0.5.60]
-        x11-libs/qt:4[webkit]
-"
-
-BUGS_TO="mixi@exherbo.org"
-
-RESTRICT="test" # tests are missing some files (last checked 0.5.0)
 
