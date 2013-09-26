@@ -11,9 +11,20 @@ MYOPTIONS=""
 
 DEPENDENCIES+="
     build+run:
-        net-im/telepathy-logger-qt[>=0.5.60]
         x11-libs/qt:4[webkit]
 "
+
+if ever at_least 0.6.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/qjson [[ note = [ expansion of shortened urls ] ]]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            net-im/telepathy-logger-qt[>=0.5.60]
+    "
+fi
 
 BUGS_TO="mixi@exherbo.org"
 
