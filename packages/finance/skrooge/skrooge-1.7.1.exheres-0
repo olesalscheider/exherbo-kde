@@ -1,7 +1,7 @@
 # Copyright 2009 Xavier Barrachina <xabarci@ega.upv.es>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="A personal finances manager for KDE4"
 DESCRIPTION="
@@ -9,32 +9,44 @@ Skrooge is a personal finances manager for KDE4, aiming at being simple and intu
 you to keep track of your expenses and incomes, categorize them, and build reports of them.
 "
 HOMEPAGE="http://skrooge.org/"
-DOWNLOADS="${HOMEPAGE}/files/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 REMOTE_IDS="freecode:${PN}"
 
 UPSTREAM_DOCUMENTATION="http://docs.kde.org/development/en/extragear-office/skrooge/index.html [[ lang = en ]]"
 
-LICENCES="GPL-3"
+LICENCES="GPL-2"
 SLOT="4"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
-
-RESTRICT="test"
+MYOPTIONS="doc"
 
 DEPENDENCIES="
+    build:
+        dev-libs/libxslt   [[ note = xsltproc ]]
+        doc? ( app-doc/doxygen )
     build+run:
         app-crypt/qca:2
         dev-db/sqlite:3
+        dev-libs/grantlee[>=0.1.7]
         finance/libofx
-        kde/kde-runtime:4[>=4.1.0]
-        kde/kdelibs:4[>=4.1.0]
-    run:
-        x11-libs/qt:4[sql][sqlite]
+        kde/kactivities:4
+        kde/kde-runtime:4[>=4.6.0]
+        kde/kdelibs:4[>=4.6.0]
+        kde/kdepimlibs:4
+        x11-libs/qt:4[>=4.7.0][sql][sqlite][webkit]
+        x11-misc/shared-mime-info[>=0.23]
 "
+
+src_compile() {
+    default
+    option doc && emake apidox
+}
 
 src_install() {
     cmake_src_install
-    edo rmdir "${IMAGE}"/usr/share/apps/skrooge/theme
+    # get rid of empty directories
+    edo find "${IMAGE}"/usr/share/apps/skrooge/html -type d -empty -delete
+
+    option doc && dodoc -r apidocs/html
 }
 
