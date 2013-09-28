@@ -40,7 +40,7 @@ DEPENDENCIES="
         kde/kdelibs:4[>=4.2.0]
         x11-misc/shared-mime-info
     recommendation:
-        app-text/texlive [[ description = [ Needed to produce dvi/pdf from (La)TeX sources ] ]]
+        app-text/texlive-core [[ description = [ Needed to produce dvi/pdf from (La)TeX sources ] ]]
 "
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( kile-remote-control.txt )
