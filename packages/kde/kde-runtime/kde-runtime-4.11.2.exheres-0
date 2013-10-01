@@ -5,5 +5,3 @@ require kde-runtime
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-Discard-the-recorded-events-in-the-item-local-handle.patch )
-
