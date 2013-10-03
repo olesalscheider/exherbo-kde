@@ -1,0 +1,38 @@
+# Copyright 2013 Friedrich Kröner <friedrich@mailstation.de>
+# Distributed under the terms of the GNU General Public License v2
+
+MYPNV="${PN}-kde-${PV}"
+
+require kde [ api=2 ]
+
+SUMMARY="KDEconnect bundles a daemon and KCM to connect your Android smartphone with your desktop."
+DESCRIPTION="
+Integrate Android with the KDE Desktop.
+Current feature list:
+- Clipboard share: copy from or to your desktop,
+- Notifications sync (4.3+): Read your Android notifications from KDE.
+- Multimedia remote control: Use your phone as a remote control.
+- WiFi connection: no usb wire or bluetooth needed.
+- RSA Encryption: your information is safe.
+"
+HOMEPAGE="http://albertvaka.wordpress.com/"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${MYPNV}.tar.xz"
+
+LICENCES="GPL-2 || ( GPL-2 GPL-3 )"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        app-crypt/qca:2
+        dev-libs/qjson
+        kde/kdelibs:4
+        media-libs/phonon
+"
+
+BUGS_TO="friedrich@mailstation.de"
+
+CMAKE_SOURCE=${WORKBASE}/${MYPNV}
+
