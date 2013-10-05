@@ -128,7 +128,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # Used in solid
-    'ppc_cpu_features:altivec PPC_ALTIVEC'
     'x86_cpu_features:mmx X86_MMX'
     'x86_cpu_features:sse X86_SSE'
     'x86_cpu_features:sse2 X86_SSE2'
@@ -158,7 +157,6 @@ if ever is_scm ; then
 fi
 
 MYOPTIONS+="
-    ppc_cpu_features: altivec
     x86_cpu_features: mmx sse sse2
 "
 

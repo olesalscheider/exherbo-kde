@@ -50,7 +50,6 @@ ever at_least 4.10.90 && MYOPTIONS+=" wayland" \
 
 MYOPTIONS+=" kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
                                                  (deprecated, will be replaced by kde/kscreen) ] ]]
-    ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
 
@@ -196,7 +195,6 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( python )
 CMAKE_SRC_CONFIGURE_OPTION_HAVES+=(
     # CMake options are different from kde/qimageblitz!
     # These are for KSplash
-    'ppc_cpu_features:altivec PPC_ALTIVEC'
     'x86_cpu_features:3dnow X86_3DNOW'
     'x86_cpu_features:mmx X86_MMX'
     'x86_cpu_features:sse X86_SSE'

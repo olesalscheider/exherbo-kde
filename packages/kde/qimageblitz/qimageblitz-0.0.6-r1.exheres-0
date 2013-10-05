@@ -15,7 +15,6 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     platform: amd64
     amd64_cpu_features: 3dnow
-    ppc_cpu_features: altivec
     x86_cpu_features: 3dnow mmx sse sse2
     "
 
@@ -41,8 +40,6 @@ src_configure() {
             $(cmake_enable x86_cpu_features:sse2 SSE2)
         )
     fi
-
-    myconf+=( $(cmake_enable ppc_cpu_features:altivec ALTIVEC) )
 
     ecmake "${myconf[@]}"
 }
