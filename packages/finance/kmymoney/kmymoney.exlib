@@ -2,7 +2,7 @@
 # Copyright 2012 Heiko Becker <heiko@shruuf.de>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde [ api=2 ] sourceforge [ project=kmymoney2 ]
+require kde [ api=2 ] sourceforge [ project=kmymoney2 suffix=tar.xz ]
 
 SUMMARY="Personal finance manager for KDE"
 DESCRIPTION="
@@ -29,7 +29,7 @@ RESTRICT="test"
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         app-crypt/gpgme
         dev-cpp/libxml++:2.6
