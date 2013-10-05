@@ -40,9 +40,7 @@ qt_mkspecs_dir() {
     spec="linux"
     if [[ ${CXX} == *g++* ]]; then
         spec+="-g++"
-        if option platform:ppc64; then
-            spec+="-64"
-        elif option platform:amd64; then
+        if option platform:amd64; then
             if [[ ${MULTIBUILD_TARGET} -eq 32 ]]; then
                 spec+="-${MULTIBUILD_TARGET}"
             fi

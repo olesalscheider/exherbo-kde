@@ -4,7 +4,7 @@
 
 require qt-4
 
-PLATFORMS="~amd64 ~ppc64 ~x86"
+PLATFORMS="~amd64 ~x86"
 
 UPSTREAM_RELEASE_NOTES="http://blog.qt.digia.com/blog/2013/07/02/qt-4-8-5-released/"
 

@@ -38,11 +38,11 @@ MYOPTIONS="dbus cups glib gstreamer opengl phonon
     sql         [[ description = [ Build the QtSQL module ] ]]
     webkit      [[ description = [ Build WebKit, an open source web browser engine, using Qt rendering ] ]]
     ( multibuild_c: 32 64 )
-    ( platform: amd64 ia64 ppc64 x86 )
+    ( platform: amd64 ia64 x86 )
 "
 
 MYOPTIONS+="
-    platform: amd64 ia64 ppc64 x86
+    platform: amd64 ia64 x86
     amd64_cpu_features: 3dnow sse3 ssse3 sse4.1 sse4.2 avx
     arm_cpu_features: neon
     x86_cpu_features: 3dnow mmx sse sse2 sse3 ssse3 sse4.1 sse4.2 avx
@@ -107,7 +107,7 @@ qconf4() {
         amd64:x86_64
         ia64
         #ppc:powerpc
-        ppc64:powerpc
+        #ppc64:powerpc
         x86:i386
     )
     for x in "${option_to_arch_map[@]}"; do

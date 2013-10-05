@@ -9,7 +9,7 @@ DOWNLOADS="http://delta.affinix.com/download/${PN}/${PV%.*}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2"
 SLOT="2"
-PLATFORMS="~amd64 ~ppc64 ~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="doc examples"
 
 DEPENDENCIES="
