@@ -30,6 +30,8 @@ DEPENDENCIES="
         dev-libs/qjson
         kde/kdelibs:4
         media-libs/phonon
+    run:
+        app-crypt/qca-ossl:2
 "
 
 BUGS_TO="friedrich@mailstation.de"
