@@ -23,11 +23,11 @@ RESTRICT=test
 
 DEPENDENCIES="
     build:
+        dev-lang/perl:*
         sys-devel/gettext
         doc? ( app-doc/doxygen[dot] )
     build+run:
         app-crypt/qca:2
-        dev-lang/perl
         dev-libs/boost
         dev-libs/gmp:=
         dev-libs/libgcrypt
