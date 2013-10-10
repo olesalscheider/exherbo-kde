@@ -109,7 +109,7 @@ DEPENDENCIES+="
             eps? ( media-gfx/pstoedit [[ note = [ Required for eps import (PS/PDF to SVG) ] ]] )
             pdf? (
                 media-libs/jpeg
-                openjpeg? ( media-libs/OpenJPEG )
+                openjpeg? ( media-libs/OpenJPEG:0 )
             )
             wordperfect? (
                 office-libs/libwpd[>=0.9]
@@ -135,7 +135,7 @@ DEPENDENCIES+="
             sci-libs/eigen:2[>=2.0]
             fftw? ( sci-libs/fftw[>=3] )
             glew? ( media-libs/glew )
-            openjpeg? ( media-libs/OpenJPEG )
+            openjpeg? ( media-libs/OpenJPEG:0 )
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
         )
