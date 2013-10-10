@@ -37,13 +37,13 @@ MYOPTIONS+="
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
     freetds        [[ description = [ Support for MS SQL and Sybase databases in Kexi ] ]]
     glew           [[ description = [ Shader filter plugin for Krita ] ]]
+    jpeg2000       [[ description = [ Support for the JPEG 2000 image format ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
     mpxj           [[ description = [ Support for importing mpxj files (i.e. Microsoft Project Exchange, Microsoft Project, Planner) in Plan ] requires = [ kde_parts: plan ] ]]
     msworks        [[ description = [ Support for Microsoft Works files in Words ] requires = [ kde_parts: words ] ]]
     mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
     openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
-    openjpeg       [[ description = [ Support for the JPEG 2000 image format ] ]]
     pdf            [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
     postgresql     [[ description = [ Support for PostgreSQL databases in Kexi ] ]]
     raw            [[ description = [ Support for the RAW filter in Krita ] ]]
@@ -56,7 +56,7 @@ MYOPTIONS+="
     ( mdb mysql postgresql ) [[ requires = [ kde_parts: kexi ] ]]
     ( fftw glew raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
-    openjpeg? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
+    jpeg2000? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
     kde_parts: author [[ requires = [ kde_parts: words ] ]]
     kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
@@ -109,7 +109,7 @@ DEPENDENCIES+="
             eps? ( media-gfx/pstoedit [[ note = [ Required for eps import (PS/PDF to SVG) ] ]] )
             pdf? (
                 media-libs/jpeg
-                openjpeg? ( media-libs/OpenJPEG:0 )
+                jpeg2000? ( media-libs/OpenJPEG:0 )
             )
             wordperfect? (
                 office-libs/libwpd[>=0.9]
@@ -135,7 +135,7 @@ DEPENDENCIES+="
             sci-libs/eigen:2[>=2.0]
             fftw? ( sci-libs/fftw[>=3] )
             glew? ( media-libs/glew )
-            openjpeg? ( media-libs/OpenJPEG:0 )
+            jpeg2000? ( media-libs/OpenJPEG:0 )
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
         )
@@ -237,7 +237,7 @@ src_configure() {
     fi
 
     if option kde_parts:karbon && option pdf || option kde_parts:krita; then
-        cmakeparams+=( -DWITH_JPEG=ON $(cmake_with OpenJPEG) )
+        cmakeparams+=( -DWITH_JPEG=ON $(cmake_with jpeg2000 OpenJPEG) )
     else
         cmakeparams+=( -DWITH_JPEG=OFF -DWITH_OpenJPEG=OFF )
     fi
