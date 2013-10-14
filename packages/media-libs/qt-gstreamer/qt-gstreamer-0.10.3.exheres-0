@@ -1,7 +1,7 @@
 # Copyright 2012 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake [ api=2 cmake_minimum_version="2.8.6" ]
+require cmake [ api=2 cmake_minimum_version="2.8.9" ]
 
 SUMMARY="C++ bindings for GStreamer with a Qt-style API"
 HOMEPAGE="http://gstreamer.freedesktop.org/wiki/QtGStreamer"
@@ -10,30 +10,46 @@ DOWNLOADS="http://gstreamer.freedesktop.org/src/${PN}/${PNV}.tar.bz2"
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="doc"
+MYOPTIONS="doc qt5 [[ description = [ Build against Qt5 instead of Qt4  ] ]]"
 
 DEPENDENCIES="
     build:
+        virtual/pkg-config
         doc? ( app-doc/doxygen )
     build+run:
         dev-libs/boost[>=1.39]
         dev-libs/glib:2
         media-libs/gstreamer:0.10[>=0.10.33]
-        media-plugins/gst-plugins-base:0.10[>=0.10.33]
+        media-plugins/gst-plugins-base:0.10[>=0.10.36]
         sys-devel/bison
         sys-devel/flex
         x11-dri/mesa
-        x11-libs/qt:4[opengl][>=4.7]
+        qt5? (
+            x11-libs/qtbase:5[>=5.0.0]
+            x11-libs/qtquick1:5[>=5.0.0]
+        )
+       !qt5? (
+            x11-libs/qt:4[opengl][>=4.7]
+        )
 "
 
 BUGS_TO="mixi@exherbo.org"
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-0001-Fix-include-order.patch )
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DQTGSTREAMER_CODEGEN:BOOL=TRUE
     -DQTGSTREAMER_TESTS:BOOL=TRUE
 )
+
+src_prepare() {
+    default
+    # disable failing test, https://bugzilla.gnome.org/show_bug.cgi?id=710370
+    edo sed -i -e "/^qgst_test(discoverertest)/d" "${CMAKE_SOURCE}"/tests/auto/CMakeLists.txt
+}
+
+src_configure() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT_VERSION=$(option qt5 && echo 5 || echo 4) )
+    cmake_src_configure
+}
 
 src_compile() {
     default
