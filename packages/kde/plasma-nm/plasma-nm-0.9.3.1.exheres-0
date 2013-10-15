@@ -13,6 +13,7 @@ SLOT="0"
 PLATFORMS="~amd64"
 
 MYOPTIONS="
+   modem-manager [[ description = [ Support managing of networking via ModemManager ] ]]
    openconnect [[ description = [ Support Cisco's AnyConnect SSL VPN ] ]]
 "
 
@@ -22,14 +23,16 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:4
         net-apps/NetworkManager[>=0.9.8]
-        net-libs/libmm-qt
-        net-libs/libnm-qt
+        net-libs/libnm-qt[>=0.9.0.1][modem-manager?]
         net-misc/mobile-broadband-provider-info
-        openconnect? ( net-apps/openconnect[>=3.99] )
         x11-libs/qt:4
+        modem-manager? ( net-libs/libmm-qt )
+        openconnect? ( net-apps/openconnect[>=3.99] )
 "
 
 BUGS_TO="devel@arnej.de"
+
+CMAKE_SRC_CONFIGURE_OPTIONS=( '!modem-manager DISABLE_MODEMMANAGER_SUPPORT' )
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( OpenConnect )
 
