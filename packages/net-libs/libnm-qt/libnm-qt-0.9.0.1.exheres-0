@@ -5,5 +5,5 @@ require libnm-qt
 
 PLATFORMS="~amd64"
 
-DOWNLOADS="mirror://kde/unstable/networkmanagement/${PV}/src/${PNV}.tar.xz"
+DOWNLOADS="mirror://kde/unstable/networkmanager-qt/${PV}/src/${PNV}.tar.xz"
 

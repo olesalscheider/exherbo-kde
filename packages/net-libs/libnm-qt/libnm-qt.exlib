@@ -8,7 +8,10 @@ HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="doc"
+MYOPTIONS="
+   doc
+   modem-manager [[ description = [ Support managing of networking via ModemManager ] ]]
+"
 
 DEPENDENCIES="
     build:
@@ -16,11 +19,13 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         net-apps/NetworkManager[>=0.9.8.0]
-        net-libs/libmm-qt
         x11-libs/qt:4[dbus]
+        modem-manager? ( net-libs/libmm-qt )
 "
 
 BUGS_TO="mixi@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_OPTIONS=( '!modem-manager DISABLE_MODEMMANAGERQT' )
 
 src_compile() {
     default
