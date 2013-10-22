@@ -164,7 +164,7 @@ else
     CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
     CMAKE_SRC_CONFIGURE_PARAMS+=(
         -DWITH_Googlegadgets:BOOL=FALSE # Extra plasma functionality
-        -DWITH_NetworkManager:BOOL=FALSE # doesn't add useful functionality, use networkmanagement
+        -DWITH_NetworkManager:BOOL=FALSE # doesn't add useful functionality, use kde/plasma-nm
     )
 fi
 
