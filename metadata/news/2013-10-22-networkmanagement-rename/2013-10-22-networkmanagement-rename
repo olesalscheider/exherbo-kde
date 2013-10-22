@@ -1,0 +1,15 @@
+Title: kde/networkmanagement has been renamed to kde/plasma-nm
+Author: Arne Janbu <arnej@arnej.de>
+Content-Type: text/plain
+Posted: 22 Oct 2013
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/networkmanagement
+
+Please uninstall kde/networkmanagement and *afterwards* install kde/plasma-nm.
+
+1. Uninstall kde/networkmanagement:
+cave resolve \!kde/networkmanagement -x
+
+2. Install kde/plasma-nm:
+cave resolve kde/plasma-nm -x
