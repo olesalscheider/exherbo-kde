@@ -1,0 +1,326 @@
+Upstream: yes
+Reason: fix build with [-modem-manager]
+
+From 3c10f767b057f0ca8912f1829dc3dd3cd0bca282 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Luk=C3=A1=C5=A1=20Tinkl?= <lukas@kde.org>
+Date: Thu, 19 Sep 2013 17:13:14 +0200
+Subject: [PATCH] compile and link against libmm-qt/mm08
+
+---
+ dbus/nm-ip4-configinterface.h          |  5 +++++
+ dbus/nm-managerinterface.h             |  5 +++++
+ dbus/nm-settings-connectioninterface.h |  5 +++++
+ dbus/nm-settingsinterface.h            |  5 +++++
+ dbus/nm-vpn-plugininterface.h          |  5 +++++
+ generic-types.h                        | 11 +++++++++++
+ modemdevice.cpp                        |  2 +-
+ settings/setting.h                     |  5 +++++
+ settings/wiredsetting.cpp              |  1 -
+ 9 files changed, 42 insertions(+), 2 deletions(-)
+
+diff --git a/dbus/nm-ip4-configinterface.h b/dbus/nm-ip4-configinterface.h
+index 463d89b..f2a3825 100644
+--- a/dbus/nm-ip4-configinterface.h
++++ b/dbus/nm-ip4-configinterface.h
+@@ -19,7 +19,12 @@
+ #include <QtCore/QStringList>
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "generic-types.h"
++#endif
+ 
+ /*
+  * Proxy class for interface org.freedesktop.NetworkManager.IP4Config
+diff --git a/dbus/nm-managerinterface.h b/dbus/nm-managerinterface.h
+index 330c15c..da13a92 100644
+--- a/dbus/nm-managerinterface.h
++++ b/dbus/nm-managerinterface.h
+@@ -19,7 +19,12 @@
+ #include <QtCore/QStringList>
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "generic-types.h"
++#endif
+ 
+ /*
+  * Proxy class for interface org.freedesktop.NetworkManager
+diff --git a/dbus/nm-settings-connectioninterface.h b/dbus/nm-settings-connectioninterface.h
+index 6056f46..88b0fa7 100644
+--- a/dbus/nm-settings-connectioninterface.h
++++ b/dbus/nm-settings-connectioninterface.h
+@@ -19,7 +19,12 @@
+ #include <QtCore/QStringList>
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "generic-types.h"
++#endif
+ 
+ /*
+  * Proxy class for interface org.freedesktop.NetworkManager.Settings.Connection
+diff --git a/dbus/nm-settingsinterface.h b/dbus/nm-settingsinterface.h
+index f4e7ab8..e574475 100644
+--- a/dbus/nm-settingsinterface.h
++++ b/dbus/nm-settingsinterface.h
+@@ -19,7 +19,12 @@
+ #include <QtCore/QStringList>
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "generic-types.h"
++#endif
+ 
+ /*
+  * Proxy class for interface org.freedesktop.NetworkManager.Settings
+diff --git a/dbus/nm-vpn-plugininterface.h b/dbus/nm-vpn-plugininterface.h
+index 5cb33ca..60aab85 100644
+--- a/dbus/nm-vpn-plugininterface.h
++++ b/dbus/nm-vpn-plugininterface.h
+@@ -19,7 +19,12 @@
+ #include <QtCore/QStringList>
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "generic-types.h"
++#endif
+ 
+ /*
+  * Proxy class for interface org.freedesktop.NetworkManager.VPN.Plugin
+diff --git a/generic-types.h b/generic-types.h
+index c186728..7e4dbcc 100644
+--- a/generic-types.h
++++ b/generic-types.h
+@@ -26,14 +26,25 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ 
+ typedef QList<QList<uint> > UIntListList;
++#ifndef WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(UIntListList)
++#endif
++
+ typedef QList<uint> UIntList;
++#ifndef WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(UIntList)
++#endif
++
+ typedef QMap<QString, QVariantMap> NMVariantMapMap;
++#ifndef WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(NMVariantMapMap)
++#endif
++
+ typedef QMap<QString, QString> NMStringMap;
+ typedef QMapIterator<QString, QString> NMStringMapIterator;
++#ifndef WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(NMStringMap)
++#endif
+ 
+ QDBusArgument &operator<<(QDBusArgument &argument, const NMStringMap &mydict);
+ const QDBusArgument &operator>>(const QDBusArgument &argument, NMStringMap &mydict);
+diff --git a/modemdevice.cpp b/modemdevice.cpp
+index 25987e5..8790f5e 100644
+--- a/modemdevice.cpp
++++ b/modemdevice.cpp
+@@ -126,7 +126,7 @@ QString NetworkManager::ModemDevice::getUdiForModemManager()
+      * but does not export this info, so let's use the first bluetooth device we find in ModemManager.
+      * Modem will be registered in ModemManager only after someone execute its org.bluez.Serial.Connect method. */
+     foreach (const ModemManager::ModemInterface::Ptr &modem, ModemManager::modemInterfaces()) {
+-        if (modem->driver() == QLatin1String("bluetooth")) {
++        if (modem->drivers().contains(QLatin1String("bluetooth"))) {
+             return modem->udi();
+         }
+     }
+diff --git a/settings/setting.h b/settings/setting.h
+index c92b4e4..1403a87 100644
+--- a/settings/setting.h
++++ b/settings/setting.h
+@@ -22,7 +22,12 @@
+ #define NETWORKMANAGERQT_SETTINGS_SETTING_H
+ 
+ #include "../NetworkManagerQt-export.h"
++
++#ifdef WITH_MODEMMANAGERQT
++#include <ModemManagerQt/generic-types.h>
++#else
+ #include "../generic-types.h"
++#endif
+ 
+ #include <QtCore/QVariantMap>
+ #include <QtCore/QStringList>
+diff --git a/settings/wiredsetting.cpp b/settings/wiredsetting.cpp
+index 0bfc1cd..41792f9 100644
+--- a/settings/wiredsetting.cpp
++++ b/settings/wiredsetting.cpp
+@@ -20,7 +20,6 @@
+ 
+ #include "wiredsetting.h"
+ #include "wiredsetting_p.h"
+-#include "generic-types.h"
+ 
+ #include <nm-setting-wired.h>
+ 
+-- 
+1.8.4.1
+
+From 607b9338a40cdde705f91c5cd95d715e5514f4cb Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Fri, 11 Oct 2013 16:56:49 +0200
+Subject: [PATCH] Fix build without libmm-qt
+
+---
+ CMakeLists.txt                         | 5 +++++
+ dbus/nm-ip4-configinterface.h          | 2 +-
+ dbus/nm-managerinterface.h             | 2 +-
+ dbus/nm-settings-connectioninterface.h | 2 +-
+ dbus/nm-settingsinterface.h            | 2 +-
+ dbus/nm-vpn-plugininterface.h          | 2 +-
+ generic-types.h                        | 8 ++++----
+ settings/setting.h                     | 2 +-
+ 8 files changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f6b0fcb..b660b38 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -218,7 +218,12 @@ qt4_automoc(${DBUS_INTERFACE_SRCS})
+ 
+ add_library(NetworkManagerQt SHARED ${NetworkManagerQt_PART_SRCS} ${DBUS_INTERFACE_SRCS} ${CONNECTIONS_SETTINGS_SRCS} ${NetworkManagerQt_MOC} )
+ 
++if (MODEMMANAGERQT_FOUND)
+ target_link_libraries(NetworkManagerQt ModemManagerQt ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} ${QT_QTNETWORK_LIBRARY})
++else()
++target_link_libraries(NetworkManagerQt ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} ${QT_QTNETWORK_LIBRARY})
++endif()
++
+ install(TARGETS NetworkManagerQt DESTINATION lib${LIB_SUFFIX})
+ 
+ install( FILES
+diff --git a/dbus/nm-ip4-configinterface.h b/dbus/nm-ip4-configinterface.h
+index f2a3825..5add20d 100644
+--- a/dbus/nm-ip4-configinterface.h
++++ b/dbus/nm-ip4-configinterface.h
+@@ -20,7 +20,7 @@
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "generic-types.h"
+diff --git a/dbus/nm-managerinterface.h b/dbus/nm-managerinterface.h
+index da13a92..2b3f8dc 100644
+--- a/dbus/nm-managerinterface.h
++++ b/dbus/nm-managerinterface.h
+@@ -20,7 +20,7 @@
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "generic-types.h"
+diff --git a/dbus/nm-settings-connectioninterface.h b/dbus/nm-settings-connectioninterface.h
+index 88b0fa7..f2cf56c 100644
+--- a/dbus/nm-settings-connectioninterface.h
++++ b/dbus/nm-settings-connectioninterface.h
+@@ -20,7 +20,7 @@
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "generic-types.h"
+diff --git a/dbus/nm-settingsinterface.h b/dbus/nm-settingsinterface.h
+index e574475..efdce4a 100644
+--- a/dbus/nm-settingsinterface.h
++++ b/dbus/nm-settingsinterface.h
+@@ -20,7 +20,7 @@
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "generic-types.h"
+diff --git a/dbus/nm-vpn-plugininterface.h b/dbus/nm-vpn-plugininterface.h
+index 60aab85..7b81e52 100644
+--- a/dbus/nm-vpn-plugininterface.h
++++ b/dbus/nm-vpn-plugininterface.h
+@@ -20,7 +20,7 @@
+ #include <QtCore/QVariant>
+ #include <QtDBus/QtDBus>
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "generic-types.h"
+diff --git a/generic-types.h b/generic-types.h
+index 7e4dbcc..029ef0c 100644
+--- a/generic-types.h
++++ b/generic-types.h
+@@ -26,23 +26,23 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ 
+ typedef QList<QList<uint> > UIntListList;
+-#ifndef WITH_MODEMMANAGERQT
++#if !WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(UIntListList)
+ #endif
+ 
+ typedef QList<uint> UIntList;
+-#ifndef WITH_MODEMMANAGERQT
++#if !WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(UIntList)
+ #endif
+ 
+ typedef QMap<QString, QVariantMap> NMVariantMapMap;
+-#ifndef WITH_MODEMMANAGERQT
++#if !WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(NMVariantMapMap)
+ #endif
+ 
+ typedef QMap<QString, QString> NMStringMap;
+ typedef QMapIterator<QString, QString> NMStringMapIterator;
+-#ifndef WITH_MODEMMANAGERQT
++#if !WITH_MODEMMANAGERQT
+ Q_DECLARE_METATYPE(NMStringMap)
+ #endif
+ 
+diff --git a/settings/setting.h b/settings/setting.h
+index 1403a87..deb40b4 100644
+--- a/settings/setting.h
++++ b/settings/setting.h
+@@ -23,7 +23,7 @@
+ 
+ #include "../NetworkManagerQt-export.h"
+ 
+-#ifdef WITH_MODEMMANAGERQT
++#if WITH_MODEMMANAGERQT
+ #include <ModemManagerQt/generic-types.h>
+ #else
+ #include "../generic-types.h"
+-- 
+1.8.4.1
+
