@@ -26,7 +26,10 @@ DEPENDENCIES="
         net-libs/libnm-qt[>=0.9.0.1][modem-manager?]
         net-misc/mobile-broadband-provider-info
         x11-libs/qt:4
-        modem-manager? ( net-libs/libmm-qt )
+        modem-manager? (
+            net-libs/libmm-qt
+            net-libs/libnm-qt[>=scm]
+        )
         openconnect? ( net-apps/openconnect[>=3.99] )
 "
 
