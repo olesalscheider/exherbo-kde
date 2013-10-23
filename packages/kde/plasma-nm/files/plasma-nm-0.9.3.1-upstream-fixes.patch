@@ -1,0 +1,493 @@
+Upstream: yes, applying those patch was recommended on kde-packager
+
+From ac08a4c148738783d86a074a058d88a2cbd22b23 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Wed, 23 Oct 2013 09:07:13 +0200
+Subject: [PATCH] Add ScrollBar with the hope it will work correctly
+
+BUG:326456
+---
+ applet/declarative/contents/ui/main.qml | 100 +++++++++++++++++---------------
+ 1 file changed, 53 insertions(+), 47 deletions(-)
+
+diff --git a/applet/declarative/contents/ui/main.qml b/applet/declarative/contents/ui/main.qml
+index 8ea88cc..aa81707 100644
+--- a/applet/declarative/contents/ui/main.qml
++++ b/applet/declarative/contents/ui/main.qml
+@@ -19,6 +19,7 @@
+ */
+ 
+ import QtQuick 1.1
++import org.kde.plasma.extras 0.1 as PlasmaExtras
+ import org.kde.plasma.components 0.1 as PlasmaComponents
+ import org.kde.plasma.core 0.1 as PlasmaCore
+ import org.kde.networkmanagement 0.1 as PlasmaNM
+@@ -77,16 +78,7 @@ Item {
+         anchors.fill: parent
+     }
+ 
+-    ListView {
+-        id: connectionView;
+-
+-        property bool expandedItem: false;
+-        property string previouslyExpandedItem: "";
+-
+-        property bool activeExpanded: true;
+-        property bool previousExpanded: true;
+-        property bool unknownExpanded: true;
+-
++    PlasmaExtras.ScrollArea {
+         anchors {
+             left: parent.left;
+             right: parent.right;
+@@ -95,50 +87,64 @@ Item {
+             topMargin: padding.margins.top;
+             bottomMargin: padding.margins.bottom
+         }
+-        clip: true
+-        model: connectionSortModel;
+-        currentIndex: -1;
+-        interactive: true;
+-        boundsBehavior: Flickable.StopAtBounds;
+-        section.property: "itemSection";
+-        section.delegate: SectionHeader {
+-            onHideSection: {
+-                if (section == i18n("Active connections")) {
+-                    connectionView.activeExpanded = false;
+-                } else if (section == i18n("Previous connections")) {
+-                    connectionView.previousExpanded = false;
+-                } else {
+-                    connectionView.unknownExpanded = false;
++
++        ListView {
++            id: connectionView;
++
++            property bool expandedItem: false;
++            property string previouslyExpandedItem: "";
++
++            property bool activeExpanded: true;
++            property bool previousExpanded: true;
++            property bool unknownExpanded: true;
++
++            anchors.fill: parent;
++
++            clip: true
++            model: connectionSortModel;
++            currentIndex: -1;
++            interactive: true;
++            boundsBehavior: Flickable.StopAtBounds;
++            section.property: "itemSection";
++            section.delegate: SectionHeader {
++                onHideSection: {
++                    if (section == i18n("Active connections")) {
++                        connectionView.activeExpanded = false;
++                    } else if (section == i18n("Previous connections")) {
++                        connectionView.previousExpanded = false;
++                    } else {
++                        connectionView.unknownExpanded = false;
++                    }
+                 }
+-            }
+ 
+-            onShowSection: {
+-                if (section == i18n("Active connections")) {
+-                    connectionView.activeExpanded = true;
+-                } else if (section == i18n("Previous connections")) {
+-                    connectionView.previousExpanded = true;
+-                } else {
+-                    connectionView.unknownExpanded = true;
++                onShowSection: {
++                    if (section == i18n("Active connections")) {
++                        connectionView.activeExpanded = true;
++                    } else if (section == i18n("Previous connections")) {
++                        connectionView.previousExpanded = true;
++                    } else {
++                        connectionView.unknownExpanded = true;
++                    }
+                 }
+             }
+-        }
+ 
+-        delegate: ConnectionItem {
+-            expanded: connectionView.expandedItem && connectionView.previouslyExpandedItem == itemUni;
+-            onItemExpanded: {
+-                if (itemExpanded) {
+-                    connectionView.expandedItem = true;
+-                    connectionView.previouslyExpandedItem = itemUni;;
+-                    connectionView.currentIndex = index;
+-                } else {
+-                    connectionView.expandedItem = false;
+-                    connectionView.previouslyExpandedItem = "";
++            delegate: ConnectionItem {
++                expanded: connectionView.expandedItem && connectionView.previouslyExpandedItem == itemUni;
++                onItemExpanded: {
++                    if (itemExpanded) {
++                        connectionView.expandedItem = true;
++                        connectionView.previouslyExpandedItem = itemUni;;
++                        connectionView.currentIndex = index;
++                    } else {
++                        connectionView.expandedItem = false;
++                        connectionView.previouslyExpandedItem = "";
++                    }
+                 }
+-            }
+ 
+-            ListView.onRemove: {
+-                if (ListView.isCurrentItem) {
+-                    connectionView.previouslyExpandedItem = "";
++                ListView.onRemove: {
++                    if (ListView.isCurrentItem) {
++                        connectionView.previouslyExpandedItem = "";
++                    }
+                 }
+             }
+         }
+-- 
+1.8.4.1
+
+From 932a9b17b72a0eed6ff7f619c6603644de92b8da Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Sun, 20 Oct 2013 19:54:35 +0200
+Subject: [PATCH] Fix the icon when you are connected to VPN
+
+BUG:326164
+---
+ declarative-plugins/applet/connectionicon.cpp | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+
+diff --git a/declarative-plugins/applet/connectionicon.cpp b/declarative-plugins/applet/connectionicon.cpp
+index c3f8540..76bdca0 100644
+--- a/declarative-plugins/applet/connectionicon.cpp
++++ b/declarative-plugins/applet/connectionicon.cpp
+@@ -166,12 +166,24 @@ void ConnectionIcon::setIcons()
+ 
+     foreach (const NetworkManager::ActiveConnection::Ptr & active, actives) {
+         if (((active->default4() || active->default6()) && active->state() == NetworkManager::ActiveConnection::Activated) || !defaultRouteExists) {
++            NetworkManager::ActiveConnection::Ptr activeConnection;
++            if (active->vpn()) {
++                NetworkManager::ActiveConnection::Ptr activeTmp;
++                activeTmp = NetworkManager::findActiveConnection(active->specificObject());
++                if (activeTmp) {
++                    activeConnection = activeTmp;
++                }
+ 
+-            if (active->vpn() || active->devices().isEmpty()) {
++                vpnFound = true;
++                NMAppletDebug() << "Emit signal setHoverIcon(object-locked)";
++                Q_EMIT setHoverIcon("object-locked");
++            } else {
++                activeConnection = active;
++            }
++            if (activeConnection->devices().isEmpty()) {
+                 continue;
+             }
+-
+-            NetworkManager::Device::Ptr device = NetworkManager::findNetworkInterface(active->devices().first());
++            NetworkManager::Device::Ptr device = NetworkManager::findNetworkInterface(activeConnection->devices().first());
+             if (device) {
+                 NetworkManager::Device::Type type = device->type();
+ 
+@@ -184,7 +196,7 @@ void ConnectionIcon::setIcons()
+                         setWirelessIconForSignalStrength(100);
+                         connectionFound = true;
+                     } else {
+-                        NetworkManager::AccessPoint::Ptr ap = wifiDevice->findAccessPoint(active->specificObject());
++                        NetworkManager::AccessPoint::Ptr ap = wifiDevice->findAccessPoint(activeConnection->specificObject());
+                         if (ap) {
+                             setWirelessIcon(device, ap->ssid());
+                             connectionFound = true;
+@@ -222,9 +234,7 @@ void ConnectionIcon::setIcons()
+                     }
+                 }
+             }
+-        }
+-
+-        if (active->vpn() && active->state() == NetworkManager::ActiveConnection::Activated) {
++        } else if (active->vpn() && active->state() == NetworkManager::ActiveConnection::Activated) {
+             vpnFound = true;
+             NMAppletDebug() << "Emit signal setHoverIcon(object-locked)";
+             Q_EMIT setHoverIcon("object-locked");
+-- 
+1.8.4.1
+
+From bd2be670a07f3dd3702ddfb66726d0edeb067740 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Luk=C3=A1=C5=A1=20Tinkl?= <lukas@kde.org>
+Date: Wed, 16 Oct 2013 17:27:54 +0200
+Subject: [PATCH] minor improvements
+
+---
+ declarative-plugins/applet/networkstatus.cpp | 5 ++---
+ kded/bluetoothmonitor.cpp                    | 1 +
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/declarative-plugins/applet/networkstatus.cpp b/declarative-plugins/applet/networkstatus.cpp
+index d63066d..8149da9 100644
+--- a/declarative-plugins/applet/networkstatus.cpp
++++ b/declarative-plugins/applet/networkstatus.cpp
+@@ -129,8 +129,8 @@ void NetworkStatus::changeTooltip()
+     }
+ 
+     QString tooltip = "<qt>";
+-    QString format = "<b>%1 - %2</b><br>%3<br><br>";
+-    QString formatDefault = "<b>%1 - %2</b><br><b>%3</b><br><br>";
++    const QString format = "<b>%1 - %2</b><br>%3<br><br>";
++    const QString formatDefault = "<b>%1 - %2</b><br><b>%3</b><br><br>";
+ 
+     foreach (const NetworkManager::ActiveConnection::Ptr & active, NetworkManager::activeConnections()) {
+         if (!active->devices().isEmpty()) {
+@@ -145,7 +145,6 @@ void NetworkStatus::changeTooltip()
+                 } else {
+                     devName = device->ipInterfaceName();
+                 }
+-//                 conType = NetworkManager::ConnectionSettings::typeAsString(active->connection()->settings()->connectionType());
+                 if (active->vpn()) {
+                     conType = i18n("VPN Connection");
+                 } else {
+diff --git a/kded/bluetoothmonitor.cpp b/kded/bluetoothmonitor.cpp
+index 2221d09..5d0218b 100644
+--- a/kded/bluetoothmonitor.cpp
++++ b/kded/bluetoothmonitor.cpp
+@@ -220,6 +220,7 @@ void BluetoothMonitor::init()
+ 
+     mDunDevice = reply.value();
+ }
++
+ #if WITH_MODEMMANAGER_SUPPORT
+ void BluetoothMonitor::modemAdded(const QString &udi)
+ {
+-- 
+1.8.4.1
+
+From dfe132707b15c5902bb5daaafcbb43d8cac193ca Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Mon, 14 Oct 2013 15:49:11 +0200
+Subject: [PATCH] Do not insert "empty" connections
+
+This happens when you don't have access to a connection which was created by another user.
+We should probably improve Connection::isValid() in libnm-qt to handle it.
+---
+ declarative-plugins/model/model.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/declarative-plugins/model/model.cpp b/declarative-plugins/model/model.cpp
+index 1b3f4c3..40ba3bc 100644
+--- a/declarative-plugins/model/model.cpp
++++ b/declarative-plugins/model/model.cpp
+@@ -230,7 +230,7 @@ void Model::addConnection(const QString& connection, const QString& device)
+ {
+     NetworkManager::Connection::Ptr con = NetworkManager::findConnection(connection);
+ 
+-    if (con->settings()->isSlave()) {
++    if (con->settings()->isSlave() || con->name().isEmpty() || con->uuid().isEmpty()) {
+         return;
+     }
+ 
+-- 
+1.8.4.1
+
+From 8f4c0fc26118481ecec1d7ce024a16d3461f1852 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Tue, 15 Oct 2013 22:43:45 +0200
+Subject: [PATCH] Display wireless icon with full signal for shared connections
+
+CCBUG:325945
+---
+ declarative-plugins/model/modelitem.cpp | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/declarative-plugins/model/modelitem.cpp b/declarative-plugins/model/modelitem.cpp
+index 9a5931f..58d5c42 100644
+--- a/declarative-plugins/model/modelitem.cpp
++++ b/declarative-plugins/model/modelitem.cpp
+@@ -151,6 +151,17 @@ QString ModelItem::icon() const
+             break;
+         case NetworkManager::ConnectionSettings::Wireless:
+             if (m_signal == 0 ) {
++                if (!m_connectionPath.isEmpty()) {
++                    NetworkManager::Connection::Ptr con = NetworkManager::findConnection(m_connectionPath);
++                    if (con) {
++                        NetworkManager::WirelessSetting::Ptr wirelessSetting;
++                        wirelessSetting = con->settings()->setting(NetworkManager::Setting::Wireless).dynamicCast<NetworkManager::WirelessSetting>();
++                        if (wirelessSetting && (wirelessSetting->mode() == NetworkManager::WirelessSetting::Adhoc ||
++                                                wirelessSetting->mode() == NetworkManager::WirelessSetting::Ap)) {
++                            return "network-wireless-100";
++                        }
++                    }
++                }
+                 return "network-wireless-00";
+             } else if (m_signal < 20) {
+                 return "network-wireless-20";
+-- 
+1.8.4.1
+
+From dce686c21cc73669082bd54b1bec177b8d385377 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Tue, 15 Oct 2013 22:44:23 +0200
+Subject: [PATCH] Do not remove shared connection when it is disconnected
+
+CCBUG:325945
+---
+ declarative-plugins/model/model.cpp | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/declarative-plugins/model/model.cpp b/declarative-plugins/model/model.cpp
+index 40ba3bc..9f04de2 100644
+--- a/declarative-plugins/model/model.cpp
++++ b/declarative-plugins/model/model.cpp
+@@ -392,10 +392,8 @@ void Model::removeWirelessNetwork(const QString& ssid, const QString& device)
+     foreach (ModelItem * item, m_items.itemsBySsid(ssid, device)) {
+         NetworkManager::AccessPoint::Ptr accessPoint;
+         NetworkManager::WirelessDevice::Ptr wirelessDevice = NetworkManager::findNetworkInterface(item->devicePath()).objectCast<NetworkManager::WirelessDevice>();
+-        if (wirelessDevice) {
+-            accessPoint = wirelessDevice->findAccessPoint(item->specificPath());
+-        }
+-        if (accessPoint && accessPoint->mode() == NetworkManager::AccessPoint::Adhoc &&
++
++        if (wirelessDevice && (wirelessDevice->mode() == NetworkManager::WirelessDevice::Adhoc || wirelessDevice->mode() == NetworkManager::WirelessDevice::ApMode) &&
+             NetworkManager::isWirelessEnabled() && NetworkManager::isWirelessHardwareEnabled()) {
+             item->setWirelessNetwork(QString());
+             if (updateItem(item)) {
+-- 
+1.8.4.1
+
+From ad87480a63170e65f0ca84ffe0010bc1888a5d7a Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Tue, 15 Oct 2013 23:04:28 +0200
+Subject: [PATCH] Partially revert previous commit, because it won't probably
+ work correctly for Adhoc connections
+
+CCBUG:326060
+---
+ declarative-plugins/model/model.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/declarative-plugins/model/model.cpp b/declarative-plugins/model/model.cpp
+index 9f04de2..3d0e18c 100644
+--- a/declarative-plugins/model/model.cpp
++++ b/declarative-plugins/model/model.cpp
+@@ -392,8 +392,11 @@ void Model::removeWirelessNetwork(const QString& ssid, const QString& device)
+     foreach (ModelItem * item, m_items.itemsBySsid(ssid, device)) {
+         NetworkManager::AccessPoint::Ptr accessPoint;
+         NetworkManager::WirelessDevice::Ptr wirelessDevice = NetworkManager::findNetworkInterface(item->devicePath()).objectCast<NetworkManager::WirelessDevice>();
++        if (wirelessDevice) {
++            accessPoint = wirelessDevice->findAccessPoint(item->specificPath());
++        }
+ 
+-        if (wirelessDevice && (wirelessDevice->mode() == NetworkManager::WirelessDevice::Adhoc || wirelessDevice->mode() == NetworkManager::WirelessDevice::ApMode) &&
++        if (accessPoint && (accessPoint->mode() == NetworkManager::AccessPoint::Adhoc || wirelessDevice->mode() == NetworkManager::WirelessDevice::ApMode) &&
+             NetworkManager::isWirelessEnabled() && NetworkManager::isWirelessHardwareEnabled()) {
+             item->setWirelessNetwork(QString());
+             if (updateItem(item)) {
+-- 
+1.8.4.1
+
+From f870b360d28af901e5e141519af24ea5cfeaff78 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Wed, 16 Oct 2013 13:05:21 +0200
+Subject: [PATCH] Remove item only when there is no connection in the case when
+ AP in ad-hoc mode dissapears
+
+---
+ declarative-plugins/model/model.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/declarative-plugins/model/model.cpp b/declarative-plugins/model/model.cpp
+index 3d0e18c..bb88362 100644
+--- a/declarative-plugins/model/model.cpp
++++ b/declarative-plugins/model/model.cpp
+@@ -396,7 +396,10 @@ void Model::removeWirelessNetwork(const QString& ssid, const QString& device)
+             accessPoint = wirelessDevice->findAccessPoint(item->specificPath());
+         }
+ 
+-        if (accessPoint && (accessPoint->mode() == NetworkManager::AccessPoint::Adhoc || wirelessDevice->mode() == NetworkManager::WirelessDevice::ApMode) &&
++        // When accesspoint in ad-hoc mode dissapears, we should remove the item only when there is no connection. Similar case is when
++        // a wireless device is in AP mode, but in this case there could be only one visible AP and this should always be associated with some connection.
++        if (accessPoint && ((accessPoint->mode() == NetworkManager::AccessPoint::Adhoc && !item->connectionPath().isEmpty()) ||
++                            wirelessDevice->mode() == NetworkManager::WirelessDevice::ApMode) &&
+             NetworkManager::isWirelessEnabled() && NetworkManager::isWirelessHardwareEnabled()) {
+             item->setWirelessNetwork(QString());
+             if (updateItem(item)) {
+-- 
+1.8.4.1
+
+From c3c6f974399d2d70f9d3c42f1c7f9999ba0ceb11 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Luk=C3=A1=C5=A1=20Tinkl?= <lukas@kde.org>
+Date: Mon, 21 Oct 2013 16:31:41 +0200
+Subject: [PATCH] Allow adding a Bridge without adding a connection to it
+
+BUG: 326374
+FIXED-IN: 0.9.3.2
+---
+ lib/editor/bridgewidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/editor/bridgewidget.cpp b/lib/editor/bridgewidget.cpp
+index 8815eb2..95344c4 100644
+--- a/lib/editor/bridgewidget.cpp
++++ b/lib/editor/bridgewidget.cpp
+@@ -216,5 +216,5 @@ void BridgeWidget::populateBridges()
+ 
+ bool BridgeWidget::isValid() const
+ {
+-    return !m_ui->ifaceName->text().isEmpty() && m_ui->bridges->count() > 0;
++    return !m_ui->ifaceName->text().isEmpty();
+ }
+-- 
+1.8.4.1
+
+From 16b0df71b48c637884278e0f6a746c6909327c4e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Luk=C3=A1=C5=A1=20Tinkl?= <lukas@kde.org>
+Date: Tue, 22 Oct 2013 19:13:13 +0200
+Subject: [PATCH] rhbz#1019890 - vpnc plugin should use new cisco-decrypt mode
+
+---
+ vpn/vpnc/vpnc.cpp | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/vpn/vpnc/vpnc.cpp b/vpn/vpnc/vpnc.cpp
+index d4a511d..645249d 100644
+--- a/vpn/vpnc/vpnc.cpp
++++ b/vpn/vpnc/vpnc.cpp
+@@ -145,7 +145,6 @@ NMVariantMapMap VpncUiPlugin::importConnectionSettings(const QString &fileName)
+     KConfigGroup cg(config, "main");   // Keys&Values are stored under [main]
+     if (cg.exists()) {
+         // Setup cisco-decrypt binary to decrypt the passwords
+-        QStringList decrArgs;
+         const QString ciscoDecryptBinary = KStandardDirs::findExe("cisco-decrypt", QString::fromLocal8Bit(qgetenv("PATH")) + ":/usr/lib/vpnc");
+         if (ciscoDecryptBinary.isEmpty()) {
+             mErrorMessage = i18n("Needed executable cisco-decrypt could not be found.");
+@@ -174,11 +173,11 @@ NMVariantMapMap VpncUiPlugin::importConnectionSettings(const QString &fileName)
+         }
+         else if (!decrPlugin->readStringKeyValue(cg,"enc_UserPassword").isEmpty() && !ciscoDecryptBinary.isEmpty()) {
+             // Decrypt the password and insert into map
+-            decrArgs.clear();
+-            decrArgs << decrPlugin->readStringKeyValue(cg,"enc_UserPassword");
+-            decrPlugin->ciscoDecrypt->setProgram(ciscoDecryptBinary, decrArgs);
++            decrPlugin->ciscoDecrypt->setProgram(ciscoDecryptBinary);
+             decrPlugin->ciscoDecrypt->start();
+-            if (decrPlugin->ciscoDecrypt->waitForStarted() && decrPlugin->ciscoDecrypt->waitForFinished()) {
++            decrPlugin->ciscoDecrypt->waitForStarted();
++            decrPlugin->ciscoDecrypt->write(decrPlugin->readStringKeyValue(cg,"enc_UserPassword").toUtf8());
++            if (decrPlugin->ciscoDecrypt->waitForFinished()) {
+                 secretData.insert(NM_VPNC_KEY_XAUTH_PASSWORD, decrPlugin->decryptedPasswd);
+             }
+         }
+@@ -203,11 +202,11 @@ NMVariantMapMap VpncUiPlugin::importConnectionSettings(const QString &fileName)
+         }
+         else if (!decrPlugin->readStringKeyValue(cg,"enc_GroupPwd").isEmpty() && !ciscoDecryptBinary.isEmpty()) {
+             //Decrypt the password and insert into map
+-            decrArgs.clear();
+-            decrArgs << decrPlugin->readStringKeyValue(cg,"enc_GroupPwd");
+-            decrPlugin->ciscoDecrypt->setProgram(ciscoDecryptBinary, decrArgs);
++            decrPlugin->ciscoDecrypt->setProgram(ciscoDecryptBinary);
+             decrPlugin->ciscoDecrypt->start();
+-            if (decrPlugin->ciscoDecrypt->waitForStarted() && decrPlugin->ciscoDecrypt->waitForFinished()) {
++            decrPlugin->ciscoDecrypt->waitForStarted();
++            decrPlugin->ciscoDecrypt->write(decrPlugin->readStringKeyValue(cg,"enc_GroupPwd").toUtf8());
++            if (decrPlugin->ciscoDecrypt->waitForFinished()) {
+                 secretData.insert(NM_VPNC_KEY_SECRET, decrPlugin->decryptedPasswd);
+                 data.insert(NM_VPNC_KEY_SECRET"-flags", QString::number(NetworkManager::Setting::AgentOwned));
+             }
+-- 
+1.8.4.1
+
