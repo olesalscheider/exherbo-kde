@@ -3,7 +3,7 @@
 
 SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
 
-require libmm-qt scm-git
+require scm-git libmm-qt
 
 PLATFORMS="~amd64"
 
