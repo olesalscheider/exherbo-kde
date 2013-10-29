@@ -7,29 +7,23 @@ SUMMARY="Provide UI/KWallet Integration For Passwords and SSL Errors on Account 
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS=""
-ever at_least 0.6.80 && \
-    MYOPTIONS+=" single-sign-on [[ description = [ Provide single sign-on functionality via Accounts & SSO framework ] ]]"
+MYOPTIONS="single-sign-on
+    [[ description = [ Provide single sign-on functionality via Accounts & SSO framework ] ]]"
 
 DEPENDENCIES+="
     build+run:
         app-crypt/qca:2
         dev-libs/qjson[>=0.5]
+        single-sign-on? (
+            net-libs/accounts-qt
+            net-libs/signon
+        )
 "
 
 BUGS_TO="mixi@exherbo.org"
 
-if ever at_least 0.6.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            single-sign-on? (
-                net-libs/accounts-qt
-                net-libs/signon
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-        'single-sign-on AccountsQt'
-        'single-sign-on SignOnQt'
-    )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'single-sign-on AccountsQt'
+    'single-sign-on SignOnQt'
+)
 
