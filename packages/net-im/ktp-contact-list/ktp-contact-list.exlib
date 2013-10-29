@@ -7,23 +7,16 @@ SUMMARY="The telepathy-kde contact list application"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
-ever at_least 0.6.80 && \
-    MYOPTIONS+=" contact-aggregation [[ description = [ Support aggregation of contacts from multiple sources ] ]]"
+MYOPTIONS="contact-aggregation
+    [[ description = [ Support aggregation of contacts from multiple sources ] ]]"
 
-if ever at_least 0.6.80 ; then
-    DEPENDENCIES="
-        build+run:
-            net-im/ktp-common-internals[contact-aggregation?]
-            contact-aggregation? ( kde/libkpeople )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'contact-aggregation KPeople' )
-else
-    DEPENDENCIES="
-        build+run:
-            net-im/telepathy-logger-qt[>=0.5.60]
-    "
-fi
+DEPENDENCIES="
+    build+run:
+        net-im/ktp-common-internals[contact-aggregation?]
+        contact-aggregation? ( kde/libkpeople )
+"
 
 BUGS_TO="mixi@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'contact-aggregation KPeople' )
 
