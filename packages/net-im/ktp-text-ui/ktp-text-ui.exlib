@@ -14,19 +14,10 @@ DEPENDENCIES+="
         x11-libs/qt:4[webkit]
 "
 
-if ever at_least 0.6.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/qjson [[ note = [ expansion of shortened urls ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            net-im/telepathy-logger-qt[>=0.5.60]
-    "
-fi
+DEPENDENCIES+="
+    build+run:
+        dev-libs/qjson [[ note = [ expansion of shortened urls ] ]]
+"
 
 BUGS_TO="mixi@exherbo.org"
-
-RESTRICT="test" # tests are missing some files (last checked 0.5.0)
 
