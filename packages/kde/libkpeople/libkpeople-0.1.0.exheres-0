@@ -14,6 +14,7 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
+        sys-devel/gettext
         doc? ( app-doc/doxygen )
     build+run:
         app-text/shared-desktop-ontologies[>=0.7.0]
