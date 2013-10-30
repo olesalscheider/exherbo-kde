@@ -27,7 +27,7 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         app-crypt/qca:2
-        dev-libs/qjson
+        dev-libs/qjson[>=0.8.1]
         kde/kdelibs:4
         media-libs/phonon
     run:
