@@ -5,3 +5,7 @@ require ktp-accounts-kcm
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-Fixed-to-use-ModemManagerQt-0.5.1-API-correctly.patch
+)
+
