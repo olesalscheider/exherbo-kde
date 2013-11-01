@@ -5,7 +5,3 @@ require kig
 
 PLATFORMS="~amd64 ~x86"
 
-#DEFAULT_SRC_PREPARE_PATCHES=(
-#    "${FILES}"/0001-Use-standard-cmake-module-to-find-boost_python.patch
-#)
-
