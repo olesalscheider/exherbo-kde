@@ -93,11 +93,13 @@ DEPENDENCIES="
 
 if ever at_least 4.10.90 ; then
     DEPENDENCIES+="
-        dev-libs/attica[>=0.4.2]
+        build+run:
+            dev-libs/attica[>=0.4.2]
     "
 else
     DEPENDENCIES+="
-        dev-libs/attica[>=0.1.90]
+        build+run:
+            dev-libs/attica[>=0.1.90]
     "
 fi
 
