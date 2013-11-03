@@ -16,11 +16,5 @@ DEPENDENCIES+="
 
 BUGS_TO="mixi@exherbo.org"
 
-src_prepare() {
-    cmake_src_prepare
-
-    # CMAKE_DISABLE_FIND_PACKAGE doesn't work because libmm-qt is searched with pkg-config
-    option sms || edo sed -e "/^add_subdirectory (pintxo)/d" \
-                          -i plugins/CMakeLists.txt
-}
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'sms pintxo' )
 
