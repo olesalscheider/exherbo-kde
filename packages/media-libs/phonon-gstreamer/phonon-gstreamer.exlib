@@ -12,14 +12,14 @@ else
     CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
 fi
 
-require cmake [ api=2 ] gtk-icon-cache
+require cmake [ api=2 ] gtk-icon-cache freedesktop-mime
 
 SUMMARY="A GStreamer-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
 DEPENDENCIES+="
     build:
@@ -28,11 +28,13 @@ DEPENDENCIES+="
         dev-libs/glib:2
         dev-libs/libxml2:2.0
         media-libs/gstreamer:0.10
-        media-libs/phonon[>=4.6.0]
+        media-libs/phonon[>=4.7.0][qt5=]
         media-plugins/gst-plugins-base:0.10
         x11-dri/mesa
         x11-libs/qt:4[opengl]
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
+
+CMAKE_SRC_CONFIGURE_OPTIONS=( 'qt5 PHONON_BUILD_PHONON4QT5' )
 
