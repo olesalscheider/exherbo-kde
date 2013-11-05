@@ -8,26 +8,28 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.xz"
 fi
 
-require cmake [ api=2 ]
+require cmake [ api=2 ] freedesktop-mime
 
 SUMMARY="A VLC-based phonon backend"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 
 LICENCES="LGPL-3"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.86]
     build+run:
         media/vlc[>=2.0.1][dbus]
-        media-libs/phonon[>=4.6.0]
+        media-libs/phonon[>=4.7.0][qt5=]
         x11-libs/qt:4[>=4.4.0][dbus][phonon]
 "
 
 CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
+
+CMAKE_SRC_CONFIGURE_OPTIONS=( 'qt5 PHONON_BUILD_PHONON4QT5' )
 
