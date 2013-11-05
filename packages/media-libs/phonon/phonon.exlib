@@ -1,6 +1,7 @@
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Copyright 2009 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2010 Ingmar Vanhassel
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'phonon-4.2-scm.kdebuild-1' from Genkdesvn, which is:
 #     Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -11,10 +12,10 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${PV}/src/${PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/phonon/${PV}/${PNV}.tar.xz"
 fi
 
-require cmake [[ api=2 out_of_source=false ]] easy-multibuild
+require cmake [[ api=2 ]] easy-multibuild
 
 SUMMARY="KDE multimedia API"
 HOMEPAGE="http://phonon.kde.org"
@@ -22,47 +23,64 @@ HOMEPAGE="http://phonon.kde.org"
 LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS="doc
+    gstreamer  [[ description = [ Enable the Phonon Gstreamer backend ] ]]
     pulseaudio [[ description = [ Enable playback through Pulseaudio ] ]]
+    qt5        [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]
+    vlc        [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
     zeitgeist  [[ description = [ Enables multimedia applications to let Zeitgeist log playback activity ] ]]
 
-    (
-        gstreamer   [[ description = [ Enable the Phonon Gstreamer backend ] ]]
-        vlc         [[ description = [ Use the Phonon VLC backend, which is the recommended backend ] ]]
-    ) [[ number-selected = at-least-one ]]
+    ( gstreamer vlc ) [[ number-selected = at-least-one ]]
+    qt5 [[ requires = -zeitgeist ]]
 
     multibuild_c: 32 64
 "
+# NOTE: QZeitgeist has not been ported to Qt5, since the restrition of qt5 and zeitgeist
 
 DEPENDENCIES="
     build:
-        kde/automoc4[>=0.9.86]
         doc? ( app-doc/doxygen )
         virtual/pkg-config
     build+run:
-        x11-libs/qt:4[>=4.7.4-r1][dbus][multibuild_c:*(-)?][phonon] [[
-            note = [ Requires >=4.6.1 but 4.7.4-r1 added some multilib fixes that are needed when multibuild is enabled ]
-        ]]
-        zeitgeist? ( dev-libs/libqzeitgeist[>=0.8] )
         pulseaudio? (
             dev-libs/glib:2
             media-sound/pulseaudio[>=0.9.21][multibuild_c:*(-)?]
         )
+       !qt5? (
+            x11-libs/qt:4[>=4.7.4-r1][dbus][multibuild_c:*(-)?][phonon] [[
+                note = [ Requires >=4.6.1 but 4.7.4-r1 added some multilib fixes
+                         that are needed when multibuild is enabled ] ]]
+        )
+        qt5? (
+            x11-libs/qtbase:5[multibuild_c:*(-)?]
+            x11-libs/qtquick1:5
+            x11-libs/qttools:5
+        )
+        zeitgeist? ( dev-libs/libqzeitgeist[>=0.8] )
     post:
         gstreamer? ( media-libs/phonon-gstreamer )
         vlc? ( media-libs/phonon-vlc )
 "
 
-CMAKE_SRC_CONFIGURE_OPTIONS=( 'doc PHONON_BUILD_DOC' )
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    'doc PHONON_BUILD_DOC'
+    'qt5 PHONON_BUILD_PHONON4QT5'
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
         'pulseaudio GLIB2'
         'pulseaudio PulseAudio'
         'zeitgeist QZeitgeist'
 )
 CMAKE_SRC_CONFIGURE_PARAMS=(
+    # automoc is included in cmake since 2.8.5
+    -DCMAKE_AUTOMOC:BOOL=TRUE
+    # super experimental QML support
+    -DPHONON_BUILD_DECLARATIVE_PLUGIN:BOOL=FALSE
     -DPHONON_BUILD_DESIGNER_PLUGIN:BOOL=TRUE
+    -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT:BOOL=TRUE
 )
 
 configure_one_multibuild() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_INSTALL_LIBDIR=${LIBDIR} )
     cmake_src_configure
 }
 

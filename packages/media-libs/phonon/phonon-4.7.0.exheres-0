@@ -10,7 +10,3 @@ require phonon
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-fix_plugin_loading_witout_kde.patch
-)
-
