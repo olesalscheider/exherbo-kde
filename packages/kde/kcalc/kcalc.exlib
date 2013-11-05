@@ -1,4 +1,4 @@
-# Copyright 2011 Heiko Becker <heiko@shruuf.de>
+# Copyright 2011 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdeutils.exlib', which is:
 #     Copyright 2008-2011 Bo Ørsted Andresen
@@ -21,4 +21,6 @@ DEPENDENCIES="
         dev-libs/mpfr:=
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
+
+RESTRICT="-test"
 
