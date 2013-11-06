@@ -12,33 +12,20 @@ DEPENDENCIES="
     build+run:
         dev-libs/qjson[>=0.5] [[ note = [ project plugin ] ]]
         kde/kactivities:4[>=4.9.90]
+        kde/kdelibs:${SLOT}[>=4.10.60] [[ note = [ with BUILD_KTEXTEDITOR:BOOL=TRUE only 4.8.0 ] ]]
         x11-misc/shared-mime-info[>=0.30]
         python? (
             dev-lang/python:=[>=2.5]
             dev-python/PyQt4[>=4.3.1]
             dev-python/sip[>=4.7.1]
+            kde/pykde4:4
+            x11-libs/qt:4[webkit]
         )
         !kde/kdesdk[<4.7.0] [[
             description = [ kde/kate was part of kde/kdesdk in previous releases ]
             resolution = uninstall-blocked-after
         ]]
 "
-
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.10.60] [[ note = [ with BUILD_KTEXTEDITOR:BOOL=TRUE only 4.8.0 ] ]]
-            python? (
-                kde/pykde4:4
-                x11-libs/qt:4[webkit]
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.7.3]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
         'python PyKDE4'

@@ -8,55 +8,34 @@ SUMMARY="Central services like file indexing, file system monitoring, query, sto
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="doc
+    epub   [[ description = [ Adds support for extracting metadata from .epub ebook files ] ]]
     exif   [[ description = [ Adds support for extracting metadata from EXIF headers ] ]]
     ffmpeg [[ description = [ Adds support for extracting audio and video metadata ] ]]
     pdf    [[ description = [ Adds support for extracting metadata from pdf files ] ]]
     taglib [[ description = [ Adds support for extracting metadata from music files ] ]]
 "
-ever at_least 4.10.90 && MYOPTIONS+=" epub [[ description = [ Adds support for extracting
-                                               metadata from .epub ebook files ] ]]"
 
 DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen )
     build+run:
+        app-text/shared-desktop-ontologies[>=0.10.51]
+        dev-libs/soprano[>=2.9.3][virtuoso]
+        kde/kdelibs:${SLOT}[>=4.9.4]
+        epub? ( app-text/ebook-tools )
         exif? ( graphics/exiv2[>=0.21] )
+        ffmpeg? ( media/ffmpeg[>=1.0] )
         pdf? ( app-text/poppler[>=0.12.1][qt4] )
         taglib? ( media-libs/taglib )
 "
 
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.10.51]
-            dev-libs/soprano[>=2.9.3][virtuoso]
-            kde/kdelibs:${SLOT}[>=4.9.4]
-            epub? ( app-text/ebook-tools )
-            ffmpeg? ( media/ffmpeg[>=1.0] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-        EPub
-        'exif Exiv2'
-        FFmpeg
-        'pdf PopplerQt4'
-        Taglib
-    )
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.10]
-            dev-libs/soprano[>=2.9.0][virtuoso]
-            kde/kdelibs:${SLOT}[>=4.7.0]
-            ffmpeg? ( media/ffmpeg )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-        'exif Exiv2'
-        FFmpeg
-        'pdf PopplerQt4'
-        Taglib
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    EPub
+    'exif Exiv2'
+    FFmpeg
+    'pdf PopplerQt4'
+    Taglib
 )
-fi
-
 
 src_compile() {
     default

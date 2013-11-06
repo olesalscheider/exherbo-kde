@@ -44,9 +44,9 @@ MYOPTIONS="ieee1394 lm_sensors python xinerama
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, etc. you'll probably want this. ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
-    qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]"
-ever at_least 4.10.90 && MYOPTIONS+=" wayland" \
-                      || MYOPTIONS+=" wicd [[ description = [ Wicd wired and wireless network manager integration ] ]]"
+    qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
+    wayland
+"
 
 MYOPTIONS+=" kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
                                                  (deprecated, will be replaced by kde/kscreen) ] ]]
@@ -61,7 +61,7 @@ DEPENDENCIES="
     build+run:
         user/kdm
         app-pim/strigi[>=0.6.3][dbus][qt4]
-        dev-libs/boost
+        dev-libs/boost[>=1.34]
         dev-libs/glib:2
         dev-libs/libusb:0.1
         dev-libs/qjson  [[ note = [ chromium bookmarks runner, hard enable since it's small and
@@ -80,6 +80,7 @@ DEPENDENCIES="
         media-libs/libpng [[ note = ksplash ]]
         server-pim/akonadi
         sys-apps/pciutils
+        sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]
         sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         sys-libs/zlib
@@ -110,6 +111,10 @@ DEPENDENCIES="
         barcodes? ( kde/prison ) [[ note = klipper ]]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
         ieee1394? ( media-libs/libraw1394 )
+        wayland? (
+            sys-libs/wayland
+            x11-dri/mesa[wayland]
+        )
         kde_parts:krandr? (
             !kde/kscreen [[
                 description = [ krandr (deprecated) provides the same functionality as kscreen
@@ -141,32 +146,8 @@ DEPENDENCIES="
         )
     recommendation:
         x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]]
+        wayland? ( compositor/weston )
 "
-
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/boost[>=1.34]
-            sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]
-            wayland? (
-                sys-libs/wayland
-                x11-dri/mesa[wayland]
-            )
-        recommendation:
-            wayland? ( compositor/weston )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Wayland )
-else
-    DEPENDENCIES+="
-        build+run:
-            wicd? ( net-misc/wicd )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( wicd )
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_Googlegadgets:BOOL=FALSE # Extra plasma functionality
-        -DWITH_NetworkManager:BOOL=FALSE # doesn't add useful functionality, use kde/plasma-nm
-    )
-fi
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
 
@@ -208,6 +189,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenGLES
     'python PythonLibrary'
     'qalculate Qalculate'
+     Wayland
      XINERAMA
 )
 

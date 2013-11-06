@@ -18,10 +18,6 @@ DEPENDENCIES="
         dev-lang/python:* [[ note = [ The pykig.py program is built unconditionally ] ]]
 "
 
-if ever at_least 4.10.95 ; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'python BoostPython' )
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'python BoostPython' )
-else
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'python Boost' )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'python BoostPython' )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'python BoostPython' )
 

@@ -18,20 +18,13 @@ DEPENDENCIES="
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kactivities:${SLOT}[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
+        kde/nepomuk-core:${SLOT}
         media-libs/jpeg
         media-libs/lcms2
         media-libs/libpng
         media-libs/phonon
         kipi? ( graphics/digikam )
 "
-
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano
-            kde/nepomuk-core:${SLOT}
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 

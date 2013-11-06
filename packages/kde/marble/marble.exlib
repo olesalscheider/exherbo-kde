@@ -24,7 +24,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
-        x11-libs/qt:4[sql][webkit]
+        x11-libs/qt:4[>=4.6.0][sql][webkit]
         x11-misc/shared-mime-info[>=0.40]
         python? (
             dev-lang/python:=
@@ -32,15 +32,6 @@ DEPENDENCIES="
             dev-python/sip[>=4.12.2]
         )
 "
-
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4[sql][webkit]
-    "
-    # quazip, unwritten, reading and displaying .kmz files, http://quazip.sourceforge.net/
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_quazip:BOOL=FALSE )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_DBUS=ON
@@ -57,6 +48,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # http://code.google.com/p/qextserialport/
     -DWITH_QextSerialPort=OFF
     -DWITH_DESIGNER_PLUGIN=ON
+    # quazip, unwritten, reading and displaying .kmz files, http://quazip.sourceforge.net/
+    -DWITH_quazip:BOOL=FALSE
 )
 
 src_configure() {

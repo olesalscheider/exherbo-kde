@@ -34,7 +34,7 @@ korganizer ktimetracker strigi-analyzer"
 
 MYOPTIONS+="
     barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
-    $(ever at_least 4.10.90 && echo " grammar [[ description = [ Build a grammar-check plugin ] ]]" )
+    grammar [[ description = [ Build a grammar-check plugin ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -46,10 +46,13 @@ DEPENDENCIES+="
     build+run:
         app-crypt/gpgme
         app-pim/strigi[>=0.6.3][dbus][qt4]
+        app-text/shared-desktop-ontologies[>=0.11]
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
         dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
+        dev-libs/soprano[>=2.9.0]
+        kde/kactivities:${SLOT}[>=4.10.90]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
@@ -57,36 +60,20 @@ DEPENDENCIES+="
         kde/nepomuk-core:${SLOT}[>=${PV}]
         kde/nepomuk-widgets:${SLOT}[>=4.9.90]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
+        server-pim/akonadi[>=1.9.51]
         sys-libs/zlib
         x11-libs/qt:4[dbus][sql]
         barcodes? ( kde/prison )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=2.0.0]
         )
+        grammar? ( office-libs/link-grammar )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
             x11-libs/libXScrnSaver
         )
 "
-
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.11]
-            dev-libs/soprano[>=2.9.0]
-            kde/kactivities:${SLOT}[>=4.10.90]
-            server-pim/akonadi[>=1.9.51]
-            grammar? ( office-libs/link-grammar )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.10]
-            dev-libs/soprano[>=2.7.56]
-            server-pim/akonadi[>=1.8.51]
-"
-fi
 
 # Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
 # macro_log_feature(DBLATEX_EXECUTABLE "dblatex" "The DocBook to LaTeX converter" "http://dblatex.sourceforge.net/" FALSE
