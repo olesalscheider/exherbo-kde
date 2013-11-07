@@ -28,11 +28,8 @@ kde4_shared_cmake_params() {
         -DKDE4_ENABLE_HTMLHANDBOOK:BOOL=TRUE \
         -DKDE4_USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR:BOOL=TRUE \
         -DWITH_STRICT_DEPENDENCIES:BOOL=TRUE \
-        $(if has test ${RESTRICT}; then
-            echo '-DKDE4_BUILD_TESTS:BOOL=FALSE'
-          else
-            echo '-DKDE4_BUILD_TESTS:BOOL=TRUE'
-          fi)
+        $(expecting_tests && echo '-DKDE4_BUILD_TESTS:BOOL=TRUE' \
+                          || echo '-DKDE4_BUILD_TESTS:BOOL=FALSE')
 }
 
 kde_pkg_setup() {
