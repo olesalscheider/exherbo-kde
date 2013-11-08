@@ -15,8 +15,8 @@ MYOPTIONS="pulseaudio"
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/kde-baseapps:${SLOT}[>=${PV}]
-        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kde-baseapps:${SLOT}[>=4.11.4.
+        kde/kde-workspace:${SLOT}[>=4.11.4.
         media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
         media-libs/phonon
         sys-sound/alsa-lib
