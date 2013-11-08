@@ -21,7 +21,7 @@ DEPENDENCIES="
             sci-libs/eigen:2 [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
         )
     build+run:
-        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kde-workspace:${SLOT}[>=4.11.0]
         kde/kdelibs:${SLOT}[>=4.7.0]
         x11-dri/mesa
         x11-libs/libX11
