@@ -102,6 +102,13 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
+if ever at_least 4.11.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            app-crypt/gpgme
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_NepomukCore:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
