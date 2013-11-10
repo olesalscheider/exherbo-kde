@@ -18,11 +18,16 @@ LICENCES="
 MYOPTIONS="
     python [[ description = [ Experimental python scripting support ] ]]
 "
+if ever at_least 4.11.80 ; then
+    MYOPTIONS+="
+        examples
+        qt-only [[ description = [ Build only against Qt, not kdelibs ] ]]
+        tools   [[ description = [ Build various tools, e.g. for file format conversion ] ]]
+    "
+fi
 
-# marble provides a qt-only mode which does not need kdelibs. Currently, we enforce the kde mode.
 DEPENDENCIES="
     build+run:
-        kde/kdelibs:${SLOT}[>=4.7.0]
         media-libs/phonon
         x11-libs/qt:4[>=4.6.0][sql][webkit]
         x11-misc/shared-mime-info[>=0.40]
@@ -32,6 +37,23 @@ DEPENDENCIES="
             dev-python/sip[>=4.12.2]
         )
 "
+
+if ever at_least 4.11.80; then
+    DEPENDENCIES+="
+        build+run:
+            examples? ( media-libs/opencv )
+           !qt-only? ( kde/kdelibs:${SLOT}[>=4.7.0] )
+            tools? (
+                dev-libs/protobuf
+                sys-libs/zlib
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.7.0]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_DBUS=ON
@@ -51,6 +73,23 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # quazip, unwritten, reading and displaying .kmz files, http://quazip.sourceforge.net/
     -DWITH_quazip:BOOL=FALSE
 )
+
+if ever at_least 4.11.80; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        # cannot build the KDE version against Qt5 until KDE Frameworks 5
+        -DQT5BUILD:BOOL=FALSE
+        -DMOBILE:BOOL=FALSE
+    )
+    CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt-only QTONLY' )
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+        'examples MARBLE_EXAMPLES'
+        'tools MARBLE_TOOLS'
+    )
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+        'tools Protobuf'
+        'tools ZLIB'
+    )
+fi
 
 src_configure() {
     if option python; then
