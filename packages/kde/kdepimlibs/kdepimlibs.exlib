@@ -26,17 +26,31 @@ DEPENDENCIES="
         dev-libs/libgpg-error
         dev-libs/qjson
         dev-libs/soprano[>=2.9.0]
-        kde/kdelibs:${SLOT}[>=4.10.4]
         kde/nepomuk-core:${SLOT}
         media-libs/phonon
         net-libs/cyrus-sasl
         office-libs/libical[>=0.42] [[ note = [ >=1.0 is recommended for 4.11, but not yet in our repo ] ]]
-        server-pim/akonadi[>=1.9.80]
         x11-libs/qt:4[>=4.8.0]
         x11-misc/shared-mime-info[>=0.30]
         barcodes? ( kde/prison )
         ldap? ( net-directory/openldap )
 "
+
+if ever at_least 4.11.97 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.11.4.
+            server-pim/akonadi[>=1.10.45]
+        test:
+            dev-libs/libxml2:2.0 [[ note = [ Needed for building the Akonadi knut resource ] ]]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdelibs:${SLOT}[>=4.10.4]
+            server-pim/akonadi[>=1.9.80]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
