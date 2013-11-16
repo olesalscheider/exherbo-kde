@@ -4,8 +4,10 @@
 # Use this exlib for packages that use KDE 4's CMake buildsystem
 
 myexparam api=1
+myexparam cmake_minimum_version=2.8.6
 
-require flag-o-matic cmake [ api=$(exparam api) ]
+require flag-o-matic cmake [ api=$(exparam api) \
+            cmake_minimum_version=$(exparam cmake_minimum_version) ]
 
 export_exlib_phases pkg_setup src_configure
 
