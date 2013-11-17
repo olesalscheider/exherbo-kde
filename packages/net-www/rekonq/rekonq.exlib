@@ -7,7 +7,7 @@ if ever is_scm ; then
     DOWNLOADS=""
 fi
 
-require cmake [ cmake_minimum_version=2.8.9 ] kde [ api=2 ] sourceforge
+require kde [ api=2 cmake_minimum_version=2.8.9 ] sourceforge [ suffix=tar.xz ]
 
 SUMMARY="A KDE browser based on Webkit"
 DESCRIPTION="
