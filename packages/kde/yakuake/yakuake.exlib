@@ -6,7 +6,7 @@ require kde
 SUMMARY="Yakuake - Quake style terminal emulator"
 DESCRIPTION="Yakuake is a drop-down terminal emulator based on KDE Konsole technology."
 HOMEPAGE="http://yakuake.kde.org/"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 
 LICENCES="GPL-2"
 SLOT="4"
@@ -22,6 +22,6 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kde-baseapps:${SLOT}
-        kde/kdelibs:${SLOT}[>=4.3.0]
+        kde/kdelibs:${SLOT}[>=4.7.1]
 "
 
