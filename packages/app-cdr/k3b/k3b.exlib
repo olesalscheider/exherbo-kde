@@ -1,7 +1,7 @@
 # Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde
+require kde [ api=2 ]
 
 SUMMARY="KDE CD Writing Software"
 DESCRIPTION="

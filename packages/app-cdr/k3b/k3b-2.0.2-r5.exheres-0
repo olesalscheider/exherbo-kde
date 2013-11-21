@@ -8,7 +8,10 @@ DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-libavcodec-compat.patch
+    "${FILES}"/${PNV}-Fixed-compilation-with-new-FFMPEG.patch
     "${FILES}"/${PNV}-ffmpeg_011.patch
+    "${FILES}"/${PNV}-CMake-checks-for-FFmpeg-API-changes.patch
+    "${FILES}"/${PNV}-FFMPEG-Renamed-enum-CodecID-to-AVCodedID.patch
+    "${FILES}"/${PNV}-FFMPEG-removed-the-deprecated-AVCODEC_MAX_AUDIO_FRAM.patch
 )
 

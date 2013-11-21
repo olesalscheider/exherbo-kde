@@ -1,26 +1,51 @@
-Source: https://bugs.kde.org/show_bug.cgi?id=300731
-Reason: fix build with ffmpeg[>=0.11]
-Upstream: no
+Upstream: yes
+
+From 9162ff9463690cd4dcbe215753d5e69637dfdadf Mon Sep 17 00:00:00 2001
+From: Alex Merry <kde@randomguy3.me.uk>
+Date: Thu, 23 Aug 2012 23:45:34 +0100
+Subject: [PATCH] Fix K3B to build with recent FFMPEG versions
+
+FFMPEG 0.11 (shipped on ArchLinux, for example) has renamed some
+functions.
+
+The exact versions in the #ifdefs are taken from the Mobile Robot
+Programming Toolkit.
+
+BUG: 300731
+
+(backport of 6f34e14b28d2f9103151c6ba08b3bb40448ffe46)
+---
+ plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
-index 0c5f366..9154d8e 100644
+index 0c5f366..024c18c 100644
 --- a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
 +++ b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
-@@ -88,7 +88,7 @@ bool K3bFFMpegFile::open()
+@@ -88,7 +88,11 @@ bool K3bFFMpegFile::open()
      close();
  
      // open the file
--    int err = ::av_open_input_file( &d->formatContext, m_filename.toLocal8Bit(), 0, 0, 0 );
++#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(53,2,0)
 +    int err = ::avformat_open_input( &d->formatContext, m_filename.toLocal8Bit(), 0, 0 );
++#else
+     int err = ::av_open_input_file( &d->formatContext, m_filename.toLocal8Bit(), 0, 0, 0 );
++#endif
      if( err < 0 ) {
          kDebug() << "(K3bFFMpegFile) unable to open " << m_filename << " with error " << err;
          return false;
-@@ -143,7 +143,7 @@ bool K3bFFMpegFile::open()
+@@ -143,7 +147,11 @@ bool K3bFFMpegFile::open()
      }
  
      // dump some debugging info
--    ::dump_format( d->formatContext, 0, m_filename.toLocal8Bit(), 0 );
++#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(53,2,0)
 +    ::av_dump_format( d->formatContext, 0, m_filename.toLocal8Bit(), 0 );
++#else
+     ::dump_format( d->formatContext, 0, m_filename.toLocal8Bit(), 0 );
++#endif
  
      return true;
  }
+-- 
+1.8.4.4
+
