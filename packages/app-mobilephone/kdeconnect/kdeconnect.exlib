@@ -15,7 +15,8 @@ Current feature list:
 - WiFi connection: no usb wire or bluetooth needed.
 - RSA Encryption: your information is safe.
 "
-HOMEPAGE="http://albertvaka.wordpress.com/"
+HOMEPAGE="http://albertvaka.wordpress.com/
+          https://projects.kde.org/projects/playground/base/${PN}-kde"
 DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${MYPNV}.tar.xz"
 
 LICENCES="GPL-2 || ( GPL-2 GPL-3 )"
@@ -34,7 +35,7 @@ DEPENDENCIES="
         app-crypt/qca-ossl:2
 "
 
-BUGS_TO="friedrich@mailstation.de"
+BUGS_TO="friedrich@mailstation.de heirecka@exherbo.org"
 
 CMAKE_SOURCE=${WORKBASE}/${MYPNV}
 
