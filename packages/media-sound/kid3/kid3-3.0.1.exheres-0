@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2012, 2013 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde [ api=2 ] sourceforge [ suffix=tar.gz ]
@@ -38,7 +38,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     # Might be optional, would be interesting if we want to build against Qt5.
-    -DWITH_KDE:BOOL=TRUE
+    -DWITH_APPS=KDE
     -DWITH_DBUS:BOOL=TRUE
     -DWITH_PHONON:BOOL=TRUE
     -DWITH_TAGLIB:BOOL=TRUE
