@@ -5,3 +5,5 @@ require umbrello
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-Fix-compile-error-due-to-undeclared-variable.patch )
+
