@@ -50,6 +50,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     # decoding. Given that we build the KDE version we cannot use that with
     # KDE-4.x.
     -DWITH_QAUDIODECODER:BOOL=FALSE
+    -DWITH_QT5:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'id3 ID3LIB'
