@@ -1,4 +1,5 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdenetwork.exlib', which is:
 #     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
@@ -146,6 +147,7 @@ src_configure() {
         $(cmake_with im_protocols:meanwhile GLIB2) \
         $(cmake_with im_protocols:meanwhile LibMeanwhile) \
         $(cmake_with im_protocols:wlm GIF) \
+        $(cmake_with im_protocols:wlm Libmsn) \
         $(cmake_with im_protocols:xmpp IDN) \
         $(cmake_with im_protocols:xmpp jabber) \
         $(cmake_with im_protocols:yahoo) \
