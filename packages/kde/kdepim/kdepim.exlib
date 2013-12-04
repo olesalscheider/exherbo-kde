@@ -43,9 +43,6 @@ MYOPTIONS+="
 DEPENDENCIES+="
     build:
         dev-libs/libxslt
-        kde_parts:kleopatra? (
-            dev-libs/libassuan[>=2.0.0] [[ note = [ libassuan is only a static library, so build-time dependency ] ]]
-        )
     build+run:
         app-crypt/gpgme
         app-pim/strigi[>=0.6.3][dbus][qt4]
@@ -63,6 +60,9 @@ DEPENDENCIES+="
         sys-libs/zlib
         x11-libs/qt:4[dbus][sql]
         barcodes? ( kde/prison )
+        kde_parts:kleopatra? (
+            dev-libs/libassuan[>=2.0.0]
+        )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? (
             x11-libs/libX11
@@ -101,7 +101,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDEPIM_MOBILE_UI:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'barcodes Prison'
     'kde_parts:kleopatra Assuan'
     'kde_parts:kleopatra Assuan2'

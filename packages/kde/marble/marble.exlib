@@ -43,6 +43,7 @@ if ever at_least 4.10.90 ; then
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DWITH_DBUS=ON
     # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
     -DWITH_libgps=OFF
     -DWITH_liblocation=OFF

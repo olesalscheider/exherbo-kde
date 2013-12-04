@@ -53,5 +53,8 @@ else
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Sasl2:BOOL=FALSE )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'barcodes Prison' Ldap )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'barcodes Prison'
+    Ldap
+)
 
