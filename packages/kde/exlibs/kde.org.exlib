@@ -26,7 +26,10 @@ if ever is_scm; then
     if exparam -b git ; then
         SCM_REPOSITORY="git://anongit.kde.org/${PN}"
         case ${PN} in
-            kdelibs|kde-workspace)
+            kdelibs)
+                SCM_BRANCH="KDE/4.12"
+                ;;
+            kde-workspace)
                 SCM_BRANCH="KDE/4.11"
                 ;;
             *)
