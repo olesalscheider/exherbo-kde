@@ -8,7 +8,7 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.xz"
     CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
 fi
 
