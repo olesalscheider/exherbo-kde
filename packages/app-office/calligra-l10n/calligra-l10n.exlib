@@ -4,7 +4,12 @@
 #     Copyright 2008-2012 Ingmar Vanhassel
 
 myexparam langs
-myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}"
+case ${PV} in
+    2.[0-9].@(8|9)*)
+        myexparam base_uri="mirror://kde/unstable/${PN%-l10n}-${PV}/${PN}" ;;
+    *)
+        myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}" ;;
+esac
 
 require kde [ api=2 ] \
         l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.xz ]
