@@ -1,6 +1,7 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008, 2009, 2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde [ api=2 ]
@@ -23,7 +24,14 @@ Management:
 "
 
 HOMEPAGE="http://www.calligra.org/"
-DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.xz"
+
+case ${PV} in
+    2.[0-9].@(8|9)*)
+        DOWNLOADS="mirror://kde/unstable/${PNV}/${PNV}.tar.xz" ;;
+    *)
+        DOWNLOADS="mirror://kde/stable/${PNV}/${PNV}.tar.xz" ;;
+esac
+
 REMOTE_IDS="freecode:${PN}"
 UPSTREAM_RELEASE_NOTES="${HOMEPAGE}news/${PN}-$(ever replace - ${PV})-released/"
 
@@ -72,7 +80,6 @@ DEPENDENCIES+="
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
         kde/kactivities:4[>=4.9.98]
         kde/kdelibs:4[>=4.6.4]
-        kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
         media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
@@ -88,7 +95,6 @@ DEPENDENCIES+="
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXpm
-        x11-libs/qt:4[>=4.6.0][dbus][opengl][qt3support] [[ note = [ qt3support is now optional via -DQT3SUPPORT, but kexi depends on it ] ]]
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
         kde_parts:active? (
@@ -117,9 +123,9 @@ DEPENDENCIES+="
             )
         )
         kde_parts:kexi? (
-            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.12 (.15 for 2.6.0) is recommended ] ]]
+            dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.15 (3.8.1 for 2.8.0) is recommended ] ]]
             dev-libs/icu
-            x11-libs/qt:4[webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
+            x11-libs/qt:4[qt3support][webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
@@ -178,6 +184,28 @@ DEPENDENCIES+="
 # plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
 # http://www.librcps.org/
 
+if ever at_least 2.7.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:4[>=4.6.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
+            x11-libs/qt:4[>=4.7.0][dbus][opengl]
+            kde_parts:krita? (
+                x11-libs/libXi
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
+            x11-libs/qt:4[>=4.6.0][dbus][opengl] [[ note = [ some krita features depend on 4.7.0 ] ]]
+    "
+fi
+
+# TODO: - A comment in CMakeLists.txt claims jpeg<9 doesn't work for krita,
+#         configuring and linking works, though. Figure out this out before the
+#         final release.
+#       - Unbundle a few deps, for example http://gmic.sourceforge.net/ for krita
+
 # Tests need X, testsuite should be fixed to run only those tests that can run, last checked: 2.7.2
 RESTRICT="test"
 
@@ -199,8 +227,10 @@ src_configure() {
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
         -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
         -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
-        -DWITH_OpenCTL=OFF # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
-        -DCMAKE_DISABLE_FIND_PACKAGE_{Open,Qt}Shiva:BOOL=TRUE # krita/plugins/extensions/. Packages unwritten.
+        # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
+        $(ever at_least 2.7.90 || echo "-DWITH_OpenCTL=OFF")
+         # krita/plugins/extensions/. Packages unwritten.
+        $(ever at_least 2.7.90 || echo "-DCMAKE_DISABLE_FIND_PACKAGE_{Open,Qt}Shiva:BOOL=TRUE")
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
         -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
@@ -209,6 +239,7 @@ src_configure() {
         $(cmake_with fftw FFTW3)
         $(cmake_with FreeTDS)
         $(cmake_with GLEW)
+        $(ever at_least 2.7.90 && cmake_option kde_parts:kexi KEXI_SCRIPTS_SUPPORT)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:stage Okular)
         $(cmake_with Marble)
