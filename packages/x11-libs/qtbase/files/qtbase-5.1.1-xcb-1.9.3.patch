@@ -1,0 +1,85 @@
+Source: https://bugreports.qt-project.org/browse/QTBUG-34748
+Upstream: yes
+Reason: compatibility with xcb 1.9.3
+
+From 486889523c8fe15277e3148904509789a19d25fe Mon Sep 17 00:00:00 2001
+From: Gatis Paeglis <gatis.paeglis@digia.com>
+Date: Tue, 19 Nov 2013 15:07:25 +0100
+Subject: [PATCH] Workaround source compatibility issue introduced by xcb 1.9.3
+
+Previous version of the struct:
+
+typedef struct {
+    uint8_t  response_type;  /**< Type of the response */
+    uint8_t  pad0;           /**< Padding */
+    uint16_t sequence;       /**< Sequence number */
+    uint32_t length;
+    uint16_t event_type;
+    uint16_t pad1;
+    uint32_t pad[5];         /**< Padding */
+    uint32_t full_sequence;  /**< full sequence */
+} xcb_ge_event_t;
+
+New version of it:
+
+typedef struct xcb_ge_event_t {
+    uint8_t  response_type; /**<  */
+    uint8_t  extension; /**<  */
+    uint16_t sequence; /**<  */
+    uint32_t length; /**<  */
+    uint16_t event_type; /**<  */
+    uint8_t  pad0[22]; /**<  */
+    uint32_t full_sequence; /**<  */
+} xcb_ge_event_t;
+
+Changes are:
+- "pad0" became "extension"
+- "pad1" and "pad" became "pad0"
+
+More details in https://bugs.freedesktop.org/show_bug.cgi?id=71502
+
+Task-number: QTBUG-34748
+Change-Id: Ibd801c11510f75fa82d5c14346b95236142487ac
+Reviewed-by: Uli Schlachter <psychon@znc.in>
+Reviewed-by: Lars Knoll <lars.knoll@digia.com>
+---
+ src/plugins/platforms/xcb/qxcbconnection.cpp | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
+
+diff --git a/src/plugins/platforms/xcb/qxcbconnection.cpp b/src/plugins/platforms/xcb/qxcbconnection.cpp
+index cc8c42f..4d2735c 100644
+--- a/src/plugins/platforms/xcb/qxcbconnection.cpp
++++ b/src/plugins/platforms/xcb/qxcbconnection.cpp
+@@ -1749,10 +1749,26 @@ bool QXcbConnection::xi2GetValuatorValueIfSet(void *event, int valuatorNum, doub
+     return true;
+ }
+ 
+-bool QXcbConnection::xi2PrepareXIGenericDeviceEvent(xcb_ge_event_t *event, int opCode)
++// Starting from the xcb version 1.9.3 struct xcb_ge_event_t has changed:
++// - "pad0" became "extension"
++// - "pad1" and "pad" became "pad0"
++// New and old version of this struct share the following fields:
++// NOTE: API might change again in the next release of xcb in which case this comment will
++// need to be updated to reflect the reality.
++typedef struct qt_xcb_ge_event_t {
++    uint8_t  response_type;
++    uint8_t  extension;
++    uint16_t sequence;
++    uint32_t length;
++    uint16_t event_type;
++} qt_xcb_ge_event_t;
++
++bool QXcbConnection::xi2PrepareXIGenericDeviceEvent(xcb_ge_event_t *ev, int opCode)
+ {
+-    // xGenericEvent has "extension" on the second byte, xcb_ge_event_t has "pad0".
+-    if (event->pad0 == opCode) {
++    qt_xcb_ge_event_t *event = (qt_xcb_ge_event_t *)ev;
++    // xGenericEvent has "extension" on the second byte, the same is true for xcb_ge_event_t starting from
++    // the xcb version 1.9.3, prior to that it was called "pad0".
++    if (event->extension == opCode) {
+         // xcb event structs contain stuff that wasn't on the wire, the full_sequence field
+         // adds an extra 4 bytes and generic events cookie data is on the wire right after the standard 32 bytes.
+         // Move this data back to have the same layout in memory as it was on the wire
+-- 
+1.8.5.1
+
