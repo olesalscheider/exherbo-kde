@@ -31,7 +31,7 @@ MYOPTIONS="debug
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         dev-lang/python:=[>=2.3]
         dev-libs/boost
@@ -39,7 +39,7 @@ DEPENDENCIES="
         media-libs/fontconfig[>=2.0]
         media-libs/freetype:2[>=2.3.11]
         media-libs/jpeg
-        media-libs/lcms[>=1.15]
+        media-libs/lcms2[>=2.1]
         media-libs/libpng
         media-libs/tiff[>=3.6]
         net-print/cups
