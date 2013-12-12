@@ -19,8 +19,19 @@ DEPENDENCIES="
         kde/libkdeedu:${SLOT}
         media-libs/phonon
         x11-dri/mesa
-        x11-libs/qt:4[opengl]
     run:
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
+
+if ever at_least 4.12.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[opengl][webkit]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[opengl]
+    "
+fi
 
