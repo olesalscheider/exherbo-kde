@@ -15,8 +15,8 @@ DEPENDENCIES="
     build+run:
         dev-libs/soprano
         graphics/exiv2[>=0.19]
-        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kactivities:${SLOT}[>=4.9.90]
+        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
         kde/nepomuk-core:${SLOT}
         media-libs/jpeg
