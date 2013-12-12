@@ -44,5 +44,9 @@ if ever at_least 4.11.97 ; then
 fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Analitza Qalculate 'R R' )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Analitza
+    Qalculate
+    'R R'
+)
 
