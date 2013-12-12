@@ -32,10 +32,10 @@ DEPENDENCIES="
         app-pim/strigi[>=0.6.3][dbus][qt4]
         app-text/shared-desktop-ontologies[>=0.10]
         dev-libs/attica[>=0.4.2]
-        dev-libs/pcre
         dev-libs/libxml2:2.0
         dev-libs/libxslt
         dev-libs/openssl
+        dev-libs/pcre
         dev-libs/soprano[>=2.7.56][virtuoso(-)]
         media-libs/fontconfig
         media-libs/freetype:2
@@ -63,7 +63,7 @@ DEPENDENCIES="
         x11-libs/libXtst
         x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit]
             [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
-         x11-misc/shared-mime-info[>=0.60]
+        x11-misc/shared-mime-info[>=0.60]
         acl? (
             sys-apps/acl
             sys-apps/attr
