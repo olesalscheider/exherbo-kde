@@ -15,13 +15,13 @@ DEPENDENCIES="
         kde/libkdeedu:${SLOT}
         x11-libs/libXrender
         html-export? (
-            dev-libs/libxslt
             dev-libs/libxml2:2.0
+            dev-libs/libxslt
         )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
-    'html-export LibXslt'
     'html-export LibXml2'
+    'html-export LibXslt'
 )
 
