@@ -20,3 +20,10 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
     "
 
+if ever at_least 4.12.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/libkomparediff2
+    "
+fi
+
