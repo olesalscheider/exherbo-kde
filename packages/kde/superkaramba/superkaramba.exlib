@@ -13,7 +13,7 @@ MYOPTIONS="python [[ description = [ Python bindings for SuperKaramba ] ]]"
 
 DEPENDENCIES="
     build+run:
-        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kde-workspace:${SLOT}[>=4.11.4]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/qimageblitz
         x11-libs/libICE
