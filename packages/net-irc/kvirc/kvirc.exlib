@@ -1,4 +1,4 @@
-# Copyright 2010 Wulf C. Krueger <philantrop@exherbo.org>
+# Copyright 2010-2013 Wulf C. Krueger <philantrop@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kvirc-4.0_pre3154.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
@@ -37,7 +37,6 @@ MYOPTIONS="
     doc
     gsm [[ description = [ Enable support for the gsm lossy speech compression for DCC Voice connections ] requires = [ dcc-voice ] ]]
     ipc [[ description = [ Enable support for IPC between ${PN} processes ] ]]
-    ipv6
     kde [[ description = [ Enable the KDE (K Desktop Enviroment; the one true Desktop Environment) integration ] ]]
     perl
     phonon [[ description = [ Enable support for the Phonon, KDE4's multimedia API, for sound ] ]]
@@ -72,6 +71,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
         -DCOEXISTENCE=1
+        -DIPV6=1
         -DWANT_BEER=1
         -DWANT_GETTEXT=1
         -DWANT_PIZZA=1
@@ -88,7 +88,6 @@ CMAKE_SRC_CONFIGURE_OPTION_WANTS=(
         "doc DOXYGEN"
         "gsm GSM"
         "ipc IPC"
-        "ipv6 IPV6"
         "kde KDE4"
         "perl PERL"
         "phonon PHONON"
