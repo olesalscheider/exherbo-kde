@@ -31,3 +31,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_Xplanet=OFF
 )
 
+if ever at_least 4.12.0 ; then
+    # Package Unwritten, http://www.astrometry.net
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_AstrometryNet:BOOL=FALSE )
+fi
+

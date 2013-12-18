@@ -17,6 +17,8 @@ MYOPTIONS="
     postscript [[ description = [ Support for PS (PostScript) files ] ]]
     tiff       [[ description = [ Support for TIFF (Tagged Image File Format) files ] ]]
 "
+ever at_least 4.11.80 \
+    && MYOPTIONS+=" mobipocket [[ description = [ Support for displaying Mobipocket e-books ] ]]"
 
 DEPENDENCIES="
     build+run:
@@ -37,11 +39,20 @@ DEPENDENCIES="
         tiff? ( media-libs/tiff )
 "
 
+if ever at_least 4.11.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/libkexiv2:${SLOT}
+            mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'mobipocket QMobipocket' )
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_ActiveApp:BOOL=FALSE
     -DWITH_QImageBlitz:BOOL=TRUE
 )
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'CHM'
     'djvu DjVuLibre'
     'EPub'

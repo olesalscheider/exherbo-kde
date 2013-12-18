@@ -20,3 +20,18 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
     "
 
+if ever at_least 4.12.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/libkomparediff2
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            !kde/libkomparediff2 [[
+                description = [ kde/libkomparediff was part of kde/kompare in previous releases ]
+                resolution = uninstall-blocked-after
+            ]]
+    "
+fi
+

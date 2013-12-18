@@ -1,0 +1,21 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Library to compare files and strings"
+
+LICENCES="GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 2
+    BSD-3 [[ note = [ cmake scripts ] ]]"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        !kde/kompare[<4.12.0] [[
+            description = [ kde/libkcomparediff2 was part of kde/kompare in previous releases ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+

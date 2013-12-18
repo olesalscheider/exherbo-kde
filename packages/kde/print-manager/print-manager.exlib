@@ -11,12 +11,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
-        net-print/cups[>=1.4]
-"
-
-if ever at_least 4.10.95 ; then
-    DEPENDENCIES+="
         net-print/cups[>=1.5]
-    "
-fi
+"
 

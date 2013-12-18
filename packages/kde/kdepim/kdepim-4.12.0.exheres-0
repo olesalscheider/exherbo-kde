@@ -1,11 +1,11 @@
-# Copyright 2012 Bo Ørsted Andresen
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require pykde4
+require kdepim
 
 PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PN}-4.11.1_fix_build_with_newer_sip.patch
+    "${FILES}"/${PNV}-install_kleopatra_headers.patch
 )
 

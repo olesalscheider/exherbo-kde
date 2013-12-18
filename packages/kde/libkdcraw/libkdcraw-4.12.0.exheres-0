@@ -1,7 +1,7 @@
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdesdk
+require libkdcraw
 
 PLATFORMS="~amd64 ~x86"
 

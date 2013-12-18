@@ -12,7 +12,7 @@ DESCRIPTION="It supports AIM, ICQ, Windows Live Messenger, Yahoo, Jabber, Gadu-G
 Novell GroupWise Messenger, and more. It is designed to be a flexible and extensible
 multi-protocol system suitable for personal and enterprise use."
 
-LICENCES="GPL-2 FDL-1.2"
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 
 MY_IM_PROTOCOLS+="
     gadu       [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
@@ -38,6 +38,11 @@ MY_KOPETE_PLUGINS+="
     wlm_voice   [[ description = [ Voice clips support in Windows Live Messenger Kopete plugin ]
                    requires = [ im_protocols: wlm ] ]]
 "
+ever at_least 4.12.0 && MY_KOPETE_PLUGINS+="
+    cryptography [[ description = [ Encrypts and signs messages using OpenPGP ] ]]
+    nowlistening [[ description = [ Displays the song you currently listen to in your status ] ]]
+"
+
 MYOPTIONS="
     im_protocols: ( ${MY_IM_PROTOCOLS} )
     kopete_plugins: ( ${MY_KOPETE_PLUGINS} )"
@@ -45,7 +50,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}
+        kde/kdepimlibs:${SLOT} [[ note = [ QGpgME for crypto plugin ] ]]
         kde/qimageblitz
         media-libs/phonon
         media-libs/v4l-utils
@@ -82,7 +87,6 @@ DEPENDENCIES="
             dev-db/sqlite:3
             x11-libs/qt:4[sql]
         )
-        kopete_plugins:otr? ( net-libs/libotr[>=3.2.0&<4.0.0] )
         kopete_plugins:statistics? (
             dev-db/sqlite:3
             x11-libs/qt:4[sql]
@@ -100,14 +104,30 @@ DEPENDENCIES="
 # run:       im_protocols:jingle? ( media-libs/speex )
 # run:       im_protocols:ilbc? ( media-plugins/msilbc ) requires im_protocols:jingle
 
+if ever at_least 4.12.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepim[kde_parts:kleopatra]
+            im_protocols:wlm? ( dev-libs/boost )
+            kopete_plugins:nowlistening? ( dev-libs/glib )
+            kopete_plugins:otr? ( net-libs/libotr[>=4.0.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kopete_plugins:otr? ( net-libs/libotr[>=3.2.0&<4.0.0] )
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xmms=OFF )
 
 src_configure() {
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
-        addbookmarks autoreplace contactnotes highlight history latex nowlistening
+        addbookmarks autoreplace contactnotes highlight history latex
         pipes privacy texteffect translator urlpicpreview
     )
+    ever at_least 4.12.0 || my_kopete_plugins+=( nowlistening )
 
     # Kopete protocols with no extra dependencies
     my_kopete_protocols=( bonjour irc oscar qq skype sms testbed winpopup )
@@ -131,6 +151,19 @@ src_configure() {
         cmakeparams+=( -DWITH_Sqlite=ON )
     else
         cmakeparams+=( -DWITH_Sqlite=OFF )
+    fi
+
+    # "Disable jingle support because it is not working and libiris does not support it"
+    cmakeparams+=(
+        -DWITH_JINGLE=OFF
+        -DWITH_Alsa=OFF
+        -DWITH_Speex=OFF
+    )
+
+    if ever at_least 4.12.0 ; then
+        cmakeparams+=(
+            $(cmake_with kopete_plugins:nowlistening)
+        )
     fi
 
      ecmake \

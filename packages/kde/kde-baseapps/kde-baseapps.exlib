@@ -31,8 +31,9 @@ DEPENDENCIES="
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         dev-libs/soprano[>=2.7.56][virtuoso(+)]
         kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ needed for activities integration in dolphin ] ]]
-        kde/kde-runtime:${SLOT}[>=${PV}]
-        kde/kde-workspace:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.10.60]
+        kde/kde-runtime:${SLOT}[>=4.10.60]
+        kde/kde-workspace:${SLOT}[>=4.10.60]
         kde/nepomuk-core:${SLOT}[>=4.9.90]
         kde/nepomuk-widgets:${SLOT}
         sys-libs/zlib
@@ -47,18 +48,6 @@ DEPENDENCIES="
         )
 "
 
-if ever at_least 4.10.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.10.60]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.9.90]
-    "
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'tidy LibTidy'
 )
@@ -66,3 +55,4 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_GLIB2:BOOL=TRUE
 )
+

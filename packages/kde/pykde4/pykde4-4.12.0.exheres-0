@@ -1,7 +1,7 @@
-# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2012 Bo Ørsted Andresen
 # Distributed under the terms of the GNU General Public License v2
 
-require kdepim
+require pykde4
 
 PLATFORMS="~amd64 ~x86"
 
