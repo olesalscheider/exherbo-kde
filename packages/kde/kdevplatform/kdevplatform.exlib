@@ -32,5 +32,8 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Boost:BOOL=TRUE )
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( subversion reviewboard )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'subversion SubversionLibrary'
+    'reviewboard QJSON'
+)
 
