@@ -21,10 +21,6 @@ DEPENDENCIES="
             kde/pykde4:4
             x11-libs/qt:4[webkit]
         )
-        !kde/kdesdk[<4.7.0] [[
-            description = [ kde/kate was part of kde/kdesdk in previous releases ]
-            resolution = uninstall-blocked-after
-        ]]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
