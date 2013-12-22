@@ -1,0 +1,185 @@
+Upstream: no
+Reason: Don't run tests which need a X server
+
+From 3774366b3624519b4ce74667f8b1b5b1be76eaf6 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sun, 22 Dec 2013 15:37:03 +0100
+Subject: [PATCH] Disable tests which need X
+
+---
+ debuggers/gdb/CMakeLists.txt       |  15 -----
+ languages/cpp/tests/CMakeLists.txt | 132 -------------------------------------
+ 2 files changed, 147 deletions(-)
+
+diff --git a/debuggers/gdb/CMakeLists.txt b/debuggers/gdb/CMakeLists.txt
+index 3d1125c..45a8bff 100644
+--- a/debuggers/gdb/CMakeLists.txt
++++ b/debuggers/gdb/CMakeLists.txt
+@@ -138,21 +138,6 @@ kde4_add_ui_files(gdbtest_PART_SRCS
+     selectaddress.ui
+     registers/registersview.ui
+ )
+-kde4_add_unit_test(gdbtest ${gdbtest_PART_SRCS})
+-target_link_libraries(gdbtest
+-    ${QT_QTTEST_LIBRARY}
+-    ${KDEVPLATFORM_SHELL_LIBRARIES}
+-    ${KDEVPLATFORM_INTERFACES_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDEVPLATFORM_DEBUGGER_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-    ${KDEVPLATFORM_UTIL_LIBRARIES}
+-    ${KDE4_KIO_LIBS}
+-    ${KDE4_KTEXTEDITOR_LIBS}
+-    ${KDE4_KPARTS_LIBRARY}
+-    ${KDE4WORKSPACE_PROCESSUI_LIBS}
+-)
+-
+ 
+ ########### install files ###############
+ 
+diff --git a/languages/cpp/tests/CMakeLists.txt b/languages/cpp/tests/CMakeLists.txt
+index fbdd4db..cc9a7fb 100644
+--- a/languages/cpp/tests/CMakeLists.txt
++++ b/languages/cpp/tests/CMakeLists.txt
+@@ -36,138 +36,6 @@ set(test_common_SRCS
+   ${setuphelpers_SRCS}
+ )
+ 
+-########### next target ###############
+-
+-set(buddiestest_SRCS
+-  test_buddies.cpp
+-)
+-
+-kde4_add_unit_test(buddiestest ${buddiestest_SRCS})
+-target_link_libraries(buddiestest
+-    ${QT_QTTEST_LIBRARY}
+-    ${QT_QTCORE_LIBRARY}
+-    ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-    ${KDEVPLATFORM_SUBLIME_LIBRARIES}
+-)
+-
+-########### next target ###############
+-
+-find_package(QJSON)
+-# Also check that kdevplatform is built with JSON support
+-# see: https://bugs.kde.org/show_bug.cgi?id=327095
+-if(QJSON_FOUND AND KDEVPLATFORM_JSONTESTS_LIBRARIES)
+-  set(cppfilestest_SRCS test_cppfiles.cpp)
+-  kde4_add_unit_test(cppfilestest ${cppfilestest_SRCS})
+-  configure_file("testfilepaths.h.cmake" "testfilepaths.h" ESCAPE_QUOTES)
+-  target_link_libraries(cppfilestest
+-      ${QT_QTTEST_LIBRARY}
+-      ${QT_QTCORE_LIBRARY}
+-      ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-      ${KDEVPLATFORM_TESTS_LIBRARIES}
+-      ${KDEVPLATFORM_JSONTESTS_LIBRARIES}
+-      kdev4cppduchain
+-  )
+-endif()
+-
+-########### next target ###############
+-
+-set(specialcompletiontest_SRCS
+-  test_specialcompletion.cpp
+-
+-  ${test_common_SRCS}
+-)
+-
+-kde4_add_unit_test(cppspecialcompletion ${specialcompletiontest_SRCS})
+-target_link_libraries(cppspecialcompletion
+-    kdev4cppduchain
+-    kdev4cpprpp
+-    kdev4cppparser
+-    ${QT_QTTEST_LIBRARY}
+-    ${QT_QTCORE_LIBRARY}
+-    ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-)
+-
+-########### next target ###############
+-
+-set(cppassistantstest_SRCS
+-  ${test_common_SRCS}
+-
+-  test_cppassistants.cpp
+-  ../codegen/renameassistant.cpp
+-  ../codegen/renameaction.cpp
+-  ../codegen/renamefileaction.cpp
+-  ../codegen/codeassistant.cpp
+-  ../codegen/signatureassistant.cpp
+-  ../codegen/adaptsignatureaction.cpp
+-)
+-
+-kde4_add_unit_test(cppassistantstest ${cppassistantstest_SRCS})
+-target_link_libraries(cppassistantstest ${QT_QTTEST_LIBRARY}
+-    kdev4cppduchain
+-    kdev4cpprpp
+-    kdev4cppparser
+-    kdevcpplanguagesupport
+-    ${KDEVPLATFORM_INTERFACES_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDE4_THREADWEAVER_LIBRARIES}
+-    ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-    ${KDE4_KDECORE_LIBS}
+-    ${KDE4_KTEXTEDITOR_LIBS}
+-)
+-
+-add_definitions(-DTEST_COMPLETION)
+-
+-set(cppcodecompletiontest_SRCS
+-  test_cppcodecompletion.cpp
+-
+-  ${test_common_SRCS}
+-)
+-
+-set(cppcodegentest_SRCS
+-  test_cppcodegen.cpp
+-
+-  ../codegen/progressdialogs.cpp
+-  ../codegen/simplerefactoring.cpp
+-  ../codegen/unresolvedincludeassistant.cpp
+-  ../cpputils.cpp
+-  ../includepathcomputer.cpp
+-  ../includepathresolver.cpp
+-  ${setuphelpers_SRCS}
+-)
+-
+-add_definitions(-DBUILD_TESTS)
+-
+-kde4_add_unit_test(cppcodecompletiontest ${cppcodecompletiontest_SRCS})
+-target_link_libraries(cppcodecompletiontest ${QT_QTTEST_LIBRARY}
+-    kdev4cppduchain
+-    kdev4cpprpp
+-    kdev4cppparser
+-    ${KDEVPLATFORM_INTERFACES_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDE4_THREADWEAVER_LIBRARIES}
+-    ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-    ${KDE4_KDECORE_LIBS}
+-    ${KDE4_KTEXTEDITOR_LIBS}
+-)
+-
+-kde4_add_unit_test(cppcodegentest ${cppcodegentest_SRCS})
+-target_link_libraries(cppcodegentest
+-    kdev4cppduchain
+-    kdev4cpprpp
+-    kdev4cppparser
+-    ${QT_QTTEST_LIBRARY}
+-    ${QT_QTCORE_LIBRARY}
+-    ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-    ${KDEVPLATFORM_PROJECT_LIBRARIES}
+-    ${KDEVPLATFORM_TESTS_LIBRARIES}
+-)
+-
+ kde4_add_executable( cpp-parser cpp-parser.cpp )
+ target_link_libraries(cpp-parser
+ ${QT_QTCORE_LIBRARY} ${KDEVPLATFORM_TESTS_LIBRARIES} ${KDEVPLATFORM_LANGUAGE_LIBRARIES}
+-- 
+1.8.5.2
+

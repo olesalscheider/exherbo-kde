@@ -1,0 +1,15 @@
+# Copyright 2010 Yury G. Kudryashov <urkud@ya.ru>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdevelop
+
+PLATFORMS="~amd64 ~x86"
+
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
+
+UPSTREAM_RELEASE_NOTES="http://www.kdevelop.org/46/kdevelop-460-final-released"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Disable-tests-which-need-X.patch
+)
+
