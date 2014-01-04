@@ -1,7 +1,7 @@
 # Copyright 2012 Aleksandar Petrinic <petrinic@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org python [ python_dep=2.6 ]
+require kde.org python [ blacklist='none' ]
 
 SUMMARY="Python bindings for Kde4"
 DESCRIPTION="
@@ -23,8 +23,8 @@ DEPENDENCIES="
         dev-libs/boost[>=1.34.0]
         dev-libs/soprano[>=2.0]
         (
-            dev-python/PyQt4[>=4.9][webkit]
-            dev-python/sip[>=4.15.2_pre20130908]
+            dev-python/PyQt4[>=4.9][python_abis:*(-)?][webkit]
+            dev-python/sip[>=4.15.2_pre20130908][python_abis:*(-)?]
         ) [[ note = [ See https://bugs.kde.org/show_bug.cgi?id=323899 ] ]]
         kde/kdelibs:4[>=4.9.4]
         kde/kdepimlibs:4[>=4.7.0]
@@ -41,7 +41,16 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PolkitQt:BOOL=FALSE
 )
 
-src_install() {
+configure_one_multibuild() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DPYTHON_EXECUTABLE=/usr/bin/${PYTHON}
+        -DPYKDEUIC4_ALTINSTALL:BOOL=TRUE
+    )
+
+    cmake_src_configure
+}
+
+install_one_multibuild() {
     kde.org_src_install
     edo pushd "${CMAKE_SOURCE:-${WORK}}"/docs
     dodoc -r html/
