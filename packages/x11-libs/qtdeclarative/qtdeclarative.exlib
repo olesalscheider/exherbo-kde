@@ -19,7 +19,6 @@ DEPENDENCIES="
         x11-libs/qtbase:${SLOT}[>=${PV}][sql]  [[ note = [ QML and user-specific local storage via
                                                            SQLite. potentially optional -> remove from
                                                            imports/imports.pro ] ]]
-        x11-libs/qtjsbackend:${SLOT}[>=${PV}]
         x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
 "
 
