@@ -8,7 +8,9 @@ require qt qmake4 [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: QtWebkit"
 
-MYOPTIONS="gstreamer"
+MYOPTIONS="
+    media [[ description = [ HTML5 video/audio support via gstreamer ] ]]
+"
 
 DEPENDENCIES="
     build:
@@ -22,20 +24,24 @@ DEPENDENCIES="
     build+run:
         dev-db/sqlite:3
         dev-libs/glib:2
+        dev-libs/icu
         dev-libs/libxml2:2.0
         dev-libs/libxslt
         media-libs/fontconfig
         media-libs/jpeg
         media-libs/libpng
         media-libs/libwebp
+        sys-libs/zlib
         x11-dri/mesa
+        x11-libs/libX11
         x11-libs/libXcomposite
+        x11-libs/libXext
         x11-libs/libXrender
         x11-libs/qtbase:${SLOT}[>=${PV}][sql][sqlite]
         x11-libs/qtdeclarative:${SLOT}[>=${PV}]
-        gstreamer? (
-            media-libs/gstreamer:0.10[>=0.10]
-            media-plugins/gst-plugins-base:0.10[>=0.10]
+        media? (
+            media-libs/gstreamer:1.0[>=0.10]
+            media-plugins/gst-plugins-base:1.0[>=0.10]
         )
 "
 
@@ -44,11 +50,17 @@ EQMAKE4_SOURCES=( WebKit.pro )
 src_configure() {
     local conf_enable,conf_disable
 
-    conf_enable="3d-rendering accelerated-2d-canvas ftpdir fullscreen-api inspector \
+    # TODO: find out how useful qtlocation, qtsensors are
+    conf_enable="3d-rendering accelerated-2d-canvas ftpdir inspector \
         javascript-debugger mathml netscape-plugin-api sql-database svg webgl xslt \
-        $(option gstreamer && echo video)"
+        $(option media && echo use_gstreamer) \
+        $(option media && echo video) \
+        $(option media && echo fullscreen_api)"
 
-    conf_disable="battery-status gamepad geolocation $(option gstreamer || echo video)"
+    conf_disable="battery-status gamepad geolocation opencl \
+        $(option media || echo use_gstreamer) \
+        $(option media || echo video) \
+        $(option media || echo fullscreen_api)"
 
     eqmake4 CONFIG+=use_system_icu WEBKIT_CONFIG+="${conf_enable}" WEBKIT_CONFIG-="${conf_disable}"
 }
