@@ -66,6 +66,7 @@ DEPENDENCIES="
         sys-apps/dbus[>=1.2.0][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]
+        x11-libs/harfbuzz[multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
         x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
         x11-libs/libXext[multibuild_c:*(-)?]
@@ -197,13 +198,16 @@ configure_one_multibuild() {
         -no-nis
         -no-rpath
         -no-separate-debug-info
-        -openssl
+        -openssl-linked
         -pch
         -reduce-relocations
+        -system-freetype
+        -system-harfbuzz
         -system-libjpeg
         -system-libpng
         -system-pcre
         -system-proxies
+        -system-xcb
         -system-xkbcommon
         -system-zlib
         -widgets
@@ -251,8 +255,6 @@ configure_one_multibuild() {
         -no-sql-oci       # Open Database Connectivity (ODBC) (e.g. MS SQL Server)
         -no-sql-odbc      # Oracle Call Interface Driver
         -no-sql-sqlite2   # SQLite version 2
-        -no-sql-symbian   # SQLite version 3 for Symbian SQL Database
-        -no-sql-symsql    # SQLite version 3 for Symbian SQL Database
         -no-sql-tds       # Sybase Adaptive Server
         $(qt_enable mysql sql-mysql plugin "")
         $(option mysql      && echo "-I/usr/include/mysql -L/usr/${LIBDIR}/mysql/")
