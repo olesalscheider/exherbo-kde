@@ -1,0 +1,23 @@
+# Copyright 2010 Sterling X. Winter <replica@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="BlueZ wrapper for the BlueDevil KDE Bluetooth stack"
+HOMEPAGE="https://projects.kde.org/projects/playground/libs/${PN}"
+DOWNLOADS="ftp://ftp.kde.org/pub/kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
+
+LICENCES="LGPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qt:4[dbus]
+    run:
+        net-wireless/bluez[>=5.12]
+"
+
+BUGS_TO="mixi@user-helfen-usern.de"
+
