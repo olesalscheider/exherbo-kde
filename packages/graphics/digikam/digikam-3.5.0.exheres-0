@@ -80,9 +80,9 @@ DEPENDENCIES="
         )
     run:
         media-gfx/enblend-enfuse[>=3.0]
-        media-gfx/hugin[>=0.8]
         media-gfx/ImageMagick[>=5.5.4]
     suggestion:
+        media-gfx/hugin[>=0.8] [[ description = [ Combine images to panorama views ] ]]
         kde/ffmpegthumbs:4 [[ description = [ For thumbnails of videos. ] ]]
 "
 
