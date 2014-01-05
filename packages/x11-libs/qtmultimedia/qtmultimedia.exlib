@@ -23,7 +23,6 @@ DEPENDENCIES="
         x11-libs/libXext
         x11-libs/libXv
         x11-libs/qtdeclarative:${SLOT}[>=${PV}]
-        x11-libs/qtjsbackend:${SLOT}[>=${PV}]
         x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
         openal? ( media-libs/openal )
         pulseaudio? ( media-sound/pulseaudio )
