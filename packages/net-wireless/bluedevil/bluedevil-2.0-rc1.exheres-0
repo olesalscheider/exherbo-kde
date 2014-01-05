@@ -1,0 +1,38 @@
+# Copyright 2010 Sterling X. Winter <replica@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde [ api=2 ]
+
+SUMMARY="KDE Bluetooth stack, successor to kbluetooth"
+DESCRIPTION="
+BlueDevil is the new Bluetooth stack for KDE, it's composed of: KCM, KDED, KIO, library and some
+other small applications.
+"
+HOMEPAGE="http://projects.kde.org/projects/extragear/base/${PN}"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4[>=4.6.0]
+        net-libs/libbluedevil[>=2.0-rc1]
+        x11-libs/qt:4[dbus]
+        x11-misc/shared-mime-info
+    run:
+        net-wireless/obex-data-server
+        net-wireless/obexd
+        net-wireless/openobex[bluetooth]
+        !net-wireless/kbluetooth [[
+            description = [ kbluetooth is superseded by BlueDevil ]
+            resolution = uninstall-blocked-after
+        ]]
+    suggestion:
+        media-sound/pulseaudio [[ description = [ Required to use pulseaudio as the audio backend ] ]]
+"
+
+BUGS_TO="mixi@user-helfen-usern.de"
+
