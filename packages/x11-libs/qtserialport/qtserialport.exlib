@@ -1,0 +1,14 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake4 [ slot=5 ]
+
+SUMMARY="Qt Cross-platform application framework: Provides access to serial ports"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        sys-apps/systemd   [[ note = udev ]]
+"
+
