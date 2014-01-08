@@ -1,0 +1,24 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Qt 5 addon providing access to numerous types of archives"
+DESCRIPTION="
+KArchive provides classes for easy reading, creation and manipulation of
+\"archive\" formats like ZIP and TAR.
+
+If also provides transparent compression and decompression of data, like the
+GZip format, via a subclass of QIODevice."
+
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-arch/bzip2
+        app-arch/xz
+        sys-libs/zlib
+"
+
