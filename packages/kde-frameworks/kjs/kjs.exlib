@@ -1,0 +1,23 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Support for JavaScript scripting in applications"
+DESCRIPTION="
+This library provides an ECMAScript compatible interpreter. The ECMA standard
+is based on well known scripting languages such as Netscape's JavaScript and
+Microsoft's JScript."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-lang/perl:*
+        virtual/pkg-config
+        debug? ( dev-util/valgrind )
+    build+run:
+        dev-libs/pcre[>=4.5]
+"
+
