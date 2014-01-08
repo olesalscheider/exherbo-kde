@@ -1,0 +1,28 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Set of item models extending the Qt model-view framework"
+DESCRIPTION="
+KItemModels provides the following models:
+* KBreadcrumbSelectionModel - Selects the parents of selected items to create
+  breadcrumbs
+* KCheckableProxyModel - Adds a checkable capability to a source model
+* KDescendantsProxyModel - Proxy Model for restructuring a Tree into a list
+* KLinkItemSelectionModel - Share a selection in multiple views which do not
+  have the same source model
+* KModelIndexProxyMapper - Mapping of indexes and selections through proxy
+  models
+* KRecursiveFilterProxyModel - Recursive filtering of models
+* KSelectionProxyModel - A Proxy Model which presents a subset of its source
+  model to observers"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+# according to CMakeLists.txt tests need grantlee, which isn't ported to Qt5
+RESTRICT="tests"
+
