@@ -1,0 +1,23 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Support for global workspace shortcuts"
+DESCRIPTION="
+KGlobalAccel allows you to have global accelerators that are independent of
+the focused window.  Unlike regular shortcuts, the application's window does not
+need focus for them to be activated."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/libX11
+        x11-libs/qtx11extras:5[>=5.2.0]
+"
+
+# 1 one of 1 test needs a running X Server
+RESTRICT="test"
+
