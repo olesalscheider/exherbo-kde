@@ -11,7 +11,7 @@ case ${PV} in
         DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz" ;;
 esac
 
-require kde [ api=2 ]
+require kde [ api=2 ] freedesktop-desktop
 
 SUMMARY="Konversation is a graphical Internet Relay Chat client for KDE"
 HOMEPAGE="http://konversation.kde.org"
@@ -30,10 +30,10 @@ DEPENDENCIES="
         dev-lang/python:* [[ description = [ Provides scripting support ] ]]
 "
 
-if ever at_least 1.5-rc1 ; then
+if ever at_least 1.5-rc2 ; then
     DEPENDENCIES+="
         build+run:
-            kde/kdelibs:4[>=4.6.0]
+            kde/kdelibs:4[>=4.7.0]
     "
 fi
 
