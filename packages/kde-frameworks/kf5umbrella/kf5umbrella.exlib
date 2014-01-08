@@ -1,0 +1,18 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="CMake convenience functions for KDE Frameworks"
+DESCRIPTION="
+This repository installs CMake files that simplify the CMake code that
+applications need to write in order to find KDE Frameworks.
+It is not used by the frameworks themselves, it exists only for the convenience
+of workspace and applications."
+
+LICENCES="BSD-3"
+MYOPTIONS=""
+
+# FIXME: exparam no_qt_dep to avoid the not necessary qt dep
+DEPENDENCIES=""
+
