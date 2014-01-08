@@ -1,0 +1,21 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Lightweight plotting framework"
+DESCRIPTION="
+KPlotWidget is a QWidget-derived class that provides a virtual base class for
+easy data-plotting. The idea behind KPlotWidget is that you only have to
+specify information in \"data units\"; i.e., the natural units of the data
+being plotted.  KPlotWidget automatically converts everything to screen pixel
+units."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+# 4 of 4 tests need a running X server
+RESTRICT="test"
+
