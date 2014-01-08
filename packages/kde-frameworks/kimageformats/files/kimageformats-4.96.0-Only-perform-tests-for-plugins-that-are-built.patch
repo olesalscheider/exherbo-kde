@@ -1,0 +1,192 @@
+Upsream: Backported from 6272954cc53fa39e73524cbd2a42a90018544ee5
+Reason: Fix tests when building with jpeg2000 option disabled
+
+From 4ba04d5d557a143a71d0cda76eee51ba0756ae49 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Tue, 25 Feb 2014 21:48:08 +0100
+Subject: [PATCH] Only perform tests for plugins that are built
+
+Backported from 6272954cc53fa39e73524cbd2a42a90018544ee5 by Alex Merry
+<kde@randomguy3.me.uk>
+---
+ CMakeLists.txt                  | 34 +++++++++++++++++++++++++++++--
+ autotests/CMakeLists.txt        | 44 ++++++++++++++++++++++++++---------------
+ src/imageformats/CMakeLists.txt | 24 +---------------------
+ 3 files changed, 61 insertions(+), 41 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8a24fd3..0a47945 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,8 +16,38 @@ include(CheckIncludeFiles)
+ set(REQUIRED_QT_VERSION 5.2.0)
+ find_package(Qt5Gui ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+ 
++# EPS support depends on the gs utility; non-UNIX systems are unlikely to have
++# this available in PATH
++set(BUILD_EPS_PLUGIN FALSE)
++if (UNIX)
++    find_package(Qt5PrintSupport 5.2.0 NO_MODULE)
++    set_package_properties(Qt5PrintSupport PROPERTIES
++        PURPOSE "Required for the QImage plugin for EPS images"
++        TYPE OPTIONAL
++    )
++    if (Qt5PrintSupport_FOUND)
++        set(BUILD_EPS_PLUGIN TRUE)
++    endif()
++endif()
++
++find_package(Jasper)
++set_package_properties(Jasper PROPERTIES
++    DESCRIPTION "A library for handling JPEG-2000 images"
++    PURPOSE "Required for the QImage plugin for JPEG-2000 images"
++    URL "http://www.ece.uvic.ca/~mdadams/jasper"
++    TYPE OPTIONAL
++)
++
++find_package(OpenEXR)
++set_package_properties(OpenEXR PROPERTIES
++    TYPE OPTIONAL
++    PURPOSE "Required for the QImage plugin for OpenEXR images"
++)
++
+ add_subdirectory(src)
+-add_subdirectory(autotests)
+-add_subdirectory(tests)
++if (BUILD_TESTING)
++    add_subdirectory(autotests)
++    add_subdirectory(tests)
++endif()
+ 
+ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+diff --git a/autotests/CMakeLists.txt b/autotests/CMakeLists.txt
+index 0192636..cf50492 100644
+--- a/autotests/CMakeLists.txt
++++ b/autotests/CMakeLists.txt
+@@ -6,11 +6,13 @@ add_definitions(-DPLUGIN_DIR="${CMAKE_CURRENT_BINARY_DIR}/../src")
+ remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+ 
+ macro(kimageformats_read_tests)
+-    add_executable(readtest readtest.cpp)
+-    target_link_libraries(readtest Qt5::Gui)
+-    target_compile_definitions(readtest
+-        PRIVATE IMAGEDIR="${CMAKE_CURRENT_SOURCE_DIR}/read")
+-    ecm_mark_as_test(readtest)
++    if (NOT TARGET readtest)
++        add_executable(readtest readtest.cpp)
++        target_link_libraries(readtest Qt5::Gui)
++        target_compile_definitions(readtest
++            PRIVATE IMAGEDIR="${CMAKE_CURRENT_SOURCE_DIR}/read")
++        ecm_mark_as_test(readtest)
++    endif()
+     foreach(_testname ${ARGN})
+         add_test(
+             NAME kimageformats-read-${_testname}
+@@ -20,11 +22,13 @@ macro(kimageformats_read_tests)
+ endmacro()
+ 
+ macro(kimageformats_write_tests)
+-    add_executable(writetest writetest.cpp)
+-    target_link_libraries(writetest Qt5::Gui)
+-    target_compile_definitions(writetest
+-        PRIVATE IMAGEDIR="${CMAKE_CURRENT_SOURCE_DIR}/write")
+-    ecm_mark_as_test(writetest)
++    if (NOT TARGET writetest)
++        add_executable(writetest writetest.cpp)
++        target_link_libraries(writetest Qt5::Gui)
++        target_compile_definitions(writetest
++            PRIVATE IMAGEDIR="${CMAKE_CURRENT_SOURCE_DIR}/write")
++        ecm_mark_as_test(writetest)
++    endif()
+     foreach(_testname ${ARGN})
+         string(REGEX MATCH "-lossless$" _is_lossless "${_testname}")
+         unset(lossless_arg)
+@@ -43,9 +47,6 @@ endmacro()
+ # Loads each <format> image in read/<format>/, and compares the
+ # result against the data read from the corresponding png file
+ kimageformats_read_tests(
+-    #eps # EPS read tests depend on the vagaries of GhostScript
+-         # which we cannot even guarantee to find
+-    jp2
+     pcx
+     pic
+     psd
+@@ -63,12 +64,23 @@ kimageformats_read_tests(
+ # You can append -lossless to the format to indicate that
+ # reading back the image data will result in an identical image.
+ kimageformats_write_tests(
+-    #eps # EPS writing depends on a choice of tools, and so needs
+-         # a cleverer test
+-    jp2
+     pcx-lossless
+     pic-lossless
+     rgb-lossless
+     tga # fixme: the alpha images appear not to be written properly
+     xv
+ )
++
++# EPS read tests depend on the vagaries of GhostScript
++# which we cannot even guarantee to find, so disable them for now
++#if (BUILD_EPS_PLUGIN)
++#    kimageformats_read_tests(eps)
++#    kimageformats_write_tests(eps)
++#endif()
++if (JASPER_FOUND)
++    kimageformats_read_tests(jp2)
++    kimageformats_write_tests(jp2)
++endif()
++if (OpenEXR_FOUND)
++    # FIXME: OpenEXR tests
++endif()
+diff --git a/src/imageformats/CMakeLists.txt b/src/imageformats/CMakeLists.txt
+index 242753e..3984774 100644
+--- a/src/imageformats/CMakeLists.txt
++++ b/src/imageformats/CMakeLists.txt
+@@ -10,15 +10,7 @@ install(FILES dds.desktop DESTINATION ${SERVICES_INSTALL_DIR}/qimageioplugins/)
+ 
+ ##################################
+ 
+-# EPS support depends on the gs utility; non-UNIX systems are unlikely to have
+-# this available in PATH
+-if (UNIX)
+-    find_package(Qt5PrintSupport 5.2.0 NO_MODULE)
+-    set_package_properties(Qt5PrintSupport PROPERTIES
+-        PURPOSE "Required for the QImage plugin for EPS images"
+-        TYPE OPTIONAL
+-    )
+-
++if (BUILD_EPS_PLUGIN)
+     if (Qt5PrintSupport_FOUND)
+         add_library(kimg_eps MODULE eps.cpp)
+         target_link_libraries(kimg_eps  Qt5::Gui Qt5::PrintSupport)
+@@ -30,14 +22,6 @@ endif()
+ 
+ ##################################
+ 
+-find_package(Jasper)
+-set_package_properties(Jasper PROPERTIES
+-    DESCRIPTION "A library for handling JPEG-2000 images"
+-    PURPOSE "Required for the QImage plugin for JPEG-2000 images"
+-    URL "http://www.ece.uvic.ca/~mdadams/jasper"
+-    TYPE OPTIONAL
+-)
+-
+ check_include_files(sys/types.h   HAVE_SYS_TYPES_H)
+ check_include_files(stdint.h      HAVE_STDINT_H)
+ configure_file(config-jp2.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-jp2.h)
+@@ -54,12 +38,6 @@ endif()
+ 
+ ##################################
+ 
+-find_package(OpenEXR)
+-set_package_properties(OpenEXR PROPERTIES
+-    TYPE OPTIONAL
+-    PURPOSE "Required for the QImage plugin for OpenEXR images"
+-)
+-
+ if(OpenEXR_FOUND)
+     add_library(kimg_exr MODULE exr.cpp)
+     target_link_libraries(kimg_exr Qt5::Gui OpenEXR::IlmImf)
+-- 
+1.9.0
+
