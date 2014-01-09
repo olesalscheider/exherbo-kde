@@ -1,0 +1,40 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="A plugin-based spell-checking framework for Qt-base applications"
+DESCRIPTION="
+It supports several different plugins, including HSpell, Enchant, ASpell and
+HUNSPELL.
+It also supports automated language detection, based on a
+combination of different algorithms."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS="
+    aspell   [[ description = [ Use aspell as a spelling backend ] ]]
+    hunspell [[ description = [ Use hunspell as a spelling backend ] ]]
+    hspell   [[ description = [ Use hpell as a spelling backend for Hebrew ] ]]
+    ( aspell hunspell hspell ) [[ number-selected = at-least-one ]]"
+#    enchant [[ description = [ Use enchant as a spelling backend ] ]]
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        aspell? ( app-spell/aspell )
+        hunspell? ( app-spell/hunspell )
+        hspell? (
+            app-spell/hspell
+            sys-libs/zlib
+        )
+"
+
+# enchant backend is currently disabled by upstream, because it's buggy
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_ENCHANT:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    ASPELL
+    HUNSPELL
+    HSPELL
+)
+
