@@ -2,19 +2,23 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qmake4
+# It's also possible to build with Qt 4.8.x, but in that case the Welcome
+# mode, Qt Quick Designer and QML Profiler are disabled
+
+if ever at_least 3.0.0 ; then
+    require qmake4 [ slot='5' ]
+    MYPNV=${PN}-opensource-src-${PV}
+    WORK=${WORKBASE}/${MYPNV}
+else
+    require qmake4
+    MYPNV=${PNV}-src
+    WORK=${WORK}-src/
+fi
 
 SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
 HOMEPAGE="http://qt-project.org/"
 
-case $(ever range 4) in
-    beta|rc)
-        status=development ;;
-    *)
-        status=official ;;
-esac
-
-DOWNLOADS="http://download.qt-project.org/${status}_releases/${PN/-/}/$(ever range 1-2)/${PV}/${PNV}-src.tar.gz"
+DOWNLOADS="http://download.qt-project.org/official_releases/${PN/-/}/$(ever range 1-2)/${PV}/${MYPNV}.tar.gz"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -25,31 +29,45 @@ DEPENDENCIES="
         virtual/pkg-config
     build+run:
         dev-libs/botan:1.10[>=1.10.0]
-        x11-libs/qt:4[>=4.8.0][X(+)][dbus][sql][sqlite][webkit]
     suggestion:
         sys-devel/gdb[python] [[ description = [ For debugging with Qt Creator ] ]]
 "
 
+if ever at_least 3.0.0 ; then
+    min_qt_ver=5.2.0
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qtbase:5[>=${min_qt_ver}]
+            x11-libs/qtdeclarative:5[>=${min_qt_ver}]
+            x11-libs/qtquick1:5[>=${min_qt_ver}]
+            x11-libs/qtscript:5[>=${min_qt_ver}]
+            x11-libs/qtsvg:5[>=${min_qt_ver}]
+            x11-libs/qtwebkit:5[>=${min_qt_ver}]
+            x11-libs/qtx11extras:5[>=${min_qt_ver}]
+            x11-libs/qtxmlpatterns:5[>=${min_qt_ver}]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qt:4[>=4.8.0][X(+)][dbus][sql][sqlite][webkit]
+    "
+fi
+
 RESTRICT="test" # far to many tests need a running X server, disable building them below
 
-if ever at_least scm ; then
-    UPSTREAM_DOCUMENTATION="http://doc-snapshot.qt-project.org/${PN/-/}-master/index.html"
-    UPSTREAM_CHANGELOG=""
-else
-    UPSTREAM_DOCUMENTATION="http://doc-snapshot.qt-project.org/${PN/-/}-$(ever range 1-2)/index.html"
-    UPSTREAM_CHANGELOG="http://qt.gitorious.org/${PN}/${PN}/blobs/master/dist/changes-$(ever range 1-3 ${PV})"
-fi
+UPSTREAM_DOCUMENTATION="http://doc-snapshot.qt-project.org/${PN/-/}-$(ever range 1-2)/index.html"
+UPSTREAM_CHANGELOG="http://qt.gitorious.org/${PN}/${PN}/blobs/master/dist/changes-$(ever range 1-3 ${PV})"
 
 BUGS_TO="kimrhh@exherbo.org heirecka@exherbo.org"
 
-ever is_scm || WORK="${WORK}-src/"
 EQMAKE4_SOURCES="qtcreator.pro"
 
 QMAKE4_SRC_CONFIGURE_PARAMS=(
-    BUILD_TESTS=0
     IDE_LIBRARY_BASENAME=${LIBDIR}
+    IDE_PACKAGE_MODE=1
     SUPPORT_QT_QML=1
     USE_SYSTEM_BOTAN=1
+    TEST=0
 )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}"/usr/ )
 

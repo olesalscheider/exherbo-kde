@@ -9,3 +9,8 @@ DOWNLOADS=""
 
 PLATFORMS="~amd64 ~x86"
 
+UPSTREAM_DOCUMENTATION="http://doc-snapshot.qt-project.org/${PN/-/}-master/index.html"
+UPSTREAM_CHANGELOG=""
+
+WORK=${WORKBASE}/${PNV}
+
