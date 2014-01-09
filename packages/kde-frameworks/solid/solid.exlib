@@ -1,0 +1,38 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks test-dbus-daemon
+
+SUMMARY="Hardware integration and detection"
+DESCRIPTION="Solid provides the following features for application developers:
+- Hardware Discovery
+- Power Management
+- Network Management"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS="
+    upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        sys-apps/systemd[>=167]    [[ note = udev ]]
+        x11-libs/qtdeclarative:5[>=5.2.0]
+        upnp? ( net-libs/herqq[>=0.9] )
+    recommendation:
+        sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
+        sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
+"
+
+# TODO: solid has an optional runtime dependency upon media-player-info:
+# MediaPlayerInfo , Enables identification and querying of portable media players,
+# <http://www.freedesktop.org/wiki/Software/media-player-info>
+# Runtime-only dependency of the udev solid backend. Support for m-p-i is included even if not found during build
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Required by the UpdateSolidPredicateParser target (mainly useful for developers)
+    -DCMAKE_DISABLE_FIND_PACKAGE_FLEX:BOOL=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_BISON:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'upnp HUpnp' )
+
