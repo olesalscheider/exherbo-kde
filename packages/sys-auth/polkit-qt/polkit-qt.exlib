@@ -29,7 +29,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         sys-auth/polkit:1[>=0.99]
-        x11-libs/qt:4[>=4.4.0]
+        x11-libs/qt:4[>=4.4.0][dbus]
     suggestion:
         sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
 "
