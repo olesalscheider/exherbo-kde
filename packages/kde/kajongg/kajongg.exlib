@@ -1,7 +1,7 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org python [ blacklist='3' ]
 
 SUMMARY="Classic Mah Jongg for four players"
 DESCRIPTION="
@@ -17,12 +17,25 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-db/sqlite:3
-        dev-lang/python:=[>=2.6&<3.0]
-        dev-python/PyQt4[sql]
+        dev-python/PyQt4[sql][python_abis:*(-)?]
         kde/kdelibs:${SLOT}
-        kde/pykde4:${SLOT}[>=4.7.4]
+        kde/pykde4:${SLOT}[>=4.7.4][python_abis:*(-)?]
         net-twisted/TwistedCore
     run:
         kde/libkmahjongg:${SLOT}
 "
+
+configure_one_multibuild() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DPYTHON_EXECUTABLE:PATH=/usr/bin/${PYTHON} )
+
+    cmake_src_configure
+}
+
+install_one_multibuild() {
+    kde.org_src_install
+
+    # fix shebang
+    edo sed -e "s:^#!/usr/bin/env python:#!/usr/bin/env ${PYTHON}:" \
+            -i "${IMAGE}"/usr/share/apps/${PN}/${PN}{,server}.py
+}
 
