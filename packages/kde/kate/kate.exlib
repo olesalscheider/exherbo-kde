@@ -1,7 +1,8 @@
 # Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+require kde.org python [ blacklist='2.6 3.1 3.2' with_opt=true ]
 
 SUMMARY="Advanced editor component which is used in numerous KDE applications"
 
@@ -15,10 +16,9 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.10.60] [[ note = [ with BUILD_KTEXTEDITOR:BOOL=TRUE only 4.8.0 ] ]]
         x11-misc/shared-mime-info[>=0.30]
         python? (
-            dev-lang/python:=[>=2.5]
-            dev-python/PyQt4[>=4.3.1]
-            dev-python/sip[>=4.7.1]
-            kde/pykde4:4
+            dev-python/PyQt4[>=4.3.1][python_abis:*(-)?]
+            dev-python/sip[>=4.7.1][python_abis:*(-)?]
+            kde/pykde4:4[python_abis:*(-)?]
             x11-libs/qt:4[webkit]
         )
 "
@@ -33,4 +33,38 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_KTEXTEDITOR:BOOL=FALSE # use ktexteditor from kdelibs
     -DBUILD_project:BOOL=TRUE
 )
+
+src_configure() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        kde_src_configure
+    fi
+}
+
+configure_one_multibuild() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DPYTHON_EXECUTABLE=/usr/bin/${PYTHON} )
+
+    kde_src_configure
+}
+
+src_compile() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        default
+    fi
+}
+
+src_install() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        kde.org_src_install
+    fi
+}
+
+install_one_multibuild() {
+    kde.org_src_install
+}
 
