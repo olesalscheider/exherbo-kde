@@ -3,7 +3,7 @@
 # Based in part upon 'kdeutils.exlib', which is:
 #     Copyright 2008-2011 Bo Ørsted Andresen
 
-require kde.org
+require kde.org python [ blacklist='3' with_opt=true ]
 
 SUMMARY="Easily create interactive desktop widgets"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
@@ -25,9 +25,43 @@ DEPENDENCIES="
         x11-libs/libXft
         x11-libs/libXpm
         x11-libs/libXrender
-        python? ( dev-lang/python:=[>=2.4&<3.0] )
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_QImageBlitz:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QImageBlitz:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'python PythonLibs' )
+
+src_configure() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        kde_src_configure
+    fi
+}
+
+configure_one_multibuild() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DPYTHON_LIBRARY:PATH=/usr/lib64/lib${PYTHON}.so )
+
+    kde_src_configure
+}
+
+
+src_compile() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        default
+    fi
+}
+
+src_install() {
+    if option python ; then
+        easy-multibuild_run_phase
+    else
+        kde.org_src_install
+    fi
+}
+
+install_one_multibuild() {
+    kde.org_src_install
+}
 
