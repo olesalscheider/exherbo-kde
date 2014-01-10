@@ -20,7 +20,7 @@ DEPENDENCIES="
     build+run:
         net-apps/NetworkManager[>=0.9.8.0]
         x11-libs/qt:4[dbus]
-        modem-manager? ( net-libs/libmm-qt[>=scm] )
+        modem-manager? ( net-libs/libmm-qt[>=1.0.0] )
 "
 
 BUGS_TO="mixi@exherbo.org"

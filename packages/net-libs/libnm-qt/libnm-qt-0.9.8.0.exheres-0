@@ -7,5 +7,3 @@ PLATFORMS="~amd64"
 
 DOWNLOADS="mirror://kde/unstable/networkmanager-qt/${PV}/src/${PNV}.tar.xz"
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PNV}-Fix-build-without-libmm-qt.patch )
-
