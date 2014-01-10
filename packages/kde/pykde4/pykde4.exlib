@@ -47,7 +47,7 @@ configure_one_multibuild() {
         -DPYKDEUIC4_ALTINSTALL:BOOL=TRUE
     )
 
-    cmake_src_configure
+    kde_src_configure
 }
 
 install_one_multibuild() {
