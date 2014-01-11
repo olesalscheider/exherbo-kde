@@ -41,6 +41,7 @@ MYOPTIONS="
     gpodder     [[ description = [ Enable gpodder.net Podcast Directory ] ]]
     ipod        [[ description = [ Enable iPod support. Requires Glib,libgpod,gdk-pixbuf ] ]]
     lastfm      [[ description = [ Enable Last.Fm service, including scrobbling, song submissions, and suggested song dynamic playlists ] ]]
+    libav       [[ requires = musicbrainz ]]
     mp3tunes    [[ description = [ Enable mp3tunes.com integration (including synchronisation) ] ]]
     mtp         [[ description = [ Enable support for portable media devices that use the media transfer protocol ] ]]
     musicbrainz [[ description = [ Music lookup service using fingerprinting ] ]]
@@ -79,7 +80,8 @@ DEPENDENCIES="
         )
         mtp? ( media-libs/libmtp[>=1.0.0] )
         musicbrainz? (
-            || ( media/ffmpeg[>=0.7] media/libav )
+            !libav? ( media/ffmpeg[>=0.7] )
+            libav? ( media/libav )
             media-libs/libofa[>=0.9.0]
         )
         playdar? (
