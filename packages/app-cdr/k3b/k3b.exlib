@@ -19,6 +19,7 @@ DOWNLOADS=""
 LICENCES="GPL-2 FDL-1.2"
 SLOT="0"
 MYOPTIONS="debug ffmpeg flac mp3 musepack musicbrainz vorbis
+    libav [[ requires = ffmpeg ]]
     mp3 [[ description = [ Adds support for encoding mp3 files with lame, and decoding with mad ] ]]
 "
 
@@ -31,7 +32,10 @@ DEPENDENCIES="
         media-libs/libsndfile
         media-libs/taglib[>=1.4.0]
         x11-libs/qt:4[X(+)][qt3support]
-        ffmpeg? ( || ( media/ffmpeg media/libav ) )
+        ffmpeg? (
+            !libav? ( media/ffmpeg )
+            libav? ( media/libav )
+        )
         flac? ( media-libs/flac [[ note = [ Flac with C++ bindings ] ]] )
         mp3? (
             media-libs/libmad
