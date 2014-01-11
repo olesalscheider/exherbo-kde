@@ -14,6 +14,7 @@ SLOT="0"
 MYOPTIONS="dbus debug exif fam inotify
     clucene [[ description = [ Indexing support for strigi, using clucene ] ]]
     ffmpeg [[ description = [ FFmpeg for indexing audio and video metadata ] ]]
+    libav [[ requires = ffmpeg ]]
     qt4 [[ description = [ Build strigiclient, a Qt4 GUI for strigi ]
            requires = dbus ]]
 "
@@ -29,7 +30,10 @@ DEPENDENCIES="
         dbus? ( sys-apps/dbus )
         exif? ( graphics/exiv2 )
         fam? ( app-admin/gamin )
-        ffmpeg? ( || ( media/ffmpeg media/libav ) )
+        ffmpeg? (
+            !libav? ( media/ffmpeg )
+            libav? ( media/libav )
+        )
         qt4? ( x11-libs/qt:4[dbus][X(+)] )
     test:
         dev-cpp/cppunit
