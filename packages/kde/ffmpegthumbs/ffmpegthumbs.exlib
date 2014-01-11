@@ -10,7 +10,7 @@ HOMEPAGE="
 "
 
 LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
-MYOPTIONS=""
+MYOPTIONS="libav"
 
 DEPENDENCIES="
     build+run:
@@ -18,9 +18,7 @@ DEPENDENCIES="
         kde/kde-baseapps:${SLOT}[>=${PV}]
         media-libs/phonon
         x11-libs/qt:4[phonon]
-        || (
-            media/ffmpeg
-            media/libav
-        )
+        !libav? ( media/ffmpeg )
+        libav? ( media/libav )
 "
 
