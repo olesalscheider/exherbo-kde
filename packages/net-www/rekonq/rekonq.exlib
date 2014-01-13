@@ -22,9 +22,11 @@ SLOT="0"
 MYOPTIONS="opera [[ description = [ Support for opera sync handler ] ]]"
 
 DEPENDENCIES="
+    build:
+        sys-devel/gettext
     build+run:
         dev-libs/soprano
-        kde/kactivities[>=4.10.0]
+        kde/kactivities:4[>=4.10.0]
         kde/kdelibs:4[>=4.8.4]
         kde/nepomuk-core:4[>=4.10.0]
         x11-libs/qt:4[>=4.8.0][X(+)][dbus][glib][webkit]
