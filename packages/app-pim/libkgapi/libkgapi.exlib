@@ -8,7 +8,7 @@ if ever is_scm; then
     SCM_REPOSITORY="git://anongit.kde.org/libkgapi"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
+    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 fi
 
 SUMMARY="An Akonadi Resource for accessing Google services, like Google Calendar and Google Contacts"
