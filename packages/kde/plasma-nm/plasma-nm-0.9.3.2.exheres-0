@@ -23,19 +23,17 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:4
         net-apps/NetworkManager[>=0.9.8]
-        net-libs/libnm-qt[>=0.9.0.1][modem-manager?]
+        net-libs/libnm-qt[>=0.9.8.0][modem-manager?]
         net-misc/mobile-broadband-provider-info
         x11-libs/qt:4
         modem-manager? (
-            net-libs/libmm-qt
-            net-libs/libnm-qt[>=scm]
+            net-libs/libmm-qt[>=1.0.0]
+            net-libs/libnm-qt[>=0.9.8.0]
         )
         openconnect? ( net-apps/openconnect[>=3.99] )
 "
 
 BUGS_TO="devel@arnej.de"
-
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PNV}-upstream-fixes.patch )
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( '!modem-manager DISABLE_MODEMMANAGER_SUPPORT' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( OpenConnect )
