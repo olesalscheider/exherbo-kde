@@ -1,0 +1,30 @@
+Title: Split sets renamed
+Author: Heiko Becker <heirecka@exherbo.org>
+Content-Type: text/plain
+Posted: 2014-01-14
+Revision: 1
+News-Item-Format: 1.0
+
+The sets for KDE and Qt5 packages were previously named with a -split
+suffix. Now this suffix was dropped, for example kdegraphics-split
+was renamed to kdegraphics. You can install all packages of a set
+with:
+
+# cave resolve <set>\*
+
+As a reminder you can find all renamed sets
+below (as well as in the sets/ directory of the ::kde repo):
+
+kde
+kdeaccessibility
+kdeadmin
+kdebindings
+kdeedu
+kdegames
+kdegraphics
+kdemultimedia
+kdenetwork
+kdesdk
+kdetoys
+kdeutils
+qt5
