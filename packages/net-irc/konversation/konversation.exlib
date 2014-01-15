@@ -23,19 +23,12 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         app-crypt/qca:2
-        kde/kdelibs:4
+        kde/kdelibs:4[>=4.7.0]
         kde/kdepimlibs:4
         media-libs/phonon
     suggestion:
         dev-lang/python:* [[ description = [ Provides scripting support ] ]]
 "
-
-if ever at_least 1.5-rc2 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:4[>=4.7.0]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_QCA2:BOOL=TRUE )
 
