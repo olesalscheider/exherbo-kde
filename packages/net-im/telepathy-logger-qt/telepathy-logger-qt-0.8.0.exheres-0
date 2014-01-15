@@ -21,7 +21,7 @@ DEPENDENCIES="
         dev-lang/python:=[>=2.5]
         dev-libs/dbus-glib:1
         dev-libs/glib:2
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
         net-im/telepathy-glib[>=0.16.0]
         net-im/telepathy-logger:=
