@@ -3,7 +3,7 @@
 
 require libmm-qt
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/unstable/modemmanager-qt/${PV}/src/${PNV}.tar.xz"
 

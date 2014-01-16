@@ -3,7 +3,7 @@
 
 require libnm-qt
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/unstable/networkmanager-qt/${PV}/src/${PNV}.tar.xz"
 
