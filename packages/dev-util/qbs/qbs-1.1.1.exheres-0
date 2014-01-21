@@ -1,0 +1,37 @@
+# Copyright 2014 Jorge Aparicio
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Qt build suite"
+HOMEPAGE="http://qt-project.org/wiki/${PN}"
+DOWNLOADS="http://download.qt-project.org/official_releases/${PN}/${PV}/${PNV}.src.tar.gz"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/qtbase:=5
+        x11-libs/qtscript:=5
+"
+
+WORK+=.src
+
+src_prepare() {
+    # fix hardcoded libdir
+    edo sed -i 's:/lib/qbs:/'"${LIBDIR}"'/qbs:' src/lib/tools/preferences.cpp
+    edo sed -i 's:/lib/qbs:/'"${LIBDIR}"'/qbs:' src/plugins/plugins.pri
+}
+
+src_configure() {
+    local configure_params=(
+        -r
+        QBS_INSTALL_PREFIX=${IMAGE}usr
+        QBS_LIB_INSTALL_DIR=${IMAGE}usr/${LIBDIR}
+    )
+
+    local configure=/usr/${LIBDIR}/qt5/bin/qmake
+
+    edo ${configure} "${configure_params[@]}" qbs.pro
+}
+
