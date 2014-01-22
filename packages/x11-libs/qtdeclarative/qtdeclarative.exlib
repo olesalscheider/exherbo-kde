@@ -1,6 +1,10 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+if ever is_scm; then
+    SCM_EXTERNAL_REFS="tests/manual/v4/test262:"
+fi
+
 require qt qmake4 [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: QtQml, QtQuick aka QtQuick2"
