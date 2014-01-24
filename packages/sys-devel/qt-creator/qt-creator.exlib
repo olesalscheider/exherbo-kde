@@ -40,6 +40,7 @@ if ever at_least 3.0.0 ; then
             x11-libs/qtbase:5[>=${min_qt_ver}]
             x11-libs/qtdeclarative:5[>=${min_qt_ver}]
             x11-libs/qtquick1:5[>=${min_qt_ver}]
+            x11-libs/qtquickcontrols:5[>=${min_qt_ver}]
             x11-libs/qtscript:5[>=${min_qt_ver}]
             x11-libs/qtsvg:5[>=${min_qt_ver}]
             x11-libs/qtwebkit:5[>=${min_qt_ver}]
