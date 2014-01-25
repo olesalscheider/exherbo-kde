@@ -4,7 +4,7 @@
 MY_USER=QupZilla
 MY_PNV=${MY_USER}-${PV}
 
-require github [[ user=${MY_USER} suffix=tar.gz rev=v${PV} ]] qmake4
+require github [[ user=${MY_USER} tag=v${PV} ]] qmake4
 
 SUMMARY="QupZilla is modern web browser based on WebKit core and Qt Framework"
 HOMEPAGE="http://www.qupzilla.com"
