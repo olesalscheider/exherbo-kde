@@ -1,0 +1,39 @@
+# Copyright 2014 Jorge Aparicio
+# Distributed under the terms of the GNU General Public License v2
+
+require qmake [ slot=5 ]
+require qt
+
+SUMMARY="Wayland plugin for Qt"
+HOMEPAGE="http://qt-project.org/wiki/${PN}"
+
+PLATFORMS="~amd64"
+MYOPTIONS="
+    opengles [[ description = [ Enables the wayland-gle backend ] ]]
+    qtcompositor [[ description = [
+        Enables the creation of Wayland compositors using Qt and QtQuick
+    ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        dev-libs/glib:2
+        sys-libs/wayland[>=1.2.0]
+        x11-dri/mesa
+        x11-libs/libxkbcommon[>=0.2.0]
+        opengles? ( x11-libs/qtbase:5[opengles] )
+        qtcompositor? ( x11-libs/qtdeclarative:5 )
+"
+
+src_configure() {
+    if option qtcompositor; then
+        EQMAKE_PARAMS=(
+            CONFIG+=wayland-compositor
+        )
+    fi
+
+    qmake_src_configure
+}
+
