@@ -66,7 +66,7 @@ DEPENDENCIES="
         sys-apps/dbus[>=1.2.0][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]
-        x11-libs/harfbuzz[multibuild_c:*(-)?]
+        x11-libs/harfbuzz[>=0.9.25][multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
         x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
         x11-libs/libXext[multibuild_c:*(-)?]
