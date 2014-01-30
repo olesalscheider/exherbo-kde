@@ -1,7 +1,7 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008, 2009, 2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde [ api=2 ]
@@ -39,6 +39,8 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="active author braindump flow karbon kexi krita plan sheets stage words"
 
+ever at_least 2.7.91 && MYOPTIONS+=" apple-keynote [[ description = [ Support for importing files from Apple's Keynote ]
+                                                      requires = [ kde_parts:stage ] ]] "
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
@@ -107,8 +109,6 @@ DEPENDENCIES+="
         kde_parts:flow? (
             visio? (
                 media-libs/libvisio
-                office-libs/libwpd[>=0.9]
-                office-libs/libwpg[>=0.2]
             )
         )
         kde_parts:karbon? (
@@ -130,7 +130,6 @@ DEPENDENCIES+="
             mdb? ( dev-libs/glib:2 )
             mysql? ( dev-db/mysql )
             postgresql? (
-                dev-db/libpqxx[>=3&<4]
                 dev-db/postgresql
             )
         )
@@ -184,13 +183,27 @@ DEPENDENCIES+="
 # plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
 # http://www.librcps.org/
 
-if ever at_least 2.7.90 ; then
+if ever at_least 2.7.91 ; then
     DEPENDENCIES+="
         build+run:
             kde/kdepimlibs:4[>=4.6.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
             x11-libs/qt:4[>=4.7.0][dbus][opengl]
+            kde_parts:flow? (
+                visio? ( office-libs/libodfgen )
+            )
+            kde_parts:kexi? (
+                postgresql? ( dev-db/libpqxx[>=3&<5] )
+            )
             kde_parts:krita? (
+                fftw? ( sci-libs/fftw[>=3.2] )
                 x11-libs/libXi
+            )
+            kde_parts:stage? (
+                apple-keynote? ( office-libs/libetonyek )
+            )
+            kde_parts:words? (
+                wordperfect? ( office-libs/libodfgen )
+                msworks? ( office-libs/libodfgen )
             )
     "
 else
@@ -198,6 +211,15 @@ else
         build+run:
             kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
             x11-libs/qt:4[>=4.6.0][dbus][opengl] [[ note = [ some krita features depend on 4.7.0 ] ]]
+            kde_parts:flow? (
+                visio? (
+                    office-libs/libwpd[>=0.9]
+                    office-libs/libwpg[>=0.2]
+                )
+            )
+            kde_parts:kexi? (
+                postgresql? ( dev-db/libpqxx[>=3&<4] )
+            )
     "
 fi
 
@@ -242,6 +264,7 @@ src_configure() {
         $(ever at_least 2.7.90 && cmake_option kde_parts:kexi KEXI_SCRIPTS_SUPPORT)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:stage Okular)
+        $(ever at_least 2.7.91 && cmake_with apple-keynote LibEtonyek)
         $(cmake_with Marble)
         $(cmake_with msworks LibWPS)
         $(cmake_with MySQL)
@@ -278,6 +301,12 @@ src_configure() {
         cmakeparams+=( -DWITH_WPD=ON )
     else
         cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
+    fi
+
+    if option visio || option kde_parts:words && wordperfect || option msworks ; then
+        cmakeparams+=( -DWITH_LibOdfGen=ON )
+    else
+        cmakeparams+=( -DWITH_LibOdfGen=OFF )
     fi
 
     for p in ${MY_KDE_PARTS}; do
