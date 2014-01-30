@@ -11,7 +11,7 @@ case ${PV} in
         myexparam base_uri="mirror://kde/stable/${PN%-l10n}-${PV}/${PN}" ;;
 esac
 
-require kde [ api=2 ] \
+require kde [ api=2 debug=false ] \
         l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.xz ]
 
 SUMMARY="Calligra localisation package"
