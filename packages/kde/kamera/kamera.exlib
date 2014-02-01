@@ -11,6 +11,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        media-libs/libgphoto2
+        media-libs/libgphoto2[>=2.5]
 "
 
