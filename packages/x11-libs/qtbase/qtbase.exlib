@@ -73,6 +73,7 @@ DEPENDENCIES="
         x11-libs/libXi[multibuild_c:*(-)?]
         x11-libs/libxkbcommon[multibuild_c:*(-)?]
         x11-libs/libXrender[multibuild_c:*(-)?]
+        x11-libs/mtdev[multibuild_c:*(-)?]
         x11-utils/xcb-util-image[multibuild_c:*(-)?]
         x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
         x11-utils/xcb-util-renderutil[multibuild_c:*(-)?]
@@ -188,9 +189,11 @@ configure_one_multibuild() {
         -audio-backend
         -c++11
         -dbus-linked
+        -egl
         -iconv
         -icu
         -largefile
+        -mtdev
         -no-eglfs    # EGL Full Screen/Single Surface, probably only useful on embedded devices
         -no-directfb
         -no-linuxfb
@@ -217,7 +220,6 @@ configure_one_multibuild() {
         $(qt_enable glib)
         $(qt_enable gtk gtkstyle)
         $(qt_enable kms)
-        $(qt_enable opengles egl)
         $(option opengles && echo -opengl es2 || echo -opengl desktop)
     )
 
