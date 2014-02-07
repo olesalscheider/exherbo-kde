@@ -1,4 +1,4 @@
-# Copyright 2012-2013 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2012-2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 MY_USER=QupZilla
@@ -14,20 +14,28 @@ SLOT="0"
 MYOPTIONS="
     bash-completion
     gnome [[ description = [ Support for storing passwords in Gnome keyring ] ]]
-    kde [[ description = [ Support for storing passwords in kwallet ] ]]
+    kde [[ description = [ Support for storing passwords in kwallet, currently only if !qt5 ] ]]
+    qt5 [[ description = [ Build for Qt5 instead of Qt4 ] ]]
     zsh-completion
+    kde [[ requires = -qt5 ]]
 "
 
-# TODO: qupzilla can be built (and run?) with Qt5 (needs app-spell/hunspell as well)
-#       qupzilla can be built with wayland support and without X11
+# There is NO_X11, so in principle, it would be possible to build qupzilla without support for X11, but as qt5 links to libX11 currently, there is no point in doing so.
 DEPENDENCIES="
     build:
         dev-util/pkg-config
     build+run:
+        dev-libs/openssl
         x11-libs/libX11
-        x11-libs/qt:4[>=4.7.0][dbus][sql][webkit]
         gnome? ( gnome-desktop/gnome-keyring )
         kde? ( kde/kdelibs )
+        qt5? (
+            app-spell/hunspell
+            x11-libs/qtbase:5 [[ note = [ gui-private, network, printsupport, sql, widgets ] ]]
+            x11-libs/qtscript:5 [[ note = [ script ] ]]
+            x11-libs/qtwebkit:5 [[ note = [ webkitwidgets ] ]]
+        )
+        !qt5? ( x11-libs/qt:4[>=4.7.0][dbus][sql][webkit] )
     run:
         kde/oxygen-icons [[ note = [ Used in preferences ] ]]
 "
@@ -36,12 +44,16 @@ WORK="${WORKBASE}"/${PNV}
 EQMAKE_SOURCES=( ${MY_USER}.pro )
 
 src_configure() {
-    option kde && export KDE_INTEGRATION=True || export KDE_INTEGRATION=False
-    option gnome && export GNOME_INTEGRATION=True || export GNOME_INTEGRATION=False
+    option kde && export KDE_INTEGRATION="true" || export KDE_INTEGRATION="false"
+    option gnome && export GNOME_INTEGRATION="true" || export GNOME_INTEGRATION="false"
 
     export USE_LIBPATH=/usr/${LIBDIR}
 
-    qmake_src_configure
+    if option qt5; then
+        eqmake 5
+    else
+        eqmake 4
+    fi
 }
 
 src_install() {
@@ -55,7 +67,7 @@ src_install() {
     if option zsh-completion; then
         dodir /usr/share/zsh/site-functions/
         insinto /usr/share/zsh/site-functions/
-        newins linux/completion/zsh_completion.sh _qupzilla
+        doins linux/completion/_qupzilla
     fi
 }
 
