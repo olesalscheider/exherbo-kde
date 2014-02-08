@@ -18,7 +18,7 @@ fi
 SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
 HOMEPAGE="http://qt-project.org/"
 
-DOWNLOADS="http://download.qt-project.org/official_releases/${PN/-/}/$(ever range 1-2)/${PV}/${MYPNV}.tar.gz"
+DOWNLOADS="mirror://qt/official_releases/${PN/-/}/$(ever range 1-2)/${PV}/${MYPNV}.tar.gz"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
