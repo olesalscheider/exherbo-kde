@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2014 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 if ever is_scm ; then
@@ -96,6 +96,8 @@ DEPENDENCIES="
         media-sound/moodbar           [[ description = [ Generate .mood files needed by the moodbar ] ]]
         net-downloader/clamz [[ description = [ Download songs from the integrated Amazon MP3 store ] ]]
 "
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-free-music-charts.patch" )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_PLAYER=ON # disabling that disables everything except utilities
