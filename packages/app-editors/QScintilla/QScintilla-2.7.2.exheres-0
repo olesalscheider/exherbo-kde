@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 MYPNV="${PN}-gpl-${PV}"
-require sourceforge [ project="pyqt/${PN}2/${PNV}" pnv=${MYPNV} suffix=tar.gz ] qmake4 python
+require sourceforge [ project="pyqt/${PN}2/${PNV}" pnv=${MYPNV} suffix=tar.gz ] qmake python
 
 SUMMARY="QScintilla is a port to Qt of the Scintilla editing component."
 HOMEPAGE="http://www.riverbankcomputing.com/software/qscintilla/"
@@ -18,7 +18,7 @@ DEPENDENCIES="
         python? ( dev-python/PyQt4 )
 "
 WORK="${WORKBASE}/${MYPNV}"
-EQMAKE4_SOURCES="${WORK}"/Qt4Qt5/qscintilla.pro
+EQMAKE_SOURCES="${WORK}"/Qt4Qt5/qscintilla.pro
 BUGS_TO="kimrhh@exherbo.org"
 
 src_compile() {

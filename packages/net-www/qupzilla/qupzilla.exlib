@@ -4,7 +4,7 @@
 MY_USER=QupZilla
 MY_PNV=${MY_USER}-${PV}
 
-require github [[ user=${MY_USER} tag=v${PV} ]] qmake4
+require github [[ user=${MY_USER} tag=v${PV} ]] qmake
 
 SUMMARY="QupZilla is modern web browser based on WebKit core and Qt Framework"
 HOMEPAGE="http://www.qupzilla.com"
@@ -33,7 +33,7 @@ DEPENDENCIES="
 "
 
 WORK="${WORKBASE}"/${PNV}
-EQMAKE4_SOURCES=( ${MY_USER}.pro )
+EQMAKE_SOURCES=( ${MY_USER}.pro )
 
 src_configure() {
     option kde && export KDE_INTEGRATION=True || export KDE_INTEGRATION=False
@@ -41,7 +41,7 @@ src_configure() {
 
     export USE_LIBPATH=/usr/${LIBDIR}
 
-    qmake4_src_configure
+    qmake_src_configure
 }
 
 src_install() {

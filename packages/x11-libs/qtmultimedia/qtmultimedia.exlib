@@ -1,7 +1,7 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt qmake4 [ slot=5 ]
+require qt qmake [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: QtMultimedia"
 DESCRIPTION="Qt Multimedia is an essential module that provides a rich set of QML types
@@ -33,7 +33,7 @@ src_configure()  {
     option openal || edo sed -e "/openal/d" -i qtmultimedia.pro
     option pulseaudio || edo sed -e "/pulseaudio/d" -i qtmultimedia.pro
 
-    qmake4_src_configure
+    qmake_src_configure
 }
 
 src_compile() {

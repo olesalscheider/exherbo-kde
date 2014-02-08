@@ -5,7 +5,7 @@ if ever is_scm; then
     SCM_EXTERNAL_REFS="tests/manual/v4/test262:"
 fi
 
-require qt qmake4 [ slot=5 ]
+require qt qmake [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: QtQml, QtQuick aka QtQuick2"
 DESCRIPTION="The Qt Quick module is the standard library for writing QML applications. While the

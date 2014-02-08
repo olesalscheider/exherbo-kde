@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PNV=${PN}-src-${PV}
-require qmake4 googlecode [ suffix=tar.gz ]
+require qmake googlecode [ suffix=tar.gz ]
 
 SUMMARY="Qt Script Generator is a tool that generates Qt bindings for Qt Script"
 DESCRIPTION="
@@ -36,7 +36,7 @@ src_prepare() {
 src_configure() {
     for subdir in generator qtbindings ; do
         edo cd "${WORK}/${subdir}"
-        eqmake4 ${subdir}.pro
+        eqmake ${subdir}.pro
     done
 }
 

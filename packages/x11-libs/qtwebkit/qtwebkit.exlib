@@ -4,7 +4,7 @@
 #     Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 #     Copyright 2008-2009, 2010 Ingmar Vanhassel
 
-require qt qmake4 [ slot=5 ]
+require qt qmake [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: QtWebkit"
 
@@ -45,7 +45,7 @@ DEPENDENCIES="
         )
 "
 
-EQMAKE4_SOURCES=( WebKit.pro )
+EQMAKE_SOURCES=( WebKit.pro )
 
 src_configure() {
     local conf_enable,conf_disable
@@ -62,7 +62,7 @@ src_configure() {
         $(option media || echo video) \
         $(option media || echo fullscreen_api)"
 
-    eqmake4 CONFIG+=use_system_icu WEBKIT_CONFIG+="${conf_enable}" WEBKIT_CONFIG-="${conf_disable}"
+    eqmake CONFIG+=use_system_icu WEBKIT_CONFIG+="${conf_enable}" WEBKIT_CONFIG-="${conf_disable}"
 }
 
 src_install() {

@@ -1,7 +1,7 @@
 # Copyright 2011, 2013 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
-require qmake4 sourceforge [ project=kdropbox suffix=tar.gz ]
+require qmake sourceforge [ project=kdropbox suffix=tar.gz ]
 
 SUMMARY="Syncing Dropbox in KDE"
 HOMEPAGE="http://kdropbox.deuteros.es/"

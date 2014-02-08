@@ -1,7 +1,7 @@
 # Copyright 2008, 2009 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qmake4 sourceforge
+require qmake sourceforge
 
 SUMMARY="A complete front-end for MPlayer"
 
@@ -27,8 +27,8 @@ run:
     )
 "
 
-EQMAKE4_SOURCES=( src/${PN}.pro )
-QMAKE4_SRC_CONFIGURE_PARAMS=( -o src/Makefile )
+EQMAKE_SOURCES=( src/${PN}.pro )
+EQMAKE_PARAMS=( -o src/Makefile )
 DEFAULT_SRC_COMPILE_PARAMS=( PREFIX=/usr )
 DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr CONF_PATH="/etc/${PN}" DOC_PATH="/usr/share/doc/${PNVR}" )
 

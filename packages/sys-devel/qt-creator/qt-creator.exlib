@@ -2,17 +2,17 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# It's also possible to build with Qt 4.8.x, but in that case the Welcome
-# mode, Qt Quick Designer and QML Profiler are disabled
+# It's also possible to build 3.0.x with Qt 4.8.x, but in that case the
+# Welcome mode, Qt Quick Designer and QML Profiler are disabled.
+# We also don't offer to build 2.8.x against Qt 5 because it needs
+# qtjsbackend which is dead and buried.
+
+require qmake
 
 if ever at_least 3.0.0 ; then
-    require qmake4 [ slot='5' ]
     MYPNV=${PN}-opensource-src-${PV}
-    WORK=${WORKBASE}/${MYPNV}
 else
-    require qmake4
     MYPNV=${PNV}-src
-    WORK=${WORK}-src/
 fi
 
 SUMMARY="Qt Creator is a new cross-platform integrated development environment for use with Qt."
@@ -22,8 +22,6 @@ DOWNLOADS="mirror://qt/official_releases/${PN/-/}/$(ever range 1-2)/${PV}/${MYPN
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS=""
-
 DEPENDENCIES="
     build:
         virtual/pkg-config
@@ -61,9 +59,10 @@ UPSTREAM_CHANGELOG="http://qt.gitorious.org/${PN}/${PN}/blobs/master/dist/change
 
 BUGS_TO="kimrhh@exherbo.org heirecka@exherbo.org"
 
-EQMAKE4_SOURCES="qtcreator.pro"
+WORK=${WORKBASE}/${MYPNV}
 
-QMAKE4_SRC_CONFIGURE_PARAMS=(
+EQMAKE_SOURCES=( qtcreator.pro )
+EQMAKE_PARAMS=(
     IDE_LIBRARY_BASENAME=${LIBDIR}
     IDE_PACKAGE_MODE=1
     SUPPORT_QT_QML=1
@@ -71,6 +70,14 @@ QMAKE4_SRC_CONFIGURE_PARAMS=(
     TEST=0
 )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}"/usr/ )
+
+src_configure() {
+    if ever at_least 3.0.0 ; then
+        eqmake 5
+    else
+        eqmake 4
+    fi
+}
 
 src_compile() {
     default

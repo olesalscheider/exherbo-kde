@@ -3,7 +3,7 @@
 #   Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require flag-o-matic qmake4
+require flag-o-matic qmake
 
 MY_P=${PN}_${PV}
 
@@ -49,6 +49,6 @@ src_prepare() {
 src_configure() {
     append-flags -I/usr/include/KDE/Phonon
 
-    qmake4_src_configure
+    qmake_src_configure
 }
 
