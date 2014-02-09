@@ -6,7 +6,7 @@ if ever at_least scm ; then
     require scm-git
     DOWNLOADS=""
 else
-    DOWNLOADS="mirror://kde/unstable/frameworks/4.95.0/${PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/unstable/frameworks/4.96.0/${PNV}.tar.xz"
 fi
 
 require cmake [ api=2 ]
@@ -24,6 +24,4 @@ DEPENDENCIES="
 "
 
 BUGS_TO="heirecka@exherbo.org"
-
-RESTRICT="test" # Variable INCLUDE_INSTALL_DIR does not exist
 
