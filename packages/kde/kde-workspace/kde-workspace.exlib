@@ -138,12 +138,7 @@ DEPENDENCIES="
         x11-apps/xsetroot
         x11-apps/xset
     post:
-        python? (
-            || (
-                kde/pykde4:4
-                kde/kdebindings:4[python]
-            )
-        )
+        python? ( kde/pykde4:4 )
     recommendation:
         x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]]
         wayland? ( compositor/weston )
