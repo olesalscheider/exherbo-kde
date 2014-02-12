@@ -1,6 +1,7 @@
 # Copyright 2009 Ingmar Vanhassel
 # Distributed under the terms of the GNU General Public License v2
 
+require github [ user=openlink pn=iODBC tag=v${PV} ]
 require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ]
 
 SUMMARY="iODBC Driver Manager"
@@ -11,7 +12,6 @@ compliant applications that can connect to various databases using
 appropriate backend drivers.
 "
 HOMEPAGE="http://www.iodbc.org"
-DOWNLOADS="https://github.com/openlink/iODBC/archive/v${PV}.tar.gz -> ${PNV}.tar.gz"
 
 LICENCES="|| ( LGPL-2 BSD-3 )"
 SLOT="0"
@@ -36,6 +36,4 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-gui
     --disable-static
 )
-
-WORK=${WORKBASE}/iODBC-${PV}
 
