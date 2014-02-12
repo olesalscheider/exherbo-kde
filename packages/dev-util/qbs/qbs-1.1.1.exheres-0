@@ -26,8 +26,8 @@ src_prepare() {
 src_configure() {
     local configure_params=(
         -r
-        QBS_INSTALL_PREFIX=${IMAGE}usr
-        QBS_LIB_INSTALL_DIR=${IMAGE}usr/${LIBDIR}
+        QBS_INSTALL_PREFIX="${IMAGE}"usr
+        QBS_LIB_INSTALL_DIR="${IMAGE}"usr/${LIBDIR}
     )
 
     local configure=/usr/${LIBDIR}/qt5/bin/qmake
