@@ -1,0 +1,26 @@
+Upstream: Yes, probably going to release .2 soon.
+From a00cd41470c2db311b1198248cb138a54511c0c5 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Sat, 15 Feb 2014 22:28:51 +0100
+Subject: [PATCH] Fix build
+
+---
+ modem.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/modem.cpp b/modem.cpp
+index b9e4b5b..87f8d6a 100644
+--- a/modem.cpp
++++ b/modem.cpp
+@@ -165,7 +165,8 @@ void ModemManager::Modem::setCurrentBands(const QList<MMModemBand> &bands)
+ QString ModemManager::Modem::command(const QString &cmd, uint timeout)
+ {
+     Q_D(Modem);
+-    d->modemIface.Command(cmd, timeout);
++    QDBusReply<QString> reply = d->modemIface.Command(cmd, timeout);
++    return reply.value();
+ }
+ 
+ QString ModemManager::Modem::simPath() const
+-- 
+1.9.0
