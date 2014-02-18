@@ -17,13 +17,28 @@ DEPENDENCIES+="
         doc? ( app-doc/doxygen )
     build+run:
         net-im/telepathy-logger-qt
-        contact-aggregation? (
-            app-text/shared-desktop-ontologies[>=0.6.50]
-            dev-libs/soprano
-            kde/libkpeople
-            kde/nepomuk-core:4
-        )
 "
+
+if ever at_least 0.7.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            contact-aggregation? (
+                kde/kdepimlibs:4
+                kde/libkpeople[>=0.2.0]
+                x11-libs/qt:4[sql]
+            )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            contact-aggregation? (
+                app-text/shared-desktop-ontologies[>=0.6.50]
+                dev-libs/soprano
+                kde/libkpeople
+                kde/nepomuk-core:4
+            )
+    "
+fi
 
 BUGS_TO="mixi@exherbo.org"
 
