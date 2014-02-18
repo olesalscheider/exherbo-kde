@@ -9,10 +9,17 @@ LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS="sms [[ description = [ enable SMS messaging via libmm-qt ] ]]"
 
-DEPENDENCIES+="
-    build+run:
-        sms? ( net-libs/libmm-qt[>=0.5.1] )
-"
+if ever at_least 0.7.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            sms? ( net-libs/libmm-qt[~0.5.1] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            sms? ( net-libs/libmm-qt[>=0.5.1] )
+    "
+fi
 
 BUGS_TO="mixi@exherbo.org"
 
