@@ -20,6 +20,13 @@ DEPENDENCIES+="
         )
 "
 
+if ever at_least 0.7.80 ; then
+    DEPENDENCIES+="
+        run:
+            app-crypt/qca-ossl:2
+    "
+fi
+
 BUGS_TO="mixi@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
