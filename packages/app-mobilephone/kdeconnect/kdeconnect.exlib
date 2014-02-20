@@ -31,6 +31,7 @@ DEPENDENCIES="
         dev-libs/qjson[>=0.8.1]
         kde/kdelibs:4
         media-libs/phonon
+        x11-libs/qt:4[dbus]
     run:
         app-crypt/qca-ossl:2
 "
