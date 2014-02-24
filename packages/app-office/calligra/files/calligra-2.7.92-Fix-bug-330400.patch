@@ -1,0 +1,56 @@
+Upstream: both patches are taken from calligra/2.8 branch
+Reason: Fix bug 330400 and errors thrown by update-mime-database
+
+From be0511675d63334783fb32eaf627d1b93f06f76d Mon Sep 17 00:00:00 2001
+From: Boudewijn Rempt <boud@valdyas.org>
+Date: Thu, 13 Feb 2014 09:48:53 +0100
+Subject: [PATCH] Fix XML
+
+CCBUG:330400
+
+It still doesn't work, though.
+---
+ krita/data/krita.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/krita/data/krita.xml b/krita/data/krita.xml
+index 8dd071f..3418314 100644
+--- a/krita/data/krita.xml
++++ b/krita/data/krita.xml
+@@ -8,7 +8,7 @@
+          <glob pattern="*.flipbook"/>
+   </mime-type>
+   <mime-type type="application/x-krita-paintoppreset">
+-         <sub-class-of="image/png"/>
++         <sub-class-of type="image/png"/>
+          <comment xml:lang="en">Krita Brush Preset</comment>
+          <glob pattern="*.kpp"/>
+   </mime-type>
+-- 
+1.9.0
+
+
+From 1ea250f407e47ff3c207ed668960e2258b64f303 Mon Sep 17 00:00:00 2001
+From: Boudewijn Rempt <boud@valdyas.org>
+Date: Tue, 18 Feb 2014 11:42:52 +0100
+Subject: [PATCH] BUG:330400 Open kpp files as png
+
+---
+ libs/main/KoDocument.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libs/main/KoDocument.cpp b/libs/main/KoDocument.cpp
+index cb651b1..91a8c97 100644
+--- a/libs/main/KoDocument.cpp
++++ b/libs/main/KoDocument.cpp
+@@ -1023,6 +1023,7 @@ QString KoDocument::checkImageMimeTypes(const QString &mimeType, const KUrl &url
+     if (!url.isLocalFile()) return mimeType;
+ 
+     if (url.toLocalFile().endsWith(".flipbook")) return "application/x-krita-flipbook";
++    if (url.toLocalFile().endsWith(".kpp")) return "image/png";
+ 
+     QStringList imageMimeTypes;
+     imageMimeTypes << "image/jpeg"
+-- 
+1.9.0
+
