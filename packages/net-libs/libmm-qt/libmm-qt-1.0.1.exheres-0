@@ -6,6 +6,3 @@ require libmm-qt
 PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/unstable/modemmanager-qt/${PV}/src/${PNV}.tar.xz"
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/a00cd41470c2db311b1198248cb138a54511c0c5.patch )
-
