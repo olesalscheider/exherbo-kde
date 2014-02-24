@@ -5,4 +5,7 @@ require libmm-qt
 
 PLATFORMS="~amd64 ~x86"
 
-DOWNLOADS="mirror://kde/unstable/modemmanager-qt/${PV}/src/${PNV}.tar.xz"
+# TODO: Remove the download arrow with the next version bump. Upstream
+# silently replaced the tarball of 1.0.1.
+DOWNLOADS="mirror://kde/unstable/modemmanager-qt/${PV}/src/${PNV}.tar.xz -> ${PNV}-r1.tar.xz"
+

@@ -1,9 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# TODO: Remove checksums.exlib with the next version bump. Upstream
-# silently replaced the tarball of this version.
-require cmake [ api=2 ] checksums [ sha1=[ ${PNV}.tar.xz=8bf2a5e7f3cb4021d4529c86472d7ffae88acbfd ] ]
+require cmake [ api=2 ]
 
 SUMMARY="Qt-only wrapper for ModemManager DBus API"
 HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
