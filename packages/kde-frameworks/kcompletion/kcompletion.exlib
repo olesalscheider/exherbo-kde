@@ -19,3 +19,6 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5[>=${PV}]
 "
 
+# 3 of 4 tests fail because they need a running X server
+RESTRICT="test"
+
