@@ -14,7 +14,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         kde-frameworks/kwindowsystem:5[>=${PV}]
         x11-libs/dbusmenu-qt[>=0.9.3_p259][qt5(-)]
