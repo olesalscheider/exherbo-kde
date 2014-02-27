@@ -1,0 +1,29 @@
+Reason: Test need a running X, we don't run then, so there is no point in building them.
+Source: Trivial
+Upstream: No
+
+From 80a4af7d5ab01167d329047e38a69cae10ef97f8 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Thu, 27 Feb 2014 18:23:36 +0100
+Subject: [PATCH] Disable tests.
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 687cfd9..77411b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -91,7 +91,7 @@ install(FILES ${CMAKE_BINARY_DIR}/dbusmenu-${QT_SUFFIX}.pc
+ 
+ add_subdirectory(src)
+ if (NOT USE_QT5) # TODO port tests to Qt5
+-add_subdirectory(tests)
++#add_subdirectory(tests)
+ endif()
+ add_subdirectory(tools)
+ 
+-- 
+1.9.0
+

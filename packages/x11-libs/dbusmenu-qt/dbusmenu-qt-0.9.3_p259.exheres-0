@@ -5,3 +5,5 @@ require dbusmenu-qt
 
 PLATFORMS="~amd64 ~x86"
 
+DOWNLOADS="https://bazaar.launchpad.net/~dbusmenu-team/libdbusmenu-qt/trunk/tarball/259 -> ${PNVR}.tar.gz"
+
