@@ -1,0 +1,24 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Utilities for KDE System Settings modules"
+DESCRIPTION="
+KCMUtils provides various classes to work with KCModules. KCModules can be
+created with the KConfigWidgets framework."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+"
+
