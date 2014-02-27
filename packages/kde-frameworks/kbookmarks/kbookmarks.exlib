@@ -1,0 +1,25 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Web browser bookmark management"
+DESCRIPTION="
+KBookmarks lets you access and manipulate bookmarks stored using the XBEL
+format (http://pyxml.sourceforge.net/topics/xbel/)."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kwidgetsaddons:5
+        kde-frameworks/kxmlgui:5
+"
+
+# 1 of 1 test needs a running X server
+RESTRICT="test"
+
