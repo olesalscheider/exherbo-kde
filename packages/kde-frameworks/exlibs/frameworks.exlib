@@ -34,11 +34,21 @@ exparam -b debug &&
 MYOPTIONS="debug"
 
 DEPENDENCIES="
-    build:
-        kde/extra-cmake-modules[>=0.0.10]
     build+run:
         x11-libs/qtbase:5[>=5.2.0]
 "
+if ever at_least 4.97.0; then
+    DEPENDENCIES="
+        build:
+            kde/extra-cmake-modules[>=0.0.11]
+    "
+else
+    DEPENDENCIES="
+        build:
+            kde/extra-cmake-modules[>=0.0.10]
+    "
+fi
+
 frameworks_pkg_setup() {
     exparam -b debug && option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
 }
