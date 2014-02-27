@@ -1,0 +1,24 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+# last checked revision: 71bf8bebe2eba9d722fbe61fd58b2ab0051d6eba
+
+SUMMARY="A framework for searching and managing metadata"
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-db/xapian-core
+        dev-libs/qjson
+        kde/kdelibs:${SLOT}
+        kde/kdepimlibs:${SLOT}[>=4.12.80]
+        kde/kfilemetadata:${SLOT}
+        server-pim/akonadi[>=1.11.42]
+        sys-apps/attr
+        x11-libs/qt:4[sql]
+"
+
