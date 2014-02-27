@@ -1,0 +1,41 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+# last checked revision: b42529ce7a22650f171ed325813f161b5e376400
+
+SUMMARY="A library for extracting file metadata"
+
+LICENCES="LGPL-2 LGPL-2.1 LGPL-3"
+MYOPTIONS="
+    epub       [[ description = [ Support for extracting metadata from .epub ebook files ] ]]
+    exif       [[ description = [ Support for extracting metadata from EXIF headers ] ]]
+    ffmpeg     [[ description = [ Support for extracting audio and video metadata ] ]]
+    mobipocket [[ description = [ Support for extracting metadata from mobipocket ebooks ] ]]
+    pdf        [[ description = [ Support for extracting metadata from pdf files ] ]]
+    taglib     [[ description = [ Support for extracting metadata from music files ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}
+        epub? ( app-text/ebook-tools )
+        exif? ( graphics/exiv2[>=0.21] )
+        ffmpeg? ( media/ffmpeg[>=1.0] )
+        mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
+        pdf? ( app-text/poppler[>=0.12.1][qt4] )
+        taglib? ( media-libs/taglib )
+"
+
+RESTRICT="-test"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    EPub
+    'exif Exiv2'
+    FFmpeg
+    'mobipocket QMobipocket'
+    'pdf PopplerQt4'
+    Taglib
+)
+
