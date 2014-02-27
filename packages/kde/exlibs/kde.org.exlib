@@ -27,7 +27,7 @@ if ever is_scm; then
         SCM_REPOSITORY="git://anongit.kde.org/${PN}"
         case ${PN} in
             kdelibs)
-                SCM_BRANCH="KDE/4.12"
+                SCM_BRANCH="KDE/4.13"
                 ;;
             kde-workspace)
                 SCM_BRANCH="KDE/4.11"
