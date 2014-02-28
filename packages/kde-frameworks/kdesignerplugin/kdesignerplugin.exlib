@@ -1,0 +1,39 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Integrating KDE frameworks widgets with Qt Designer"
+DESCRIPTION="
+This framework provides plugins for Qt Designer that allow it to display
+the widgets provided by various KDE frameworks, as well as a utility
+(kgendesignerplugin) that can be used to generate other such plugins
+from ini-style description files.
+"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        kde-frameworks/kbookmarks:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/kdewebkit:5[>=${PV}]
+        kde-frameworks/kguiaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kplotting:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/ktextwidgets:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+        x11-libs/qttools:5[>=5.2.0]
+"
+
