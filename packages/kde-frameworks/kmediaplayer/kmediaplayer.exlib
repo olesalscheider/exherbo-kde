@@ -1,0 +1,21 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Interface for media player KParts"
+
+LICENCES="X11"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+"
+
+# Tries to connect to the running display server
+RESTRICT=test
+
