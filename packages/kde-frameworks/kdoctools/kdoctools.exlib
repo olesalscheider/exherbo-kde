@@ -5,7 +5,7 @@ require frameworks
 
 SUMMARY="Provides tools to generate documentation in various format from DocBook files"
 
-LICENCES="LGPL-2.1"
+LICENCES="MIT LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="

@@ -9,7 +9,7 @@ KNotification is used to notify the user of an event. It covers feedback and
 persistent events.
 "
 
-LICENCES="LGPL-2.1"
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="

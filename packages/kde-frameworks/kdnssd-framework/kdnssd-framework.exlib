@@ -11,7 +11,7 @@ services, such as printers, to be discovered without any user intervention or
 centralized infrastructure.
 "
 
-LICENCES="LGPL-2.1"
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="

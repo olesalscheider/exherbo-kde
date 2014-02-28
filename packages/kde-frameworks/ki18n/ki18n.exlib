@@ -16,7 +16,7 @@ of source and translated text. This includes argument capturing,
 customizable markup, and translation scripting.
 "
 
-LICENCES="LGPL-2.1"
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
