@@ -1,0 +1,32 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="KDE text editor component"
+
+DESCRIPTION="
+KTextEditor provides a powerful text editor component that you can embed in your
+application, either as a KPart or using the KF5::TextEditor library (if you need
+more control).
+
+The text editor component contains many useful features, from syntax
+highlighting and automatic indentation to advanced scripting support, making it
+suitable for everything from a simple embedded text-file editor to an advanced IDE.
+"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kguiaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/sonnet:5[>=${PV}]
+        x11-libs/qtscript:5[>=5.2.0]
+"
+
