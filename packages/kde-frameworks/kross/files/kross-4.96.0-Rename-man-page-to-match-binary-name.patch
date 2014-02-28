@@ -1,0 +1,74 @@
+Upstream: yes
+Reason: see below, fixes a collision with kdelibs:4
+
+From a3dd43698bb060af563e1b2083dcf59dfa7b0f37 Mon Sep 17 00:00:00 2001
+From: Michael Palimaka <kensington@gentoo.org>
+Date: Tue, 11 Feb 2014 00:13:30 +1100
+Subject: [PATCH] Rename man page to match binary name.
+
+REVIEW: 115624
+---
+ docs/kross/CMakeLists.txt                                  |  2 +-
+ docs/kross/{man-kross.1.docbook => man-kf5kross.1.docbook} | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+ rename docs/kross/{man-kross.1.docbook => man-kf5kross.1.docbook} (90%)
+
+diff --git a/docs/kross/CMakeLists.txt b/docs/kross/CMakeLists.txt
+index 8e34a07..fb88661 100644
+--- a/docs/kross/CMakeLists.txt
++++ b/docs/kross/CMakeLists.txt
+@@ -1 +1 @@
+-kdoctools_create_manpage(man-kross.1.docbook 1 INSTALL_DESTINATION ${MAN_INSTALL_DIR})
++kdoctools_create_manpage(man-kf5kross.1.docbook 1 INSTALL_DESTINATION ${MAN_INSTALL_DIR})
+diff --git a/docs/kross/man-kross.1.docbook b/docs/kross/man-kf5kross.1.docbook
+similarity index 90%
+rename from docs/kross/man-kross.1.docbook
+rename to docs/kross/man-kf5kross.1.docbook
+index e2e6dd1..793a79a 100644
+--- a/docs/kross/man-kross.1.docbook
++++ b/docs/kross/man-kf5kross.1.docbook
+@@ -21,12 +21,12 @@
+ </refentryinfo>
+ 
+ <refmeta>
+-<refentrytitle><command>kross</command></refentrytitle>
++<refentrytitle><command>kf5kross</command></refentrytitle>
+ <manvolnum>1</manvolnum>
+ </refmeta>
+ 
+ <refnamediv>
+-<refname><command>kross</command></refname>
++<refname><command>kf5kross</command></refname>
+ <refpurpose>&kde; application to run kross scripts.</refpurpose>
+ </refnamediv>
+ 
+@@ -34,7 +34,7 @@
+ <title>Synopsis</title>
+ 
+ <cmdsynopsis>
+-<command>kross</command>
++<command>kf5kross</command>
+ 
+ <arg choice="opt">--help</arg>
+ <arg choice="opt">Generic-options</arg>
+@@ -47,7 +47,7 @@
+ <refsect1>
+ <title>Description</title>
+ 
+-<para><command>kross</command> executes kross scripts written in &kde; Javascript, Python, Ruby, Java and Falcon.
++<para><command>kf5kross</command> executes kross scripts written in &kde; Javascript, Python, Ruby, Java and Falcon.
+ </para>
+ <para>This command line tool is used for any non-GUI scripts, e.g. Calligra Sheets has some of these.</para>
+ </refsect1>
+@@ -131,7 +131,7 @@
+ <refsect1>
+ <title>Usage</title>
+ <para>
+-<command>kross</command> <parameter>file</parameter> runs the script in <parameter>file</parameter>
++<command>kf5kross</command> <parameter>file</parameter> runs the script in <parameter>file</parameter>
+ after loading the interpreter plugin for the script language (detected by filename suffix).
+ </para>
+ <para>
+-- 
+1.9.0
+
