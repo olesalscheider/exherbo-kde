@@ -1,0 +1,20 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Library to interface with pseudo terminal devices"
+DESCRIPTION="
+It provides primitives to interface with pseudo terminal devices
+as well as a KProcess derived class for running child processes and
+communicating with them using a pty."
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+"
+
