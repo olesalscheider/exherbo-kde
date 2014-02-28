@@ -65,7 +65,6 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     'doc PHONON_BUILD_DOC'
-    'qt5 PHONON_BUILD_PHONON4QT5'
 )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
         'pulseaudio GLIB2'
@@ -89,7 +88,8 @@ _ecmake_helper() {
         done ) \
         $(for s in "${CMAKE_SRC_CONFIGURE_OPTION_WITHS[@]}" ; do
             cmake_with ${s}
-        done )
+        done ) \
+        "$@"
 }
 
 configure_one_multibuild() {
@@ -97,22 +97,24 @@ configure_one_multibuild() {
     if option qt4 ; then
         edo mkdir "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt4-build
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt4-build
-        _ecmake_helper
+        _ecmake_helper -DPHONON_BUILD_PHONON4QT5:BOOL=FALSE
         edo popd
-    elif option qt5 ; then
+    fi
+    if option qt5 ; then
         edo mkdir "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
-        _ecmake_helper
+        _ecmake_helper -DPHONON_BUILD_PHONON4QT5:BOOL=TRUE
         edo popd
     fi
 }
 
 compile_one_multibuild() {
-    if option qt4; then
+    if option qt4 ; then
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt4-build
         emake
         edo popd
-    elif option qt5; then
+    fi
+    if option qt5 ; then
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
         emake
         edo popd
@@ -123,8 +125,9 @@ install_one_multibuild() {
     if option qt4; then
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt4-build
         emake -j1 DESTDIR="${IMAGE}" install
-    elif option qt5; then
-        edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt4-build
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
         emake -j1 DESTDIR="${IMAGE}" install
     fi
 }
