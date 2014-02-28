@@ -1,0 +1,22 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="User interface for running shell commands with root privileges"
+DESCRIPTION="
+libkdesu provides functionality for building GUI front ends for
+(password asking) console mode programs. For example, kdesu and
+kdessh use it to interface with su and ssh respectively."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kpty:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        x11-libs/libX11
+"
+
