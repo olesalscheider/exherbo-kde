@@ -19,7 +19,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         app-crypt/qca:2
-        dev-libs/attica [[ note = [ Open Collaboration Services plugin ] ]]
+        dev-libs/attica:0 [[ note = [ Open Collaboration Services plugin ] ]]
         dev-libs/qjson
         kde/kdelibs:4[>=4.4.0]
         sys-auth/qoauth
