@@ -10,7 +10,7 @@ LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="okular [[ description = [ SMOKE bindings for Okular ] ]]"
 DEPENDENCIES="
     build+run:
-        dev-libs/attica
+        dev-libs/attica:0
         dev-libs/soprano
         kde/kate:${SLOT}[>=4.7.4]
         kde/kdelibs:${SLOT}[>=${PV}]
