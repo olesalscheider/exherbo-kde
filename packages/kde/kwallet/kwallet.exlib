@@ -3,6 +3,8 @@
 # Based in part upon 'kdeutils.exlib', which is:
 #     Copyright 2008-2011 Bo Ørsted Andresen
 
+ever at_least 4.12.3 && KDEMODULE=kwalletmanager
+
 require kde.org
 
 SUMMARY="KDE wallet management tool"
@@ -21,4 +23,8 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
 "
+
+if ever at_least 4.12.3 ; then
+    CMAKE_SOURCE=${WORKBASE}/kwalletmanager-${PV}
+fi
 
