@@ -23,7 +23,7 @@ DEPENDENCIES+="
         dev-lang/python:*
         sci-libs/eigen:2[>=2.0.3]
     build+run:
-        dev-libs/attica[>=0.1.1]
+        dev-libs/attica:0[>=0.1.1]
         dev-libs/boost
         dev-libs/qjson [[ note = [ dataengines/microblog, runners/youtube ] ]]
         kde/kde-workspace:${SLOT}
