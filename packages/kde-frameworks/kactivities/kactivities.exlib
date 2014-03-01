@@ -1,0 +1,38 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Runtime and library to organize the user work in separate activities"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+"
+
+# build+run: if KACTIVITIES_LIBRARY_ONLY=FALSE
+#        dev-libs/boost[>=1.49]
+#        kde-frameworks/kconfig:5[>=${PV}]
+#        kde-frameworks/kcoreaddons:5[>=${PV}]
+#        kde-frameworks/ki18n:5[>=${PV}]
+#        kde-frameworks/kservice:5[>=${PV}]
+#        kde-frameworks/kwindowsystem:5[>=${PV}]
+#        x11-libs/qtbase:5[>=5.2.0][sql]
+#        x11-libs/qtdeclarative:5[>=5.2.0]
+#if ever at_least 4.97.0 ; then
+#    DEPENDENCIES+="
+#        build+run:
+#            kde-frameworks/kauth:5[>=${PV}]
+#    "
+#fi
+
+# TODO: remove KACTIVITIES_LIBRARY_ONLY if kactivitymanagerd can be
+# coinstalled with KDE
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DCMAKE_AUTOMOC:BOOL=TRUE
+    -DKACTIVITIES_LIBRARY_ONLY:BOOL=TRUE
+)
+

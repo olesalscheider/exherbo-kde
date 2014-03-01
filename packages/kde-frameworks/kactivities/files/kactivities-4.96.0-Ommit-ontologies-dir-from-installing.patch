@@ -1,0 +1,47 @@
+Upstream: yes
+
+From a70ef082e63bdfc032096afa079e692710f9f358 Mon Sep 17 00:00:00 2001
+From: Hrvoje Senjan <hrvoje.senjan@gmail.com>
+Date: Mon, 10 Feb 2014 12:46:00 +0100
+Subject: [PATCH] Ommit ontologies/ dir from installing
+
+So kf5 kactivities can be co-installed with kactivities(4)
+
+REVIEW: 115606
+---
+ src/CMakeLists.txt            |  2 +-
+ src/ontologies/CMakeLists.txt | 11 -----------
+ 2 files changed, 1 insertion(+), 12 deletions(-)
+ delete mode 100644 src/ontologies/CMakeLists.txt
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 8a00cf8..00c5c7e 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -130,5 +130,5 @@ if (NOT KACTIVITIES_LIBRARY_ONLY)
+ 
+ endif ()
+ 
+-add_subdirectory (ontologies)
++#add_subdirectory (ontologies)
+ 
+diff --git a/src/ontologies/CMakeLists.txt b/src/ontologies/CMakeLists.txt
+deleted file mode 100644
+index 4bd4528..0000000
+--- a/src/ontologies/CMakeLists.txt
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# vim:set softtabstop=3 shiftwidth=3 tabstop=3 expandtab:
+-
+-configure_file (kao.ontology.in ${CMAKE_CURRENT_BINARY_DIR}/kao.ontology)
+-
+-install (
+-   FILES
+-   kao.trig
+-   ${CMAKE_CURRENT_BINARY_DIR}/kao.ontology
+-   DESTINATION
+-   ${KACTIVITIES_ONTOLOGIES_DIR}
+-   )
+-- 
+1.9.0
+
