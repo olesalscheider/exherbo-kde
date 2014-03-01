@@ -10,7 +10,7 @@ MYOPTIONS="html-export"
 
 DEPENDENCIES="
     build+run:
-        dev-libs/attica
+        dev-libs/attica:0
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkdeedu:${SLOT}
         x11-libs/libXrender
