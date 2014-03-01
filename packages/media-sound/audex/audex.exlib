@@ -1,17 +1,17 @@
-# Copyright 2011-2013 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2011-2014 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="http://kde.maniatek.com/${PN}/files/${PNV/_beta/b}.tar.xz"
+    DOWNLOADS="http://kde.maniatek.com/${PN}/files/${PNV}.tar.xz"
 fi
 
 require kde [ api=2 ]
 
 SUMMARY="KDE4 based CDDA extraction tool"
-DESCRIPTION="Audex is a audio grabber tool for CD-ROM drives based on KDE4"
+DESCRIPTION="Audex is a audio grabber tool for CD-ROM drives."
 HOMEPAGE="http://kde.maniatek.com/${PN}"
 
 LICENCES="GPL-3"
@@ -25,10 +25,10 @@ DEPENDENCIES="
         kde/libkcompactdisc:4
         media/cdparanoia
     suggestion:
+        dev-python/eyeD3         [[ note = [ eyeD3 will be prefered over LAME for ID3 tagging ] ]]
+        media-libs/faac          [[ note = [ Encode mp4/aac files ] ]]
         media-libs/flac          [[ note = [ Encode flac files ] ]]
         media-sound/lame         [[ note = [ Encode mp3 files ] ]]
         media-sound/vorbis-tools [[ note = [ Encode ogg vorbis files ] ]]
 "
-
-CMAKE_SOURCE=${WORKBASE}/${PNV/_beta/b}
 
