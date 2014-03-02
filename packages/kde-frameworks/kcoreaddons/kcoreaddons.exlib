@@ -14,7 +14,6 @@ LICENCES="LGPL-2.1"
 MYOPTIONS="fam"
 
 DEPENDENCIES="
-    build:
     build+run:
         x11-misc/shared-mime-info[>=0.70]
         fam? ( app-admin/gamin )
