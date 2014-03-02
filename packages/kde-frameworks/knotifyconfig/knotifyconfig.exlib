@@ -12,7 +12,6 @@ LICENCES="LGPL-2.1"
 MYOPTIONS="phonon"
 
 DEPENDENCIES="
-    build:
     build+run:
         kde-frameworks/kcompletion:5[>=${PV}]
         kde-frameworks/kconfig:5[>=${PV}]
