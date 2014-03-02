@@ -14,7 +14,6 @@ DEPENDENCIES="
     build+run:
         dev-libs/openssl
         kde-frameworks/karchive:5[>=${PV}]
-        kde-frameworks/kbookmarks:5[>=${PV}]
         kde-frameworks/kcodecs:5[>=${PV}]
         kde-frameworks/kglobalaccel:5[>=${PV}]
         kde-frameworks/ki18n:5[>=${PV}]
@@ -34,7 +33,7 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/phonon[>=4.6.60][qt5]
         x11-libs/libX11
-        x11-libs/qtx11extras
+        x11-libs/qtx11extras:5[>=5.2.0]
         sys-libs/zlib
 "
 
