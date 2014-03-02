@@ -5,7 +5,3 @@ require kross
 
 PLATFORMS="~amd64"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Rename-man-page-to-match-binary-name.patch
-)
-
