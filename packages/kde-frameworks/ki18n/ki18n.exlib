@@ -22,17 +22,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         dev-lang/perl:*
+        x11-libs/qtscript:5[>=5.2.0]
 "
-
-if ever at_least 4.97.0; then
-    DEPENDENCIES="
-        build+run:
-            x11-libs/qtscript:5[>=5.2.0]
-    "
-    else
-    DEPENDENCIES="
-        build+run:
-            kde-frameworks/kjs[>=4.96.0]
-    "
-fi
 
