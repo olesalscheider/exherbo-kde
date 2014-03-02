@@ -9,7 +9,6 @@ LICENCES="LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
-    build:
     build+run:
         kde-frameworks/kconfig:5[>=${PV}]
         kde-frameworks/kcoreaddons:5[>=${PV}]
