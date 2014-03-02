@@ -14,7 +14,7 @@ MYOPTIONS="jpeg2000 openexr"
 
 DEPENDENCIES="
     build:
-        virtual/pkg-config
+        openexr? ( virtual/pkg-config )
     build+run:
         jpeg2000? ( media-libs/jasper )
         openexr? ( media-libs/openexr )

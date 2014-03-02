@@ -5,7 +5,3 @@ require kimageformats
 
 PLATFORMS="~amd64"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Only-perform-tests-for-plugins-that-are-built.patch
-)
-
