@@ -37,6 +37,7 @@ src_prepare() {
 
     # FIXME: very dirty hack to include private qpa headers
     edo sed -e 's:${Qt5Gui_PRIVATE_INCLUDE_DIRS}:/usr/include/qt5/QtGui/5.2.1/QtGui:' \
-            -i src/platformtheme/CMakeLists.txt
+            -i src/platformtheme/CMakeLists.txt \
+            -i autotests/CMakeLists.txt
 }
 
