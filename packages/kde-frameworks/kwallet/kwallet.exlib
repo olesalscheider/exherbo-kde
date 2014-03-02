@@ -1,8 +1,6 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-MY_PNV=${PN}-framework-${PV}
-
 require frameworks test-dbus-daemon
 
 SUMMARY="Safe desktop-wide storage for passwords"
@@ -11,10 +9,6 @@ This framework contains two main components:
 * Interface to KWallet, the safe desktop-wide storage for passwords on KDE work
 spaces.
 * The kwalletd used to safely store the passwords on KDE work spaces."
-
-# TODO: DO we need an exparam? Or do we want to rename it to -framework?
-# Also note that the git repo is named kwallet.
-DOWNLOADS="mirror://kde/unstable/frameworks/${PV}/${MY_PNV}.tar.xz"
 
 LICENCES="LGPL-2.1"
 MYOPTIONS="
@@ -43,8 +37,6 @@ DEPENDENCIES="
 # "...Couldn't start kwalletd:  QDBusError("org.freedesktop.DBus.Error.ServiceUnknown",
 # "The name org.kde.kwalletd5 was not provided by any .service files")..."
 RESTRICT="test"
-
-CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gpg Gpgme'
