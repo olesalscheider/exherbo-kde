@@ -4,16 +4,19 @@
 # TODO: This eventually can be merged to kde.org/kde exlibs, but keep it
 # here for the time being and see how many code can be shared.
 
+myexparam module=${PN}
+exparam -v KDEMODULE module
+
 case ${PV} in
     scm)
-        SCM_REPOSITORY="git://anongit.kde.org/${PN}"
+        SCM_REPOSITORY="git://anongit.kde.org/${KDEMODULE}"
         require scm-git
 
         DOWNLOADS=""
         ;;
 
     4.9@(5|6|7|8|9).*)
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${PNV}.tar.xz"}"
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}"
         UPSTREAM_RELEASE_NOTES="http://dot.kde.org/2014/01/07/frameworks-5-tech-preview"
         ;;
 esac
@@ -24,7 +27,8 @@ export_exlib_phases pkg_setup src_configure
 
 myexparam -b debug=true
 
-HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"} https://projects.kde.org/projects/frameworks/${PN}"
+
+HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"} https://projects.kde.org/projects/frameworks/${KDEMODULE}"
 SLOT="5"
 
 BUGS_TO="kde@exherbo.org"
@@ -38,6 +42,8 @@ DEPENDENCIES="
         kde/extra-cmake-modules[>=0.0.11]
         x11-libs/qtbase:5[>=5.2.0]
 "
+
+ever is_scm || CMAKE_SOURCE=${WORKBASE}/${KDEMODULE}-${PV}
 
 frameworks_pkg_setup() {
     exparam -b debug && option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
