@@ -5,7 +5,3 @@ require kactivities
 
 PLATFORMS="~amd64"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Ommit-ontologies-dir-from-installing.patch
-)
-
