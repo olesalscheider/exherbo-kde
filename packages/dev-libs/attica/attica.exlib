@@ -17,12 +17,12 @@ SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
 HOMEPAGE="http://www.kde.org"
 
 LICENCES="LGPL-2.1"
-ever at_least 4.96.0 || \
+ever at_least 4.97.0 || \
     MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
 DEPENDENCIES=""
 
-if ! ever at_least 4.96.0 ; then
+if ! ever at_least 4.97.0 ; then
     DEPENDENCIES+="
         build:
             qt5? ( kde/extra-cmake-modules[>=0.0.6] )
@@ -31,12 +31,10 @@ if ! ever at_least 4.96.0 ; then
            !qt5? ( x11-libs/qt:4[>=4.7.0] )
     "
     CMAKE_SRC_CONFIGURE_OPTIONS+=( '!qt5 QT4_BUILD' )
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
 fi
 
 BUGS_TO="kde@exherbo.org"
 
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DATTICA_ENABLE_TESTS:BOOL=TRUE
-    -DATTICA_STATIC_BUILD:BOOL=FALSE
-)
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DATTICA_STATIC_BUILD:BOOL=FALSE )
 
