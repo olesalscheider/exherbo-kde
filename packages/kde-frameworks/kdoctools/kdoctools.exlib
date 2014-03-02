@@ -13,7 +13,7 @@ DEPENDENCIES="
         app-text/docbook-xml-dtd:4.2
         app-text/docbook-xsl-stylesheets
     build+run:
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         dev-libs/libxslt
         kde-frameworks/karchive:5[>=${PV}]
 "
