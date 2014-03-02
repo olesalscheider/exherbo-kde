@@ -23,5 +23,3 @@ DEPENDENCIES=""
 # the paludisbuild environment.
 RESTRICT="test"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DBIN_INSTALL_DIR=/usr/bin )
-
