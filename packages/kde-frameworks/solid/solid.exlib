@@ -16,7 +16,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        sys-apps/systemd[>=167]    [[ note = udev ]]
+        sys-apps/systemd[>=167]    [[ note = [ for udev, might be optional ] ]]
         x11-libs/qtdeclarative:5[>=5.2.0]
         upnp? ( net-libs/herqq[>=0.9] )
     recommendation:
