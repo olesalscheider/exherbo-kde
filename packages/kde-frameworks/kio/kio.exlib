@@ -20,21 +20,19 @@ file dialog or any other KIO enabled infrastructure."
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="acl kerberos"
 
-# NOTE:  Due to a CMake bug, we need to explicitly find private dependencies of our dependencies
-#        Remove when we depend on CMake 3.0.0
 DEPENDENCIES="
     build:
         kde-frameworks/kdoctools:5[>=${PV}]
     build+run:
         dev-libs/libxml2:2.0
         dev-libs/libxslt
-        dev-libs/openssl
         kde-frameworks/karchive:5[>=${PV}]
         kde-frameworks/kbookmarks:5[>=${PV}]
+        kde-frameworks/kcodecs:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
         kde-frameworks/kconfigwidgets:5[>=${PV}]
         kde-frameworks/kcompletion:5[>=${PV}]
         kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kcrash:5[>=${PV}]
         kde-frameworks/kdbusaddons:5[>=${PV}]
         kde-frameworks/kguiaddons:5[>=${PV}]
         kde-frameworks/ki18n:5[>=${PV}]
@@ -43,7 +41,6 @@ DEPENDENCIES="
         kde-frameworks/kjobwidgets:5[>=${PV}]
         kde-frameworks/knotifications:5[>=${PV}]
         kde-frameworks/kservice:5[>=${PV}]
-        kde-frameworks/ktextwidgets:5[>=${PV}]
         kde-frameworks/kwidgetsaddons:5[>=${PV}]
         kde-frameworks/kwindowsystem:5[>=${PV}]
         kde-frameworks/kxmlgui:5[>=${PV}]
@@ -51,9 +48,14 @@ DEPENDENCIES="
         sys-libs/zlib
         x11-libs/libX11 [[ note = [ Could be optional ] ]]
         x11-libs/qtscript:5[>=5.2.0] [[ note = [ Could be optional ] ]]
-        acl? ( sys-apps/acl )
+        acl? (
+            sys-apps/acl
+            sys-apps/attr
+        )
         kerberos? ( virtual/kerberos )
 "
+# Currently (4.97.0) commented out
+#        dev-libs/openssl
 
 # Tests need a running X server and broken tests
 RESTRICT="test"

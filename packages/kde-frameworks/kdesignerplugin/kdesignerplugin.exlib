@@ -30,6 +30,7 @@ DEPENDENCIES="
         kde-frameworks/ktextwidgets:5[>=${PV}]
         kde-frameworks/kwidgetsaddons:5[>=${PV}]
         kde-frameworks/kxmlgui:5[>=${PV}]
+        x11-libs/qtscript:5[>=5.2.0]
         x11-libs/qttools:5[>=5.2.0]
 "
 
