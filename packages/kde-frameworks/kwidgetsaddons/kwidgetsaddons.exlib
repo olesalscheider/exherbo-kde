@@ -19,6 +19,6 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
-# 6 of 6 tests need a running X server
+# 7 of 7 tests need a running X server
 RESTRICT="test"
 
