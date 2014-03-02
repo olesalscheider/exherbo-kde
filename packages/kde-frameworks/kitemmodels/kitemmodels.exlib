@@ -23,6 +23,5 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
-# according to CMakeLists.txt tests need grantlee, which isn't ported to Qt5
-RESTRICT="tests"
+# NOTE: according to CMakeLists.txt tests need grantlee, which isn't ported to Qt5
 
