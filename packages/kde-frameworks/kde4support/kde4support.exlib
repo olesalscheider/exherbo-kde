@@ -1,0 +1,66 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Framework to help porting from kdelibs4"
+DESCRIPTION="
+It provides code and utilities to ease the transition from kdelibs 4
+to KDE Frameworks 5.  This includes CMake macros and C++ classes
+whose functionality has been replaced by code in CMake, Qt and
+other frameworks.
+
+Code should aim to port away from this framework eventually.  The API
+documentation of the classes in this framework and the notes at
+<http://community.kde.org/Frameworks/Porting_Notes> should help with
+this."
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+        sys-devel/gettext
+    build+run:
+        dev-libs/openssl
+        kde-frameworks/kbookmarks:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/kcrash:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/kdesignerplugin:5[>=${PV}]
+        kde-frameworks/kglobalaccel:5[>=${PV}]
+        kde-frameworks/kguiaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/knotifications:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/ktextwidgets:5[>=${PV}]
+        kde-frameworks/kunitconversion:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+        x11-libs/libX11
+        x11-libs/libSM
+        x11-libs/qtsvg:5[>=5.2.0]
+        x11-libs/qttools:5[>=5.2.0]
+        x11-libs/qtx11extras:5[>=5.2.0]
+"
+
+# 26 of 38 tests need a running X server
+RESTRICT="test"
+
+src_install() {
+    cmake_src_install
+
+    # Avoid collision with kdelibs
+    edo rm -r "${IMAGE}"/usr/share/locale/en_US
+    # Remove headers that just include <nepomuk/header>
+    edo rm -r "${IMAGE}"/usr/include/KF5/KDE4Support/KDE/Nepomuk
+}
+
