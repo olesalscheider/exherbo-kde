@@ -30,3 +30,6 @@ DEPENDENCIES="
         x11-libs/qtscript:5[>=5.2.0]
 "
 
+# 27 of 48 tests need a running X server
+RESTRICT="test"
+
