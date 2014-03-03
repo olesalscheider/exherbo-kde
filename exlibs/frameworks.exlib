@@ -26,6 +26,7 @@ require flag-o-matic cmake [ api=2 ]
 export_exlib_phases pkg_setup src_configure
 
 myexparam -b debug=true
+myexparam -b no_qt_dependency=false
 
 
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"} https://projects.kde.org/projects/frameworks/${KDEMODULE}"
@@ -40,8 +41,14 @@ MYOPTIONS="debug"
 DEPENDENCIES="
     build+run:
         kde/extra-cmake-modules[>=0.0.11]
-        x11-libs/qtbase:5[>=5.2.0]
 "
+
+if ! exparam -b no_qt_dependency ; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qtbase:5[>=5.2.0]
+    "
+fi
 
 ever is_scm || CMAKE_SOURCE=${WORKBASE}/${KDEMODULE}-${PV}
 

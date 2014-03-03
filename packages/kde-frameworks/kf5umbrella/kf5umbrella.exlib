@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require frameworks
+require frameworks [ no_qt_dependency=true ]
 
 SUMMARY="CMake convenience functions for KDE Frameworks"
 DESCRIPTION="
@@ -13,6 +13,5 @@ of workspace and applications."
 LICENCES="BSD-3"
 MYOPTIONS=""
 
-# FIXME: exparam no_qt_dep to avoid the not necessary qt dep
 DEPENDENCIES=""
 
