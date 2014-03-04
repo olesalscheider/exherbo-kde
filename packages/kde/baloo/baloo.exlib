@@ -20,5 +20,9 @@ DEPENDENCIES="
         server-pim/akonadi[>=1.11.42]
         sys-apps/attr
         x11-libs/qt:4[sql]
+        !kde/kde-runtime[<4.12.80] [[
+            description = [ kde/kde-runtime<4.12.80 and baloo collide ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
