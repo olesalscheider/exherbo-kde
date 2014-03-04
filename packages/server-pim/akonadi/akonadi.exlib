@@ -1,5 +1,5 @@
 # Copyright 2008,2010 Bernd Steinhauser <berniyh@exherbo.org>
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'akonadi-server-scm.kdebuild-1' from Genkdesvn, which is:
 # Copyright 2007-2008 by the individual contributors of the genkdesvn project
@@ -27,6 +27,7 @@ MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4. ] ]]"
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.87]
+        virtual/pkg-config
         qt5? ( sys-devel/cmake[>=2.8.9] )
     build+run:
         dev-db/mysql[>=5.1]
@@ -43,8 +44,14 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DAKONADI_BUILD_QSQLITE:BOOL=FALSE
     -DAKONADI_BUILD_TESTS:BOOL=TRUE
+    # "backward compat, remove eventually"
     -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE
     -DDATABASE_BACKEND:STRING=MYSQL
 )
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
+
+if ever at_least 1.11.80 ; then
+    # Make this optional for frameworks where there is no Nepomuk
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOPRANO:BOOL=TRUE )
+fi
 
