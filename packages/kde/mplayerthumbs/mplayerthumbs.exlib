@@ -18,10 +18,7 @@ DEPENDENCIES="
         media-libs/phonon
         x11-libs/qt:4[phonon]
     run:
-        || (
-            media/mplayer
-            media/mplayer2[>=2.0-r11]
-        )
+        media/mplayer
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
