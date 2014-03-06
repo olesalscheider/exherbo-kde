@@ -23,8 +23,8 @@ DEPENDENCIES="
         x11-libs/qt:4[dbus]
         x11-misc/shared-mime-info
     run:
+        net-wireless/bluez[>=5.12]
         net-wireless/obex-data-server
-        net-wireless/obexd
         net-wireless/openobex[bluetooth]
         !net-wireless/kbluetooth [[
             description = [ kbluetooth is superseded by BlueDevil ]
