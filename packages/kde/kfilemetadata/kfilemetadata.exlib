@@ -3,8 +3,6 @@
 
 require kde.org
 
-# last checked revision: b42529ce7a22650f171ed325813f161b5e376400
-
 SUMMARY="A library for extracting file metadata"
 
 LICENCES="LGPL-2 LGPL-2.1 LGPL-3"
