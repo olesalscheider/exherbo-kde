@@ -31,6 +31,14 @@ DEPENDENCIES="
         taglib? ( media-libs/taglib )
 "
 
+if ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/baloo:${SLOT}
+            kde/kfilemetadata:${SLOT}
+    "
+if
+
 if ever at_least 4.11.80 ; then
     DEPENDENCIES+="
         build+run:
