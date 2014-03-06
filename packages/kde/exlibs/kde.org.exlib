@@ -57,11 +57,11 @@ REMOTE_IDS="freecode:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.5.0|4.6.0|4.8.0|4.8.2|4.9.0|4.10.0|4.11.0|4.12.0)
+        4.5.0|4.6.0|4.8.0|4.8.2|4.9.0|4.10.0|4.11.0|4.12.0|4.13.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
-        4.@(3|4|5|6|7|8|9|10|11|12).@(1|2|3|4|5|6|7|8|9|10|11.1))
+        4.@(3|4|5|6|7|8|9|10|11|12|13).@(1|2|3|4|5|6|7|8|9|10|11.1))
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
-        4.@(2|3|4|5|9|10|11).@(6|7|8|9)*)
+        4.@(2|3|4|5|9|10|11|12).@(6|7|8|9)*)
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
         4.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
     esac
@@ -88,7 +88,7 @@ case ${PV} in
         DOWNLOADS=""
         ;;
 
-    4.@(4|5|9|10|11).@(80|85|90|92|95|96|97|98)) # Betas, RCs
+    4.@(4|5|9|10|11|12).@(80|85|90|92|95|96|97|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(5).@(9)*) # Weekly SVN snapshots
         case ${PV} in
