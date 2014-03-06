@@ -5,7 +5,10 @@
 
 require kde.org
 
-SUMMARY="SCM plugins for Dolphin for git, svn, mercurial and bazaar"
+SUMMARY="Plugins for the Dolphin filemanager"
+DESCRIPTION="
+It provides following SCM plugins: git, svn, mercurial and bazaar.
+Since KDE 4.13.x a Dropbox version control plugin is also included."
 
 LICENCES="GPL-2"
 MYOPTIONS=""
