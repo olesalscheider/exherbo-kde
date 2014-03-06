@@ -40,6 +40,7 @@ kuiserver: Display progress information
 kurifilter-plugins: URI filter and helper
 kwalletd: Password storage service
 nepomuk: Core services and service registry daemon for nepomuk
+         (removed in 4.13.x)
 phonon: Multimedia support
 plasma: Provide plasma capabilities inside KDE applications
 renamedlgplugins: Plugins for Konqueror's rename dialog
@@ -64,15 +65,12 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-crypt/qca:2[>=2.0.0]
-        app-pim/strigi[>=0.6.3][dbus][qt4]
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/attica:0[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
         kde/kactivities:${SLOT}
         kde/kdelibs:${SLOT}[>=4.9.95]
         kde/kdepimlibs:${SLOT}
-        kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
-                build with <4.10.0 ] ]]
         media-libs/jpeg
         media-libs/phonon[>=4.4.57]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
@@ -83,14 +81,13 @@ DEPENDENCIES="
         alsa? ( sys-sound/alsa-lib[>=1.0.14a] )
         jpeg-rotation? ( graphics/exiv2 )
         networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
-        openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR formatted images in the thumbnail kioslave ] ]]
+        openexr? ( media-libs/openexr ) [[ description = [ support for OpenEXR images in the thumbnail kioslave ] ]]
         pulseaudio? (
             dev-libs/glib:2
             media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
             media-sound/pulseaudio[>=0.9.16]
         )
         samba? ( net-fs/samba:= ) [[ description = [ samba kioslave ] ]]
-        sftp? ( net-libs/libssh[>=0.4.0] )
         slp? ( net-libs/openslp )
         webp? ( media-libs/libwebp )
     run:
@@ -102,6 +99,31 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
+if ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/libgcrypt[>=1.5.0]
+            sftp? ( net-libs/libssh[>=0.6.0] )
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=(
+        -DWITH_NepomukCore:BOOL=FALSE
+        -DKDERUNTIME_BUILD_NEPOMUK:BOOL=FALSE
+    )
+else
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi[>=0.6.3][dbus][qt4]
+            kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
+                    build with <4.10.0 ] ]]
+            sftp? ( net-libs/libssh[>=0.4.0] )
+            !kde/baloo [[
+                description = [ kde/baloo (nepomuk replacement for 4.13.x) and kde-runtime collide ]
+                resolution = uninstall-blocked-after
+            ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
+fi
+
 if ever at_least 4.11.80 ; then
     DEPENDENCIES+="
         build+run:
@@ -109,18 +131,7 @@ if ever at_least 4.11.80 ; then
     "
 fi
 
-if ! ever at_least 4.12.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            !kde/baloo [[
-                description = [ kde/baloo (nepomuk replacement for 4.13.x) and kde-runtime collide ]
-                resolution = uninstall-blocked-after
-            ]]
-    "
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DWITH_NepomukCore:BOOL=TRUE
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
 )
