@@ -27,15 +27,11 @@ DEPENDENCIES="
         dev-cpp/cppunit
         x11-apps/bdftopcf
     build+run:
-        app-pim/strigi
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-        dev-libs/soprano[>=2.7.56][virtuoso(+)]
         kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ needed for activities integration in dolphin ] ]]
         kde/kdelibs:${SLOT}[>=4.10.60]
         kde/kde-runtime:${SLOT}[>=4.10.60]
         kde/kde-workspace:${SLOT}[>=4.10.60]
-        kde/nepomuk-core:${SLOT}[>=4.9.90]
-        kde/nepomuk-widgets:${SLOT}
         sys-libs/zlib
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
@@ -47,6 +43,23 @@ DEPENDENCIES="
             )
         )
 "
+
+if ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/baloo:${SLOT}
+            kde/baloo-widgets:${SLOT}
+            kde/kfilemetadata:${SLOT}
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            app-pim/strigi
+            dev-libs/soprano[>=2.7.56][virtuoso(+)]
+            kde/nepomuk-core:${SLOT}[>=4.9.90]
+            kde/nepomuk-widgets:${SLOT}
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'tidy LibTidy'
