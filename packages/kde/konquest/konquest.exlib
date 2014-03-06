@@ -19,3 +19,7 @@ DEPENDENCIES="
         kde/libkdegames:${SLOT}
 "
 
+if ever at_least 4.12.80 ; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DKONQUEST_EXAMPLE_PLAYER:BOOL=TRUE )
+fi
+
