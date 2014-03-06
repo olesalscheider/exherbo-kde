@@ -16,9 +16,15 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        dev-libs/boost
         dev-libs/libxml2:2.0
         dev-libs/libxslt
         kde/kdelibs:${SLOT}
 "
+
+if ! ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/boost
+    "
+fi
 
