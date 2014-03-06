@@ -1,0 +1,9 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 71bf8bebe2eba9d722fbe61fd58b2ab0051d6eba
+
+require baloo
+
+PLATFORMS="~amd64"
+
