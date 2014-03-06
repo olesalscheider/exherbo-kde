@@ -1,4 +1,4 @@
-# Copyright 2011 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2011,2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdegraphics.exlib', which is:
 #     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
@@ -13,18 +13,31 @@ MYOPTIONS="kipi [[ description = [ Provides various image manipulation and expor
 
 DEPENDENCIES="
     build+run:
-        dev-libs/soprano
         graphics/exiv2[>=0.19]
         kde/kactivities:${SLOT}[>=4.9.90]
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
-        kde/nepomuk-core:${SLOT}
         media-libs/jpeg
         media-libs/lcms2
         media-libs/libpng
         media-libs/phonon
         kipi? ( graphics/digikam )
 "
+
+if ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/baloo:${SLOT}
+            kde/kfilemetadata:${SLOT}
+            kde/libkdcraw:${SLOT}[>=4.12.2]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/soprano
+            kde/nepomuk-core:${SLOT}
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 
