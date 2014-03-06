@@ -19,6 +19,12 @@ DEPENDENCIES="
         media-libs/libraw[>=0.15] [[ note = [ 0.16.x is prefered, but not released yet ] ]]
 "
 
+if ever at_least 4.12.80 ; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/libraw[>=0.16] [[ note = [ not strictly required but recommended ] ]]
+    "
+fi
 if ! ever at_least 4.11.80 ; then
     DEPENDENCIES+="
         build+run:
