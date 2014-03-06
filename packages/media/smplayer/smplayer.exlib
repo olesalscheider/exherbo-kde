@@ -15,16 +15,10 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4[X(+)]
+    run:
+        media/mplayer[ass][truetype]
     suggestion:
         x11-themes/smplayer-themes
-"
-
-DEPENDENCIES+="
-run:
-    || (
-        media/mplayer2[ass][truetype(+)]
-        media/mplayer[ass][truetype]
-    )
 "
 
 EQMAKE_SOURCES=( src/${PN}.pro )
