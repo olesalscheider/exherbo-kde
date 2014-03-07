@@ -1,0 +1,20 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Widgets for Baloo"
+
+LICENCES="
+    GPL-2 [[ note = [ utils/daterange.h, not compiled or installed ] ]]
+    LGPL-2.1
+"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/baloo:${SLOT}
+        kde/kdelibs:${SLOT}[>=4.10.0]
+        kde/kfilemetadata:${SLOT}
+"
+
