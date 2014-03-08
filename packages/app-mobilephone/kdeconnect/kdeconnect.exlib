@@ -36,6 +36,9 @@ DEPENDENCIES="
         app-crypt/qca-ossl:2
 "
 
+# 1 test fails the other needs a running X server (0.5.1)
+RESTRICT="test"
+
 BUGS_TO="friedrich@mailstation.de heirecka@exherbo.org"
 
 CMAKE_SOURCE=${WORKBASE}/${MYPNV}
