@@ -12,14 +12,11 @@ DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 LICENCES="LGPL-2.1"
 SLOT="0"
 
-MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
+MYOPTIONS=""
 
 DEPENDENCIES+="
-    build:
-        qt5? ( kde/extra-cmake-modules[>=0.0.6] )
     build+run:
-        qt5? ( x11-libs/qtbase:5 )
-        !qt5? ( x11-libs/qt:4[>=4.7.0] )
+        x11-libs/qt:4[>=4.7.0]
 "
 
 BUGS_TO="kde@exherbo.org"
@@ -27,7 +24,6 @@ BUGS_TO="kde@exherbo.org"
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DATTICA_ENABLE_TESTS:BOOL=TRUE
     -DATTICA_STATIC_BUILD:BOOL=FALSE
+    -DQT4_BUILD:BOOL=TRUE
 )
-
-CMAKE_SRC_CONFIGURE_OPTIONS+=( '!qt5 QT4_BUILD' )
 
