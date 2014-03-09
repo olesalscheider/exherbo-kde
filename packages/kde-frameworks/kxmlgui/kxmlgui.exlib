@@ -25,7 +25,7 @@ DEPENDENCIES="
         kde-frameworks/ktextwidgets:5[>=${PV}]
         kde-frameworks/kwidgetsaddons:5[>=${PV}]
         kde-frameworks/kwindowsystem:5[>=${PV}]
-        attica? ( dev-libs/attica:5[>=${PV}] )
+        attica? ( kde-frameworks/attica:5[>=${PV}] )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'attica KF5Attica' )

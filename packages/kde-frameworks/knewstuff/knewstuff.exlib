@@ -14,7 +14,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        dev-libs/attica:5[>=${PV}]
+        kde-frameworks/attica:5[>=${PV}]
         kde-frameworks/karchive:5[>=${PV}]
         kde-frameworks/kcompletion:5[>=${PV}]
         kde-frameworks/kconfig:5[>=${PV}]

@@ -1,0 +1,15 @@
+# Copyright 2009, 2010, 2012 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DATTICA_STATIC_BUILD:BOOL=FALSE )
+
