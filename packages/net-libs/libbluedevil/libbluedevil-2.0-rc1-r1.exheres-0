@@ -21,3 +21,5 @@ DEPENDENCIES="
 
 BUGS_TO="mixi@user-helfen-usern.de"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Add-Adapter-alias-property-alias-and-setAlias.patch )
+
