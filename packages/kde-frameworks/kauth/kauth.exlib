@@ -10,21 +10,25 @@ to be performed as a privileged user (root, for example) to small (hopefully
 secure) helper utilities."
 
 LICENCES="LGPL-2.1"
-MYOPTIONS="policykit"
+MYOPTIONS="" # policykit
 
 DEPENDENCIES="
     build+run:
         kde-frameworks/kcoreaddons:5[>=${PV}]
-        policykit? ( sys-auth/polkit-qt:1[>=0.99.0] )
     recommendation:
-        policykit? (
-                sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-            )
 "
+# TODO: make optional again when kauth works with a Qt5 polkit-qt version
+#    build+run:
+#        policykit? ( sys-auth/polkit-qt:1[>=0.99.0] )
+#    recommendation:
+#        policykit? (
+#                sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
+#            )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DSYSCONF_INSTALL_DIR=/etc
-    -DKAUTH_BACKEND_NAME=POLKITQT-1
+    #-DKAUTH_BACKEND_NAME=POLKITQT-1
+    -DCMAKE_DISABLE_FIND_PACKAGE_PolkitQt-1=TRUE
 )
-CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'policykit PolkitQt-1' )
+#CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'policykit PolkitQt-1' )
 
