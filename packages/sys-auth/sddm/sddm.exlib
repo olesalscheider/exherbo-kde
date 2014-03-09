@@ -1,0 +1,33 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require github cmake [ api=2 ]
+
+SUMMARY="SDDM is a modern display manager based on Qt using technologies like QtQuick"
+DESCRIPTION="
+SDDM is extremely themeable. We put no restrictions on the user interface design,
+it is completely up to the designer. We simply provide a few callbacks to the user
+interface which can be used for authentication, suspend etc.
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+# Could also build it against Qt4, but I don't see the point, as noone has done that yet
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        sys-apps/systemd
+        sys-libs/pam [[ note = [ Optional ] ]]
+        x11-libs/libxcb
+        x11-libs/qtbase:5
+        x11-libs/qttools:5 [[ note = [ Qt5LinguistTools ] ]]
+    run:
+        x11-apps/xauth
+        x11-server/xorg-server
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DUSE_QT5=TRUE )
+
