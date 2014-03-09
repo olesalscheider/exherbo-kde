@@ -9,7 +9,8 @@ BlueDevil is the new Bluetooth stack for KDE, it's composed of: KCM, KDED, KIO, 
 other small applications.
 "
 HOMEPAGE="http://projects.kde.org/projects/extragear/base/${PN}"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
+#DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
+DOWNLOADS="http://dev.exherbo.org/~berniyh/${PNV}.tar.xz"
 
 LICENCES="GPL-3"
 SLOT="0"
@@ -19,7 +20,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=4.6.0]
-        net-libs/libbluedevil[>=2.0-rc1]
+        net-libs/libbluedevil[>=2.0-rc1-r1]
         x11-libs/qt:4[dbus]
         x11-misc/shared-mime-info
     run:
