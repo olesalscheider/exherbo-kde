@@ -5,3 +5,12 @@ require smplayer
 
 PLATFORMS="~amd64 ~x86"
 
+EQMAKE_PARAMS+=( CONFIG-="UPDATE_CHECKER" )
+
+src_install(){
+    default
+
+    # Empty directory, cave complains.
+    edo rmdir "${IMAGE}"/usr/share/doc/${PNVR}/eu
+}
+
