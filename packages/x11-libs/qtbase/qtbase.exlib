@@ -356,5 +356,19 @@ EOF
 
     # remove references to build dir
     edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
+
+    # allow other projects to find Qt's private headers via CMake
+    # https://bugreports.qt-project.org/browse/QTBUG-37417
+    if ! ever at_least scm ; then
+        local modules
+        modules=( Qt5Core Qt5DBus Qt5Gui Qt5Network Qt5OpenGL Qt5PrintSupport Qt5Test \
+            Qt5Widgets Qt5Xml )
+        option sql && modules+=( Qt5Sql )
+        for i in ${modules[@]} ; do
+            edo sed -e "/include(\"\${CMAKE_CURRENT_LIST_DIR}\/ExtraSourceIncludes.cmake\" OPTIONAL)/d" \
+                    -e "s:\(set(${i}_PRIVATE_INCLUDE_DIRS \)\"\":\1\n\"\${_qt5Gui_install_prefix}/include/qt5/${i/5/}/$(ever range 1-3)\"\n\"\${_qt5Gui_install_prefix}/include/qt5/${i/5/}/$(ever range 1-3)/${i/5/}\":" \
+                    -i "${IMAGE}"/usr/${LIBDIR}/cmake/${i}/${i}Config.cmake
+        done
+    fi
 }
 
