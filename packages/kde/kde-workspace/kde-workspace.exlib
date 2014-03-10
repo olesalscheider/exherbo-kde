@@ -45,7 +45,9 @@ MYOPTIONS="ieee1394 lm_sensors python
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, etc. you'll probably want this. ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
     qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
+    systemd [[ description = [ logind support in KDM ] ]]
     wayland
+    ( consolekit systemd ) [[ number-selected = exactly-one ]]
 "
 
 MYOPTIONS+=" kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
@@ -144,7 +146,10 @@ DEPENDENCIES="
         wayland? ( compositor/weston )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PN}-usbids.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-usbids.patch
+    "${FILES}"/kde-workspace-4.11.0-kdm-logind-multiseat.patch
+)
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_USBIDS_DIR="/usr/share/misc"
@@ -185,7 +190,8 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     OpenGLES
     'python PythonLibrary'
     'qalculate Qalculate'
-     Wayland
+    SYSTEMD
+    Wayland
 )
 
 src_prepare() {
