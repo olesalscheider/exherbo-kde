@@ -37,7 +37,7 @@ if ever at_least 4.12.80 ; then
             kde/baloo:${SLOT}
             kde/kfilemetadata:${SLOT}
     "
-if
+fi
 
 if ever at_least 4.11.80 ; then
     DEPENDENCIES+="
