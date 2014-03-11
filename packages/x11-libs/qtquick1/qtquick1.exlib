@@ -1,22 +1,30 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt qmake [ slot=5 ]
+require qt qmake [ slot=5 ] easy-multibuild
 
 SUMMARY="Qt Cross-platform application framework: QtQuick1"
 
-MYOPTIONS="doc"
+MYOPTIONS="
+    doc
+    multibuild_c: 32 64
+"
 
 DEPENDENCIES="
     build:
         doc? ( x11-libs/qttools:${SLOT} )
     build+run:
-        x11-libs/qtscript:${SLOT}[>=${PV}]
-        x11-libs/qttools:${SLOT}[>=${PV}]
-        x11-libs/qtwebkit:${SLOT}[>=${PV}]
+        x11-libs/qtscript:${SLOT}[>=${PV}][multibuild_c:*(-)?]
+        x11-libs/qttools:${SLOT}[>=${PV}][multibuild_c:*(-)?]
+        x11-libs/qtwebkit:${SLOT}[>=${PV}][multibuild_c:*(-)?]
 "
 
-src_install() {
+configure_one_multibuild() {
+    EQMAKE_SOURCES=( ../../${PN}-$(ever is_scm || echo "opensource-src-")${PV}/${PN}.pro )
+    eqmake
+}
+
+install_one_multibuild() {
     default
 
     # remove references to build dir
