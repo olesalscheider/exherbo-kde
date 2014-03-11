@@ -1,15 +1,17 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'qt-4.exlib', which is:
 #     Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
 #     Copyright 2008-2009, 2010 Ingmar Vanhassel
 
-require qt qmake [ slot=5 ]
+require qt qmake [ slot=5 ] \
+        easy-multibuild [ multiunpack=true work=${PN}-$(ever is_scm || echo "opensource-src-")${PV} ]
 
 SUMMARY="Qt Cross-platform application framework: QtWebkit"
 
 MYOPTIONS="
     media [[ description = [ HTML5 video/audio support via gstreamer ] ]]
+    multibuild_c: 32 64
 "
 
 DEPENDENCIES="
@@ -22,23 +24,23 @@ DEPENDENCIES="
         sys-devel/flex
         virtual/pkg-config
     build+run:
-        dev-db/sqlite:3
-        dev-libs/glib:2
-        dev-libs/icu
-        dev-libs/libxml2:2.0
-        dev-libs/libxslt
-        media-libs/fontconfig
-        media-libs/jpeg
-        media-libs/libpng
-        media-libs/libwebp
-        sys-libs/zlib
-        x11-dri/mesa
-        x11-libs/libX11
-        x11-libs/libXcomposite
-        x11-libs/libXext
-        x11-libs/libXrender
-        x11-libs/qtbase:${SLOT}[>=${PV}][sql][sqlite]
-        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
+        dev-db/sqlite:3[multibuild_c:*(-)?]
+        dev-libs/glib:2[multibuild_c:*(-)?]
+        dev-libs/icu[multibuild_c:*(-)?]
+        dev-libs/libxml2:2.0[multibuild_c:*(-)?]
+        dev-libs/libxslt[multibuild_c:*(-)?]
+        media-libs/fontconfig[multibuild_c:*(-)?]
+        media-libs/jpeg[multibuild_c:*(-)?]
+        media-libs/libpng[multibuild_c:*(-)?]
+        media-libs/libwebp[multibuild_c:*(-)?]
+        sys-libs/zlib[multibuild_c:*(-)?]
+        x11-dri/mesa[multibuild_c:*(-)?]
+        x11-libs/libX11[multibuild_c:*(-)?]
+        x11-libs/libXcomposite[multibuild_c:*(-)?]
+        x11-libs/libXext[multibuild_c:*(-)?]
+        x11-libs/libXrender[multibuild_c:*(-)?]
+        x11-libs/qtbase:${SLOT}[>=${PV}][multibuild_c:*(-)?][sql][sqlite]
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}][multibuild_c:*(-)?]
         media? (
             media-libs/gstreamer:1.0[>=0.10]
             media-plugins/gst-plugins-base:1.0[>=0.10]
@@ -54,7 +56,7 @@ fi
 
 EQMAKE_SOURCES=( WebKit.pro )
 
-src_configure() {
+configure_one_multibuild() {
     local conf_enable,conf_disable
 
     # TODO: find out how useful qtlocation, qtsensors are
@@ -74,7 +76,7 @@ src_configure() {
         WEBKIT_CONFIG-="${conf_disable}"
 }
 
-src_install() {
+install_one_multibuild() {
     default
 
     # remove references to build dir
