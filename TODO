@@ -1,16 +1,11 @@
 These issues should probably be addressed before we merge to master:
 
-- Find out why Qt5Gui_PRIVATE_INCLUDE_DIRS doesn't provide the right path
-  and remove the horrible hacks in kguiaddons and frameworkintegration
 - Fix multibuild of phonon[qt5]
 - Add an snapshot of polkit-qt taken from its qt5 branch...
 - ...and let kauth[policykit] depend on it. Note that it doesn't check for the
   Qt4 version and compiles fine with it but things will propably go horribly
-  wrong during runtime.
-- Rename everything properly to our liking, e.g. plasma <-> plasma-framework
-- Possibly move packages to kde-frameworks, candidates are attica and
-  extra-cmake-modules for example.
+  wrong during runtime. Note: currently kauth[policykit] is hard-disabled.
 - Fix remaining collision upstream (kactvities, kio and kde4support)
 
-A litt bittle unrelated:
+A litte bit unrelated:
 - Sort out all issues with Qt5 and unmask it (or at least not as broken anymore)
