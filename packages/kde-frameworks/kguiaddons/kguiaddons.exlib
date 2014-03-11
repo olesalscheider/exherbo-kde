@@ -22,13 +22,3 @@ DEPENDENCIES="
 # 3 of 3 tests need a running X server
 RESTRICT="test"
 
-src_prepare() {
-    cmake_src_prepare
-
-    # FIXME: very dirty hack to include private qpa headers
-    # http://mail.kde.org/pipermail/kde-frameworks-devel/2014-February/012041.html
-    # mentions that linking to qtx11extras would avoid that
-    edo sed -e 's:${Qt5Gui_PRIVATE_INCLUDE_DIRS}:/usr/include/qt5/QtGui/5.2.1/QtGui:' \
-            -i src/CMakeLists.txt
-}
-
