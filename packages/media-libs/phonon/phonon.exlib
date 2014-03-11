@@ -54,8 +54,8 @@ DEPENDENCIES="
         )
         qt5? (
             x11-libs/qtbase:5[multibuild_c:*(-)?]
-            x11-libs/qtquick1:5
-            x11-libs/qttools:5
+            x11-libs/qtquick1:5[multibuild_c:*(-)?]
+            x11-libs/qttools:5[multibuild_c:*(-)?]
         )
         zeitgeist? ( dev-libs/libqzeitgeist[>=0.8] )
     post:
@@ -100,10 +100,23 @@ configure_one_multibuild() {
         _ecmake_helper -DPHONON_BUILD_PHONON4QT5:BOOL=FALSE
         edo popd
     fi
+
+    qt5_cmake_params+=(
+        -DQt5Core_DIR=/usr/${LIBDIR}/cmake/Qt5Core
+        -DQt5DBus_DIR=/usr/${LIBDIR}/cmake/Qt5DBus
+        -DQt5Declarative_DIR=/usr/${LIBDIR}/cmake/Qt5Declarative
+        -DQt5Designer_DIR=/usr/${LIBDIR}/cmake/Qt5Designer
+        -DQt5Gui_DIR=/usr/${LIBDIR}/cmake/Qt5Gui
+        -DQt5OpenGL_DIR=/usr/${LIBDIR}/cmake/Qt5OpenGL
+        -DQt5Script=/usr/${LIBDIR}/cmake/Qt5Script
+        -DQt5Widgets_DIR=/usr/${LIBDIR}/cmake/Qt5Widgets
+        -DQt5Xml_DIR=/usr/${LIBDIR}/cmake/Qt5Xml
+    )
+
     if option qt5 ; then
         edo mkdir "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
         edo pushd "${WORKBASE}"/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}/qt5-build
-        _ecmake_helper -DPHONON_BUILD_PHONON4QT5:BOOL=TRUE
+        _ecmake_helper -DPHONON_BUILD_PHONON4QT5:BOOL=TRUE "${qt5_cmake_params[@]}"
         edo popd
     fi
 }
