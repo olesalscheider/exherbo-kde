@@ -1,5 +1,5 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
-# Copyright 2013 Heiko Becker <heirecka@eherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@eherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require telepathy-kde [ telepathy_qt_ver_min=0.9.2.1 kde_ver_min=4.8.0 ]
@@ -17,28 +17,12 @@ DEPENDENCIES+="
         doc? ( app-doc/doxygen )
     build+run:
         net-im/telepathy-logger-qt
+        contact-aggregation? (
+            kde/kdepimlibs:4
+            kde/libkpeople[>=0.2.1]
+            x11-libs/qt:4[sql]
+        )
 "
-
-if ever at_least 0.7.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            contact-aggregation? (
-                kde/kdepimlibs:4
-                kde/libkpeople[>=0.2.0]
-                x11-libs/qt:4[sql]
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            contact-aggregation? (
-                app-text/shared-desktop-ontologies[>=0.6.50]
-                dev-libs/soprano
-                kde/libkpeople
-                kde/nepomuk-core:4
-            )
-    "
-fi
 
 BUGS_TO="mixi@exherbo.org"
 
