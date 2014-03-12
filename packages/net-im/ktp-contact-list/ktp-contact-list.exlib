@@ -13,22 +13,11 @@ MYOPTIONS="contact-aggregation
 DEPENDENCIES="
     build+run:
         net-im/ktp-common-internals[contact-aggregation?]
-"
-
-if ever at_least 0.7.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            contact-aggregation? (
-                kde/kdepimlibs:4
-                kde/libkpeople[>=0.2.0]
+        contact-aggregation? (
+            kde/kdepimlibs:4
+            kde/libkpeople[>=0.2.1]
         )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            contact-aggregation? ( kde/libkpeople )
-    "
-fi
+"
 
 BUGS_TO="mixi@exherbo.org"
 
