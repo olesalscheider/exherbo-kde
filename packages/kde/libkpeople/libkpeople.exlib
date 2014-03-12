@@ -5,11 +5,7 @@ require kde [ api=2 ]
 
 SUMMARY="Metacontact aggregation library"
 HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
-if ever at_least 0.2.1 ; then
-    DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
-else
-    DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
-fi
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -21,27 +17,11 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         kde/kdelibs:4[>=4.10.1]
+        kde/kdepimlibs:4[>=4.10.1]
+        x11-libs/qt:4[sql]
 "
 
-if ever at_least 0.2.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs:4[>=4.10.1]
-            x11-libs/qt:4[sql]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.7.0]
-            dev-libs/soprano
-            kde/nepomuk-core
-    "
-fi
-
 BUGS_TO="heirecka@exherbo.org"
-
-# needs a running nepomuserver
-ever at_least 0.2.0 || RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_EXAMPLES:BOOL=OFF )
 
