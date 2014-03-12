@@ -18,18 +18,59 @@ HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 
 LICENCES="LGPL-3"
 SLOT="0"
-MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
+MYOPTIONS="qt4
+    qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
 DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.86]
     build+run:
         media/vlc[>=2.0.1][dbus]
-        media-libs/phonon[>=4.7.0][qt5=]
-        x11-libs/qt:4[>=4.4.0][dbus][phonon]
+        media-libs/phonon[>=4.7.0][qt4?][qt5?]
+        qt4? (  x11-libs/qt:4[>=4.4.0][dbus][phonon] )
+        qt5? ( x11-libs/qtbase:5 )
 "
 
-CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
+CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 
-CMAKE_SRC_CONFIGURE_OPTIONS=( 'qt5 PHONON_BUILD_PHONON4QT5' )
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        ecmake -DPHONON_BUILD_PHONON4QT5:BOOL=FALSE
+        edo popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        ecmake -DPHONON_BUILD_PHONON4QT5:BOOL=TRUE
+        edo popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+}
 

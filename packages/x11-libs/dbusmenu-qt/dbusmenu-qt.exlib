@@ -1,5 +1,6 @@
 # Copyright 2010 Alex Elsayed <eternaleye@gmail.com>
 # Copyright 2010 Bo Ørsted Andresen
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PN=lib${PN}
@@ -11,7 +12,10 @@ SUMMARY="Stand-alone library providing a way to import and export QMenu instance
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS="doc"
+MYOPTIONS="
+    doc
+    ( qt4 qt5 ) [[ number-selected = at-least-one ]]
+"
 
 RESTRICT="test"
 
@@ -19,19 +23,18 @@ DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen )
     build+run:
-        x11-libs/qt:4[>=4.6.0]
+        qt4? ( x11-libs/qt:4[>=4.6.0] )
+        qt5? ( x11-libs/qtbase:5 )
 "
 #   Tests require qjson, but are useless currently; see note below
 #   test:
 #       dev-libs/qjson[>=0.5]
 
-CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
+CMAKE_SOURCE=${WORKBASE}/\~dbusmenu-team/libdbusmenu-qt/trunk/
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-0.9.2-optionaltests.patch )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-optionaltests.patch )
 
 # Tests require X to run
-CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=FALSE )
-
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'doc DOC'
 )
@@ -40,10 +43,46 @@ src_prepare() {
     edo cd "${CMAKE_SOURCE}"
 
     # Install doxygen docs to ${PNVR}/html instead of ${PN}
-    edo sed -e "/DESTINATION/s:dbusmenu-qt:${PNVR}/html:" \
+    edo sed -e "/DESTINATION/s:libdbusmenu-:${PNVR}/html/:" \
             -i CMakeLists.txt
 
     default
+}
 
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}/qt4-build"
+        edo pushd "${WORKBASE}/qt4-build"
+        ecmake -DUSE_QT4=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE
+        popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}/qt5-build"
+        edo pushd "${WORKBASE}/qt5-build"
+        ecmake -DUSE_QT5=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE
+        popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}/qt4-build"
+        emake
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/qt5-build"
+        emake
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}/qt4-build"
+        emake -j1 DESTDIR="${IMAGE}" install
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/qt5-build"
+        emake -j1 DESTDIR="${IMAGE}" install
+    fi
 }
 

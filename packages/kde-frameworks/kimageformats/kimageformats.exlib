@@ -1,0 +1,27 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Provides additional image format plugins for QtGui"
+DESCRIPTION="
+As such it is not required for the compilation of any other software, but may
+be a runtime requirement for Qt-based software to support certain image
+formats."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS="jpeg2000 openexr"
+
+DEPENDENCIES="
+    build:
+        openexr? ( virtual/pkg-config )
+    build+run:
+        jpeg2000? ( media-libs/jasper )
+        openexr? ( media-libs/openexr )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'jpeg2000 Jasper'
+    OpenEXR
+)
+

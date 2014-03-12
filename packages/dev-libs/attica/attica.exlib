@@ -1,39 +1,29 @@
 # Copyright 2009, 2010, 2012 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
-
-if ever is_scm ; then
-    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-    require scm-git
-else
-    DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
-fi
 
 require cmake [ api=2 ]
 
 SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
+
 HOMEPAGE="http://www.kde.org"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 
-LICENCES="|| ( LGPL-3 LGPL-2.1 )"
+LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
 
-DEPENDENCIES="
-    build:
-        qt5? ( kde/extra-cmake-modules[>=0.0.6] )
+MYOPTIONS=""
+
+DEPENDENCIES+="
     build+run:
-        qt5? ( x11-libs/qtbase:5 )
-       !qt5? ( x11-libs/qt:4[>=4.7.0] )
+        x11-libs/qt:4[>=4.7.0]
 "
-
-if ever at_least scm ; then
-    DEPENDENCIES+="
-        build:
-            kde/extra-cmake-modules[=scm]
-    "
-fi
 
 BUGS_TO="kde@exherbo.org"
 
-CMAKE_SRC_CONFIGURE_PARAMS=( -DATTICA_ENABLE_TESTS:BOOL=TRUE )
-CMAKE_SRC_CONFIGURE_OPTIONS+=( '!qt5 QT4_BUILD' )
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DATTICA_STATIC_BUILD:BOOL=FALSE
+    -DQT4_BUILD:BOOL=TRUE
+)
+CMAKE_SRC_CONFIGURE_TESTS+=( '-DATTICA_ENABLE_TESTS:BOOL=TRUE -DATTICA_ENABLE_TESTS:BOOL=FALSE' )
 

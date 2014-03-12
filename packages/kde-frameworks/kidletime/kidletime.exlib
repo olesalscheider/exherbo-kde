@@ -1,0 +1,26 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Reporting of idle time of user and system"
+DESCRIPTION="
+KIdleTime is a singleton reporting information on idle time. It is useful not
+only for finding out about the current idle time of the PC, but also for
+getting notified upon idle time events, such as custom timeouts, or user
+activity."
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        x11-libs/libX11
+        x11-libs/libxcb
+        x11-libs/libXext
+        x11-libs/libXScrnSaver
+        x11-libs/qtx11extras:5[>=5.2.0]
+"
+

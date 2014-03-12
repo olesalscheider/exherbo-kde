@@ -1,0 +1,15 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks test-dbus-daemon
+
+SUMMARY="Addons to QtDBus"
+DESCRIPTION="
+KDBusAddons provides convenience classes on top of QtDBus, as well as an API
+to create KDED modules."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+

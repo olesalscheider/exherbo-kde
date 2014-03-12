@@ -1,0 +1,35 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Framework for managing menu and toolbar actions"
+DESCRIPTION="
+libkxmlgui provides a framework for managing menu and toolbar actions in an
+abstract way. The actions are configured through a XML description and hooks
+in the application code. The framework supports merging of multiple
+description for example for integrating actions from plugins."
+
+LICENCES="GPL-2 LGPL-2.1"
+# NOTE: I think I'll hard enable that after adding attica:5
+MYOPTIONS="attica"
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/kglobalaccel:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/ktextwidgets:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        attica? ( kde-frameworks/attica:5[>=${PV}] )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'attica KF5Attica' )
+
+# 5 of 5 tests need a running X server
+RESTRICT="test"
+

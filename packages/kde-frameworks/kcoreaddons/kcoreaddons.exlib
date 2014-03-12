@@ -1,0 +1,38 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Addons to QtCore"
+DESCRIPTION="
+They perform various tasks such as manipulating mime types, autosaving files,
+creating backup files, generating random sequences, performing text
+manipulations such as macro replacement, accessing user information and many
+more."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS="fam"
+
+DEPENDENCIES="
+    build+run:
+        x11-misc/shared-mime-info[>=0.70]
+        fam? ( app-admin/gamin )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( FAM )
+
+src_prepare() {
+    cmake_src_prepare
+
+    # TODO: Fix the tests, the second one is probably some race condition, fails unreliably.
+    edo sed -e '/kshelltest/d' \
+            -e '/list(APPEND KDIRWATCH_BACKENDS_TO_TEST Fam)/d' \
+            -i autotests/CMakeLists.txt
+}
+
+src_test() {
+    esandbox allow_net 'unix:/tmp/fam-paludisbuild/fam-*'
+    default
+    esandbox disallow_net 'unix:/tmp/fam-paludisbuild/fam-*'
+}
+

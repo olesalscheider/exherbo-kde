@@ -1,0 +1,12 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="A collection of methods to manipulate strings using various encodings"
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+

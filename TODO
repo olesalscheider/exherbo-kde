@@ -1,0 +1,11 @@
+These issues should probably be addressed before we merge to master:
+
+- Fix multibuild of phonon[qt5]
+- Add an snapshot of polkit-qt taken from its qt5 branch...
+- ...and let kauth[policykit] depend on it. Note that it doesn't check for the
+  Qt4 version and compiles fine with it but things will propably go horribly
+  wrong during runtime. Note: currently kauth[policykit] is hard-disabled.
+- Fix remaining collision upstream (kactvities, kio and kde4support)
+
+A litte bit unrelated:
+- Sort out all issues with Qt5 and unmask it (or at least not as broken anymore)

@@ -1,0 +1,29 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Plugin framework for desktop services"
+DESCRIPTION="
+KService provides a plugin framework for handling desktop services. Services can
+be applications or libraries. They can be bound to MIME types or handled by
+application specific code.
+"
+
+LICENCES="GPL-2 GPL-3 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kcrash:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+"
+
+# Tests fail, needs investigation
+RESTRICT=test
+

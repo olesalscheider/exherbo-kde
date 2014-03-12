@@ -1,0 +1,32 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Configuration dialog for desktop notifications"
+DESCRIPTION="
+KNotifyConfig provides a configuration dialog for desktop notifications which
+can be embedded in your application."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS="phonon"
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        phonon? ( media-libs/phonon[qt5] )
+"
+# No autotests
+#    test-expensive:
+#        kde-frameworks/kconfigwidgets:5[>=${PV}]
+#        kde-frameworks/knotifications:5[>=${PV}]
+#        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+#        kde-frameworks/kxmlgui:5[>=${PV}]
+
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'phonon Phonon4Qt5' )
+

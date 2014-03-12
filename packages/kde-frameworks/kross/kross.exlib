@@ -1,0 +1,32 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Embedding of scripting into applications"
+DESCRIPTION="
+Kross is a scripting bridge to embed scripting functionality into an
+application. It supports QtScript as a scripting interpreter backend."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+        x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qttools:5[>=5.2.0]
+"
+
+# 1 of 1 test needs a running X server
+RESTRICT="test"
+

@@ -1,0 +1,31 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Icon theme GUI utilities"
+DESCRIPTION="
+This library contains classes to improve the handling of icons
+in applications using the KDE Frameworks. Provided are:
+- KIconDialog: Dialog class to let the user select an icon
+    from the list of installed icons.
+- KIconButton: Custom button class that displays an icon.
+    When clicking it, the user can change it using the icon dialog.
+- KIconEffect: Applies various colorization effects to icons,
+    which can be used to create selected/disabled icon images."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        x11-libs/qtsvg:5[>=5.2.0]
+"
+
+# 1 of 1 test needs a running X server
+RESTRICT="test"
+

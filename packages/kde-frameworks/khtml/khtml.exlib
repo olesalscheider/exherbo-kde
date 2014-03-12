@@ -1,0 +1,42 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="A web rendering engine, based on KParts and using KJS for JavaScript"
+
+LICENCES="GPL-3 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-lang/perl:*
+    build+run:
+        dev-libs/openssl
+        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/kcodecs:5[>=${PV}]
+        kde-frameworks/kglobalaccel:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kjs:5[>=${PV}]
+        kde-frameworks/knotifications:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/ktextwidgets:5[>=${PV}]
+        kde-frameworks/kwallet:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/sonnet:5[>=${PV}]
+        media-libs/giflib
+        media-libs/jpeg
+        media-libs/libpng
+        media-libs/phonon[>=4.6.60][qt5]
+        x11-libs/libX11
+        x11-libs/qtx11extras:5[>=5.2.0]
+        sys-libs/zlib
+"
+
+# 2 of 2 tests need a running X server
+RESTRICT="test"
+

@@ -1,0 +1,26 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Advanced text editing widgets"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/sonnet:5[>=${PV}]
+"
+
+# 4 of 4 tests need a running X server
+RESTRICT="test"
+

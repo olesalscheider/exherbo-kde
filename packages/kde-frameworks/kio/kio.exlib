@@ -1,0 +1,69 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks test-dbus-daemon
+
+SUMMARY="Network transparent access to files and data"
+DESCRIPTION="
+This framework implements almost all the file management functions you
+will ever need. In fact, the KDE file manager (Dolphin) and the KDE
+file dialog also uses this to provide its network-enabled file management.
+
+It supports accessing files locally as well as via HTTP and FTP out of the
+box and can be extended by plugins to support other protocols as well. There
+is a variety of plugins available, e.g. to support access via SSH.
+
+The framework can also be used to bridge a native protocol to a file-based
+interface. This makes the data accessible in all applications using the KDE
+file dialog or any other KIO enabled infrastructure."
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS="acl kerberos"
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        dev-libs/libxml2:2.0
+        dev-libs/libxslt
+        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/kbookmarks:5[>=${PV}]
+        kde-frameworks/kcodecs:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/kguiaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/kjobwidgets:5[>=${PV}]
+        kde-frameworks/knotifications:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/solid:5[>=${PV}]
+        sys-libs/zlib
+        x11-libs/libX11 [[ note = [ Could be optional ] ]]
+        x11-libs/qtscript:5[>=5.2.0] [[ note = [ Could be optional ] ]]
+        acl? (
+            sys-apps/acl
+            sys-apps/attr
+        )
+        kerberos? ( virtual/kerberos )
+"
+# Currently (4.97.0) commented out
+#        dev-libs/openssl
+
+# Tests need a running X server and broken tests
+RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    ACL
+    'kerberos GSSAPI'
+)
+
+# TODO: kioslaves help files collide with kdelibs:4
+

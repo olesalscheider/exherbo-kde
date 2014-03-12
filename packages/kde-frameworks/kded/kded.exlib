@@ -1,0 +1,22 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Central daemon of KDE work spaces"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${PV}]
+    build+run:
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kcrash:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/kinit:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+"
+

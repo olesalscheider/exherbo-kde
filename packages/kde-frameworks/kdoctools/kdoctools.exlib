@@ -1,0 +1,20 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Provides tools to generate documentation in various format from DocBook files"
+
+LICENCES="MIT LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        app-text/docbook-xml-dtd:4.2
+        app-text/docbook-xsl-stylesheets
+    build+run:
+        dev-libs/libxml2:2.0
+        dev-libs/libxslt
+        kde-frameworks/karchive:5[>=${PV}]
+"
+

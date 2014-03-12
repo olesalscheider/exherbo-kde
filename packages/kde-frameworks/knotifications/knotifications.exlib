@@ -1,0 +1,31 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="KDE Desktop notifications framework"
+DESCRIPTION="
+KNotification is used to notify the user of an event. It covers feedback and
+persistent events.
+"
+
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        media-libs/phonon[>=4.6.60][qt5]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcodecs:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
+        x11-libs/dbusmenu-qt[>=0.9.3_p259][qt5(-)]
+        x11-libs/qtx11extras:5[>=5.2.0] [[ note = [ Could make this optional if necessary ] ]]
+        x11-libs/libX11 [[ note = [ Could make this optional if necessary ] ]]
+        x11-libs/libXtst [[ note = [ Could make this optional if necessary ] ]]
+"
+

@@ -1,0 +1,30 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Framework for downloading and sharing additional application data"
+DESCRIPTION="
+The KNewStuff library implements collaborative data sharing for
+applications. It uses libattica to support the Open Collaboration Services
+specification."
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/attica:5[>=${PV}]
+        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kitemviews:5[>=${PV}]
+        kde-frameworks/ktextwidgets:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kxmlgui:5[>=${PV}]
+"
+

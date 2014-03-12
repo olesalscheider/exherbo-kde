@@ -1,0 +1,22 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="KDE integration of the HTML rendering engine WebKit"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kjobwidgets:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwallet:5[>=${PV}]
+        x11-libs/qtwebkit:5[>=5.2.0]
+"
+

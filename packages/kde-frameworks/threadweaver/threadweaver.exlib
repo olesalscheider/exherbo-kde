@@ -1,0 +1,20 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="High-level multithreading framework"
+DESCRIPTION="
+ThreadWeaver is a helper for multithreaded programming.  It uses a job-based
+interface to queue tasks and execute them in an efficient way.
+
+You simply divide the workload into jobs, state the dependencies between the jobs
+and ThreadWeaver will work out the most efficient way of dividing the work between
+threads within a set of resource limits."
+
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+

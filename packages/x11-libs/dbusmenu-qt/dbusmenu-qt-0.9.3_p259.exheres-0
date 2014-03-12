@@ -1,0 +1,9 @@
+# Copyright 2010 Alex Elsayed <eternaleye@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require dbusmenu-qt
+
+PLATFORMS="~amd64 ~x86"
+
+DOWNLOADS="https://bazaar.launchpad.net/~dbusmenu-team/libdbusmenu-qt/trunk/tarball/259 -> ${PNVR}.tar.gz"
+

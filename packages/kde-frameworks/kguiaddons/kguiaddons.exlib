@@ -1,0 +1,24 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="Utilities for graphical user interfaces"
+DESCRIPTION="
+The KDE GUI addons provide utilities for graphical user interfaces in the areas
+of colors, fonts, text, images, keyboard input."
+
+LICENCES="GPL-2 LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        x11-libs/libX11
+        x11-libs/libxcb
+"
+
+# 3 of 3 tests need a running X server
+RESTRICT="test"
+

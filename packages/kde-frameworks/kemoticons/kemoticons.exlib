@@ -1,0 +1,20 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require frameworks
+
+SUMMARY="KEmoticons converts emoticons from text to a graphical representation"
+
+LICENCES="GPL-2 [[ note = [ Tests ] ]] LGPL-2.1"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kservice:5[>=${PV}]
+"
+
+# Tries to connect to the running display server
+RESTRICT=test
+
