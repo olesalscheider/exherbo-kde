@@ -1,0 +1,22 @@
+Title: kde/extra-cmake-modules has been moved to kde-frameworks/extra-cmake-modules
+Author: Heiko Becker <heirecka@exherbo.org
+Content-Type: text/plain
+Posted: 2014-03-12
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/extra-cmake-modules
+
+Please install kde-frameworks/extra-cmake-modules and *afterwards* uninstall kde/extra-cmake-modules.
+
+1. Take note of any packages depending on kde/extra-cmake-modules:
+cave resolve \!kde/extra-cmake-modules
+
+2. Install kde-frameworks/extra-cmake-modules:
+cave resolve kde-frameworks/extra-cmake-modules -x
+
+3. Re-install the packages from step 1.
+
+4. Uninstall kde/extra-cmake-modules
+cave resolve \!kde/extra-cmake-modules -x
+
+Do it in *this* order or you'll potentially *break* your system.
