@@ -13,12 +13,10 @@ LICENCES="LGPL-2.1"
 SLOT="0"
 MYOPTIONS=""
 
-if ever at_least 0.7.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qt:4[sql]
-    "
-fi
+DEPENDENCIES+="
+    build+run:
+        x11-libs/qt:4[sql]
+"
 
 BUGS_TO="mixi@exherbo.org"
 
