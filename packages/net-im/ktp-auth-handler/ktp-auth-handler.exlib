@@ -18,14 +18,9 @@ DEPENDENCIES+="
             net-libs/accounts-qt
             net-libs/signon
         )
+    run:
+        app-crypt/qca-ossl:2
 "
-
-if ever at_least 0.7.80 ; then
-    DEPENDENCIES+="
-        run:
-            app-crypt/qca-ossl:2
-    "
-fi
 
 BUGS_TO="mixi@exherbo.org"
 
