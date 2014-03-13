@@ -65,5 +65,10 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'kerberos GSSAPI'
 )
 
-# TODO: kioslaves help files collide with kdelibs:4
+src_install() {
+    default
+
+    # Prevent collision with kde-runtime:4
+    ever at_least 4.98 && edo rm -r "${IMAGE}"/usr/share/doc/HTML/en/khelpcenter
+}
 
