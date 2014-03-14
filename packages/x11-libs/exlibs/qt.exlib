@@ -9,7 +9,11 @@ myexparam pv=${MY_PV:-${PV}}
 MY_PNV=$(exparam pn)-$(exparam pv)
 
 HOMEPAGE="http://qt-project.org/"
-BASE_URI="mirror://qt/official_releases/qt/$(ever range 1-2)/${PV}/"
+if [[ ${PV} == *-@(alpha|beta|rc) ]] ; then
+    BASE_URI="mirror://qt/development_releases/qt/$(ever range 1-2)/${PV}/"
+else
+    BASE_URI="mirror://qt/official_releases/qt/$(ever range 1-2)/${PV}/"
+fi
 
 if ever is_scm; then
     SCM_REPOSITORY="git://gitorious.org/qt/${PN}.git"
@@ -18,9 +22,6 @@ if ever is_scm; then
     require scm-git
 elif ever at_least 5.2.1; then
     DOWNLOADS="${BASE_URI}submodules/${MY_PNV}.tar.xz"
-    DEPENDENCIES=" build: app-arch/xz "
-elif ever at_least 5.1.0; then
-    DOWNLOADS="${BASE_URI}submodules/${MY_PNV}.tar.gz"
 else
     DOWNLOADS="${BASE_URI}${MY_PNV}.tar.gz"
     UPSTREAM_CHANGELOG="${BASE_URI}changes-${PV}"
@@ -28,18 +29,15 @@ fi
 
 if ever is_scm; then
     SLOT=5
-else
-    SLOT=$(ever major)
-fi
-
-if ever is_scm; then
     UPSTREAM_DOCUMENTATION="
         http://qt-project.org/doc/qt-${SLOT}/ [[ description = [ Qt Reference Documentation ] ]]
     "
 else
+    SLOT=$(ever major)
     UPSTREAM_DOCUMENTATION="
         http://qt-project.org/doc/qt-$(ever range 1-2)/ [[ description = [ Qt Reference Documentation ] ]]
     "
+    WORK=${WORKBASE}/${MY_PNV}
 fi
 
 LICENCES="|| ( LGPL-2.1 GPL-3 ) FDL-1.3"
@@ -49,9 +47,6 @@ LICENCES="|| ( LGPL-2.1 GPL-3 ) FDL-1.3"
 
 BUGS_TO="kde@exherbo.org"
 
-if ! ever is_scm; then
-    WORK=${WORKBASE}/${MY_PNV}
-fi
 DEFAULT_SRC_INSTALL_PARAMS+=( INSTALL_ROOT="${IMAGE}" )
 
 qt_mkspecs_dir() {
