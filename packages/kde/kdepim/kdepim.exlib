@@ -74,10 +74,10 @@ DEPENDENCIES+="
         )
 "
 
-if ever at_least 4.12.80 ; then
+if ever at_least 4.12.90 ; then
     DEPENDENCIES+="
         build+run:
-            kde/baloo[>=4.2.81]
+            kde/baloo[>=4.12.83]
             kde/kdelibs:${SLOT}[>=4.12.0]
             server-pim/akonadi[>=1.11.80]
             googledrive? ( app-pim/libkgapi[>=2.1.0] )
