@@ -5,7 +5,7 @@ require kde.org
 
 SUMMARY="A library for extracting file metadata"
 
-LICENCES="LGPL-2 LGPL-2.1 LGPL-3"
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2 LGPL-2.1 LGPL-3"
 MYOPTIONS="
     epub       [[ description = [ Support for extracting metadata from .epub ebook files ] ]]
     exif       [[ description = [ Support for extracting metadata from EXIF headers ] ]]
