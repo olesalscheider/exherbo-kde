@@ -11,17 +11,24 @@ LICENCES="GPL-2 FDL-1.2 LGPL-2
 
 MYOPTIONS=""
 
-# FIXME: automagic dependency upon QtMathML Widget - http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html
+# NOTE: automagic dependency upon QtMathML Widget - http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html
+#       But it's removed in 4.13.x
 DEPENDENCIES="
     build+run:
         kde/analitza:${SLOT}
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/libkdeedu:${SLOT}
         media-libs/phonon
         x11-dri/mesa
     run:
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
+
+if ! ever at_least 4.12.90 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/libkdeedu:${SLOT}
+    "
+fi
 
 if ever at_least 4.12.0 ; then
     DEPENDENCIES+="
