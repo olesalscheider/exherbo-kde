@@ -7,6 +7,7 @@ SUMMARY="Qt Cross-platform application framework: Various image format plugins"
 DESCRIPTION="Supports MNG, TGA, TIFF and WBMP".
 
 MYOPTIONS="doc"
+ever at_least 5.3.0-alpha && MYOPTIONS+=" jpeg2000 webp"
 
 DEPENDENCIES="
     build:
@@ -14,8 +15,20 @@ DEPENDENCIES="
     build+run:
         media-libs/libmng[>=1.0.9]
         media-libs/tiff[>=4.0]
+        jpeg2000? ( media-libs/jasper[>=1.900.1] )
+        webp? ( media-libs/libwebp )
 "
 
+src_prepare() {
+    default
+
+    if ever at_least 5.3.0-alpha ; then
+        option jpeg2000 || edo sed -e '/jp2/d' \
+            -i src/plugins/imageformats/imageformats.pro
+        option webp || edo sed -e '/webp/d' \
+            -i src/plugins/imageformats/imageformats.pro
+    fi
+}
 src_compile() {
     default
 
