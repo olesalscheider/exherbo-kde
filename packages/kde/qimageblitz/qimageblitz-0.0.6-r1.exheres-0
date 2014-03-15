@@ -3,24 +3,9 @@
 # Based in part upon 'qimageblitz-0.0.4.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation.
 
-require cmake [ api=2 ]
+require qimageblitz
 
-SUMMARY="Qimageblitz is an interim image effect library that people can use until KDE 4.1"
-HOMEPAGE="http://websvn.kde.org/trunk/kdesupport/qimageblitz/"
-DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.bz2"
-
-LICENCES="GPL-2 LGPL-2"
-SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="
-    platform: amd64
-    amd64_cpu_features: 3dnow
-    x86_cpu_features: 3dnow mmx sse sse2
-    "
-
-DEPENDENCIES="
-    build+run:
-        x11-libs/qt:4[X(+)]"
 
 src_configure() {
     local myconf=()

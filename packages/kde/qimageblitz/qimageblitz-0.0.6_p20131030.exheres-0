@@ -1,0 +1,70 @@
+# Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qimageblitz-0.0.4.ebuild' from Gentoo, which is:
+#     Copyright 1999-2008 Gentoo Foundation.
+
+require qimageblitz
+
+DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.xz"
+
+PLATFORMS="~amd64 ~x86"
+
+src_configure() {
+    local myconf=()
+
+    if option platform:amd64 ; then
+        myconf+=(
+            -DENABLE_MMX:BOOL=TRUE
+            -DENABLE_SSE:BOOL=TRUE
+            -DENABLE_SSE2:BOOL=TRUE
+            $(cmake_enable amd64_cpu_features:3dnow 3DNOW)
+        )
+    else
+        myconf+=(
+            $(cmake_enable x86_cpu_features:3dnow 3DNOW)
+            $(cmake_enable x86_cpu_features:mmx MMX)
+            $(cmake_enable x86_cpu_features:sse SSE)
+            $(cmake_enable x86_cpu_features:sse2 SSE2)
+        )
+    fi
+
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        ecmake -DQT4_BUILD:BOOL=TRUE "${myconf[@]}"
+        edo popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        ecmake -DQT4_BUILD:BOOL=FALSE "${myconf[@]}"
+        edo popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/"qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+}
+
