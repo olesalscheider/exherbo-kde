@@ -5,7 +5,7 @@
 
 require qimageblitz
 
-DOWNLOADS="http://dev.exherbo.org/~ingmar/distfiles/${PN}/${PNV}.tar.xz"
+DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.xz"
 
 PLATFORMS="~amd64 ~x86"
 
