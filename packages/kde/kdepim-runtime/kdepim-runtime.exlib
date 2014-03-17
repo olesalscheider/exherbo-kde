@@ -49,6 +49,10 @@ if ever at_least 4.12.80 ; then
                 net-libs/signon
             )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+        'single-sign-on AccountsQt'
+        'single-sign-on SignOnQt'
+    )
 else
     DEPENDENCIES+="
         build+run:
@@ -80,8 +84,6 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'google LibKGAPI2'
     'facebook LibKFbAPI'
-    'single-sign-on AccountsQt'
-    'single-sign-on SignOnQt'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DCMAKE_DISABLE_FIND_PACKAGE_Libkolab:BOOL=TRUE # unwritten - http://mirror.kolabsys.com/pub/releases/
