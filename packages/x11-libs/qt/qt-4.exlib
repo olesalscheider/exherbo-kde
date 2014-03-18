@@ -103,7 +103,7 @@ DEPENDENCIES="
             dev-libs/atk[multibuild_c:*(-)?]
         )
         multimedia? ( sys-sound/alsa-lib[multibuild_c:*(-)?] )
-        mysql? ( dev-db/mysql[multibuild_c:*(-)?] )
+        mysql? ( virtual/mysql[multibuild_c:*(-)?] )
         opengl? ( x11-dri/mesa[multibuild_c:*(-)?] )
         postgresql? ( dev-db/postgresql )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
