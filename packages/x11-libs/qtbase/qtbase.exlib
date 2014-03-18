@@ -87,7 +87,7 @@ DEPENDENCIES="
             sys-apps/systemd[multibuild_c:*(-)?]   [[ note = udev ]]
             x11-dri/libdrm[multibuild_c:*(-)?]
         )
-        mysql? ( dev-db/mysql[multibuild_c:*(-)?] )
+        mysql? ( virtual/mysql[multibuild_c:*(-)?] )
         postgresql? ( dev-db/postgresql )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
