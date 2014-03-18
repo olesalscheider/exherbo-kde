@@ -1,4 +1,4 @@
-# Copyright 2011 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2011,2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdegraphics.exlib', which is:
 #     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
@@ -44,7 +44,9 @@ if ever at_least 4.12.80 ; then
         build+run:
             kde/libkscreen[>=1.0.2] [[ note = [ might be optional, dpi detection ] ]]
     "
-elif ever at_least 4.11.80 ; then
+fi
+
+if ever at_least 4.11.80 ; then
     DEPENDENCIES+="
         build+run:
             kde/libkexiv2:${SLOT}
