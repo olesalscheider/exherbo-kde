@@ -1,0 +1,6 @@
+# Copyright 2014 David Heidelberger <david.heidelberger@ixit.cz>
+# Distributed under the terms of the GNU General Public License v2
+
+require qtcurve
+
+PLATFORMS="~amd64"

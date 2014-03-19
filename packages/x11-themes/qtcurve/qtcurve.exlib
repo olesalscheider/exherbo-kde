@@ -1,0 +1,60 @@
+# Copyright 2014 David Heidelberger <david.heidelberger@ixit.cz>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 ] kde github
+
+SUMMARY="QtCurve - Qt5/Qt4/KDE4/GTK+2 widget styles"
+DESCRIPTION="This is a set of widget styles for Qt5/Qt4/KDE4 and Gtk2 based apps."
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="
+    gtk2 [[ requires = X ]]
+    kde [[ requires = qt4 ]]
+    qt4 [[ requires = X ]]
+    qt5
+    X
+"
+
+DEPENDENCIES="
+    build:
+        gtk2? (
+            virtual/pkg-config
+        )
+        X? (
+            virtual/pkg-config
+            x11-proto/xcb-proto
+        )
+    build+run:
+        x11-libs/libxcb
+        gtk2? (
+            x11-libs/gtk+:2
+        )
+        kde? (
+            kde/kde-workspace:4
+            kde/kdelibs:4
+        )
+        qt4? (
+            x11-libs/qt:4
+        )
+        qt5? (
+            dev-qt/qtdbus:5
+            dev-qt/qtdeclarative:5
+            dev-qt/qtgui:5
+            dev-qt/qtsvg:5
+            dev-qt/qtwidgets:5
+            dev-qt/qtx11extras:5
+        )
+        X? (
+            x11-libs/libX11
+        )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DLIB_INSTALL_DIR=/usr/${LIBDIR} )
+CMAKE_SRC_CONFIGURE_OPTIONS+=(
+    'gtk2 ENABLE_GTK2'
+    'kde QTC_QT4_ENABLE_KDE'
+    'qt4 ENABLE_QT4'
+    'qt5 ENABLE_QT5'
+    'X QTC_ENABLE_X11'
+)
