@@ -128,7 +128,7 @@ DEPENDENCIES+="
             x11-libs/qt:4[qt3support][webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
-            mysql? ( dev-db/mysql )
+            mysql? ( virtual/mysql )
             postgresql? (
                 dev-db/postgresql
             )
