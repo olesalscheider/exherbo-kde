@@ -30,10 +30,10 @@ DEPENDENCIES="
         virtual/pkg-config
         qt5? ( sys-devel/cmake[>=2.8.9] )
     build+run:
-        dev-db/mysql[>=5.1]
         dev-libs/boost      [[ note = [ Akonadi uses the program_options library ] ]]
         dev-libs/libxslt
         dev-libs/soprano[>=2.7.56]
+        virtual/mysql[>=5.1]
         x11-misc/shared-mime-info[>=0.23]
         qt5? ( x11-libs/qtbase:5[mysql][sql] )
        !qt5? ( x11-libs/qt:4[>=4.8.0][dbus][mysql][sql] )
