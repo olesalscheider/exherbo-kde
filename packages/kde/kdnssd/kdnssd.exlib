@@ -4,6 +4,11 @@
 #     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
 #     Copyright 2008-2011 Bo Ørsted Andresen
 
+# Follow upstream reanaming with the release of 4.13.0
+if ever at_least 4.12.95 ; then
+    KDEMODULE="zeroconf-ioslave"
+fi
+
 require kde.org
 
 SUMMARY="Network Monitor for DNS-SD services (Zeroconf)"
@@ -15,4 +20,8 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[avahi]
 "
+
+if ever at_least 4.12.95 ; then
+    CMAKE_SOURCE=${WORKBASE}/zeroconf-ioslave-${PV}
+fi
 
