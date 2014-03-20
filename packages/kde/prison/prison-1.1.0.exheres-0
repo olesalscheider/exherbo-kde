@@ -1,11 +1,11 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake [ api=2 ]
 
 SUMMARY="A library currently offering a nice Qt api to produce certain barcodes"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/${PN}"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.gz"
+DOWNLOADS="mirror://kde/stable/${PN}/$(ever range 1-2)/src/${PNV}.tar.xz"
 
 LICENCES="
     MIT
