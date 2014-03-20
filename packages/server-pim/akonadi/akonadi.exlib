@@ -51,7 +51,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
 
 if ever at_least 1.11.80 ; then
-    # Make this optional for frameworks where there is no Nepomuk
+    # Make this optional for frameworks where there is no Nepomuk or when KDE[<4.13] is gone
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOPRANO:BOOL=TRUE )
 fi
 
