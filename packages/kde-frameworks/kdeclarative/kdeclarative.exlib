@@ -17,3 +17,14 @@ DEPENDENCIES="
         x11-libs/qtdeclarative:5[>=5.2.0]
 "
 
+if ever at_least 4.98.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kglobalaccel:5[>=${PV}]
+            kde-frameworks/kguiaddons:5[>=${PV}]
+            kde-frameworks/kwidgetsaddons:5[>=${PV}]
+            kde-frameworks/kwindowsystem:5[>=${PV}]
+    "
+    RESTRICT="test"
+fi
+
