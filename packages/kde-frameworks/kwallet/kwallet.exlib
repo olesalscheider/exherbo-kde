@@ -34,6 +34,13 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.98.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/libgcrypt[>=1.5.0]
+    "
+fi
+
 # "...Couldn't start kwalletd:  QDBusError("org.freedesktop.DBus.Error.ServiceUnknown",
 # "The name org.kde.kwalletd5 was not provided by any .service files")..."
 RESTRICT="test"
