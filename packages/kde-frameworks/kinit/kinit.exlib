@@ -26,3 +26,10 @@ DEPENDENCIES="
         x11-libs/libX11
 "
 
+if ever at_least 4.98.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kconfig:5[>=${PV}]
+    "
+fi
+
