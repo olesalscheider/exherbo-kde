@@ -13,7 +13,7 @@ Using kdeinit to launch KDE applications makes starting a typical KDE
 applications 2.5 times faster (100ms instead of 250ms on a P-III 500) It
 reduces memory consumption by approx. 350Kb per application."
 
-LICENCES="LGPL-2.1"
+LICENCES="BSD-3 LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
