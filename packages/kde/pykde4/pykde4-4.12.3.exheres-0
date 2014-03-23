@@ -5,3 +5,7 @@ require pykde4
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-fix-build-with-sip-4-15-5.patch
+)
+
