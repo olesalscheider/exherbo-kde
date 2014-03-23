@@ -6,16 +6,31 @@ require kde.org
 SUMMARY="Desktop Planetarium"
 
 LICENCES="GPL-2 FDL-1.2 BSD-3"
-MYOPTIONS=""
+MYOPTIONS="
+    xplanet [[ description = [ Renders images of all major planets and most satellites ] ]]
+"
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        sci-libs/eigen:2[>=2.0.3]
         sys-libs/zlib
         x11-dri/mesa
         x11-libs/qt:4[opengl]
+    run:
+        xplanet? ( x11-apps/xplanet )
 "
+
+if ever at_least 4.12.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/qjson
+            sci-libs/eigen:3
+    "
+else
+    DEPENDENCIES+="
+        sci-libs/eigen:2[>=2.0.3]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Package Unwritten, http://indi.sf.net; Support for the FITS (Flexible Image Transport System) data format in KStars.
@@ -27,9 +42,8 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Package Unwritten, http://www.atnf.csiro.au/people/mcalabre/WCS/; Support for world coordinate
     # systems in FITS header
     -DWITH_WCSLIB=OFF
-    # Package Unwritten, http://xplanet.sourceforge.net/; Renders an image of all the major planets and most satellites
-    -DWITH_Xplanet=OFF
 )
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( Xplanet )
 
 if ever at_least 4.12.0 ; then
     # Package Unwritten, http://www.astrometry.net
