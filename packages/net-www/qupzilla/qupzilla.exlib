@@ -23,7 +23,7 @@ MYOPTIONS="
 # There is NO_X11, so in principle, it would be possible to build qupzilla without support for X11, but as qt5 links to libX11 currently, there is no point in doing so.
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         dev-libs/openssl
         x11-libs/libX11
