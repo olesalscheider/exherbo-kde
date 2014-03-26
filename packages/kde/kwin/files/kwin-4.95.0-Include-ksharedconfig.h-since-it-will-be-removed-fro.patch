@@ -1,0 +1,106 @@
+Upstream: both patches taken from the master branch
+Reason: fix build with KF5 beta1
+
+From a83d9c34c756424f45707c89b96685a3434fef06 Mon Sep 17 00:00:00 2001
+From: David Faure <faure@kde.org>
+Date: Sat, 29 Mar 2014 09:05:08 +0100
+Subject: [PATCH] Include ksharedconfig.h (since it will be removed from
+ kpluginfactory.h)
+
+---
+ kwin/clients/aurorae/src/aurorae.cpp             | 1 +
+ kwin/effects/startupfeedback/startupfeedback.cpp | 1 +
+ kwin/scripting/genericscriptedconfig.h           | 1 +
+ kwin/tabbox/tabboxhandler.cpp                    | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/kwin/clients/aurorae/src/aurorae.cpp b/kwin/clients/aurorae/src/aurorae.cpp
+index c8b508b..7de7585 100644
+--- a/kwin/clients/aurorae/src/aurorae.cpp
++++ b/kwin/clients/aurorae/src/aurorae.cpp
+@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ #include <KConfig>
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KPluginInfo>
+ #include <KServiceTypeTrader>
+ 
+diff --git a/kwin/effects/startupfeedback/startupfeedback.cpp b/kwin/effects/startupfeedback/startupfeedback.cpp
+index 8143208..bc87ee8 100644
+--- a/kwin/effects/startupfeedback/startupfeedback.cpp
++++ b/kwin/effects/startupfeedback/startupfeedback.cpp
+@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <QtGui/QPainter>
+ // KDE
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KIconLoader>
+ #include <KStartupInfo>
+ #include <KSelectionOwner>
+diff --git a/kwin/scripting/genericscriptedconfig.h b/kwin/scripting/genericscriptedconfig.h
+index 7d76891..8950f3c 100644
+--- a/kwin/scripting/genericscriptedconfig.h
++++ b/kwin/scripting/genericscriptedconfig.h
+@@ -23,6 +23,7 @@
+ 
+ #include <KCModule>
+ #include <KPluginFactory>
++#include <KConfigGroup>
+ 
+ namespace KWin
+ {
+diff --git a/kwin/tabbox/tabboxhandler.cpp b/kwin/tabbox/tabboxhandler.cpp
+index c712a6b..d95c7db 100644
+--- a/kwin/tabbox/tabboxhandler.cpp
++++ b/kwin/tabbox/tabboxhandler.cpp
+@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <QDesktopWidget>
+ #include <QKeyEvent>
+ #include <QModelIndex>
++#include <QStandardPaths>
+ #include <QTimer>
+ #include <QQmlContext>
+ #include <QQmlComponent>
+-- 
+1.9.1
+
+
+From 40ea6cab33d27a30c0ad009c390ce4cbfe922ae6 Mon Sep 17 00:00:00 2001
+From: David Faure <faure@kde.org>
+Date: Sat, 29 Mar 2014 10:00:42 +0100
+Subject: [PATCH] doesn't need klibrary
+
+---
+ kwin/libkdecorations/CMakeLists.txt            | 2 +-
+ kwin/libkdecorations/kdecoration_plugins_p.cpp | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/kwin/libkdecorations/CMakeLists.txt b/kwin/libkdecorations/CMakeLists.txt
+index 5e5f47b..1ac9e4f 100644
+--- a/kwin/libkdecorations/CMakeLists.txt
++++ b/kwin/libkdecorations/CMakeLists.txt
+@@ -13,7 +13,7 @@ target_link_libraries(kdecorations
+     PUBLIC
+         Qt5::Widgets
+         KF5::ConfigCore
+-        KF5::Service # KLibrary
++        KF5::Service # KPluginLoader
+         KF5::WindowSystem # NETWM defines
+     PRIVATE
+         KF5::I18n
+diff --git a/kwin/libkdecorations/kdecoration_plugins_p.cpp b/kwin/libkdecorations/kdecoration_plugins_p.cpp
+index d08aebc..8570b6a 100644
+--- a/kwin/libkdecorations/kdecoration_plugins_p.cpp
++++ b/kwin/libkdecorations/kdecoration_plugins_p.cpp
+@@ -27,7 +27,6 @@ DEALINGS IN THE SOFTWARE.
+ #include "kdecoration_plugins_p.h"
+ 
+ #include <kconfig.h>
+-#include <klibrary.h>
+ #include <KPluginFactory>
+ #include <KPluginLoader>
+ #include <KPluginTrader>
+-- 
+1.9.1
+

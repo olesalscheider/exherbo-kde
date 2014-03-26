@@ -1,0 +1,81 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ module='kde-workspace' ]
+
+SUMMARY="An easy to use, but flexible, composited Window Manager"
+
+LICENCES="FDL-1.2 GPL-2"
+MYOPTIONS="activities
+    opengles [[ description = [ Use the OpenGLES backend originally targeted at mobile devices, disables the OpenGL backend ] ]]
+    wayland"
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5
+        virtual/pkg-config
+    build+run:
+        kde-frameworks/kauth:5
+        kde-frameworks/kcmutils:5
+        kde-frameworks/kcompletion:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kcrash:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/kglobalaccel:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kio:5
+        kde-frameworks/knewstuff:5
+        kde-frameworks/kxmlgui:5
+        kde-frameworks/knotifications:5
+        kde-frameworks/kservice:5
+        kde-frameworks/kwidgetsaddons:5
+        kde-frameworks/kwindowsystem:5
+        kde-frameworks/kxmlgui:5
+        kde-frameworks/plasma-framework:5
+        x11-dri/mesa
+        x11-libs/libSM
+        x11-libs/libX11
+        x11-libs/libXcursor
+        x11-libs/libXext
+        x11-libs/libXxf86vm
+        x11-libs/libxcb
+        x11-libs/qtbase:5[>=5.2.0]
+        x11-libs/qtdeclarative:5[>=5.2.0]
+        x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qttools:5[>=5.2.0]
+        x11-libs/qtx11extras:5[>=5.2.0]
+        x11-utils/xcb-util-image
+        x11-utils/xcb-util-keysyms
+        x11-utils/xcb-util-wm
+        activities? ( kde-frameworks/kactivities:5 )
+        opengles? ( x11-libs/qtbase[opengles] )
+        wayland? (
+            sys-libs/wayland[>=1.2]
+            x11-dri/mesa[wayland]
+            x11-libs/libxkbcommon
+        )
+"
+
+# 7 of 9 tests require a running X server
+RESTRICT="test"
+
+# we don't want the whole kde-workspace checkout, only the kwin directory
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+else
+    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
+fi
+
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -KWIN_BUILD_KAPPMENU:BOOL=FALSE
+    -KWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS+=( 'activities KWIN_BUILD_ACTIVITIES' )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    Wayland
+    'wayland XKB'
+)
+
