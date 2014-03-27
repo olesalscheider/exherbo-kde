@@ -10,7 +10,7 @@ This package contains Personal Information Management libraries and data files n
 "
 HOMEPAGE="http://kdepim.kde.org/"
 
-LICENCES="BSD-2 GPL-2 LGPL-2.1"
+LICENCES="BSD-2 BSD-3 GPL-2 LGPL-2.1"
 MYOPTIONS="
     barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
     ldap
