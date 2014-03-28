@@ -1,0 +1,27 @@
+Upstream: yes
+
+From 40fe123ec387a2000c42ca9ce7a8bac4ecfa9bc0 Mon Sep 17 00:00:00 2001
+From: Aleix Pol <aleixpol@kde.org>
+Date: Mon, 31 Mar 2014 06:47:21 +0200
+Subject: [PATCH] Fix standalone compilation
+
+---
+ gui/SensorDisplayLib/ProcessController.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gui/SensorDisplayLib/ProcessController.cpp b/gui/SensorDisplayLib/ProcessController.cpp
+index 6641293..76b4c3e 100644
+--- a/gui/SensorDisplayLib/ProcessController.cpp
++++ b/gui/SensorDisplayLib/ProcessController.cpp
+@@ -30,7 +30,7 @@
+ #include "ProcessController.moc"
+ #include "ProcessController.h"
+ #include "processui/ksysguardprocesslist.h"
+-#include "processes.h"
++#include "processcore/processes.h"
+ 
+ //#define DO_MODELCHECK
+ #ifdef DO_MODELCHECK
+-- 
+1.9.1
+

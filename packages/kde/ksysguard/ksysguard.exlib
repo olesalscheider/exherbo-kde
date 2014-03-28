@@ -1,0 +1,50 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ module='kde-workspace' ]
+
+SUMMARY="A network enabled task and system monitor"
+DESCRIPTION="
+It features a client/server architecture that allows monitoring of local as
+well as remote hosts. The graphical front end uses so-called sensors to
+retrieve the information it displays. A sensor can return simple values or
+more complex information like tables. For each type of information, one or
+more displays are provided. Displays are organized in worksheets that can be
+saved and loaded independently from each other. So, ksysguard is not only a
+simple task manager but also a very powerful tool to control large server
+farms."
+
+LICENCES="FDL-1.2 GPL-2"
+MYOPTIONS="lm_sensors"
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5
+    build+run:
+        kde/libksysguard:${SLOT}[>=${PV}]
+        kde-frameworks/kconfig:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kinit:5
+        kde-frameworks/kitemviews:5
+        kde-frameworks/knewstuff:5
+        kde-frameworks/plasma-framework:5
+        x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qtwebkit:5[>=5.2.0]
+        x11-libs/qtx11extras:5[>=5.2.0]
+        lm_sensors? ( sys-apps/lm_sensors )
+"
+
+# we don't want the whole kde-workspace checkout, only the ksysguard directory
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+else
+    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
+fi
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'lm_sensors Sensors'
+)
+
