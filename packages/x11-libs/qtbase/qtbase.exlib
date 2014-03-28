@@ -68,16 +68,15 @@ DEPENDENCIES="
         x11-dri/mesa[multibuild_c:*(-)?]
         x11-libs/harfbuzz[>=0.9.25][multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
-        x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
         x11-libs/libXext[multibuild_c:*(-)?]
         x11-libs/libXi[multibuild_c:*(-)?]
-        x11-libs/libxkbcommon[multibuild_c:*(-)?]
         x11-libs/libXrender[multibuild_c:*(-)?]
         x11-libs/mtdev[multibuild_c:*(-)?]
         x11-utils/xcb-util-image[multibuild_c:*(-)?]
         x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
         x11-utils/xcb-util-renderutil[multibuild_c:*(-)?]
         x11-utils/xcb-util-wm[multibuild_c:*(-)?]
+        cups? ( net-print/cups[>=1.4][multibuild_c:*(-)?] )
         glib? ( dev-libs/glib:2[multibuild_c:*(-)?] )
         gtk? (
             dev-libs/atk[multibuild_c:*(-)?]
@@ -93,10 +92,18 @@ DEPENDENCIES="
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
 "
 
-if ever at_least 5.3.0-alpha ; then
+if ever at_least 5.3.0-beta ; then
     DEPENDENCIES+="
         build+run:
             sys-apps/systemd[multibuild_c:*(-)?]
+            x11-libs/libxcb[>=1.10][multibuild_c:*(-)?]
+            x11-libs/libxkbcommon[>=0.4.0][X][multibuild_c:*(-)?]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
+            x11-libs/libxkbcommon[multibuild_c:*(-)?]
     "
 fi
 
@@ -206,7 +213,7 @@ configure_one_multibuild() {
         -no-directfb
         $(ever at_least 5.3.0-alpha && echo "-no-imf")
         $(ever at_least 5.3.0-alpha && echo "-no-lgmon")      # Both are only useful on QNX
-        $(ever at_least scm || echo "-no-javascript-jit")
+        $(ever at_least 5.3.0-beta || echo "-no-javascript-jit")
         -no-linuxfb
         -no-nis
         -no-rpath
