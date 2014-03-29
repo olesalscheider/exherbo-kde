@@ -10,22 +10,11 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        app-text/docbook-xml-dtd:4.5
         app-text/docbook-xsl-stylesheets
     build+run:
         dev-libs/libxml2:2.0
         dev-libs/libxslt
         kde-frameworks/karchive:5[>=${PV}]
 "
-
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        build:
-            app-text/docbook-xml-dtd:4.5
-    "
-else
-    DEPENDENCIES+="
-        build:
-            app-text/docbook-xml-dtd:4.2
-    "
-fi
 
