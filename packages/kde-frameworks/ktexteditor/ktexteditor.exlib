@@ -24,6 +24,7 @@ DEPENDENCIES="
         kde-frameworks/kconfig:5[>=${PV}]
         kde-frameworks/kguiaddons:5[>=${PV}]
         kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kiconthemes:5[>=${PV}]
         kde-frameworks/kio:5[>=${PV}]
         kde-frameworks/kparts:5[>=${PV}]
         kde-frameworks/sonnet:5[>=${PV}]
@@ -32,4 +33,6 @@ DEPENDENCIES="
 
 # 27 of 48 tests need a running X server
 RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_VIMODE:BOOL=TRUE )
 
