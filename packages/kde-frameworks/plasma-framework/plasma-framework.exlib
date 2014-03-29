@@ -28,6 +28,7 @@ MYOPTIONS="interactive-console ruby"
 
 DEPENDENCIES="
     build:
+        kde-frameworks/kdoctools:5[>=${PV}]
         virtual/pkg-config
     build+run:
         kde-frameworks/kactivities:5[>=${PV}]
