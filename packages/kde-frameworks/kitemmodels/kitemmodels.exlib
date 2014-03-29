@@ -25,7 +25,5 @@ DEPENDENCIES=""
 
 # NOTE: according to CMakeLists.txt tests need grantlee, which isn't ported to Qt5
 # 4 of 4 tests need a running X server
-if ever at_least 4.98.0 ; then
-    RESTRICT="test"
-fi
+RESTRICT="test"
 
