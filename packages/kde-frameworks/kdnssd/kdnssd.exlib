@@ -1,11 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ever at_least scm ; then
-    require frameworks
-else
-    require frameworks [ module=${PN}-framework ]
-fi
+require frameworks
 
 SUMMARY="Network service discovery using Zeroconf"
 DESCRIPTION="
