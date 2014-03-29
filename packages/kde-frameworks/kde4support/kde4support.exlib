@@ -20,6 +20,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        app-text/docbook-xml-dtd:4.2
         kde-frameworks/kdoctools:5[>=${PV}]
         sys-devel/gettext
     build+run:
@@ -51,13 +52,6 @@ DEPENDENCIES="
         x11-libs/qttools:5[>=5.2.0]
         x11-libs/qtx11extras:5[>=5.2.0]
 "
-
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        build:
-            app-text/docbook-xml-dtd:4.2
-    "
-fi
 
 # 26 of 38 tests need a running X server
 RESTRICT="test"
