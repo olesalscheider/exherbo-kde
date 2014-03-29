@@ -1,0 +1,12 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require khotkeys
+
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    -p2 "${FILES}"/${PNV}-Include-ksharedconfig.h-since-it-will-be-removed-fro.patch
+        "${FILES}"/${PNV}-Explicitly-declare-exported-interfaces-of-libraries.patch
+)
+

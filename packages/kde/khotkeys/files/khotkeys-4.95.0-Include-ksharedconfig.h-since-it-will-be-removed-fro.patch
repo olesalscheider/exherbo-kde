@@ -1,0 +1,66 @@
+Upstream: yes
+
+From a83d9c34c756424f45707c89b96685a3434fef06 Mon Sep 17 00:00:00 2001
+From: David Faure <faure@kde.org>
+Date: Sat, 29 Mar 2014 09:05:08 +0100
+Subject: [PATCH 1/2] Include ksharedconfig.h (since it will be removed from
+ kpluginfactory.h)
+
+---
+ khotkeys/libkhotkeysprivate/actions/action_list.cpp            | 1 +
+ khotkeys/libkhotkeysprivate/actions/actions.h                  | 1 +
+ khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp | 1 +
+ khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp  | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/khotkeys/libkhotkeysprivate/actions/action_list.cpp b/khotkeys/libkhotkeysprivate/actions/action_list.cpp
+index eec46c4..c35d5ff 100644
+--- a/khotkeys/libkhotkeysprivate/actions/action_list.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/action_list.cpp
+@@ -20,6 +20,7 @@
+ #include "actions.h"
+ 
+ #include <kconfiggroup.h>
++#include <ksharedconfig.h>
+ 
+ namespace KHotKeys {
+ 
+diff --git a/khotkeys/libkhotkeysprivate/actions/actions.h b/khotkeys/libkhotkeysprivate/actions/actions.h
+index 58f8d49..1d857aa 100644
+--- a/khotkeys/libkhotkeysprivate/actions/actions.h
++++ b/khotkeys/libkhotkeysprivate/actions/actions.h
+@@ -18,6 +18,7 @@
+ #include <kservice.h>
+ 
+ class KConfig;
++class KConfigGroup;
+ 
+ #include "khotkeysglobal.h"
+ 
+diff --git a/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp b/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
+index 9548a29..5b85cf0 100644
+--- a/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
+@@ -21,6 +21,7 @@
+ #include "windows_helper/window_selection_list.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KDebug>
+ 
+ namespace KHotKeys {
+diff --git a/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp b/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
+index 2a5ab7e..cde1ee3 100644
+--- a/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
+@@ -25,6 +25,7 @@
+ #include "windows_helper/window_selection_list.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KDebug>
+ 
+ // #include <X11/X.h>
+-- 
+1.9.1
+

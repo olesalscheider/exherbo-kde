@@ -1,0 +1,40 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ module='kde-workspace' ]
+
+SUMMARY="Bind actions to triggers and conditions"
+
+LICENCES="GPL-2"
+MYOPTIONS="X"
+
+DEPENDENCIES="
+    build+run:
+        kde/plasma-workspace:${SLOT}
+        kde-frameworks/kcmutils:5
+        kde-frameworks/kdbusaddons:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/kglobalaccel:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kio:5
+        kde-frameworks/ktextwidgets:5
+        kde-frameworks/kxmlgui:5
+        kde-frameworks/plasma-framework:5
+        X? (
+            x11-libs/libX11
+            x11-libs/libXtst
+            x11-libs/qtx11extras:5[>=5.2.0]
+        )
+"
+
+# we don't want the whole kde-workspace checkout, only the khotkeys directory
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+else
+    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
+fi
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'X X11'
+)
+
