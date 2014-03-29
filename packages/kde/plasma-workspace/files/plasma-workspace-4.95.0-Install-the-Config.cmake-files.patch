@@ -1,0 +1,61 @@
+Upstream: yes
+
+From bd1632fd5afffc325187fae2bdd80067535a7019 Mon Sep 17 00:00:00 2001
+From: Aleix Pol <aleixpol@kde.org>
+Date: Mon, 31 Mar 2014 06:34:48 +0200
+Subject: [PATCH] Install the Config.cmake files
+
+It didn't look like it's needed from the API, but after looking at
+the code it's clear that it's needed.
+---
+ ksmserver/screenlocker/CMakeLists.txt | 3 +++
+ libkworkspace/CMakeLists.txt          | 4 +++-
+ libtaskmanager/CMakeLists.txt         | 3 ++-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/ksmserver/screenlocker/CMakeLists.txt b/ksmserver/screenlocker/CMakeLists.txt
+index 6a1e66e..55ebc6f 100644
+--- a/ksmserver/screenlocker/CMakeLists.txt
++++ b/ksmserver/screenlocker/CMakeLists.txt
+@@ -42,6 +42,9 @@ ecm_configure_package_config_file(ScreenSaverDBusInterfaceConfig.cmake.in
+     ${CMAKE_CURRENT_BINARY_DIR}/ScreenSaverDBusInterfaceConfig.cmake
+     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
++install(FILES
++        ${CMAKE_CURRENT_BINARY_DIR}/ScreenSaverDBusInterfaceConfig.cmake
++        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ install(FILES kscreenlocker.notifyrc  DESTINATION ${DATA_INSTALL_DIR}/ksmserver/ RENAME ksmserver.notifyrc)
+ install(FILES ${screensaver_dbusXML}
+         DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
+diff --git a/libkworkspace/CMakeLists.txt b/libkworkspace/CMakeLists.txt
+index 2848a65..01b60a6 100644
+--- a/libkworkspace/CMakeLists.txt
++++ b/libkworkspace/CMakeLists.txt
+@@ -60,7 +60,9 @@ ecm_configure_package_config_file(LibKWorkspaceConfig.cmake.in
+     "${CMAKE_CURRENT_BINARY_DIR}/LibKWorkspaceConfig.cmake"
+     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/LibKWorkspaceConfigVersion.cmake
++install(FILES
++        ${CMAKE_CURRENT_BINARY_DIR}/LibKWorkspaceConfig.cmake
++        ${CMAKE_CURRENT_BINARY_DIR}/LibKWorkspaceConfigVersion.cmake
+         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
+ install(EXPORT libkworkspaceLibraryTargets
+diff --git a/libtaskmanager/CMakeLists.txt b/libtaskmanager/CMakeLists.txt
+index 94431d7..6fa6926 100644
+--- a/libtaskmanager/CMakeLists.txt
++++ b/libtaskmanager/CMakeLists.txt
+@@ -93,7 +93,8 @@ ecm_configure_package_config_file(LibTaskManagerConfig.cmake.in
+     "${CMAKE_CURRENT_BINARY_DIR}/LibTaskManagerConfig.cmake"
+     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/LibTaskManagerConfigVersion.cmake
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/LibTaskManagerConfig.cmake
++              ${CMAKE_CURRENT_BINARY_DIR}/LibTaskManagerConfigVersion.cmake
+         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
+ install(EXPORT libtaskmanagerLibraryTargets
+-- 
+1.9.1
+
