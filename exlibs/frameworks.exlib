@@ -40,7 +40,7 @@ MYOPTIONS="debug"
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/extra-cmake-modules[>=0.0.11]
+        kde-frameworks/extra-cmake-modules[>=0.0.12]
 "
 
 if ! exparam -b no_qt_dependency ; then
