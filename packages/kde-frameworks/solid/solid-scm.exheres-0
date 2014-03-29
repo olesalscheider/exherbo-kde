@@ -5,3 +5,7 @@ require solid
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-solid-hardware-rename-for-co-installability-with-kde.patch
+)
+

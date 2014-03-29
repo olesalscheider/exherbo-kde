@@ -1,0 +1,30 @@
+Upstream: https://git.reviewboard.kde.org/r/117160/
+
+From 7819b9ef0f796a128153e7a02bde05a6cdc712c9 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 29 Mar 2014 16:24:30 +0100
+Subject: [PATCH] solid-hardware: rename for co-installability with kdelibs4
+
+---
+ src/tools/solid-hardware/CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/tools/solid-hardware/CMakeLists.txt b/src/tools/solid-hardware/CMakeLists.txt
+index 7cb604e..e7f7b5b 100644
+--- a/src/tools/solid-hardware/CMakeLists.txt
++++ b/src/tools/solid-hardware/CMakeLists.txt
+@@ -1,7 +1,7 @@
+-add_executable(solid-hardware solid-hardware.cpp)
+-ecm_mark_nongui_executable(solid-hardware)
+-target_link_libraries(solid-hardware KF5::Solid)
+-install(TARGETS solid-hardware ${INSTALL_TARGETS_DEFAULT_ARGS})
++add_executable(solid-hardware5 solid-hardware.cpp)
++ecm_mark_nongui_executable(solid-hardware5)
++target_link_libraries(solid-hardware5 KF5::Solid)
++install(TARGETS solid-hardware5 ${INSTALL_TARGETS_DEFAULT_ARGS})
+ 
+ 
+ 
+-- 
+1.9.1
+
