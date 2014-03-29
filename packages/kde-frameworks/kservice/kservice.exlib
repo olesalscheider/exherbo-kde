@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require frameworks
+require frameworks test-dbus-daemon
 
 SUMMARY="Plugin framework for desktop services"
 DESCRIPTION="
@@ -24,6 +24,7 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5[>=${PV}]
 "
 
-# Tests fail, needs investigation
-RESTRICT=test
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-autotests-Don-t-build-kpluginfactorytest.patch
+)
 
