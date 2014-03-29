@@ -11,20 +11,17 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde-frameworks/kconfig:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kglobalaccel:5[>=${PV}]
+        kde-frameworks/kguiaddons:5[>=${PV}]
         kde-frameworks/ki18n:5[>=${PV}]
         kde-frameworks/kiconthemes:5[>=${PV}]
         kde-frameworks/kio:5[>=${PV}]
+        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kwindowsystem:5[>=${PV}]
         x11-libs/qtdeclarative:5[>=5.2.0]
 "
 
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kglobalaccel:5[>=${PV}]
-            kde-frameworks/kguiaddons:5[>=${PV}]
-            kde-frameworks/kwidgetsaddons:5[>=${PV}]
-            kde-frameworks/kwindowsystem:5[>=${PV}]
-    "
-    RESTRICT="test"
-fi
+# 1 of 1 test needs a running X server
+RESTRICT="test"
 
