@@ -18,6 +18,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
+        kde-frameworks/kconfig:5[>=${PV}]
         kde-frameworks/kcrash:5[>=${PV}]
         kde-frameworks/ki18n:5[>=${PV}]
         kde-frameworks/kio:5[>=${PV}]
@@ -25,11 +26,4 @@ DEPENDENCIES="
         kde-frameworks/kwindowsystem:5[>=${PV}]
         x11-libs/libX11
 "
-
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kconfig:5[>=${PV}]
-    "
-fi
 
