@@ -27,6 +27,5 @@ DEPENDENCIES="
 #        kde-frameworks/kwidgetsaddons:5[>=${PV}]
 #        kde-frameworks/kxmlgui:5[>=${PV}]
 
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'phonon Phonon4Qt5' )
 
