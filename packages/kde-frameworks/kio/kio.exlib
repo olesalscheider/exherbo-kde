@@ -29,9 +29,9 @@ DEPENDENCIES="
         kde-frameworks/karchive:5[>=${PV}]
         kde-frameworks/kbookmarks:5[>=${PV}]
         kde-frameworks/kcodecs:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${PV}]
         kde-frameworks/kconfig:5[>=${PV}]
         kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/kcompletion:5[>=${PV}]
         kde-frameworks/kcoreaddons:5[>=${PV}]
         kde-frameworks/kdbusaddons:5[>=${PV}]
         kde-frameworks/kguiaddons:5[>=${PV}]
@@ -41,6 +41,7 @@ DEPENDENCIES="
         kde-frameworks/kjobwidgets:5[>=${PV}]
         kde-frameworks/knotifications:5[>=${PV}]
         kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kwallet:5[>=${PV}]
         kde-frameworks/kwidgetsaddons:5[>=${PV}]
         kde-frameworks/kwindowsystem:5[>=${PV}]
         kde-frameworks/kxmlgui:5[>=${PV}]
@@ -69,6 +70,6 @@ src_install() {
     default
 
     # Prevent collision with kde-runtime:4
-    ever at_least 4.98 && edo rm -r "${IMAGE}"/usr/share/doc/HTML/en/khelpcenter
+    edo rm -r "${IMAGE}"/usr/share/doc/HTML/en/khelpcenter
 }
 
