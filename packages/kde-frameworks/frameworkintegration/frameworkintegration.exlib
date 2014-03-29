@@ -27,14 +27,9 @@ DEPENDENCIES="
             x11-libs/libxcb
             x11-libs/qtx11extras:5[>=5.2.0]
         ) [[ note = [ might be optional, pass style properties to native Windows ] ]]
+    suggestion:
+        fonts/oxygen-fonts[>=0.4] [[ description = [ Default font for KDE Applications ] ]]
 "
-
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        suggestion:
-            fonts/oxygen-fonts[>=0.4] [[ description = [ Default font for KDE Applications ] ]]
-    "
-fi
 
 # 3 of 3 tests need a running X server
 RESTRICT="test"
