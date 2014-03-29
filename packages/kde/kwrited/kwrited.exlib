@@ -1,0 +1,24 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ module='kde-workspace' ]
+
+SUMMARY="Write daemon"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+# It has an automagic dep on utempter which we don't have atm
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kde4support:5
+        kde-frameworks/kpty:5
+"
+
+# we don't want the whole kde-workspace checkout, only the kwin directory
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+else
+    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
+fi
+
