@@ -17,14 +17,8 @@ DEPENDENCIES="
     build+run:
         x11-libs/libX11
         x11-libs/libxcb
+        x11-libs/qtx11extras:5[>=5.2.0]
 "
-
-if ever at_least 4.98.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qtx11extras:5[>=5.2.0]
-    "
-fi
 
 # 3 of 3 tests need a running X server
 RESTRICT="test"
