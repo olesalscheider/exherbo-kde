@@ -8,8 +8,6 @@ SUMMARY="Plugin for KIO that provides a component for previewing audio files"
 LICENCES="LGPL-2.1"
 MYOPTIONS=""
 
-# Note: 4.96.0 looks for a couple of transitive deps due to a cmake bug.
-# These have been removed as of 4.97.0.
 DEPENDENCIES="
     build:
         kde-frameworks/kdoctools:5[>=${PV}]
