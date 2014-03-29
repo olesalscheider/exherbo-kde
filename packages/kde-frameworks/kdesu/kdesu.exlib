@@ -15,6 +15,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${PV}]
         kde-frameworks/kpty:5[>=${PV}]
         kde-frameworks/kservice:5[>=${PV}]
         x11-libs/libX11
