@@ -1,0 +1,28 @@
+Upstream: yes
+Reason: fix build
+
+From a83d9c34c756424f45707c89b96685a3434fef06 Mon Sep 17 00:00:00 2001
+From: David Faure <faure@kde.org>
+Date: Sat, 29 Mar 2014 09:05:08 +0100
+Subject: [PATCH 1/2] Include ksharedconfig.h (since it will be removed from
+ kpluginfactory.h)
+
+---
+ plasma-desktop/kcms/standard_actions/standard_actions_module.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp b/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
+index 49e68e2..6e18bbd 100644
+--- a/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
++++ b/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
+@@ -24,6 +24,7 @@
+ #include <KConfigGroup>
+ #include <KDebug>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KShortcutsEditor>
+ #include <KStandardAction>
+ #include <KMessageBox>
+-- 
+1.9.1
+
