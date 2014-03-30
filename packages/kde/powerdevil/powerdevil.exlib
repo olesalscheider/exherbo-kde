@@ -1,0 +1,42 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ module='kde-workspace' ]
+
+SUMMARY="KDE Power Management System"
+
+LICENCES="GPL-2"
+MYOPTIONS="X"
+
+DEPENDENCIES="
+    build+run:
+        kde/plasma-workspace:${SLOT}
+        kde-frameworks/kauth:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/kglobalaccel:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kidletime:5
+        kde-frameworks/kio:5
+        kde-frameworks/knotifyconfig
+        kde-frameworks/kwindowsystem
+        kde-frameworks/plasma-framework
+        kde-frameworks/solid:5
+        sys-apps/systemd
+        x11-libs/qtx11extras:5[>=5.2.0]
+        X? (
+            x11-libs/libX11
+            x11-libs/libxcb
+            x11-utils/xcb-util-image
+            x11-utils/xcb-util-keysyms
+            x11-utils/xcb-util-wm
+        )
+"
+
+# we don't want the whole kde-workspace checkout, only the powerdevil directory
+if ever is_scm ; then
+    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
+else
+    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
+fi
+
