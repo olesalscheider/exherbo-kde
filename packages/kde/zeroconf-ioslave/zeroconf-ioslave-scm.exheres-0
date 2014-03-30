@@ -1,7 +1,9 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kdnssd
+# last checked revision: 6a016bcc2911cb3ee0a0bcef4cc62b6d6e959202
+
+require zeroconf-ioslave
 
 PLATFORMS="~amd64"
 
