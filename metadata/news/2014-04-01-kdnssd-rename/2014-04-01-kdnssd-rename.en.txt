@@ -1,0 +1,25 @@
+Title: kde/kdnssd has been renamed to kde/zeroconf-ioslave
+Author: Heiko Becker <heirecka@exherbo.org>
+Content-Type: text/plain
+Posted: 2014-04-01
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde/kdnssd
+
+Please install kde/zeroconf-ioslave and *afterwards* uninstall kde/kdnssd.
+
+1. Take note of any packages depending on kde/kdnssd
+cave resolve \!kde/kdnssd
+
+2. Install kde/zeroconf-ioslave:
+cave resolve kde/zeroconf-ioslave -x
+
+3. Re-install the packages from step 1.
+
+4. Uninstall kde/kdnssd
+cave resolve \!kde/kdnssd -x
+
+Do it in *this* order or you'll potentially *break* your system.
+
+NOTE: kde-frameworks/kdnssd:5 isn't affected. It's a different piece of
+software and in fact provided the reason its KDE4 namesake was renamed.
