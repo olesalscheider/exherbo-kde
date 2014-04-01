@@ -3,7 +3,7 @@
 
 require kde-workspace
 
-DOWNLOADS="mirror://kde/stable/4.12.3/src/${PNV}.tar.xz"
+DOWNLOADS="mirror://kde/stable/4.12.4/src/${PNV}.tar.xz"
 
 PLATFORMS="~amd64 ~x86"
 
