@@ -7,19 +7,30 @@
 myexparam module=${PN}
 exparam -v KDEMODULE module
 
-case ${PV} in
-    scm)
-        SCM_REPOSITORY="git://anongit.kde.org/${KDEMODULE}"
-        require scm-git
+if ever is_scm ; then
+    SCM_REPOSITORY="git://anongit.kde.org/${KDEMODULE}"
+    case ${KDEMODULE} in
+        kate|kde-runtime|kdepimlibs|konsole)
+            SCM_BRANCH="frameworks"
+            ;;
+        *)
+            SCM_BRANCH="master"
+            ;;
+    esac
+    require scm-git
 
-        DOWNLOADS=""
-        ;;
+    DOWNLOADS=""
+else
+    case ${PV} in
+        4.9@(5|6|7|8|9).*)
+            DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}"
+            UPSTREAM_RELEASE_NOTES="http://dot.kde.org/2014/01/07/frameworks-5-tech-preview"
+            ;;
 
-    4.9@(5|6|7|8|9).*)
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}"
-        UPSTREAM_RELEASE_NOTES="http://dot.kde.org/2014/01/07/frameworks-5-tech-preview"
-        ;;
-esac
+        *)
+            die "Version ${PV} is not yet supported by frameworks.exlib" ;;
+    esac
+fi
 
 require flag-o-matic cmake [ api=2 ]
 
