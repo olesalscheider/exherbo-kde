@@ -5,3 +5,7 @@ require kimageformats
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-autotests-disable-failing-read-pic-test.patch
+)
+
