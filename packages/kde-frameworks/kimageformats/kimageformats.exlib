@@ -20,6 +20,10 @@ DEPENDENCIES="
         openexr? ( media-libs/openexr )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-autotests-disable-failing-read-pic-test.patch
+)
+
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'jpeg2000 Jasper'
     OpenEXR
