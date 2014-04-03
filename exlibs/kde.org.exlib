@@ -302,6 +302,19 @@ KDE_BLOCKERS="
         kde/printer-applet
         kde/superkaramba
         kde/sweeper
+    kde/kde-workspace:
+        kde/khotkeys
+        kde/kinfocenter
+        kde/kmenuedit
+        kde/ksysguard
+        kde/kwin
+        kde/kwrited
+        kde/libksysguard
+        kde/oxygen
+        kde/plasma-desktop
+        kde/plasma-workspace
+        kde/powerdevil
+        kde/systemsettings
 "
 kde_blocker_dependencies() {
     local parent block=()
