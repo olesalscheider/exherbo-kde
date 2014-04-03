@@ -33,7 +33,7 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
-if ever_at_least 4.12.80 ; then
+if ever at_least 4.12.80 ; then
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.12.0]
