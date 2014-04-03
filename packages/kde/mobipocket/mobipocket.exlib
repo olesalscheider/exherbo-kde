@@ -1,10 +1,7 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-KDEMODULE=kdegraphics-${PN}
-WORK=${WORKBASE}/${KDEMODULE}-${PV}
-
-require kde.org
+require kde.org [ module=kdegraphics-${PN} ]
 
 SUMMARY="A collection of plugins to handle mobipocket files"
 

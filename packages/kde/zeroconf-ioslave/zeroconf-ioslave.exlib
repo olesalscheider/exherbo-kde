@@ -6,10 +6,10 @@
 
 # Uppstream reanamed it between 4.12.3 and 4.12.4
 if ! ever at_least 4.12.4 ; then
-    KDEMODULE="kdnssd"
+    require kde.org [ module="kdnssd" ]
+else
+    require kde.org
 fi
-
-require kde.org
 
 SUMMARY="Network Monitor for DNS-SD services (Zeroconf)"
 
@@ -20,8 +20,4 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[avahi]
 "
-
-if ! ever at_least 4.12.4 ; then
-    CMAKE_SOURCE=${WORKBASE}/kdnssd-${PV}
-fi
 
