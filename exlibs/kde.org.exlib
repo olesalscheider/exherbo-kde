@@ -1,6 +1,7 @@
 # Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2011-2012 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 #
 # Based in part upon 'kde4-base.eclass', 'kde4-functions.eclass', 'kde4-meta.eclass'
@@ -19,18 +20,29 @@
 
 export_exlib_phases src_install
 
-myexparam -b upstream_release_notes=true
+myexparam module=${PN}
+exparam -v KDEMODULE module
+
 myexparam -b git=true
+myexparam -b no_qt_dependency=false
+myexparam -b upstream_release_notes=true
 
 if ever is_scm; then
     if exparam -b git ; then
-        SCM_REPOSITORY="git://anongit.kde.org/${PN}"
-        case ${PN} in
+        SCM_REPOSITORY="git://anongit.kde.org/${KDEMODULE}"
+        case ${KDEMODULE} in
             kdelibs)
                 SCM_BRANCH="KDE/4.13"
                 ;;
             kde-workspace)
                 SCM_BRANCH="KDE/4.11"
+                ;;
+            kate|kde-runtime|kdepimlibs|konsole)
+                if ever at_least 4.95.0 ; then
+                    SCM_BRANCH="frameworks"
+                else
+                    SCM_BRANCH="master"
+                fi
                 ;;
             *)
                 SCM_BRANCH="master"
@@ -43,20 +55,28 @@ if ever is_scm; then
     fi
 fi
 
-require kde [ api=2 ]
+if ever at_least 4.95.0 ; then
+    require frameworks
+else
+    require kde [ api=2 ]
+    # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
+    RESTRICT=test
+fi
 
-# TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
-RESTRICT=test
-
-KDEMODULE=${KDEMODULE:-${PN}}
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
-SLOT="4"
+if [[ ${CATEGORY} == "kde-frameworks" ]] ; then
+    SLOT="5"
+else
+    SLOT="4"
+fi
 
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freecode:kde"
 
 if exparam -b upstream_release_notes ; then
     case ${PV} in
+        4.9@(5|6|7|8|9).*)
+            UPSTREAM_RELEASE_NOTES="http://dot.kde.org/2013/09/25/frameworks-5" ;;
         4.5.0|4.6.0|4.8.0|4.8.2|4.9.0|4.10.0|4.11.0|4.12.0|4.13.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
         4.@(3|4|5|6|7|8|9|10|11|12|13).@(1|2|3|4|5|6|7|8|9|10|11.1))
@@ -69,7 +89,7 @@ fi
 
 # NOTE: kde-l10n has its own DOWNLOADS logic
 case ${PV} in
-    scm)
+    *scm)
         if ! exparam -b git ; then
             case ${KDEMODULE} in
                 oxygen-icons)
@@ -88,6 +108,8 @@ case ${PV} in
         DOWNLOADS=""
         ;;
 
+    4.9@(5|6|7|8|9).*) # KDE 5 pre-releases
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(4|5|9|10|11|12).@(80|85|90|92|95|96|97|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(5).@(9)*) # Weekly SVN snapshots
@@ -103,10 +125,19 @@ case ${PV} in
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
 
-DEPENDENCIES="
-    build+run:
-        x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl(+)][svg(+)][X(+)]
-"
+if ! exparam -b no_qt_dependency ; then
+    if ever at_least 4.95.0 ; then
+        DEPENDENCIES+="
+            build+run:
+                x11-libs/qtbase:5[>=5.2.0]
+        "
+    else
+        DEPENDENCIES="
+            build+run:
+                x11-libs/qt:4[accessibility(+)][dbus][gif(+)][jpeg(+)][png(+)][qt3support][ssl(+)][svg(+)][X(+)]
+        "
+    fi
+fi
 
 # This list also includes splits for future releases, still it might be subject to changes
 KDE_BLOCKERS="
@@ -309,6 +340,8 @@ kde_blocker_dependencies() {
     done
 }
 kde_blocker_dependencies ${KDE_BLOCKERS}
+
+ever is_scm || CMAKE_SOURCE=${WORKBASE}/${KDEMODULE}-${PV}
 
 kde.org_src_install() {
     cmake_src_install
