@@ -2,7 +2,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require frameworks
+require kde.org
 
 SUMMARY="A Qt library to access the api of Open Collaboration Services servers"
 
