@@ -133,6 +133,7 @@ if ! exparam -b no_qt_dependency ; then
             build+run:
                 x11-libs/qtbase:5[>=5.2.0]
         "
+        [[ ${CATEGORY} == "kde" ]] && DEPENDENCIES+=" build: kde-frameworks/kf5umbrella"
     else
         DEPENDENCIES="
             build+run:
