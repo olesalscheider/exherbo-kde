@@ -108,6 +108,8 @@ case ${PV} in
         DOWNLOADS=""
         ;;
 
+    4.95.*)
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.9@(5|6|7|8|9).*) # KDE 5 pre-releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(4|5|9|10|11|12).@(80|85|90|92|95|96|97|98)) # Betas, RCs
