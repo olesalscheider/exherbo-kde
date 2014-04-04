@@ -5,7 +5,3 @@ require systemsettings
 
 PLATFORMS="~amd64"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    -p2 "${FILES}"/${PNV}-Include-ksharedconfig.h-since-it-will-be-removed-fro.patch
-)
-
