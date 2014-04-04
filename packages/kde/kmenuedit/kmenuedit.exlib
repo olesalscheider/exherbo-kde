@@ -1,7 +1,11 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ module='kde-workspace' ]
+if ! ever is_scm ; then
+    require kde.org [ module='kde-workspace' ]
+else
+    require kde.org
+fi
 
 SUMMARY="KDE Menu editor"
 DESCRIPTION="
@@ -31,9 +35,7 @@ DEPENDENCIES="
 "
 
 # we don't want the whole kde-workspace checkout, only the kmenuedit directory
-if ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
-else
+if ! ever is_scm ; then
     CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
 fi
 
