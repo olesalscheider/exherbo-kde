@@ -10,10 +10,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5[>=${PV}]
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
-        kde-frameworks/kparts:5[>=${PV}]
-        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
 "
 
 # Tries to connect to the running display server

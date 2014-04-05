@@ -10,9 +10,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/karchive:5[>=${PV}]
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/karchive:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
 "
 
 # Tries to connect to the running display server

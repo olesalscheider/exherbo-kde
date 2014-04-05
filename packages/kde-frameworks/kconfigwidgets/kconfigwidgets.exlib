@@ -14,15 +14,15 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5[>=${PV}]
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
-        kde-frameworks/kauth:5[>=${PV}]
-        kde-frameworks/kcodecs:5[>=${PV}]
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kguiaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kauth:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcodecs:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kguiaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
 "
 
 # Tries to connect to the current display server

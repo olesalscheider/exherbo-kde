@@ -10,16 +10,16 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kdbusaddons:5[>=${PV}]
+        kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
 "
 
 # build+run: if KACTIVITIES_LIBRARY_ONLY=FALSE
 #        dev-libs/boost[>=1.49]
-#        kde-frameworks/kconfig:5[>=${PV}]
-#        kde-frameworks/kcoreaddons:5[>=${PV}]
-#        kde-frameworks/ki18n:5[>=${PV}]
-#        kde-frameworks/kservice:5[>=${PV}]
-#        kde-frameworks/kwindowsystem:5[>=${PV}]
+#        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
 #        x11-libs/qtbase:5[>=5.2.0][sql]
 #        x11-libs/qtdeclarative:5[>=5.2.0]
 

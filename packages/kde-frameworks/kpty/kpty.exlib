@@ -14,7 +14,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 

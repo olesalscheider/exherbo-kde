@@ -16,13 +16,13 @@ DEPENDENCIES="
     build:
         virtual/pkg-config [[ note = [ needed for finding libxcb ] ]]
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/knotifications:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/knotifications:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
         (
             x11-libs/libxcb
             x11-libs/qtx11extras:5[>=5.2.0]

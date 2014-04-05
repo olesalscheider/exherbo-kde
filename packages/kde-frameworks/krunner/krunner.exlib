@@ -11,14 +11,14 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
-        kde-frameworks/plasma-framework:5[>=${PV}]
-        kde-frameworks/solid:5[>=${PV}]
-        kde-frameworks/threadweaver:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+        kde-frameworks/plasma-framework:5[>=${KF5_MIN_VER}]
+        kde-frameworks/solid:5[>=${KF5_MIN_VER}]
+        kde-frameworks/threadweaver:5[>=${KF5_MIN_VER}]
         x11-libs/qtdeclarative:5[>=5.2.0]
 "
 

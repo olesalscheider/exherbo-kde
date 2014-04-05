@@ -34,7 +34,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 

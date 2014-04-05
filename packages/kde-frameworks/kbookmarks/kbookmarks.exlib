@@ -13,11 +13,11 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
 "
 
 # 1 of 1 test needs a running X server

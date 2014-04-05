@@ -13,16 +13,16 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5[>=${PV}]
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
-        kde-frameworks/kcompletion:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/kparts:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
         x11-libs/qtscript:5[>=5.2.0]
         x11-libs/qttools:5[>=5.2.0]
 "

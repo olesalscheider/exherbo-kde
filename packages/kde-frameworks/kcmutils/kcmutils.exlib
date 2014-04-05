@@ -13,12 +13,12 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kitemviews:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
-        kde-frameworks/kxmlgui:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kitemviews:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
 "
 

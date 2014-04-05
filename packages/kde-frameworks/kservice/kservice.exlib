@@ -15,13 +15,13 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5[>=${PV}]
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kcrash:5[>=${PV}]
-        kde-frameworks/kdbusaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcrash:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 
 DEFAULT_SRC_PREPARE_PATCHES+=(

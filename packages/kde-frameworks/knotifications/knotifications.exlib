@@ -16,12 +16,12 @@ DEPENDENCIES="
     build:
         virtual/pkg-config
     build+run:
-        kde-frameworks/kcodecs:5[>=${PV}]
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
-        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kcodecs:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         media-libs/phonon[>=4.6.60][qt5]
         x11-libs/dbusmenu-qt[>=0.9.3_p259][qt5(-)]
         x11-libs/libX11 [[ note = [ Could make this optional if necessary ] ]]

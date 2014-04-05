@@ -10,15 +10,15 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kcoreaddons:5[>=${PV}]
-        kde-frameworks/kglobalaccel:5[>=${PV}]
-        kde-frameworks/kguiaddons:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-        kde-frameworks/kwindowsystem:5[>=${PV}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kglobalaccel:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kguiaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         x11-libs/qtdeclarative:5[>=5.2.0]
 "
 

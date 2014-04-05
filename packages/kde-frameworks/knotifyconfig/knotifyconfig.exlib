@@ -13,19 +13,19 @@ MYOPTIONS="phonon"
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kcompletion:5[>=${PV}]
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/kservice:5[>=${PV}]
+        kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
         phonon? ( media-libs/phonon[qt5] )
 "
 # No autotests
 #    test-expensive:
-#        kde-frameworks/kconfigwidgets:5[>=${PV}]
-#        kde-frameworks/knotifications:5[>=${PV}]
-#        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-#        kde-frameworks/kxmlgui:5[>=${PV}]
+#        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/knotifications:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+#        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'phonon Phonon4Qt5' )
 

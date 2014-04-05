@@ -15,6 +15,6 @@ DEPENDENCIES="
     build+run:
         dev-libs/libxml2:2.0
         dev-libs/libxslt
-        kde-frameworks/karchive:5[>=${PV}]
+        kde-frameworks/karchive:5[>=${KF5_MIN_VER}]
 "
 

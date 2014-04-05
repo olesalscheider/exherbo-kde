@@ -13,21 +13,21 @@ DEPENDENCIES="
         dev-lang/perl:*
     build+run:
         dev-libs/openssl
-        kde-frameworks/karchive:5[>=${PV}]
-        kde-frameworks/kcodecs:5[>=${PV}]
-        kde-frameworks/kglobalaccel:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kio:5[>=${PV}]
-        kde-frameworks/kjs:5[>=${PV}]
-        kde-frameworks/knotifications:5[>=${PV}]
-        kde-frameworks/kparts:5[>=${PV}]
-        kde-frameworks/ktextwidgets:5[>=${PV}]
-        kde-frameworks/kwallet:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-        kde-frameworks/kwindowsystem:5[>=${PV}]
-        kde-frameworks/kxmlgui:5[>=${PV}]
-        kde-frameworks/sonnet:5[>=${PV}]
+        kde-frameworks/karchive:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcodecs:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kglobalaccel:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kjs:5[>=${KF5_MIN_VER}]
+        kde-frameworks/knotifications:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ktextwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwallet:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
+        kde-frameworks/sonnet:5[>=${KF5_MIN_VER}]
         media-libs/giflib
         media-libs/jpeg
         media-libs/libpng

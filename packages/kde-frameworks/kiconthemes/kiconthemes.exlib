@@ -19,10 +19,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kitemviews:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
+        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kitemviews:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
         x11-libs/qtsvg:5[>=5.2.0]
 "
 

@@ -15,16 +15,16 @@ MYOPTIONS="attica"
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kconfig:5[>=${PV}]
-        kde-frameworks/kconfigwidgets:5[>=${PV}]
-        kde-frameworks/kglobalaccel:5[>=${PV}]
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kiconthemes:5[>=${PV}]
-        kde-frameworks/kitemviews:5[>=${PV}]
-        kde-frameworks/ktextwidgets:5[>=${PV}]
-        kde-frameworks/kwidgetsaddons:5[>=${PV}]
-        kde-frameworks/kwindowsystem:5[>=${PV}]
-        attica? ( kde-frameworks/attica:5[>=${PV}] )
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kglobalaccel:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kitemviews:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ktextwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
+        attica? ( kde-frameworks/attica:5[>=${KF5_MIN_VER}] )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'attica KF5Attica' )

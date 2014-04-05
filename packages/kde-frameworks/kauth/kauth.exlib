@@ -14,7 +14,7 @@ MYOPTIONS="" # policykit
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kcoreaddons:5[>=${PV}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
     recommendation:
 "
 # TODO: make optional again when kauth works with a Qt5 polkit-qt version

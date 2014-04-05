@@ -13,10 +13,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5[>=${PV}]
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
-        kde-frameworks/ki18n:5[>=${PV}]
-        kde-frameworks/kjs:5[>=${PV}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kjs:5[>=${KF5_MIN_VER}]
         x11-libs/qtsvg:5[>=5.2.0]
         x11-libs/qttools:5[>=5.2.0]
 "
