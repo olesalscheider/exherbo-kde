@@ -34,6 +34,13 @@ DEPENDENCIES="
         )
 "
 
+if ever at_least 4.96.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kconfigwidgets:5
+    "
+fi
+
 # we don't want the whole kde-workspace checkout, only the oxygen directory
 if ! ever is_scm ; then
     CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
