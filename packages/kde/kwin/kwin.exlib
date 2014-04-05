@@ -26,7 +26,6 @@ DEPENDENCIES="
         kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kcrash:5
-        kde-frameworks/kde4support:5
         kde-frameworks/kglobalaccel:5
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
@@ -62,6 +61,22 @@ DEPENDENCIES="
             x11-libs/libxkbcommon
         )
 "
+
+if ever at_least 4.96.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kdeclarative:5
+            kde-frameworks/kinit:5
+        suggestion:
+            x11-libs/qtmultimedia:5[>=5.2.0] [[ description = [ Runtime-only dependency for effect video playback ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DKDE_DISTRIBUTION_TEXT:STRING="Exherbo" )
+else
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kde4support:5
+    "
+fi
 
 # 7 of 9 tests require a running X server
 RESTRICT="test"
