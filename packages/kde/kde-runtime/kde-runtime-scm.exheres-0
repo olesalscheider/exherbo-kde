@@ -1,7 +1,13 @@
 # Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde-runtime
+# last checked revision: b67437a9465a4dfeff537604ef9b168450838a73
 
-PLATFORMS="~amd64 ~x86"
+require kde-runtime-next
+
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-kreadconfig-adapt-to-the-move-to-kde-cli-tools.patch
+)
 
