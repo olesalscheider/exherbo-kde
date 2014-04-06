@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' ]
+    require kde.org [ module='kde-workspace' kde_major_version='5' ]
 else
-    require kde.org
+    require kde.org [ kde_major_version='5' ]
 fi
 
 SUMMARY="A network enabled task and system monitor"

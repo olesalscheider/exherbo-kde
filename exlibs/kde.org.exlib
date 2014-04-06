@@ -24,6 +24,7 @@ myexparam module=${PN}
 exparam -v KDEMODULE module
 
 myexparam -b git=true
+myexparam kde_major_version=4
 myexparam -b no_qt_dependency=false
 myexparam -b upstream_release_notes=true
 
@@ -55,7 +56,7 @@ if ever is_scm; then
     fi
 fi
 
-if ever at_least 4.95.0 ; then
+if [[ $(exparam kde_major_version) == 5 ]] ; then
     require frameworks
 else
     require kde [ api=2 ]
@@ -129,7 +130,7 @@ case ${PV} in
 esac
 
 if ! exparam -b no_qt_dependency ; then
-    if ever at_least 4.95.0 ; then
+    if [[ $(exparam kde_major_version) == 5 ]] ; then
         DEPENDENCIES+="
             build+run:
                 x11-libs/qtbase:5[>=5.2.0]

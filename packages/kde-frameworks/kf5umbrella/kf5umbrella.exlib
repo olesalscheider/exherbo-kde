@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ no_qt_dependency=true ]
+require kde.org [ kde_major_version='5' ] [ no_qt_dependency=true ]
 
 SUMMARY="CMake convenience functions for KDE Frameworks"
 DESCRIPTION="
