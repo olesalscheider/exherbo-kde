@@ -60,6 +60,8 @@ DEPENDENCIES="
             x11-dri/mesa[wayland]
             x11-libs/libxkbcommon
         )
+    recommendation:
+        kde/oxygen:4 [[ description = [ Oxygen is the default decoration, otherwise kwin falls back to Plastik ] ]]
 "
 
 if ever at_least 4.96.0 ; then
