@@ -1,7 +1,7 @@
 # Copyright 2011 Alex Elsayed
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="Basket is a hierarchical note-taking application"
 DESCRIPTION="
@@ -32,6 +32,9 @@ DEPENDENCIES="
         kde/qimageblitz[-qt5(-)]
         kparts? ( kde/kdepimlibs:=[>=4.6] )    
 "
+
+# 2 of 2 tests need a running X server
+RESTRICT="test"
 
 BUGS_TO="eternaleye@gmail.com"
 
