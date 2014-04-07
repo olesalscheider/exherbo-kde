@@ -35,7 +35,7 @@ DEPENDENCIES="
         kde/kdepimlibs:4[>=4.2.0]
         kde/libkcddb:4[>=4.2.0]
         kde/nepomuk-core:4[>=4.2.0]
-        kde/qimageblitz
+        kde/qimageblitz[-qt5(-)]
         media-libs/taglib
         x11-libs/qt:4
         pdf? (

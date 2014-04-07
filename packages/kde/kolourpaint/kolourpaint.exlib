@@ -11,6 +11,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/qimageblitz
+        kde/qimageblitz[-qt5(-)]
 "
 

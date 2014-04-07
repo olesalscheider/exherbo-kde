@@ -30,7 +30,7 @@ DEPENDENCIES+="
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepimlibs:${SLOT}
         kde/libkexiv2:${SLOT} [[ note = [ Automatic rotation of the frame applet ] ]]
-        kde/qimageblitz[>=0.0.4]
+        kde/qimageblitz[>=0.0.4][-qt5(-)]
         x11-dri/mesa
         x11-libs/dbusmenu-qt
         x11-libs/libX11

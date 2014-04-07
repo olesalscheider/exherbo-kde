@@ -25,7 +25,7 @@ DEPENDENCIES="
         app-arch/bzip2
         kde/kactivities:4[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.0]
-        kde/qimageblitz
+        kde/qimageblitz[-qt5(-)]
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
         media-libs/phonon

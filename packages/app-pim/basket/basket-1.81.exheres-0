@@ -29,7 +29,7 @@ DEPENDENCIES="
     build+run:
         app-crypt/gpgme
         kde/kdelibs:=[>=4.6]
-        kde/qimageblitz
+        kde/qimageblitz[-qt5(-)]
         kparts? ( kde/kdepimlibs:=[>=4.6] )    
 "
 
