@@ -11,6 +11,7 @@ SUMMARY="Plasma desktop"
 
 LICENCES="FDL-1.2 GPL-2"
 MYOPTIONS="X"
+ever at_least 4.96.0 && MYOPTIONS+=" pulseaudio"
 
 DEPENDENCIES="
     build:
@@ -18,7 +19,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/libusb:0.1
         kde/kwin:${SLOT}
-        kde/plasma-workspace:4
+        kde/plasma-workspace:${SLOT}
         kde-frameworks/kactivities:5
         kde-frameworks/karchive:5
         kde-frameworks/kauth:5
@@ -65,6 +66,27 @@ DEPENDENCIES="
             x11-utils/xcb-util-wm
         )
 "
+
+if ever at_least 4.96.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/attica:5
+            kde-frameworks/kconfigwidgets:5
+            kde-frameworks/kemoticons:5
+            kde-frameworks/kunitconversion:5
+            kde-frameworks/kwallet:5
+            kde-frameworks/sonnet:5
+            media-libs/phonon[>=4.6.60][qt5]
+            x11-libs/qtsvg:5[>=5.2.0]
+            pulseaudio? (
+                dev-libs/glib:2
+                media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
+                media-sound/pulseaudio[>=0.9.16]
+                virtual/pkg-config
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( PulseAudio )
+fi
 
 # we don't want the whole kde-workspace checkout, only the plasma-desktop directory
 if ! ever is_scm ; then
