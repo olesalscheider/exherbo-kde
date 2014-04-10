@@ -35,15 +35,9 @@ DEPENDENCIES="
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
         sys-apps/pciutils
-        sys-libs/zlib
         x11-dri/glu
         x11-dri/mesa
-        X? (
-            x11-libs/libX11
-            x11-libs/libxcb
-            x11-utils/xcb-util-image
-            x11-utils/xcb-util-keysyms
-        )
+        X? ( x11-libs/libX11 )
         ieee1394? ( media-libs/libraw1394 )
         opengles? ( x11-libs/qtbase[opengles] )
         wayland? (
@@ -51,6 +45,26 @@ DEPENDENCIES="
             x11-dri/mesa[wayland]
         )
 "
+
+if ever at_least 4.96.0 ; then
+    DEPENDENCIES+="
+        build:
+            kde-frameworks/kdoctools:5
+        build+run:
+            kde-frameworks/kcompletion:5
+            kde-frameworks/kconfig:5
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            sys-libs/zlib
+            X? (
+                x11-libs/libxcb
+                x11-utils/xcb-util-image
+                x11-utils/xcb-util-keysyms
+            )
+    "
+fi
 
 # we don't want the whole kde-workspace checkout, only the kinfocenter directory
 if ! ever is_scm ; then

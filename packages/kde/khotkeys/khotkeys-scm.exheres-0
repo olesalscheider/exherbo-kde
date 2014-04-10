@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: d3c15bb6ec69c81fa5938071a99ce35cf4ed4107
+
 require khotkeys
 
 PLATFORMS="~amd64"
