@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: 8be07e529b02eebdd7d446dbd54c1ca961458f0e
+
 require libksysguard
 
 PLATFORMS="~amd64"
