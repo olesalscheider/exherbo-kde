@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: 50f99b825731ea6e47161b165fa04d9d01a9bdae
+
 require kwrited
 
 PLATFORMS="~amd64"
