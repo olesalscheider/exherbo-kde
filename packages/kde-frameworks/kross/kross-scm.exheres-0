@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: aa0f0f1e266599a6039c6d8c4e666d49c5dd9d3a
+
 require kross
 
 PLATFORMS="~amd64"

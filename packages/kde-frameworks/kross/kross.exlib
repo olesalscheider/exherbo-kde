@@ -27,6 +27,13 @@ DEPENDENCIES="
         x11-libs/qttools:5[>=5.2.0]
 "
 
+if ever at_least 4.99.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+    "
+fi
+
 # 1 of 1 test needs a running X server
 RESTRICT="test"
 
