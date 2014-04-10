@@ -33,11 +33,11 @@ DEPENDENCIES="
         ldap? ( net-directory/openldap )
 "
 
-if ever at_least 4.12.80 ; then
+if ever at_least 4.13.0 ; then
     DEPENDENCIES+="
         build+run:
             kde/kdelibs:${SLOT}[>=4.12.0]
-            server-pim/akonadi[>=1.11.80]
+            server-pim/akonadi[>=1.12.1]
     "
 else
     DEPENDENCIES+="
