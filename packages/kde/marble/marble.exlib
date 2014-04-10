@@ -3,6 +3,7 @@
 # Based in part upon kdeedu.exlib, which is:
 # Copyright 2008 Bernd Steinhauser <berniyh@exherbo.org>
 # Copyright 2008-2011 Bo Ørsted Andresen <zlin@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -15,47 +16,34 @@ LICENCES="
     CCPL-Attribution-3.0 [[ note = [ City files taken from geonames.org ] ]]
     public-domain [[ note = [ boundaryplacemarks.kml from the CIA World Factbook ] ]]
 "
-MYOPTIONS="
+MYOPTIONS="examples
     python [[ description = [ Experimental python scripting support ] ]]
+    qt-only [[ description = [ Build only against Qt, not kdelibs ] ]]
+    tools   [[ description = [ Build various tools, e.g. for file format conversion ] ]]
 "
-if ever at_least 4.11.80 ; then
-    MYOPTIONS+="
-        examples
-        qt-only [[ description = [ Build only against Qt, not kdelibs ] ]]
-        tools   [[ description = [ Build various tools, e.g. for file format conversion ] ]]
-    "
-fi
 
 DEPENDENCIES="
     build+run:
         media-libs/phonon
         x11-libs/qt:4[>=4.6.0][sql][webkit]
         x11-misc/shared-mime-info[>=0.40]
+        examples? ( media-libs/opencv )
         python? (
             dev-lang/python:=
             dev-python/PyQt4[>=4.8.4]
             dev-python/sip[>=4.12.2]
         )
+       !qt-only? ( kde/kdelibs:${SLOT}[>=4.7.0] )
+        tools? (
+            dev-libs/protobuf
+            sys-libs/zlib
+        )
 "
 
-if ever at_least 4.11.80; then
-    DEPENDENCIES+="
-        build+run:
-            examples? ( media-libs/opencv )
-           !qt-only? ( kde/kdelibs:${SLOT}[>=4.7.0] )
-            tools? (
-                dev-libs/protobuf
-                sys-libs/zlib
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.7.0]
-    "
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DMOBILE:BOOL=FALSE
+    # cannot build the KDE version against Qt5 until KDE Frameworks 5
+    -DQT5BUILD:BOOL=FALSE
     -DWITH_DBUS=ON
     # Marble, requires sci-geosciences/gpsd - http://gpsd.berlios.de/ and liblocation
     -DWITH_libgps=OFF
@@ -73,31 +61,16 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     # quazip, unwritten, reading and displaying .kmz files, http://quazip.sourceforge.net/
     -DWITH_quazip:BOOL=FALSE
 )
-
-if ever at_least 4.11.80; then
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        # cannot build the KDE version against Qt5 until KDE Frameworks 5
-        -DQT5BUILD:BOOL=FALSE
-        -DMOBILE:BOOL=FALSE
-    )
-    CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt-only QTONLY' )
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
-        'examples MARBLE_EXAMPLES'
-        'tools MARBLE_TOOLS'
-    )
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-        'tools Protobuf'
-        'tools ZLIB'
-    )
-fi
-
-src_configure() {
-    if option python; then
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DEXPERIMENTAL_PYTHON_BINDINGS=TRUE )
-    else
-        CMAKE_SRC_CONFIGURE_PARAMS+=( -DEXPERIMENTAL_PYTHON_BINDINGS=FALSE )
-    fi
-
-    kde_src_configure
-}
+CMAKE_SRC_CONFIGURE_OPTIONS+=(
+    'python EXPERIMENTAL_PYTHON_BINDINGS'
+    'qt-only QTONLY'
+)
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    'examples MARBLE_EXAMPLES'
+    'tools MARBLE_TOOLS'
+)
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'tools Protobuf'
+    'tools ZLIB'
+)
 

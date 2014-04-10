@@ -32,8 +32,6 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker"
-# is only built if AKONADI_USE_STRIGI_SEARCH is true, which we've set to false for our akonadi
-ever at_least 4.11.80 || MY_KDE_PARTS+=" strigi-analyzer"
 ever at_least 4.12.80 && \
     MYOPTIONS+=" googledrive [[ description = [ Access data in your Google Drive ] ]]"
 
@@ -55,13 +53,15 @@ DEPENDENCIES+="
         dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
+        dev-libs/qjson
         kde/kactivities:${SLOT}[>=4.10.90]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
+        media-libs/phonon
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         sys-libs/zlib
-        x11-libs/qt:4[dbus][sql]
+        x11-libs/qt:4[dbus][sql][webkit]
         barcodes? ( kde/prison )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=2.0.0]
@@ -87,27 +87,10 @@ else
         build+run:
             app-text/shared-desktop-ontologies[>=0.11]
             dev-libs/soprano[>=2.9.0]
+            kde/kdelibs:${SLOT}[>=4.11.3]
             kde/nepomuk-core:${SLOT}[>=${PV}]
             kde/nepomuk-widgets:${SLOT}[>=4.9.90]
-    "
-fi
-
-if ever at_least 4.11.97 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/qjson
-            kde/kdelibs:${SLOT}[>=4.11.3]
-            media-libs/phonon
             server-pim/akonadi[>=1.10.45]
-            x11-libs/qt:4[dbus][sql][webkit]
-            kde_parts:ktimetracker? ( x11-libs/libX11 )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-pim/strigi[>=0.6.3][dbus][qt4]
-            kde/kdelibs:${SLOT}[>=4.11]
-            server-pim/akonadi[>=1.9.51]
     "
 fi
 

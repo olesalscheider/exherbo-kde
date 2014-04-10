@@ -3,11 +3,7 @@
 # Based in part upon 'kdeutils.exlib', which is:
 #     Copyright 2008-2011 Bo Ørsted Andresen
 
-if ever at_least 4.12.3 ; then
-    require kde.org [ module=kwalletmanager ]
-else
-    require kde.org
-fi
+require kde.org [ module=kwalletmanager ]
 
 SUMMARY="KDE wallet management tool"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"

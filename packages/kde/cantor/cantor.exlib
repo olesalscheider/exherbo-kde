@@ -1,11 +1,7 @@
 # Copyright 2011 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ever at_least 4.11.97 ; then
-    require python [ blacklist='2.6 3' with_opt=true multibuild=false ]
-fi
-
-require kde.org
+require python [ blacklist='2.6 3' with_opt=true multibuild=false ] kde.org
 
 SUMMARY="KDE Frontend to Mathematical Software"
 
@@ -39,13 +35,10 @@ DEPENDENCIES="
         sci-apps/sage
 "
 
-if ever at_least 4.11.97 ; then
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'python PythonLibs' )
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Analitza
+    'python PythonLibs'
     Qalculate
     'R R'
 )

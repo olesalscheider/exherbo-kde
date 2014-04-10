@@ -1,5 +1,5 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Copyright 2013 Ingmar Vanhassel
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdenetwork.exlib', which is:
 #     Copyright 2008-2009, 2010, 2011, 2012 Ingmar Vanhassel
@@ -31,16 +31,14 @@ MY_IM_PROTOCOLS+="
 #    ilbc       [[ description = [ iLBC codec support for voice calls over Jabber ]
 #                  requires = [ im_protocols: jingle ] ]]
 MY_KOPETE_PLUGINS+="
-    history2    [[ description = [ New SQLite based history plugin ] ]]
-    otr         [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
-    statistics  [[ description = [ Statistics plugin for Kopete ] ]]
-    webpresence [[ description = [ WebPresence plugin for Kopete ] ]]
-    wlm_voice   [[ description = [ Voice clips support in Windows Live Messenger Kopete plugin ]
-                   requires = [ im_protocols: wlm ] ]]
-"
-ever at_least 4.12.0 && MY_KOPETE_PLUGINS+="
     cryptography [[ description = [ Encrypts and signs messages using OpenPGP ] ]]
+    history2     [[ description = [ New SQLite based history plugin ] ]]
     nowlistening [[ description = [ Displays the song you currently listen to in your status ] ]]
+    otr          [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
+    statistics   [[ description = [ Statistics plugin for Kopete ] ]]
+    webpresence  [[ description = [ WebPresence plugin for Kopete ] ]]
+    wlm_voice    [[ description = [ Voice clips support in Windows Live Messenger Kopete plugin ]
+                    requires = [ im_protocols: wlm ] ]]
 "
 
 MYOPTIONS="
@@ -50,6 +48,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
+        kde/kdepim[kde_parts:kleopatra]
         kde/kdepimlibs:${SLOT} [[ note = [ QGpgME for crypto plugin ] ]]
         kde/qimageblitz[-qt5(-)]
         media-libs/phonon
@@ -63,6 +62,7 @@ DEPENDENCIES="
             net-libs/meanwhile
         )
         im_protocols:wlm? (
+            dev-libs/boost
             media-libs/giflib
             net-libs/libmsn[>=4.0_beta2]
             kopete_plugins:wlm_voice? (
@@ -87,6 +87,8 @@ DEPENDENCIES="
             dev-db/sqlite:3
             x11-libs/qt:4[sql]
         )
+        kopete_plugins:nowlistening? ( dev-libs/glib )
+        kopete_plugins:otr? ( net-libs/libotr[>=4.0.0] )
         kopete_plugins:statistics? (
             dev-db/sqlite:3
             x11-libs/qt:4[sql]
@@ -104,30 +106,14 @@ DEPENDENCIES="
 # run:       im_protocols:jingle? ( media-libs/speex )
 # run:       im_protocols:ilbc? ( media-plugins/msilbc ) requires im_protocols:jingle
 
-if ever at_least 4.12.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepim[kde_parts:kleopatra]
-            im_protocols:wlm? ( dev-libs/boost )
-            kopete_plugins:nowlistening? ( dev-libs/glib )
-            kopete_plugins:otr? ( net-libs/libotr[>=4.0.0] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kopete_plugins:otr? ( net-libs/libotr[>=3.2.0&<4.0.0] )
-    "
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xmms=OFF )
 
 src_configure() {
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
         addbookmarks autoreplace contactnotes highlight history latex
-        pipes privacy texteffect translator urlpicpreview
+        nowlistening pipes privacy texteffect translator urlpicpreview
     )
-    ever at_least 4.12.0 || my_kopete_plugins+=( nowlistening )
 
     # Kopete protocols with no extra dependencies
     my_kopete_protocols=( bonjour irc oscar qq skype sms testbed winpopup )
@@ -160,12 +146,6 @@ src_configure() {
         -DWITH_Speex=OFF
     )
 
-    if ever at_least 4.12.0 ; then
-        cmakeparams+=(
-            $(cmake_with kopete_plugins:nowlistening)
-        )
-    fi
-
      ecmake \
         $(kde4_shared_cmake_params) \
         "${cmakeparams[@]}" \
@@ -186,6 +166,7 @@ src_configure() {
         $(cmake_with im_protocols:yahoo) \
         $(cmake_with im_protocols:yahoo Jasper) \
         $(cmake_with kopete_plugins:history2) \
+        $(cmake_with kopete_plugins:nowlistening) \
         $(cmake_with kopete_plugins:otr LibOTR) \
         $(cmake_with kopete_plugins:webpresence) \
         $(cmake_with kopete_plugins:webpresence LibXml2) \

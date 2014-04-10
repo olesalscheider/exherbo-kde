@@ -6,12 +6,7 @@ require kde.org [ module=kdegraphics-${PN} ]
 SUMMARY="A collection of plugins to handle mobipocket files"
 
 LICENCES="GPL-2"
-if ! ever at_least 4.11.80 ; then
-    MY_KDE_PARTS="okular"
-    MYOPTIONS="kde_parts: ${MY_KDE_PARTS}"
-else
-    MYOPTIONS=""
-fi
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
@@ -20,11 +15,4 @@ DEPENDENCIES="
 "
 # macro_display_feature_log() displays okular in spite of setting -DBUILD_okular:BOOL=false, but
 # the build works as expected
-
-if ! ever at_least 4.11.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde_parts:okular? ( kde/okular:${SLOT}[>=${PV}] )
-    "
-fi
 

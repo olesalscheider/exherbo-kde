@@ -44,23 +44,11 @@ else
         build+run:
             app-text/shared-desktop-ontologies[>=0.11]
             dev-libs/soprano[>=2.9.0]
-            kde/nepomuk-core:${SLOT}
-    "
-fi
-
-if ever at_least 4.11.97 ; then
-    DEPENDENCIES+="
-        build+run:
             kde/kdelibs:${SLOT}[>=4.11.3]
+            kde/nepomuk-core:${SLOT}
             server-pim/akonadi[>=1.10.45]
         test:
             dev-libs/libxml2:2.0 [[ note = [ Needed for building the Akonadi knut resource ] ]]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdelibs:${SLOT}[>=4.10.4]
-            server-pim/akonadi[>=1.9.80]
     "
 fi
 

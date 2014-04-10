@@ -13,18 +13,18 @@ MYOPTIONS="
     djvu       [[ description = [ Support for DjVu formatted files ] ]]
     encrypted  [[ description = [ Support for encrypted OpenDocument Text documents ] ]]
     epub       [[ description = [ Support for EPub documents ] ]]
+    mobipocket [[ description = [ Support for displaying Mobipocket e-books ] ]]
     pdf        [[ description = [ Support for PDF (Portable Document Format) files ] ]]
     postscript [[ description = [ Support for PS (PostScript) files ] ]]
     tiff       [[ description = [ Support for TIFF (Tagged Image File Format) files ] ]]
 "
-ever at_least 4.11.80 \
-    && MYOPTIONS+=" mobipocket [[ description = [ Support for displaying Mobipocket e-books ] ]]"
 
 DEPENDENCIES="
     build+run:
         app-arch/bzip2
         kde/kactivities:4[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/libkexiv2:${SLOT}
         kde/qimageblitz[-qt5(-)]
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
@@ -34,6 +34,7 @@ DEPENDENCIES="
         djvu? ( app-text/djvu[>=3.5.17] )
         encrypted? ( app-crypt/qca:2 )
         epub? ( app-text/ebook-tools )
+        mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
         pdf? ( app-text/poppler[>=0.12.1][qt4] )
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
@@ -46,15 +47,6 @@ if ever at_least 4.12.80 ; then
     "
 fi
 
-if ever at_least 4.11.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/libkexiv2:${SLOT}
-            mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'mobipocket QMobipocket' )
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_ActiveApp:BOOL=FALSE
     -DWITH_QImageBlitz:BOOL=TRUE
@@ -64,6 +56,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'djvu DjVuLibre'
     'EPub'
     'encrypted QCA2'
+    'mobipocket QMobipocket'
     'pdf Poppler'
     'postscript LibSpectre'
     'TIFF'

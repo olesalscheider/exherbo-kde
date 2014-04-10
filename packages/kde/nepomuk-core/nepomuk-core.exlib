@@ -1,5 +1,5 @@
 # Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
-# Copyright 2012-2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2012-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
@@ -11,11 +11,10 @@ MYOPTIONS="doc
     epub   [[ description = [ Support for extracting metadata from .epub ebook files ] ]]
     exif   [[ description = [ Support for extracting metadata from EXIF headers ] ]]
     ffmpeg [[ description = [ Support for extracting audio and video metadata ] ]]
+    mobipocket [[ description = [ Support for extracting metadata from mobipocket ebooks ] ]]
     pdf    [[ description = [ Support for extracting metadata from pdf files ] ]]
     taglib [[ description = [ Support for extracting metadata from music files ] ]]
 "
-ever at_least 4.11.80 \
-    && MYOPTIONS+=" mobipocket [[ description = [ Support for extracting metadata from mobipocket ebooks ] ]]"
 
 DEPENDENCIES="
     build:
@@ -27,6 +26,7 @@ DEPENDENCIES="
         epub? ( app-text/ebook-tools )
         exif? ( graphics/exiv2[>=0.21] )
         ffmpeg? ( media/ffmpeg[>=1.0] )
+        mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
         pdf? ( app-text/poppler[>=0.12.1][qt4] )
         taglib? ( media-libs/taglib )
 "
@@ -39,18 +39,11 @@ if ever at_least 4.12.80 ; then
     "
 fi
 
-if ever at_least 4.11.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'mobipocket QMobipocket' )
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     EPub
     'exif Exiv2'
     FFmpeg
+    'mobipocket QMobipocket'
     'pdf PopplerQt4'
     Taglib
 )

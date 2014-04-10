@@ -1,4 +1,4 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part upon 'kdesdk.exlib', which is:
 #     Copyright 2008-2011 Bo Ørsted Andresen
@@ -18,20 +18,6 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
-    "
-
-if ever at_least 4.12.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/libkomparediff2
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            !kde/libkomparediff2 [[
-                description = [ kde/libkomparediff was part of kde/kompare in previous releases ]
-                resolution = uninstall-blocked-after
-            ]]
-    "
-fi
+        kde/libkomparediff2:${SLOT}
+"
 
