@@ -1,11 +1,9 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: d1929788d2ec4149406b4fdc56311b8b8922e2be
+
 require solid
 
 PLATFORMS="~amd64"
-
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-solid-hardware-rename-for-co-installability-with-kde.patch
-)
 
