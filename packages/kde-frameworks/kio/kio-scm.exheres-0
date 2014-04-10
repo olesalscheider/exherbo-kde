@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: 45860ce5683064456cd69087037b27aef9dc9ad0
+
 require kio
 
 PLATFORMS="~amd64"

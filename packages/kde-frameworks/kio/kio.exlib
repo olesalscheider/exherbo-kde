@@ -70,6 +70,6 @@ src_install() {
     default
 
     # Prevent collision with kde-runtime:4
-    edo rm -r "${IMAGE}"/usr/share/doc/HTML/en/khelpcenter
+    ever at_least 4.99.0 || edo rm -r "${IMAGE}"/usr/share/doc/HTML/en/khelpcenter
 }
 
