@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: cdb1baacea4b1f8e6019e0f6d1db509ed74a7242
+
 require kde4support
 
 PLATFORMS="~amd64"

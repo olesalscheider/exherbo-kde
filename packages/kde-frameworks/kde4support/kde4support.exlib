@@ -1,7 +1,12 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ]
+# wait for the next release to rename the package
+if ever at_least 4.99.0 ; then
+    require kde.org [ kde_major_version='5' module='kdelibs4support' ]
+else
+    require kde.org [ kde_major_version='5' ]
+fi
 
 SUMMARY="Framework to help porting from kdelibs4"
 DESCRIPTION="
@@ -30,7 +35,6 @@ DEPENDENCIES="
         kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
         kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcrash:5[>=${KF5_MIN_VER}]
-        kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kdesignerplugin:5[>=${KF5_MIN_VER}]
         kde-frameworks/kglobalaccel:5[>=${KF5_MIN_VER}]
         kde-frameworks/kguiaddons:5[>=${KF5_MIN_VER}]
@@ -52,6 +56,13 @@ DEPENDENCIES="
         x11-libs/qttools:5[>=5.2.0]
         x11-libs/qtx11extras:5[>=5.2.0]
 "
+
+if ! ever at_least 4.99.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
+    "
+fi
 
 # 26 of 38 tests need a running X server
 RESTRICT="test"
