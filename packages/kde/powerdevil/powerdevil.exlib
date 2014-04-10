@@ -27,7 +27,6 @@ DEPENDENCIES="
         kde-frameworks/plasma-framework
         kde-frameworks/solid:5
         sys-apps/systemd
-        x11-libs/qtx11extras:5[>=5.2.0]
         X? (
             x11-libs/libX11
             x11-libs/libxcb
@@ -36,6 +35,18 @@ DEPENDENCIES="
             x11-utils/xcb-util-wm
         )
 "
+
+if ever at_least 4.96.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            X? ( x11-libs/qtx11extras:5[>=5.2.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qtx11extras:5[>=5.2.0]
+    "
+fi
 
 # we don't want the whole kde-workspace checkout, only the powerdevil directory
 if ! ever is_scm ; then

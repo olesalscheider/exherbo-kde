@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked revision: 43d9f3b1f20e0be1a8deef5b4ecd30abe7e63519
+
 require powerdevil
 
 PLATFORMS="~amd64"
