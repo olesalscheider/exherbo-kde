@@ -52,7 +52,6 @@ DEPENDENCIES+="
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
         dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
-        dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
         dev-libs/qjson
         kde/kactivities:${SLOT}[>=4.10.90]
         kde/kde-runtime:${SLOT}[>=${PV}]
@@ -61,6 +60,7 @@ DEPENDENCIES+="
         media-libs/phonon
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         sys-libs/zlib
+        x11-libs/libX11
         x11-libs/qt:4[dbus][sql][webkit]
         barcodes? ( kde/prison )
         kde_parts:kleopatra? (
@@ -68,24 +68,22 @@ DEPENDENCIES+="
         )
         grammar? ( office-libs/link-grammar )
         kde_parts:knotes? ( x11-libs/libX11 )
-        kde_parts:ktimetracker? (
-            x11-libs/libX11
-            x11-libs/libXScrnSaver
-        )
+        kde_parts:ktimetracker? ( x11-libs/libXScrnSaver )
 "
 
 if ever at_least 4.12.90 ; then
     DEPENDENCIES+="
         build+run:
-            kde/baloo[>=4.12.83]
+            kde/baloo[>=4.13.0]
             kde/kdelibs:${SLOT}[>=4.12.0]
-            server-pim/akonadi[>=1.11.80]
+            server-pim/akonadi[>=1.12.0]
             googledrive? ( app-pim/libkgapi[>=2.1.0] )
     "
 else
     DEPENDENCIES+="
         build+run:
             app-text/shared-desktop-ontologies[>=0.11]
+            dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
             dev-libs/soprano[>=2.9.0]
             kde/kdelibs:${SLOT}[>=4.11.3]
             kde/nepomuk-core:${SLOT}[>=${PV}]
