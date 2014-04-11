@@ -18,6 +18,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
         kde/libkdegames:${SLOT}[>=4.9.0]
         media-libs/phonon
+        sys-libs/zlib
 "
 # NOTE: contains a copy of iris (http://delta.affinix.com/iris/) which has no releases so far
 
