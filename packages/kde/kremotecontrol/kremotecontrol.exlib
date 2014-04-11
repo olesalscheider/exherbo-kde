@@ -21,6 +21,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
+        x11-libs/libX11
+        x11-libs/libXtst
     run:
         remote/lirc
 "
