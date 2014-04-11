@@ -28,7 +28,8 @@ if ever at_least 4.12.95 ; then
     "
 else
     DEPENDENCIES+="
-        sci-libs/eigen:2[>=2.0.3]
+        build+run:
+            sci-libs/eigen:2[>=2.0.3]
     "
 fi
 
