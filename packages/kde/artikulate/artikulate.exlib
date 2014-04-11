@@ -1,0 +1,30 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="A learning software that helps improving pronunciation skills"
+
+LICENCES="
+    ( BSD-2 BSD-3 ) [[ note = [ cmake scripts ] ]]
+    FDL-1.2 [[ note = [ documentation ] ]]
+    GPL-2
+    LGPL-3  [[ note = [ artwork ] ]]"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:${SLOT}[>=4.11.1]
+        media-libs/phonon[qt4(+)]
+        media-libs/qt-gstreamer
+        x11-libs/qt:4[sql]
+    test:
+        x11-libs/qt:4[opengl]
+"
+
+RESTRICT="-test"
+
+# Unpackaged, couldn't quickly find any tarballs, included in Qt5
+# Could be used for another recording backend besides QtGstreamer
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_QtMobility:BOOL=TRUE )
+
