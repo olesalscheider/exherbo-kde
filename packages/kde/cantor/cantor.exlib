@@ -7,9 +7,9 @@ SUMMARY="KDE Frontend to Mathematical Software"
 
 LICENCES="GPL-2 FDL-1.2"
 MYOPTIONS="
-    analitza [[ description = [ Build the analitza (kalgebra) backend ] ]]
+    analitza  [[ description = [ Build the analitza (kalgebra) backend ] ]]
     qalculate [[ description = [ Build the qalculate backend ] ]]
-    R [[ description = [ Build the R backend ] ]]
+    R         [[ description = [ Build the R backend ] ]]
     ( analitza qalculate R ) [[ number-selected = at-least-one ]]
 "
 
