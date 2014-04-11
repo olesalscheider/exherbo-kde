@@ -13,7 +13,7 @@ DEPENDENCIES="
         dev-db/xapian-core
         dev-libs/qjson
         kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}[>=4.12.97]
+        kde/kdepimlibs:${SLOT}[>=4.13.0]
         kde/kfilemetadata:${SLOT}
         server-pim/akonadi[>=1.11.42]
         x11-libs/qt:4[sql]
