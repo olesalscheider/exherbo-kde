@@ -31,7 +31,6 @@ MY_IM_PROTOCOLS+="
 #    ilbc       [[ description = [ iLBC codec support for voice calls over Jabber ]
 #                  requires = [ im_protocols: jingle ] ]]
 MY_KOPETE_PLUGINS+="
-    cryptography [[ description = [ Encrypts and signs messages using OpenPGP ] ]]
     history2     [[ description = [ New SQLite based history plugin ] ]]
     nowlistening [[ description = [ Displays the song you currently listen to in your status ] ]]
     otr          [[ description = [ Off-the-Record encryption plugin for Kopete ] ]]
@@ -111,7 +110,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xmms=OFF )
 src_configure() {
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
-        addbookmarks autoreplace contactnotes highlight history latex
+        addbookmarks autoreplace contactnotes cryptography highlight history latex
         nowlistening pipes privacy texteffect translator urlpicpreview
     )
 
