@@ -21,16 +21,18 @@ DEPENDENCIES="
         media-libs/lcms2
         media-libs/libpng
         media-libs/phonon
+        x11-libs/libX11
         kipi? ( graphics/digikam )
 "
 
-if ever at_least 4.12.80 ; then
+if ever at_least 4.13.0 ; then
     DEPENDENCIES+="
         build+run:
             kde/baloo:${SLOT}
             kde/kfilemetadata:${SLOT}
             kde/libkdcraw:${SLOT}[>=4.12.2]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DGWENVIEW_SEMANTICINFO_BACKEND_BALOO:BOOL=TRUE )
 else
     DEPENDENCIES+="
         build+run:
