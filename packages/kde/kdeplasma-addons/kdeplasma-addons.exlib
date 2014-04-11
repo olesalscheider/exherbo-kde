@@ -31,6 +31,7 @@ DEPENDENCIES+="
         kde/kdepimlibs:${SLOT}
         kde/libkexiv2:${SLOT} [[ note = [ Automatic rotation of the frame applet ] ]]
         kde/qimageblitz[>=0.0.4][-qt5(-)]
+        media-libs/phonon[qt4(+)]
         x11-dri/mesa
         x11-libs/dbusmenu-qt
         x11-libs/libX11
@@ -46,14 +47,18 @@ DEPENDENCIES+="
             dev-libs/glib:2
             inputmethods/ibus[>=1.4.2]
         )
-        marble? ( kde/marble:4 )
-        qalculate? ( sci-libs/libqalculate )
+        marble? ( kde/marble:${SLOT} )
+        qalculate? (
+            sci-libs/cln
+            sci-libs/libqalculate
+        )
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Marble
     Qalculate
     'kde_parts:microblog QtOAuth'
+    'kde_parts:microblog QCA2'
 )
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # We need to hardcode KDE4Workspace_DIR because switching from kde-4.6 to
@@ -69,7 +74,6 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibAttica:BOOL=TRUE
     -DWITH_Nepomuk:BOOL=ON
     -DWITH_OpenGL:BOOL=TRUE
-    -DWITH_QCA2:BOOL=TRUE
     # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
     # kimpanel has been activated
     -DBUILD_scim=Off
