@@ -12,7 +12,7 @@ SUMMARY="Periodic Table of Elements"
 LICENCES="GPL-2 FDL-1.2"
 MYOPTIONS="
     3dviewer [[ description = [ Build the molecule editor ] ]]
-    solver [[ description = [ Build the equation solver ] ]]
+    solver   [[ description = [ Build the equation solver ] ]]
 "
 
 DEPENDENCIES="
