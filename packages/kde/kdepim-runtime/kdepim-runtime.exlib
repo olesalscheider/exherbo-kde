@@ -41,13 +41,13 @@ DEPENDENCIES="
         )
 "
 
-if ever at_least 4.12.80 ; then
+if ever at_least 4.13.0 ; then
     DEPENDENCIES+="
         build+run:
-            server-pim/akonadi[>=1.11.80]
+            server-pim/akonadi[>=1.12.0]
             single-sign-on? (
-                net-libs/accounts-qt
-                net-libs/signon
+                net-libs/accounts-qt[>=1.11]
+                net-libs/signon[>=8.56]
             )
     "
     CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
