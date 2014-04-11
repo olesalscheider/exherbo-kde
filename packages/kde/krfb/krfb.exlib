@@ -17,6 +17,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         media-libs/jpeg
+        sys-libs/zlib
         x11-libs/libX11
         x11-libs/libXdamage
         x11-libs/libXext
