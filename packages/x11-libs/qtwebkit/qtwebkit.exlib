@@ -31,7 +31,7 @@ DEPENDENCIES="
         dev-libs/libxslt[multibuild_c:*(-)?]
         media-libs/fontconfig[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
-        media-libs/libpng[multibuild_c:*(-)?]
+        media-libs/libpng:=[multibuild_c:*(-)?]
         media-libs/libwebp[multibuild_c:*(-)?]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]

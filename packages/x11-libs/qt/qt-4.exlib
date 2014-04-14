@@ -75,7 +75,7 @@ DEPENDENCIES="
         media-libs/freetype:2[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
         media-libs/libmng[multibuild_c:*(-)?]
-        media-libs/libpng[multibuild_c:*(-)?]
+        media-libs/libpng:=[multibuild_c:*(-)?]
         media-libs/tiff[multibuild_c:*(-)?]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-libs/libSM[multibuild_c:*(-)?]

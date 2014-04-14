@@ -79,7 +79,7 @@ DEPENDENCIES="
         media-libs/fontconfig [[ note = kcontrol ]]
         media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
         media-libs/jpeg [[ note = ksplash ]]
-        media-libs/libpng [[ note = ksplash ]]
+        media-libs/libpng:= [[ note = ksplash ]]
         server-pim/akonadi
         sys-apps/pciutils
         sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]

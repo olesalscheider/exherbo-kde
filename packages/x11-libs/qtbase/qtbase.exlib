@@ -62,7 +62,7 @@ DEPENDENCIES="
         media-libs/fontconfig[multibuild_c:*(-)?]
         media-libs/freetype:2[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
-        media-libs/libpng[multibuild_c:*(-)?]
+        media-libs/libpng:=[multibuild_c:*(-)?]
         sys-apps/dbus[>=1.2.0][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
         sys-libs/zlib[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]

@@ -50,7 +50,7 @@ DEPENDENCIES="
         media-libs/lensfun[>=0.2.6] [[ description = [ To support LensCorrection editor ] ]]
         media-libs/liblqr:1[>=0.4.1] [[ description = [ For Liquid Rescale tool ] ]]
         media-libs/libpgf[>=6.11.24]
-        media-libs/libpng[>=1.2.7]
+        media-libs/libpng:=[>=1.2.7]
         media-libs/opencv[>=2.4.4] [[ note = [ For Libkface ] ]]
         media-libs/tiff[>=3.8.2] [[ note = [ Can work with >=3.6.x but >=3.8.2 recommended ] ]]
         sci-libs/eigen:3

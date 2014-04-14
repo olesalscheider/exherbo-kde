@@ -30,7 +30,7 @@ DEPENDENCIES="
         kde-frameworks/sonnet:5[>=${KF5_MIN_VER}]
         media-libs/giflib
         media-libs/jpeg
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/phonon[>=4.6.60][qt5]
         sys-libs/zlib
         x11-libs/libX11

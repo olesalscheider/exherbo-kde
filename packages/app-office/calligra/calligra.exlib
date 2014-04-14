@@ -85,7 +85,7 @@ DEPENDENCIES+="
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
         media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/phonon [[ note = [ Used by stage, videoshape plugin ] ]]
         sys-libs/zlib
         x11-dri/mesa [[ note = [ Required for opengl support (Krita and Flake) ] ]]

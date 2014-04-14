@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
         media-libs/jpeg
         media-libs/lcms2
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/phonon
         x11-libs/libX11
         kipi? ( graphics/digikam )

@@ -41,7 +41,7 @@ DEPENDENCIES="
         media-libs/freetype:2
         media-libs/giflib
         media-libs/jpeg
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/phonon[>=4.3.80]
         sys-apps/dbus[X(-)]
         sys-apps/systemd
