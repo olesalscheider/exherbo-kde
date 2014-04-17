@@ -9,7 +9,7 @@ HOMEPAGE="http://qt-project.org/wiki/${PN}"
 
 PLATFORMS="~amd64"
 MYOPTIONS="
-    opengles [[ description = [ Enables the wayland-gle backend ] ]]
+    opengles [[ description = [ Enables the wayland-gles backend ] ]]
     qtcompositor [[ description = [
         Enables the creation of Wayland compositors using Qt and QtQuick
     ] ]]
