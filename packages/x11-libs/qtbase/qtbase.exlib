@@ -48,7 +48,7 @@ MYOPTIONS+="
     platform: amd64 x86
     amd64_cpu_features: sse3 ssse3 sse4.1 sse4.2 avx avx2
     arm_cpu_features: neon
-    x86_cpu_features: mmx sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2
+    x86_cpu_features: sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2
 "
 
 DEPENDENCIES="
@@ -241,15 +241,9 @@ configure_one_multibuild() {
     )
 
     # Avoid auto detection of CPU features:
-    # mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2, iwmmxt, neon
+    # sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2, iwmmxt, neon
     # Note: iwmmxt breaks build, at least on 4.7
-    # Always enable mmx, sse and sse2 on amd64
-    if option !platform:amd64 && option !x86_cpu_features:mmx ; then
-        myconf+=( -no-mmx )
-    fi
-    if option !platform:amd64 && option !x86_cpu_features:sse ; then
-        myconf+=( -no-sse )
-    fi
+    # Always enable sse2 on amd64
     if option !platform:amd64 && option !x86_cpu_features:sse2 ; then
         myconf+=( -no-sse2 )
     fi
