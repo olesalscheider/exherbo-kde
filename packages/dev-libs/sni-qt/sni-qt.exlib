@@ -1,0 +1,25 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 ] launchpad [ branch='trunk' suffix='tar.bz2' ]
+
+SUMMARY="A Qt plugin which turns all QSystemTrayIcon into StatusNotifierItems"
+
+LICENCES="|| ( LGPL-2.1 LGPL-3 )"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        x11-libs/dbusmenu-qt
+        x11-libs/qt:4[dbus]
+
+"
+
+# 2 of 3 tests need a running X server (0.2.6)
+RESTRICT="test"
+
+BUGS_TO="heirecka@exherbo.org"
+
