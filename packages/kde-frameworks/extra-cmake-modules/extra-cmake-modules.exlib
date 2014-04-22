@@ -1,4 +1,4 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 if ever at_least scm ; then
@@ -17,11 +17,30 @@ HOMEPAGE="http://projects.kde.org/projects/kdesupport/${PN}"
 LICENCES="BSD-3"
 SLOT="0"
 MYOPTIONS=""
+ever at_least 0.0.13 && MYOPTIONS="doc"
 
-DEPENDENCIES="
-    build+run:
-        sys-devel/cmake[>=2.8.12]
-"
+# NOTE: We might depend on qttools:5 for translations of Qt-only frameworks,
+#       but I think that dep should go into the frameworks that ship a po
+#       folder (probably the first time with 4.99.0) - heirecka
 
-BUGS_TO="heirecka@exherbo.org"
+if ever at_least 0.0.13 ; then
+    DEPENDENCIES+="
+        build:
+            doc? ( dev-python/Sphinx )
+        build+run:
+            sys-devel/cmake[>=3.0.0-rc]
+                [[ note = [ There is no mention of this in the code, but tests and building
+                            depending frameworks fail with cmake-2.8.12.2 ] ]]
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
+        'doc HTML_DOCS'
+        'doc MAN_DOCS'
+    )
+    CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_QTHELP_DOCS:BOOL=FALSE )
+else
+    DEPENDENCIES="
+        build+run:
+            sys-devel/cmake[>=2.8.12]
+    "
+fi
 
