@@ -10,7 +10,7 @@ DESCRIPTION="Solid provides the following features for application developers:
 - Network Management"
 
 LICENCES="LGPL-2.1"
-MYOPTIONS="
+ever at_least 4.99 || MYOPTIONS="
     upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
 "
 
@@ -18,11 +18,18 @@ DEPENDENCIES="
     build+run:
         sys-apps/systemd[>=167]    [[ note = [ for udev, might be optional ] ]]
         x11-libs/qtdeclarative:5[>=5.2.0]
-        upnp? ( net-libs/herqq[>=0.9] )
     recommendation:
         sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
 "
+
+if ! ever at_least 4.99 ; then
+    DEPENDENCIES+="
+        build+run:
+            upnp? ( net-libs/herqq[>=0.9] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'upnp HUpnp' )
+fi
 
 # TODO: solid has an optional runtime dependency upon media-player-info:
 # MediaPlayerInfo , Enables identification and querying of portable media players,
@@ -34,5 +41,4 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DCMAKE_DISABLE_FIND_PACKAGE_FLEX:BOOL=TRUE
     -DCMAKE_DISABLE_FIND_PACKAGE_BISON:BOOL=TRUE
 )
-CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'upnp HUpnp' )
 
