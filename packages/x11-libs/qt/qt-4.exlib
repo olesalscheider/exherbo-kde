@@ -78,6 +78,7 @@ DEPENDENCIES="
         media-libs/libpng:=[multibuild_c:*(-)?]
         media-libs/tiff[multibuild_c:*(-)?]
         sys-libs/zlib[multibuild_c:*(-)?]
+        x11-libs/libICE[multibuild_c:*(-)?]
         x11-libs/libSM[multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
         x11-libs/libXcursor[multibuild_c:*(-)?]

@@ -1,0 +1,14 @@
+# Copyright 2008 Bo Ørsted Andresen <zlin@exherbo.org>
+#           2009 Kim Højgaard-Hansen <kimrhh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt-4
+
+PLATFORMS="~amd64 ~x86"
+
+UPSTREAM_RELEASE_NOTES="http://blog.qt.digia.com/blog/2014/04/24/qt-4-8-6-released/"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
+)
+
