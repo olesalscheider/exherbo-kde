@@ -3,5 +3,9 @@
 
 require qtbase
 
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Don-t-crash-on-broken-GIF-images.patch
+)
 
