@@ -70,9 +70,15 @@ RESTRICT="test"
 src_install() {
     cmake_src_install
 
-    # Avoid collision with kdelibs
+    # Avoid collision with kdelibs:4
     edo rm -r "${IMAGE}"/usr/share/locale/en_US
     # Remove headers that just include <nepomuk/header>
-    edo rm -r "${IMAGE}"/usr/include/KF5/KDE4Support/KDE/Nepomuk
+    if ever at_least 4.99.0 ; then
+        edo rm -r "${IMAGE}"/usr/include/KF5/KDELibs4Support/KDE/Nepomuk
+        # Avoid collision with kde-runtime:4
+        edo rm -r "${IMAGE}"/usr/share/doc/HTML
+    else
+        edo rm -r "${IMAGE}"/usr/include/KF5/KDE4Support/KDE/Nepomuk
+    fi
 }
 
