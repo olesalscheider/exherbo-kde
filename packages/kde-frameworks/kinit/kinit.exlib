@@ -27,3 +27,10 @@ DEPENDENCIES="
         x11-libs/libX11
 "
 
+if ever at_least 4.99.0 ; then
+    DEPENDENCIES+="
+        build:
+            kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
+    "
+fi
+
