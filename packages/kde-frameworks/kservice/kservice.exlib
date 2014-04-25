@@ -24,7 +24,3 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PN}-autotests-Don-t-build-kpluginfactorytest.patch
-)
-

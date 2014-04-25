@@ -5,3 +5,7 @@ require kservice
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-autotests-Don-t-build-kpluginfactorytest.patch
+)
+
