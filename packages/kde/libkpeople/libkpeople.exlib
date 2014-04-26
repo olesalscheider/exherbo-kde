@@ -5,7 +5,7 @@ require kde [ api=2 ]
 
 SUMMARY="Metacontact aggregation library"
 HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
