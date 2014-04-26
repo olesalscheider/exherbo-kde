@@ -11,6 +11,7 @@ MYOPTIONS="sms [[ description = [ enable SMS messaging via libmm-qt ] ]]"
 
 DEPENDENCIES+="
     build+run:
+        x11-libs/qt:4
         sms? ( net-libs/libmm-qt[~0.5.1] )
 "
 
