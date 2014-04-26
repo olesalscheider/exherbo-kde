@@ -14,6 +14,7 @@ DEPENDENCIES+="
     build+run:
         app-crypt/qca:2
         dev-libs/qjson[>=0.5]
+        x11-libs/qt:4[dbus][webkit]
         single-sign-on? (
             net-libs/accounts-qt
             net-libs/signon
