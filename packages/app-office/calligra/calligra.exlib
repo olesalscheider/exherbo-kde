@@ -1,4 +1,4 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2008, 2009, 2010, 2014 Ingmar Vanhassel <ingmar@exherbo.org>
 # Copyright 2008, 2009, 2010 Bo Ørsted Andresen <zlin@exherbo.org>
 # Copyright 2011 Bernd Steinhauser <berniyh@exherbo.org>
 # Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
@@ -40,7 +40,7 @@ SLOT="2"
 MY_KDE_PARTS="active author braindump flow karbon kexi krita plan sheets stage words"
 
 ever at_least 2.7.91 && MYOPTIONS+=" apple-keynote [[ description = [ Support for importing files from Apple's Keynote ]
-                                                      requires = [ kde_parts:stage ] ]] "
+                                                      requires = [ kde_parts: stage ] ]] "
 MYOPTIONS+="
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
