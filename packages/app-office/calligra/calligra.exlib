@@ -303,7 +303,7 @@ src_configure() {
         cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
     fi
 
-    if option visio || option kde_parts:words && wordperfect || option msworks ; then
+    if option visio || option kde_parts:words && option wordperfect || option msworks ; then
         cmakeparams+=( -DWITH_LibOdfGen=ON )
     else
         cmakeparams+=( -DWITH_LibOdfGen=OFF )
