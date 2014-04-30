@@ -46,7 +46,6 @@ MYOPTIONS+="
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
     freetds        [[ description = [ Support for MS SQL and Sybase databases in Kexi ] ]]
-    glew           [[ description = [ Shader filter plugin for Krita ] ]]
     jpeg2000       [[ description = [ Support for the JPEG 2000 image format ] ]]
     marble         [[ description = [ Edit and view RDF geolocations ] ]]
     mdb            [[ description = [ Support for the Microsoft Access mdb database format in Kexi ] ]]
@@ -64,7 +63,7 @@ MYOPTIONS+="
     wordperfect    [[ description = [ WordPerfect Document support for Words and Graphics support for Karbon ] ]]
 
     ( mdb mysql postgresql ) [[ requires = [ kde_parts: kexi ] ]]
-    ( fftw glew raw tiff ) [[ requires = [ kde_parts: krita ] ]]
+    ( fftw raw tiff ) [[ requires = [ kde_parts: krita ] ]]
 
     jpeg2000? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
@@ -74,6 +73,9 @@ MYOPTIONS+="
     pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
 "
+# Hard-enable glew for krita, partially because of https://bugs.kde.org/show_bug.cgi?id=332813
+ever at_least 2.8.2 || \
+    MYOPTIONS=" glew [[ description = [ Shader filter plugin for Krita ] requires = [ kde_parts: krita ] ]]"
 
 DEPENDENCIES+="
     build+run:
@@ -139,7 +141,6 @@ DEPENDENCIES+="
             media-libs/jpeg
             sci-libs/eigen:2[>=2.0]
             fftw? ( sci-libs/fftw[>=3] )
-            glew? ( media-libs/glew )
             jpeg2000? ( media-libs/OpenJPEG:0 )
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
@@ -183,10 +184,11 @@ DEPENDENCIES+="
 # plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
 # http://www.librcps.org/
 
-if ever at_least 2.7.91 ; then
+if ever at_least 2.8.2 ; then
     DEPENDENCIES+="
         build+run:
             kde/kdepimlibs:4[>=4.6.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
+            x11-dri/glu
             x11-libs/qt:4[>=4.7.0][dbus][opengl]
             kde_parts:flow? (
                 visio? ( office-libs/libodfgen )
@@ -195,6 +197,7 @@ if ever at_least 2.7.91 ; then
                 postgresql? ( dev-db/libpqxx[>=3&<5] )
             )
             kde_parts:krita? (
+                media-libs/glew
                 fftw? ( sci-libs/fftw[>=3.2] )
                 x11-libs/libXi
             )
@@ -219,6 +222,9 @@ else
             )
             kde_parts:kexi? (
                 postgresql? ( dev-db/libpqxx[>=3&<4] )
+            )
+            kde_pars:krita? (
+                glew? ( media-libs/glew )
             )
     "
 fi
@@ -260,7 +266,6 @@ src_configure() {
         $(cmake_with eps Pstoedit)
         $(cmake_with fftw FFTW3)
         $(cmake_with FreeTDS)
-        $(cmake_with GLEW)
         $(ever at_least 2.7.90 && cmake_option kde_parts:kexi KEXI_SCRIPTS_SUPPORT)
         $(cmake_with kde_parts:krita Exiv2)
         $(cmake_with kde_parts:stage Okular)
@@ -277,6 +282,12 @@ src_configure() {
         $(cmake_with visio LibVisio)
         $(cmake_with TIFF)
     )
+
+    if ever at_least 2.8.2 ; then
+        cmakeparams+=( $(cmake_with kde_parts:krita GLEW) )
+    else
+        cmakeparams+=( $(cmake_with GLEW ) )
+    fi
 
     if option kde_parts:krita || option kde_parts:sheets; then
         cmakeparams+=( -DWITH_Eigen2=ON )
