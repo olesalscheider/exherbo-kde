@@ -3,7 +3,7 @@
 
 require plasma-workspace
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
     -p2 "${FILES}"/${PNV}-Explicitly-declare-exported-interfaces-of-libraries.patch

@@ -5,5 +5,5 @@
 
 require extra-cmake-modules
 
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 
