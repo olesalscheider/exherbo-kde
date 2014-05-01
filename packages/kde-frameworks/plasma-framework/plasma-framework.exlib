@@ -82,7 +82,7 @@ RESTRICT="test"
 
 src_install() {
     cmake_src_install
-    option ruby || edo rm -r "${IMAGE}"/usr/share/plasma_scriptengine_ruby
+    option ruby || edo rm -r "${IMAGE}"/usr/share/plasma/plasma_scriptengine_ruby
     # avoid collision with plasmapkg.1 man page from kde-runtime:4
     ever at_least 4.99.0 && edo rm -r "${IMAGE}"/usr/share/man
 }
