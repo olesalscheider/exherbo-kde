@@ -38,11 +38,3 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 
-src_install() {
-    cmake_src_install
-    if ever at_least 4.99.0 ; then
-        # Prevent collision with kde-runtime:4
-        edo rm -r "${IMAGE}"/usr/share/locale
-    fi
-}
-
