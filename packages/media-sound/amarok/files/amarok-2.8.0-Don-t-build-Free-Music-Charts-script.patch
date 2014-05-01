@@ -1,0 +1,28 @@
+Upstream: This is basically 929bd4c4df48aa006a9d3bca66870caefd4b0538
+          from Mark Kretschmann but we avoid having a huge patch
+          with binary artifacts.
+
+From 40cd5c022f422e6f6b0b7d64957c5eb8eabdda8f Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Thu, 1 May 2014 15:36:51 +0200
+Subject: [PATCH] Don't build "Free Music Charts" script
+
+---
+ src/scripts/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/scripts/CMakeLists.txt b/src/scripts/CMakeLists.txt
+index 5de8825..05ae586 100644
+--- a/src/scripts/CMakeLists.txt
++++ b/src/scripts/CMakeLists.txt
+@@ -1,7 +1,6 @@
+ add_subdirectory( radio_station_service )
+ add_subdirectory( librivox_service )
+ add_subdirectory( lyrics_lyricwiki )
+-add_subdirectory( free_music_charts_service )
+ 
+ #add_subdirectory( qtscript_debug )
+ add_subdirectory( script_console )
+-- 
+1.9.2
+

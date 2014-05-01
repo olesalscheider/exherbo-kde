@@ -127,3 +127,9 @@ pkg_setup() {
     export DISPLAY= DBUS_SESSION_BUS_ADDRESS=
 }
 
+src_prepare() {
+    cmake_src_prepare
+    # Has been removed upstream, delete it here instead of using a huge patch.
+    ever is_scm || edo rm -r "${CMAKE_SOURCE}"/src/scripts/free_music_charts_service
+}
+

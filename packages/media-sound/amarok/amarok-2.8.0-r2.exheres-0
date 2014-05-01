@@ -5,6 +5,10 @@ require amarok
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Don-t-build-Free-Music-Charts-script.patch
+)
+
 pkg_postinst() {
     elog "Amarok doesn't currently generate .mood files for the moodbar so they must be"
     elog "generated manually. Scripts to help with this can be found here:"
