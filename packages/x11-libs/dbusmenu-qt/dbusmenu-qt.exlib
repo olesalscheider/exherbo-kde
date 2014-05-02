@@ -35,9 +35,6 @@ CMAKE_SOURCE=${WORKBASE}/\~dbusmenu-team/libdbusmenu-qt/trunk/
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-optionaltests.patch )
 
 # Tests require X to run
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
-    'doc DOC'
-)
 
 src_prepare() {
     edo cd "${CMAKE_SOURCE}"
@@ -53,13 +50,13 @@ src_configure() {
     if option qt4; then
         edo mkdir "${WORKBASE}/qt4-build"
         edo pushd "${WORKBASE}/qt4-build"
-        ecmake -DUSE_QT4=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE
+        ecmake -DUSE_QT4=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE $(cmake_with DOC)
         popd
     fi
     if option qt5; then
         edo mkdir "${WORKBASE}/qt5-build"
         edo pushd "${WORKBASE}/qt5-build"
-        ecmake -DUSE_QT5=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE
+        ecmake -DUSE_QT5=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_QJSON=TRUE $(cmake_with DOC)
         popd
     fi
 }
