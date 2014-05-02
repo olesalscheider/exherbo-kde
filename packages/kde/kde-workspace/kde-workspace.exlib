@@ -149,6 +149,7 @@ DEPENDENCIES="
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-usbids.patch
     "${FILES}"/kde-workspace-4.11.0-kdm-logind-multiseat.patch
+    "${FILES}"/kdm-DesktopNames-4.11.9.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
