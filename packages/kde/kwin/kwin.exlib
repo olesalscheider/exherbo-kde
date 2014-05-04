@@ -69,6 +69,8 @@ if ever at_least 4.96.0 ; then
         build+run:
             kde-frameworks/kdeclarative:5
             kde-frameworks/kinit:5
+        run:
+            kde-frameworks/kded:5
         suggestion:
             x11-libs/qtmultimedia:5[>=5.2.0] [[ description = [ Runtime-only dependency for effect video playback ] ]]
     "
