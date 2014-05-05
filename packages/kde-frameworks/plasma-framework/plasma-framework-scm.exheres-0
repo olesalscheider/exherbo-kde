@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: d8731d7806942b7414a7958915f99e48b439de54
+# last checked commit: 873106a7ca4ff8f15e823b1019b4f5b66332867a
 
 require plasma-framework
 

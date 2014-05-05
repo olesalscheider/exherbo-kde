@@ -20,10 +20,9 @@ load the actual workspace, it's completely controlled by QML, by itself
 doesn't have any UI."
 
 LICENCES="BSD-3 GPL-2 LGPL-2.1"
-# NOTE: - There are python scripts which aren't installed because
-#         find_package(Python) isn't called anywhere
-MYOPTIONS="ruby"
-ever at_least 4.99.0 || MYOPTIONS+=" interactive-console"
+# NOTE: There are currently no python bindings for plasma
+# #if (PYTHONLIBRARY_FOUND AND NOT WIN32)
+MYOPTIONS="examples ruby"
 
 DEPENDENCIES="
     build:
@@ -42,9 +41,7 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
         kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
         kde-frameworks/kio:5[>=${KF5_MIN_VER}]
-        kde-frameworks/kparts:5[>=${KF5_MIN_VER}] [[ note = [ examples, possibly optional ] ]]
         kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
-        kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}] [[ note = [ examples, possibly optional ] ]]
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
         x11-dri/mesa
@@ -56,34 +53,21 @@ DEPENDENCIES="
         x11-libs/qtscript:5[>=5.2.0]
         x11-libs/qtsvg:5[>=5.2.0]
         x11-libs/qtx11extras:5[>=5.2.0]
+        examples? (
+            kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
+            kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
+        )
     run:
         ruby? ( dev-lang/ruby:* )
 "
 
-if ! ever at_least 4.99.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kauth:5[>=${KF5_MIN_VER}]
-            kde-frameworks/kcrash:5[>=${KF5_MIN_VER}]
-            kde-frameworks/kdnssd:5[>=${KF5_MIN_VER}]
-            kde-frameworks/kwallet:5[>=${KF5_MIN_VER}]
-            kde-frameworks/solid:5[>=${KF5_MIN_VER}]
-            kde-frameworks/threadweaver:5[>=${KF5_MIN_VER}]
-            x11-libs/qtquick1:5[>=5.2.0]
-            interactive-console? ( kde-frameworks/ktexteditor:5[>=${KF5_MIN_VER}] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-        'interactive-console KF5TextEditor'
-    )
-fi
-
 # 7 of 7 tests need a running X server
 RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples BUILD_EXAMPLES' )
 
 src_install() {
     cmake_src_install
     option ruby || edo rm -r "${IMAGE}"/usr/share/plasma/plasma_scriptengine_ruby
-    # avoid collision with plasmapkg.1 man page from kde-runtime:4
-    ever at_least 4.99.0 && edo rm -r "${IMAGE}"/usr/share/man
 }
 
