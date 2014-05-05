@@ -1,12 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# wait for the next release to rename the package
-if ever at_least 4.99.0 ; then
-    require kde.org [ kde_major_version='5' module='kdelibs4support' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Framework to help porting from kdelibs4"
 DESCRIPTION="
@@ -30,18 +25,23 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         dev-libs/openssl
+        kde-frameworks/kauth:5[>=${KF5_MIN_VER}]
         kde-frameworks/kbookmarks:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
         kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
         kde-frameworks/kconfigwidgets:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcrash:5[>=${KF5_MIN_VER}]
         kde-frameworks/kdesignerplugin:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kemoticons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kglobalaccel:5[>=${KF5_MIN_VER}]
         kde-frameworks/kguiaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
         kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
         kde-frameworks/kio:5[>=${KF5_MIN_VER}]
         kde-frameworks/kitemviews:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kitemmodels:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kinit:5[>=${KF5_MIN_VER}]
         kde-frameworks/knotifications:5[>=${KF5_MIN_VER}]
         kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
         kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
@@ -57,28 +57,6 @@ DEPENDENCIES="
         x11-libs/qtx11extras:5[>=5.2.0]
 "
 
-if ! ever at_least 4.99.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
-    "
-fi
-
 # 26 of 38 tests need a running X server
 RESTRICT="test"
-
-src_install() {
-    cmake_src_install
-
-    # Avoid collision with kdelibs:4
-    edo rm -r "${IMAGE}"/usr/share/locale/en_US
-    # Remove headers that just include <nepomuk/header>
-    if ever at_least 4.99.0 ; then
-        edo rm -r "${IMAGE}"/usr/include/KF5/KDELibs4Support/KDE/Nepomuk
-        # Avoid collision with kde-runtime:4
-        edo rm -r "${IMAGE}"/usr/share/doc/HTML
-    else
-        edo rm -r "${IMAGE}"/usr/include/KF5/KDE4Support/KDE/Nepomuk
-    fi
-}
 
