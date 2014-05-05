@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ]
+require kde.org [ kde_major_version='5' translations=true ]
 
 SUMMARY="Widgets for showing progress of asynchronous jobs"
 
