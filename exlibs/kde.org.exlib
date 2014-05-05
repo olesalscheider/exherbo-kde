@@ -68,7 +68,7 @@ fi
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 if [[ ${CATEGORY} == "kde-frameworks" ]] ; then
     SLOT="5"
-    KF5_MIN_VER="4.98.0"
+    KF5_MIN_VER="4.99.0"
 else
     SLOT="4"
 fi
@@ -114,7 +114,14 @@ case ${PV} in
     4.95.*)
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.9@(5|6|7|8|9).*) # KDE 5 pre-releases
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
+        case ${PN} in
+            # Deprecated frameworks considered as porting aid only
+            kdelibs4support | kfileaudiopreview | khtml | kjs | kjsembed | \
+            kmediaplayer | kross | krunner)
+                DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/portingAids/${KDEMODULE}-${PV}.tar.xz"}" ;;
+            *)
+                DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
+        esac ;;
     4.@(4|5|9|10|11|12).@(80|85|90|92|95|96|97|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(5).@(9)*) # Weekly SVN snapshots
