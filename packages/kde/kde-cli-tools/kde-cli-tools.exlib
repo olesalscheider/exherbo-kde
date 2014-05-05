@@ -1,0 +1,23 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="Collection of cli tools for KDE"
+
+LICENCES="Artistic GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kcmutils:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/kdesu:5
+        x11-libs/libX11
+        x11-libs/qtx11extras:5
+"
+
+# Tries to connect to X
+RESTRICT=test
+
