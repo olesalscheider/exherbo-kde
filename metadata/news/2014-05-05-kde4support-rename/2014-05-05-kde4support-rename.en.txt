@@ -1,0 +1,22 @@
+Title: kde4support has been renamed to kdelibs4support
+Author: Heiko Becker <heirecka@exherbo.org>
+Content-Type: text/plain
+Posted: 2014-05-05
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: kde-frameworks/kde4support
+
+Please install kdelibs4support and *afterwards* uninstall kde4support.
+
+1. Take note of any packages depending on kde4support:
+cave resolve \!kde-frameworks/kde4support
+
+2. Install kde-frameworks/kdelibs4support:
+cave resolve kdelibs4support -x
+
+3. Re-install the packages from step 1.
+
+4. Uninstall kde-frameworks/kde4support
+cave resolve \!kde-frameworks/kde4support -x
+
+Do it in *this* order or you'll potentially *break* your system.
