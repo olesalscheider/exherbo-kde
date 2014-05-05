@@ -25,3 +25,6 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     OpenEXR
 )
 
+# Disables pictest which needs a running X server
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PN}-Disable-pictest.patch )
+

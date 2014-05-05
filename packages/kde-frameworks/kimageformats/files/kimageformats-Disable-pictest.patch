@@ -1,0 +1,31 @@
+Upstream: not upstreamble
+Reason: pictest needs a running X server
+
+From c5a12ddbd4a6808c454b7bd292b07bf7f844c3a4 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Mon, 5 May 2014 16:00:11 +0200
+Subject: [PATCH] Disable pictest
+
+---
+ autotests/CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/autotests/CMakeLists.txt b/autotests/CMakeLists.txt
+index 8a2209d..2739827 100644
+--- a/autotests/CMakeLists.txt
++++ b/autotests/CMakeLists.txt
+@@ -109,7 +109,7 @@ if(NOT Qt5Test_FOUND)
+     return()
+ endif()
+ 
+-add_executable(pictest pictest.cpp)
+-target_link_libraries(pictest Qt5::Gui Qt5::Test)
+-ecm_mark_as_test(pictest)
+-add_test(NAME kimageformats-pic COMMAND pictest)
++#add_executable(pictest pictest.cpp)
++#target_link_libraries(pictest Qt5::Gui Qt5::Test)
++#ecm_mark_as_test(pictest)
++#add_test(NAME kimageformats-pic COMMAND pictest)
+-- 
+1.9.2
+
