@@ -26,6 +26,7 @@ exparam -v KDEMODULE module
 myexparam -b git=true
 myexparam kde_major_version=4
 myexparam -b no_qt_dependency=false
+myexparam -b translations=false
 myexparam -b upstream_release_notes=true
 
 if ever is_scm; then
@@ -135,6 +136,12 @@ if ! exparam -b no_qt_dependency ; then
             build+run:
                 x11-libs/qtbase:5[>=5.2.0]
         "
+        if exparam -b translations && ! ever is_scm ; then
+            DEPENDENCIES+="
+                build:
+                    x11-libs/qttools:5 [[ note = [ lrelease/lconvert for translations ] ]]
+        "
+        fi
     else
         DEPENDENCIES="
             build+run:
