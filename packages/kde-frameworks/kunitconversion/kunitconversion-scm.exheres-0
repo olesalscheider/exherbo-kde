@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 0da65d82f7e12a263d43e8b8a481d9944fc47ab2
+# last checked commit: 94219d2cc22b83e151a7874d0752673889840564
 
 require kunitconversion
 
