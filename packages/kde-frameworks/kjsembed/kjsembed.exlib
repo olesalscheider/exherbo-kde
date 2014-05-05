@@ -21,3 +21,10 @@ DEPENDENCIES="
         x11-libs/qttools:5[>=5.2.0]
 "
 
+pkg_preinst() {
+    # Versions < 4.99.0 installed a file whereas later versions install a directory.
+    if [[ -f ${ROOT}/usr/include/KF5/KJsEmbed/KJsEmbed ]] ; then
+        nonfatal edo rm "${ROOT}"/usr/include/KF5/KJsEmbed/KJsEmbed
+    fi
+}
+
