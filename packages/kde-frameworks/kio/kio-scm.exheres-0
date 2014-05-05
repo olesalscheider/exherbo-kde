@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: 45860ce5683064456cd69087037b27aef9dc9ad0
+# last checked commit: 8ea1a88ccf4c0253840a28cfbd2968d9aedc7c8a
 
 require kio
 
