@@ -1,7 +1,7 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: b8b7630bd5e67aa4a85c020d869531e443b805db
+# last checked commit: 73992f139276b75aeddf78f476644a2d82f9e802
 
 require extra-cmake-modules
 

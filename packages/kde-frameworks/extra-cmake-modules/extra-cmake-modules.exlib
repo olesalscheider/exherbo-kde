@@ -6,7 +6,7 @@ if ever at_least scm ; then
     require scm-git
     DOWNLOADS=""
 else
-    DOWNLOADS="mirror://kde/unstable/frameworks/4.98.0/${PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/unstable/frameworks/4.99.0/${PNV}.tar.xz"
 fi
 
 require cmake [ api=2 ]
@@ -16,31 +16,18 @@ HOMEPAGE="http://projects.kde.org/projects/kdesupport/${PN}"
 
 LICENCES="BSD-3"
 SLOT="0"
-MYOPTIONS=""
-ever at_least 0.0.13 && MYOPTIONS="doc"
+MYOPTIONS="doc"
 
-# NOTE: We might depend on qttools:5 for translations of Qt-only frameworks,
-#       but I think that dep should go into the frameworks that ship a po
-#       folder (probably the first time with 4.99.0) - heirecka
+DEPENDENCIES+="
+    build:
+        doc? ( dev-python/Sphinx )
+    build+run:
+        sys-devel/cmake[>=2.8.12]
+"
 
-if ever at_least 0.0.13 ; then
-    DEPENDENCIES+="
-        build:
-            doc? ( dev-python/Sphinx )
-        build+run:
-            sys-devel/cmake[>=3.0.0-rc]
-                [[ note = [ There is no mention of this in the code, but tests and building
-                            depending frameworks fail with cmake-2.8.12.2 ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
-        'doc HTML_DOCS'
-        'doc MAN_DOCS'
-    )
-    CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_QTHELP_DOCS:BOOL=FALSE )
-else
-    DEPENDENCIES="
-        build+run:
-            sys-devel/cmake[>=2.8.12]
-    "
-fi
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
+    'doc HTML_DOCS'
+    'doc MAN_DOCS'
+)
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_QTHELP_DOCS:BOOL=FALSE )
 
