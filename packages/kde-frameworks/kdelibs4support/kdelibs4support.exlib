@@ -60,3 +60,5 @@ DEPENDENCIES="
 # 26 of 38 tests need a running X server
 RESTRICT="test"
 
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_NetworkManager:BOOL=TRUE )
+
