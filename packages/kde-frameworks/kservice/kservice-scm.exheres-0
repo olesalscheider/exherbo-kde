@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: b87a8701c3243bfb957d4dcaed60dbbbd177ea8e
+# last checked commit: 9146596a432b6034b49fe64da45c5cea74998284
 
 require kservice
 
