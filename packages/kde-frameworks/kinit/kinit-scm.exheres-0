@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 346f375adb7ef2838498563235aba0a878551027
+# last checked commit: ef5f0396b0cc96b79749c5e90a57106ea050d223
 
 require kinit
 

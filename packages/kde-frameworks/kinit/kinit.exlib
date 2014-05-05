@@ -17,6 +17,8 @@ LICENCES="BSD-3 LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
         kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcrash:5[>=${KF5_MIN_VER}]
@@ -26,11 +28,4 @@ DEPENDENCIES="
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         x11-libs/libX11
 "
-
-if ever at_least 4.99.0 ; then
-    DEPENDENCIES+="
-        build:
-            kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
-    "
-fi
 
