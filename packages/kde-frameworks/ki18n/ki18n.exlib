@@ -22,6 +22,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         dev-lang/perl:*
+        sys-devel/gettext
         x11-libs/qtscript:5[>=5.2.0]
 "
 
