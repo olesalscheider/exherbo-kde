@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ] test-dbus-daemon
+require kde.org [ kde_major_version='5' translations=true ] test-dbus-daemon
 
 SUMMARY="Hardware integration and detection"
 DESCRIPTION="Solid provides the following features for application developers:
@@ -10,9 +10,6 @@ DESCRIPTION="Solid provides the following features for application developers:
 - Network Management"
 
 LICENCES="LGPL-2.1"
-ever at_least 4.99 || MYOPTIONS="
-    upnp [[ description = [ Solid support for discovering UPnP devices ] ]]
-"
 
 DEPENDENCIES="
     build+run:
@@ -22,14 +19,6 @@ DEPENDENCIES="
         sys-apps/udisks:2 [[ description = [ Enable auto-mounting support ] ]]
         sys-apps/upower [[ description = [ Battery info and suspend menus ] ]]
 "
-
-if ! ever at_least 4.99 ; then
-    DEPENDENCIES+="
-        build+run:
-            upnp? ( net-libs/herqq[>=0.9] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'upnp HUpnp' )
-fi
 
 # TODO: solid has an optional runtime dependency upon media-player-info:
 # MediaPlayerInfo , Enables identification and querying of portable media players,

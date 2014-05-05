@@ -5,7 +5,3 @@ require solid
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-rename-solid-hardware-to-solid-hardware5-to-stop-it-.patch
-)
-
