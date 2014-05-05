@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: aa0f0f1e266599a6039c6d8c4e666d49c5dd9d3a
+# last checked commit: 0ebcd7a803cee172264bde553a152410f06ae5a4
 
 require kross
 

@@ -16,6 +16,7 @@ DEPENDENCIES="
         kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
     build+run:
         kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
+        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
         kde-frameworks/kiconthemes:5[>=${KF5_MIN_VER}]
         kde-frameworks/kio:5[>=${KF5_MIN_VER}]
@@ -26,13 +27,6 @@ DEPENDENCIES="
         x11-libs/qtscript:5[>=5.2.0]
         x11-libs/qttools:5[>=5.2.0]
 "
-
-if ever at_least 4.99.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
-    "
-fi
 
 # 1 of 1 test needs a running X server
 RESTRICT="test"
