@@ -1,11 +1,24 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases pkg_setup
-
 require flag-o-matic cmake [ api=2 ]
 
+export_exlib_phases pkg_setup src_prepare
+
 myexparam -b debug=true
+
+# Two possible values for translations. Both options expect the needed files in po/.
+# - qt:    Qt based translations
+#          Typically those are recognised by something in CMakeLists.txt like:
+#
+#          include (ECMPoQmTools)
+#          ecm_install_po_files_as_qm(po)
+# - ki18n: Gettext based translation via KDE's internationalization system
+#          Those usually include
+#          ki18n_install
+#          in CMakeLists.txt
+myexparam translations=
+exparam -v translation_type translations
 
 exparam -b debug &&
 MYOPTIONS="debug"
@@ -14,6 +27,22 @@ DEPENDENCIES="
     build+run:
         kde-frameworks/extra-cmake-modules[>=0.0.14]
 "
+
+# Translations aren't stored in the code repositories, but put together by release scripts.
+if ! ever is_scm ; then
+    if [[ ${translation_type} == qt ]] ; then
+        DEPENDENCIES+="
+            build:
+                x11-libs/qttools:5 [[ note = [ lrelease/lconvert for translations ] ]]
+            "
+    elif [[ ${translation_type} == ki18n ]] ; then
+        DEPENDENCIES+="
+            build:
+                kde-frameworks/ki18n [[ note = [ ki18n_install() from KF5I18NMacros.cmake ] ]]
+                sys-devel/gettext
+        "
+    fi
+fi
 
 # The libexec paths are intentionally relative, as some paths are hardcoded into scripts or programs.
 # Giving absolute paths results in hardcoded paths like /usr/usr/libexec
@@ -31,5 +60,22 @@ CMAKE_SRC_CONFIGURE_TESTS+=( '-DBUILD_TESTING:BOOL=TRUE -DBUILD_TESTING:BOOL=FAL
 
 frameworks_pkg_setup() {
     exparam -b debug && option !debug && append-flags -DNDEBUG -DQT_NO_DEBUG
+}
+
+frameworks_src_prepare() {
+    if ! ever is_scm ; then
+        local lingua
+
+        if [[ ${translation_type} == qt || ${translation_type} == ki18n ]] ; then
+            echo "Removing unselected translations..."
+            for lingua in $(ls "${CMAKE_SOURCE}"/po) ; do
+                if ! has ${lingua} ${LINGUAS} ; then
+                    edo rm -r "${CMAKE_SOURCE}"/po/${lingua}
+                fi
+            done
+        fi
+    fi
+
+    cmake_src_prepare
 }
 
