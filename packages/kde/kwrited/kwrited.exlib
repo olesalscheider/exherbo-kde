@@ -15,7 +15,7 @@ MYOPTIONS=""
 # It has an automagic dep on utempter which we don't have atm
 DEPENDENCIES="
     build+run:
-        kde-frameworks/kde4support:5
+        kde-frameworks/kdelibs4support:5
         kde-frameworks/kpty:5
 "
 

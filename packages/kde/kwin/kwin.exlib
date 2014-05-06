@@ -81,7 +81,7 @@ if ever at_least 4.96.0 ; then
 else
     DEPENDENCIES+="
         build+run:
-            kde-frameworks/kde4support:5
+            kde-frameworks/kdelibs4support:5
     "
 fi
 

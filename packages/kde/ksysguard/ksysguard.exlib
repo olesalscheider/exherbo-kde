@@ -28,7 +28,7 @@ DEPENDENCIES="
         kde/libksysguard:${SLOT}[>=${PV}]
         kde-frameworks/kconfig:5
         kde-frameworks/kcoreaddons:5
-        kde-frameworks/kde4support:5
+        kde-frameworks/kdelibs4support:5
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
         kde-frameworks/kitemviews:5

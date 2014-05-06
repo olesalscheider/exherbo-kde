@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde-frameworks/kcmutils:5
         kde-frameworks/kconfig:5
         kde-frameworks/kdbusaddons:5
-        kde-frameworks/kde4support:5
+        kde-frameworks/kdelibs4support:5
         kde-frameworks/khtml:5
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
