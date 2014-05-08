@@ -67,6 +67,7 @@ DEPENDENCIES="
         gps? ( dev-libs/gpsd )
         qimageblitz? ( kde/qimageblitz[qt5] )
     run:
+        kde/kde-cli-tools [[ note = [ Needs kioclient ] ]]
         x11-libs/qtquickcontrols
         X? (
             x11-apps/xprop

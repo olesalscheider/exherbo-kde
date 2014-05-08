@@ -65,6 +65,8 @@ DEPENDENCIES="
             x11-utils/xcb-util-keysyms
             x11-utils/xcb-util-wm
         )
+    run:
+        kde/kde-cli-tools [[ note = [ Some tools use keditfiletype ] ]]
 "
 
 if ever at_least 4.96.0 ; then
