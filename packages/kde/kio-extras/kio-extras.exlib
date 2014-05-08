@@ -1,0 +1,45 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="Colletion of Input/Output protocols for KDE"
+
+LICENCES="FDL-1.2 GPL-2"
+MYOPTIONS="
+    samba? [[ description = [ Support for the smb:/ kioslave for MS windows shares ] ]]
+    sftp [[ description = [ Support for the sftp:/ kioslave by libssh ] ]]
+    slp? [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5
+
+    build+run:
+        app-arch/bzip2
+        app-arch/xz
+        kde-frameworks/karchive:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kdbusaddons:5
+        kde-frameworks/kde4support:5
+        kde-frameworks/kdnssd:5
+        kde-frameworks/khtml:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kio:5
+        kde-frameworks/ksolid:5
+        x11-misc/shared-mime-info[>=0.40]
+        samba? ( net-fs/samba:= )
+        sftp? ( net-libs/libssh[>=0.6.0] )
+        slp? ( net-libs/openslp )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    Samba
+    'sftp LibSSH'
+    SLP
+)
+
