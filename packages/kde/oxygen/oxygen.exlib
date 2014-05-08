@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Qt5-based oxygen style"
 
@@ -18,11 +14,13 @@ DEPENDENCIES="
         kde-frameworks/frameworkintegration:5
         kde-frameworks/kcompletion:5
         kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
         kde-frameworks/kguiaddons:5
         kde-frameworks/ki18n:5
         kde-frameworks/kservice:5
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
+        !kde/kde-workspace [[ note = [ File collisions ] ]]
         X? (
             x11-libs/libX11
             x11-libs/libxcb
@@ -30,34 +28,7 @@ DEPENDENCIES="
         )
 "
 
-if ever at_least 4.96.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kconfigwidgets:5
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kdelibs4support:5
-            X? (
-                x11-utils/xcb-util-image
-                x11-utils/xcb-util-keysyms
-                x11-utils/xcb-util-wm
-            )
-    "
-fi
-
-# we don't want the whole kde-workspace checkout, only the oxygen directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
-
-src_install() {
-    default
-    # avoid collision with kde-workspace:4
-    edo rm -r "${IMAGE}"/usr/share/icons
-}
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'X X11'
 )
+

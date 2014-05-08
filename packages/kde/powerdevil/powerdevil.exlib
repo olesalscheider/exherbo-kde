@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="KDE Power Management System"
 
@@ -30,26 +26,10 @@ DEPENDENCIES="
         X? (
             x11-libs/libX11
             x11-libs/libxcb
+            x11-libs/qtx11extras:5[>=5.2.0]
             x11-utils/xcb-util-image
             x11-utils/xcb-util-keysyms
             x11-utils/xcb-util-wm
         )
 "
-
-if ever at_least 4.96.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            X? ( x11-libs/qtx11extras:5[>=5.2.0] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/qtx11extras:5[>=5.2.0]
-    "
-fi
-
-# we don't want the whole kde-workspace checkout, only the powerdevil directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
 

@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: 8be07e529b02eebdd7d446dbd54c1ca961458f0e
+# last checked revision: 8e4495d6a8baa0f46914ec01a5e34868ca079b9c
 
 require libksysguard
 

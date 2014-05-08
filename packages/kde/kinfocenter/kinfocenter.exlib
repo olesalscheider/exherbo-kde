@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="System information center"
 DESCRIPTION="The infocenter provides you with a centralized and convenient
@@ -22,9 +18,12 @@ MYOPTIONS="X
 
 DEPENDENCIES="
     build:
+        kde-frameworks/kdoctools:5
         virtual/pkg-config
     build+run:
         kde-frameworks/kcmutils:5
+        kde-frameworks/kcompletion:5
+        kde-frameworks/kconfig:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/ki18n:5
@@ -45,31 +44,6 @@ DEPENDENCIES="
             x11-dri/mesa[wayland]
         )
 "
-
-if ever at_least 4.96.0 ; then
-    DEPENDENCIES+="
-        build:
-            kde-frameworks/kdoctools:5
-        build+run:
-            kde-frameworks/kcompletion:5
-            kde-frameworks/kconfig:5
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            sys-libs/zlib
-            X? (
-                x11-libs/libxcb
-                x11-utils/xcb-util-image
-                x11-utils/xcb-util-keysyms
-            )
-    "
-fi
-
-# we don't want the whole kde-workspace checkout, only the kinfocenter directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'X X11'

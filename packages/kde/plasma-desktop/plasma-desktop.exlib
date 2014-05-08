@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Plasma desktop"
 
@@ -20,16 +16,19 @@ DEPENDENCIES="
         dev-libs/libusb:0.1
         kde/kwin:${SLOT}
         kde/plasma-workspace:${SLOT}
+        kde-frameworks/attica:5
         kde-frameworks/kactivities:5
         kde-frameworks/karchive:5
         kde-frameworks/kauth:5
         kde-frameworks/kcmutils:5
         kde-frameworks/kcompletion:5
         kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kdbusaddons:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kdesu:5
+        kde-frameworks/kemoticons:5
         kde-frameworks/kglobalaccel
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
@@ -41,15 +40,25 @@ DEPENDENCIES="
         kde-frameworks/kparts:5
         kde-frameworks/krunner:5
         kde-frameworks/kservice:5
+        kde-frameworks/kunitconversion:5
+        kde-frameworks/kwallet:5
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
+        kde-frameworks/sonnet:5
         media-libs/fontconfig
         media-libs/freetype:2
-        media-libs/phonon[qt5]
+        media-libs/phonon[>=4.6.60][qt5]
         x11-libs/qtdeclarative:5[>=5.2.0]
+        x11-libs/qtsvg:5[>=5.2.0]
+        pulseaudio? (
+            dev-libs/glib:2
+            media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
+            media-sound/pulseaudio[>=0.9.16]
+            virtual/pkg-config
+        )
         X? (
             x11-libs/libX11
             x11-libs/libXcursor
@@ -69,33 +78,8 @@ DEPENDENCIES="
         kde/kde-cli-tools [[ note = [ Some tools use keditfiletype ] ]]
 "
 
-if ever at_least 4.96.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/attica:5
-            kde-frameworks/kconfigwidgets:5
-            kde-frameworks/kemoticons:5
-            kde-frameworks/kunitconversion:5
-            kde-frameworks/kwallet:5
-            kde-frameworks/sonnet:5
-            media-libs/phonon[>=4.6.60][qt5]
-            x11-libs/qtsvg:5[>=5.2.0]
-            pulseaudio? (
-                dev-libs/glib:2
-                media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
-                media-sound/pulseaudio[>=0.9.16]
-                virtual/pkg-config
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( PulseAudio )
-fi
-
-# we don't want the whole kde-workspace checkout, only the plasma-desktop directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    PulseAudio 
     'X X11'
 )
 

@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="An easy to use, but flexible, composited Window Manager"
 
@@ -26,9 +22,11 @@ DEPENDENCIES="
         kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kcrash:5
+        kde-frameworks/kdeclarative:5
         kde-frameworks/kglobalaccel:5
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
+        kde-frameworks/kinit:5
         kde-frameworks/kio:5
         kde-frameworks/knewstuff:5
         kde-frameworks/kxmlgui:5
@@ -58,44 +56,24 @@ DEPENDENCIES="
         wayland? (
             sys-libs/wayland[>=1.2]
             x11-dri/mesa[wayland]
-            x11-libs/libxkbcommon
+            x11-libs/libxkbcommon[>=0.4.1]
         )
+    run:
+        kde-frameworks/kded:5
     recommendation:
         kde/oxygen:4 [[ description = [ Oxygen is the default decoration, otherwise kwin falls back to Plastik ] ]]
+    suggestion:
+        x11-libs/qtmultimedia:5[>=5.2.0] [[ description = [ Runtime-only dependency for effect video playback ] ]]
 "
-
-if ever at_least 4.96.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kdeclarative:5
-            kde-frameworks/kinit:5
-        run:
-            kde-frameworks/kded:5
-        suggestion:
-            x11-libs/qtmultimedia:5[>=5.2.0] [[ description = [ Runtime-only dependency for effect video playback ] ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DKDE_DISTRIBUTION_TEXT:STRING="Exherbo"
-        -DKWIN_BUILD_COVERAGE:BOOL=FALSE
-    )
-else
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/kdelibs4support:5
-    "
-fi
 
 # 7 of 9 tests require a running X server
 RESTRICT="test"
 
-# we don't want the whole kde-workspace checkout, only the kwin directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -KWIN_BUILD_KAPPMENU:BOOL=FALSE
-    -KWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
+    -DKDE_DISTRIBUTION_TEXT:STRING="Exherbo"
+    -DKWIN_BUILD_COVERAGE:BOOL=FALSE
+    -DKWIN_BUILD_KAPPMENU:BOOL=FALSE
+    -DKWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'activities KWIN_BUILD_ACTIVITIES' )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

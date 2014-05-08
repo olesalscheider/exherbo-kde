@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Write daemon"
 
@@ -18,9 +14,4 @@ DEPENDENCIES="
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kpty:5
 "
-
-# we don't want the whole kde-workspace checkout, only the kwin directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
 
