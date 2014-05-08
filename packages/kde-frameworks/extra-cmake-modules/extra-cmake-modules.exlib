@@ -31,3 +31,16 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
 )
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_QTHELP_DOCS:BOOL=FALSE )
 
+src_install() {
+    default
+
+    hereenvd 45kf5 <<EOF
+QML2_IMPORT_PATH=/usr/${LIBDIR}/qml
+QML_IMPORT_PATH=/usr/${LIBDIR}/qml
+QT_PLUGIN_PATH=/usr/${LIBDIR}/plugins
+XDG_CONFIG_DIRS=/etc/xdg
+XDG_DATA_DIRS=/usr/share
+EOF
+}
+
+
