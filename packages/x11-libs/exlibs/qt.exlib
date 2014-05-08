@@ -9,8 +9,8 @@ myexparam pv=${MY_PV:-${PV}}
 MY_PNV=$(exparam pn)-$(exparam pv)
 
 HOMEPAGE="http://qt-project.org/"
-if [[ ${PV} == *-@(alpha|beta|rc) ]] ; then
-    BASE_URI="mirror://qt/development_releases/qt/$(ever range 1-2)/${PV}/"
+if [[ ${PV} == *-@(alpha|beta|rc|RC) ]] ; then
+    BASE_URI="mirror://qt/development_releases/qt/$(ever range 1-2)/${PV/RC/rc}/"
 else
     BASE_URI="mirror://qt/official_releases/qt/$(ever range 1-2)/${PV}/"
 fi

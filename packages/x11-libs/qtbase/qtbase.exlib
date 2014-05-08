@@ -92,12 +92,12 @@ DEPENDENCIES="
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
 "
 
-if ever at_least 5.3.0-beta ; then
+if ever at_least 5.3.0-RC ; then
     DEPENDENCIES+="
         build+run:
             sys-apps/systemd[multibuild_c:*(-)?]
             x11-libs/libxcb[>=1.10][multibuild_c:*(-)?]
-            x11-libs/libxkbcommon[>=0.4.0][X][multibuild_c:*(-)?]
+            x11-libs/libxkbcommon[>=0.4.1][X][multibuild_c:*(-)?]
     "
 else
     DEPENDENCIES+="
@@ -204,6 +204,7 @@ configure_one_multibuild() {
         -c++11
         -dbus-linked
         -egl
+        $(ever at_least 5.3.0-RC && echo "-evdev")
         -iconv
         -icu
         $(ever at_least 5.3.0-alpha && echo "-journald")
@@ -396,5 +397,14 @@ EOF
         # Set the right pointer size
         edo sed -e "s/\(\#define QT_POINTER_SIZE \)8/\14/" -i "${IMAGE}"/usr/include/qt5/QtCore/qconfig-32.h
     fi
+
+    # install symlinks for some binaries to /usr/bin
+    local binaries
+    binaries=( moc qmake rcc uic )
+
+    for i in ${binaries[@]} ; do
+        [[ -e "${IMAGE}"/usr/${LIBDIR}/qt5/bin/${i} ]] || die "/usr/${LIBDIR}/qt5/bin/${i} does not exist in ${IMAGE}"
+        dosym /usr/${LIBDIR}/qt5/bin/${i} /usr/bin/${i}-qt5
+    done
 }
 
