@@ -36,7 +36,7 @@ install_one_multibuild() {
     edo mkdir -p "${IMAGE}"/usr/bin
     for i in ${binaries[@]} ; do
         [[ -e "${IMAGE}"/usr/${LIBDIR}/qt5/bin/${i} ]] || die "/usr/${LIBDIR}/qt5/bin/${i} does not exist in ${IMAGE}"
-        dosym /usr/${LIBDIR}/qt5/bin/${i} /usr/bin/${i}5
+        dosym /usr/${LIBDIR}/qt5/bin/${i} /usr/bin/${i}-qt5
     done
     dosym /usr/${LIBDIR}/qt5/bin/qtpaths /usr/bin/qtpaths
 
