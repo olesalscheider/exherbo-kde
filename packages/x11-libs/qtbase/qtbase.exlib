@@ -337,6 +337,7 @@ qtbase_src_install() {
 
     hereenvd 44qt5 <<EOF
 LDPATH=${ldpath}
+QT_PLUGIN_PATH=/usr/${LIBDIR}/qt5/plugins
 EOF
 
     if option examples ; then
