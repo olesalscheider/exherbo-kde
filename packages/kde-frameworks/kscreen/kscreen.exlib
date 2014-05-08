@@ -1,18 +1,18 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde [ api=2 ]
+${KDEMODULE}=libkscreen
+SCM_BRANCH=frameworks
+
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="KDE's screen management library"
-HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
-DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 
 LICENCES="GPL-2
     BSD-3 [[ note = [ cmake scripts ] ]]"
 SLOT="0"
 MYOPTIONS=""
-# Building the API docs is currently broken (1.0.1)
-#MYOPTIONS="doc"
 
 DEPENDENCIES="
     build+run:
@@ -21,15 +21,12 @@ DEPENDENCIES="
         x11-libs/libX11
         x11-libs/libxcb
         x11-libs/libXrandr
-        x11-libs/qt:4
-        !kde-frameworks/kscreen
+        x11-libs/qtx11extras[>=5.2.0]
+        !kde/libkscreen
 "
-# doc? ( app-doc/doxygen )
 
 # Tests need a running X server (1.0.2)
-RESTRICT=test
+#RESTRICT=test
 
 BUGS_TO="heirecka@exherbo.org"
-
-#CMAKE_SRC_CONFIGURE_OPTIONS+=( 'doc LIBKSCREEN_BUILD_API_DOCS' )
 

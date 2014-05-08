@@ -1,0 +1,8 @@
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kscreen
+
+PLATFORMS="~amd64 ~x86"
+
