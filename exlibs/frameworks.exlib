@@ -15,10 +15,14 @@ DEPENDENCIES="
         kde-frameworks/extra-cmake-modules[>=0.0.13]
 "
 
+# The libexec paths are intentionally relative, as some paths are hardcoded into scripts or programs.
+# Giving absolute paths results in hardcoded paths like /usr/usr/libexec
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_SHARED_LIBS:BOOL=TRUE
     -DAUTOSTART_INSTALL_DIR=/etc/xdg/autostart
     -DCONFIG_INSTALL_DIR=/etc/xdg
+    -DKF5_LIBEXEC_INSTALL_DIR=libexec/kf5
+    -DLIBEXEC_INSTALL_DIR=libexec
     -DPLUGIN_INSTALL_DIR=/usr/${LIBDIR}/plugins
     -DQT_PLUGIN_INSTALL_DIR=/usr/${LIBDIR}/qt5/plugins
     -DSYSCONF_INSTALL_DIR=/etc
