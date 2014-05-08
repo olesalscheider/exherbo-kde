@@ -19,8 +19,8 @@ DEPENDENCIES="
         virtual/pkg-config
     build+run:
         kde/kwin:${SLOT}
-        kde/libkscreen
         kde/libksysguard:${SLOT}
+        kde-frameworks/kscreen[>=2.0.0]
         kde-frameworks/kactivities:5
         kde-frameworks/kconfig:5
         kde-frameworks/kconfigwidgets:5
