@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: dcc52aea99c98fdb0fc973ca969acdaa9e0420c8
+
 require kde.org
 
 SUMMARY="A library for extracting file metadata"

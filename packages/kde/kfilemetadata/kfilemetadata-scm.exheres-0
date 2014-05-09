@@ -1,9 +1,40 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: b42529ce7a22650f171ed325813f161b5e376400
+require kde.org [ kde_major_version='5' ]
 
-require kfilemetadata
+SUMMARY="A library for extracting file metadata"
 
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2 LGPL-2.1 LGPL-3"
 PLATFORMS="~amd64"
+
+MYOPTIONS="
+    epub       [[ description = [ Support for extracting metadata from .epub ebook files ] ]]
+    exif       [[ description = [ Support for extracting metadata from EXIF headers ] ]]
+    ffmpeg     [[ description = [ Support for extracting audio and video metadata ] ]]
+    pdf        [[ description = [ Support for extracting metadata from pdf files ] ]]
+    taglib     [[ description = [ Support for extracting metadata from music files ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        kde-frameworks/karchive:5[>=4.97.0]
+        kde-frameworks/ki18n:5[>=4.97.0]
+        kde-frameworks/kservice:5[>=4.97.0]
+        epub? ( app-text/ebook-tools )
+        exif? ( graphics/exiv2[>=0.21] )
+        ffmpeg? ( media/ffmpeg[>=1.0] )
+        pdf? ( app-text/poppler[>=0.12.1][qt5] )
+        taglib? ( media-libs/taglib )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    EPub
+    'exif Exiv2'
+    FFmpeg
+    'pdf PopplerQt5'
+    Taglib
+)
 
