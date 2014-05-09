@@ -77,6 +77,7 @@ DEPENDENCIES="
         qimageblitz? ( kde/qimageblitz[qt5] )
     run:
         kde/kde-cli-tools [[ note = [ Needs kioclient ] ]]
+        kde/milou         [[ note = [ Needed for krunner ] ]]
         x11-libs/qtquickcontrols
         X? (
             x11-apps/xprop
