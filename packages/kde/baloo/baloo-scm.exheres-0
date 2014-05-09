@@ -1,7 +1,46 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require baloo
+# last checked commit: 8d13b51a6adcd9d5b3b127058020a7003d56bd59
 
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="A framework for searching and managing metadata"
+
+LICENCES="GPL-2 LGPL-2.1"
 PLATFORMS="~amd64"
+MYOPTIONS="pim"
+
+DEPENDENCIES="
+    build+run:
+        dev-db/xapian-core
+        kde/kfilemetadata:${SLOT}[>=4.97.0]
+        kde-frameworks/kauth:5
+        kde-frameworks/kcmutils:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kcrash:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kidletime:5
+        kde-frameworks/kio:5
+        kde-frameworks/krunner:5
+        kde-frameworks/kservice:5
+        kde-frameworks/solid:5
+        x11-libs/qtbase:5[sql]
+        pim? (
+            kde/kdepimlibs:${SLOT}[>=4.95.0]
+            kde-frameworks/kdelibs4support:5
+            kde-frameworks/kitemmodels:5
+            server-pim/akonadi[>=1.70.41]
+        )
+        !kde/kde-runtime[<4.12.80] [[
+            description = [ kde/kde-runtime<4.12.80 and baloo collide ]
+            resolution = uninstall-blocked-after
+        ]]
+"
+
+# 4 of 12 tests are currently failing
+RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
 
