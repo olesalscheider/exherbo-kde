@@ -7,9 +7,9 @@ SUMMARY="Colletion of Input/Output protocols for KDE"
 
 LICENCES="FDL-1.2 GPL-2"
 MYOPTIONS="
-    samba? [[ description = [ Support for the smb:/ kioslave for MS windows shares ] ]]
+    samba [[ description = [ Support for the smb:/ kioslave for MS windows shares ] ]]
     sftp [[ description = [ Support for the sftp:/ kioslave by libssh ] ]]
-    slp? [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
+    slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
 "
 
 DEPENDENCIES="
@@ -30,7 +30,7 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
         kde-frameworks/kio:5
-        kde-frameworks/ksolid:5
+        kde-frameworks/solid:5
         x11-misc/shared-mime-info[>=0.40]
         samba? ( net-fs/samba:= )
         sftp? ( net-libs/libssh[>=0.6.0] )
@@ -42,4 +42,7 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'sftp LibSSH'
     SLP
 )
+
+# Tries to connect to X
+RESTRICT=test
 
