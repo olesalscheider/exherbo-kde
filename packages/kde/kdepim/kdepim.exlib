@@ -37,7 +37,6 @@ ever at_least 4.12.80 && \
 
 MYOPTIONS+="
     barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
-    grammar [[ description = [ Build a grammar-check plugin ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -53,7 +52,6 @@ DEPENDENCIES+="
         dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/qjson
-        kde/kactivities:${SLOT}[>=4.10.90]
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
@@ -66,7 +64,6 @@ DEPENDENCIES+="
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=2.0.0]
         )
-        grammar? ( office-libs/link-grammar )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? ( x11-libs/libXScrnSaver )
 "
@@ -90,6 +87,7 @@ else
             kde/nepomuk-widgets:${SLOT}[>=4.9.90]
             server-pim/akonadi[>=1.10.45]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_KActivities:BOOL=TRUE )
 fi
 
 # Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
