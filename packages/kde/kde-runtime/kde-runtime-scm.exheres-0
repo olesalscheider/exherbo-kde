@@ -1,9 +1,0 @@
-# Copyright 2008, 2009, 2010 Ingmar Vanhassel <ingmar@exherbo.org>
-# Distributed under the terms of the GNU General Public License v2
-
-# last checked revision: 842209a8610fe69cafdae46866d1e0830dc084e2
-
-require kde-runtime-next
-
-PLATFORMS="~amd64"
-
