@@ -12,7 +12,7 @@ DEPENDENCIES="
     build+run:
         kde-frameworks/kcmutils:5
         kde-frameworks/kconfig:5
-        kde-frameworks/kde4support:5
+        kde-frameworks/kdelibs4support:5
         kde-frameworks/khtml:5
         kde-frameworks/kinit:5
 "
