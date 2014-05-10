@@ -5,3 +5,7 @@ require libkscreen
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-CMakeLists.txt-only-search-for-required-xcb-componen.patch
+)
+

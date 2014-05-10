@@ -1,0 +1,34 @@
+Upstream: reported at https://bugs.kde.org/show_bug.cgi?id=334379
+
+From b3e06fef0f044dcb76c96e26708bc139b27c8a60 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 10 May 2014 17:01:27 +0200
+Subject: [PATCH] CMakeLists.txt: only search for required xcb components
+
+---
+ CMakeLists.txt | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a5cb83f..1339e77 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -20,11 +20,10 @@ include(KDE4Defaults)
+ add_definitions(${KDE4_DEFINITIONS})
+ include(CheckCXXCompilerFlag)
+ 
+-macro_optional_find_package(XCB)
+-set_package_properties(XCB PROPERTIES DESCRIPTION "The X protocol C-language Binding (XCB) is a replacement for Xlib"
+-    URL "http://xcb.freedesktop.org/"
+-    TYPE OPTIONAL
+-    PURPOSE "Needed to build XRandR 1.1 backend"
++find_package(XCB COMPONENTS XCB RANDR)
++set_package_properties(XCB PROPERTIES
++                       TYPE OPTIONAL
++                       PURPOSE "Required for building XRandR 1.1 backend"
+ )
+ 
+ macro_optional_find_package(X11_XCB)
+-- 
+1.9.3
+
