@@ -22,8 +22,6 @@ DEPENDENCIES="
         x11-libs/libxcb
         x11-libs/libXrandr
         x11-libs/qt:4
-        !kde-frameworks/kscreen
-        !kde-frameworks/libkscreen
 "
 # doc? ( app-doc/doxygen )
 

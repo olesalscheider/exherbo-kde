@@ -19,11 +19,17 @@ DEPENDENCIES="
         x11-libs/libxcb
         x11-libs/libXrandr
         x11-libs/qtx11extras[>=5.2.0]
-        !kde/libkscreen
 "
 
 # Tests need a running X server (1.0.2)
 RESTRICT=test
 
 BUGS_TO="heirecka@exherbo.org"
+
+src_install() {
+    kde.org_src_install
+
+    # Rename the pkg config file to avoid file collisions.
+    edo mv "${IMAGE}"/usr/${LIBDIR}/pkgconfig/{kscreen.pc,kf5screen.pc}
+}
 
