@@ -92,6 +92,15 @@ DEPENDENCIES="
         samba? ( net-fs/samba:= ) [[ description = [ samba kioslave ] ]]
         slp? ( net-libs/openslp )
         webp? ( media-libs/libwebp )
+        !kf5-coinstall? (
+            !kde/kde-cli-tools
+            !kde/khelpcenter
+            !kde/kinfocenter
+            !kde/kio-extras
+            !kde/plasma-desktop
+            !kde/plasma-workspace
+        )
+
     run:
         kde/oxygen-icons:${SLOT}
     suggestion:

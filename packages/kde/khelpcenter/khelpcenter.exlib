@@ -15,5 +15,6 @@ DEPENDENCIES="
         kde-frameworks/kdelibs4support:5
         kde-frameworks/khtml:5
         kde-frameworks/kinit:5
+        !kde/kde-runtime[-kf5-coinstall]
 "
 

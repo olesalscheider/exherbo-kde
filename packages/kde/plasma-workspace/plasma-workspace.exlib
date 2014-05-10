@@ -75,6 +75,7 @@ DEPENDENCIES="
         gps? ( dev-libs/gpsd )
         qalculate? ( sci-libs/libqalculate )
         qimageblitz? ( kde/qimageblitz[qt5] )
+        !kde/kde-runtime[-kf5-coinstall]
     run:
         kde/kde-cli-tools [[ note = [ Needs kioclient ] ]]
         kde/milou         [[ note = [ Needed for krunner ] ]]

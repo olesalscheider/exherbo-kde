@@ -16,6 +16,7 @@ DEPENDENCIES="
         kde-frameworks/kdesu:5
         x11-libs/libX11
         x11-libs/qtx11extras:5
+        !kde/kde-runtime[-kf5-coinstall]
 "
 
 # Tries to connect to X

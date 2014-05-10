@@ -35,6 +35,7 @@ DEPENDENCIES="
         samba? ( net-fs/samba:= )
         sftp? ( net-libs/libssh[>=0.6.0] )
         slp? ( net-libs/openslp )
+        !kde/kde-runtime[-kf5-coinstall]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

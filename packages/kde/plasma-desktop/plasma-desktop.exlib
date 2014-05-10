@@ -74,6 +74,7 @@ DEPENDENCIES="
             x11-utils/xcb-util-keysyms
             x11-utils/xcb-util-wm
         )
+        !kde/kde-runtime[-kf5-coinstall]
     run:
         kde/kde-cli-tools [[ note = [ Some tools use keditfiletype ] ]]
 "
