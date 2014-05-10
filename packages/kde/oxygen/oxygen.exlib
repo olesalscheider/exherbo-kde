@@ -20,7 +20,6 @@ DEPENDENCIES="
         kde-frameworks/kservice:5
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
-        !kde/kde-workspace [[ note = [ File collisions ] ]]
         X? (
             x11-libs/libX11
             x11-libs/libxcb
