@@ -2,10 +2,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-${KDEMODULE}=libkscreen
-SCM_BRANCH=frameworks
-
-require kde.org [ kde_major_version='5' ]
+require kde.org [ kde_major_version='5' module=libkscreen ]
 
 SUMMARY="KDE's screen management library"
 
@@ -26,7 +23,7 @@ DEPENDENCIES="
 "
 
 # Tests need a running X server (1.0.2)
-#RESTRICT=test
+RESTRICT=test
 
 BUGS_TO="heirecka@exherbo.org"
 

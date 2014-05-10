@@ -39,7 +39,7 @@ if ever is_scm; then
             kde-workspace)
                 SCM_BRANCH="KDE/4.11"
                 ;;
-            baloo|kate|kde-runtime|kdepimlibs|kfilemetadata|konsole|milou)
+            baloo|kate|kde-runtime|kdepimlibs|kfilemetadata|konsole|libkscreen|milou)
                 if ever at_least 4.95.0 ; then
                     SCM_BRANCH="frameworks"
                 else

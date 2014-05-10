@@ -20,7 +20,6 @@ DEPENDENCIES="
     build+run:
         kde/kwin:${SLOT}
         kde/libksysguard:${SLOT}
-        kde-frameworks/kscreen[>=2.0.0]
         kde-frameworks/kactivities:5
         kde-frameworks/kconfig:5
         kde-frameworks/kconfigwidgets:5
@@ -50,6 +49,7 @@ DEPENDENCIES="
         kde-frameworks/kwallet:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
+        kde-frameworks/libkscreen[>=2.0.0]
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
         kde-frameworks/threadweaver:5
