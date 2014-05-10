@@ -54,6 +54,7 @@ soliduiserver: Hardware Detection daemon
 LICENCES="GPL-2 LGPL-2.1 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS="alsa networkmanager openexr samba pulseaudio
     jpeg-rotation [[ description = [ Support automatic rotation of JPEGs in the thumbnail kioslave ] ]]
+    kf5-coinstall [[ description = [ Do not install files that would collide with kf5-based packages. Only use this if you want to run a kf5-based desktop. ] ]]
     sftp [[ description = [ SFTP kioslave ] ]]
     slp [[ description = [ Provides SLP support in the network:/ kioslave, see http://www.openslp.org/ ] ]]
     webp [[ description = [ Support for Google's WebP image format ] ]]
@@ -61,13 +62,12 @@ MYOPTIONS="alsa networkmanager openexr samba pulseaudio
 
 DEPENDENCIES="
     build:
-        app-doc/doxygen
+        !kf5-coinstall? ( app-doc/doxygen )
         dev-cpp/cppunit
     build+run:
         app-crypt/gpgme
         app-crypt/qca:2[>=2.0.0]
         app-text/shared-desktop-ontologies[>=0.6.50]
-        dev-libs/attica:0[>=0.1.4]
         dev-libs/soprano[>=2.6.50][virtuoso]
         kde/kactivities:${SLOT}
         kde/kdelibs:${SLOT}[>=4.9.95]
@@ -79,6 +79,7 @@ DEPENDENCIES="
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
         x11-libs/qt:4[phonon][webkit]
         x11-misc/shared-mime-info[>=0.40]
+        !kf5-coinstall? ( dev-libs/attica:0[>=0.1.4] )
         alsa? ( sys-sound/alsa-lib[>=1.0.14a] )
         jpeg-rotation? ( graphics/exiv2 )
         networkmanager? ( net-apps/NetworkManager[>=0.7.0] )
@@ -130,6 +131,10 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
 )
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'webp FOUND_WEBP' )
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=(
+    '!kf5-coinstall attica'
+    '!kf5-coinstall doc'
+)
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     ALSA
     NetworkManager
@@ -150,6 +155,23 @@ src_install() {
         d=$(dirname "${f}")
         newdoc "${f}" "README.kioslave.${d##*/}"
     done
+
+    if option kf5-coinstall; then
+        # Remove files which collide with kf5-based packages
+        local f delete=(
+                /usr/bin/khelpcenter
+                /usr/share/config.kcfg/jpegcreatorsettings.kcfg
+                /usr/share/desktop-directories
+                /usr/share/dbus-1/interfaces/org.kde.khelpcenter.kcmhelpcenter.xml
+                /usr/share/man/man1/kdesu.1
+                /etc/xdg/menus/kde-information.menu
+                /usr/share/config.kcfg/khelpcenter.kcfg
+                /usr/lib64/libmolletnetwork.so
+                )
+        for f in ${delete[@]}; do
+            edo rm -fr "${IMAGE}"/${f}
+        done
+    fi
 
     # Get rid of empty icons directories
     edo find "${IMAGE}" -type d -empty -delete
