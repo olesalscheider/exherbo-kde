@@ -78,8 +78,11 @@ DEPENDENCIES="
         kde/kde-cli-tools [[ note = [ Some tools use keditfiletype ] ]]
 "
 
+# 4 of 4 tests need a running X server
+RESTRICT="test"
+
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-    PulseAudio 
+    PulseAudio
     'X X11'
 )
 
