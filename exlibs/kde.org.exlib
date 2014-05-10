@@ -320,6 +320,13 @@ KDE_BLOCKERS="
         kde/printer-applet
         kde/superkaramba
         kde/sweeper
+    kde/kde-runtime:
+        kde/kde-cli-tools
+        kde/khelpcenter
+        kde/kinfocenter
+        kde/kio-extras
+        kde/plasma-desktop
+        kde/plasma-workspace
     kde/kde-workspace:
         kde/khotkeys
         kde/kinfocenter
