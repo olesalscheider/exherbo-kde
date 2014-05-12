@@ -5,3 +5,5 @@ require audex
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Fix-device-url-handling.patch )
+

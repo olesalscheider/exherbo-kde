@@ -1,0 +1,63 @@
+Reason: Crash under some circumstances
+Source: Upstream
+Upstream: Yes
+
+From eeb677d09c199728409e6f7baddb03e7be889ab8 Mon Sep 17 00:00:00 2001
+From: Marco Nelles <marco@maniatek.de>
+Date: Mon, 12 May 2014 10:32:16 +0200
+Subject: [PATCH] Fix device url handling.
+
+---
+ mainwindow.cpp       | 15 +++++++++++----
+ models/cddamodel.cpp |  2 +-
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/mainwindow.cpp b/mainwindow.cpp
+index 855406d..e042531 100644
+--- a/mainwindow.cpp
++++ b/mainwindow.cpp
+@@ -35,7 +35,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent) {
+ 
+   QStringList deviceUrls = KCompactDisc::cdromDeviceNames();
+   int dev_index = Preferences::cdDevice().toInt();
+-  cdda_model = new CDDAModel(this, KCompactDisc::cdromDeviceUrl(deviceUrls[dev_index]).path());
++  QString device_path;
++  if ((dev_index >= 0) && (dev_index < deviceUrls.count())) {
++    device_path = KCompactDisc::cdromDeviceUrl(deviceUrls[dev_index]).path();
++  }
++  cdda_model = new CDDAModel(this, device_path);
+   if (!cdda_model) {
+     kDebug() << "Unable to create CDDAModel object. Low mem?";
+     ErrorDialog::show(this, i18n("Unable to create CDDAModel object."), i18n("Internal error. Check your hardware. If all okay please make bug report."));
+@@ -308,9 +312,12 @@ void MainWindow::configuration_updated(const QString& dialog_name) {
+   Preferences::self()->writeConfig();
+   QStringList deviceUrls = KCompactDisc::cdromDeviceNames();
+   int dev_index = Preferences::cdDevice().toInt();
+-  QString dev = KCompactDisc::cdromDeviceUrl(deviceUrls[dev_index]).path();
+-  if (dev != cdda_model->device()) {
+-    cdda_model->setDevice(dev);
++  QString device_path;
++  if ((dev_index >= 0) && (dev_index < deviceUrls.count())) {
++    device_path = KCompactDisc::cdromDeviceUrl(deviceUrls[dev_index]).path();
++  }
++  if (device_path != cdda_model->device()) {
++    cdda_model->setDevice(device_path);
+   }
+ }
+ 
+diff --git a/models/cddamodel.cpp b/models/cddamodel.cpp
+index 2df1658..572acc9 100644
+--- a/models/cddamodel.cpp
++++ b/models/cddamodel.cpp
+@@ -62,7 +62,7 @@ CDDAModel::~CDDAModel() {
+ 
+ void CDDAModel::setDevice(const QString& device) {
+   this->_device = device;
+-  compact_disc->setDevice(device, 50, FALSE);
++  if (!device.isEmpty()) compact_disc->setDevice(device, 50, FALSE);
+ }
+ 
+ int CDDAModel::rowCount(const QModelIndex &parent) const {
+-- 
+1.9.3
+
