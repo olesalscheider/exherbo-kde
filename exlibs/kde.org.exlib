@@ -174,10 +174,6 @@ KDE_BLOCKERS="
         kde/kactivities
         kde/kde-baseapps
         kde/konsole
-    kde/kdebase-runtime:
-        kde/kde-runtime
-    kde/kdebase-workspace:
-        kde/kde-workspace
     kde/kdebindings:
         kde/kimono
         kde/korundum
