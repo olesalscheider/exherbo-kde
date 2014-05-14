@@ -30,10 +30,9 @@ DEPENDENCIES="
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ needed for activities integration in dolphin ] ]]
         kde/kdelibs:${SLOT}[>=4.10.60]
-        kde/kde-runtime:${SLOT}[>=4.10.60]
-        kde/kde-workspace:${SLOT}[>=4.10.60]
         media-libs/phonon[qt4(+)]
         sys-libs/zlib
+        x11-libs/libX11
         x11-libs/libXrender
         x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
         x11-libs/qt:4[glib][opengl]
@@ -43,6 +42,8 @@ DEPENDENCIES="
                 app-text/tidy-html5
             )
         )
+    run:
+        kde/kde-runtime:${SLOT} [[ note = [ kdesu for kdepasswd ] ]]
 "
 
 if ever at_least 4.12.80 ; then
