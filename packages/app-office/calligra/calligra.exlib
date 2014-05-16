@@ -39,9 +39,8 @@ LICENCES="GPL-2 LGPL-2 FDL-1.2"
 SLOT="2"
 MY_KDE_PARTS="active author braindump flow karbon kexi krita plan sheets stage words"
 
-ever at_least 2.7.91 && MYOPTIONS+=" apple-keynote [[ description = [ Support for importing files from Apple's Keynote ]
-                                                      requires = [ kde_parts: stage ] ]] "
 MYOPTIONS+="
+    apple-keynote  [[ description = [ Support for importing files from Apple's Keynote ] requires = [ kde_parts: stage ] ]]
     encrypted      [[ description = [ Support for encrypted OpenDocument Text documents in Words ] ]]
     eps            [[ description = [ EPS (Encapsulated PostScript) import filter for Karbon ] requires = [ kde_parts: karbon ] ]]
     fftw           [[ description = [ Fast convolution operators in Krita ] ]]
@@ -73,9 +72,6 @@ MYOPTIONS+="
     pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
     wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
 "
-# Hard-enable glew for krita, partially because of https://bugs.kde.org/show_bug.cgi?id=332813
-ever at_least 2.8.2 || \
-    MYOPTIONS=" glew [[ description = [ Shader filter plugin for Krita ] requires = [ kde_parts: krita ] ]]"
 
 DEPENDENCIES+="
     build+run:
@@ -84,12 +80,14 @@ DEPENDENCIES+="
         dev-libs/soprano [[ note = [ handle RDF metadata in ODF ] ]]
         kde/kactivities:4[>=4.9.98]
         kde/kdelibs:4[>=4.6.4]
+        kde/kdepimlibs:4[>=4.6.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
         media-libs/fontconfig [[ note = [ Required to handle exact font size ] ]]
         media-libs/freetype:2 [[ note = [ Required to handle exact font size ] ]]
         media-libs/lcms2[>=2.4] [[ note = [ Required for color management and Krita ] ]]
         media-libs/libpng:=
         media-libs/phonon [[ note = [ Used by stage, videoshape plugin ] ]]
         sys-libs/zlib
+        x11-dri/glu
         x11-dri/mesa [[ note = [ Required for opengl support (Krita and Flake) ] ]]
         x11-libs/libICE
         x11-libs/libSM
@@ -99,6 +97,7 @@ DEPENDENCIES+="
         x11-libs/libXext
         x11-libs/libXft
         x11-libs/libXpm
+        x11-libs/qt:4[>=4.7.0][dbus][opengl]
         x11-misc/shared-mime-info [[ note = [ filters/libmsooxml/ and krita/plugins/formats/ofa/ ] ]]
         encrypted? ( app-crypt/qca:2 [[ note = [ Support encrypted odf and ooxml (MS Office 2007) files ] ]] )
         kde_parts:active? (
@@ -111,6 +110,7 @@ DEPENDENCIES+="
         kde_parts:flow? (
             visio? (
                 media-libs/libvisio
+                office-libs/libodfgen
             )
         )
         kde_parts:karbon? (
@@ -132,15 +132,18 @@ DEPENDENCIES+="
             mdb? ( dev-libs/glib:2 )
             mysql? ( virtual/mysql )
             postgresql? (
+                dev-db/libpqxx[>=3&<5]
                 dev-db/postgresql
             )
         )
         kde_parts:krita? (
             dev-libs/glib:2 [[ note = [ Required by the Krita MyPaint-compatible brush engine ] ]]
             graphics/exiv2[>=0.16]
+            media-libs/glew [[ note = [ partially hard enabled because of https://bugs.kde.org/show_bug.cgi?id=332813 ] ]]
             media-libs/jpeg
             sci-libs/eigen:2[>=2.0]
-            fftw? ( sci-libs/fftw[>=3] )
+            x11-libs/libXi
+            fftw? ( sci-libs/fftw[>=3.2] )
             jpeg2000? ( media-libs/OpenJPEG:0 )
             raw? ( kde/libkdcraw:4 )
             tiff? ( media-libs/tiff )
@@ -151,6 +154,7 @@ DEPENDENCIES+="
         )
         kde_parts:stage? (
             kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
+            apple-keynote? ( office-libs/libetonyek )
         )
         kde_parts:words? (
             (
@@ -158,10 +162,14 @@ DEPENDENCIES+="
                 dev-libs/icu
             ) [[ note = [ Needed for bibliography, dep of common libcalligradb, also used by kexi ] ]]
             wordperfect? (
+                office-libs/libodfgen
                 office-libs/libwpd[>=0.9]
                 office-libs/libwpg[>=0.2]
             )
-            msworks? ( office-libs/libwps[>=0.2] )
+            msworks? (
+                office-libs/libodfgen
+                office-libs/libwps[>=0.2]
+            )
         )
         marble? (
             kde/marble:4
@@ -183,51 +191,6 @@ DEPENDENCIES+="
 "
 # plan? ( office-libs/librcps ) - Plan bundles a copy of LibRCPS, which is unwritten
 # http://www.librcps.org/
-
-if ever at_least 2.8.2 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs:4[>=4.6.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
-            x11-dri/glu
-            x11-libs/qt:4[>=4.7.0][dbus][opengl]
-            kde_parts:flow? (
-                visio? ( office-libs/libodfgen )
-            )
-            kde_parts:kexi? (
-                postgresql? ( dev-db/libpqxx[>=3&<5] )
-            )
-            kde_parts:krita? (
-                media-libs/glew
-                fftw? ( sci-libs/fftw[>=3.2] )
-                x11-libs/libXi
-            )
-            kde_parts:stage? (
-                apple-keynote? ( office-libs/libetonyek )
-            )
-            kde_parts:words? (
-                wordperfect? ( office-libs/libodfgen )
-                msworks? ( office-libs/libodfgen )
-            )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            kde/kdepimlibs:4[>=4.3.0] [[ note = [ In fact optional for plan and KDE address book integration ] ]]
-            x11-libs/qt:4[>=4.6.0][dbus][opengl] [[ note = [ some krita features depend on 4.7.0 ] ]]
-            kde_parts:flow? (
-                visio? (
-                    office-libs/libwpd[>=0.9]
-                    office-libs/libwpg[>=0.2]
-                )
-            )
-            kde_parts:kexi? (
-                postgresql? ( dev-db/libpqxx[>=3&<4] )
-            )
-            kde_pars:krita? (
-                glew? ( media-libs/glew )
-            )
-    "
-fi
 
 # TODO: - A comment in CMakeLists.txt claims jpeg<9 doesn't work for krita,
 #         configuring and linking works, though. Figure out this out before the
@@ -255,23 +218,20 @@ src_configure() {
         -DWITH_Iconv=ON # Required for MS .doc support and MS Access mdb import
         -DWITH_OCIO:BOOL=FALSE # http://www.opencolorio.org, required by the Krita LUT docker
         -DWITH_OIIO:BOOL=FALSE # https://sites.google.com/site/openimageio/, required by th OIIO file import/export filter
-        # for the Krita OpenEXR plugin, [>=0.9.16]. Package unwritten.
-        $(ever at_least 2.7.90 || echo "-DWITH_OpenCTL=OFF")
-         # krita/plugins/extensions/. Packages unwritten.
-        $(ever at_least 2.7.90 || echo "-DCMAKE_DISABLE_FIND_PACKAGE_{Open,Qt}Shiva:BOOL=TRUE")
         -DWITH_PNG=ON
         -DWITH_Soprano:BOOL=TRUE
         -DWITH_Vc:BOOL=FALSE # http://code.compeng.uni-frankfurt.de/projects/vc, required by Krita for vectorization
+        $(cmake_with apple-keynote LibEtonyek)
         $(cmake_with encrypted QCA2)
         $(cmake_with eps Pstoedit)
         $(cmake_with fftw FFTW3)
         $(cmake_with FreeTDS)
-        $(ever at_least 2.7.90 && cmake_option kde_parts:kexi KEXI_SCRIPTS_SUPPORT)
+        $(cmake_option kde_parts:kexi KEXI_SCRIPTS_SUPPORT)
         $(cmake_with kde_parts:krita Exiv2)
+        $(cmake_with kde_parts:krita GLEW)
         $(cmake_with kde_parts:stage Okular)
-        $(ever at_least 2.7.91 && cmake_with apple-keynote LibEtonyek)
         $(cmake_with Marble)
-        $(cmake_with msworks LibWPS)
+        $(cmake_with msworks LibWps)
         $(cmake_with MySQL)
         $(cmake_with OpenEXR)
         $(cmake_with pdf Poppler)
@@ -280,14 +240,10 @@ src_configure() {
         $(cmake_with solver GSL)
         $(cmake_with spacenavigator Spnav)
         $(cmake_with visio LibVisio)
+        $(cmake_with wordperfect LibWpd)
+        $(cmake_with wordperfect LibWpg)
         $(cmake_with TIFF)
     )
-
-    if ever at_least 2.8.2 ; then
-        cmakeparams+=( $(cmake_with kde_parts:krita GLEW) )
-    else
-        cmakeparams+=( $(cmake_with GLEW ) )
-    fi
 
     if option kde_parts:krita || option kde_parts:sheets; then
         cmakeparams+=( -DWITH_Eigen2=ON )
@@ -305,13 +261,6 @@ src_configure() {
         cmakeparams+=( -DWITH_JPEG=ON $(cmake_with jpeg2000 OpenJPEG) )
     else
         cmakeparams+=( -DWITH_JPEG=OFF -DWITH_OpenJPEG=OFF )
-    fi
-
-    if option wordperfect; then
-        cmakeparams+=( $(cmake_with kde_parts:karbon WPG) )
-        cmakeparams+=( -DWITH_WPD=ON )
-    else
-        cmakeparams+=( -DWITH_WPD=OFF -DWITH_WPG=OFF )
     fi
 
     if option visio || option kde_parts:words && option wordperfect || option msworks ; then

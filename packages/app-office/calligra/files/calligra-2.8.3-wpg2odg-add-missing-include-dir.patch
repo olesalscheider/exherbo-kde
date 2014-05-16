@@ -1,0 +1,27 @@
+Upstream: submitted for review
+          https://git.reviewboard.kde.org/r/118172/diff/#index_header
+
+From 683bcd5acb232dda9e3e3b16ee0c767ef1fa258c Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Fri, 16 May 2014 17:07:07 +0200
+Subject: [PATCH] wpg2odg import filter: add missing include dir
+
+---
+ filters/flow/wpg/import/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/filters/flow/wpg/import/CMakeLists.txt b/filters/flow/wpg/import/CMakeLists.txt
+index 524d1b1..7fb2c69 100644
+--- a/filters/flow/wpg/import/CMakeLists.txt
++++ b/filters/flow/wpg/import/CMakeLists.txt
+@@ -2,6 +2,7 @@ include_directories(
+     ../../../libodfhandler/
+     ${LIBODFGEN_INCLUDE_DIRS}
+     ${LIBVISIO_INCLUDE_DIRS}
++    ${LIBWPG_INCLUDE_DIRS}
+     ${KOMAIN_INCLUDES}
+ )
+ 
+-- 
+1.9.3
+
