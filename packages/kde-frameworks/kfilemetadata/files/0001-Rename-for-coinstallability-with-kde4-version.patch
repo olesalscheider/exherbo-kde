@@ -1,0 +1,255 @@
+Reason: Would collide with kde/kfilemetadata otherwise.
+Source: Bernd Steinhauser
+Upstream: No, but trying.
+
+From 3b7cf69f17e21979bc7e84db872ece405a1bb107 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Sun, 18 May 2014 07:17:49 +0200
+Subject: [PATCH] Rename for coinstallability with kde4 version.
+
+kfilemetadata already uses KF5 naming internally.
+Start using the KF5 scheme externally as well to
+avoid clashes with the kde4 version.
+---
+ CMakeLists.txt                                     | 12 ++++++------
+ ...fig.cmake.in => KF5KFileMetaDataConfig.cmake.in |  2 +-
+ autotests/CMakeLists.txt                           |  4 ++--
+ src/CMakeLists.txt                                 | 22 +++++++++++-----------
+ src/extractors/CMakeLists.txt                      | 20 ++++++++++----------
+ 5 files changed, 30 insertions(+), 30 deletions(-)
+ rename KFileMetaDataConfig.cmake.in => KF5KFileMetaDataConfig.cmake.in (90%)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aa2b086..cf9c5c3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -18,7 +18,7 @@ set(REQUIRED_QT_VERSION "5.2.0")
+ 
+ ecm_setup_version(${KF5_VERSION}
+                   VARIABLE_PREFIX KFILEMETADATA
+-                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KFileMetaDataConfigVersion.cmake"
++                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KFileMetaDataConfigVersion.cmake"
+                   SOVERSION 5)
+ 
+ # Build dependencies
+@@ -65,19 +65,19 @@ add_subdirectory(autotests)
+ add_subdirectory(test)
+ 
+ # Config files
+-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KFileMetaData")
++set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5KFileMetaData")
+ 
+ include(ECMPackageConfigHelpers)
+ 
+ ecm_configure_package_config_file(
+-  "${CMAKE_CURRENT_SOURCE_DIR}/KFileMetaDataConfig.cmake.in"
+-  "${CMAKE_CURRENT_BINARY_DIR}/KFileMetaDataConfig.cmake"
++  "${CMAKE_CURRENT_SOURCE_DIR}/KF5KFileMetaDataConfig.cmake.in"
++  "${CMAKE_CURRENT_BINARY_DIR}/KF5KFileMetaDataConfig.cmake"
+   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+ )
+ 
+ install(FILES
+-  "${CMAKE_CURRENT_BINARY_DIR}/KFileMetaDataConfig.cmake"
+-  "${CMAKE_CURRENT_BINARY_DIR}/KFileMetaDataConfigVersion.cmake"
++  "${CMAKE_CURRENT_BINARY_DIR}/KF5KFileMetaDataConfig.cmake"
++  "${CMAKE_CURRENT_BINARY_DIR}/KF5KFileMetaDataConfigVersion.cmake"
+   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+   COMPONENT devel
+ )
+diff --git a/KFileMetaDataConfig.cmake.in b/KF5KFileMetaDataConfig.cmake.in
+similarity index 90%
+rename from KFileMetaDataConfig.cmake.in
+rename to KF5KFileMetaDataConfig.cmake.in
+index b4d1c93..1848ecb 100644
+--- a/KFileMetaDataConfig.cmake.in
++++ b/KF5KFileMetaDataConfig.cmake.in
+@@ -11,7 +11,7 @@ get_filename_component(rootDir ${_currentDir}/@relInstallDir@ ABSOLUTE) # The in
+ set(KFILEMETADATA_INSTALL_PREFIX "${rootDir}")
+ set(KFILEMETADATA_INCLUDE_DIR "@INCLUDE_INSTALL_DIR@")
+ 
+-include(${_currentDir}/KFileMetaDataTargetsWithPrefix.cmake)
++include(${_currentDir}/KF5KFileMetaDataTargetsWithPrefix.cmake)
+ 
+ # Set the library variable
+ set(KFILEMETADATA_LIBRARY KF5::FileMetaData)
+diff --git a/autotests/CMakeLists.txt b/autotests/CMakeLists.txt
+index 95c3e30..43afbe7 100644
+--- a/autotests/CMakeLists.txt
++++ b/autotests/CMakeLists.txt
+@@ -8,7 +8,7 @@ set(indexerextractor_SRCS
+ )
+ ecm_add_test(${indexerextractor_SRCS}
+     TEST_NAME "indexextractortest"
+-    LINK_LIBRARIES Qt5::Test KF5::Service kfilemetadata
++    LINK_LIBRARIES Qt5::Test KF5::Service KF5KFileMetadata
+ )
+ 
+ #
+@@ -16,6 +16,6 @@ ecm_add_test(${indexerextractor_SRCS}
+ #
+ ecm_add_test(propertyinfotest.cpp
+     TEST_NAME "propertyinfotest"
+-    LINK_LIBRARIES Qt5::Test kfilemetadata
++    LINK_LIBRARIES Qt5::Test KF5KFileMetadata
+ )
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 82dbd5c..d5a5358 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-add_library(kfilemetadata SHARED
++add_library(KF5KFileMetadata SHARED
+     extractionresult.cpp
+     extractorplugin.cpp
+     extractorpluginmanager.cpp
+@@ -6,9 +6,9 @@ add_library(kfilemetadata SHARED
+     typeinfo.cpp
+ )
+ 
+-add_library(KF5::FileMetaData ALIAS kfilemetadata)
++add_library(KF5::FileMetaData ALIAS KF5KFileMetadata)
+ 
+-target_link_libraries(kfilemetadata
++target_link_libraries(KF5KFileMetadata
+   PUBLIC
+     Qt5::Core
+   PRIVATE
+@@ -16,23 +16,23 @@ target_link_libraries(kfilemetadata
+     KF5::I18n
+ )
+ 
+-generate_export_header(kfilemetadata BASE_NAME KFileMetaData EXPORT_FILE_NAME kfilemetadata_export.h)
+-set_target_properties(kfilemetadata PROPERTIES
++generate_export_header(KF5KFileMetadata BASE_NAME KFileMetaData EXPORT_FILE_NAME kfilemetadata_export.h)
++set_target_properties(KF5KFileMetadata PROPERTIES
+     VERSION ${KFILEMETADATA_VERSION_STRING}
+     SOVERSION ${KFILEMETADATA_SOVERSION}
+     EXPORT_NAME FileMetaData
+ )
+-target_include_directories(kfilemetadata INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>")
++target_include_directories(KF5KFileMetadata INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>")
+ 
+-install(TARGETS kfilemetadata ${INSTALL_TARGETS_DEFAULT_ARGS})
++install(TARGETS KF5KFileMetadata ${INSTALL_TARGETS_DEFAULT_ARGS})
+ 
+-install(TARGETS kfilemetadata EXPORT KFileMetaDataTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
++install(TARGETS KF5KFileMetadata EXPORT KFileMetaDataTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+ install(FILES kfilemetadataextractor.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+ 
+ install(EXPORT KFileMetaDataTargets
+         NAMESPACE KF5::
+-        DESTINATION ${LIB_INSTALL_DIR}/cmake/KFileMetaData
+-        FILE KFileMetaDataTargetsWithPrefix.cmake)
++        DESTINATION ${LIB_INSTALL_DIR}/cmake/KF5KFileMetaData
++        FILE KF5KFileMetaDataTargetsWithPrefix.cmake)
+ 
+ install(FILES
+     extractionresult.h
+@@ -44,7 +44,7 @@ install(FILES
+     typeinfo.h
+     ${CMAKE_CURRENT_BINARY_DIR}/kfilemetadata_export.h
+ 
+-    DESTINATION ${INCLUDE_INSTALL_DIR}/kfilemetadata COMPONENT Devel
++    DESTINATION ${INCLUDE_INSTALL_DIR}/KF5KFileMetadata COMPONENT Devel
+ )
+ 
+ add_subdirectory(extractors)
+diff --git a/src/extractors/CMakeLists.txt b/src/extractors/CMakeLists.txt
+index 0099c08..b2d6f15 100644
+--- a/src/extractors/CMakeLists.txt
++++ b/src/extractors/CMakeLists.txt
+@@ -4,7 +4,7 @@ if(POPPLER_QT5_FOUND)
+     add_library(kfilemetadata_popplerextractor MODULE popplerextractor.cpp)
+ 
+     target_link_libraries(kfilemetadata_popplerextractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${POPPLER_QT5_LIBRARIES}
+     )
+@@ -25,7 +25,7 @@ if(TAGLIB_FOUND)
+     add_library(kfilemetadata_taglibextractor MODULE taglibextractor.cpp )
+ 
+     target_link_libraries( kfilemetadata_taglibextractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${TAGLIB_LIBRARIES}
+     )
+@@ -47,7 +47,7 @@ if(EXIV2_FOUND)
+     add_library(kfilemetadata_exiv2extractor MODULE exiv2extractor.cpp)
+ 
+     target_link_libraries(kfilemetadata_exiv2extractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${EXIV2_LIBRARIES}
+     )
+@@ -68,7 +68,7 @@ if(FFMPEG_FOUND)
+     add_library(kfilemetadata_ffmpegextractor MODULE ffmpegextractor.cpp)
+ 
+     target_link_libraries(kfilemetadata_ffmpegextractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${FFMPEG_LIBRARIES}
+     )
+@@ -90,7 +90,7 @@ if(EPUB_FOUND)
+     add_library(kfilemetadata_epubextractor MODULE epubextractor.cpp)
+ 
+     target_link_libraries(kfilemetadata_epubextractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${EPUB_LIBRARIES}
+     )
+@@ -111,7 +111,7 @@ endif(EPUB_FOUND)
+ add_library(kfilemetadata_plaintextextractor MODULE plaintextextractor.cpp )
+ 
+ target_link_libraries( kfilemetadata_plaintextextractor
+-    kfilemetadata
++    KF5KFileMetadata
+     KF5::Service
+ )
+ 
+@@ -130,7 +130,7 @@ DESTINATION ${PLUGIN_INSTALL_DIR})
+ add_library(kfilemetadata_odfextractor MODULE odfextractor.cpp)
+ 
+ target_link_libraries(kfilemetadata_odfextractor
+-    kfilemetadata
++    KF5KFileMetadata
+     Qt5::Core
+     Qt5::Xml
+     KF5::Service
+@@ -152,7 +152,7 @@ DESTINATION ${PLUGIN_INSTALL_DIR})
+ add_library(kfilemetadata_office2007extractor MODULE office2007extractor.cpp)
+ 
+ target_link_libraries(kfilemetadata_office2007extractor
+-    kfilemetadata
++    KF5KFileMetadata
+     Qt5::Core
+     Qt5::Xml
+     KF5::Service
+@@ -174,7 +174,7 @@ DESTINATION ${PLUGIN_INSTALL_DIR})
+ add_library(kfilemetadata_officeextractor MODULE officeextractor.cpp)
+ 
+ target_link_libraries(kfilemetadata_officeextractor
+-    kfilemetadata
++    KF5KFileMetadata
+     KF5::Service
+ )
+ 
+@@ -194,7 +194,7 @@ if (QMOBIPOCKET_FOUND)
+ 
+     include_directories(${QMOBIPOCKET_INCLUDE_DIR})
+     target_link_libraries(kfilemetadata_mobiextractor
+-        kfilemetadata
++        KF5KFileMetadata
+         KF5::Service
+         ${QMOBIPOCKET_LIBRARIES}
+     )
+-- 
+1.9.3
+
