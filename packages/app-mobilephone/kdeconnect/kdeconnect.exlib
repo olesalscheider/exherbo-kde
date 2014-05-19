@@ -17,7 +17,7 @@ Current feature list:
 "
 HOMEPAGE="http://albertvaka.wordpress.com/
           https://projects.kde.org/projects/playground/base/${PN}-kde"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${MYPNV}.tar.xz"
+DOWNLOADS="mirror://kde/unstable/${PN}/$(ever range 1-3)/src/${MYPNV}.tar.xz"
 
 LICENCES="GPL-2 || ( GPL-2 GPL-3 )"
 SLOT="0"
@@ -35,9 +35,6 @@ DEPENDENCIES="
     run:
         app-crypt/qca-ossl:2
 "
-
-# 1 test fails the other needs a running X server (0.5.1)
-RESTRICT="test"
 
 BUGS_TO="friedrich@mailstation.de heirecka@exherbo.org"
 
