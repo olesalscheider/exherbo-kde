@@ -1,6 +1,8 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: f9d33a959dd03cd4f335532942e910119b44c8d6
+
 require ktexteditor
 
 PLATFORMS="~amd64 ~x86"

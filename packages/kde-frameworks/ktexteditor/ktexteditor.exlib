@@ -19,6 +19,8 @@ LICENCES="LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        dev-lang/perl:*
     build+run:
         kde-frameworks/karchive:5[>=${KF5_MIN_VER}]
         kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
