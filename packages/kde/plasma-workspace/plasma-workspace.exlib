@@ -21,6 +21,8 @@ DEPENDENCIES="
         kde/kwin:${SLOT}
         kde/libksysguard:${SLOT}
         kde-frameworks/kactivities:5
+        kde-frameworks/kbookmarks:5
+        kde-frameworks/kcompletion:5
         kde-frameworks/kconfig:5
         kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
@@ -47,6 +49,7 @@ DEPENDENCIES="
         kde-frameworks/kservice:5
         kde-frameworks/ktexteditor:5
         kde-frameworks/kwallet:5
+        kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/libkscreen[>=2.0.0]
@@ -57,18 +60,19 @@ DEPENDENCIES="
         sys-libs/pam
         sys-libs/zlib
         x11-libs/dbusmenu-qt[qt5]
-        x11-libs/qtbase:5[>=5.2.0][sql] [[ note = [ runners/bookmarks ] ]]
-        x11-libs/qtdeclarative:5[>=5.2.0]
-        x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qtbase:5[>=5.3.0-RC][sql] [[ note = [ runners/bookmarks ] ]]
+        x11-libs/qtdeclarative:5[>=5.3.0-RC]
+        x11-libs/qtscript:5[>=5.3.0-RC]
         X? (
             x11-libs/libSM
             x11-libs/libX11
             x11-libs/libXau
+            x11-libs/libxcb
             x11-libs/libXcomposite
+            x11-libs/libXcursor
             x11-libs/libXfixes
             x11-libs/libXrender
-            x11-libs/libxcb
-            x11-libs/qtx11extras:5[>=5.2.0]
+            x11-libs/qtx11extras:5[>=5.3.0-RC]
             x11-utils/xcb-util-image
             x11-utils/xcb-util-keysyms
         )
