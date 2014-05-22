@@ -13,6 +13,7 @@ DEPENDENCIES="
         kde/plasma-workspace:${SLOT}
         kde-frameworks/kauth:5
         kde-frameworks/kconfig:5
+        kde-frameworks/kdbusaddons:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kglobalaccel:5
         kde-frameworks/ki18n:5
@@ -26,6 +27,7 @@ DEPENDENCIES="
         X? (
             x11-libs/libX11
             x11-libs/libxcb
+            x11-libs/libXrandr
             x11-libs/qtx11extras:5[>=5.2.0]
             x11-utils/xcb-util-image
             x11-utils/xcb-util-keysyms

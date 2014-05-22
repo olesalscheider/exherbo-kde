@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: e85f45a069b6b530c1e283ce8d1dbe4194c3bb25
+# last checked commit: 1712304bc0c837ba6fc476ab7cd432921971fa9d
 
 require powerdevil
 
