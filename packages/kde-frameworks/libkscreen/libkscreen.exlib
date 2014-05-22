@@ -12,6 +12,8 @@ SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
         dev-libs/qjson[>=0.8]
         kde/kdelibs:4

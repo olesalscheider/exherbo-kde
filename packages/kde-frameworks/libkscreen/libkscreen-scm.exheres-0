@@ -2,6 +2,8 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: e24d85e8f1d0af3bbc1cee0d04cfdcf89b12f4eb
+
 require libkscreen
 
 PLATFORMS="~amd64 ~x86"
