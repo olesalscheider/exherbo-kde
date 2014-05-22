@@ -23,7 +23,7 @@ DEPENDENCIES="
         X? (
             x11-libs/libX11
             x11-libs/libXtst
-            x11-libs/qtx11extras:5[>=5.2.0]
+            x11-libs/qtx11extras:5[>=5.3.0-RC]
         )
 "
 
