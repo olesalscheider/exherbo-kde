@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 940f12d991bb483986c4ef7f3d069de916386e6b
+
 require kdbusaddons
 
 PLATFORMS="~amd64 ~x86"
