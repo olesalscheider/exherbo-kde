@@ -1,6 +1,8 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: a1e298da06ef4ba689652aadbc402b5f017606b4
+
 require breeze
 
 PLATFORMS="~amd64 ~x86"
