@@ -1,6 +1,8 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: fe8a2fbb391041bef3c3521d50040f467992474a
+
 require khelpcenter
 
 PLATFORMS="~amd64"
