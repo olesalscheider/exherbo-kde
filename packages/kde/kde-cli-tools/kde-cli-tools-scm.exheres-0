@@ -1,6 +1,8 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 06d17cd557250dd3f414ce0451b93530890cb54f
+
 require kde-cli-tools
 
 PLATFORMS="~amd64 ~x86"
