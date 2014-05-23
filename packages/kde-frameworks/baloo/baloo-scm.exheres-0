@@ -14,12 +14,12 @@ MYOPTIONS="pim"
 DEPENDENCIES="
     build+run:
         dev-db/xapian-core
-        kde/kfilemetadata:${SLOT}[>=4.97.0]
         kde-frameworks/kauth:5
         kde-frameworks/kcmutils:5
         kde-frameworks/kconfig:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kcrash:5
+        kde-frameworks/kfilemetadata:5[>=4.97.0]
         kde-frameworks/ki18n:5
         kde-frameworks/kidletime:5
         kde-frameworks/kio:5
@@ -41,6 +41,10 @@ DEPENDENCIES="
 
 # 4 of 12 tests are currently failing
 RESTRICT="test"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-Adapt-to-KFileMetaData-becoming-a-framework.patch
+)
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
 
