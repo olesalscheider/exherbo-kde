@@ -1,0 +1,66 @@
+Upstream: not yet, waiting for changes of baloo to be applied upstream
+
+From dc217920b15cefaa0f16146b8508efa0f814fd27 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 24 May 2014 16:30:18 +0200
+Subject: [PATCH] Adapt to changes in baloo
+
+---
+ CMakeLists.txt              | 2 +-
+ lib/CMakeLists.txt          | 2 +-
+ lib/previews/CMakeLists.txt | 6 ++++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4bf25ae..36d9159 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+ 
+ find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Script Qml Widgets Xml Test Sql WebKitWidgets)
+ find_package(KF5 REQUIRED COMPONENTS Runner Plasma I18n Declarative)
+-find_package(Baloo 4.60 REQUIRED)
++find_package(KF5 REQUIRED Baloo)
+ 
+ include(FeatureSummary)
+ include(ECMAddTests)
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 657e9dc..7f1bd45 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -11,7 +11,7 @@ target_link_libraries (milou
+     KF5::KIOWidgets
+     KF5::Plasma
+     KF5::Runner
+-    ${BALOO_CORE_LIBRARY}
++    KF5::BalooCore
+ )
+ 
+ install(
+diff --git a/lib/previews/CMakeLists.txt b/lib/previews/CMakeLists.txt
+index b10542f..4ec3112 100644
+--- a/lib/previews/CMakeLists.txt
++++ b/lib/previews/CMakeLists.txt
+@@ -89,7 +89,8 @@ target_link_libraries(milouaudioplugin
+     milou
+     KF5::KIOWidgets
+     Qt5::Declarative
+-    ${BALOO_CORE_LIBRARY} ${BALOO_FILE_LIBRARY}
++    KF5::BalooCore
++    KF5::BalooFiles
+ )
+ 
+ install(
+@@ -109,7 +110,8 @@ target_link_libraries(miloufileplugin
+     milou
+     KF5::KIOWidgets
+     Qt5::Declarative
+-    ${BALOO_CORE_LIBRARY} ${BALOO_FILE_LIBRARY}
++    KF5::BalooCore
++    KF5::BalooFiles
+ )
+ 
+ install(
+-- 
+1.9.3
+
