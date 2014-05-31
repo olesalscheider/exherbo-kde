@@ -31,7 +31,6 @@ DEPENDENCIES="
             x11-libs/gtk+:2
         )
         kde? (
-            kde/kde-workspace:4
             kde/kdelibs:4
         )
         qt4? (

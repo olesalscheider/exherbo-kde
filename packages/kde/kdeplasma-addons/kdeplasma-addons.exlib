@@ -26,7 +26,7 @@ DEPENDENCIES+="
         dev-libs/attica:0[>=0.1.1]
         dev-libs/boost
         dev-libs/qjson [[ note = [ dataengines/microblog, runners/youtube ] ]]
-        kde/kde-workspace:${SLOT}
+        kde/kde-workspace:${SLOT}[-kf5-coinstall(-)]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdepimlibs:${SLOT}
         kde/libkexiv2:${SLOT} [[ note = [ Automatic rotation of the frame applet ] ]]
