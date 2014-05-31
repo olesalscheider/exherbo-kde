@@ -44,7 +44,9 @@ RESTRICT="test"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/0001-Adapt-to-KFileMetaData-becoming-a-framework.patch
+    "${FILES}"/0001-Add-an-option-to-build-only-the-baloo-libraries.patch
 )
 
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBALOO_LIBRARIES_ONLY:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
 
