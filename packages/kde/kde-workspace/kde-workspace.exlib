@@ -44,7 +44,7 @@ MYOPTIONS="ieee1394 lm_sensors python
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, etc. you'll probably want this. ] ]]
     kf5-coinstall [[ description = [ Build a small subset of kde-workspace to allow for parallel installation with KF5 and Plasma-Next.
-                Built are: Oxygen, libkdeworkspace, libtaskmanager, kdm and some minor stuff  ] ]]
+                Built are: Oxygen, libkdeworkspace, libtaskmanager, libkscreensaver, kdm and some minor stuff  ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
     qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
     systemd [[ description = [ logind support in KDM ] ]]
@@ -228,7 +228,7 @@ src_configure() {
             appmenu cursors doc freespacenotifier
             kcheckpass kcminit kcontrol khotkeys
             kinfocenter klipper kmenuedit krunner
-            kscreensaver ksmserver ksplash ksysguard
+            ksmserver ksplash ksysguard
             ksystraycmd ktouchpadenabler kwin kwrited
             module plasma powerdevil python qguiplatformplugin_kde
             screenlocker systemsettings
