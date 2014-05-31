@@ -25,5 +25,6 @@ DEPENDENCIES="
         kde-frameworks/kservice:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
+        !kde/kde-workspace[-kf5-coinstall]
 "
 

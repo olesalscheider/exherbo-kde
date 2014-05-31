@@ -30,6 +30,7 @@ DEPENDENCIES="
         kde-frameworks/kitemviews:5
         kde-frameworks/knewstuff:5
         lm_sensors? ( sys-apps/lm_sensors )
+        !kde/kde-workspace[-kf5-coinstall]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

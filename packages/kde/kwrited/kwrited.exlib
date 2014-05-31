@@ -13,5 +13,6 @@ DEPENDENCIES="
     build+run:
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kpty:5
+        !kde/kde-workspace[-kf5-coinstall]
 "
 

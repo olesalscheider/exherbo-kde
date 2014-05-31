@@ -44,6 +44,7 @@ DEPENDENCIES="
             x11-dri/mesa[wayland]
         )
         !kde/kde-runtime[-kf5-coinstall]
+        !kde/kde-workspace[-kf5-coinstall]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

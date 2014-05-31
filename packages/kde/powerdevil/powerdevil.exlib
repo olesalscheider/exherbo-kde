@@ -33,5 +33,6 @@ DEPENDENCIES="
             x11-utils/xcb-util-keysyms
             x11-utils/xcb-util-wm
         )
+        !kde/kde-workspace[-kf5-coinstall]
 "
 

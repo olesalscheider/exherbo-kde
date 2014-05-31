@@ -27,6 +27,7 @@ DEPENDENCIES="
         kde-frameworks/kio:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/sonnet:5
+        !kde/kde-workspace[-kf5-coinstall]
 "
 
 # we don't want the whole kde-workspace checkout, only the kmenuedit directory

@@ -125,6 +125,18 @@ DEPENDENCIES="
             lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
             python? ( dev-lang/python:= )
             qalculate? ( sci-libs/libqalculate[>=0.9.5] )
+            !kde/khotkeys
+            !kde/kinfocenter
+            !kde/kmenuedit
+            !kde/ksysguard
+            !kde/kwin
+            !kde/kwrited
+            !kde/libksysguard
+            !kde/oxygen
+            !kde/plasma-desktop
+            !kde/plasma-workspace
+            !kde/powerdevil
+            !kde/systemsettings
         )
     run:
         x11-apps/xinit [[ note = kdm ]]

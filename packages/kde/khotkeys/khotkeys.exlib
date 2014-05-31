@@ -25,6 +25,7 @@ DEPENDENCIES="
             x11-libs/libXtst
             x11-libs/qtx11extras:5[>=5.3.0-RC]
         )
+        !kde/kde-workspace[-kf5-coinstall]
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

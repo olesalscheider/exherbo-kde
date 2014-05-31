@@ -59,6 +59,7 @@ DEPENDENCIES="
             x11-dri/mesa[wayland]
             x11-libs/libxkbcommon[>=0.4.1]
         )
+        !kde/kde-workspace[-kf5-coinstall]
     run:
         kde-frameworks/kded:5
     recommendation:
