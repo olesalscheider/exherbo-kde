@@ -8,7 +8,6 @@ SUMMARY="KDE's screen management library"
 
 LICENCES="GPL-2
     BSD-3 [[ note = [ cmake scripts ] ]]"
-SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
