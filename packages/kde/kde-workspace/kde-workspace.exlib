@@ -43,16 +43,16 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2 BSD-3 [[ note = [ cmake scripts ] ]]"
 MYOPTIONS="ieee1394 lm_sensors python
     barcodes   [[ description = [ Create mobile barcodes from clipboard data ] ]]
     consolekit [[ description = [ Enable ConsoleKit integration for KDM sessions. If you're in group 'plugdev' and using Device Notifier, etc. you'll probably want this. ] ]]
+    kf5-coinstall [[ description = [ Build a small subset of kde-workspace to allow for parallel installation with KF5 and Plasma-Next.
+                Built are: Oxygen, libkdeworkspace, libtaskmanager, kdm and some minor stuff  ] ]]
     opengles   [[ description = [ Use the OpenGLES backend for desktop effects originally targeted at mobile devices. Disables the default OpenGL backend ] ]]
     qalculate  [[ description = [ Support advanced features of the calculator runner ] ]]
     systemd [[ description = [ logind support in KDM ] ]]
     wayland
     ( consolekit systemd ) [[ number-selected = exactly-one ]]
+    ( ieee1394 lm_sensors python barcodes opengles qalculate wayland ) [[ *requires = -kf5-coinstall ]]
+    x86_cpu_features: 3dnow mmx sse sse2
 "
-
-MYOPTIONS+=" kde_parts: krandr [[ description = [ System Settings module to configure multiple screens
-                                                 (deprecated, will be replaced by kde/kscreen) ] ]]
-    x86_cpu_features: 3dnow mmx sse sse2"
 # cpu_features are for ksplash
 
 # kwrited has an automagic dep on utempter which we don't have atm
@@ -62,87 +62,85 @@ DEPENDENCIES="
         dev-lang/perl:* [[ note = kdm ]]
     build+run:
         user/kdm
-        app-pim/strigi[>=0.6.3][dbus][qt4]
-        dev-libs/boost[>=1.34]
-        dev-libs/glib:2
-        dev-libs/libusb:0.1
-        dev-libs/qjson  [[ note = [ chromium bookmarks runner, hard enable since it's small and
-                                     already needed for kdepimlibs ] ]]
-        dev-libs/soprano[>=2.7.56][virtuoso(+)]
         kde/kactivities:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
-        kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-        kde/kde-runtime:${SLOT}[>=${PV}]
-        kde/nepomuk-core:${SLOT}[>=4.9.90]
         kde/qimageblitz[>=0.0.4]
-        media-libs/fontconfig [[ note = kcontrol ]]
-        media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
-        media-libs/jpeg [[ note = ksplash ]]
-        media-libs/libpng:= [[ note = ksplash ]]
-        server-pim/akonadi
-        sys-apps/pciutils
         sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]
-        sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         sys-libs/zlib
-        x11-dri/mesa
-        x11-libs/dbusmenu-qt[>=0.6.0]
         x11-libs/libICE [[ note = ksmserver ]]
         x11-libs/libX11 [[ note = [ kdm ] ]]
         x11-libs/libXau [[ note = kdm ]]
-        x11-libs/libxcb [[ note = kwin ]]
         x11-libs/libXcomposite [[ note = kwin ]]
-        x11-libs/libXcursor [[ note = kcontrol ]]
-        x11-libs/libXdamage [[ note = kwin ]]
         x11-libs/libXdmcp [[ note = kdm ]]
         x11-libs/libXext [[ note = ksysguardd ]]
         x11-libs/libXfixes [[ note = [ kcontrol, XRender compositing backend in KWin ] ]]
         x11-libs/libXft [[ note = kcontrol ]]
         x11-libs/libXi[>=1.2] [[ note = kcontrol/keyboard/ktouchpadenabler ]]
-        x11-libs/libXinerama
+        x11-libs/libxkbfile
         x11-libs/libXrandr[>=1.3] [[ note = [ Multi Screen Support ] ]]
         x11-libs/libXrender [[ note = kwin ]]
-        x11-libs/libXScrnSaver [[ note = krunner ]]
         x11-libs/libXtst [[ note = kcontrol ]]
-        x11-libs/libXxf86misc [[ note = krunner ]]
-        x11-libs/libxkbfile
         x11-libs/qt:4[>=4.8.0][opengl][webkit]
-        x11-utils/xcb-util-image [[ note = kwin ]]
-        x11-utils/xcb-util-keysyms [[ note = kwin ]]
-        x11-utils/xcb-util-renderutil [[ note = kwin ]]
-        barcodes? ( kde/prison ) [[ note = klipper ]]
+        (
+            x11-dri/mesa
+            x11-libs/libXcursor [[ note = kcontrol ]]
+            x11-libs/libXdamage [[ note = kwin ]]
+            x11-libs/libxcb [[ note = kwin ]]
+            x11-utils/xcb-util-image [[ note = kwin ]]
+            x11-utils/xcb-util-keysyms [[ note = kwin ]]
+            x11-utils/xcb-util-renderutil [[ note = kwin ]]
+        ) [[ note = [ Not needed for kf5-coinstall, but making them optional requires messing with the cmake files as they are marked as required ] ]]
         consolekit? ( sys-auth/ConsoleKit ) [[ note = kdm ]]
-        ieee1394? ( media-libs/libraw1394 )
-        wayland? (
-            sys-libs/wayland
-            x11-dri/mesa[wayland]
+
+        !kf5-coinstall? (
+            app-pim/strigi[>=0.6.3][dbus][qt4]
+            dev-libs/boost[>=1.34]
+            dev-libs/glib:2
+            dev-libs/libusb:0.1
+            dev-libs/qjson  [[ note = [ chromium bookmarks runner, hard enable since it's small and
+                                         already needed for kdepimlibs ] ]]
+            dev-libs/soprano[>=2.7.56][virtuoso(+)]
+            kde/kdepimlibs:${SLOT}[>=${PV}]
+            kde/kde-runtime:${SLOT}[>=${PV}]
+            kde/nepomuk-core:${SLOT}[>=4.9.90]
+            media-libs/fontconfig [[ note = kcontrol ]]
+            media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
+            media-libs/jpeg [[ note = ksplash ]]
+            media-libs/libpng:= [[ note = ksplash ]]
+            server-pim/akonadi
+            sys-apps/pciutils
+            sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
+            x11-libs/dbusmenu-qt[>=0.6.0]
+            x11-libs/libXinerama
+            x11-libs/libXScrnSaver [[ note = krunner ]]
+            x11-libs/libXxf86misc [[ note = krunner ]]
+            barcodes? ( kde/prison ) [[ note = klipper ]]
+            ieee1394? ( media-libs/libraw1394 )
+            wayland? (
+                sys-libs/wayland
+                x11-dri/mesa[wayland]
+            )
+            lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
+            python? ( dev-lang/python:= )
+            qalculate? ( sci-libs/libqalculate[>=0.9.5] )
         )
-        kde_parts:krandr? (
-            !kde/kscreen [[
-                description = [ krandr (deprecated) provides the same functionality as kscreen
-                                 and conflicts with it when plugging in a new screen ]
-                resolution = manual
-            ]]
-        )
-        lm_sensors? ( sys-apps/lm_sensors ) [[ note = ksysguard ]]
-        python? (
-            dev-lang/python:=
-        )
-        qalculate? ( sci-libs/libqalculate[>=0.9.5] )
     run:
-        x11-apps/mkfontdir
-        x11-apps/setxkbmap
         x11-apps/xinit [[ note = kdm ]]
-        x11-apps/xkeyboard-config
         x11-apps/xmessage
         x11-apps/xprop
         x11-apps/xsetroot
         x11-apps/xset
+        !kf5-coinstall? (
+            x11-apps/mkfontdir
+            x11-apps/setxkbmap
+            x11-apps/xkeyboard-config
+        )
     post:
         python? ( kde/pykde4:4 )
     recommendation:
-        x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]]
+        !kf5-coinstall? ( x11-libs/appmenu-qt [[ description = [ Option to export menus and moving them to the window decoration ]  ]] )
         wayland? ( compositor/weston )
 "
 
@@ -156,23 +154,12 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_USBIDS_DIR="/usr/share/misc"
     -DDISABLE_USBIDS_INSTALL:BOOL=TRUE
     -DKWIN_BUILD_KAPPMENU:BOOL=TRUE
-    -DWITH_Akonadi:BOOL=TRUE # Optional, but we hard-enable this
-    -DWITH_Boost:BOOL=TRUE # Optional, but we hard-enable this. For Plasma DataEngines (Akonadi,RSS, Calendar)
-    -DWITH_Fontconfig:BOOL=TRUE
-    -DWITH_Freetype:BOOL=TRUE
-    -DWITH_GLIB2:BOOL=TRUE
-    -DWITH_NepomukCore:BOOL=TRUE
-    -DWITH_Soprano:BOOL=TRUE
-    -DWITH_OpenGL:BOOL=TRUE
-    -DWITH_PCIUTILS:BOOL=TRUE
-    -DWITH_USB:BOOL=TRUE # Logitech USB mouse support in kcontrol
-    -DWITH_XKB:BOOL=TRUE # kxkb, kdm
-    -DKDE4_{KRB5AUTH,RPCAUTH}:BOOL=FALSE
     -DKDE4_XDMCP:BOOL=TRUE
-    -DWITH_XINERAMA:BOOL=TRUE
+    -DWITH_XKB:BOOL=TRUE # kxkb, kdm
     -DWITH_Xmms:BOOL=FALSE
-    -DWITH_KdepimLibs:BOOL=TRUE # Plasma RSS data engine
+    -DKDE4_{KRB5AUTH,RPCAUTH}:BOOL=FALSE
     -DWITH_libgps:BOOL=FALSE # GPS support for geolocation "http://gpsd.berlios.de/"
+    -DWITH_OpenGL:BOOL=TRUE
     -DQIMAGEBLITZ_INCLUDES=/usr/include/qimageblitz
     -DQIMAGEBLITZ_LIBRARIES=/usr/${LIBDIR}/libqimageblitz.so.4 # Pass the library paths to qimageblitz libs manually so the correct ones are selected. Not the best workaround but it works.
 )
@@ -206,14 +193,70 @@ src_prepare() {
             -e '/macro_optional_find_package(PyKDE4)/s/^/#DONOTWANT /' \
             -i CMakeLists.txt
 
-    # Optionally disabling building of krandr
-    option kde_parts:krandr || edo sed -e '/add_subdirectory( randr )/d' -i kcontrol/CMakeLists.txt \
+    # Sed out the build of krandr which is deprecated
+    edo sed -e '/add_subdirectory( randr )/d' -i kcontrol/CMakeLists.txt \
                                        -e '/^. krandrstartup/d' -i startkde.cmake
+    if option kf5-coinstall; then
+        # Prevent building ksysguard and plasma stuff
+        edo sed -e '/add_subdirectory(ksysguard)/d' \
+                -e '/add_subdirectory(plasmagenericshell)/d' \
+                -e '/add_subdirectory(plasmaclock)/d' \
+                -i libs/CMakeLists.txt
+    fi
 }
 
 src_configure() {
     if option opengles; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DKWIN_BUILD_WITH_OPENGLES=TRUE )
+    fi
+
+    if option kf5-coinstall; then
+        # Disable the parts that collide with kf5
+        local parts=(
+            appmenu cursors doc freespacenotifier
+            kcheckpass kcminit kcontrol khotkeys
+            kinfocenter klipper kmenuedit krunner
+            kscreensaver ksmserver ksplash ksysguard
+            ksystraycmd ktouchpadenabler kwin kwrited
+            module plasma powerdevil python qguiplatformplugin_kde
+            screenlocker systemsettings
+        )
+        for part in ${parts[@]}; do
+            CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_${part}=FALSE )
+        done
+        CMAKE_SRC_CONFIGURE_PARAMS+=(
+            # Collides otherwise
+            -DINCLUDE_INSTALL_DIR=/usr/include/kde4
+            # Disable all the deps we do not need
+            -DCMAKE_DISABLE_FIND_PACKAGE_Strigi=TRUE
+            -DCMAKE_DISABLE_FIND_PACKAGE_DBusMenuQt=TRUE
+            -DWITH_Akonadi:BOOL=FALSE
+            -DWITH_Boost:BOOL=FALSE
+            -DWITH_Fontconfig:BOOL=FALSE
+            -DWITH_Freetype:BOOL=FALSE
+            -DWITH_GLIB2:BOOL=FALSE
+            -DWITH_NepomukCore:BOOL=FALSE
+            -DWITH_Soprano:BOOL=FALSE
+            -DWITH_PCIUTILS:BOOL=FALSE
+            -DWITH_USB:BOOL=FALSE
+            -DWITH_XINERAMA:BOOL=FALSE
+            -DWITH_KdepimLibs:BOOL=FALSE
+        )
+    else
+        CMAKE_SRC_CONFIGURE_PARAMS+=(
+            -DWITH_Akonadi:BOOL=TRUE # Optional, but we hard-enable this
+            -DWITH_Boost:BOOL=TRUE # Optional, but we hard-enable this. For Plasma DataEngines (Akonadi,RSS, Calendar)
+            -DWITH_Fontconfig:BOOL=TRUE
+            -DWITH_Freetype:BOOL=TRUE
+            -DWITH_GLIB2:BOOL=TRUE
+            -DWITH_NepomukCore:BOOL=TRUE
+            -DWITH_Soprano:BOOL=TRUE
+            -DWITH_PCIUTILS:BOOL=TRUE
+            -DWITH_USB:BOOL=TRUE # Logitech USB mouse support in kcontrol
+            -DWITH_XKB:BOOL=TRUE # kxkb, kdm
+            -DWITH_XINERAMA:BOOL=TRUE
+            -DWITH_KdepimLibs:BOOL=TRUE # Plasma RSS data engine
+        )
     fi
 
     kde_src_configure
@@ -234,6 +277,17 @@ src_install() {
 
     if option python; then
         python_bytecompile
+    fi
+
+    if option kf5-coinstall; then
+        local remove=(
+            /usr/bin/startkde
+            /usr/lib64/libkworkspace.so
+            /usr/lib64/libtaskmanager.so
+        )
+        for file in ${remove[@]}; do
+            edo rm "${IMAGE}"/${file}
+        done
     fi
 
     install_systemd_files
