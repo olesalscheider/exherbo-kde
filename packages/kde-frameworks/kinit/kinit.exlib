@@ -26,6 +26,7 @@ DEPENDENCIES="
         kde-frameworks/kio:5[>=${KF5_MIN_VER}]
         kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
+        sys-libs/libcap
         x11-libs/libX11
 "
 
