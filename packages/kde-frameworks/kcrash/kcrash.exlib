@@ -13,7 +13,7 @@ DEPENDENCIES="
         kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         x11-libs/libX11 [[ note = [ Could make this optional if necessary ] ]]
-        x11-libs/qtx11extras [[ note = [ Could make this optional if necessary ] ]]
+        x11-libs/qtx11extras:5 [[ note = [ Could make this optional if necessary ] ]]
 "
 
 # Tries to connect to the running display
