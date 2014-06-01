@@ -58,7 +58,7 @@ DEPENDENCIES="
 # Currently (4.97.0) commented out
 #        dev-libs/openssl
 
-# Tests need a running X server and broken tests
+# Tests need a running X server and are currently broken
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
