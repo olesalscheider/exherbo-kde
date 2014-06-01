@@ -9,16 +9,12 @@ KDBusAddons provides convenience classes on top of QtDBus, as well as an API
 to create KDED modules."
 
 LICENCES="LGPL-2.1"
-MYOPTIONS=""
-ever at_least 4.99.1 && MYOPTIONS="X"
+MYOPTIONS="X"
 
-DEPENDENCIES=""
+DEPENDENCIES+="
+    build+run:
+        X? ( x11-libs/qtx11extras:5[>=5.2.0] )
+"
 
-if ever at_least 4.99.1 ; then
-    DEPENDENCIES+="
-        build+run:
-            X? ( x11-libs/qtx11extras:5[>=5.2.0] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'X Qt5X11Extras' )
-fi
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'X Qt5X11Extras' )
 
