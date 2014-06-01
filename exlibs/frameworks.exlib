@@ -12,7 +12,7 @@ MYOPTIONS="debug"
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/extra-cmake-modules[>=0.0.13]
+        kde-frameworks/extra-cmake-modules[>=0.0.14]
 "
 
 # The libexec paths are intentionally relative, as some paths are hardcoded into scripts or programs.
