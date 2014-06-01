@@ -11,14 +11,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
+        kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
-
-if ever at_least 4.99.1 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
-    "
-fi
 
 # build+run: if KACTIVITIES_LIBRARY_ONLY=FALSE
 #        dev-libs/boost[>=1.49]
