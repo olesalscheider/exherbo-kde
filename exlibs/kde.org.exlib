@@ -140,7 +140,7 @@ esac
 if ! exparam -b no_qt_dependency ; then
     if [[ $(exparam kde_major_version) == 5 ]] ; then
         if [[ ${CATEGORY} == "kde" ]] ; then
-            QT_MIN_VER="5.3.0-RC"
+            QT_MIN_VER="5.3.0"
         else
             QT_MIN_VER="5.2.0"
         fi
