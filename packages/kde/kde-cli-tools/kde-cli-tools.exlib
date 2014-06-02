@@ -12,15 +12,18 @@ DEPENDENCIES="
     build+run:
         kde-frameworks/kcmutils:5
         kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kdesu:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
         kde-frameworks/kio:5
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         x11-libs/libX11
-        x11-libs/qtsvg:5[>=5.3.0-RC]
-        x11-libs/qtx11extras:5[>=5.3.0-RC]
+        x11-libs/qtsvg:5[>=5.3.0]
+        x11-libs/qtx11extras:5[>=5.3.0]
         !kde/kde-runtime[-kf5-coinstall]
 "
 
