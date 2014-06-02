@@ -1,0 +1,75 @@
+Upstream: not upstreamable
+
+From 95029a7f9554bb44b53cb500e25dc079e07721e6 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 15 Mar 2014 00:20:02 +0100
+Subject: [PATCH] Disable tests that need a running X server
+
+---
+ src/autotests/CMakeLists.txt | 31 -------------------------------
+ 1 file changed, 31 deletions(-)
+
+diff --git a/src/autotests/CMakeLists.txt b/src/autotests/CMakeLists.txt
+index a04029c..368b85e 100644
+--- a/src/autotests/CMakeLists.txt
++++ b/src/autotests/CMakeLists.txt
+@@ -15,32 +15,11 @@ add_test(CharacterWidthTest CharacterWidthTest)
+ target_link_libraries(CharacterWidthTest ${KONSOLE_TEST_LIBS})
+ 
+ 
+-if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+-    add_executable(DBusTest DBusTest.cpp)
+-    ecm_mark_as_test(DBusTest)
+-    add_test(DBusTest DBusTest)
+-    target_link_libraries(DBusTest ${KONSOLE_TEST_LIBS} Qt5::DBus)
+-endif()
+-
+-add_executable(HistoryTest HistoryTest.cpp)
+-ecm_mark_as_test(HistoryTest)
+-add_test(HistoryTest HistoryTest)
+-target_link_libraries(HistoryTest ${KONSOLE_TEST_LIBS})
+-
+-
+ add_executable(KeyboardTranslatorTest KeyboardTranslatorTest.cpp)
+ ecm_mark_as_test(KeyboardTranslatorTest)
+ add_test(KeyboardTranslatorTest KeyboardTranslatorTest)
+ target_link_libraries(KeyboardTranslatorTest ${KONSOLE_TEST_LIBS})
+ 
+-if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+-    add_executable(PartTest PartTest.cpp)
+-    ecm_mark_as_test(PartTest)
+-    add_test(PartTest PartTest)
+-    target_link_libraries(PartTest KF5::XmlGui KF5::Parts KF5::Pty
+-                               ${KONSOLE_TEST_LIBS})
+-endif()
+-
+ add_executable(ProfileTest ProfileTest.cpp)
+ ecm_mark_as_test(ProfileTest)
+ add_test(ProfileTest ProfileTest)
+@@ -51,11 +30,6 @@ ecm_mark_as_test(PtyTest)
+ add_test(PtyTest PtyTest)
+ target_link_libraries(PtyTest KF5::Pty ${KONSOLE_TEST_LIBS})
+ 
+-add_executable(SessionTest SessionTest.cpp)
+-ecm_mark_as_test(SessionTest)
+-add_test(SessionTest SessionTest)
+-target_link_libraries(SessionTest ${KONSOLE_TEST_LIBS})
+-
+ add_executable(ShellCommandTest ShellCommandTest.cpp)
+ ecm_mark_as_test(ShellCommandTest)
+ add_test(ShellCommandTest ShellCommandTest)
+@@ -67,11 +41,6 @@ ecm_mark_as_test(TerminalCharacterDecoderTest)
+ add_test(TerminalCharacterDecoderTest TerminalCharacterDecoderTest)
+ target_link_libraries(TerminalCharacterDecoderTest ${KONSOLE_TEST_LIBS})
+ 
+-add_executable(TerminalTest TerminalTest.cpp)
+-ecm_mark_as_test(TerminalTest)
+-add_test(TerminalTest TerminalTest)
+-target_link_libraries(TerminalTest ${KONSOLE_TEST_LIBS})
+-
+ ##add_executable(TerminalInterfaceTest TerminalInterfaceTest.cpp)
+ ##ecm_mark_as_test(TerminalInterface)
+ ##add_test(TerminalInterfaceTest TerminalInterfaceTest)
+-- 
+1.9.0
+

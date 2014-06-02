@@ -1,0 +1,56 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="KDE's terminal emulator"
+
+LICENCES="
+    GPL-2 FDL-1.2 LGPL-2
+    Unicode-Data [[ note = [ src/konsole_wcwidth.cpp ] ]]
+"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5
+    build+run:
+        kde-frameworks/kbookmarks:5
+        kde-frameworks/kcompletion:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kdelibs4support:5
+        kde-frameworks/kguiaddons:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kinit:5
+        kde-frameworks/kio:5
+        kde-frameworks/knotifications:5
+        kde-frameworks/knotifyconfig:5
+        kde-frameworks/kparts:5
+        kde-frameworks/kpty:5
+        kde-frameworks/kservice:5
+        kde-frameworks/ktextwidgets:5
+        kde-frameworks/kwidgetsaddons:5
+        kde-frameworks/kwindowsystem:5
+        kde-frameworks/kxmlgui:5
+        x11-libs/libICE
+        x11-libs/libSM
+        x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
+        x11-libs/libXau
+        x11-libs/libXdmcp
+        x11-libs/libXext
+        x11-libs/libXft
+        x11-libs/libXpm
+        x11-libs/qtscript:5[>=5.2.0]
+"
+# if (FALSE) # there is no libkonq for Qt5 yet
+#        kde/kde-baseapps:${SLOT}[>=4.7.0] [[ note = [ LibKonq, required for drag-n-drop menus ] ]]
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-Disable-tests-that-need-a-running-X-server.patch
+)
+
