@@ -8,6 +8,7 @@ SUMMARY="Plasma libraries and utilities"
 LICENCES="FDL-1.2 GPL-2 LGPL-2.1"
 MYOPTIONS="X
     gps         [[ description = [ GPS support for geolocation ] ]]
+    barcodes    [[ description = [ Create mobile barcodes from clipboard data via prison ] ]]
     qalculate   [[ description = [ Support advanced features of the calculator runner ] ]]
     qimageblitz [[ description = [ Support for some image effects ] ]]"
 # Commented out at the moment
@@ -52,7 +53,7 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
-        kde-frameworks/libkscreen[>=2.0.0]
+        kde-frameworks/libkscreen:5[>=2.0.0]
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
         kde-frameworks/threadweaver:5
@@ -60,9 +61,9 @@ DEPENDENCIES="
         sys-libs/pam
         sys-libs/zlib
         x11-libs/dbusmenu-qt[qt5]
-        x11-libs/qtbase:5[>=5.3.0-RC][sql] [[ note = [ runners/bookmarks ] ]]
-        x11-libs/qtdeclarative:5[>=5.3.0-RC]
-        x11-libs/qtscript:5[>=5.3.0-RC]
+        x11-libs/qtbase:5[>=5.3.0][sql] [[ note = [ runners/bookmarks ] ]]
+        x11-libs/qtdeclarative:5[>=5.3.0]
+        x11-libs/qtscript:5[>=5.3.0]
         X? (
             x11-libs/libSM
             x11-libs/libX11
@@ -72,19 +73,21 @@ DEPENDENCIES="
             x11-libs/libXcursor
             x11-libs/libXfixes
             x11-libs/libXrender
-            x11-libs/qtx11extras:5[>=5.3.0-RC]
+            x11-libs/qtx11extras:5[>=5.3.0]
             x11-utils/xcb-util-image
             x11-utils/xcb-util-keysyms
         )
         gps? ( dev-libs/gpsd )
+        barcodes? ( kde/prison[>=1.2.0] )
         qalculate? ( sci-libs/libqalculate )
         qimageblitz? ( kde/qimageblitz[qt5] )
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
     run:
-        kde/kde-cli-tools [[ note = [ Needs kioclient ] ]]
-        kde/milou         [[ note = [ Needed for krunner ] ]]
-        x11-libs/qtquickcontrols
+        kde/kde-cli-tools:${SLOT}  [[ note = [ Needs kioclient ] ]]
+        kde/milou:${SLOT}          [[ note = [ Needed for krunner ] ]]
+        x11-libs/qtquickcontrols:5
+        x11-libs/qttools:5         [[ note = [ startkde needs qtpaths ] ]]
         X? (
             x11-apps/xprop
             x11-apps/xset
@@ -103,6 +106,7 @@ RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gps libgps'
+    'barcodes Prison'
     Qalculate
     QImageBlitz
     'X X11'
