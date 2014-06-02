@@ -52,8 +52,8 @@ DEPENDENCIES="
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/phonon[>=4.6.60][qt5]
-        x11-libs/qtdeclarative:5[>=5.2.0]
-        x11-libs/qtsvg:5[>=5.2.0]
+        x11-libs/qtdeclarative:5[>=5.3.0]
+        x11-libs/qtsvg:5[>=5.3.0]
         pulseaudio? (
             dev-libs/glib:2
             media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
@@ -78,7 +78,7 @@ DEPENDENCIES="
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
     run:
-        kde/kde-cli-tools [[ note = [ Some tools use keditfiletype ] ]]
+        kde/kde-cli-tools:${SLOT} [[ note = [ Some tools use keditfiletype ] ]]
 "
 
 # 4 of 4 tests need a running X server
