@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ]
+require kde.org [ kde_major_version='5' ] toolchain-funcs
 
 SUMMARY="An easy to use, but flexible, composited Window Manager"
 
@@ -13,7 +13,6 @@ MYOPTIONS="activities
 DEPENDENCIES="
     build:
         kde-frameworks/kdoctools:5
-        sys-devel/gcc:*[>=4.8.0]
         virtual/pkg-config
     build+run:
         kde-frameworks/kauth:5
@@ -45,15 +44,15 @@ DEPENDENCIES="
         x11-libs/libXcursor
         x11-libs/libXext
         x11-libs/libXxf86vm
-        x11-libs/qtdeclarative:5[>=5.3.0-RC]
-        x11-libs/qtscript:5[>=5.3.0-RC]
-        x11-libs/qttools:5[>=5.3.0-RC]
-        x11-libs/qtx11extras:5[>=5.3.0-RC]
+        x11-libs/qtdeclarative:5[>=5.3.0]
+        x11-libs/qtscript:5[>=5.3.0]
+        x11-libs/qttools:5[>=5.3.0]
+        x11-libs/qtx11extras:5[>=5.3.0]
         x11-utils/xcb-util-image
         x11-utils/xcb-util-keysyms
         x11-utils/xcb-util-wm
         activities? ( kde-frameworks/kactivities:5 )
-        opengles? ( x11-libs/qtbase[opengles] )
+        opengles? ( x11-libs/qtbase:5[opengles] )
         wayland? (
             sys-libs/wayland[>=1.2]
             x11-dri/mesa[wayland]
@@ -65,7 +64,7 @@ DEPENDENCIES="
     recommendation:
         kde/oxygen:4 [[ description = [ Oxygen is the default decoration, otherwise kwin falls back to Plastik ] ]]
     suggestion:
-        x11-libs/qtmultimedia:5[>=5.3.0-RC] [[ description = [ Runtime-only dependency for effect video playback ] ]]
+        x11-libs/qtmultimedia:5[>=5.3.0] [[ description = [ Runtime-only dependency for effect video playback ] ]]
 "
 
 # 7 of 9 tests require a running X server
@@ -82,4 +81,12 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     Wayland
     'wayland XKB'
 )
+
+pkg_pretend() {
+    if ! ever at_least 4.8 $(gcc-version) ; then
+        eerror "sys-devel/gcc[>=4.8] is required to build kde/kwin."
+        eerror "You can use 'eclectic gcc' to change the active compiler."
+        die
+    fi
+}
 
