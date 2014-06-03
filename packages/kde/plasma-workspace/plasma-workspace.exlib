@@ -78,7 +78,7 @@ DEPENDENCIES="
             x11-utils/xcb-util-keysyms
         )
         gps? ( dev-libs/gpsd )
-        barcodes? ( kde/prison[>=1.2.0] )
+        barcodes? ( kde/prison[>=1.1.0_p20140529][qt5(-)] )
         qalculate? ( sci-libs/libqalculate )
         qimageblitz? ( kde/qimageblitz[qt5] )
         !kde/kde-runtime[-kf5-coinstall]
