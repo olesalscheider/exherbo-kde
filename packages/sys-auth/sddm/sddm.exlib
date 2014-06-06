@@ -21,6 +21,7 @@ DEPENDENCIES="
     build+run:
         sys-apps/systemd
         sys-libs/pam [[ note = [ Optional ] ]]
+        user/sddm
         x11-libs/libxcb
         x11-libs/qtbase:5
         x11-libs/qttools:5 [[ note = [ Qt5LinguistTools ] ]]
