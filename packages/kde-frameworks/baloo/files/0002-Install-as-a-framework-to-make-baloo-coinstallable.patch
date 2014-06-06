@@ -1,6 +1,6 @@
 Upstream: posted for review https://git.reviewboard.kde.org/r/118439/
 
-From edea1fc486a640eb0a1352b9a8b1b9446aa6f779 Mon Sep 17 00:00:00 2001
+From 318aaeb902dd2bf88710d45feda1060096ab6b84 Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Sat, 31 May 2014 12:42:28 +0200
 Subject: [PATCH] Install as a framework to make baloo coinstallable
@@ -19,10 +19,10 @@ Subject: [PATCH] Install as a framework to make baloo coinstallable
  rename BalooConfig.cmake.in => KF5BalooConfig.cmake.in (81%)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c8335d3..a945395 100644
+index c9d36b9..04e3dcf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -17,6 +17,7 @@ include(FeatureSummary)
+@@ -28,6 +28,7 @@ endif()
  include(KDEInstallDirs)
  include(KDECMakeSettings)
  include(KDECompilerSettings)
@@ -30,7 +30,7 @@ index c8335d3..a945395 100644
  
  # Temporary option untill kdepimlibs is ok. Activate it if you want to compile kdepim
  option(KDEPIM_SUPPORT_BUILD "Build baloo kdepim support" FALSE)
-@@ -57,7 +58,7 @@ kde_enable_exceptions()
+@@ -68,7 +69,7 @@ kde_enable_exceptions()
  set(KF5_VERSION "5.0.0")
  ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX BALOO
                          VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/baloo_version.h"
@@ -39,7 +39,7 @@ index c8335d3..a945395 100644
  
  include_directories(
    ${XAPIAN_INCLUDE_DIR}
-@@ -72,14 +73,27 @@ include_directories(
+@@ -83,14 +84,27 @@ include_directories(
  add_subdirectory(src)
  add_subdirectory(icons)
  
@@ -312,11 +312,11 @@ index 0c20b65..8176bc1 100644
 +        KF5::BalooFiles
  )
 diff --git a/src/xapian/CMakeLists.txt b/src/xapian/CMakeLists.txt
-index 5fcfd09..cc8314f 100644
+index 670c491..90fda64 100644
 --- a/src/xapian/CMakeLists.txt
 +++ b/src/xapian/CMakeLists.txt
-@@ -6,19 +6,22 @@ set(XAPIAN_SRCS
-     xapiandatabase.cpp
+@@ -7,21 +7,24 @@ set(XAPIAN_SRCS
+     termgenerator.cpp
  )
  
 -add_library(balooxapian SHARED ${XAPIAN_SRCS})
@@ -344,6 +344,8 @@ index 5fcfd09..cc8314f 100644
  
 -install(TARGETS balooxapian EXPORT BalooLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 +install(TARGETS KF5BalooXapian EXPORT BalooLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+ 
+ add_subdirectory(autotests)
 -- 
 2.0.0
 

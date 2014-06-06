@@ -1,5 +1,5 @@
 Upstream: not yet, waiting for changes of kfilemetadata to be applied upstream
-From c341e8b615a048e328bf8fa9a3d58b9802e24bc5 Mon Sep 17 00:00:00 2001
+From 4933c2d07d887b102fd0c0a80d6193497dcfd1ed Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Fri, 23 May 2014 12:33:34 +0200
 Subject: [PATCH] Adapt to KFileMetaData becoming a framework
@@ -9,18 +9,18 @@ Subject: [PATCH] Adapt to KFileMetaData becoming a framework
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fe6b241..c8335d3 100644
+index f4b36e8..c9d36b9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${ECM_MODULE_P
  
  find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Widgets DBus Test Sql)
- find_package(KF5 REQUIRED COMPONENTS I18n Config Service IdleTime KCMUtils Auth Runner Crash Solid KIO Auth)
+ find_package(KF5 REQUIRED COMPONENTS I18n Config Service IdleTime KCMUtils Auth Runner Crash Solid KIO Auth KDELibs4Support)
 -find_package(KFileMetaData 4.97 REQUIRED)
 +find_package(KF5 REQUIRED KFileMetaData)
  
  include(ECMSetupVersion)
  include(ECMAddTests)
 -- 
-1.9.3
+2.0.0
 
