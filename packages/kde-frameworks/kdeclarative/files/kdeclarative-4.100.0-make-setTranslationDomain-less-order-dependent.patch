@@ -1,0 +1,76 @@
+Upstream: yes
+
+From 6d193f500fbae64ae5e63290ca45f6f7cf790617 Mon Sep 17 00:00:00 2001
+From: Marco Martin <notmart@gmail.com>
+Date: Thu, 5 Jun 2014 15:32:36 +0200
+Subject: [PATCH 3/4] make setTranslationDomain less order dependent
+
+---
+ src/kdeclarative/kdeclarative.cpp         | 14 ++++++++++----
+ src/kdeclarative/private/kdeclarative_p.h |  2 ++
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/src/kdeclarative/kdeclarative.cpp b/src/kdeclarative/kdeclarative.cpp
+index 7f1c826..b3906e2 100644
+--- a/src/kdeclarative/kdeclarative.cpp
++++ b/src/kdeclarative/kdeclarative.cpp
+@@ -39,7 +39,8 @@ namespace KDeclarative {
+ QStringList KDeclarativePrivate::s_runtimePlatform;
+ 
+ KDeclarativePrivate::KDeclarativePrivate()
+-    : initialized(false)
++    : initialized(false),
++      contextObj(0)
+ {
+ }
+ 
+@@ -86,11 +87,13 @@ void KDeclarative::setupBindings()
+ 
+     /*Create a context object for the root qml context.
+       in this way we can register global functions, in this case the i18n() family*/
+-    RootContext *contextObj = new RootContext(d->declarativeEngine.data());
+-    d->declarativeEngine.data()->rootContext()->setContextObject(contextObj);
++    if (!d->contextObj) {
++        d->contextObj = new RootContext(d->declarativeEngine.data());
++    }
++    d->declarativeEngine.data()->rootContext()->setContextObject(d->contextObj);
+ 
+     if (!d->translationDomain.isNull()) {
+-        contextObj->setProperty("translationDomain", d->translationDomain);
++        d->contextObj->setProperty("translationDomain", d->translationDomain);
+     }
+ 
+     /* Tell the engine to search for platform-specific imports first
+@@ -118,6 +121,9 @@ void KDeclarative::setupBindings()
+ void KDeclarative::setTranslationDomain(const QString &translationDomain)
+ {
+     d->translationDomain = translationDomain;
++    if (d->contextObj) {
++        d->contextObj->setProperty("translationDomain", d->translationDomain);
++    }
+ }
+ 
+ QString KDeclarative::translationDomain() const
+diff --git a/src/kdeclarative/private/kdeclarative_p.h b/src/kdeclarative/private/kdeclarative_p.h
+index 1e31628..cb540a0 100644
+--- a/src/kdeclarative/private/kdeclarative_p.h
++++ b/src/kdeclarative/private/kdeclarative_p.h
+@@ -21,6 +21,7 @@
+ #define KDECLARATIVE_P_H
+ 
+ #include "kdeclarative.h"
++#include "rootcontext_p.h"
+ 
+ #include <QtCore/QPointer>
+ 
+@@ -35,6 +36,7 @@ public:
+     bool initialized;
+     QString translationDomain;
+     static QStringList s_runtimePlatform;
++    RootContext *contextObj;
+ };
+ 
+ }
+-- 
+2.0.0
+
