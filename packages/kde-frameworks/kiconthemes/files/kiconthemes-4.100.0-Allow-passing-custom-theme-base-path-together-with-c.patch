@@ -1,0 +1,147 @@
+Upstream: yes
+Reason: allow building of plasma-workspace against this version
+
+From f23fb35f2daed4671089c70f46356d74a59b6840 Mon Sep 17 00:00:00 2001
+From: Martin Klapetek <mklapetek@kde.org>
+Date: Fri, 6 Jun 2014 14:31:35 +0200
+Subject: [PATCH] Allow passing custom theme base path together with custom app
+ themes
+
+KIconTheme in kdelibs4 was searching
+KGlobal::dirs()->resourceDirs("data") to find all icons; the status notifier dataengine was then setting custom resourceDirs(..) with custom SNI theme paths (which the SNIs can pass) and so the SNI icons always ended up in the theme search paths (the SNI icons are stored as a whole theme).
+
+With the port to QStandardPaths, we lost the ability to pass custom dirs
+into the theme search paths and that results in status notifier icons in
+Plasma Next having "unknown" icons as their icon theme paths are not
+searched and so icons are not found. This is the case mostly of the Qt4
+apps running on Qt with the QSystrayIcon-to-SNI-patches (case of *buntu
+and I heard opensuse too?)
+
+KIconLoader however has "addAppDir(..)" method, so I expanded that
+method to actually take an "app dir" and add it to the theme search
+paths. Plasma Next now have proper icons in the systray.
+
+REVIEW: 118561
+---
+ src/kiconloader.cpp | 16 ++++++++--------
+ src/kiconloader.h   |  8 ++++++--
+ src/kicontheme.cpp  |  9 ++++++++-
+ src/kicontheme.h    |  4 +++-
+ 4 files changed, 25 insertions(+), 12 deletions(-)
+
+diff --git a/src/kiconloader.cpp b/src/kiconloader.cpp
+index 4080a1d..6e22f3e 100644
+--- a/src/kiconloader.cpp
++++ b/src/kiconloader.cpp
+@@ -202,7 +202,7 @@ public:
+      * @internal
+      * Adds themes installed in the application's directory.
+      **/
+-    void addAppThemes(const QString &appname);
++    void addAppThemes(const QString &appname, const QString &themeBaseDir = QString());
+ 
+     /**
+      * @internal
+@@ -576,28 +576,28 @@ QStringList KIconLoader::searchPaths() const
+     return d->searchPaths;
+ }
+ 
+-void KIconLoader::addAppDir(const QString &appname)
++void KIconLoader::addAppDir(const QString &appname, const QString &themeBaseDir)
+ {
+     d->initIconThemes();
+ 
+     d->searchPaths.append(appname + "/pics");
+-    d->addAppThemes(appname);
++    d->addAppThemes(appname, themeBaseDir);
+ }
+ 
+-void KIconLoaderPrivate::addAppThemes(const QString &appname)
++void KIconLoaderPrivate::addAppThemes(const QString &appname, const QString &themeBaseDir)
+ {
+     initIconThemes();
+ 
+-    KIconTheme *def = new KIconTheme(KIconTheme::current(), appname);
++    KIconTheme *def = new KIconTheme("hicolor", appname, themeBaseDir);
+     if (!def->isValid()) {
+         delete def;
+-        def = new KIconTheme(KIconTheme::defaultThemeName(), appname);
++        def = new KIconTheme(KIconTheme::defaultThemeName(), appname, themeBaseDir);
+     }
+     KIconThemeNode *node = new KIconThemeNode(def);
+     bool addedToLinks = false;
+ 
+-    if (!mThemesInTree.contains(node->theme->internalName())) {
+-        mThemesInTree.append(node->theme->internalName());
++    if (!mThemesInTree.contains(appname)) {
++        mThemesInTree.append(appname);
+         links.append(node);
+         addedToLinks = true;
+     }
+diff --git a/src/kiconloader.h b/src/kiconloader.h
+index 68ccd09..6168a7a 100644
+--- a/src/kiconloader.h
++++ b/src/kiconloader.h
+@@ -199,10 +199,14 @@ public:
+     static KIconLoader *global();
+ 
+     /**
+-     * Adds @p appname to the list of application specific directories.
++     * Adds @p appname to the list of application specific directories with @p themeBaseDir as its base directory.
++     * Assume the icons are in /home/user/app/icons/hicolor/48x48/my_app.png, the base directory would be
++     * /home/user/app/icons; KIconLoader automatically searches @p themeBaseDir + "/hicolor"
++     * This directory must contain a dir structure as defined by the XDG icons specification
+      * @param appname The application name.
++     * @param themeBaseDir The base directory of the application's theme (eg. "/home/user/app/icons")
+      */
+-    void addAppDir(const QString &appname);
++    void addAppDir(const QString &appname, const QString &themeBaseDir = QString());
+ 
+     /**
+      * Loads an icon. It will try very hard to find an icon which is
+diff --git a/src/kicontheme.cpp b/src/kicontheme.cpp
+index 12337e8..4f0e522 100644
+--- a/src/kicontheme.cpp
++++ b/src/kicontheme.cpp
+@@ -115,7 +115,9 @@ private:
+     QString mBaseDirThemeDir;
+ };
+ 
+-KIconTheme::KIconTheme(const QString &name, const QString &appName)
++
++
++KIconTheme::KIconTheme(const QString &name, const QString &appName, const QString &basePathHint)
+     : d(new KIconThemePrivate)
+ {
+ 
+@@ -137,6 +139,11 @@ KIconTheme::KIconTheme(const QString &name, const QString &appName)
+                 themeDirs += cDir + '/';
+             }
+         }
++
++        if (!basePathHint.isEmpty()) {
++            // Checks for dir existing are done below
++            themeDirs += basePathHint + '/' + name + '/';
++        }
+     }
+     // Find the theme description file. These are always global.
+ 
+diff --git a/src/kicontheme.h b/src/kicontheme.h
+index 73011e2..ca04879 100644
+--- a/src/kicontheme.h
++++ b/src/kicontheme.h
+@@ -50,8 +50,10 @@ public:
+      * @param name the name of the theme (e.g. "hicolor" or "keramik")
+      * @param appName the name of the application. Can be null. This argument
+      *        allows applications to have themed application icons.
++     * @param basePathHint optional hint where to search the app themes.
++     *        This is appended at the end of the search paths
+      */
+-    explicit KIconTheme(const QString &name, const QString &appName = QString());
++    explicit KIconTheme(const QString &name, const QString &appName = QString(), const QString &basePathHint = QString());
+     ~KIconTheme();
+ 
+     /**
+-- 
+2.0.0
+
