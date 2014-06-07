@@ -60,7 +60,7 @@ DEPENDENCIES+="
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/qt:4[dbus][sql][webkit]
-        barcodes? ( kde/prison )
+        barcodes? ( kde/prison[qt4(+)] )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=2.0.0]
         )
@@ -68,12 +68,12 @@ DEPENDENCIES+="
         kde_parts:ktimetracker? ( x11-libs/libXScrnSaver )
 "
 
-if ever at_least 4.12.90 ; then
+if ever at_least 4.13.2 ; then
     DEPENDENCIES+="
         build+run:
             kde/baloo[>=4.13.0]
             kde/kdelibs:${SLOT}[>=4.12.0]
-            server-pim/akonadi[>=1.12.0]
+            server-pim/akonadi[>=1.12.1]
             googledrive? ( app-pim/libkgapi[>=2.1.0] )
     "
 else
