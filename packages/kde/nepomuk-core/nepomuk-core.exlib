@@ -15,6 +15,7 @@ MYOPTIONS="doc
     pdf    [[ description = [ Support for extracting metadata from pdf files ] ]]
     taglib [[ description = [ Support for extracting metadata from music files ] ]]
 "
+ever at_least 4.13.2 && MYOPTIONS+=" baloo-migrator [[ description = [ Builds a tool that helps you migrate from nepomuk to baloo ] ]]"
 
 DEPENDENCIES="
     build:
@@ -31,12 +32,18 @@ DEPENDENCIES="
         taglib? ( media-libs/taglib )
 "
 
-if ever at_least 4.12.80 ; then
+if ever at_least 4.13.2 ; then
     DEPENDENCIES+="
         build+run:
-            kde/baloo:${SLOT}
-            kde/kfilemetadata:${SLOT}
+            baloo-migrator? (
+                kde/baloo:${SLOT}
+                kde/kfilemetadata:${SLOT}
+            )
     "
+    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+        'baloo-migrator Baloo'
+        'baloo-migrator KFileMetaData'
+    )
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
