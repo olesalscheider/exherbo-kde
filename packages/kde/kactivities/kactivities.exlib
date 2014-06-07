@@ -7,6 +7,8 @@ SUMMARY="KDE activity manager and libraries"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
+ever at_least 4.13.2 && \
+MYOPTIONS+=" daemon [[ description = [ Build the daemon and sevices. Enable this if you want to use the daemon from KDE4. ] ]]"
 
 DEPENDENCIES="
     build+run:
@@ -17,4 +19,19 @@ DEPENDENCIES="
         x11-libs/libX11
         x11-libs/qt:4[opengl][sql]
 "
+
+if ever at_least 4.13.2 ; then
+    DEPENDENCIES+="
+        build+run:
+            !kde-frameworks/kactivities:5[daemon=]
+    "
+
+    CMAKE_SRC_CONFIGURE_OPTIONS+=( '!daemon KACTIVITIES_LIBRARY_ONLY' )
+else
+    DEPENDENCIES+="
+        build+run:
+            !kde-frameworks/kactivities:5[daemon]
+    "
+fi
+
 
