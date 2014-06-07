@@ -6,27 +6,25 @@ require kde.org [ kde_major_version='5' ]
 SUMMARY="Runtime and library to organize the user work in separate activities"
 
 LICENCES="GPL-2"
-MYOPTIONS=""
+MYOPTIONS="daemon [[ description = [ Build the daemon and sevices. Enable this if you want to use the daemon from KF5. ] ]]"
 
 DEPENDENCIES="
     build+run:
         kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
+        daemon? (
+            dev-libs/boost[>=1.49]
+            kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
+            kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
+            kde-frameworks/kio:5[>=${KF5_MIN_VER}]
+            kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+            kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
+            x11-libs/qtbase:5[>=5.2.0][sql]
+            x11-libs/qtdeclarative:5[>=5.2.0]
+        )
+        !kde/kactivities:4[daemon=]
 "
 
-# build+run: if KACTIVITIES_LIBRARY_ONLY=FALSE
-#        dev-libs/boost[>=1.49]
-#        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
-#        kde-frameworks/kcoreaddons:5[>=${KF5_MIN_VER}]
-#        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
-#        kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
-#        x11-libs/qtbase:5[>=5.2.0][sql]
-#        x11-libs/qtdeclarative:5[>=5.2.0]
-
-# TODO: remove KACTIVITIES_LIBRARY_ONLY if kactivitymanagerd can be
-# coinstalled with KDE
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DCMAKE_AUTOMOC:BOOL=TRUE
-    -DKACTIVITIES_LIBRARY_ONLY:BOOL=TRUE
-)
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_AUTOMOC:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTIONS+=( '!daemon KACTIVITIES_LIBRARY_ONLY' )
 
