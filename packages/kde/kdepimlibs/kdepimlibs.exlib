@@ -29,7 +29,7 @@ DEPENDENCIES="
         office-libs/libical[>=0.42] [[ note = [ >=1.0 is recommended for 4.11, but not yet in our repo ] ]]
         x11-libs/qt:4[>=4.8.0]
         x11-misc/shared-mime-info[>=0.30]
-        barcodes? ( kde/prison )
+        barcodes? ( kde/prison[qt4(+)] )
         ldap? ( net-directory/openldap )
 "
 
