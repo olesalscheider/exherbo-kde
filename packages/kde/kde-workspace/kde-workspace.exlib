@@ -116,7 +116,7 @@ DEPENDENCIES="
             x11-libs/libXinerama
             x11-libs/libXScrnSaver [[ note = krunner ]]
             x11-libs/libXxf86misc [[ note = krunner ]]
-            barcodes? ( kde/prison ) [[ note = klipper ]]
+            barcodes? ( kde/prison[qt4(+)] ) [[ note = klipper ]]
             ieee1394? ( media-libs/libraw1394 )
             wayland? (
                 sys-libs/wayland
@@ -159,7 +159,6 @@ DEPENDENCIES="
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-usbids.patch
     "${FILES}"/kde-workspace-4.11.0-kdm-logind-multiseat.patch
-    "${FILES}"/kdm-DesktopNames-4.11.9.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
