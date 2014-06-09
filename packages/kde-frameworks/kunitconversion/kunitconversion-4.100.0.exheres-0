@@ -3,5 +3,14 @@
 
 require kunitconversion
 
+MYOPTIONS="
+    ( linguas:
+        ar ast bg bs ca ca@valencia cs da de el en_GB eo es et eu fi fr ga gl
+        hr hu ia is it ja kk ko lt lv mr ms nb nds nl nn pa pl pt pt_BR ro ru
+        se sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta th tr ug uk
+        zh_CN zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
