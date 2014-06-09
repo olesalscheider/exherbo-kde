@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' translations=true ]
+require kde.org [ kde_major_version='5' ] frameworks [ translations='qt' ]
 
 SUMMARY="Integration with X11 and window managers"
 DESCRIPTION="
@@ -12,7 +12,15 @@ allows asking the window manager to change the using a more high-level
 interface than the NETWinInfo/NETRootInfo low-level classes."
 
 LICENCES="LGPL-2.1"
-MYOPTIONS=""
+MYOPTIONS="
+    ( linguas:
+        af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb
+        cy da de el en_GB eo es et eu fa fi fr fy ga gl gu ha he hi hne hr hsb
+        hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds
+        ne nl nn or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian
+        sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic
+        vi wa xh zh_CN zh_HK zh_TW
+    )"
 
 DEPENDENCIES="
     build:
