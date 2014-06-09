@@ -3,5 +3,14 @@
 
 require solid
 
+MYOPTIONS="
+    ( linguas:
+        ar bg bs ca ca@valencia cs da de el en_GB eo es et eu fi fr ga gl he
+        hr hu ia is it ja kk km ko lt lv ml mr ms nb nds nl nn pa pl pt pt_BR
+        ro ru se sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta th tr
+        ug uk zh_CN zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
