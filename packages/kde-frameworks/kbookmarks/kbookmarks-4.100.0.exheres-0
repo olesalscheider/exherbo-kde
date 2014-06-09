@@ -3,5 +3,15 @@
 
 require kbookmarks
 
+MYOPTIONS="
+    ( linguas:
+        af ar ast be be@latin bg bn br bs ca ca@valencia cs csb cy da de el
+        en_GB eo es et eu fa fi fr fy ga gl gu he hi hr hsb hu ia is it ja kk
+        km ko ku lt lv mai mk ml mr ms nb nds ne nl nn pa pl pt pt_BR ro ru se
+        sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta tg th tr ug
+        uk uz uz@cyrillic vi wa xh zh_CN zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
