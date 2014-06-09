@@ -3,5 +3,15 @@
 
 require ktexteditor
 
+MYOPTIONS="
+    ( linguas:
+        af ar ast be bg bn br bs ca ca@valencia cs cy da de el en_GB eo es et
+        eu fa fi fr fy ga gl gu he hi hr hsb hu ia is it ja ka kk km ko ku lb
+        lt lv mai mk ml mr ms nb nds ne nl nn pa pl pt pt_BR ro ru se si sk sl
+        sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta tg th tr ug uk uz
+        uz@cyrillic vi wa xh zh_CN zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
