@@ -3,5 +3,12 @@
 
 require frameworkintegration
 
+MYOPTIONS="
+    ( linguas:
+        ca cs de es fi gl hu ia it ko nds nl pl pt pt_BR ro sk sr
+        sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
