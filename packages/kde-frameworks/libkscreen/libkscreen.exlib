@@ -2,7 +2,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' module=libkscreen ]
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="KDE's screen management library"
 
@@ -30,11 +30,4 @@ DEPENDENCIES="
 RESTRICT=test
 
 BUGS_TO="heirecka@exherbo.org"
-
-src_install() {
-    kde.org_src_install
-
-    # Rename the pkg config file to avoid file collisions.
-    edo mv "${IMAGE}"/usr/${LIBDIR}/pkgconfig/{kscreen.pc,kf5screen.pc}
-}
 
