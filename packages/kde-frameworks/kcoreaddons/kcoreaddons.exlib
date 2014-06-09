@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' translations=true ]
+require kde.org [ kde_major_version='5' ] frameworks [ translations='qt' ]
 
 SUMMARY="Addons to QtCore"
 DESCRIPTION="
@@ -22,7 +22,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( FAM )
 
 src_prepare() {
-    cmake_src_prepare
+    frameworks_src_prepare
 
     # TODO: Fix the tests, the second one is probably some race condition, fails unreliably.
     edo sed -e '/kshelltest/d' \
