@@ -3,5 +3,14 @@
 
 require kactivities
 
+MYOPTIONS="
+    ( linguas:
+        ar bg bs ca ca@valencia cs da de el en_GB es et eu fi fr ga gl gu he hi
+        hr hu ia is it ja kk km kn ko lt lv mr ms nb nds nl nn pa pl pt pt_BR
+        ro ru se sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv tg th tr
+        ug uk wa zh_CN zh_TW
+    )
+"
+
 PLATFORMS="~amd64 ~x86"
 
