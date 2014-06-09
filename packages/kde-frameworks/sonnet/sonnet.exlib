@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' translations=true ]
+require kde.org [ kde_major_version='5' ] frameworks [ translations='qt' ]
 
 SUMMARY="A plugin-based spell-checking framework for Qt-base applications"
 DESCRIPTION="
@@ -15,6 +15,7 @@ MYOPTIONS="
     aspell   [[ description = [ Use aspell as a spelling backend ] ]]
     hunspell [[ description = [ Use hunspell as a spelling backend ] ]]
     hspell   [[ description = [ Use hpell as a spelling backend for Hebrew ] ]]
+
     ( aspell hunspell hspell ) [[ number-selected = at-least-one ]]"
 #    enchant [[ description = [ Use enchant as a spelling backend ] ]]
 
