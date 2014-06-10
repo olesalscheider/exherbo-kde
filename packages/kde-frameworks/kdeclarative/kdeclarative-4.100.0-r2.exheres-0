@@ -1,0 +1,14 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeclarative
+
+PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Provide-i18nd-wrappers-in-kdeclarative.patch
+    "${FILES}"/${PNV}-add-a-getter-for-translation-domain.patch
+    "${FILES}"/${PNV}-crash.patch
+    "${FILES}"/${PNV}-make-setTranslationDomain-less-order-dependent.patch
+)
+
