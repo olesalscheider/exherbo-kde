@@ -1,0 +1,59 @@
+Upstream: yes
+
+From f4a2d0144c6e92aceadbe48eed4696d736a83f13 Mon Sep 17 00:00:00 2001
+From: Montel Laurent <montel@kde.org>
+Date: Tue, 3 Jun 2014 13:49:13 +0200
+Subject: [PATCH 2/2] As discussed with david don't allow to use
+ setSuffix(QString) if you want it uses directly QSpinBox
+
+---
+ autotests/kpluralhandlingspinboxtest.cpp | 10 ----------
+ autotests/kpluralhandlingspinboxtest.h   |  1 -
+ src/widgets/kpluralhandlingspinbox.h     |  1 -
+ 3 files changed, 12 deletions(-)
+
+diff --git a/autotests/kpluralhandlingspinboxtest.cpp b/autotests/kpluralhandlingspinboxtest.cpp
+index 1b123b0..3927b66 100644
+--- a/autotests/kpluralhandlingspinboxtest.cpp
++++ b/autotests/kpluralhandlingspinboxtest.cpp
+@@ -67,13 +67,3 @@ void KPluralHandlingSpinBoxTest::shouldReturnEmptySuffix()
+     QCOMPARE(spinbox.suffix(), QString());
+ }
+ 
+-void KPluralHandlingSpinBoxTest::shouldReturnDefaultSuffixWhenUseQSpinBoxDefaultSuffixFunction()
+-{
+-    KPluralHandlingSpinBox spinbox;
+-    spinbox.setSuffix(QLatin1Literal("suffix"));
+-    spinbox.setValue(2);
+-    QCOMPARE(spinbox.suffix(), QLatin1String("suffix"));
+-    spinbox.setValue(1);
+-    QCOMPARE(spinbox.suffix(), QLatin1String("suffix"));
+-}
+-
+diff --git a/autotests/kpluralhandlingspinboxtest.h b/autotests/kpluralhandlingspinboxtest.h
+index e7677c2..013d089 100644
+--- a/autotests/kpluralhandlingspinboxtest.h
++++ b/autotests/kpluralhandlingspinboxtest.h
+@@ -34,7 +34,6 @@ private Q_SLOTS:
+     void shouldUsePlurialValueWhenUseValueSuperiorToOne();
+     void shouldUseSingularValueWhenWeChangeValueAndFinishWithValueEqualOne();
+     void shouldReturnEmptySuffix();
+-    void shouldReturnDefaultSuffixWhenUseQSpinBoxDefaultSuffixFunction();
+ };
+ 
+ #endif // KPLURALHANDLINGSPINBOXTEST_H
+diff --git a/src/widgets/kpluralhandlingspinbox.h b/src/widgets/kpluralhandlingspinbox.h
+index c181942..ef8f6bf 100644
+--- a/src/widgets/kpluralhandlingspinbox.h
++++ b/src/widgets/kpluralhandlingspinbox.h
+@@ -48,7 +48,6 @@ public:
+      * Use this to add a plural-aware suffix, e.g. by using ki18np("singular", "plural").
+      */
+     void setSuffix(const KLocalizedString &suffix);
+-    using QSpinBox::setSuffix;
+ private:
+     class KPluralHandlingSpinBoxPrivate;
+     friend class KPluralHandlingSpinBoxPrivate;
+-- 
+2.0.0
+

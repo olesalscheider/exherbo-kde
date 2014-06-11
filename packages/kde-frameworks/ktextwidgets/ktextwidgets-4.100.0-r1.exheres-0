@@ -16,3 +16,8 @@ MYOPTIONS="
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-Add-KPluralHandlingSpinbox-to-allow-to-add-plural-i1.patch
+    "${FILES}"/0002-As-discussed-with-david-don-t-allow-to-use-setSuffix.patch
+)
+
