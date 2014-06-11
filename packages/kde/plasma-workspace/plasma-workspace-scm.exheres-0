@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 11f0f399d6b5a412bd7172e5bf31dac164075090
+# last checked commit: 636b51962def2b64b6c3bba8e7e9458a4e860dc6
 
 require plasma-workspace
 
