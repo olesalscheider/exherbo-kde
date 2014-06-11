@@ -1,19 +1,20 @@
-Upstream: posted for review https://git.reviewboard.kde.org/r/118438/
-From d2cc7b378136e544246bf38344ed88885c2b41ed Mon Sep 17 00:00:00 2001
+Upstream: temporary patch until binaries are split out
+
+From 9a91415ce778a444bd93fc4182894bd9bada8868 Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
-Date: Sat, 31 May 2014 12:32:30 +0200
-Subject: [PATCH 1/2] Add an option to build only the baloo libraries
+Date: Wed, 11 Jun 2014 17:33:14 +0200
+Subject: [PATCH] Add an option to build only the baloo libraries
 
 ---
- src/CMakeLists.txt      |  15 ++++--
- src/file/CMakeLists.txt | 125 +++++++++++++++++++++++++-----------------------
- 2 files changed, 74 insertions(+), 66 deletions(-)
+ src/CMakeLists.txt      |  16 ++++--
+ src/file/CMakeLists.txt | 126 ++++++++++++++++++++++++------------------------
+ 2 files changed, 75 insertions(+), 67 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index de04402..6021130 100644
+index 8131d22..11cdf78 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -1,8 +1,13 @@
+@@ -1,8 +1,14 @@
 +option(BALOO_LIBRARIES_ONLY "If true, compiles only the Baloo libraries, without binaries, kioslaves." OFF)
 +
  add_subdirectory(core)
@@ -32,15 +33,18 @@ index de04402..6021130 100644
 +    add_subdirectory(runner)
 +    #add_subdirectory(queryparser)
 +endif ()
++
 diff --git a/src/file/CMakeLists.txt b/src/file/CMakeLists.txt
-index 4f9fb9d..318b289 100644
+index dd2e2b2..abf385e 100644
 --- a/src/file/CMakeLists.txt
 +++ b/src/file/CMakeLists.txt
-@@ -1,74 +1,77 @@
+@@ -1,74 +1,76 @@
  kde_enable_exceptions()
  
  add_subdirectory(lib)
 -add_subdirectory(search)
++if (NOT BALOO_LIBRARIES_ONLY)
++    add_subdirectory(search)
  
 -set(file_SRCS
 -    # Filewatch
@@ -48,9 +52,7 @@ index 4f9fb9d..318b289 100644
 -    activefilequeue.cpp
 -    metadatamover.cpp
 -    database.cpp
-+if (NOT BALOO_LIBRARIES_ONLY
-+    add_subdirectory(search)
- 
+-
 -    # File Indexer
 -    fileindexer.cpp
 -    fileindexerconfig.cpp
@@ -132,9 +134,9 @@ index 4f9fb9d..318b289 100644
 -    KF5::Crash
 -    KF5::ConfigCore
 -    ${XAPIAN_LIBRARIES}
--    baloocore
--    baloofiles
--    balooxapian
+-    KF5::BalooCore
+-    KF5::BalooFiles
+-    KF5::BalooXapian
 -)
 +    add_executable(baloo_file ${file_SRCS})
  
@@ -153,9 +155,9 @@ index 4f9fb9d..318b289 100644
 +        KF5::Crash
 +        KF5::ConfigCore
 +        ${XAPIAN_LIBRARIES}
-+        baloocore
-+        baloofiles
-+        balooxapian
++        KF5::BalooCore
++        KF5::BalooFiles
++        KF5::BalooXapian
 +    )
 +
 +    install(TARGETS baloo_file ${INSTALL_TARGETS_DEFAULT_ARGS})
@@ -177,4 +179,3 @@ index 4f9fb9d..318b289 100644
 +endif()
 -- 
 2.0.0
-

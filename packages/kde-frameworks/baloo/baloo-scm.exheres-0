@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 8d13b51a6adcd9d5b3b127058020a7003d56bd59
+# last checked commit: b8c97e07f618ff7cb68a4156bdc68056650c598a
 
 require kde.org [ kde_major_version='5' ]
 
@@ -19,6 +19,7 @@ DEPENDENCIES="
         kde-frameworks/kconfig:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kcrash:5
+        kde-frameworks/kdelibs4support:5
         kde-frameworks/kfilemetadata:5[>=4.97.0]
         kde-frameworks/ki18n:5
         kde-frameworks/kidletime:5
@@ -45,7 +46,6 @@ RESTRICT="test"
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/0001-Adapt-to-KFileMetaData-becoming-a-framework.patch
     "${FILES}"/0001-Add-an-option-to-build-only-the-baloo-libraries.patch
-    "${FILES}"/0002-Install-as-a-framework-to-make-baloo-coinstallable.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBALOO_LIBRARIES_ONLY:BOOL=TRUE )
