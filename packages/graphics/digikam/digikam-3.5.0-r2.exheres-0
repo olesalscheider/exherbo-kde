@@ -32,7 +32,6 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         app-crypt/qca:2
-        dev-db/mysql
         dev-libs/boost
         dev-libs/expat[>=2.0.1]   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
         dev-libs/libxml2:2.0[>=2.7] [[ description = [ Htmlexport ] ]]
@@ -54,6 +53,7 @@ DEPENDENCIES="
         media-libs/opencv[>=2.4.4] [[ note = [ For Libkface ] ]]
         media-libs/tiff[>=3.8.2] [[ note = [ Can work with >=3.6.x but >=3.8.2 recommended ] ]]
         sci-libs/eigen:3
+        virtual/mysql
         x11-dri/mesa[>=7.0.4]       [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libX11[>=1.1.5]    [[ description = [ For Slideshow and ImageViewer ] ]]
         x11-libs/libXrandr [[ description = [ For Slideshow and ImageViewer ] ]]
