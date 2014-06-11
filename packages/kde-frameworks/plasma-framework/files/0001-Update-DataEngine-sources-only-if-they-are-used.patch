@@ -1,0 +1,43 @@
+Upstream: yes
+
+From e558e446582e3ac08625ea4154d14401c0defd01 Mon Sep 17 00:00:00 2001
+From: Marco Martin <notmart@gmail.com>
+Date: Mon, 9 Jun 2014 13:24:16 +0200
+Subject: [PATCH] export the applet we're configuring
+
+---
+ src/plasmaquick/configview.cpp | 5 +++++
+ src/plasmaquick/configview.h   | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/src/plasmaquick/configview.cpp b/src/plasmaquick/configview.cpp
+index 62a3fea..db6ee46 100644
+--- a/src/plasmaquick/configview.cpp
++++ b/src/plasmaquick/configview.cpp
+@@ -255,6 +255,11 @@ void ConfigView::init()
+     setSource(QUrl::fromLocalFile(d->corona->package().filePath("appletconfigurationui")));
+ }
+ 
++Plasma::Applet *ConfigView::applet()
++{
++    return d->applet.data();
++}
++
+ ConfigModel *ConfigView::configModel() const
+ {
+     return d->configModel;
+diff --git a/src/plasmaquick/configview.h b/src/plasmaquick/configview.h
+index 441fdbb..42e241f 100644
+--- a/src/plasmaquick/configview.h
++++ b/src/plasmaquick/configview.h
+@@ -63,6 +63,8 @@ public:
+ 
+     virtual void init();
+ 
++    Plasma::Applet *applet();
++
+     QString appletGlobalShortcut() const;
+     void setAppletGlobalShortcut(const QString &shortcut);
+ 
+-- 
+2.0.0
