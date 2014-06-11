@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 9f6e0ce1918a86f67d475d0782e9efa52b2cda58
+# last checked commit: 45fa539ec0c8e96ae1f895144936291f9e09a3f7
 
 require kde.org [ kde_major_version='5' ]
 
@@ -17,7 +17,6 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/baloo:5[>=4.60]
         kde-frameworks/kdeclarative:5
         kde-frameworks/ki18n:5
         kde-frameworks/kio:5
@@ -27,7 +26,7 @@ DEPENDENCIES="
         x11-libs/qtdeclarative:5
         x11-libs/qtscript:5
         x11-libs/qtwebkit:5
+    run:
+        kde-frameworks/baloo:5 [[ note = [ Baloo provides a runner which is used via krunner ] ]]
 "
-
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-Adapt-to-changes-in-baloo.patch )
 
