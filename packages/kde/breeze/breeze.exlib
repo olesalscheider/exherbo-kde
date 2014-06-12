@@ -10,14 +10,15 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kwin:${SLOT}
         kde-frameworks/kconfig:5
-        kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
-        x11-libs/qtdeclarative:5[>=5.2.0]
-        x11-libs/qttools:5[>=5.2.0]
-        x11-libs/qtx11extras:5[>=5.2.0]
     run:
         x11-libs/qtquickcontrols:5[>=5.2.0]
 "
+# #add_subdirectory(code) in windec/CMakeLists.txt
+#        kde/kwin:${SLOT}
+#        kde-frameworks/kconfigwidgets:5
+#        x11-libs/qtdeclarative:5[>=5.2.0]
+#        x11-libs/qttools:5[>=5.2.0]
+#        x11-libs/qtx11extras:5[>=5.2.0]
 
