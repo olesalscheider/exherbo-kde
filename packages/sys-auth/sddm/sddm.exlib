@@ -19,7 +19,7 @@ DEPENDENCIES="
     build:
         virtual/pkg-config
     build+run:
-        sys-apps/systemd
+        sys-apps/systemd [[ note = [ Uses logind ] ]]
         sys-libs/pam [[ note = [ Optional ] ]]
         user/sddm
         x11-libs/libxcb
