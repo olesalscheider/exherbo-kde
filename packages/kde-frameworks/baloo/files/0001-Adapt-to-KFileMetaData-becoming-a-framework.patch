@@ -20,7 +20,7 @@ index 7a07aa4..0a92171 100644
 -find_package(KF5 REQUIRED COMPONENTS I18n Config Service IdleTime KCMUtils Auth Runner Crash Solid KIO KDELibs4Support)
 -find_package(KFileMetaData 4.97 REQUIRED)
 +find_package(KF5 REQUIRED COMPONENTS I18n Config Service IdleTime KCMUtils Auth Runner Crash Solid KIO Auth KDELibs4Support)
-+find_package(KF5 REQUIRED KFileMetaData)
++find_package(KF5 REQUIRED FileMetaData)
  
  include(ECMSetupVersion)
  include(ECMAddTests)
