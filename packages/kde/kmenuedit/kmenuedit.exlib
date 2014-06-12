@@ -30,8 +30,3 @@ DEPENDENCIES="
         !kde/kde-workspace[-kf5-coinstall]
 "
 
-# we don't want the whole kde-workspace checkout, only the kmenuedit directory
-if ! ever is_scm ; then
-    CMAKE_SOURCE=${WORKBASE}/kde-workspace-${PV}/${PN}
-fi
-
