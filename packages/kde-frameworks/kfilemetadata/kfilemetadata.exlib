@@ -31,7 +31,6 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-Rename-for-coinstallability-with-kde4-version.patch
-    "${FILES}"/0001-Install-headers-similar-as-other-frameworks.patch
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
