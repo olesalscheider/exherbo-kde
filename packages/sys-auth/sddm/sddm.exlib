@@ -32,3 +32,10 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DUSE_QT5=TRUE )
 
+src_prepare() {
+    default
+
+    # Don't set PrivateTmp in the service file
+    edo sed -e '/PrivateTmp/d' -i "${CMAKE_SOURCE}"/services/sddm.service.in
+}
+
