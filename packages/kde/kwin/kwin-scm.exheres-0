@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: c16472e53507ee05efbb9860ce78b808fcd18839
+# last checked commit: 54d85c8a734c00bcd562de6032c6d0be1314edf0
 
 require kwin
 
