@@ -32,3 +32,7 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'X X11'
 )
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-XCB-is-searched-for-in-the-top-level-cmake-file.patch
+)
+

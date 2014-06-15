@@ -1,0 +1,51 @@
+From 86f8dab0a3b55f01527022a2d1d5535cca846774 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Sun, 15 Jun 2014 14:16:55 +0200
+Subject: [PATCH] XCB is searched for in the top level cmake file.
+
+Use XCB::XCB instead of ${XCB_LIBRARIES}.
+---
+ kstyle/CMakeLists.txt    | 6 +-----
+ liboxygen/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/kstyle/CMakeLists.txt b/kstyle/CMakeLists.txt
+index 165b62a..0fca1da 100644
+--- a/kstyle/CMakeLists.txt
++++ b/kstyle/CMakeLists.txt
+@@ -3,10 +3,6 @@ project(kstyle-oxygen)
+ ################# X11 #################
+ add_definitions( -DHAVE_X11=${X11_FOUND} )
+ 
+-if(X11_FOUND)
+-    find_package(XCB REQUIRED)
+-endif()
+-
+ ################# includes #################
+ include_directories(
+     animations
+@@ -81,7 +77,7 @@ target_link_libraries(oxygen KF5::GuiAddons KF5::Style KF5::WindowSystem)
+ target_link_libraries(oxygen oxygenstyle5)
+ 
+ if(X11_FOUND)
+-  target_link_libraries(oxygen ${XCB_LIBRARIES})
++  target_link_libraries(oxygen XCB::XCB)
+   target_link_libraries(oxygen Qt5::X11Extras)
+ endif()
+ 
+diff --git a/liboxygen/CMakeLists.txt b/liboxygen/CMakeLists.txt
+index 0d1dd94..90d790c 100644
+--- a/liboxygen/CMakeLists.txt
++++ b/liboxygen/CMakeLists.txt
+@@ -34,7 +34,7 @@ target_link_libraries(oxygenstyle5
+ )
+ target_include_directories(oxygenstyle5 PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+ if( X11_FOUND )
+-    target_link_libraries(oxygenstyle5 PRIVATE ${XCB_LIBRARIES} Qt5::X11Extras)
++    target_link_libraries(oxygenstyle5 PRIVATE XCB::XCB Qt5::X11Extras)
+ endif()
+ 
+ set_target_properties(oxygenstyle5 PROPERTIES VERSION 5.0.0 SOVERSION 5 )
+-- 
+2.0.0
+
