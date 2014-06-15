@@ -1,0 +1,1240 @@
+Upstream: yes
+
+From bb2374e19505d5c6a72039a46d55ec3f632192f4 Mon Sep 17 00:00:00 2001
+From: Kai Uwe Broulik <kde@privat.broulik.de>
+Date: Thu, 5 Jun 2014 12:03:45 +0200
+Subject: [PATCH 1/2] Add timeToFull/timeToEmpty, recall notice and
+ FullyCharged to Solid::Battery
+
+This adds the following functionality to Solid::Battery:
+
+- timeToFull and timeToEmpty (at the moment provided by PowerDevil but for all batteries combined, this patch does it individually for each)
+- rename isPlugged to isPresent (as plugged always confused me - it has nothing to do with whether AC is plugged in but if the battery is "present in its bay", it's also the name of the UPower iface)
+- FullyCharged battery state, we cannot rely on the battery being 100%, and since the info is provided by UPower (not on HAL), why not use it
+- RecallVendor/RecallUrl when a battery has been recalled by the vendor, currently provided/handled by PowerDevil
+- Serial number of the battery
+
+Sorry for the hard to read patch but I also re-ordered some methods to have the order in all implementations and headers the same.
+
+REVIEW: 117339
+---
+ src/solid/devices/backends/fakehw/fakebattery.cpp  |  45 +++++-
+ src/solid/devices/backends/fakehw/fakebattery.h    |  21 ++-
+ src/solid/devices/backends/hal/halbattery.cpp      |  76 +++++++--
+ src/solid/devices/backends/hal/halbattery.h        |  20 ++-
+ .../devices/backends/upower/upowerbattery.cpp      |  85 ++++++++--
+ src/solid/devices/backends/upower/upowerbattery.h  |  37 ++++-
+ src/solid/devices/frontend/battery.cpp             |  80 ++++++++--
+ src/solid/devices/frontend/battery.h               | 173 +++++++++++++++++----
+ src/solid/devices/ifaces/battery.h                 | 126 +++++++++++++--
+ 9 files changed, 558 insertions(+), 105 deletions(-)
+
+diff --git a/src/solid/devices/backends/fakehw/fakebattery.cpp b/src/solid/devices/backends/fakehw/fakebattery.cpp
+index 9af4c6c..f90cb76 100644
+--- a/src/solid/devices/backends/fakehw/fakebattery.cpp
++++ b/src/solid/devices/backends/fakehw/fakebattery.cpp
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -32,9 +33,9 @@ FakeBattery::~FakeBattery()
+ {
+ }
+ 
+-bool FakeBattery::isPlugged() const
++bool FakeBattery::isPresent() const
+ {
+-    return fakeDevice()->property("isPlugged").toBool();
++    return fakeDevice()->property("isPresent").toBool();
+ }
+ 
+ Solid::Battery::BatteryType FakeBattery::type() const
+@@ -93,11 +94,23 @@ Solid::Battery::ChargeState FakeBattery::chargeState() const
+         return Solid::Battery::Charging;
+     } else if (state == "discharging") {
+         return Solid::Battery::Discharging;
++    } else if (state == "fullyCharged") {
++        return Solid::Battery::FullyCharged;
+     } else {
+         return Solid::Battery::NoCharge;
+     }
+ }
+ 
++qlonglong FakeBattery::timeToEmpty() const
++{
++    return fakeDevice()->property("timeToEmpty").toLongLong();
++}
++
++qlonglong FakeBattery::timeToFull() const
++{
++    return fakeDevice()->property("timeToFull").toLongLong();
++}
++
+ void FakeBattery::setChargeState(Solid::Battery::ChargeState newState)
+ {
+     QString name;
+@@ -112,6 +125,9 @@ void FakeBattery::setChargeState(Solid::Battery::ChargeState newState)
+     case Solid::Battery::NoCharge:
+         name = "noCharge";
+         break;
++    case Solid::Battery::FullyCharged:
++        name = "fullyCharged";
++        break;
+     }
+ 
+     fakeDevice()->setProperty("chargeState", name);
+@@ -143,3 +159,28 @@ double FakeBattery::voltage() const
+ {
+     return fakeDevice()->property("voltage").toDouble();
+ }
++
++double FakeBattery::temperature() const
++{
++    return fakeDevice()->property("temperature").toDouble();
++}
++
++bool FakeBattery::isRecalled() const
++{
++    return fakeDevice()->property("isRecalled").toBool();
++}
++
++QString FakeBattery::recallVendor() const
++{
++    return fakeDevice()->property("recallVendor").toString();
++}
++
++QString FakeBattery::recallUrl() const
++{
++    return fakeDevice()->property("recallUrl").toString();
++}
++
++QString FakeBattery::serial() const
++{
++    return fakeDevice()->property("serial").toString();
++}
+diff --git a/src/solid/devices/backends/fakehw/fakebattery.h b/src/solid/devices/backends/fakehw/fakebattery.h
+index fdb4bcc..3066f24 100644
+--- a/src/solid/devices/backends/fakehw/fakebattery.h
++++ b/src/solid/devices/backends/fakehw/fakebattery.h
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -41,7 +42,7 @@ public:
+     virtual ~FakeBattery();
+ 
+ public Q_SLOTS:
+-    virtual bool isPlugged() const;
++    virtual bool isPresent() const;
+     virtual Solid::Battery::BatteryType type() const;
+ 
+     virtual int chargePercent() const;
+@@ -49,7 +50,10 @@ public Q_SLOTS:
+ 
+     virtual bool isRechargeable() const;
+     virtual bool isPowerSupply() const;
++
+     virtual Solid::Battery::ChargeState chargeState() const;
++    virtual qlonglong timeToEmpty() const;
++    virtual qlonglong timeToFull() const;
+ 
+     void setChargeState(Solid::Battery::ChargeState newState);
+     void setChargeLevel(int newLevel);
+@@ -61,15 +65,26 @@ public Q_SLOTS:
+     virtual double energyRate() const;
+ 
+     virtual double voltage() const;
++    virtual double temperature() const;
++
++    virtual bool isRecalled() const;
++    virtual QString recallVendor() const;
++    virtual QString recallUrl() const;
++
++    virtual QString serial() const;
+ 
+ Q_SIGNALS:
++    void presentStateChanged(bool newState, const QString &udi);
+     void chargePercentChanged(int value, const QString &udi);
+     void capacityChanged(int value, const QString &udi);
++    void powerSupplyStateChanged(bool newState, const QString &udi);
+     void chargeStateChanged(int newState, const QString &udi);
+-    void plugStateChanged(bool newState, const QString &udi);
++    void timeToEmptyChanged(qlonglong time, const QString &udi);
++    void timeToFullChanged(qlonglong time, const QString &udi);
+     void energyChanged(double energy, const QString &udi);
+     void energyRateChanged(double energyRate, const QString &udi);
+-    void powerSupplyStateChanged(bool newState, const QString &udi);
++    void voltageChanged(double voltage, const QString &udi);
++    void temperatureChanged(double temperature, const QString &udi);
+ };
+ }
+ }
+diff --git a/src/solid/devices/backends/hal/halbattery.cpp b/src/solid/devices/backends/hal/halbattery.cpp
+index a2ac83d..24dde4b 100644
+--- a/src/solid/devices/backends/hal/halbattery.cpp
++++ b/src/solid/devices/backends/hal/halbattery.cpp
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -35,14 +36,14 @@ Battery::~Battery()
+ 
+ }
+ 
+-bool Battery::isPlugged() const
++bool Battery::isPresent() const
+ {
+-    return m_device->prop("battery.present").toBool();
++    return static_cast<HalDevice *>(m_device)->prop("battery.present").toBool();
+ }
+ 
+ Solid::Battery::BatteryType Battery::type() const
+ {
+-    QString name = m_device->prop("battery.type").toString();
++    QString name = static_cast<HalDevice *>(m_device)->prop("battery.type").toString();
+ 
+     if (name == "pda") {
+         return Solid::Battery::PdaBattery;
+@@ -65,20 +66,20 @@ Solid::Battery::BatteryType Battery::type() const
+ 
+ int Battery::chargePercent() const
+ {
+-    return m_device->prop("battery.charge_level.percentage").toInt();
++    return static_cast<HalDevice *>(m_device)->prop("battery.charge_level.percentage").toInt();
+ }
+ 
+ int Battery::capacity() const
+ {
+-    const qreal lastFull = m_device->prop("battery.charge_level.last_full").toDouble();
+-    const qreal designFull = m_device->prop("battery.charge_level.design").toDouble();
++    const qreal lastFull = static_cast<HalDevice *>(m_device)->prop("battery.charge_level.last_full").toDouble();
++    const qreal designFull = static_cast<HalDevice *>(m_device)->prop("battery.charge_level.design").toDouble();
+ 
+     return lastFull / designFull * 100;
+ }
+ 
+ bool Battery::isRechargeable() const
+ {
+-    return m_device->prop("battery.is_rechargeable").toBool();
++    return static_cast<HalDevice *>(m_device)->prop("battery.is_rechargeable").toBool();
+ }
+ 
+ bool Battery::isPowerSupply() const
+@@ -94,8 +95,8 @@ bool Battery::isPowerSupply() const
+ 
+ Solid::Battery::ChargeState Battery::chargeState() const
+ {
+-    bool charging = m_device->prop("battery.rechargeable.is_charging").toBool();
+-    bool discharging = m_device->prop("battery.rechargeable.is_discharging").toBool();
++    bool charging = static_cast<HalDevice *>(m_device)->prop("battery.rechargeable.is_charging").toBool();
++    bool discharging = static_cast<HalDevice *>(m_device)->prop("battery.rechargeable.is_discharging").toBool();
+ 
+     if (!charging && !discharging) {
+         return Solid::Battery::NoCharge;
+@@ -106,9 +107,20 @@ Solid::Battery::ChargeState Battery::chargeState() const
+     }
+ }
+ 
++qlonglong Battery::timeToEmpty() const
++{
++    // NOTE Hal doesn't differentiate between time to empty and full
++    return static_cast<HalDevice *>(m_device)->prop("battery.remaining_time").toLongLong();
++}
++
++qlonglong Battery::timeToFull() const
++{
++    return static_cast<HalDevice *>(m_device)->prop("battery.remaining_time").toLongLong();
++}
++
+ Solid::Battery::Technology Battery::technology() const
+ {
+-    const QString tech = m_device->prop("battery.technology").toString();
++    const QString tech = static_cast<HalDevice *>(m_device)->prop("battery.technology").toString();
+ 
+     if (tech == "lithium-ion") {
+         return Solid::Battery::LithiumIon;
+@@ -127,21 +139,50 @@ Solid::Battery::Technology Battery::technology() const
+ 
+ double Battery::energy() const
+ {
+-    return m_device->prop("battery.charge_level.current").toInt() / 1000;
++    return static_cast<HalDevice *>(m_device)->prop("battery.charge_level.current").toInt() / 1000;
+ }
+ 
+ double Battery::energyRate() const
+ {
+-    return m_device->prop("battery.charge_level.rate").toInt() / 1000;
++    return static_cast<HalDevice *>(m_device)->prop("battery.charge_level.rate").toInt() / 1000;
+ }
+ 
+ double Battery::voltage() const
+ {
+-    return m_device->prop("battery.voltage.current").toInt() / 1000;
++    return static_cast<HalDevice *>(m_device)->prop("battery.voltage.current").toInt() / 1000;
++}
++
++double Battery::temperature() const
++{
++    return 0; // not supported by HAL
++}
++
++bool Battery::isRecalled() const
++{
++    return static_cast<HalDevice *>(m_device)->prop("info.is_recalled").toBool();
++}
++
++QString Battery::recallVendor() const
++{
++    return static_cast<HalDevice *>(m_device)->prop("info.recall.vendor").toString();
++}
++
++QString Battery::recallUrl() const
++{
++    return static_cast<HalDevice *>(m_device)->prop("info.recall.website_url").toString();
++}
++
++QString Battery::serial() const
++{
++    return static_cast<HalDevice *>(m_device)->prop("system.hardware.serial").toString();
+ }
+ 
+ void Battery::slotPropertyChanged(const QMap<QString, int> &changes)
+ {
++    if (changes.contains("battery.present")) {
++        emit presentStateChanged(isPresent(), m_device->udi());
++    }
++
+     if (changes.contains("battery.charge_level.percentage")) {
+         emit chargePercentChanged(chargePercent(), m_device->udi());
+     }
+@@ -156,8 +197,9 @@ void Battery::slotPropertyChanged(const QMap<QString, int> &changes)
+         emit chargeStateChanged(chargeState(), m_device->udi());
+     }
+ 
+-    if (changes.contains("battery.present")) {
+-        emit plugStateChanged(isPlugged(), m_device->udi());
++    if (changes.contains("battery.remaining_time")) {
++        emit timeToEmptyChanged(timeToEmpty(), m_device->udi());
++        emit timeToFullChanged(timeToFull(), m_device->udi());
+     }
+ 
+     if (changes.contains("battery.charge_level.current")) {
+@@ -168,4 +210,8 @@ void Battery::slotPropertyChanged(const QMap<QString, int> &changes)
+         emit energyRateChanged(energyRate(), m_device->udi());
+     }
+ 
++    if (changes.contains("battery.voltage.current")) {
++        emit voltageChanged(voltage(), m_device->udi());
++    }
++
+ }
+diff --git a/src/solid/devices/backends/hal/halbattery.h b/src/solid/devices/backends/hal/halbattery.h
+index 1e60aeb..0d91009 100644
+--- a/src/solid/devices/backends/hal/halbattery.h
++++ b/src/solid/devices/backends/hal/halbattery.h
+@@ -39,7 +39,7 @@ public:
+     Battery(HalDevice *device);
+     virtual ~Battery();
+ 
+-    virtual bool isPlugged() const;
++    virtual bool isPresent() const;
+     virtual Solid::Battery::BatteryType type() const;
+ 
+     virtual int chargePercent() const;
+@@ -47,7 +47,10 @@ public:
+ 
+     virtual bool isRechargeable() const;
+     virtual bool isPowerSupply() const;
++
+     virtual Solid::Battery::ChargeState chargeState() const;
++    virtual qlonglong timeToEmpty() const;
++    virtual qlonglong timeToFull() const;
+ 
+     virtual Solid::Battery::Technology technology() const;
+ 
+@@ -56,15 +59,26 @@ public:
+     virtual double energyRate() const;
+ 
+     virtual double voltage() const;
++    virtual double temperature() const;
++
++    virtual bool isRecalled() const;
++    virtual QString recallVendor() const;
++    virtual QString recallUrl() const;
++
++    virtual QString serial() const;
+ 
+ Q_SIGNALS:
++    void presentStateChanged(bool newState, const QString &udi);
+     void chargePercentChanged(int value, const QString &udi);
+     void capacityChanged(int value, const QString &udi);
++    void powerSupplyStateChanged(bool newState, const QString &udi); // dummy
+     void chargeStateChanged(int newState, const QString &udi);
+-    void plugStateChanged(bool newState, const QString &udi);
++    void timeToEmptyChanged(qlonglong time, const QString &udi);
++    void timeToFullChanged(qlonglong time, const QString &udi);
+     void energyChanged(double energy, const QString &udi);
+     void energyRateChanged(double energyRate, const QString &udi);
+-    void powerSupplyStateChanged(bool newState, const QString &udi); // dummy
++    void voltageChanged(double voltage, const QString &udi);
++    void temperatureChanged(double temperature, const QString &udi); // dummy
+ 
+ private Q_SLOTS:
+     void slotPropertyChanged(const QMap<QString, int> &changes);
+diff --git a/src/solid/devices/backends/upower/upowerbattery.cpp b/src/solid/devices/backends/upower/upowerbattery.cpp
+index c771f68..7c1689e 100644
+--- a/src/solid/devices/backends/upower/upowerbattery.cpp
++++ b/src/solid/devices/backends/upower/upowerbattery.cpp
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2009 Pino Toscano <pino@kde.org>
+     Copyright 2010, 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -35,7 +36,7 @@ Battery::~Battery()
+ {
+ }
+ 
+-bool Battery::isPlugged() const
++bool Battery::isPresent() const
+ {
+     return m_device.data()->prop("IsPresent").toBool();
+ }
+@@ -108,7 +109,8 @@ Solid::Battery::ChargeState Battery::chargeState() const
+         break;
+     case 3: // TODO "Empty"
+         break;
+-    case 4: // TODO "Fully charged"
++    case 4:
++        result = Solid::Battery::FullyCharged;
+         break;
+     case 5: // TODO "Pending charge"
+         break;
+@@ -118,6 +120,16 @@ Solid::Battery::ChargeState Battery::chargeState() const
+     return result;
+ }
+ 
++qlonglong Battery::timeToEmpty() const
++{
++    return m_device.data()->prop("TimeToEmpty").toLongLong();
++}
++
++qlonglong Battery::timeToFull() const
++{
++    return m_device.data()->prop("TimeToFull").toLongLong();
++}
++
+ Solid::Battery::Technology Battery::technology() const
+ {
+     const uint tech = m_device.data()->prop("Technology").toUInt();
+@@ -154,36 +166,73 @@ double Battery::voltage() const
+     return m_device.data()->prop("Voltage").toDouble();
+ }
+ 
++double Battery::temperature() const
++{
++    return m_device.data()->prop("Temperature").toDouble();
++}
++
++bool Battery::isRecalled() const
++{
++    return m_device.data()->prop("RecallNotice").toBool();
++}
++
++QString Battery::recallVendor() const
++{
++    return m_device.data()->prop("RecallVendor").toString();
++}
++
++QString Battery::recallUrl() const
++{
++    return m_device.data()->prop("RecallUrl").toString();
++}
++
++QString Battery::serial() const
++{
++    return m_device.data()->prop("Serial").toString();
++}
++
+ void Battery::slotChanged()
+ {
+     if (m_device) {
++        const bool old_isPresent = m_isPresent;
+         const int old_chargePercent = m_chargePercent;
+         const int old_capacity = m_capacity;
++        const bool old_isPowerSupply = m_isPowerSupply;
+         const Solid::Battery::ChargeState old_chargeState = m_chargeState;
++        const qlonglong old_timeToEmpty = m_timeToEmpty;
++        const qlonglong old_timeToFull = m_timeToFull;
+         const double old_energy = m_energy;
+         const double old_energyRate = m_energyRate;
+-        const bool old_isPlugged = m_isPlugged;
+-        const bool old_isPowerSupply = m_isPowerSupply;
++        const double old_voltage = m_voltage;
++        const double old_temperature = m_temperature;
+         updateCache();
+ 
+-        if (old_chargePercent != m_chargePercent) {
+-            emit chargePercentChanged(m_chargePercent, m_device.data()->udi());
++        if (old_isPresent != m_isPresent) {
++            emit presentStateChanged(m_isPresent, m_device.data()->udi());
+         }
+ 
+-        if (old_chargeState != m_chargeState) {
+-            emit chargeStateChanged(m_chargeState, m_device.data()->udi());
++        if (old_chargePercent != m_chargePercent) {
++            emit chargePercentChanged(m_chargePercent, m_device.data()->udi());
+         }
+ 
+         if (old_capacity != m_capacity) {
+             emit capacityChanged(m_capacity, m_device.data()->udi());
+         }
+ 
++        if (old_isPowerSupply != m_isPowerSupply) {
++            emit powerSupplyStateChanged(m_isPowerSupply, m_device.data()->udi());
++        }
++
+         if (old_chargeState != m_chargeState) {
+             emit chargeStateChanged(m_chargeState, m_device.data()->udi());
+         }
+ 
+-        if (old_isPlugged != m_isPlugged) {
+-            emit plugStateChanged(m_isPlugged, m_device.data()->udi());
++        if (old_timeToEmpty != m_timeToEmpty) {
++            emit timeToEmptyChanged(m_timeToEmpty, m_device.data()->udi());
++        }
++
++        if (old_timeToFull != m_timeToFull) {
++            emit timeToFullChanged(m_timeToFull, m_device.data()->udi());
+         }
+ 
+         if (old_energy != m_energy) {
+@@ -194,19 +243,27 @@ void Battery::slotChanged()
+             emit energyRateChanged(m_energyRate, m_device.data()->udi());
+         }
+ 
+-        if (old_isPowerSupply != m_isPowerSupply) {
+-            emit powerSupplyStateChanged(m_isPowerSupply, m_device.data()->udi());
++        if (old_voltage != m_voltage) {
++            emit voltageChanged(m_voltage, m_device.data()->udi());
++        }
++
++        if (old_temperature != m_temperature) {
++            emit temperatureChanged(m_temperature, m_device.data()->udi());
+         }
+     }
+ }
+ 
+ void Battery::updateCache()
+ {
+-    m_isPlugged = isPlugged();
++    m_isPresent = isPresent();
+     m_chargePercent = chargePercent();
+     m_capacity = capacity();
++    m_isPowerSupply = isPowerSupply();
+     m_chargeState = chargeState();
++    m_timeToEmpty = timeToEmpty();
++    m_timeToFull = timeToFull();
+     m_energy = energy();
+     m_energyRate = energyRate();
+-    m_isPowerSupply = isPowerSupply();
++    m_voltage = voltage();
++    m_temperature = temperature();
+ }
+diff --git a/src/solid/devices/backends/upower/upowerbattery.h b/src/solid/devices/backends/upower/upowerbattery.h
+index 9b49d32..0f0c7b6 100644
+--- a/src/solid/devices/backends/upower/upowerbattery.h
++++ b/src/solid/devices/backends/upower/upowerbattery.h
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2009 Pino Toscano <pino@kde.org>
+     Copyright 2010, 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -40,7 +41,7 @@ public:
+     Battery(UPowerDevice *device);
+     virtual ~Battery();
+ 
+-    virtual bool isPlugged() const;
++    virtual bool isPresent() const;
+ 
+     virtual Solid::Battery::BatteryType type() const;
+ 
+@@ -54,6 +55,10 @@ public:
+ 
+     virtual Solid::Battery::ChargeState chargeState() const;
+ 
++    virtual qlonglong timeToEmpty() const;
++
++    virtual qlonglong timeToFull() const;
++
+     virtual Solid::Battery::Technology technology() const;
+ 
+     virtual double energy() const;
+@@ -62,16 +67,28 @@ public:
+ 
+     virtual double voltage() const;
+ 
+-    // TODO report stuff like time-to-full, vendor, etc.
++    virtual double temperature() const;
++
++    virtual bool isRecalled() const;
++
++    virtual QString recallVendor() const;
++
++    virtual QString recallUrl() const;
++
++    virtual QString serial() const;
+ 
+ Q_SIGNALS:
+-    void chargePercentChanged(int value, const QString &udi);
++    void presentStateChanged(bool newState, const QString &udi);
++    void chargePercentChanged(int value, const QString &udi = QString());
+     void capacityChanged(int value, const QString &udi);
+-    void chargeStateChanged(int newState, const QString &udi);
+-    void plugStateChanged(bool newState, const QString &udi);
++    void powerSupplyStateChanged(bool newState, const QString &udi);
++    void chargeStateChanged(int newState, const QString &udi = QString());
++    void timeToEmptyChanged(qlonglong time, const QString &udi);
++    void timeToFullChanged(qlonglong time, const QString &udi);
+     void energyChanged(double energy, const QString &udi);
+     void energyRateChanged(double energyRate, const QString &udi);
+-    void powerSupplyStateChanged(bool newState, const QString &udi);
++    void voltageChanged(double voltage, const QString &udi);
++    void temperatureChanged(double temperature, const QString &udi);
+ 
+ private Q_SLOTS:
+     void slotChanged();
+@@ -79,13 +96,17 @@ private Q_SLOTS:
+ private:
+     void updateCache();
+ 
+-    bool m_isPlugged;
++    bool m_isPresent;
+     int m_chargePercent;
+     int m_capacity;
++    bool m_isPowerSupply;
+     Solid::Battery::ChargeState m_chargeState;
++    qlonglong m_timeToEmpty;
++    qlonglong m_timeToFull;
+     double m_energy;
+     double m_energyRate;
+-    bool m_isPowerSupply;
++    double m_voltage;
++    double m_temperature;
+ };
+ }
+ }
+diff --git a/src/solid/devices/frontend/battery.cpp b/src/solid/devices/frontend/battery.cpp
+index e433582..7b95fc9 100644
+--- a/src/solid/devices/frontend/battery.cpp
++++ b/src/solid/devices/frontend/battery.cpp
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006-2007 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -28,17 +29,26 @@
+ Solid::Battery::Battery(QObject *backendObject)
+     : DeviceInterface(*new BatteryPrivate(), backendObject)
+ {
++    connect(backendObject, SIGNAL(presentStateChanged(bool,QString)),
++            this, SIGNAL(presentStateChanged(bool,QString)));
++
+     connect(backendObject, SIGNAL(chargePercentChanged(int,QString)),
+             this, SIGNAL(chargePercentChanged(int,QString)));
+ 
+     connect(backendObject, SIGNAL(capacityChanged(int,QString)),
+             this, SIGNAL(capacityChanged(int,QString)));
+ 
++    connect(backendObject, SIGNAL(powerSupplyStateChanged(bool,QString)),
++            this, SIGNAL(powerSupplyStateChanged(bool,QString)));
++
+     connect(backendObject, SIGNAL(chargeStateChanged(int,QString)),
+             this, SIGNAL(chargeStateChanged(int,QString)));
+ 
+-    connect(backendObject, SIGNAL(plugStateChanged(bool,QString)),
+-            this, SIGNAL(plugStateChanged(bool,QString)));
++    connect(backendObject, SIGNAL(timeToEmptyChanged(qlonglong,QString)),
++            this, SIGNAL(timeToEmptyChanged(qlonglong,QString)));
++
++    connect(backendObject, SIGNAL(timeToFullChanged(qlonglong,QString)),
++            this, SIGNAL(timeToFullChanged(qlonglong,QString)));
+ 
+     connect(backendObject, SIGNAL(energyChanged(double,QString)),
+             this, SIGNAL(energyChanged(double,QString)));
+@@ -46,8 +56,12 @@ Solid::Battery::Battery(QObject *backendObject)
+     connect(backendObject, SIGNAL(energyRateChanged(double,QString)),
+             this, SIGNAL(energyRateChanged(double,QString)));
+ 
+-    connect(backendObject, SIGNAL(powerSupplyStateChanged(bool,QString)),
+-            this, SIGNAL(powerSupplyStateChanged(bool,QString)));
++    connect(backendObject, SIGNAL(voltageChanged(double,QString)),
++            this, SIGNAL(voltageChanged(double,QString)));
++
++    connect(backendObject, SIGNAL(temperatureChanged(double,QString)),
++            this, SIGNAL(temperatureChanged(double,QString)));
++
+ }
+ 
+ Solid::Battery::~Battery()
+@@ -55,16 +69,10 @@ Solid::Battery::~Battery()
+ 
+ }
+ 
+-bool Solid::Battery::isPlugged() const
++bool Solid::Battery::isPresent() const
+ {
+     Q_D(const Battery);
+-    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), false, isPlugged());
+-}
+-
+-bool Solid::Battery::isPowerSupply() const
+-{
+-    Q_D(const Battery);
+-    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), true, isPowerSupply());
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), false, isPresent());
+ }
+ 
+ Solid::Battery::BatteryType Solid::Battery::type() const
+@@ -91,12 +99,30 @@ bool Solid::Battery::isRechargeable() const
+     return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), false, isRechargeable());
+ }
+ 
++bool Solid::Battery::isPowerSupply() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), true, isPowerSupply());
++}
++
+ Solid::Battery::ChargeState Solid::Battery::chargeState() const
+ {
+     Q_D(const Battery);
+     return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), NoCharge, chargeState());
+ }
+ 
++qlonglong Solid::Battery::timeToEmpty() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), 0, timeToEmpty());
++}
++
++qlonglong Solid::Battery::timeToFull() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), 0, timeToFull());
++}
++
+ Solid::Battery::Technology Solid::Battery::technology() const
+ {
+     Q_D(const Battery);
+@@ -120,3 +146,33 @@ double Solid::Battery::voltage() const
+     Q_D(const Battery);
+     return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), 0.0, voltage());
+ }
++
++double Solid::Battery::temperature() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), 0.0, temperature());
++}
++
++bool Solid::Battery::isRecalled() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), false, isRecalled());
++}
++
++QString Solid::Battery::recallVendor() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), QString(), recallVendor());
++}
++
++QString Solid::Battery::recallUrl() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), QString(), recallUrl());
++}
++
++QString Solid::Battery::serial() const
++{
++    Q_D(const Battery);
++    return_SOLID_CALL(Ifaces::Battery *, d->backendObject(), QString(), serial());
++}
+diff --git a/src/solid/devices/frontend/battery.h b/src/solid/devices/frontend/battery.h
+index bbf2201..e8cf3c4 100644
+--- a/src/solid/devices/frontend/battery.h
++++ b/src/solid/devices/frontend/battery.h
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006-2007 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -38,13 +39,23 @@ class SOLID_EXPORT Battery : public DeviceInterface
+ {
+     Q_OBJECT
+     Q_ENUMS(BatteryType ChargeState)
+-    Q_PROPERTY(bool plugged READ isPlugged)
+-    Q_PROPERTY(bool powerSupply READ isPowerSupply)
+-    Q_PROPERTY(BatteryType type READ type)
+-    Q_PROPERTY(int chargePercent READ chargePercent)
+-    Q_PROPERTY(int capacity READ capacity)
+-    Q_PROPERTY(bool rechargeable READ isRechargeable)
+-    Q_PROPERTY(ChargeState chargeState READ chargeState)
++    Q_PROPERTY(bool present READ isPresent NOTIFY presentStateChanged)
++    Q_PROPERTY(BatteryType type READ type CONSTANT)
++    Q_PROPERTY(int chargePercent READ chargePercent NOTIFY chargePercentChanged)
++    Q_PROPERTY(int capacity READ capacity NOTIFY capacityChanged)
++    Q_PROPERTY(bool rechargeable READ isRechargeable CONSTANT)
++    Q_PROPERTY(bool powerSupply READ isPowerSupply NOTIFY powerSupplyStateChanged)
++    Q_PROPERTY(ChargeState chargeState READ chargeState NOTIFY chargeStateChanged)
++    Q_PROPERTY(qlonglong timeToEmpty READ timeToEmpty NOTIFY timeToEmptyChanged)
++    Q_PROPERTY(qlonglong timeToFull READ timeToFull NOTIFY timeToFullChanged)
++    Q_PROPERTY(double energy READ energy NOTIFY energyChanged)
++    Q_PROPERTY(double energyRate READ energyRate NOTIFY energyRateChanged)
++    Q_PROPERTY(double voltage READ voltage NOTIFY voltageChanged)
++    Q_PROPERTY(double temperature READ temperature NOTIFY temperatureChanged)
++    Q_PROPERTY(bool recalled READ isRecalled)
++    Q_PROPERTY(QString recallVendor READ recallVendor)
++    Q_PROPERTY(QString recallUrl READ recallUrl)
++    Q_PROPERTY(QString serial READ serial)
+     Q_DECLARE_PRIVATE(Battery)
+     friend class Device;
+ 
+@@ -76,8 +87,10 @@ public:
+      *              the state is Unknown
+      * - Charging : Battery is charging
+      * - Discharging : Battery is discharging
++     * - FullyCharged: The battery is fully charged; a battery not neccessarily
++     *                 charges up to 100%
+      */
+-    enum ChargeState { NoCharge, Charging, Discharging };
++    enum ChargeState { NoCharge, Charging, Discharging, FullyCharged };
+ 
+     /**
+       * Technology used in the battery
+@@ -123,19 +136,11 @@ public:
+     }
+ 
+     /**
+-     * Indicates if this battery is plugged.
++     * Indicates if this battery is currently present in its bay.
+      *
+-     * @return true if the battery is plugged, false otherwise
++     * @return true if the battery is present, false otherwise
+      */
+-    bool isPlugged() const;
+-
+-    /**
+-     * Indicates if this battery is powering the machine or from an attached deviced.
+-     *
+-     * @since 4.11
+-     * @return true the battery is a powersupply, false otherwise
+-     */
+-    bool isPowerSupply() const;
++    bool isPresent() const;
+ 
+     /**
+      * Retrieves the type of device holding this battery.
+@@ -143,7 +148,7 @@ public:
+      * @return the type of device holding this battery
+      * @see Solid::Battery::BatteryType
+      */
+-    BatteryType type() const;
++    Solid::Battery::BatteryType type() const;
+ 
+     /**
+      * Retrieves the current charge level of the battery normalised
+@@ -172,13 +177,36 @@ public:
+     bool isRechargeable() const;
+ 
+     /**
++     * Indicates if the battery is powering the machine.
++     *
++     * @return true if the battery is powersupply, false otherwise
++     */
++    bool isPowerSupply() const;
++
++    /**
+      * Retrieves the current charge state of the battery. It can be in a stable
+      * state (no charge), charging or discharging.
+      *
+      * @return the current battery charge state
+      * @see Solid::Battery::ChargeState
+      */
+-    ChargeState chargeState() const;
++    Solid::Battery::ChargeState chargeState() const;
++
++    /**
++     * Time (in seconds) until the battery is empty.
++     *
++     * @return time until the battery is empty
++     * @since 5.0
++     */
++    qlonglong timeToEmpty() const;
++
++    /**
++     * Time (in seconds) until the battery is full.
++     *
++     * @return time until the battery is full
++     * @since 5.0
++     */
++    qlonglong timeToFull() const;
+ 
+     /**
+       * Retrieves the technology used to manufacture the battery.
+@@ -211,8 +239,57 @@ public:
+       */
+     double voltage() const;
+ 
++    /**
++     * The temperature of the battery in degrees Celsius.
++     *
++     * @return the battery temperature in degrees Celsius
++     * @since 5.0
++     */
++    double temperature() const;
++
++    /**
++     * The battery may have been recalled by the vendor due to a suspected fault.
++     *
++     * @return true if the battery has been recalled, false otherwise
++     * @since 5.0
++     */
++    bool isRecalled() const;
++
++    /**
++     * The vendor that has recalled the battery.
++     *
++     * @return the vendor name that has recalled the battery
++     * @since 5.0
++     */
++    QString recallVendor() const;
++
++    /**
++     * The website URL of the vendor that has recalled the battery.
++     *
++     * @return the website URL of the vendor that has recalled the battery
++     * @since 5.0
++     */
++    QString recallUrl() const;
++
++    /**
++     * The serial number of the battery
++     *
++     * @return the serial number of the battery
++     * @since 5.0
++     */
++    QString serial() const;
++
+ Q_SIGNALS:
+     /**
++     * This signal is emitted if the battery get plugged in/out of the
++     * battery bay.
++     *
++     * @param newState the new plugging state of the battery, type is boolean
++     * @param udi the UDI of the battery with thew new plugging state
++     */
++    void presentStateChanged(bool newState, const QString &udi);
++
++    /**
+      * This signal is emitted when the charge percent value of this
+      * battery has changed.
+      *
+@@ -231,6 +308,16 @@ Q_SIGNALS:
+     void capacityChanged(int value, const QString &udi);
+ 
+     /**
++     * This signal is emitted when the power supply state of the battery
++     * changes.
++     *
++     * @param newState the new power supply state, type is boolean
++     * @param udi the UDI of the battery with the new power supply state
++     * @since 4.11
++     */
++    void powerSupplyStateChanged(bool newState, const QString &udi);
++
++    /**
+      * This signal is emitted when the charge state of this battery
+      * has changed.
+      *
+@@ -239,16 +326,27 @@ Q_SIGNALS:
+      * @see Solid::Battery::ChargeState
+      * @param udi the UDI of the battery with the new charge state
+      */
+-    void chargeStateChanged(int newState, const QString &udi);
++    void chargeStateChanged(int newState, const QString &udi = QString());
+ 
+     /**
+-     * This signal is emitted if the battery get plugged in/out of the
+-     * battery bay.
++     * This signal is emitted when the time until the battery is empty
++     * has changed.
+      *
+-     * @param newState the new plugging state of the battery, type is boolean
+-     * @param udi the UDI of the battery with the new plugging state
++     * @param time the new remaining time
++     * @param udi the UDI of the battery with the new remaining time
++     * @since 5.0
++     */
++    void timeToEmptyChanged(qlonglong time, const QString &udi);
++
++    /**
++     * This signal is emitted when the time until the battery is full
++     * has changed.
++     *
++     * @param time the new remaining time
++     * @param udi the UDI of the battery with the new remaining time
++     * @since 5.0
+      */
+-    void plugStateChanged(bool newState, const QString &udi);
++    void timeToFullChanged(qlonglong time, const QString &udi);
+ 
+     /**
+      * This signal is emitted when the energy value of this
+@@ -271,14 +369,23 @@ Q_SIGNALS:
+     void energyRateChanged(double energyRate, const QString &udi);
+ 
+     /**
+-     * This signal is emitted when the power supply state of the battery
+-     * changes.
++     * This signal is emitted when the voltage in the cell has changed.
+      *
+-     * @param newState the new power supply state, type is boolean
+-     * @param udi the UDI of the battery with the new power supply state
+-     * @since 4.11
++     * @param voltage the new voltage of the cell
++     * @param udi the UDI of the battery with the new voltage
++     * @since 5.0
+      */
+-    void powerSupplyStateChanged(bool newState, const QString &udi);
++    void voltageChanged(double voltage, const QString &udi);
++
++    /**
++     * This signal is emitted when the battery temperature has changed.
++     *
++     * @param temperature the new temperature of the battery in degrees Celsius
++     * @param udi the UDI of the battery with the new temperature
++     * @since 5.0
++     */
++    void temperatureChanged(double temperature, const QString &udi);
++
+ };
+ }
+ 
+diff --git a/src/solid/devices/ifaces/battery.h b/src/solid/devices/ifaces/battery.h
+index 79e0d60..055af62 100644
+--- a/src/solid/devices/ifaces/battery.h
++++ b/src/solid/devices/ifaces/battery.h
+@@ -1,6 +1,7 @@
+ /*
+     Copyright 2006 Kevin Ottens <ervin@kde.org>
+     Copyright 2012 Lukas Tinkl <ltinkl@redhat.com>
++    Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+@@ -41,11 +42,11 @@ public:
+     virtual ~Battery();
+ 
+     /**
+-     * Indicates if this battery is plugged.
++     * Indicates if this battery is currently present in its bay.
+      *
+-     * @return true if the battery is plugged, false otherwise
++     * @return true if the battery is present, false otherwise
+      */
+-    virtual bool isPlugged() const = 0;
++    virtual bool isPresent() const = 0;
+ 
+     /**
+      * Retrieves the type of device holding this battery.
+@@ -98,6 +99,22 @@ public:
+     virtual Solid::Battery::ChargeState chargeState() const = 0;
+ 
+     /**
++     * Time (in seconds) until the battery is empty.
++     *
++     * @return time until the battery is empty
++     * @since 5.0
++     */
++    virtual qlonglong timeToEmpty() const = 0;
++
++    /**
++     * Time (in seconds) until the battery is full.
++     *
++     * @return time until the battery is full
++     * @since 5.0
++     */
++    virtual qlonglong timeToFull() const = 0;
++
++    /**
+       * Retrieves the technology used to manufacture the battery.
+       *
+       * @return the battery technology
+@@ -128,9 +145,58 @@ public:
+       */
+     virtual double voltage() const = 0;
+ 
++    /**
++     * The temperature of the battery in degrees Celsius.
++     *
++     * @return the battery temperature in degrees Celsius
++     * @since 5.0
++     */
++    virtual double temperature() const = 0;
++
++    /**
++     * The battery may have been recalled by the vendor due to a suspected fault.
++     *
++     * @return true if the battery has been recalled, false otherwise
++     * @since 5.0
++     */
++    virtual bool isRecalled() const = 0;
++
++    /**
++     * The vendor that has recalled the battery.
++     *
++     * @return the vendor name that has recalled the battery
++     * @since 5.0
++     */
++    virtual QString recallVendor() const = 0;
++
++    /**
++     * The website URL of the vendor that has recalled the battery.
++     *
++     * @return the website URL of the vendor that has recalled the battery
++     * @since 5.0
++     */
++    virtual QString recallUrl() const = 0;
++
++    /**
++     * The serial number of the battery
++     *
++     * @return the serial number of the battery
++     * @since 5.0
++     */
++    virtual QString serial() const = 0;
++
+ protected:
+     //Q_SIGNALS:
+     /**
++     * This signal is emitted if the battery get plugged in/out of the
++     * battery bay.
++     *
++     * @param newState the new plugging state of the battery, type is boolean
++     * @param udi the UDI of the battery with thew new plugging state
++     */
++    virtual void presentStateChanged(bool newState, const QString &udi) = 0;
++
++    /**
+      * This signal is emitted when the charge percent value of this
+      * battery has changed.
+      *
+@@ -149,6 +215,16 @@ protected:
+     virtual void capacityChanged(int value, const QString &udi) = 0;
+ 
+     /**
++     * This signal is emitted when the power supply state of the battery
++     * changes.
++     *
++     * @param newState the new power supply state, type is boolean
++     * @param udi the UDI of the battery with the new power supply state
++     * @since 4.11
++     */
++    virtual void powerSupplyStateChanged(bool newState, const QString &udi) = 0;
++
++    /**
+      * This signal is emitted when the charge state of this battery
+      * has changed.
+      *
+@@ -157,16 +233,27 @@ protected:
+      * @see Solid::Battery::ChargeState
+      * @param udi the UDI of the battery with the new charge state
+      */
+-    virtual void chargeStateChanged(int newState, const QString &udi) = 0;
++    virtual void chargeStateChanged(int newState, const QString &udi = QString()) = 0;
+ 
+     /**
+-     * This signal is emitted if the battery get plugged in/out of the
+-     * battery bay.
++     * This signal is emitted when the time until the battery is empty
++     * has changed.
+      *
+-     * @param newState the new plugging state of the battery, type is boolean
+-     * @param udi the UDI of the battery with thew new plugging state
++     * @param time the new remaining time
++     * @param udi the UDI of the battery with the new remaining time
++     * @since 5.0
+      */
+-    virtual void plugStateChanged(bool newState, const QString &udi) = 0;
++    virtual void timeToEmptyChanged(qlonglong time, const QString &udi) = 0;
++
++    /**
++     * This signal is emitted when the time until the battery is full
++     * has changed.
++     *
++     * @param time the new remaining time
++     * @param udi the UDI of the battery with the new remaining time
++     * @since 5.0
++     */
++    virtual void timeToFullChanged(qlonglong time, const QString &udi) = 0;
+ 
+     /**
+      * This signal is emitted when the energy value of this
+@@ -189,14 +276,23 @@ protected:
+     virtual void energyRateChanged(double energyRate, const QString &udi) = 0;
+ 
+     /**
+-     * This signal is emitted when the power supply state of the battery
+-     * changes.
++     * This signal is emitted when the voltage in the cell has changed.
+      *
+-     * @param newState the new power supply state, type is boolean
+-     * @param udi the UDI of the battery with the new power supply state
+-     * @since 4.11
++     * @param voltage the new voltage of the cell
++     * @param udi the UDI of the battery with the new voltage
++     * @since 5.0
+      */
+-    virtual void powerSupplyStateChanged(bool newState, const QString &udi) = 0;
++    virtual void voltageChanged(double voltage, const QString &udi) = 0;
++
++    /**
++     * This signal is emitted when the battery temperature has changed.
++     *
++     * @param temperature the new temperature of the battery in degrees Celsius
++     * @param udi the UDI of the battery with the new temperature
++     * @since 5.0
++     */
++    virtual void temperatureChanged(double temperature, const QString &udi) = 0;
++
+ };
+ }
+ }
+-- 
+2.0.0
+
