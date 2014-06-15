@@ -6,7 +6,7 @@ require kde.org [ kde_major_version='5' ]
 SUMMARY="Plasma desktop"
 
 LICENCES="FDL-1.2 GPL-2"
-MYOPTIONS="pulseaudio X"
+MYOPTIONS="pulseaudio"
 
 DEPENDENCIES="
     build:
@@ -34,6 +34,7 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
         kde-frameworks/kio:5
+        kde-frameworks/kitemmodels:5
         kde-frameworks/kitemviews:5
         kde-frameworks/knewstuff:5
         kde-frameworks/knotifications:5
@@ -52,28 +53,26 @@ DEPENDENCIES="
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/phonon[>=4.6.60][qt5]
+        x11-libs/libX11
+        x11-libs/libXcursor
+        x11-libs/libXfixes
+        x11-libs/libXft
+        x11-libs/libXi[>=1.2.0]
+        x11-libs/libxkbfile
+        x11-libs/libXrender
+        x11-libs/libXtst
+        x11-libs/libxcb
         x11-libs/qtdeclarative:5[>=5.3.0]
         x11-libs/qtsvg:5[>=5.3.0]
+        x11-libs/qtx11extras:5[>=5.3.0]
+        x11-utils/xcb-util-image
+        x11-utils/xcb-util-keysyms
+        x11-utils/xcb-util-wm
         pulseaudio? (
             dev-libs/glib:2
             media-libs/libcanberra[pulseaudio] [[ description = [ needed for speaker setup GUI ] ]]
             media-sound/pulseaudio[>=0.9.16]
             virtual/pkg-config
-        )
-        X? (
-            x11-libs/libX11
-            x11-libs/libXcursor
-            x11-libs/libXfixes
-            x11-libs/libXft
-            x11-libs/libXi[>=1.2.0]
-            x11-libs/libxkbfile
-            x11-libs/libXrender
-            x11-libs/libXtst
-            x11-libs/libxcb
-            x11-libs/qtx11extras:5[>=5.2.0]
-            x11-utils/xcb-util-image
-            x11-utils/xcb-util-keysyms
-            x11-utils/xcb-util-wm
         )
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
@@ -86,6 +85,5 @@ RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     PulseAudio
-    'X X11'
 )
 
