@@ -1,0 +1,64 @@
+Upstream: yes
+
+From 50b25458cc6a1c7e725e153f56e5f911f4eb0c20 Mon Sep 17 00:00:00 2001
+From: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Date: Mon, 14 Apr 2014 16:27:01 +0200
+Subject: [PATCH 1/8] don't emit -L/-F/-I with system dirs to .pc files
+
+Change-Id: Idecb6f8ba61872c23856a8c7e22305c01c67f0b9
+Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+Reviewed-by: Davide Pesavento <davidepesa@gmail.com>
+---
+ qmake/generators/makefile.cpp | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/qmake/generators/makefile.cpp b/qmake/generators/makefile.cpp
+index bad4eb5..a20e8ff 100644
+--- a/qmake/generators/makefile.cpp
++++ b/qmake/generators/makefile.cpp
+@@ -3284,10 +3284,12 @@ MakefileGenerator::writePkgConfigFile()
+ 
+     // libs
+     t << "Libs: ";
+-    QString pkgConfiglibDir;
+     QString pkgConfiglibName;
+     if (target_mode == TARG_MAC_MODE && project->isActiveConfig("lib_bundle")) {
+-        pkgConfiglibDir = "-F${libdir}";
++        if (libDir != QLatin1String("/System/Library/Frameworks")
++            && libDir != QLatin1String("/Library/Frameworks")) {
++            t << "-F${libdir} ";
++        }
+         ProString bundle;
+         if (!project->isEmpty("QMAKE_FRAMEWORK_BUNDLE_NAME"))
+             bundle = unescapeFilePath(project->first("QMAKE_FRAMEWORK_BUNDLE_NAME"));
+@@ -3298,12 +3300,13 @@ MakefileGenerator::writePkgConfigFile()
+             bundle = bundle.left(suffix);
+         pkgConfiglibName = "-framework " + bundle + " ";
+     } else {
+-        pkgConfiglibDir = "-L${libdir}";
++        if (!project->values("QMAKE_DEFAULT_LIBDIRS").contains(libDir))
++            t << "-L${libdir} ";
+         pkgConfiglibName = "-l" + unescapeFilePath(project->first("QMAKE_ORIG_TARGET"));
+         if (project->isActiveConfig("shared"))
+             pkgConfiglibName += project->first("TARGET_VERSION_EXT").toQString();
+     }
+-    t << pkgConfiglibDir << " " << pkgConfiglibName << " \n";
++    t << pkgConfiglibName << " \n";
+ 
+     ProStringList libs;
+     if(!project->isEmpty("QMAKE_INTERNAL_PRL_LIBS")) {
+@@ -3327,7 +3330,10 @@ MakefileGenerator::writePkgConfigFile()
+       << varGlue("PRL_EXPORT_CXXFLAGS", "", " ", " ")
+       << varGlue("QMAKE_PKGCONFIG_CFLAGS", "", " ", " ")
+         //      << varGlue("DEFINES","-D"," -D"," ")
+-      << "-I${includedir}\n";
++         ;
++    if (!project->values("QMAKE_DEFAULT_INCDIRS").contains(includeDir))
++        t << "-I${includedir}";
++    t << endl;
+ 
+     // requires
+     const QString requires = project->values("QMAKE_PKGCONFIG_REQUIRES").join(' ');
+-- 
+2.0.0
+
