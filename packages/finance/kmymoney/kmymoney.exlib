@@ -1,8 +1,8 @@
 # Copyright 2009 Ingmar Vanhassel
-# Copyright 2012 Heiko Becker <heiko@shruuf.de>
+# Copyright 2012,2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde [ api=2 ] sourceforge [ project=kmymoney2 suffix=tar.xz ]
+require kde [ api=2 ]
 
 SUMMARY="Personal finance manager for KDE"
 DESCRIPTION="
@@ -10,12 +10,15 @@ KMyMoney is the personal finance manager for KDE. It operates in a manner simila
 Quicken and supports different account types, categorisation of expenses, QIF import/export,
 multiple currencies, and online banking.
 "
+HOMEPAGE="http://www.kmymoney.org/"
 
 if ever is_scm; then
     DOWNLOADS=""
+else
+    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 fi
-UPSTREAM_CHANGELOG="${HOMEPAGE}ChangeLog-${PV}.txt"
-UPSTREAM_RELEASE_NOTES="${HOMEPAGE}release-${PV}.html"
+
+UPSTREAM_RELEASE_NOTES="${HOMEPAGE}/news.php#itemKMyMoney$(ever delete_all)released"
 LICENCES="GPL-2"
 SLOT="0"
 MYOPTIONS="

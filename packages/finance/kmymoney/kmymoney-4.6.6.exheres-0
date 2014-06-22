@@ -5,7 +5,3 @@ require kmymoney
 
 PLATFORMS="~amd64"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Fixed-linking-with-Gwenhywfar-4.6.0.patch
-)
-
