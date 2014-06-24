@@ -1,4 +1,5 @@
 # Copyright 2010 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PN=phonon-backend-vlc
@@ -8,7 +9,7 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.xz"
 fi
 
 require cmake [ api=2 ] freedesktop-mime
