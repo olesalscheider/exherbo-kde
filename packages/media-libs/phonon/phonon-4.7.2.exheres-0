@@ -10,7 +10,3 @@ require phonon
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-sync-FindQt4-from-kdelibs-master-to-unbreak-build-wi.patch
-)
-
