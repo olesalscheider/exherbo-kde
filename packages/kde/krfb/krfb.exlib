@@ -22,7 +22,7 @@ DEPENDENCIES="
         x11-libs/libXdamage
         x11-libs/libXext
         x11-libs/libXtst
-        telepathy? ( net-im/telepathy-qt[>=0.9] )
+        telepathy? ( net-im/telepathy-qt[>=0.9][qt4(+)] )
 "
 # TODO: see if the bundled libvncserver could be unbundled
 

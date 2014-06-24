@@ -22,7 +22,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
-        telepathy? ( net-im/telepathy-qt[>=0.9] )
+        telepathy? ( net-im/telepathy-qt[>=0.9][qt4(+)] )
         vnc? (
             media-libs/jpeg
             net-libs/libvncserver[>=0.9.8]

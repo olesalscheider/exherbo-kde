@@ -25,7 +25,7 @@ DEPENDENCIES="
         media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
         net-im/telepathy-glib[>=0.16.0]
         net-im/telepathy-logger:=
-        net-im/telepathy-qt[>=0.9.1]
+        net-im/telepathy-qt[>=0.9.1][qt4(+)]
         sys-apps/dbus
         sys-devel/bison
         sys-devel/flex

@@ -20,7 +20,7 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kdelibs:4${KDE_VER_STRING}
-        net-im/telepathy-qt${TELEPATHY_QT_VER_STRING}
+        net-im/telepathy-qt${TELEPATHY_QT_VER_STRING}[qt4(+)]
 
         ${COMMON_INTERNALS_STRING}
     run:

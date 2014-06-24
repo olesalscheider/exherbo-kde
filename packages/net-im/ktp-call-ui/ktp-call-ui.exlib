@@ -15,8 +15,8 @@ DEPENDENCIES+="
     build+run:
         media-libs/phonon
         media-libs/qt-gstreamer
-        net-im/telepathy-farstream[<0.6.0] [[ note = [ fails to build with 0.6.0 because of gstreamer-1.0 ] ]]
-        net-im/telepathy-qt[>=0.9.1] [[ note = [ 0.9.1 for farstream support ] ]]
+        net-im/telepathy-farstream[<0.6.0]   [[ note = [ fails to build with 0.6.0 because of gstreamer-1.0 ] ]]
+        net-im/telepathy-qt[>=0.9.1][qt4(+)] [[ note = [ 0.9.1 for farstream support ] ]]
 "
 
 BUGS_TO="mixi@exherbo.org"
