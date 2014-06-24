@@ -1,0 +1,393 @@
+Upstream: yes
+
+From d09bfbd3949688c3eaf422cd785f77c96ff6e399 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sebastian=20K=C3=BCgler?= <sebas@kde.org>
+Date: Mon, 16 Jun 2014 23:30:13 +0200
+Subject: [PATCH 1/3] New API: allow querying installed catalogue
+
+New method: KLocalizedString::availableDomainTranslations(QByteArray)
+
+This method allows querying for "installed" translations without using
+setApplicationDomain(). This is useful to find language catalogs other
+than the current one.
+
+This method will be used in the new translations KCM.
+
+REVIEW:118678
+---
+ src/klocalizedstring.cpp | 18 ++++++++++++++++--
+ src/klocalizedstring.h   | 21 +++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 2 deletions(-)
+
+diff --git a/src/klocalizedstring.cpp b/src/klocalizedstring.cpp
+index e12d6df..97ed4ac 100644
+--- a/src/klocalizedstring.cpp
++++ b/src/klocalizedstring.cpp
+@@ -1290,10 +1290,24 @@ QSet<QString> KLocalizedString::availableApplicationTranslations()
+ {
+     KLocalizedStringPrivateStatics *s = staticsKLSP();
+     QSet<QString> availableLanguages;
+-    if (!s->applicationDomain.isEmpty()) {
+-        availableLanguages = KCatalog::availableCatalogLanguages(s->applicationDomain);
++    QByteArray domain = s->applicationDomain;
++    if (!domain.isEmpty()) {
++        availableLanguages = KCatalog::availableCatalogLanguages(domain);
+         availableLanguages.insert(s->codeLanguage);
+     }
++
++    return availableLanguages;
++}
++
++QSet<QString> KLocalizedString::availableDomainTranslations(const QByteArray &domain)
++{
++    QSet<QString> availableLanguages;
++
++    if (!domain.isEmpty()) {
++        availableLanguages = KCatalog::availableCatalogLanguages(domain);
++        availableLanguages.insert(staticsKLSP()->codeLanguage);
++    }
++
+     return availableLanguages;
+ }
+ 
+diff --git a/src/klocalizedstring.h b/src/klocalizedstring.h
+index 1a9fce8..53a5c9f 100644
+--- a/src/klocalizedstring.h
++++ b/src/klocalizedstring.h
+@@ -517,6 +517,27 @@ public:
+     static QSet<QString> availableApplicationTranslations();
+ 
+     /**
++     * @since 5.0
++     *
++     * Get the languages for which a translation catalog file
++     * for the passed translation domain exists.
++     *
++     * If the translation domain was not specified in the
++     * domain parameter an empty set is returned.
++     *
++     * If the application domain was set, the language set will always
++     * contain at least the source code language (<tt>en_US</tt>).
++     *
++     * \param domain query for translations of a specific domain, if an empty
++     * QByteArray is passed, an empty set will be returned
++     *
++     * \return set of language codes for existing translation catalogs
++     * \see setApplicationDomain
++     * \see availableApplicationTranslations
++     */
++    static QSet<QString> availableDomainTranslations(const QByteArray &domain);
++
++    /**
+      * Find a path to the localized file for the given original path.
+      *
+      * This is intended mainly for non-text resources (images, sounds, etc).
+-- 
+2.0.0
+
+
+From 72d411a775b407d1e4b25786e0b5347d726051c3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Gr=C3=A4=C3=9Flin?= <mgraesslin@kde.org>
+Date: Thu, 12 Jun 2014 10:46:46 +0200
+Subject: [PATCH 2/3] Introduce a KLocalizedTranslator
+
+The KLocalizedTranslator is a QTranslator subclass which can delegate
+to ki18n for translations. This class allows to translate text which
+can only use Qt's translation system with ki18n.
+
+REVIEW: 118690
+---
+ autotests/klocalizedstringtest.cpp |  26 +++++++++
+ autotests/klocalizedstringtest.h   |   2 +
+ src/CMakeLists.txt                 |   1 +
+ src/klocalizedtranslator.cpp       |  69 ++++++++++++++++++++++++
+ src/klocalizedtranslator.h         | 108 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 206 insertions(+)
+ create mode 100644 src/klocalizedtranslator.cpp
+ create mode 100644 src/klocalizedtranslator.h
+
+diff --git a/autotests/klocalizedstringtest.cpp b/autotests/klocalizedstringtest.cpp
+index e4e97ce..b29f0a5 100644
+--- a/autotests/klocalizedstringtest.cpp
++++ b/autotests/klocalizedstringtest.cpp
+@@ -22,6 +22,7 @@
+ #undef TRANSLATION_DOMAIN
+ 
+ #include "klocalizedstringtest.h"
++#include "klocalizedtranslator.h"
+ 
+ #include <locale.h>
+ 
+@@ -490,6 +491,31 @@ void KLocalizedStringTest::translateQt()
+     KLocalizedString::removeQtDomain("ki18n-test-qt");
+ }
+ 
++void KLocalizedStringTest::testLocalizedTranslator()
++{
++    if (!m_hasFrench) {
++        QSKIP("French test files not usable.");
++    }
++    QScopedPointer<KLocalizedTranslator> translator(new KLocalizedTranslator());
++    QCoreApplication *app = QCoreApplication::instance();
++    app->installTranslator(translator.data());
++
++    // no translation domain and no context
++    QCOMPARE(app->translate("foo", "Job"), QStringLiteral("Job"));
++
++    // adding the translation domain still lacks the context
++    translator->setTranslationDomain(QStringLiteral("ki18n-test"));
++    QCOMPARE(app->translate("foo", "Job"), QStringLiteral("Job"));
++
++    translator->addContextToMonitor(QStringLiteral("foo"));
++    // now it should translate
++    QCOMPARE(app->translate("foo", "Job"), QStringLiteral("Tâche"));
++    // other context shouldn't translate
++    QCOMPARE(app->translate("bar", "Job"), QStringLiteral("Job"));
++    // with a mismatching disambiguation it shouldn't translate
++    QCOMPARE(app->translate("foo", "Job", "bar"), QStringLiteral("Job"));
++}
++
+ #include <QThreadPool>
+ #include <QtConcurrentRun>
+ #include <QFutureSynchronizer>
+diff --git a/autotests/klocalizedstringtest.h b/autotests/klocalizedstringtest.h
+index 52b6248..6d95c0b 100644
+--- a/autotests/klocalizedstringtest.h
++++ b/autotests/klocalizedstringtest.h
+@@ -38,6 +38,8 @@ private Q_SLOTS:
+ 
+     void testThreads();
+ 
++    void testLocalizedTranslator();
++
+ private:
+     bool m_hasFrench;
+     QTemporaryDir m_tempDir;
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 09490e5..73adf9c 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -1,5 +1,6 @@
+ set(libki18n_SRCS
+     klocalizedstring.cpp
++    klocalizedtranslator.cpp
+     kcatalog.cpp
+     kuitmarkup.cpp
+     common_helpers.cpp
+diff --git a/src/klocalizedtranslator.cpp b/src/klocalizedtranslator.cpp
+new file mode 100644
+index 0000000..b1b256f
+--- /dev/null
++++ b/src/klocalizedtranslator.cpp
+@@ -0,0 +1,69 @@
++/*
++ * Copyright 2014  Martin Gräßlin <mgraesslin@kde.org>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) version 3, or any
++ * later version accepted by the membership of KDE e.V. (or its
++ * successor approved by the membership of KDE e.V.), which shall
++ * act as a proxy defined in Section 6 of version 3 of the license.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++*/
++#include "klocalizedtranslator.h"
++#include "klocalizedstring.h"
++
++// Qt
++#include <QMetaObject>
++#include <QMetaProperty>
++
++class KLocalizedTranslatorPrivate
++{
++public:
++    QString translationDomain;
++    QSet<QString> monitoredContexts;
++};
++
++KLocalizedTranslator::KLocalizedTranslator(QObject *parent)
++    : QTranslator(parent)
++    , d(new KLocalizedTranslatorPrivate)
++{
++}
++
++KLocalizedTranslator::~KLocalizedTranslator()
++{
++}
++
++void KLocalizedTranslator::setTranslationDomain(const QString &translationDomain)
++{
++    d->translationDomain = translationDomain;
++}
++
++void KLocalizedTranslator::addContextToMonitor(const QString &context)
++{
++    d->monitoredContexts.insert(context);
++}
++
++void KLocalizedTranslator::removeContextToMonitor(const QString &context)
++{
++    d->monitoredContexts.remove(context);
++}
++
++QString KLocalizedTranslator::translate(const char *context, const char *sourceText, const char *disambiguation, int n) const
++{
++    if (d->translationDomain.isEmpty() || !d->monitoredContexts.contains(QString::fromUtf8(context))) {
++        return QTranslator::translate(context, sourceText, disambiguation, n);
++    }
++    if (qstrlen(disambiguation) == 0) {
++        return ki18nd(d->translationDomain.toUtf8().constData(), sourceText).toString();
++    } else {
++        return ki18ndc(d->translationDomain.toUtf8().constData(), disambiguation, sourceText).toString();
++    }
++}
+diff --git a/src/klocalizedtranslator.h b/src/klocalizedtranslator.h
+new file mode 100644
+index 0000000..cf64472
+--- /dev/null
++++ b/src/klocalizedtranslator.h
+@@ -0,0 +1,108 @@
++/*
++ * Copyright 2014  Martin Gräßlin <mgraesslin@kde.org>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) version 3, or any
++ * later version accepted by the membership of KDE e.V. (or its
++ * successor approved by the membership of KDE e.V.), which shall
++ * act as a proxy defined in Section 6 of version 3 of the license.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++*/
++#ifndef KLOCALIZEDTRANSLATOR_H
++#define KLOCALIZEDTRANSLATOR_H
++
++#include <ki18n_export.h>
++
++#include <QtCore/QTranslator>
++
++class KLocalizedTranslatorPrivate;
++
++/**
++ * @brief A QTranslator using KLocalizedString for translations.
++ *
++ * This class allows to translate strings in Qt's translation system with KLocalizedString.
++ * An example is the translation of a dynamically loaded user interface through QUILoader.
++ *
++ * To use this Translator install it in the QCoreApplication and provide the translation domain
++ * to be used. The Translator can operate for multiple contexts, those needs to be specified.
++ *
++ * Example for translating a UI loaded through QUILoader:
++ * @code
++ * // create translator and install in QCoreApplication
++ * KLocalizedTranslator *translator = new KLocalizedTranslator(this);
++ * QCoreApplication::instance()->installTranslator(translator);
++ * translator->setTranslationDomain(QStringLiteral("MyAppsDomain"));
++ *
++ * // create the QUILoader
++ * QUiLoader *loader = new QUiLoader(this);
++ * loader->setLanguageChangeEnabled(true);
++ *
++ * // load the UI
++ * QFile uiFile(QStringLiteral("/path/to/userInterface.ui"));
++ * uiFile.open(QFile::ReadOnly);
++ * QWidget *loadedWidget = loader->load(&uiFile, this);
++ * uiFile.close();
++ *
++ * // the object name of the loaded UI is the context in this case
++ * translator->addContextToMonitor(loadedWidget->objectName());
++ *
++ * // send a LanguageChange event, this will re-translate using our translator
++ * QEvent le(QEvent::LanguageChange);
++ * QCoreApplication::sendEvent(loadedWidget, &le);
++ * @endcode
++ *
++ * @since 5.0
++ **/
++class KI18N_EXPORT KLocalizedTranslator : public QTranslator
++{
++    Q_OBJECT
++public:
++    explicit KLocalizedTranslator(QObject *parent = 0);
++    virtual ~KLocalizedTranslator();
++    QString translate(const char *context, const char *sourceText, const char *disambiguation = 0, int n = -1) const Q_DECL_OVERRIDE;
++
++    /**
++     * Sets the @p translationDomain to be used.
++     *
++     * The translation domain is required. Without the translation domain any invocation of
++     * translate() will be delegated to the base class.
++     *
++     * @param translationDomain The translation domain to be used.
++     **/
++    void setTranslationDomain(const QString &translationDomain);
++
++    /**
++     * Adds a @p context for which this Translator should be active.
++     *
++     * The Translator only translates texts with a context matching one of the monitored contexts.
++     * If the context is not monitored, the translate() method delegates to the base class.
++     *
++     * @param context The context for which the Translator should be active
++     *
++     * @see removeContextToMonitor
++     **/
++    void addContextToMonitor(const QString &context);
++
++    /**
++     * Stop translating for the given @p context.
++     *
++     * @param context The context for which the Translator should no longer be active
++     *
++     * @see addContextToMonitor
++     **/
++    void removeContextToMonitor(const QString &context);
++
++private:
++    const QScopedPointer<KLocalizedTranslatorPrivate> d;
++};
++
++#endif //KLOCALIZEDTRANSLATOR_H
+-- 
+2.0.0
+
+
+From 3b8b004087a43cb88143d3576e3c049f677befaf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Gr=C3=A4=C3=9Flin?= <mgraesslin@kde.org>
+Date: Wed, 18 Jun 2014 14:56:31 +0200
+Subject: [PATCH 3/3] Generate header for KLocalizedTranslator
+
+---
+ src/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 73adf9c..ed5c789 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -28,6 +28,7 @@ install(TARGETS KF5I18n EXPORT KF5I18nTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS
+ ecm_generate_headers(KI18n_HEADERS
+   HEADER_NAMES
+     KLocalizedString
++    KLocalizedTranslator
+     KuitMarkup
+     KuitSetup
+     REQUIRED_HEADERS KI18n_HEADERS
+-- 
+2.0.0
+

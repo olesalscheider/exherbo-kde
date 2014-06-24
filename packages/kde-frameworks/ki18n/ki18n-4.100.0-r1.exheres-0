@@ -16,3 +16,7 @@ MYOPTIONS="
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Introduce-a-KLocalizedTranslator.patch
+)
+
