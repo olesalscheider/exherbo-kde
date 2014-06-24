@@ -7,6 +7,7 @@ PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-4.6.0-CMake-strict-dependencies.patch
+    "${FILES}"/${PN}-Don-t-require-a-job-to-handle-messageboxes.patch
     -p0 "${FILES}"/${PN}-kstandarddirs.patch
 )
 
