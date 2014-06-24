@@ -1,20 +1,18 @@
-Upstream: temporary patch until binaries are split out
-
-From 9a91415ce778a444bd93fc4182894bd9bada8868 Mon Sep 17 00:00:00 2001
+From 08767a26c5fcb00753d8bb390845ac38f00c1519 Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
-Date: Wed, 11 Jun 2014 17:33:14 +0200
+Date: Sat, 31 May 2014 12:32:30 +0200
 Subject: [PATCH] Add an option to build only the baloo libraries
 
 ---
- src/CMakeLists.txt      |  16 ++++--
- src/file/CMakeLists.txt | 126 ++++++++++++++++++++++++------------------------
- 2 files changed, 75 insertions(+), 67 deletions(-)
+ src/CMakeLists.txt      |  13 +++--
+ src/file/CMakeLists.txt | 125 +++++++++++++++++++++++++-----------------------
+ 2 files changed, 73 insertions(+), 65 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 8131d22..11cdf78 100644
+index 810f6dc..dae9e51 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -1,8 +1,14 @@
+@@ -1,7 +1,12 @@
 +option(BALOO_LIBRARIES_ONLY "If true, compiles only the Baloo libraries, without binaries, kioslaves." OFF)
 +
  add_subdirectory(core)
@@ -23,28 +21,23 @@ index 8131d22..11cdf78 100644
 -add_subdirectory(pim)
 -add_subdirectory(kioslaves)
 -add_subdirectory(tools)
--add_subdirectory(runner)
 -#add_subdirectory(queryparser)
 +
 +if (NOT BALOO_LIBRARIES_ONLY)
 +    add_subdirectory(pim)
-+    add_subdirectory(kioslaves)
++    #add_subdirectory(kioslaves)
 +    add_subdirectory(tools)
-+    add_subdirectory(runner)
 +    #add_subdirectory(queryparser)
 +endif ()
-+
 diff --git a/src/file/CMakeLists.txt b/src/file/CMakeLists.txt
-index dd2e2b2..abf385e 100644
+index dd2e2b2..0b6700f 100644
 --- a/src/file/CMakeLists.txt
 +++ b/src/file/CMakeLists.txt
-@@ -1,74 +1,76 @@
+@@ -1,74 +1,77 @@
  kde_enable_exceptions()
  
  add_subdirectory(lib)
 -add_subdirectory(search)
-+if (NOT BALOO_LIBRARIES_ONLY)
-+    add_subdirectory(search)
  
 -set(file_SRCS
 -    # Filewatch
@@ -52,7 +45,9 @@ index dd2e2b2..abf385e 100644
 -    activefilequeue.cpp
 -    metadatamover.cpp
 -    database.cpp
--
++if (NOT BALOO_LIBRARIES_ONLY)
++    add_subdirectory(search)
+ 
 -    # File Indexer
 -    fileindexer.cpp
 -    fileindexerconfig.cpp
@@ -179,3 +174,4 @@ index dd2e2b2..abf385e 100644
 +endif()
 -- 
 2.0.0
+
