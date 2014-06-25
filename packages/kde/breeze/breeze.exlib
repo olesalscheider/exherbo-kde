@@ -3,7 +3,7 @@
 
 require kde.org [ kde_major_version='5' ]
 
-SUMMARY="Standard KDE cursor theme"
+SUMMARY="Artwork, styles and assets for the Breeze style for the Plasma Desktop"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
@@ -13,6 +13,7 @@ DEPENDENCIES="
         kde-frameworks/kconfig:5
         kde-frameworks/kcoreaddons:5
     run:
+        x11-libs/qtgraphicaleffects:5[>=5.2.0]
         x11-libs/qtquickcontrols:5[>=5.2.0]
 "
 # #add_subdirectory(code) in windec/CMakeLists.txt
