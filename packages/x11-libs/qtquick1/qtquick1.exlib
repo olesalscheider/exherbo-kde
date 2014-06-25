@@ -17,6 +17,7 @@ DEPENDENCIES="
         x11-libs/qtscript:${SLOT}[>=${PV}][multibuild_c:*(-)?]
         x11-libs/qttools:${SLOT}[>=${PV}][multibuild_c:*(-)?]
         x11-libs/qtwebkit:${SLOT}[>=${PV}][multibuild_c:*(-)?]
+        x11-libs/qtxmlpatterns:${SLOT}[>=${PV}][multibuild_c:*(-)?]
 "
 
 configure_one_multibuild() {
