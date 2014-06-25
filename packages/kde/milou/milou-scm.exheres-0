@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 45fa539ec0c8e96ae1f895144936291f9e09a3f7
+# last checked commit: ed6b7c598b2a328043fa40fb2fd3ef33fb78d6b7
 
 require kde.org [ kde_major_version='5' ]
 
@@ -22,10 +22,8 @@ DEPENDENCIES="
         kde-frameworks/kio:5
         kde-frameworks/krunner:5
         kde-frameworks/plasma-framework:5
-        x11-libs/qtbase[sql]
         x11-libs/qtdeclarative:5
         x11-libs/qtscript:5
-        x11-libs/qtwebkit:5
     run:
         kde-frameworks/baloo:5 [[ note = [ Baloo provides a runner which is used via krunner ] ]]
 "
