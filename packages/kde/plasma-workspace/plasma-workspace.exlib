@@ -9,8 +9,7 @@ LICENCES="FDL-1.2 GPL-2 LGPL-2.1"
 MYOPTIONS="X
     gps         [[ description = [ GPS support for geolocation ] ]]
     barcodes    [[ description = [ Create mobile barcodes from clipboard data via prison ] ]]
-    qalculate   [[ description = [ Support advanced features of the calculator runner ] ]]
-    qimageblitz [[ description = [ Support for some image effects ] ]]"
+    qalculate   [[ description = [ Support advanced features of the calculator runner ] ]]"
 # Commented out at the moment
 #MYOPTIONS="pim [[ description = [ Build certain Plasma DataEngines (Akonadi, Calendar) ] ]]"
 
@@ -21,6 +20,7 @@ DEPENDENCIES="
     build+run:
         kde/kwin:${SLOT}
         kde/libksysguard:${SLOT}
+        kde-frameworks/baloo:5
         kde-frameworks/kactivities:5
         kde-frameworks/kbookmarks:5
         kde-frameworks/kcompletion:5
@@ -57,7 +57,6 @@ DEPENDENCIES="
         kde-frameworks/libkscreen:5[>=2.0.0]
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
-        kde-frameworks/threadweaver:5
         media-libs/phonon[>=4.6.60][qt5]
         sys-libs/pam
         sys-libs/zlib
@@ -66,6 +65,7 @@ DEPENDENCIES="
         x11-libs/qtdeclarative:5[>=5.3.0]
         x11-libs/qtscript:5[>=5.3.0]
         X? (
+            x11-libs/libICE
             x11-libs/libSM
             x11-libs/libX11
             x11-libs/libXau
@@ -79,8 +79,10 @@ DEPENDENCIES="
         )
         gps? ( dev-libs/gpsd )
         barcodes? ( kde/prison[>=1.1.0_p20140529][qt5(-)] )
-        qalculate? ( sci-libs/libqalculate )
-        qimageblitz? ( kde/qimageblitz[qt5] )
+        qalculate? (
+            sci-libs/cln
+            sci-libs/libqalculate
+        )
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
     run:
@@ -95,12 +97,6 @@ DEPENDENCIES="
         )
 "
 
-# Commented out atm
-#        pim? (
-#            dev-libs/boost[>=1.34.0]
-#            kde/kdepimlibs:5[>=4.70.10]
-#            server-pim/akonadi
-
 # 1 one of 1 test needs a running X Server
 RESTRICT="test"
 
@@ -108,12 +104,6 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gps libgps'
     'barcodes Prison'
     Qalculate
-    QImageBlitz
     'X X11'
-)
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DCMAKE_DISABLE_FIND_PACKAGE_Akonadi:BOOL=TRUE
-    -DCMAKE_DISABLE_FIND_PACKAGE_Boost:BOOL=TRUE
-    -DCMAKE_DISABLE_FIND_PACKAGE_KdepimLibs:BOOL=TRUE
 )
 
