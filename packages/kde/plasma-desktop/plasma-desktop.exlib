@@ -27,7 +27,6 @@ DEPENDENCIES="
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kdbusaddons:5
         kde-frameworks/kdelibs4support:5
-        kde-frameworks/kdesu:5
         kde-frameworks/kemoticons:5
         kde-frameworks/kglobalaccel:5
         kde-frameworks/kguiaddons:5
