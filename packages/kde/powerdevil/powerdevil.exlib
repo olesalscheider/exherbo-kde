@@ -34,5 +34,7 @@ DEPENDENCIES="
             x11-utils/xcb-util-wm
         )
         !kde/kde-workspace[-kf5-coinstall]
+    run:
+        sys-apps/upower
 "
 
