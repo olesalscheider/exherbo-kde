@@ -19,8 +19,11 @@ HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 
 LICENCES="LGPL-3"
 SLOT="0"
-MYOPTIONS="qt4
-    qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
+MYOPTIONS="
+    qt4
+    qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]
+    ( qt4 qt5 ) [[ number-selected = at-least-one ]]
+"
 
 DEPENDENCIES="
     build:
