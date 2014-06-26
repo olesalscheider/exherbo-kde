@@ -1,0 +1,34 @@
+Upstream: yes
+
+From bf7f6cea1f92b424bbdb4631142918a974505715 Mon Sep 17 00:00:00 2001
+From: Christian Kandeler <christian.kandeler@digia.com>
+Date: Fri, 23 May 2014 13:46:07 +0200
+Subject: [PATCH] Add missing header file to installation targets.
+
+Change-Id: I44bf57b4cded1a283f4d62deac21d2f7b686d971
+Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+---
+ src/lib/corelib/api/api.pri | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/lib/corelib/api/api.pri b/src/lib/corelib/api/api.pri
+index e1cc31a..2259fac 100644
+--- a/src/lib/corelib/api/api.pri
++++ b/src/lib/corelib/api/api.pri
+@@ -23,7 +23,12 @@ SOURCES += \
+     $$PWD/qmljsrewriter.cpp
+ 
+ !qbs_no_dev_install {
+-    api_headers.files = $$PWD/projectdata.h $$PWD/runenvironment.h $$PWD/jobs.h $$PWD/project.h
++    api_headers.files = \
++        $$PWD/jobs.h \
++        $$PWD/languageinfo.h \
++        $$PWD/project.h \
++        $$PWD/projectdata.h \
++        $$PWD/runenvironment.h
+     api_headers.path = $${QBS_INSTALL_PREFIX}/include/qbs/api
+     INSTALLS += api_headers
+ }
+-- 
+2.0.0
+

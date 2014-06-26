@@ -13,21 +13,21 @@ PLATFORMS="~amd64"
 
 DEPENDENCIES="
     build+run:
-        x11-libs/qtbase:=5
-        x11-libs/qtscript:=5
+        x11-libs/qtbase:5
+        x11-libs/qtscript:5
 "
 
-# "qbs_autotests' could not be found." Last checked 1.1.2
+# "qbs_autotests' could not be found." Last checked 1.2.1
 RESTRICT="test"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-Add-missing-header-file-to-installation-targets.patch
+)
 
 EQMAKE_PARAMS=(
     QBS_INSTALL_PREFIX=/usr
+    QBS_LIBRARY_DIRNAME=${LIBDIR}
     QBS_LIB_INSTALL_DIR=/usr/${LIBDIR}
+    QBS_PLUGINS_INSTALL_DIR=/usr/${LIBDIR}/qbs/plugins
 )
-
-src_prepare() {
-    # fix hardcoded libdir
-    edo sed -i 's:/lib/qbs:/'"${LIBDIR}"'/qbs:' src/lib/tools/preferences.cpp
-    edo sed -i 's:/lib/qbs:/'"${LIBDIR}"'/qbs:' src/plugins/plugins.pri
-}
 
