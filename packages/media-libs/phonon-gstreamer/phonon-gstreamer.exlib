@@ -1,4 +1,5 @@
 # Copyright 2011 Johannes Nixdorf <mixi@user-helfen-usern.de>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed unter the terms of the GNU General Public License v2
 
 MY_PN=phonon-backend-gstreamer
@@ -8,7 +9,7 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/${MY_PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/phonon/${MY_PN}/${PV}/src/${MY_PNV}.tar.xz"
     CMAKE_SOURCE="${WORKBASE}"/${MY_PNV}
 fi
 
@@ -19,7 +20,11 @@ HOMEPAGE="https://projects.kde.org/projects/kdesupport/phonon/${PN}"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
-MYOPTIONS="qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]"
+MYOPTIONS="
+    qt4
+    qt5 [[ description = [ Build against Qt5 instead of Qt4 (experimental) ] ]]
+    ( qt4 qt5 ) [[ number-selected = at-least-one ]]
+"
 
 DEPENDENCIES+="
     build:
@@ -28,13 +33,55 @@ DEPENDENCIES+="
         dev-libs/glib:2
         dev-libs/libxml2:2.0
         media-libs/gstreamer:0.10
-        media-libs/phonon[>=4.7.0][qt5=]
+        media-libs/phonon[>=4.7.0][qt4?][qt5?]
         media-plugins/gst-plugins-base:0.10
         x11-dri/mesa
-        x11-libs/qt:4[opengl]
+        qt4? ( x11-libs/qt:4[opengl] )
+        qt5? ( x11-libs/qtbase:5 )
 "
 
 BUGS_TO="mixi@user-helfen-usern.de"
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'qt5 PHONON_BUILD_PHONON4QT5' )
+
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        ecmake -DPHONON_BUILD_PHONON4QT5:BOOL=FALSE
+        edo popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        ecmake -DPHONON_BUILD_PHONON4QT5:BOOL=TRUE
+        edo popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+}
 
