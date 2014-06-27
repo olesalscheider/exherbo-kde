@@ -1,18 +1,18 @@
-From 08767a26c5fcb00753d8bb390845ac38f00c1519 Mon Sep 17 00:00:00 2001
+From 5d59bbe1411fadc60ee2ad5b8bc153d1b3e7d0cc Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Sat, 31 May 2014 12:32:30 +0200
 Subject: [PATCH] Add an option to build only the baloo libraries
 
 ---
- src/CMakeLists.txt      |  13 +++--
+ src/CMakeLists.txt      |  12 +++--
  src/file/CMakeLists.txt | 125 +++++++++++++++++++++++++-----------------------
- 2 files changed, 73 insertions(+), 65 deletions(-)
+ 2 files changed, 72 insertions(+), 65 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 810f6dc..dae9e51 100644
+index 810f6dc..ff52ce1 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -1,7 +1,12 @@
+@@ -1,7 +1,11 @@
 +option(BALOO_LIBRARIES_ONLY "If true, compiles only the Baloo libraries, without binaries, kioslaves." OFF)
 +
  add_subdirectory(core)
@@ -22,10 +22,9 @@ index 810f6dc..dae9e51 100644
 -add_subdirectory(kioslaves)
 -add_subdirectory(tools)
 -#add_subdirectory(queryparser)
-+
 +if (NOT BALOO_LIBRARIES_ONLY)
 +    add_subdirectory(pim)
-+    #add_subdirectory(kioslaves)
++    add_subdirectory(kioslaves)
 +    add_subdirectory(tools)
 +    #add_subdirectory(queryparser)
 +endif ()

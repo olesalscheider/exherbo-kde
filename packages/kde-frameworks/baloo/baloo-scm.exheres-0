@@ -44,7 +44,6 @@ DEPENDENCIES="
 RESTRICT="test"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/0001-Adapt-to-KFileMetaData-becoming-a-framework.patch
     "${FILES}"/0001-Add-an-option-to-build-only-the-baloo-libraries.patch
 )
 
