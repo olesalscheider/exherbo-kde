@@ -29,10 +29,6 @@ DEPENDENCIES="
         taglib? ( media-libs/taglib )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-Rename-for-coinstallability-with-kde4-version.patch
-)
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     EPub
     'exif Exiv2'
