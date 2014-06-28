@@ -1,7 +1,8 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake [ api=2 ]
+require cmake [ api=2 cmake_minimum_version=2.8.11 ]
 
 MY_PN="${PN}-1"
 MY_PNV="${MY_PN}-${PV}"
@@ -21,23 +22,39 @@ HOMEPAGE="https://projects.kde.org/projects/kdesupport/${MY_PN}"
 
 LICENCES="LGPL-2.1"
 SLOT="1"
+
 MYOPTIONS="examples"
+ever at_least 0.103.0_p20140303 && MYOPTIONS+=" ( qt4 qt5 ) [[ number-selected = at-least-one ]]"
 
 DEPENDENCIES="
     build:
-        kde/automoc4
+        virtual/pkg-config
     build+run:
         dev-libs/glib:2
         sys-auth/polkit:1[>=0.99]
-        x11-libs/qt:4[>=4.4.0][dbus]
     suggestion:
         sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
 "
+
+if ever at_least 0.103.0_p20140303 ; then
+    DEPENDENCIES+="
+        build:
+            qt5? ( kde-frameworks/extra-cmake-modules[>=0.0.6] )
+        build+run:
+            qt4? ( x11-libs/qt:4[>=4.4.0][dbus] )
+            qt5? ( x11-libs/qtbase:5[>=5.1.0] )
+    "
+else
+    DEPENDENCIES+="
+        build:
+            kde/automoc4
+        build+run:
+            x11-libs/qt:4[>=4.4.0][dbus]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DSYSCONF_INSTALL_DIR:PATH=/etc/
     -DBUILD_TEST:BOOL=TRUE
 )
-
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS=( EXAMPLES )
 

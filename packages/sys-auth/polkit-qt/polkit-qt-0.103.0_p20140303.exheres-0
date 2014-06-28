@@ -1,0 +1,56 @@
+# Copyright 2009, 2010 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require polkit-qt
+
+#git archive --format=tar --prefix=polkit-qt-1-${PV}/ HEAD | xz -z > polkit-qt-${PV}.tar.xz
+DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.xz"
+
+PLATFORMS="~amd64 ~x86"
+
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        ecmake -DUSE_QT4=TRUE "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" $(cmake_build EXAMPLES)
+        popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        ecmake -DUSE_QT5=TRUE "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" $(cmake_build EXAMPLES)
+        popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/"qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+
+    edo pushd "${CMAKE_SOURCE}"
+    emagicdocs
+    edo popd
+}
+
