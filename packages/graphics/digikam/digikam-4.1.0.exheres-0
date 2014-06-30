@@ -7,7 +7,7 @@ require kde [ api=2 ]
 
 SUMMARY="An advanced digital photo management application"
 HOMEPAGE="http://www.digikam.org/"
-DOWNLOADS="mirror://kde/unstable/${PN}/${PNV}.tar.bz2"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.bz2"
 
 BUGS_TO="kde@exherbo.org"
 
