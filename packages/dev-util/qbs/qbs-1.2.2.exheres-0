@@ -20,10 +20,6 @@ DEPENDENCIES="
 # "qbs_autotests' could not be found." Last checked 1.2.1
 RESTRICT="test"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-Add-missing-header-file-to-installation-targets.patch
-)
-
 EQMAKE_PARAMS=(
     QBS_INSTALL_PREFIX=/usr
     QBS_LIBRARY_DIRNAME=${LIBDIR}
