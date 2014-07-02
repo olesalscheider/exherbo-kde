@@ -24,6 +24,6 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5[>=${KF5_MIN_VER}]
 "
 
-# Tries to run kded5
+# Tries to run kded5 (5.0.0)
 RESTRICT=test
 
