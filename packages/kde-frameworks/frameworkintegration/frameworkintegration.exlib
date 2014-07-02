@@ -31,6 +31,6 @@ DEPENDENCIES="
         fonts/oxygen-fonts[>=0.4] [[ description = [ Default font for KDE Applications ] ]]
 "
 
-# 3 of 3 tests need a running X server
+# 4 of 4 tests need a running X server (5.0.0)
 RESTRICT="test"
 

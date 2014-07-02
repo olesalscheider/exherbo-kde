@@ -5,8 +5,8 @@ require frameworkintegration
 
 MYOPTIONS="
     ( linguas:
-        ca cs de es fi gl hu ia it ko nds nl pl pt pt_BR ro sk sr
-        sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_TW
+        ar ca cs de en_GB es fi gl hu ia it ko nds nl oa pl pt pt_BR ro ru sk
+        sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_TW
     )
 "
 
