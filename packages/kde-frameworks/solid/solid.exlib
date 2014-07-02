@@ -26,6 +26,9 @@ DEPENDENCIES="
 # <http://www.freedesktop.org/wiki/Software/media-player-info>
 # Runtime-only dependency of the udev solid backend. Support for m-p-i is included even if not found during build
 
+# We might want to enable those below at a later point
+#option(WITH_NEW_SOLID_JOB "WIP: base Job class" Off)
+#option(WITH_NEW_POWER_ASYNC_API "WIP: Asynchronous API for power management" Off)
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Required by the UpdateSolidPredicateParser target (mainly useful for developers)
     -DCMAKE_DISABLE_FIND_PACKAGE_FLEX:BOOL=TRUE
