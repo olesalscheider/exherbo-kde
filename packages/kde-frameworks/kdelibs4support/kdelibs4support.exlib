@@ -57,7 +57,7 @@ DEPENDENCIES="
         x11-libs/qtx11extras:5[>=5.2.0]
 "
 
-# 26 of 38 tests need a running X server
+# 26 of 38 tests need a running X server (5.0.0)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_NetworkManager:BOOL=TRUE )
