@@ -21,6 +21,6 @@ DEPENDENCIES="
         kde-frameworks/sonnet:5[>=${KF5_MIN_VER}]
 "
 
-# 4 of 4 tests need a running X server
+# 5 of 5 tests need a running X server (5.0.0)
 RESTRICT="test"
 
