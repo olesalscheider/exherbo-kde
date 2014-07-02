@@ -19,6 +19,6 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
-# 7 of 7 tests need a running X server
+# 7 of 7 tests need a running X server (5.0.0)
 RESTRICT="test"
 
