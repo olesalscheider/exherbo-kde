@@ -35,10 +35,6 @@ DEPENDENCIES="
         )
 "
 
-# "...Couldn't start kwalletd:  QDBusError("org.freedesktop.DBus.Error.ServiceUnknown",
-# "The name org.kde.kwalletd5 was not provided by any .service files")..."
-RESTRICT="test"
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gpg Gpgme'
     'gpg QGpgme'
