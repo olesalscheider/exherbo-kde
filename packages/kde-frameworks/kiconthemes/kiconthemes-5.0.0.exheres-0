@@ -15,7 +15,3 @@ MYOPTIONS="
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Allow-passing-custom-theme-base-path-together-with-c.patch
-)
-
