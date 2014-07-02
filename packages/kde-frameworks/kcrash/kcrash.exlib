@@ -16,6 +16,6 @@ DEPENDENCIES="
         x11-libs/qtx11extras:5 [[ note = [ Could make this optional if necessary ] ]]
 "
 
-# Tries to connect to the running display
-RESTRICT=test
+# Tries to connect to the running display (5.0.0)
+#RESTRICT=test
 
