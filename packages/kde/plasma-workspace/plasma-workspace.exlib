@@ -88,13 +88,20 @@ DEPENDENCIES="
     run:
         kde/kde-cli-tools:${SLOT}  [[ note = [ Needs kioclient ] ]]
         kde/milou:${SLOT}          [[ note = [ Needed for krunner ] ]]
+        kde-frameworks/kded:5
+        kde-frameworks/kinit:5
         x11-libs/qtquickcontrols:5
-        x11-libs/qttools:5         [[ note = [ startkde needs qtpaths ] ]]
+        x11-libs/qttools:5         [[ note = [ startkde needs qtpaths, qdbus ] ]]
         X? (
+            x11-apps/iceauth
+            x11-apps/xmessage      [[ note = [ startkde ] ]]
             x11-apps/xprop
+            x11-apps/xrdb          [[ note = [ startkde ] ]]
             x11-apps/xset
             x11-apps/xsetroot
         )
+    post:
+        kde/plasma-desktop         [[ note = [ kapplymousetheme used in startkde ] ]]
 "
 
 # 1 one of 1 test needs a running X Server
