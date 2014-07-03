@@ -76,7 +76,11 @@ DEPENDENCIES="
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
     run:
-        kde/kde-cli-tools:${SLOT} [[ note = [ Some tools use keditfiletype ] ]]
+        kde/kde-cli-tools:${SLOT} [[ note = [ keditfiletype, kcmshell5 ] ]]
+        x11-apps/mkfontdir
+        x11-apps/setxkbmap
+        x11-apps/xmodmap
+        x11-apps/xrdb
 "
 
 # 4 of 4 tests need a running X server
