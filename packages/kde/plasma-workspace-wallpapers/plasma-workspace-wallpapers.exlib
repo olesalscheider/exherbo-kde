@@ -1,0 +1,14 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked revision: 1392132
+
+require kde.org [ git=false  kde_major_version='5' ]
+
+SUMMARY="Wallpapers for Plasma 5"
+
+LICENCES="GPL-2 LGPL-3"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
