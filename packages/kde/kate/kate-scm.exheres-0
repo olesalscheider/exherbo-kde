@@ -1,0 +1,40 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="Advanced editor component which is used in numerous KDE applications"
+
+LICENCES=" BSD-2 [[ note = [ cmake scripts ] ]] LGPL-2"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/kdoctools:5
+    build+run:
+        kde-frameworks/kconfig:5
+        kde-frameworks/kdbusaddons:5
+        kde-frameworks/kguiaddons:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kinit:5
+        kde-frameworks/kio:5
+        kde-frameworks/kitemmodels:5
+        kde-frameworks/kitemviews:5
+        kde-frameworks/kjobwidgets:5
+        kde-frameworks/knewstuff:5
+        kde-frameworks/knotifications:5
+        kde-frameworks/kparts:5
+        kde-frameworks/ktexteditor:5
+        kde-frameworks/kwallet:5 [[ note = [ katesql ] ]]
+        kde-frameworks/kwindowsystem:5
+        kde-frameworks/kxmlgui:5
+        x11-libs/qtbase:5[>=5.2.0][sql]
+        x11-libs/qtscript:5[>=5.2.0]
+"
+
+# 4 of 5 tests need a running X server
+RESTRICT="test"
+
