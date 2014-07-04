@@ -30,3 +30,9 @@ DEPENDENCIES="
 # Tries to connect to X
 RESTRICT=test
 
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
+
