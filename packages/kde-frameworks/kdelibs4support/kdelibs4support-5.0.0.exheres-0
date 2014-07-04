@@ -5,3 +5,5 @@ require kdelibs4support
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/rb119111.patch )
+
