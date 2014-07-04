@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked revision: 1383ad297676bdbd713008eeda5dba2a1c895900
+# last checked revision: ecac61f7fbc1b09683c93f59712ba104b5373aa1
 
 require systemsettings
 
