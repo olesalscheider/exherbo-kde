@@ -1,9 +1,13 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 7b5c814c2d775d004bb7656ec0a148d0e3e3eec7
-
 require milou
+
+#MYOPTIONS="
+#    ( linguas:
+#        ca de en_GB es fi nds nl pa pl pt pt_BR sk sl sv uk
+#    )
+#"
 
 PLATFORMS="~amd64"
 
