@@ -54,7 +54,7 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
-        kde-frameworks/libkscreen:5[>=2.0.0]
+        kde-frameworks/libkscreen:5[>=1.7.3]
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
         media-libs/phonon[>=4.6.60][qt5]
@@ -106,6 +106,12 @@ DEPENDENCIES="
 
 # 1 one of 1 test needs a running X Server
 RESTRICT="test"
+
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gps libgps'
