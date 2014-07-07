@@ -55,10 +55,10 @@ DEPENDENCIES="
         )
         kerberos? ( virtual/kerberos )
 "
-# Currently (4.97.0) commented out
+# Currently (5.0.0) commented out
 #        dev-libs/openssl
 
-# Tests need a running X server and are currently broken
+# Many tests need a running X server and a few are currently broken (5.0.0)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(

@@ -29,6 +29,6 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'attica KF5Attica' )
 
-# 5 of 5 tests need a running X server
+# 5 of 5 tests need a running X server (5.0.0)
 RESTRICT="test"
 

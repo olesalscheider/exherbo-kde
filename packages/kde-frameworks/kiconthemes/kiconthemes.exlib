@@ -24,8 +24,10 @@ DEPENDENCIES="
         kde-frameworks/kitemviews:5[>=${KF5_MIN_VER}]
         kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
         x11-libs/qtsvg:5[>=5.2.0]
+    test:
+        kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
 "
 
-# 1 of 1 test needs a running X server
+# 1 of 1 test needs a running X server (5.0.0)
 RESTRICT="test"
 

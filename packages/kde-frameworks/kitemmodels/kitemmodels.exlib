@@ -24,6 +24,6 @@ MYOPTIONS=""
 DEPENDENCIES=""
 
 # NOTE: according to CMakeLists.txt tests need grantlee, which isn't ported to Qt5
-# 4 of 4 tests need a running X server
+# 4 of 4 tests need a running X server (5.0.0)
 RESTRICT="test"
 

@@ -61,7 +61,7 @@ DEPENDENCIES="
         ruby? ( dev-lang/ruby:* )
 "
 
-# 7 of 7 tests need a running X server
+# 5 of 6 tests need a running X server (5.0.0)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples BUILD_EXAMPLES' )

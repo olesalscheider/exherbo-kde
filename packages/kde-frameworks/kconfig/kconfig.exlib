@@ -20,6 +20,6 @@ MYOPTIONS=""
 DEPENDENCIES=""
 
 # A few tests need a running X server, others also fail probably because of
-# the paludisbuild environment.
+# the paludisbuild environment. (5.0.0)
 RESTRICT="test"
 

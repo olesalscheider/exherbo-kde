@@ -1,12 +1,12 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require frameworkintegration
+require kdbusaddons
 
 MYOPTIONS="
     ( linguas:
-        ca cs de es fi gl hu ia it ko nds nl pl pt pt_BR ro sk sr
-        sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_TW
+        ca cs de en_GB es fi fr gl hu ia it ko nb nds nl nn pl pt pt_BR ru se
+        sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv uk zh_TW
     )
 "
 

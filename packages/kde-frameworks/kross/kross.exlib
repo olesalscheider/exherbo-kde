@@ -28,6 +28,6 @@ DEPENDENCIES="
         x11-libs/qttools:5[>=5.2.0]
 "
 
-# 1 of 1 test needs a running X server
+# 1 of 1 test needs a running X server (5.0.0)
 RESTRICT="test"
 

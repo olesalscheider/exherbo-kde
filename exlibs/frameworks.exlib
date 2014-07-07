@@ -25,7 +25,7 @@ MYOPTIONS="debug"
 
 DEPENDENCIES="
     build+run:
-        kde-frameworks/extra-cmake-modules[>=0.0.14]
+        kde-frameworks/extra-cmake-modules[>=1.0.0]
 "
 
 # Translations aren't stored in the code repositories, but put together by release scripts.

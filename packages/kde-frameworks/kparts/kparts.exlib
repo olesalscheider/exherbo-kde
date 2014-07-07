@@ -24,6 +24,6 @@ DEPENDENCIES="
 "
 # TODO: if(HAVE_NEPOMUK) - I thought nepomuk was dead?
 
-# 2 of 2 tests need a running X server
+# 2 of 2 tests need a running X server (5.0.0)
 RESTRICT="test"
 

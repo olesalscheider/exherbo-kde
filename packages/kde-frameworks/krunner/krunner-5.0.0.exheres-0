@@ -5,7 +5,3 @@ require krunner
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-AbstractRunner-Add-a-categoryIcon-virtual-function.patch
-)
-

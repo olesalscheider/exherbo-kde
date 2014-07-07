@@ -16,6 +16,6 @@ DEPENDENCIES="
         kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
 "
 
-# Tries to connect to the running display server
+# 1 of 2 tests need a running X server (5.0.0)
 RESTRICT=test
 

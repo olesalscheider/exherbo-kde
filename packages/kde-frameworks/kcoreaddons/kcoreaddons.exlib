@@ -24,9 +24,8 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( FAM )
 src_prepare() {
     frameworks_src_prepare
 
-    # TODO: Fix the tests, the second one is probably some race condition, fails unreliably.
+    # TODO: Fix the test
     edo sed -e '/kshelltest/d' \
-            -e '/list(APPEND KDIRWATCH_BACKENDS_TO_TEST Fam)/d' \
             -i autotests/CMakeLists.txt
 }
 

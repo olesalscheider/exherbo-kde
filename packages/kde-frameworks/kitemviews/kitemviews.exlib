@@ -14,6 +14,6 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
-# 1 of 1 tests needs a running X server
+# 1 of 1 tests needs a running X server (5.0.0)
 RESTRICT="test"
 

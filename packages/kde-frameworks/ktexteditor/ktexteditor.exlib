@@ -33,7 +33,7 @@ DEPENDENCIES="
         x11-libs/qtscript:5[>=5.2.0]
 "
 
-# 27 of 48 tests need a running X server
+# 30 of 51 tests need a running X server (5.0.0)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_VIMODE:BOOL=TRUE )

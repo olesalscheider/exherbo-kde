@@ -67,7 +67,7 @@ fi
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 if [[ ${CATEGORY} == "kde-frameworks" ]] ; then
     SLOT="5"
-    KF5_MIN_VER="4.100.0"
+    KF5_MIN_VER="5.0.0"
 else
     SLOT="4"
 fi

@@ -15,6 +15,6 @@ DEPENDENCIES="
         kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
 "
 
-# Tries to connect to the running display server
+# 1 of 1 test needs a running X server (5.0.0)
 RESTRICT=test
 
