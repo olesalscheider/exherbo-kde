@@ -76,6 +76,13 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKWIN_BUILD_KAPPMENU:BOOL=FALSE
     -DKWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
 )
+
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'activities KWIN_BUILD_ACTIVITIES' )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     Wayland
