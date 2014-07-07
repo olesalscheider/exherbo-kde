@@ -28,7 +28,7 @@ DEPENDENCIES="
             x11-libs/libX11
             x11-libs/libxcb
             x11-libs/libXrandr
-            x11-libs/qtx11extras:5[>=5.2.0]
+            x11-libs/qtx11extras:5[>=5.3.0]
             x11-utils/xcb-util-image
             x11-utils/xcb-util-keysyms
             x11-utils/xcb-util-wm
@@ -37,4 +37,10 @@ DEPENDENCIES="
     run:
         sys-apps/upower
 "
+
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
 
