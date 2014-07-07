@@ -1,0 +1,18 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kio-extras
+
+#MYOPTIONS="
+#    ( linguas:
+#        af ar ast be be@latin bg bn bn_IN br bs ca ca@valencia cs csb cy da de
+#        el en_GB eo es et eu fa fi fr fy ga gl gu he hi hne hr hsb hu hy ia id
+#        is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn or
+#        pa pl pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin
+#        sr@latin sv ta te tg th tr ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK
+#        zh_TW
+#    )
+#"
+
+PLATFORMS="~amd64 ~x86"
+
