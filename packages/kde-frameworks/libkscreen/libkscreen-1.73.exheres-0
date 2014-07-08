@@ -2,9 +2,9 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: c4b6e8954ab777bb1bcbb04e05570aff77f68cb1
-
 require libkscreen
+
+DOWNLOADS="mirror://kde/unstable/plasma/4.98.0/src/${PNV}.tar.xz"
 
 PLATFORMS="~amd64 ~x86"
 
