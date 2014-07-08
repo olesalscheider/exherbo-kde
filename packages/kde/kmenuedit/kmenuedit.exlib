@@ -1,11 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ! ever is_scm ; then
-    require kde.org [ module='kde-workspace' kde_major_version='5' ]
-else
-    require kde.org [ kde_major_version='5' ]
-fi
+require kde.org [ kde_major_version='5' ]
 
 SUMMARY="KDE Menu editor"
 DESCRIPTION="
@@ -29,4 +25,10 @@ DEPENDENCIES="
         kde-frameworks/sonnet:5
         !kde/kde-workspace[-kf5-coinstall]
 "
+
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
 
