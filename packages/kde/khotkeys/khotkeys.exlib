@@ -28,6 +28,12 @@ DEPENDENCIES="
         !kde/kde-workspace[-kf5-coinstall]
 "
 
+if ! ever is_scm ; then
+    # Translations collide with kde-l10n:4. Disable them unconditionally
+    # until we solve this.
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
+fi
+
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'X X11'
 )
