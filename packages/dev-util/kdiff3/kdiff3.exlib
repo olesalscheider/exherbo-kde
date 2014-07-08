@@ -26,6 +26,7 @@ DEPENDENCIES="
         kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
         kde/kdelibs:4[>=4.6]
 "
+
 if ever is_scm ; then
     CMAKE_SOURCE=${WORKBASE}/${PNV}/${PN}
 fi
