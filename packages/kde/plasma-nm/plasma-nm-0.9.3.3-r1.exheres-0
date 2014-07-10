@@ -28,6 +28,10 @@ DEPENDENCIES="
         x11-libs/qt:4
         modem-manager? ( net-libs/libmm-qt[>=1.0.0] )
         openconnect? ( net-apps/openconnect[>=3.99] )
+        !kde/plasma-nm:4 [[
+            description = [ Collides with its Plasma 5 counterpart ]
+            resolution = uninstall-blocked-after
+        ]]
 "
 
 BUGS_TO="devel@arnej.de"
