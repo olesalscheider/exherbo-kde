@@ -1,0 +1,19 @@
+# Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org [ kde_major_version='5' ]
+
+SUMMARY="Qt-only wrapper for ModemManager DBus API"
+HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    run:
+        net-wireless/ModemManager[>=1.1]
+"
+
+BUGS_TO="mixi@exherbo.org"
+
