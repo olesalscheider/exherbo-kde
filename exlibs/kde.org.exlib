@@ -125,7 +125,7 @@ case ${PV} in
         WORK=${WORKBASE}/${KDEMODULE}-${PV}svn${K_SVN_REV} ;;
     4.4.@(6|7|8|9|10|11.1)) # newer KDEPim 4.4.x releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/kdepim-${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
-    5.0.*) # KDE 5 Frameworks
+    5.0.@(0|1|2|3)) # KDE 5 Frameworks
         case ${PN} in
             # Deprecated frameworks considered as porting aid only
             kdelibs4support | kfileaudiopreview | khtml | kjs | kjsembed | \
@@ -134,6 +134,8 @@ case ${PV} in
             *)
                 DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
         esac ;;
+    5.0.9@(0|1|2|3))
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/4.98.0/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
