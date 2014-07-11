@@ -7,3 +7,5 @@ require plasma-desktop
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-Add-FindOpenGLES.patch )
+

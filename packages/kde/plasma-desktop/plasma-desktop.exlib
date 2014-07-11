@@ -86,6 +86,14 @@ DEPENDENCIES="
 # 4 of 4 tests need a running X server
 RESTRICT="test"
 
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kdeclarative:5
+            kde-frameworks/kdewebkit:5
+    "
+fi
+
 if ! ever is_scm ; then
     # Translations collide with kde-l10n:4. Disable them unconditionally
     # until we solve this.
