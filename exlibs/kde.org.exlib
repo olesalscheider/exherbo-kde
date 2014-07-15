@@ -75,10 +75,27 @@ fi
 BUGS_TO="kde@exherbo.org"
 REMOTE_IDS="freecode:kde"
 
+if ever at_least 5.0.0 ; then
+    case ${PN} in
+        # Deprecated frameworks considered as porting aid only
+        kdelibs4support | kfileaudiopreview | khtml | kjs | kjsembed | \
+        kmediaplayer | kross | krunner)
+            RELEASE_BUNDLE="portingAids" ;;
+        # Plasma Workspace
+        baloo | breeze | kde-cli-tools | khelpcenter | khotkeys | \
+        kfilemetadata | kinfocenter | kio-extras | kmenuedit | ksysguard | \
+        kwin | kwrited | libksysguard | milou | oxygen | plasma-desktop | \
+        plasma-nm | plasma-workspace | plasma-workspace-wallpapers | \
+        powerdevil | systemsettings)
+            RELEASE_BUNDLE="plasma" ;;
+        # Ordinary KDE 5 Frameworks
+        *)
+            RELEASE_BUNDLE="frameworks" ;;
+    esac
+fi
+
 if exparam -b upstream_release_notes ; then
     case ${PV} in
-        4.98.0)
-            UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/plasma-5.0-rc.php" ;;
         4.5.0|4.6.0|4.8.0|4.8.2|4.9.0|4.10.0|4.11.0|4.12.0|4.13.0)
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
         4.@(3|4|5|6|7|8|9|10|11|12|13).@(1|2|3|4|5|6|7|8|9|10|11))
@@ -86,8 +103,13 @@ if exparam -b upstream_release_notes ; then
         4.@(2|3|4|5|9|10|11|12).@(6|7|8|9)*)
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
         5.0.*)
-            UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-5.0.php" ;;
-        4.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
+            if [[ ${RELEASE_BUNDLE} == plasma ]] ; then
+                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/plasma5.0/"
+            else
+                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-5.0.php"
+            fi
+            ;;
+        4.*|5.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
     esac
 fi
 
@@ -112,21 +134,17 @@ case ${PV} in
         DOWNLOADS=""
         ;;
 
-    4.98.*)
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
     4.@(4|5|9|10|11|12).@(80|85|90|92|95|96|97|98)) # Betas, RCs
         DOWNLOADS="${DOWNLOADS:-"listed-only: mirror://kde/unstable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
-    5.0.@(0|1|2|3)) # KDE 5 Frameworks
-        case ${PN} in
-            # Deprecated frameworks considered as porting aid only
-            kdelibs4support | kfileaudiopreview | khtml | kjs | kjsembed | \
-            kmediaplayer | kross | krunner)
-                DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/frameworks/${PV}/portingAids/${KDEMODULE}-${PV}.tar.xz"}" ;;
-            *)
-                DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/frameworks/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
-        esac ;;
-    5.0.9@(0|1|2|3))
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/4.98.0/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
+    5.0.@(0|1|2|3)) # KDE 5 Frameworks and Plasma 5
+        if [[ ${RELEASE_BUNDLE} == portingAids ]] ; then
+            DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/frameworks/${PV}/${RELEASE_BUNDLE}/${KDEMODULE}-${PV}.tar.xz"}"
+        else
+            DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${RELEASE_BUNDLE}/${PV}/${KDEMODULE}-${PV}.tar.xz"}"
+        fi
+        ;;
+    5.0.9@(|1|2|3)) # Will become frameworks, released with Plasma 5 in the meantime
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/plasma/5.0.0/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
