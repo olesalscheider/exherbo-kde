@@ -25,5 +25,7 @@ DEPENDENCIES="
         gsl-solver? ( sci-libs/gsl[>=1.8] )
 "
 
+RESTRICT="-test"
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'gsl-solver GSL' )
 
