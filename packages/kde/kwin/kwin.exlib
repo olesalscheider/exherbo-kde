@@ -70,18 +70,22 @@ DEPENDENCIES="
 # 7 of 9 tests require a running X server
 RESTRICT="test"
 
+if ! ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            !kde/kde-l10n:4 [[
+                description = [ Translations of Plasma packages collide with kde-l10n:4 ]
+                resolution =  uninstall-blocked-after
+            ]]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_DISTRIBUTION_TEXT:STRING="Exherbo"
     -DKWIN_BUILD_COVERAGE:BOOL=FALSE
     -DKWIN_BUILD_KAPPMENU:BOOL=FALSE
     -DKWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
 )
-
-if ! ever is_scm ; then
-    # Translations collide with kde-l10n:4. Disable them unconditionally
-    # until we solve this.
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
-fi
 
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'activities KWIN_BUILD_ACTIVITIES' )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
