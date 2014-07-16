@@ -3,11 +3,11 @@
 
 require milou
 
-#MYOPTIONS="
-#    ( linguas:
-#        ca de en_GB es fi nds nl pa pl pt pt_BR sk sl sv uk
-#    )
-#"
+MYOPTIONS="
+    ( linguas:
+        ca de en_GB es fi nds nl pa pl pt pt_BR sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv uk
+    )
+"
 
 PLATFORMS="~amd64"
 
