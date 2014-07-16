@@ -5,7 +5,7 @@ require kde.org [ git=false  kde_major_version='5' ]
 
 SUMMARY="Wallpapers for Plasma 5"
 
-LICENCES="GPL-2 LGPL-3"
+LICENCES="GPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES=""
