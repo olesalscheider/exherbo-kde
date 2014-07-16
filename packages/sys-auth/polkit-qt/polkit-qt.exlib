@@ -23,8 +23,10 @@ HOMEPAGE="https://projects.kde.org/projects/kdesupport/${MY_PN}"
 LICENCES="LGPL-2.1"
 SLOT="1"
 
-MYOPTIONS="examples"
-ever at_least 0.103.0_p20140303 && MYOPTIONS+=" ( qt4 qt5 ) [[ number-selected = at-least-one ]]"
+MYOPTIONS="
+    examples
+    ( qt4 qt5 ) [[ number-selected = at-least-one ]]
+"
 
 DEPENDENCIES="
     build:
@@ -32,29 +34,59 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         sys-auth/polkit:1[>=0.99]
+        qt4? ( x11-libs/qt:4[>=4.4.0][dbus] )
+        qt5? ( x11-libs/qtbase:5[>=5.1.0] )
     suggestion:
         sys-auth/polkit-kde-agent[>=0.99.0]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
 "
-
-if ever at_least 0.103.0_p20140303 ; then
-    DEPENDENCIES+="
-        build:
-            qt5? ( kde-frameworks/extra-cmake-modules[>=0.0.6] )
-        build+run:
-            qt4? ( x11-libs/qt:4[>=4.4.0][dbus] )
-            qt5? ( x11-libs/qtbase:5[>=5.1.0] )
-    "
-else
-    DEPENDENCIES+="
-        build:
-            kde/automoc4
-        build+run:
-            x11-libs/qt:4[>=4.4.0][dbus]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DSYSCONF_INSTALL_DIR:PATH=/etc/
     -DBUILD_TEST:BOOL=TRUE
 )
+
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        ecmake -DUSE_QT4=TRUE "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" $(cmake_build EXAMPLES)
+        popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        ecmake -DUSE_QT5=TRUE "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" $(cmake_build EXAMPLES)
+        popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/"qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+
+    edo pushd "${CMAKE_SOURCE}"
+    emagicdocs
+    edo popd
+}
 

@@ -1,4 +1,5 @@
 # Copyright 2009, 2010 Ingmar Vanhassel
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require polkit-qt
