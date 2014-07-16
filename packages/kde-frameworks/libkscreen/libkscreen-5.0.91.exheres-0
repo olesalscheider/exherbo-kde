@@ -4,7 +4,5 @@
 
 require libkscreen
 
-DOWNLOADS="mirror://kde/unstable/plasma/4.98.0/src/${PNV}.tar.xz"
-
 PLATFORMS="~amd64 ~x86"
 
