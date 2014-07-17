@@ -35,7 +35,7 @@ if ! ever is_scm ; then
             build:
                 x11-libs/qttools:5 [[ note = [ lrelease/lconvert for translations ] ]]
             "
-    elif [[ ${translation_type} == ki18n ]] ; then
+    elif [[ ${translation_type} == ki18n && ${PN} != ki18n ]] ; then
         DEPENDENCIES+="
             build:
                 kde-frameworks/ki18n [[ note = [ ki18n_install() from KF5I18NMacros.cmake ] ]]
