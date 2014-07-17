@@ -25,6 +25,25 @@ HOMEPAGE="http://l10n.kde.org/"
 DEPENDENCIES="
     build+run:
         kde/kdelibs:4[>=${PV}]
+        (
+            !kde/kde-cli-tools:4
+            !kde/khelpcenter:4
+            !kde/khotkeys:4
+            !kde/kinfocenter:4
+            !kde/kio-extras:4
+            !kde/kmenuedit:4
+            !kde/ksysguard:4
+            !kde/kwin:4
+            !kde/libksysguard:4
+            !kde/oxygen:4
+            !kde/plasma-desktop:4
+            !kde/plasma-workspace:4
+            !kde/powerdevil:4
+            !kde/systemsettings:4
+        ) [[
+                *description = [ Translations of Plasma packages collide with kde-l10n:4 ]
+                *resolution =  uninstall-blocked-after
+        ]]
 "
 
 # override cmake_src_prepare
