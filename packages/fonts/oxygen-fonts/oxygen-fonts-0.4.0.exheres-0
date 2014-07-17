@@ -13,8 +13,7 @@ would be rendered with Freetype on Linux-based devices. In addition a bold
 weight, plus regular and bold italics, and a monospace version will be made."
 
 HOMEPAGE="https://projects.kde.org/projects/playground/artwork/${PN}"
-# git archive --format=tar --prefix=oxygen-fonts-0.4/ a952e7c50 | xz -z > oxygen-fonts-0.4.tar.xz
-DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.xz"
+DOWNLOADS="mirror://kde/stable/plasma/5.0.0/${PNV}.tar.xz"
 
 LICENCES="GPL-3-font-exception OFL-1.1"
 SLOT="0"
@@ -24,14 +23,10 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         kde-frameworks/extra-cmake-modules[>=0.0.11]
+        media-gfx/fontforge
 "
 
 BUGS_TO="heirecka@exherbo.org"
 
-src_install() {
-    default
-
-    edo mkdir "${IMAGE}"/usr/share/fonts/X11
-    edo mv "${IMAGE}"/usr/share/fonts/{oxygen,X11/${PN}}
-}
+CMAKE_SRC_CONFIGURE_PARAMS=( -DOXYGEN_FONT_INSTALL_DIR=/usr/share/fonts/X11/${PN} )
 
