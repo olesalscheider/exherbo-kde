@@ -22,7 +22,5 @@ DEPENDENCIES="
         )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-polkit-qt5-support.patch )
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'policykit PolkitQt5-1' )
 
