@@ -70,6 +70,13 @@ DEPENDENCIES="
 # 7 of 9 tests require a running X server
 RESTRICT="test"
 
+if ever at_least 5.0.90; then
+    DEPENDENCIES+="
+        build+run:
+            dev-libs/libepoxy
+    "
+fi
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
