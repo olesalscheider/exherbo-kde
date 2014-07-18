@@ -15,5 +15,9 @@ MYOPTIONS="
 "
 
 PLATFORMS="~amd64 ~x86"
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-polkit-qt5-support.patch )
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-polkit-qt5-support.patch
+    "${FILES}"/${PN}-fix-auth-race-condition.patch
+)
 
