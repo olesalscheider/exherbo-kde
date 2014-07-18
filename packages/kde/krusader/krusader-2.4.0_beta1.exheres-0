@@ -27,7 +27,7 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         kde/kdelibs:4
-        kde/kde-baseapps:4
+        kde/kde-baseapps:4[<5]
 "
 
 BUGS_TO="kde@exherbo.org"

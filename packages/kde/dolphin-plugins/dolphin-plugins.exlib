@@ -15,7 +15,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kde-baseapps:${SLOT} [[ note = libkonq ]]
+        kde/kde-baseapps:${SLOT}[<5] [[ note = libkonq ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
     run:
         kde/kompare:${SLOT}

@@ -24,7 +24,7 @@ DEPENDENCIES="
     build+run:
         app-arch/libarchive[>=2.8.0]
         app-arch/xz
-        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
+        kde/kde-baseapps:${SLOT}[>=${PV}&<5] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0]
     suggestion:
         app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]

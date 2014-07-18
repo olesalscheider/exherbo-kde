@@ -15,7 +15,7 @@ DEPENDENCIES="
     build+run:
         graphics/exiv2[>=0.19]
         kde/kactivities:${SLOT}[>=4.9.90]
-        kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ libkonq is required ] ]]
+        kde/kde-baseapps:${SLOT}[>=${PV}&<5] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
         media-libs/jpeg
         media-libs/lcms2

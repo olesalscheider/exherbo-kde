@@ -1,0 +1,89 @@
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked commit: 71ac8fda167c348f02428c7428cac46a1018f93c
+
+require kde.org [ kde_major_version=5 ]
+
+SUMMARY="Collection of applications used for file and Internet browsing"
+DESCRIPTION="
+dolphin: Easy to use file manager
+kdepasswd: Frontend to the Unix passwd command
+kdialog: Display dialog boxes from shell scripts
+keditbookmarks: Edit browser bookmarks
+kfind: File find utility
+konq-plugins: Various plugins to enhance konqueror functionality
+konqueror: Web browser and file manager
+nsplugins: Various tools used to utilize Netscape(R) browser plugins
+"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
+PLATFORMS="~amd64 x86"
+MYOPTIONS="
+    semantic-desktop [[ description = [ Adds support for searching and tagging via Baloo ] ]]
+"
+#    tidy [[ description = [ Build the CSS & HTML validator plugins ] ]]
+
+DEPENDENCIES="
+    build:
+        dev-cpp/cppunit
+        kde-frameworks/kdoctools:5
+        x11-apps/bdftopcf
+    build+run:
+        kde-frameworks/kactivities:5
+        kde-frameworks/karchive:5
+        kde-frameworks/kbookmarks:5
+        kde-frameworks/kcmutils:5
+        kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kcoreaddons:5
+        kde-frameworks/kdbusaddons:5
+        kde-frameworks/kdelibs4support:5
+        kde-frameworks/kdesu:5
+        kde-frameworks/kinit:5
+        kde-frameworks/kio:5
+        kde-frameworks/knewstuff:5
+        kde-frameworks/kparts:5
+        kde-frameworks/kservice:5
+        kde-frameworks/kxmlgui:5
+        kde-frameworks/solid:5
+        media-libs/phonon[qt5(-)]
+        sys-libs/zlib
+        x11-libs/libX11
+        x11-libs/libXrender
+        x11-libs/qtbase:5[>=5.2.0]
+        semantic-desktop? (
+            kde-frameworks/baloo:5
+            kde-frameworks/kfilemetadata:5
+            kde/baloo-widgets[>=scm]
+        )
+"
+# nsplugins and konq-plugins are commented out at the moment
+#        dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
+#        x11-libs/libXt [[ note = [ Required for browser plugin support ] ]]
+#
+#        tidy? (
+#            || (
+#                app-text/tidy
+#                app-text/tidy-html5
+#            )
+#        )
+
+# 11 of 11 tests need a running X server.
+RESTRICT="test"
+
+#CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+#    'tidy LibTidy'
+#)
+#CMAKE_SRC_CONFIGURE_PARAMS+=(
+#    -DWITH_GLIB2:BOOL=TRUE
+#)
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'semantic-desktop KF5Baloo'
+    'semantic-desktop KF5BalooWidgets'
+    'semantic-desktop KF5FileMetaData'
+)
+

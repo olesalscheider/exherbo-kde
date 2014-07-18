@@ -23,7 +23,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        kde/kde-baseapps:4 [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
+        kde/kde-baseapps:4[<5] [[ note = [ KDiff3 contextmenu plugin for Dolphin/Konqueror ] ]]
         kde/kdelibs:4[>=4.6]
 "
 

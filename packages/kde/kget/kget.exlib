@@ -22,8 +22,8 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.4]
         dev-libs/boost
         dev-libs/soprano
-        kde/kde-baseapps:${SLOT}    [[ note = [ libkonq ] ]]
-        kde/kde-workspace:${SLOT}   [[ note = [ allow shutdown after download ] ]]
+        kde/kde-baseapps:${SLOT}[<5] [[ note = [ libkonq ] ]]
+        kde/kde-workspace:${SLOT}    [[ note = [ allow shutdown after download ] ]]
         kde/kdelibs:${SLOT}
         kde/nepomuk-core:${SLOT}
         kde/nepomuk-widgets:${SLOT}
