@@ -44,14 +44,15 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DAKONADI_BUILD_QSQLITE:BOOL=FALSE
     -DAKONADI_BUILD_TESTS:BOOL=TRUE
-    # "backward compat, remove eventually"
-    -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE
     -DDATABASE_BACKEND:STRING=MYSQL
 )
-CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
+CMAKE_SRC_CONFIGURE_OPTIONS+=(
+    'qt5 QT5_BUILD'
+    # Nepomuk is no more for KF5, we could disable this after KDE[<4.13] is gone
+    '!qt5 WITH_SOPRANO'
+)
 
-if ever at_least 1.11.80 ; then
-    # Make this optional for frameworks where there is no Nepomuk or when KDE[<4.13] is gone
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_SOPRANO:BOOL=TRUE )
+if ! ever at_least 1.11.80 ; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DAKONADI_USE_STRIGI_SEARCH:BOOL=FALSE )
 fi
 
