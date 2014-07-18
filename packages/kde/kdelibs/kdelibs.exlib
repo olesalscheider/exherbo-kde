@@ -36,7 +36,6 @@ DEPENDENCIES="
         dev-libs/attica:0[>=0.4.2]
         dev-libs/libxml2:2.0
         dev-libs/libxslt
-        dev-libs/openssl
         dev-libs/pcre
         dev-libs/soprano[>=2.7.56][virtuoso(-)]
         media-libs/fontconfig
@@ -48,6 +47,7 @@ DEPENDENCIES="
         sys-apps/dbus[X(-)]
         sys-apps/systemd
         sys-libs/zlib
+        virtual/libssl
         x11-libs/dbusmenu-qt[qt4(+)]
         x11-libs/libICE
         x11-libs/libSM
