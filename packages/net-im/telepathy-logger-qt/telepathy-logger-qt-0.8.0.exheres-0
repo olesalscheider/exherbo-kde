@@ -22,7 +22,7 @@ DEPENDENCIES="
         dev-libs/dbus-glib:1
         dev-libs/glib:2
         dev-libs/libxml2:2.0
-        media-libs/qt-gstreamer [[ note = [ Contains QtGLib ] ]]
+        media-libs/qt-gstreamer[-qt5] [[ note = [ Contains QtGLib ] ]]
         net-im/telepathy-glib[>=0.16.0]
         net-im/telepathy-logger:=
         net-im/telepathy-qt[>=0.9.1][qt4(+)]

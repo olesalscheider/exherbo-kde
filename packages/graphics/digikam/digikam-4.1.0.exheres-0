@@ -29,7 +29,7 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        app-crypt/qca:2
+        app-crypt/qca:2[qt4(+)]
         dev-libs/boost
         dev-libs/expat[>=2.0.1]   [[ description = [ For DNGConverter: XMP SDK need Expat library to compile ] ]]
         dev-libs/libxml2:2.0[>=2.7] [[ description = [ Htmlexport ] ]]
@@ -74,7 +74,7 @@ DEPENDENCIES="
         )
         kipi_plugins:videoslideshow? (
             media-gfx/ImageMagick[>=5.5.4]
-            media-libs/qt-gstreamer
+            media-libs/qt-gstreamer[-qt5]
         )
         nepomuk? (
             app-text/shared-desktop-ontologies[>=0.6.50]

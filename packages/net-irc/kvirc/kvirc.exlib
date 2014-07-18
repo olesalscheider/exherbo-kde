@@ -61,7 +61,7 @@ DEPENDENCIES="
         kde? ( kde/kdelibs:4 )
         perl? ( dev-lang/perl )
         phonon? (
-            media-libs/phonon
+            media-libs/phonon[qt4(+)]
             x11-libs/qt:4[phonon]
         )
         python? ( dev-lang/python:=[>=2.6.1] )

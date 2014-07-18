@@ -22,7 +22,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/soprano
         kde/kdelibs:4[>=4.5.0][nepomuk(+)]
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         media-libs/taglib
         x11-libs/qt:4[>=4.3.0]  [[ note = [ Minimum version needed for QtScript ] ]]
 "

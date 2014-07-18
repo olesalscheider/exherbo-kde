@@ -12,7 +12,7 @@ MYOPTIONS="single-sign-on
 
 DEPENDENCIES+="
     build+run:
-        app-crypt/qca:2
+        app-crypt/qca:2[qt4(+)]
         dev-libs/qjson[>=0.5]
         x11-libs/qt:4[dbus][webkit]
         single-sign-on? (

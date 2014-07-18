@@ -17,7 +17,7 @@ DEPENDENCIES="
         kde/kdepimlibs:${SLOT}[>=${PV}]
         kde/smokegen:${SLOT}[>=4.7.4]
         kde/smokeqt:${SLOT}[>=4.7.4]
-        server-pim/akonadi
+        server-pim/akonadi[-qt5]
         x11-libs/qt:4[dbus]
         okular? ( kde/okular:${SLOT}[>=4.7.4] )
 "

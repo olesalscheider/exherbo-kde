@@ -18,7 +18,7 @@ DEPENDENCIES="
         kde/libkcddb:${SLOT}
         kde/libkcompactdisc:${SLOT}
         media/cdparanoia
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         x11-libs/qt:4[phonon]
         flac? ( media-libs/flac[>=1.1.2] )
         vorbis? (

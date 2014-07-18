@@ -16,7 +16,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.11.1]
         media-libs/phonon[qt4(+)]
-        media-libs/qt-gstreamer[<1.0]
+        media-libs/qt-gstreamer[<1.0][-qt5]
         x11-libs/qt:4[sql]
     test:
         x11-libs/qt:4[opengl]

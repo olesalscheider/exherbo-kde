@@ -12,5 +12,5 @@ PLATFORMS="~amd64 ~x86"
 DEPENDENCIES="
     build+run:
         x11-libs/qt:4[>=4.8.0]
-        x11-libs/dbusmenu-qt[>=0.9.0]
+        x11-libs/dbusmenu-qt[>=0.9.0][qt4(+)]
 "

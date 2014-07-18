@@ -34,7 +34,7 @@ DEPENDENCIES="
         kde-frameworks/kio:5
         kde-frameworks/solid:5
         media-libs/jpeg
-        media-libs/phonon[qt5(-)][>=4.6.60]
+        media-libs/phonon[>=4.6.60][qt5(-)]
         x11-misc/shared-mime-info[>=0.40]
         jpeg-rotation? ( graphics/exiv2 )
         openexr? ( media-libs/openexr )

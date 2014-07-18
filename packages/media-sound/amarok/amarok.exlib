@@ -52,7 +52,7 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        app-crypt/qca:2
+        app-crypt/qca:2[qt4(+)]
         dev-libs/soprano              [[ note = [ nepomuk collection, possibly optional ] ]]
         kde/kdelibs:4[>=4.8.4]        [[ note = [ nfs and smb support depend on it ] ]]
         kde/nepomuk-core:4[>=4.9.0]   [[ note = [ nepomuk collection, possibly optional ] ]]

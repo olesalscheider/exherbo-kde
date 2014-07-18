@@ -17,7 +17,7 @@ DEPENDENCIES="
         dev-lang/python:* [[ note = [ Needed by xml data translation ] ]]
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         sci-libs/cln
         sci-libs/eigen:2[>=2.0.3]
         sci-libs/libqalculate[>=0.9.5] [[ note = [ qalculate could be made optional ] ]]

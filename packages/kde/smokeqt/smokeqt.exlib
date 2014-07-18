@@ -16,7 +16,7 @@ MYOPTIONS="
 DEPENDENCIES="
     build+run:
         kde/smokegen:${SLOT}
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         x11-libs/qt:4[dbus][multimedia?][opengl?][qt3support?][webkit?]
 "
 

@@ -55,7 +55,7 @@ DEPENDENCIES+="
         kde/kde-runtime:${SLOT}[>=${PV}]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
         sys-libs/zlib
         x11-libs/libX11
@@ -73,7 +73,7 @@ if ever at_least 4.13.2 ; then
         build+run:
             kde/baloo[>=4.13.0]
             kde/kdelibs:${SLOT}[>=4.12.0]
-            server-pim/akonadi[>=1.12.1]
+            server-pim/akonadi[>=1.12.1][-qt5]
             googledrive? ( app-pim/libkgapi[>=2.1.0] )
     "
 else
@@ -85,7 +85,7 @@ else
             kde/kdelibs:${SLOT}[>=4.11.3]
             kde/nepomuk-core:${SLOT}[>=${PV}]
             kde/nepomuk-widgets:${SLOT}[>=4.9.90]
-            server-pim/akonadi[>=1.10.45]
+            server-pim/akonadi[>=1.10.45][-qt5]
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_KActivities:BOOL=TRUE )
 fi

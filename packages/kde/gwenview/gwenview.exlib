@@ -20,7 +20,7 @@ DEPENDENCIES="
         media-libs/jpeg
         media-libs/lcms2
         media-libs/libpng:=
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         x11-libs/libX11
         kipi? ( graphics/digikam )
 "

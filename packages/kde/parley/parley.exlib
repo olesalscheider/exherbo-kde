@@ -13,7 +13,7 @@ DEPENDENCIES="
         dev-libs/attica:0
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkdeedu:${SLOT}
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         x11-libs/libX11
         x11-libs/libXrender
         html-export? (

@@ -25,7 +25,7 @@ DEPENDENCIES="
         dev-libs/libxslt   [[ note = xsltproc ]]
         doc? ( app-doc/doxygen )
     build+run:
-        app-crypt/qca:2[>=2.0.0]
+        app-crypt/qca:2[>=2.0.0][qt4(+)]
         dev-db/sqlite:3[>=3.7.0]
         dev-libs/grantlee[>=0.2]
         dev-libs/qjson[>=0.7.1]

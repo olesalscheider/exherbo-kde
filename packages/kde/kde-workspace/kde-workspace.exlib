@@ -65,7 +65,7 @@ DEPENDENCIES="
         kde/kactivities:${SLOT}[>=${PV}]
         kde/kdelibs:${SLOT}[>=${PV}]
         kde/kde-pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
-        kde/qimageblitz[>=0.0.4]
+        kde/qimageblitz[>=0.0.4][qt4(+)]
         sys-apps/systemd [[ note = [ udev for UPower backend in PowerDevil ] ]]
         sys-libs/pam [[ note = [ Currently pam is an automagic dependency. Hard-enabled until we have a proper patch for that. ] ]]
         sys-libs/zlib
@@ -109,10 +109,10 @@ DEPENDENCIES="
             media-libs/freetype:2 [[ note = [ kcontrol, ksplash ] ]]
             media-libs/jpeg [[ note = ksplash ]]
             media-libs/libpng:= [[ note = ksplash ]]
-            server-pim/akonadi
+            server-pim/akonadi[-qt5]
             sys-apps/pciutils
             sys-apps/usbutils-data [[ note = [ required to display USB information in kinfocenter ] ]]
-            x11-libs/dbusmenu-qt[>=0.6.0]
+            x11-libs/dbusmenu-qt[>=0.6.0][qt4(+)]
             x11-libs/libXinerama
             x11-libs/libXScrnSaver [[ note = krunner ]]
             x11-libs/libXxf86misc [[ note = krunner ]]

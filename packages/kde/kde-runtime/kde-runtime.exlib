@@ -66,14 +66,14 @@ DEPENDENCIES="
         dev-cpp/cppunit
     build+run:
         app-crypt/gpgme
-        app-crypt/qca:2[>=2.0.0]
+        app-crypt/qca:2[>=2.0.0][qt4(+)]
         app-text/shared-desktop-ontologies[>=0.6.50]
         dev-libs/soprano[>=2.6.50][virtuoso]
         kde/kactivities:${SLOT}
         kde/kdelibs:${SLOT}[>=4.9.95]
         kde/kdepimlibs:${SLOT}
         media-libs/jpeg
-        media-libs/phonon[>=4.4.57]
+        media-libs/phonon[>=4.4.57][qt4(+)]
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]

@@ -16,6 +16,6 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         kde/libkdegames:${SLOT}
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
 "
 

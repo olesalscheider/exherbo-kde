@@ -14,10 +14,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        app-crypt/qca:2[>=2.0.0] [[ note = [ Build Ksirk Jabber support's GroupWise and Jabberprotocols ] ]]
+        app-crypt/qca:2[>=2.0.0][qt4(+)] [[ note = [ Build Ksirk Jabber support's GroupWise and Jabberprotocols ] ]]
         kde/kdelibs:${SLOT}
         kde/libkdegames:${SLOT}[>=4.9.0]
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         sys-libs/zlib
 "
 # NOTE: contains a copy of iris (http://delta.affinix.com/iris/) which has no releases so far

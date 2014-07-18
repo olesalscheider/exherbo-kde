@@ -28,7 +28,7 @@ DEPENDENCIES="
         ) [[ note = [ See https://bugs.kde.org/show_bug.cgi?id=323899 ] ]]
         kde/kdelibs:4[>=4.9.4]
         kde/kdepimlibs:4[>=4.7.0]
-        media-libs/phonon[>=4.3.80]
+        media-libs/phonon[>=4.3.80][qt4(+)]
         x11-libs/qt:4[>=4.7.0][webkit]
 "
 

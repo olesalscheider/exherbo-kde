@@ -110,7 +110,7 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
     post:
-        phonon? ( media-libs/phonon[>=4.3.80][gstreamer?][multibuild_c:*(-)?] )
+        phonon? ( media-libs/phonon[>=4.3.80][gstreamer?][qt4(+)][multibuild_c:*(-)?] )
 "
 
 # Packages that need QtSQL should depend on x11-libs/qt:4[sql]

@@ -28,11 +28,11 @@ DEPENDENCIES="
         kde/qimageblitz[qt4(+)]
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
-        media-libs/phonon
+        media-libs/phonon[qt4(+)]
         sys-libs/zlib [[ note = [ Support for Plucker files in Okular ] ]]
         chm? ( media-libs/chmlib )
         djvu? ( app-text/djvu[>=3.5.17] )
-        encrypted? ( app-crypt/qca:2 )
+        encrypted? ( app-crypt/qca:2[qt4(+)] )
         epub? ( app-text/ebook-tools )
         mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
         pdf? ( app-text/poppler[>=0.12.1][qt4] )

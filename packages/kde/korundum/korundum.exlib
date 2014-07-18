@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde/qtruby:4[>=4.7.4]
         kde/smokegen:4[>=4.7.4]
         kde/smokekde:4[>=4.7.4][okular?]
-        server-pim/akonadi
+        server-pim/akonadi[-qt5]
         x11-libs/qt:4[dbus]
         okular? ( kde/okular:4[>=4.7.4] )
 "
