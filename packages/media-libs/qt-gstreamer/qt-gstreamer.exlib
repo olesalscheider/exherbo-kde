@@ -1,0 +1,77 @@
+# Copyright 2012 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 cmake_minimum_version="2.8.9" ]
+
+SUMMARY="C++ bindings for GStreamer with a Qt-style API"
+HOMEPAGE="http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"
+
+ever at_least 1.2.0 && suffix="xz" || suffix="bz2"
+DOWNLOADS="http://gstreamer.freedesktop.org/src/${PN}/${PNV}.tar.${suffix}"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+MYOPTIONS="doc qt5 [[ description = [ Build against Qt5 instead of Qt4  ] ]]"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        doc? ( app-doc/doxygen )
+    build+run:
+        dev-libs/boost[>=1.39]
+        dev-libs/glib:2
+        sys-devel/bison
+        sys-devel/flex
+        x11-dri/mesa
+        qt5? (
+            x11-libs/qtbase:5[>=5.0.0]
+            x11-libs/qtquick1:5[>=5.0.0]
+        )
+       !qt5? (
+            x11-libs/qt:4[opengl][>=4.7]
+        )
+"
+
+if ever at_least 1.2.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/gstreamer:1.0[>=1.0.0]
+            media-plugins/gst-plugins-base:1.0[>=1.0.0]
+            qt5? ( x11-libs/qtdeclarative:5[>=5.0.0] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            media-libs/gstreamer:0.10[>=0.10.33]
+            media-plugins/gst-plugins-base:0.10[>=0.10.36]
+    "
+fi
+
+BUGS_TO="mixi@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DQTGSTREAMER_CODEGEN:BOOL=TRUE
+    -DQTGSTREAMER_TESTS:BOOL=TRUE
+)
+
+src_prepare() {
+    default
+    # disable failing test, https://bugzilla.gnome.org/show_bug.cgi?id=710370
+    edo sed -i -e "/^qgst_test(discoverertest)/d" "${CMAKE_SOURCE}"/tests/auto/CMakeLists.txt
+}
+
+src_configure() {
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT_VERSION=$(option qt5 && echo 5 || echo 4) )
+    cmake_src_configure
+}
+
+src_compile() {
+    default
+    option doc && emake doc
+}
+
+src_install() {
+    default
+    option doc && dodoc -r doc
+}
+
