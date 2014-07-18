@@ -5,3 +5,7 @@ require extra-cmake-modules
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-Define-convenience-variable-for-DATAROOTDIR-kxmlgui5.patch
+)
+
