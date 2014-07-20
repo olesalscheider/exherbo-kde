@@ -22,6 +22,7 @@ DEPENDENCIES="
     build:
         doc? ( x11-libs/qttools:${SLOT} )
     build+run:
+        x11-dri/mesa
         x11-libs/qtbase:${SLOT}[>=${PV}][multibuild_c:*(-)?][sql]
             [[ note = [ QML and user-specific local storage via SQLite. Might
                         optional -> remove from imports/imports.pro ] ]]
