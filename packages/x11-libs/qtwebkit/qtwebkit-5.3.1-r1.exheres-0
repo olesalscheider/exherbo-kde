@@ -5,3 +5,7 @@ require qtwebkit
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-Prevent-crashes-when-the-QWebView-gets-reparented.patch
+)
+
