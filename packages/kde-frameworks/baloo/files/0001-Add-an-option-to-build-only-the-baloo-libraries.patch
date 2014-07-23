@@ -1,46 +1,51 @@
-Uptream: under review, https://git.reviewboard.kde.org/r/118438/
-
-From 82d6684fd9c02751f219d0243f305400f2fc2734 Mon Sep 17 00:00:00 2001
+From c93ec8d3a2a598c505df84a59fecd1c0574203aa Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Sat, 31 May 2014 12:32:30 +0200
 Subject: [PATCH] Add an option to build only the baloo libraries
 
 ---
- src/CMakeLists.txt      |  12 ++--
- src/file/CMakeLists.txt | 166 ++++++++++++++++++++++++------------------------
- 2 files changed, 92 insertions(+), 86 deletions(-)
+ CMakeLists.txt          |   1 +
+ src/CMakeLists.txt      |   8 ++-
+ src/file/CMakeLists.txt | 164 ++++++++++++++++++++++++------------------------
+ 3 files changed, 89 insertions(+), 84 deletions(-)
 
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index abb494a..2c499a5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,6 +26,7 @@ ecm_setup_version(${BALOO_VERSION} VARIABLE_PREFIX BALOO
+                         SOVERSION 1
+ )
+ 
++option(BALOO_LIBRARIES_ONLY "If true, compiles only the Baloo libraries, without binaries, kioslaves." OFF)
+ # Temporary option untill kdepimlibs is ok. Activate it if you want to compile kdepim
+ option(KDEPIM_SUPPORT_BUILD "Build baloo kdepim support" FALSE)
+ 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 810f6dc..ff52ce1 100644
+index 810f6dc..92d32e2 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -1,7 +1,11 @@
-+option(BALOO_LIBRARIES_ONLY "If true, compiles only the Baloo libraries, without binaries, kioslaves." OFF)
-+
- add_subdirectory(core)
+@@ -2,6 +2,8 @@ add_subdirectory(core)
  add_subdirectory(xapian)
  add_subdirectory(file)
--add_subdirectory(pim)
+ add_subdirectory(pim)
 -add_subdirectory(kioslaves)
 -add_subdirectory(tools)
 -#add_subdirectory(queryparser)
 +if (NOT BALOO_LIBRARIES_ONLY)
-+    add_subdirectory(pim)
 +    add_subdirectory(kioslaves)
 +    add_subdirectory(tools)
 +    #add_subdirectory(queryparser)
 +endif ()
 diff --git a/src/file/CMakeLists.txt b/src/file/CMakeLists.txt
-index 72b56ea..a3a713a 100644
+index df96fd7..9415488 100644
 --- a/src/file/CMakeLists.txt
 +++ b/src/file/CMakeLists.txt
-@@ -1,97 +1,99 @@
- kde_enable_exceptions()
+@@ -4,96 +4,98 @@ kde_enable_exceptions()
  
  add_subdirectory(lib)
--add_subdirectory(search)
+ add_subdirectory(search)
 +if (NOT BALOO_LIBRARIES_ONLY)
-+    add_subdirectory(search)
  
 -set(file_static_lib_SRCS
 -    # File Indexer
@@ -217,5 +222,5 @@ index 72b56ea..a3a713a 100644
 +    add_subdirectory(cleaner)
 +endif()
 -- 
-2.0.1
+2.0.2
 
