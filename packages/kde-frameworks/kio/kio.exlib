@@ -54,6 +54,8 @@ DEPENDENCIES="
             sys-apps/attr
         )
         kerberos? ( virtual/kerberos )
+    post:
+        kde-frameworks/kded:5 [[ note = [ calls org.kde.kded5 via dbus ] ]]
 "
 # Currently (5.0.0) commented out
 #        dev-libs/openssl
