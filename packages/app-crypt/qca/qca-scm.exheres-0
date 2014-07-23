@@ -1,0 +1,144 @@
+# Copyright 2008 Thomas Anderson
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qca-2.0.0.ebuild', which is:
+#   Copyright 1999-2008 Gentoo Foundation
+
+SCM_REPOSITORY="git://anongit.kde.org/qca.git"
+
+require scm-git cmake [ api=2 ]
+
+SUMMARY="Qt Cryptographic Architecture (QCA)"
+HOMEPAGE="http://delta.affinix.com/qca/"
+
+LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] LGPL-2"
+SLOT="2"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    botan  [[ description = [ Build crypto algorithms plugin based on botan ] ]]
+    doc
+    gcrypt [[ description = [ Build crypto algorithms plugin based on libgcrypt ] ]]
+    gpg    [[ description = [ Build crypto algorithms plugin based on gnupg ] ]]
+    nss    [[ description = [ Build crypto algorithms plugin based on nss ] ]]
+    pkcs11 [[ description = [ Build crypto algorithms plugin based on pkcs11-helper ] ]]
+    qt4
+    qt5    [[ description = [ Add support for the Qt GUI/Application Toolkit version 5.x ] ]]
+    sasl   [[ description = [ Build crypto algorithms plugin based on cyrus-sasl ] ]]
+
+    ( qt4 qt5 ) [[ number-selected = at-least-one ]]"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        doc? ( app-doc/doxygen )
+    build+run:
+        virtual/libssl
+        botan? ( dev-libs/botan:1.10 )
+        gcrypt? ( dev-libs/libgcrypt )
+        gpg? ( app-crypt/gnupg )
+        nss? ( dev-libs/nss )
+        pkcs11? ( dev-libs/pkgcs11-helper )
+        qt4? ( x11-libs/qt:4[>=4.7.0] )
+        qt5? ( x11-libs/qtbase:5 )
+        sasl? ( net-libs/cyrus-sasl[>=2] )
+        (
+            !app-crypt/qca-gnupg
+            !app-crypt/qca-ossl
+        ) [[
+            *description = [ qca-gnupg and qca-ossl are included in qca-scm ]
+            *resolution = uninstall-blocked-after
+        ]]
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Disable-pgpunittest.patch )
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( -DBUILD_SHARED_LIBS:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_TESTS=( '-DBUILD_TESTS:BOOL=TRUE -DBUILD_TESTS:BOOL=FALSE' )
+
+with_plugin() {
+    local opt="${1}" cmake_flag="${2:-${1}}"
+    echo "-DWITH_${cmake_flag}_PLUGIN=$(option ${opt} 'yes' 'no')"
+}
+
+qca_conf() {
+    ecmake \
+        -DWITH_ossl_PLUGIN=TRUE \
+        $(with_plugin botan) \
+        $(with_plugin gcrypt) \
+        $(with_plugin gpg gnupg) \
+        $(with_plugin nss) \
+        $(with_plugin pkcs11) \
+        $(with_plugin sasl cyrus-sasl) \
+        "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
+        "$@"
+}
+
+src_configure() {
+    if option qt4; then
+        edo mkdir "${WORKBASE}"/qt4-build
+        edo pushd "${WORKBASE}"/qt4-build
+        qca_conf \
+            -DQT4_BUILD=TRUE \
+            -DQCA_PLUGINS_INSTALL_DIR=/usr/${LIBDIR}/qt4/plugins/crypto
+        popd
+    fi
+    if option qt5; then
+        edo mkdir "${WORKBASE}"/qt5-build
+        edo pushd "${WORKBASE}"/qt5-build
+        qca_conf \
+            -DQCA_FEATURE_INSTALL_DIR=/usr/share/qt5/mkspecs/features \
+            -DQCA_INCLUDE_INSTALL_DIR=/usr/include/qca-qt5 \
+            -DQCA_PLUGINS_INSTALL_DIR=/usr/${LIBDIR}/qt5/plugins/crypto \
+            -DQCA_SUFFIX=qt5
+        popd
+    fi
+}
+
+src_compile() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}/"qt5-build
+        emake
+        edo popd
+    fi
+}
+
+src_test() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake test
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake test
+        edo popd
+    fi
+}
+
+src_install() {
+    if option qt4; then
+        edo pushd "${WORKBASE}"/qt4-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+    if option qt5; then
+        edo pushd "${WORKBASE}"/qt5-build
+        emake -j1 DESTDIR="${IMAGE}" install
+        edo popd
+    fi
+
+    if option doc ; then
+        edo doxygen "${CMAKE_SOURCE}"/Doxyfile.in
+        dodoc apidocs/html/*
+    fi
+
+    edo pushd "${CMAKE_SOURCE}"
+    emagicdocs
+    edo popd
+}
+

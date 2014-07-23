@@ -1,0 +1,26 @@
+From 0c270cdf598c2c7ea8dca29eb0b0417effd9f157 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 28 Jun 2014 11:45:41 +0200
+Subject: [PATCH] Disable pgpunittest
+
+It needs a running X server.
+---
+ unittest/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/unittest/CMakeLists.txt b/unittest/CMakeLists.txt
+index 19e6f14..f1dcbac 100644
+--- a/unittest/CMakeLists.txt
++++ b/unittest/CMakeLists.txt
+@@ -28,7 +28,7 @@ add_subdirectory(keylengthunittest)
+ add_subdirectory(keystore)
+ add_subdirectory(macunittest)
+ add_subdirectory(metatype)
+-add_subdirectory(pgpunittest)
++#add_subdirectory(pgpunittest)
+ add_subdirectory(pipeunittest)
+ add_subdirectory(pkits)
+ add_subdirectory(rsaunittest)
+-- 
+2.0.2
+
