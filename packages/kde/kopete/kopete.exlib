@@ -98,7 +98,8 @@ DEPENDENCIES="
         )
     suggestion:
         im_protocols:xmpp? (
-            app-crypt/qca-ossl:2 [[ description = [ Necessary to make SSL secured xmpp connections with kopete ] ]]
+            app-crypt/qca:2 [[ description = [ Necessary to make SSL secured xmpp connections with kopete ]
+                               note = [ qca-ossl plugin ] ]]
         )
 "
 # build+run: im_protocols:jingle? ( net-libs/ortp[>=0.13] sys-sound/alsa-lib )

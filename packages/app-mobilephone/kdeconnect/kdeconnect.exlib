@@ -27,15 +27,13 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        app-crypt/qca:2[qt4(+)]
+        app-crypt/qca:2[qt4(+)] [[ note = [ library and qca-ossl plugin ] ]]
         dev-libs/qjson[>=0.8.1]
         kde/kdelibs:4
         media-libs/phonon[qt4(+)]
         x11-libs/libX11
         x11-libs/libXtst
         x11-libs/qt:4[dbus]
-    run:
-        app-crypt/qca-ossl:2
 "
 
 BUGS_TO="friedrich@mailstation.de heirecka@exherbo.org"
