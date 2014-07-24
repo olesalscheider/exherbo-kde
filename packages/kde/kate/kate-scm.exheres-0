@@ -2,6 +2,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 94e8e951ad5d09d84d4dabc1ede05b19e51416b6
+
 require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Advanced editor component which is used in numerous KDE applications"
