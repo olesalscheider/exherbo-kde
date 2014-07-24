@@ -39,7 +39,7 @@ if ever is_scm; then
                 SCM_BRANCH="KDE/4.11"
                 ;;
             baloo|kde-baseapps|kde-gtk-config|kde-runtime|kdepimlibs| \
-            kfilemetadata|konsole|kscreen|libkscreen)
+            kfilemetadata|konsole|konversation|kscreen|libkscreen)
                 if ever at_least 4.95.0 ; then
                     SCM_BRANCH="frameworks"
                 else
