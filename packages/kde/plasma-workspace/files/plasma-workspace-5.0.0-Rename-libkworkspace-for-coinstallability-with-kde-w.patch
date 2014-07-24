@@ -1,0 +1,46 @@
+Upstream: yes, taken from master
+
+From 9edfd9cefe0642995d6dcfdd235f9df79f6542d7 Mon Sep 17 00:00:00 2001
+From: Michael Palimaka <kensington@gentoo.org>
+Date: Thu, 24 Jul 2014 19:52:30 +1000
+Subject: [PATCH] Rename libkworkspace for coinstallability with
+ kde-workspace4.
+
+REVIEW: 119452
+---
+ libkworkspace/CMakeLists.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/libkworkspace/CMakeLists.txt b/libkworkspace/CMakeLists.txt
+index e417c76..f59cac5 100644
+--- a/libkworkspace/CMakeLists.txt
++++ b/libkworkspace/CMakeLists.txt
+@@ -23,6 +23,7 @@ set_target_properties(kworkspace PROPERTIES
+                              VERSION 5.0.0
+                              SOVERSION 5
+                              EXPORT_NAME KWorkspace
++                             OUTPUT_NAME kworkspace5
+                       )
+ 
+ generate_export_header(kworkspace)
+@@ -37,7 +38,7 @@ target_link_libraries(kworkspace
+         Xau
+ )
+ target_include_directories(kworkspace PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+-                                      INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kworkspace>" )
++                                      INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kworkspace5>" )
+ 
+ configure_file(config-libkworkspace.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-libkworkspace.h)
+ 
+@@ -54,7 +55,7 @@ install( FILES kdisplaymanager.h
+                kworkspace.h
+                ${CMAKE_CURRENT_BINARY_DIR}/config-libkworkspace.h
+                ${CMAKE_CURRENT_BINARY_DIR}/kworkspace_export.h
+-         DESTINATION ${INCLUDE_INSTALL_DIR}/kworkspace COMPONENT Devel )
++         DESTINATION ${INCLUDE_INSTALL_DIR}/kworkspace5 COMPONENT Devel )
+ 
+ set(CMAKECONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/LibKWorkspace)
+ ecm_configure_package_config_file(LibKWorkspaceConfig.cmake.in
+-- 
+2.0.2
+
