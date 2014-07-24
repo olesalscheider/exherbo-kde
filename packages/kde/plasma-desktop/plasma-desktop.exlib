@@ -52,6 +52,7 @@ DEPENDENCIES="
         media-libs/fontconfig
         media-libs/freetype:2
         media-libs/phonon[>=4.6.60][qt5]
+        x11-dri/mesa
         x11-libs/libX11
         x11-libs/libXcursor
         x11-libs/libXfixes
@@ -77,6 +78,7 @@ DEPENDENCIES="
         !kde/kde-workspace[-kf5-coinstall]
     run:
         kde/kde-cli-tools:${SLOT} [[ note = [ keditfiletype, kcmshell5 ] ]]
+        sys-apps/accountsservice  [[ note = [ called via dbus in kcm_useraccount ] ]]
         x11-apps/mkfontdir
         x11-apps/setxkbmap
         x11-apps/xmodmap

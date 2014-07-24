@@ -1,0 +1,27 @@
+Upstream: yes, taken from master
+
+From 3c7673f47a408eb40a7b21867db5c47e67b61133 Mon Sep 17 00:00:00 2001
+From: Michael Palimaka <kensington@gentoo.org>
+Date: Fri, 25 Jul 2014 01:40:45 +1000
+Subject: [PATCH] Fix header include to match plasma-workspace change.
+
+---
+ applets/kicker/plugin/systemmodel.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/applets/kicker/plugin/systemmodel.h b/applets/kicker/plugin/systemmodel.h
+index 5ac0366..824a8ca 100644
+--- a/applets/kicker/plugin/systemmodel.h
++++ b/applets/kicker/plugin/systemmodel.h
+@@ -23,7 +23,7 @@
+ #include "abstractentry.h"
+ #include "abstractmodel.h"
+ 
+-#include <kworkspace/kdisplaymanager.h>
++#include <kworkspace5/kdisplaymanager.h>
+ 
+ class SystemEntry : public AbstractEntry
+ {
+-- 
+2.0.2
+
