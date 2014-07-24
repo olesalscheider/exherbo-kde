@@ -293,7 +293,6 @@ src_install() {
     if option kf5-coinstall; then
         local remove=(
             /usr/bin/startkde
-            /usr/lib64/libkworkspace.so
             /usr/lib64/libtaskmanager.so
         )
         for file in ${remove[@]}; do
