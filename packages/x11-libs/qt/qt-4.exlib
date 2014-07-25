@@ -70,7 +70,6 @@ DEPENDENCIES="
         x11-proto/videoproto
         x11-proto/xineramaproto
     build+run:
-        dev-libs/openssl[multibuild_c:*(-)?]
         media-libs/fontconfig[multibuild_c:*(-)?]
         media-libs/freetype:2[multibuild_c:*(-)?]
         media-libs/jpeg[multibuild_c:*(-)?]
@@ -78,6 +77,7 @@ DEPENDENCIES="
         media-libs/libpng:=[multibuild_c:*(-)?]
         media-libs/tiff[multibuild_c:*(-)?]
         sys-libs/zlib[multibuild_c:*(-)?]
+        virtual/libssl[multibuild_c:*(-)?]
         x11-libs/libICE[multibuild_c:*(-)?]
         x11-libs/libSM[multibuild_c:*(-)?]
         x11-libs/libX11[multibuild_c:*(-)?]
