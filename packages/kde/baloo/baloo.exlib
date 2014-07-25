@@ -13,13 +13,25 @@ DEPENDENCIES="
         dev-db/xapian-core
         dev-libs/qjson
         kde/kdelibs:${SLOT}
-        kde/kdepimlibs:${SLOT}[>=4.13.0]
         kde/kfilemetadata:${SLOT}
-        server-pim/akonadi[>=1.12.1][-qt5]
         x11-libs/qt:4[sql]
         !kde/kde-runtime[<4.12.80] [[
             description = [ kde/kde-runtime<4.12.80 and baloo collide ]
             resolution = uninstall-blocked-after
         ]]
 "
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:${SLOT}[>=4.14.0]
+            server-pim/akonadi[>=1.12.90][-qt5]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde/kdepimlibs:${SLOT}[>=4.13.0]
+            server-pim/akonadi[>=1.12.1][-qt5]
+    "
+fi
 
