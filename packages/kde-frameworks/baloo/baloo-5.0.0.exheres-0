@@ -14,6 +14,6 @@ require baloo
 PLATFORMS="~amd64"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/0001-Add-an-option-to-build-only-the-baloo-libraries.patch
+    "${FILES}"/${PNV}-Add-an-option-to-build-only-the-baloo-libraries.patch
 )
 
