@@ -66,6 +66,7 @@ DEPENDENCIES="
         x11-libs/qtbase:5[>=5.3.0][sql] [[ note = [ runners/bookmarks ] ]]
         x11-libs/qtdeclarative:5[>=5.3.0]
         x11-libs/qtscript:5[>=5.3.0]
+        x11-libs/qtwebkit:5[>=5.3.0]
         X? (
             x11-libs/libICE
             x11-libs/libSM
@@ -104,6 +105,8 @@ DEPENDENCIES="
         )
     post:
         kde/plasma-desktop         [[ note = [ kapplymousetheme used in startkde ] ]]
+    recommendation:
+        dev-libs/sni-qt [[ description = [ Needed for systray icons of Qt4 based apps ] ]]
 "
 
 # 1 one of 1 test needs a running X Server
