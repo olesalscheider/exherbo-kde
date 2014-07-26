@@ -299,6 +299,9 @@ src_install() {
         for file in ${remove[@]}; do
             edo rm "${IMAGE}"/${file}
         done
+        edo mkdir -p "${IMAGE}"/usr/${LIBDIR}/qt4/plugins
+        edo mv "${IMAGE}"/usr/${LIBDIR}/kde4/plugins/styles "${IMAGE}"/usr/${LIBDIR}/qt4/plugins
+        edo rm -r "${IMAGE}"/usr/${LIBDIR}/kde4/plugins
     fi
 
     install_systemd_files
