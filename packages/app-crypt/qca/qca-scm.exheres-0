@@ -4,6 +4,8 @@
 # Based in part upon 'qca-2.0.0.ebuild', which is:
 #   Copyright 1999-2008 Gentoo Foundation
 
+# last checked commit: 55093770df946a515834199b69e8be92aacd0f6c
+
 SCM_REPOSITORY="git://anongit.kde.org/qca.git"
 
 require scm-git cmake [ api=2 ]
@@ -17,6 +19,7 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     botan  [[ description = [ Build crypto algorithms plugin based on botan ] ]]
     doc
+    examples
     gcrypt [[ description = [ Build crypto algorithms plugin based on libgcrypt ] ]]
     gpg    [[ description = [ Build crypto algorithms plugin based on gnupg ] ]]
     nss    [[ description = [ Build crypto algorithms plugin based on nss ] ]]
@@ -135,6 +138,12 @@ src_install() {
     if option doc ; then
         edo doxygen "${CMAKE_SOURCE}"/Doxyfile.in
         dodoc apidocs/html/*
+    fi
+
+    if option examples ; then
+        pushd ${CMAKE_SOURCE}/examples
+        docinto examples
+        dodoc -r *
     fi
 
     edo pushd "${CMAKE_SOURCE}"
