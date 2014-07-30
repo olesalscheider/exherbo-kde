@@ -17,5 +17,5 @@ DEPENDENCIES="
 "
 
 # Tries to connect to the running display (5.0.0)
-#RESTRICT=test
+RESTRICT=test
 
