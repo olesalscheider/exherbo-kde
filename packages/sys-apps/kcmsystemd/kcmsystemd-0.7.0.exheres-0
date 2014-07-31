@@ -1,0 +1,24 @@
+# Copyright 2014 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=rthomsen ] cmake [ api=2 out_of_source=false ] kde
+
+SUMMARY="systemd control module for KDE"
+DESCRIPTION="
+Provides a graphical frontend for the systemd daemon, which allows for viewing
+and controlling systemd units, as well as modifying configuration files.
+Integrates in the System Settings dialogue in KDE.
+"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/boost[>=1.45.0]
+        kde/kdelibs:4[>=4.4.0]
+        x11-libs/qt:4[>=4.6.0]
+"
+
