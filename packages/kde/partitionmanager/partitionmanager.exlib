@@ -1,0 +1,50 @@
+# Copyright 2014 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org freedesktop-desktop gtk-icon-cache
+
+SUMMARY="KDE Partition Manager"
+DESCRIPTION="
+KDE Partition Manager is a utility program to help you manage the disk devices,
+partitions and file systems on your computer. It allows you to easily create,
+copy, move, delete, resize without losing data, backup and restore partitions.
+
+KDE Partition Manager supports a large number of file systems,
+including ext2/3/4, reiserfs, NTFS, FAT16/32, jfs, xfs and more.
+"
+DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+        virtual/pkg-config
+    build+run:
+        base/libatasmart
+        sys-apps/util-linux [[ note = [ for libblkid and libuuid ] ]]
+        sys-fs/parted[>=3.0]
+        kde/kdelibs:4[>=4.4.0]
+    suggestion:
+        sys-fs/btrfs-progs       [[ description = [ Support for Btrfs filesystems ] ]]
+        sys-fs/dosfstools        [[ description = [ Support for FAT16/32 filesystems ] ]]
+        sys-fs/ntfs-3g_ntfsprogs [[ description = [ Support for NTFS filesystems ] ]]
+        sys-fs/reiserfsprogs     [[ description = [ Support for ReiserFS filesystems ] ]]
+        sys-fs/xfsprogs          [[ description = [ Support for XFS filesystems ] ]]
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DENABLE_UDISKS2:BOOL=TRUE
+)
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
