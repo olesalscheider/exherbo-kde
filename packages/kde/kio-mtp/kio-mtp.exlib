@@ -1,10 +1,14 @@
-# Copyright 2012 Timo Gurr <tgurr@exherbo.org>
+# Copyright 2012-2014 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require kde.org
 
 if ever is_scm; then
     SCM_BRANCH="master"
+else
+    COMMIT_ID="2063e757559edb20d744ac5200e8340f56de2afd"
+    DOWNLOADS="http://quickgit.kde.org/?p=${PN}.git&a=snapshot&h=${COMMIT_ID}&fmt=tgz -> ${PNV}.tar.gz"
+    CMAKE_SOURCE=${WORKBASE}/${PN}
 fi
 
 SUMMARY="Provides KIO Access to MTP devices using the mtp:/ protocol"
