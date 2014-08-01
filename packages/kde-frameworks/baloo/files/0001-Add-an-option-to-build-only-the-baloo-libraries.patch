@@ -1,6 +1,6 @@
 Uptream: under review, https://git.reviewboard.kde.org/r/118438/
 
-From 3443961fc14bbb9cfd40b5b2321def945ee397cc Mon Sep 17 00:00:00 2001
+From 9d157f4bbaf407e722f0eb8100df646279354c9f Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Sat, 31 May 2014 12:32:30 +0200
 Subject: [PATCH] Add an option to build only the baloo libraries
@@ -8,8 +8,8 @@ Subject: [PATCH] Add an option to build only the baloo libraries
 ---
  CMakeLists.txt          |   1 +
  src/CMakeLists.txt      |   8 ++-
- src/file/CMakeLists.txt | 164 ++++++++++++++++++++++++------------------------
- 3 files changed, 89 insertions(+), 84 deletions(-)
+ src/file/CMakeLists.txt | 166 ++++++++++++++++++++++++------------------------
+ 3 files changed, 90 insertions(+), 85 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index abb494a..2c499a5 100644
@@ -40,14 +40,12 @@ index 810f6dc..92d32e2 100644
 +    #add_subdirectory(queryparser)
 +endif ()
 diff --git a/src/file/CMakeLists.txt b/src/file/CMakeLists.txt
-index b9b4a4c..87adc50 100644
+index 7d384c5..c3156ac 100644
 --- a/src/file/CMakeLists.txt
 +++ b/src/file/CMakeLists.txt
-@@ -4,95 +4,97 @@ kde_enable_exceptions()
- 
+@@ -5,94 +5,96 @@ kde_enable_exceptions()
  add_subdirectory(lib)
  add_subdirectory(search)
-+if (NOT BALOO_LIBRARIES_ONLY)
  
 -set(file_static_lib_SRCS
 -    # File Indexer
@@ -62,6 +60,15 @@ index b9b4a4c..87adc50 100644
 -    fileindexingjob.cpp
 -    eventmonitor.cpp
 -    util.cpp
+-
+-    # Common
+-    database.cpp
+-    priority.cpp
+-    regexpcache.cpp
+-    fileexcludefilters.cpp
+-    lib/filemapping.cpp
+-    removablemediacache.cpp
++if (NOT BALOO_LIBRARIES_ONLY)
 +    set(file_static_lib_SRCS
 +        # File Indexer
 +        fileindexer.cpp
@@ -76,22 +83,35 @@ index b9b4a4c..87adc50 100644
 +        eventmonitor.cpp
 +        util.cpp
  
--    # Common
--    database.cpp
--    priority.cpp
--    regexpcache.cpp
--    fileexcludefilters.cpp
--    lib/filemapping.cpp
+-    # File Watcher
+-    filewatch.cpp
+-    pendingfilequeue.cpp
+-    metadatamover.cpp
+-    pendingfile.cpp
+-)
 +        # Common
 +        database.cpp
 +        priority.cpp
 +        regexpcache.cpp
 +        fileexcludefilters.cpp
 +        lib/filemapping.cpp
++        removablemediacache.cpp
  
--    # removablemediacache.cpp
--)
--
+-set(BUILD_KINOTIFY False)
+-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+-    set(BUILD_KINOTIFY True)
+-    set(file_static_lib_SRCS
+-        ${file_static_lib_SRCS}
+-        kinotify.cpp
++        # File Watcher
++        filewatch.cpp
++        pendingfilequeue.cpp
++        metadatamover.cpp
++        pendingfile.cpp
+     )
+-    add_definitions(-DBUILD_KINOTIFY)
+-endif()
+ 
 -add_library(baloofilecommon STATIC ${file_static_lib_SRCS})
 -target_link_libraries(baloofilecommon
 -    Qt5::Sql
@@ -109,15 +129,17 @@ index b9b4a4c..87adc50 100644
 -    KF5::BalooXapian
 -    KF5::KDELibs4Support # For Solid
 -)
--
--set(file_SRCS
--    # Filewatch
--    filewatch.cpp
--    activefilequeue.cpp
--    metadatamover.cpp
-+        # removablemediacache.cpp
-+    )
++    set(BUILD_KINOTIFY False)
++    if(CMAKE_SYSTEM_NAME MATCHES "Linux")
++        set(BUILD_KINOTIFY True)
++        set(file_static_lib_SRCS
++            ${file_static_lib_SRCS}
++            kinotify.cpp
++        )
++        add_definitions(-DBUILD_KINOTIFY)
++    endif()
  
+-set(file_SRCS
 -    main.cpp
 -)
 +    add_library(baloofilecommon STATIC ${file_static_lib_SRCS})
@@ -138,32 +160,10 @@ index b9b4a4c..87adc50 100644
 +        KF5::KDELibs4Support # For Solid
 +    )
  
--set(BUILD_KINOTIFY False)
--if(CMAKE_SYSTEM_NAME MATCHES "Linux")
--    set(BUILD_KINOTIFY True)
-     set(file_SRCS
--        ${file_SRCS}
--        kinotify.cpp
-+        # Filewatch
-+        filewatch.cpp
-+        activefilequeue.cpp
-+        metadatamover.cpp
-+
-+        main.cpp
-     )
--    add_definitions(-DBUILD_KINOTIFY)
--endif()
- 
 -add_executable(baloo_file ${file_SRCS})
-+    set(BUILD_KINOTIFY False)
-+    if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-+        set(BUILD_KINOTIFY True)
-+        set(file_SRCS
-+            ${file_SRCS}
-+            kinotify.cpp
-+        )
-+        add_definitions(-DBUILD_KINOTIFY)
-+    endif()
++    set(file_SRCS
++        main.cpp
++    )
 +
 +    add_executable(baloo_file ${file_SRCS})
  
@@ -223,5 +223,5 @@ index b9b4a4c..87adc50 100644
 +    add_subdirectory(cleaner)
 +endif()
 -- 
-2.0.2
+2.0.4
 
