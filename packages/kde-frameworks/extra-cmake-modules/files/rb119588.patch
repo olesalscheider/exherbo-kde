@@ -1,0 +1,19 @@
+Upstream: yes, will be in 1.2.0
+Source: Alex Merry
+Reason: Projects which use ECM makes them wrongly require Qt5Core
+
+diff --git a/ECMConfig.cmake.in b/ECMConfig.cmake.in
+index ea47abf0d8b025dd9e424b0aea26986d1f288279..b163e3ae6e7b0f0f4d4620700a35ac501c6f94f8 100644
+--- a/ECMConfig.cmake.in
++++ b/ECMConfig.cmake.in
+@@ -16,10 +16,3 @@ set(ECM_KDE_MODULE_DIR "@PACKAGE_KDE_MODULES_INSTALL_DIR@")
+ set(ECM_MODULE_PATH "${ECM_MODULE_DIR}" "${ECM_FIND_MODULE_DIR}" "${ECM_KDE_MODULE_DIR}")
+ 
+ include("${ECM_MODULE_DIR}/ECMUseFindModules.cmake")
+-
+-if(CMAKE_MINIMUM_REQUIRED_VERSION VERSION_LESS 2.8.13)
+-  find_package(Qt5Core 5.2.0 REQUIRED)
+-  set_property(TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_DEFINITIONS QT_CORE_LIB $<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:DebugFull>>>:QT_NO_DEBUG>)
+-else()
+-  message(FATAL_ERROR \"Remove this hack. Set CMAKE_MAP_IMPORTED_TARGET_DEBUGFULL to DEBUG instead.\")
+-endif()
