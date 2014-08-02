@@ -37,6 +37,6 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gpg Gpgme'
-    'gpg QGpgme'
+    'gpg KF5Gpgme'
 )
 
