@@ -64,6 +64,7 @@ DEPENDENCIES="
 # 5 of 6 tests need a running X server (5.0.0)
 RESTRICT="test"
 
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_COVERAGE:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples BUILD_EXAMPLES' )
 
 src_install() {
