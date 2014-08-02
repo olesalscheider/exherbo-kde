@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github cmake [ api=2 ]
+require github [ tag=v${PV} ] cmake [ api=2 ]
 
 SUMMARY="SDDM is a modern display manager based on Qt using technologies like QtQuick"
 DESCRIPTION="
