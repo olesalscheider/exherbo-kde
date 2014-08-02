@@ -28,6 +28,8 @@ DEPENDENCIES="
 
 if ever at_least scm ; then
     DEPENDENCIES+="
+        build:
+            kde-frameworks/kdoctools:5
         build+run:
             app-crypt/qca:2[>=2.1.0][qt5(-)]
             kde-frameworks/karchive:5

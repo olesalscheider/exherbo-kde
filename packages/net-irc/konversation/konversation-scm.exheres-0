@@ -1,6 +1,8 @@
 # Copyright 2008-2009 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 58d02b5a339fd321b8e8eed96878a085b4863f76
+
 require konversation
 
 PLATFORMS="~amd64 ~x86"
