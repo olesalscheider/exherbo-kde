@@ -1,9 +1,9 @@
 # Copyright 2013 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: a420dd2d9ec8fc236e4e8f6b39f095cabf8668e4
-
 require kde-gtk-config
+
+DOWNLOADS="ftp://ftp.kde.org/pub/kde/unstable/${PN}/${PV}/src/${PNV}.tar.xz"
 
 PLATFORMS="~amd64 ~x86"
 

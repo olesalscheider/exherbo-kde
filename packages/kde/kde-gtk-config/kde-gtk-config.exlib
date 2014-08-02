@@ -1,7 +1,7 @@
 # Copyright 2013 Kim Højgaard-Hansen <kimrhh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-if ever at_least scm; then
+if ever at_least 2.9.90 ; then
     require kde.org [ kde_major_version='5' ]
 
     DOWNLOADS=""
@@ -41,7 +41,7 @@ DEPENDENCIES="
         x11-libs/pango
 "
 
-if ever at_least scm ; then
+if ever at_least 2.9.90 ; then
     DEPENDENCIES+="
         build+run:
             kde-frameworks/karchive:5
@@ -60,4 +60,12 @@ else
 fi
 
 BUGS_TO="kimrhh@exherbo.org"
+
+src_prepare() {
+    cmake_src_prepare
+
+    # remove unnecessary find_package call, gone with kdelibs4
+    ever at_least 2.9.90 && edo sed -e '/find_package(Msgfmt REQUIRED)/d' \
+        -i CMakeLists.txt
+}
 
