@@ -5,3 +5,7 @@ require krfb
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/krfb-4.12.5-CVE-2014-4607-Unbundle-libvncserver.patch
+)
+
