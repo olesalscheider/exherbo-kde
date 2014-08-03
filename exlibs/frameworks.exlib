@@ -50,16 +50,18 @@ if ! ever is_scm ; then
     fi
 fi
 
-# The libexec paths are intentionally relative, as some paths are hardcoded into scripts or programs.
-# Giving absolute paths results in hardcoded paths like /usr/usr/libexec
+# The libexec, PLUGIN_INSTALL_DIR and QT_PLUGIN_INSTALL_DIR paths are
+# intentionally relative, as some paths are hardcoded into scripts or programs.
+# Giving absolute paths results in hardcoded paths like /usr/usr/libexec,
+# cf. kde-modules/KDEInstallDirs.cmake in extra-cmake-modules
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_SHARED_LIBS:BOOL=TRUE
     -DAUTOSTART_INSTALL_DIR=/etc/xdg/autostart
     -DCONFIG_INSTALL_DIR=/etc/xdg
     -DKF5_LIBEXEC_INSTALL_DIR=libexec/kf5
     -DLIBEXEC_INSTALL_DIR=libexec
-    -DPLUGIN_INSTALL_DIR=/usr/${LIBDIR}/plugins
-    -DQT_PLUGIN_INSTALL_DIR=/usr/${LIBDIR}/qt5/plugins
+    -DPLUGIN_INSTALL_DIR=${LIBDIR}/plugins
+    -DQT_PLUGIN_INSTALL_DIR=${LIBDIR}/qt5/plugins
     -DSYSCONF_INSTALL_DIR=/etc
 )
 CMAKE_SRC_CONFIGURE_TESTS+=( '-DBUILD_TESTING:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE' )
