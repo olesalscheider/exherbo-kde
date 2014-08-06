@@ -21,13 +21,19 @@ DEPENDENCIES="
     build+run:
         kde-frameworks/karchive:5[>=5.0.0]
         kde-frameworks/ki18n:5[>=5.0.0]
-        kde-frameworks/kservice:5[>=5.0.0]
         epub? ( app-text/ebook-tools )
         exif? ( graphics/exiv2[>=0.21] )
         ffmpeg? ( media/ffmpeg[>=1.0] )
         pdf? ( app-text/poppler[>=0.12.1][qt5] )
         taglib? ( media-libs/taglib )
 "
+
+if ! ever at_least scm ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kservice:5[>=5.0.0]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     EPub

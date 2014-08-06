@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 2b200ac7ed03331b8de152a9d10c0299aef3c9bb
+# last checked commit: c98d6e82f1e2c6e0d72f2d06d581a02a3c674aea
 
 require kfilemetadata
 
