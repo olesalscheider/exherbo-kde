@@ -1,13 +1,9 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: b8c97e07f618ff7cb68a4156bdc68056650c598a
+# last checked commit: da2e941898f773eb747951b9e391aab68dc28b34
 
 require baloo
 
 PLATFORMS="~amd64"
-
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/0001-Add-an-option-to-build-only-the-baloo-libraries.patch
-)
 
