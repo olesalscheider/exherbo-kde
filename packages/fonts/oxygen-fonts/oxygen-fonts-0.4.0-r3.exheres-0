@@ -20,15 +20,10 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
-# TODO: Because extra-cmake-modules does find_package(Qt5Core...) to configure
-# debug builds in ECMConfig.cmake this package needs qtbase:5 for a successful
-# installation but doesn't actually use it.
-# https://bugs.kde.org/show_bug.cgi?id=331849
 DEPENDENCIES="
     build:
         kde-frameworks/extra-cmake-modules[>=0.0.11]
         media-gfx/fontforge[>=20140101]
-        x11-libs/qtbase:5[>=5.2.0]
 "
 
 BUGS_TO="heirecka@exherbo.org"
