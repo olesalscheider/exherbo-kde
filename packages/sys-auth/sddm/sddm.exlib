@@ -14,7 +14,6 @@ LICENCES="GPL-2"
 SLOT="0"
 MYOPTIONS=""
 
-# Could also build it against Qt4, but I don't see the point, as noone has done that yet
 DEPENDENCIES="
     build:
         virtual/pkg-config
