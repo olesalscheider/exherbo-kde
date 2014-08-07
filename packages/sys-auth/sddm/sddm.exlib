@@ -12,7 +12,9 @@ interface which can be used for authentication, suspend etc.
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="
+    journald [[ description = [ Log to systemd's journal ] ]]
+"
 
 DEPENDENCIES="
     build:
@@ -30,6 +32,7 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DUSE_QT5=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( JOURNALD )
 
 src_prepare() {
     default
