@@ -29,6 +29,8 @@ DEPENDENCIES="
     run:
         x11-apps/xauth
         x11-server/xorg-server
+    suggestion:
+        sys-apps/upower [[ description = [ Used for suspend support ] ]]
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DUSE_QT5=TRUE )
