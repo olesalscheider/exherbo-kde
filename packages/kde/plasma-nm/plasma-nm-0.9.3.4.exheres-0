@@ -5,8 +5,7 @@ require cmake [ api=2 ]
 
 SUMMARY="Plasma applet for managing network connections"
 HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
-
-DOWNLOADS="mirror://kde/unstable/${PN}/${PNV}.tar.xz"
+DOWNLOADS="mirror://kde/stable/${PN}/${PNV}.tar.xz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -23,7 +22,7 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:4
         net-apps/NetworkManager[>=0.9.8.4]
-        net-libs/libnm-qt[>=0.9.8.1][modem-manager?]
+        net-libs/libnm-qt[>=0.9.8.2][modem-manager?]
         net-misc/mobile-broadband-provider-info
         x11-libs/qt:4
         modem-manager? ( net-libs/libmm-qt[>=1.0.0] )
@@ -35,6 +34,10 @@ DEPENDENCIES="
 "
 
 BUGS_TO="devel@arnej.de"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/992a1826f870e8c095414351e2e9dcc044145786.patch
+)
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( '!modem-manager DISABLE_MODEMMANAGER_SUPPORT' )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( OpenConnect )
