@@ -1,34 +1,37 @@
 # Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt qmake [ slot=5 ]
+require qt qmake [ slot=5 ] easy-multibuild
 
-export_exlib_phases src_configure src_compile src_install
+export_exlib_phases src_configure
 
 SUMMARY="Qt Cross-platform application framework: QtMultimedia"
 DESCRIPTION="Qt Multimedia is an essential module that provides a rich set of QML types
 and C++ classes to handle multimedia content. It also provides necessary APIs to access
 the camera and radio functionality."
 
-MYOPTIONS="alsa doc openal pulseaudio"
+MYOPTIONS="
+    alsa doc openal pulseaudio
+    multibuild_c: 32 64
+"
 
 DEPENDENCIES="
     build:
         virtual/pkg-config
         doc? ( x11-libs/qttools:${SLOT} )
     build+run:
-        dev-libs/glib:2[>=2.26]
-        media-libs/gstreamer:0.10
-        media-plugins/gst-plugins-bad:0
-        media-plugins/gst-plugins-base:0.10
-        sys-sound/alsa-lib
-        x11-libs/libX11
-        x11-libs/libXext
-        x11-libs/libXv
-        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
-        x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
-        openal? ( media-libs/openal )
-        pulseaudio? ( media-sound/pulseaudio )
+        dev-libs/glib:2[>=2.26][multibuild_c:*(-)?]
+        media-libs/gstreamer:0.10[multibuild_c:*(-)?]
+        media-plugins/gst-plugins-bad:0[multibuild_c:*(-)?]
+        media-plugins/gst-plugins-base:0.10[multibuild_c:*(-)?]
+        sys-sound/alsa-lib[multibuild_c:*(-)?]
+        x11-libs/libX11[multibuild_c:*(-)?]
+        x11-libs/libXext[multibuild_c:*(-)?]
+        x11-libs/libXv[multibuild_c:*(-)?]
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}][multibuild_c:*(-)?]
+        x11-libs/qtxmlpatterns:${SLOT}[>=${PV}][multibuild_c:*(-)?]
+        openal? ( media-libs/openal[multibuild_c:*(-)?] )
+        pulseaudio? ( media-sound/pulseaudio[multibuild_c:*(-)?] )
 "
 
 qtmultimedia_src_configure()  {
@@ -36,16 +39,21 @@ qtmultimedia_src_configure()  {
     option openal || edo sed -e "/openal/d" -i qtmultimedia.pro
     option pulseaudio || edo sed -e "/pulseaudio/d" -i qtmultimedia.pro
 
-    qmake_src_configure
+    easy-multibuild_src_configure
 }
 
-qtmultimedia_src_compile() {
+configure_one_multibuild()  {
+    EQMAKE_SOURCES=( ../../${PN}-$(ever is_scm || echo "opensource-src-")${PV}/${PN}.pro )
+    eqmake
+}
+
+compile_one_multibuild() {
     default
 
     option doc && emake docs
 }
 
-qtmultimedia_src_install() {
+install_one_multibuild() {
     default
 
     if option doc ; then
