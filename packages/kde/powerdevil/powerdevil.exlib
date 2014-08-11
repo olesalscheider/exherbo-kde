@@ -20,8 +20,6 @@ DEPENDENCIES="
         kde-frameworks/kidletime:5
         kde-frameworks/kio:5
         kde-frameworks/knotifyconfig
-        kde-frameworks/kwindowsystem
-        kde-frameworks/plasma-framework
         kde-frameworks/solid:5
         sys-apps/systemd
         X? (
@@ -29,9 +27,6 @@ DEPENDENCIES="
             x11-libs/libxcb
             x11-libs/libXrandr
             x11-libs/qtx11extras:5[>=5.3.0]
-            x11-utils/xcb-util-image
-            x11-utils/xcb-util-keysyms
-            x11-utils/xcb-util-wm
         )
         !kde/kde-workspace[-kf5-coinstall]
     run:
