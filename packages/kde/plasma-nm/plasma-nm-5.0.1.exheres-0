@@ -15,6 +15,12 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
    modem-manager [[ description = [ Support managing of networking via ModemManager ] ]]
    openconnect [[ description = [ Support Cisco's AnyConnect SSL VPN ] ]]
+   ( linguas:
+        ar bg bs ca ca@valencia cs da de el en_GB eo es et fa fi fr ga gl hr
+        hu ia is it ja km lt lv mai mr ms nb nds nl nn pa pl pt pt_BR ro ru sk
+        sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv th tr ug uk zh_CN
+        zh_TW
+    )
 "
 
 DEPENDENCIES="
