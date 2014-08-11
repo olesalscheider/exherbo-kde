@@ -22,6 +22,9 @@ DEPENDENCIES="
         !kde/kde-runtime[-kf5-coinstall]
 "
 
+#   suggestion:
+#       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
@@ -31,4 +34,6 @@ if ! ever is_scm ; then
             ]]
     "
 fi
+
+DEFAULT_SRC_INSTALL_EXCLUDE=( history.{cpp,h} )
 
