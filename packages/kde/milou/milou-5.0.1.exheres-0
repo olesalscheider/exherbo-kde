@@ -5,7 +5,9 @@ require milou
 
 MYOPTIONS="
     ( linguas:
-        ca de en_GB es fi nds nl pa pl pt pt_BR sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv uk
+        ar bs ca cs da de el en_GB es fi fr gl hu ia ja ko lt nds nl pa pl pt
+        pt_BR ro ru sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv uk
+        zh_CN zh_TW
     )
 "
 
