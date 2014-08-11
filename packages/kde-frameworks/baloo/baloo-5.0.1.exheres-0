@@ -3,13 +3,13 @@
 
 require baloo
 
-#MYOPTIONS="
-#    ( linguas:
-#        bg bs ca ca@valencia cs da de el en_GB es eu fi fr gl hu ia it ja ko
-#        lt nb nds nl nn pa pl pt pt_BR ru sk sl sr sr@ijekavian
-#        sr@ijekavianlatin sr@latin sv uk zh_CN zh_TW
-#    )
-#"
+MYOPTIONS="
+    ( linguas:
+        ar bg bs ca ca@valencia cs da de el en_GB es eu fi fr gl hu ia it ja
+        ko lt nb nds nl nn pa pl pt pt_BR ru sk sl sr sr@ijekavian
+        sr@ijekavianlatin sr@latin sv uk zh_CN zh_TW
+    )
+"
 
 PLATFORMS="~amd64"
 

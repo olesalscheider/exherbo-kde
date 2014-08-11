@@ -39,14 +39,19 @@ DEPENDENCIES="
         ]]
 "
 
+if ! ever is_scm ; then
+    DEPENDENCIES+="
+        build+run:
+            !kde/kde-l10n:4 [[
+                description = [ Translations of Plasma packages collide with kde-l10n:4 ]
+                resolution =  uninstall-blocked-after
+            ]]
+    "
+fi
+
+
 # 4 of 12 tests are currently failing
 RESTRICT="test"
-
-if ! ever is_scm ; then
-    # Translations collide with kde-l10n:4. Disable them unconditionally
-    # until we solve this.
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_po:BOOL=FALSE )
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBALOO_LIBRARIES_ONLY:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
