@@ -26,7 +26,7 @@ DESCRIPTION="Contains the following modules:
 MYOPTIONS_PARTS="doc examples"
 SQL_BACKENDS="mysql postgresql sqlite" # firebird odbc
 # accessibility gif jpeg png enabled by default
-MYOPTIONS="$(ever at_least 5.3.1 && echo 'alsa') cups debug glib kms opengles sql
+MYOPTIONS="alsa cups debug glib kms opengles sql
     ${MYOPTIONS_PARTS}
     ( ${SQL_BACKENDS} ) [[ requires = sql ]]
     sql? (
@@ -63,6 +63,7 @@ DEPENDENCIES="
         media-libs/jpeg[multibuild_c:*(-)?]
         media-libs/libpng:=[multibuild_c:*(-)?]
         sys-apps/dbus[>=1.2.0][multibuild_c:*(-)?] [[ note = [ besides QtDBUs also needed for accessibility and xcb ] ]]
+        sys-apps/systemd[multibuild_c:*(-)?]
         sys-libs/zlib[multibuild_c:*(-)?]
         virtual/libssl[multibuild_c:*(-)?]
         x11-dri/mesa[multibuild_c:*(-)?]
@@ -73,6 +74,8 @@ DEPENDENCIES="
         x11-libs/libXext[multibuild_c:*(-)?]
         x11-libs/libXi[multibuild_c:*(-)?]
         x11-libs/libXrender[multibuild_c:*(-)?]
+        x11-libs/libxcb[>=1.10][multibuild_c:*(-)?]
+        x11-libs/libxkbcommon[>=0.4.1][X][multibuild_c:*(-)?]
         x11-libs/mtdev[multibuild_c:*(-)?]
         x11-utils/xcb-util-image[multibuild_c:*(-)?]
         x11-utils/xcb-util-keysyms[multibuild_c:*(-)?]
@@ -93,21 +96,6 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio[>=0.9.10][multibuild_c:*(-)?] )
         sqlite? ( dev-db/sqlite:3[multibuild_c:*(-)?] )
 "
-
-if ever at_least 5.3.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            sys-apps/systemd[multibuild_c:*(-)?]
-            x11-libs/libxcb[>=1.10][multibuild_c:*(-)?]
-            x11-libs/libxkbcommon[>=0.4.1][X][multibuild_c:*(-)?]
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            x11-libs/libxcb[>=1.8.1][multibuild_c:*(-)?]
-            x11-libs/libxkbcommon[multibuild_c:*(-)?]
-    "
-fi
 
 # Packages that need QtSQL should depend on x11-libs/qtbase:5[sql]
 # option='sql' needs at least one SQL plugin, any-of mysql, postgresql, sqlite, (firebird, odbc)
@@ -185,16 +173,6 @@ qtbase_src_prepare() {
     # No big chance to come across CoreWLAN on Linux but disable it anyway.
     edo sed -e "/^CFG_COREWLAN=/s:auto:no:" -i configure
 
-    if ! ever at_least 5.3.1 ; then
-        # There's no configure switch for pulseaudio, so we change the default from
-        # "auto" to an explicit "yes" or "no".
-        if option pulseaudio ; then
-            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:yes:" -i configure
-        else
-            edo sed -e "/^CFG_PULSEAUDIO=/s:auto:no:" -i configure
-        fi
-    fi
-
     # Workaround to allow other projects to find Qt's private headers via CMake
     # https://bugreports.qt-project.org/browse/QTBUG-37417
     edo sed -e "/CMAKE_NO_PRIVATE_INCLUDES = true/d" \
@@ -214,17 +192,16 @@ configure_one_multibuild() {
         -dbus-linked
         $(option debug && echo "-debug")
         -egl
-        $(ever at_least 5.3.0 && echo "-evdev")
+        -evdev
         -iconv
         -icu
-        $(ever at_least 5.3.0 && echo "-journald")
+        -journald
         -largefile
         -mtdev
         -no-eglfs    # EGL Full Screen/Single Surface, probably only useful on embedded devices
         -no-directfb
-        $(ever at_least 5.3.0 && echo "-no-imf")
-        $(ever at_least 5.3.0 && echo "-no-lgmon")      # Both are only useful on QNX
-        $(ever at_least 5.3.0 || echo "-no-javascript-jit")
+        -no-imf
+        -no-lgmon      # Both are only useful on QNX
         -no-linuxfb
         -no-nis
         -no-rpath
@@ -244,13 +221,13 @@ configure_one_multibuild() {
         -widgets
         -xcb
         -xinput2
-        $(ever at_least 5.3.1 && qt_enable alsa)
+        $(qt_enable alsa)
         $(qt_enable cups)
         $(qt_enable glib)
         $(qt_enable gtk gtkstyle)
         $(qt_enable kms)
         $(option opengles && echo -opengl es2 || echo -opengl desktop)
-        $(ever at_least 5.3.1 && qt_enable pulseaudio)
+        $(qt_enable pulseaudio)
     )
 
     # Avoid auto detection of CPU features:
@@ -265,9 +242,6 @@ configure_one_multibuild() {
             myconf+=( -no-${feature} )
         fi
     done
-    if ! ever at_least 5.3.0 && option !arm_cpu_features:neon ; then
-        myconf+=( -no-neon)
-    fi
 
     # X
     local o X_options="fontconfig sm xcursor xfixes xkb xrandr xrender xshape"
