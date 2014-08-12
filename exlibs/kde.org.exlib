@@ -105,7 +105,7 @@ if exparam -b upstream_release_notes ; then
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
         5.@(0|1|2|3|4).*)
             if [[ ${RELEASE_BUNDLE} == plasma ]] ; then
-                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/plasma5.0/"
+                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/plasma-${PV}.php"
             else
                 UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-${PV%.0}.php"
             fi
@@ -145,7 +145,7 @@ case ${PV} in
         fi
         ;;
     5.0.9@(|1|2|3)) # Will become frameworks, released with Plasma 5 in the meantime
-        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/plasma/5.0.0/${KDEMODULE}-${PV}.tar.xz"}" ;;
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/plasma/5.0.1/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
