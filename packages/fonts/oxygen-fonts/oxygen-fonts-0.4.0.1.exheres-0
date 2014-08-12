@@ -13,7 +13,7 @@ would be rendered with Freetype on Linux-based devices. In addition a bold
 weight, plus regular and bold italics, and a monospace version will be made."
 
 HOMEPAGE="https://projects.kde.org/projects/playground/artwork/${PN}"
-DOWNLOADS="mirror://kde/stable/plasma/5.0.0/${PNV}.tar.xz"
+DOWNLOADS="mirror://kde/stable/plasma/5.0.1/${PNV}.tar.xz"
 
 LICENCES="GPL-3-font-exception OFL-1.1"
 SLOT="0"
