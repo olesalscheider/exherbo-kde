@@ -25,6 +25,7 @@ DEPENDENCIES="
         kde/kactivities:4[>=4.9.90]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/libkexiv2:${SLOT}
+        kde/libkscreen[>=1.0.2] [[ note = [ might be optional, dpi detection ] ]]
         kde/qimageblitz[qt4(+)]
         media-libs/freetype:2 [[ note = [ Provides freetype font support in the okular DVI generator ] ]]
         media-libs/jpeg [[ note = [ Support fof PalmDB documents in okular ] ]]
@@ -39,13 +40,6 @@ DEPENDENCIES="
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
 "
-
-if ever at_least 4.12.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/libkscreen[>=1.0.2] [[ note = [ might be optional, dpi detection ] ]]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_ActiveApp:BOOL=FALSE

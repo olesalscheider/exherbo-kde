@@ -28,8 +28,11 @@ DEPENDENCIES="
         x11-apps/bdftopcf
     build+run:
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
-        kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ needed for activities integration in dolphin ] ]]
+        kde/baloo:${SLOT}
+        kde/baloo-widgets:${SLOT}
+        kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ activities integration in dolphin ] ]]
         kde/kdelibs:${SLOT}[>=4.10.60]
+        kde/kfilemetadata:${SLOT}
         media-libs/phonon[qt4(+)]
         sys-libs/zlib
         x11-libs/libX11
@@ -45,23 +48,6 @@ DEPENDENCIES="
     run:
         kde/kde-runtime:${SLOT} [[ note = [ kdesu for kdepasswd ] ]]
 "
-
-if ever at_least 4.12.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/baloo:${SLOT}
-            kde/baloo-widgets:${SLOT}
-            kde/kfilemetadata:${SLOT}
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-pim/strigi
-            dev-libs/soprano[>=2.7.56][virtuoso(+)]
-            kde/nepomuk-core:${SLOT}[>=4.9.90]
-            kde/nepomuk-widgets:${SLOT}
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'tidy LibTidy'

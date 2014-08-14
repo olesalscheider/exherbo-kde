@@ -14,16 +14,11 @@ LICENCES="GPL-2 FDL-1.2"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        dev-lang/python:*
     build+run:
         kde/kdelibs:${SLOT}
     suggestion:
         dev-util/valgrind [[ description = [ Needed to generate profiling data via callgrind ] ]]
 "
-
-if ever at_least 4.13.0 ; then
-    DEPENDENCIES+="
-        build:
-            dev-lang/python:*
-    "
-fi
 

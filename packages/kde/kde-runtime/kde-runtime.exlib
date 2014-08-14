@@ -70,6 +70,7 @@ DEPENDENCIES="
         app-crypt/gpgme
         app-crypt/qca:2[>=2.0.0][qt4(+)]
         app-text/shared-desktop-ontologies[>=0.6.50]
+        dev-libs/libgcrypt[>=1.5.0] [[ note = [ kwallet ] ]]
         dev-libs/soprano[>=2.6.50][virtuoso]
         kde/kactivities:${SLOT}
         kde/kdelibs:${SLOT}[>=4.9.95]
@@ -92,6 +93,7 @@ DEPENDENCIES="
             media-sound/pulseaudio[>=0.9.16]
         )
         samba? ( net-fs/samba:= ) [[ description = [ samba kioslave ] ]]
+        sftp? ( net-libs/libssh[>=0.6.0] )
         slp? ( net-libs/openslp )
         webp? ( media-libs/libwebp )
         !kf5-coinstall? (
@@ -112,32 +114,9 @@ DEPENDENCIES="
 #   suggestion:
 #       net/htdig [[ description = [ khelpcenter needs htdig to generate search indexes ] ]]
 
-if ever at_least 4.12.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/libgcrypt[>=1.5.0] [[ note = [ kwallet ] ]]
-            sftp? ( net-libs/libssh[>=0.6.0] )
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=(
-        -DWITH_NepomukCore:BOOL=FALSE
-        -DKDERUNTIME_BUILD_NEPOMUK:BOOL=FALSE
-    )
-else
-    DEPENDENCIES+="
-        build+run:
-            app-pim/strigi[>=0.6.3][dbus][qt4]
-            kde/nepomuk-core:${SLOT}[>=4.10.0] [[ note = [ Nothing in cmake files, but fails to
-                    build with <4.10.0 ] ]]
-            sftp? ( net-libs/libssh[>=0.4.0] )
-            !kde/baloo [[
-                description = [ kde/baloo (nepomuk replacement for 4.13.x) and kde-runtime collide ]
-                resolution = uninstall-blocked-after
-            ]]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_NepomukCore:BOOL=TRUE )
-fi
-
 CMAKE_SRC_CONFIGURE_PARAMS+=(
+    -DKDERUNTIME_BUILD_NEPOMUK:BOOL=FALSE
+    -DWITH_NepomukCore:BOOL=FALSE
     -DWITH_QCA2:BOOL=TRUE
     -DWITH_QNtrack:BOOL=FALSE # QNtrack is currently unpackaged (2010-10-05)
 )

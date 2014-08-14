@@ -32,11 +32,10 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2
 #   in kontact/plugins/CMakeLists.txt ( kaddressbook korganizer ) [[ requires = [ kde_parts: kmail ] ]]
 MY_KDE_PARTS="akregator blogilo console kalarm kjots kleopatra knode knotes kontact
 korganizer ktimetracker"
-ever at_least 4.12.80 && \
-    MYOPTIONS+=" googledrive [[ description = [ Access data in your Google Drive ] ]]"
 
 MYOPTIONS+="
-    barcodes [[ description = [ Show mobile barcodes for contacts ] ]]
+    barcodes    [[ description = [ Show mobile barcodes for contacts ] ]]
+    googledrive [[ description = [ Access data in your Google Drive ] ]]
     kde_parts:
         ${MY_KDE_PARTS}
         kontact [[ requires = [ kde_parts: korganizer ] ]]
@@ -52,43 +51,25 @@ DEPENDENCIES+="
         dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/qjson
+        kde/baloo[>=4.13.0]
         kde/kde-runtime:${SLOT}[>=${PV}]
+        kde/kdelibs:${SLOT}[>=4.12.0]
         kde/kdepim-runtime:${SLOT}[>=${PV}] [[ note = [ Contains akonadi ] ]]
         kde/kdepimlibs:${SLOT}[>=${PV}]
         media-libs/phonon[qt4(+)]
         net-libs/cyrus-sasl [[ note = [ Required to support authentication of logins on ManageSieve servers ] ]]
+        server-pim/akonadi[>=1.12.1][-qt5]
         sys-libs/zlib
         x11-libs/libX11
         x11-libs/qt:4[dbus][sql][webkit]
         barcodes? ( kde/prison[qt4(+)] )
+        googledrive? ( app-pim/libkgapi[>=2.1.0] )
         kde_parts:kleopatra? (
             dev-libs/libassuan[>=2.0.0]
         )
         kde_parts:knotes? ( x11-libs/libX11 )
         kde_parts:ktimetracker? ( x11-libs/libXScrnSaver )
 "
-
-if ever at_least 4.13.2 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/baloo[>=4.13.0]
-            kde/kdelibs:${SLOT}[>=4.12.0]
-            server-pim/akonadi[>=1.12.1][-qt5]
-            googledrive? ( app-pim/libkgapi[>=2.1.0] )
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            app-text/shared-desktop-ontologies[>=0.11]
-            dev-libs/libxml2:2.0 [[ note = [ akonadi/xml/ ] ]]
-            dev-libs/soprano[>=2.9.0]
-            kde/kdelibs:${SLOT}[>=4.11.3]
-            kde/nepomuk-core:${SLOT}[>=${PV}]
-            kde/nepomuk-widgets:${SLOT}[>=4.9.90]
-            server-pim/akonadi[>=1.10.45][-qt5]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_KActivities:BOOL=TRUE )
-fi
 
 # Automagic build: dependency upon app-text/dblatex for generating some licenses.pdf from licenses.xml
 # macro_log_feature(DBLATEX_EXECUTABLE "dblatex" "The DocBook to LaTeX converter" "http://dblatex.sourceforge.net/" FALSE
@@ -105,6 +86,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
 CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kde_parts:kleopatra libkleopatraclient' )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'barcodes Prison'
+    'googledrive LibKGAPI2'
     'kde_parts:kleopatra Assuan'
     'kde_parts:kleopatra Assuan2'
 )

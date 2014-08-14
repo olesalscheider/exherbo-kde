@@ -25,10 +25,3 @@ DEPENDENCIES="
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
 
-if ! ever at_least 4.12.90 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/libkdeedu:${SLOT}
-    "
-fi
-

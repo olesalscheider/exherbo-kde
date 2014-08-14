@@ -21,10 +21,3 @@ DEPENDENCIES="
         kde/kdelibs:${SLOT}
 "
 
-if ! ever at_least 4.12.80 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/boost
-    "
-fi
-

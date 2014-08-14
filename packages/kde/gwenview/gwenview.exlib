@@ -14,9 +14,12 @@ MYOPTIONS="kipi [[ description = [ Provides various image manipulation and expor
 DEPENDENCIES="
     build+run:
         graphics/exiv2[>=0.19]
+        kde/baloo:${SLOT}
         kde/kactivities:${SLOT}[>=4.9.90]
         kde/kde-baseapps:${SLOT}[>=${PV}&<5] [[ note = [ libkonq is required ] ]]
         kde/kdelibs:${SLOT}[>=4.7.0] [[ note = [ nepomuk ] ]]
+        kde/kfilemetadata:${SLOT}
+        kde/libkdcraw:${SLOT}[>=4.12.2]
         media-libs/jpeg
         media-libs/lcms2
         media-libs/libpng:=
@@ -25,21 +28,6 @@ DEPENDENCIES="
         kipi? ( graphics/digikam )
 "
 
-if ever at_least 4.13.0 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde/baloo:${SLOT}
-            kde/kfilemetadata:${SLOT}
-            kde/libkdcraw:${SLOT}[>=4.12.2]
-    "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DGWENVIEW_SEMANTICINFO_BACKEND_BALOO:BOOL=TRUE )
-else
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/soprano
-            kde/nepomuk-core:${SLOT}
-    "
-fi
-
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DGWENVIEW_SEMANTICINFO_BACKEND_BALOO:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
 

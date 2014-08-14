@@ -10,6 +10,7 @@ SUMMARY="Central services like file indexing, file system monitoring, query, sto
 
 LICENCES="GPL-2 LGPL-2.1"
 MYOPTIONS="doc
+    baloo-migrator [[ description = [ Builds a tool that helps you migrate from nepomuk to baloo ] ]]
     epub   [[ description = [ Support for extracting metadata from .epub ebook files ] ]]
     exif   [[ description = [ Support for extracting metadata from EXIF headers ] ]]
     ffmpeg [[ description = [ Support for extracting audio and video metadata ] ]]
@@ -17,7 +18,6 @@ MYOPTIONS="doc
     pdf    [[ description = [ Support for extracting metadata from pdf files ] ]]
     taglib [[ description = [ Support for extracting metadata from music files ] ]]
 "
-ever at_least 4.13.2 && MYOPTIONS+=" baloo-migrator [[ description = [ Builds a tool that helps you migrate from nepomuk to baloo ] ]]"
 
 DEPENDENCIES="
     build:
@@ -26,6 +26,10 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.10.51]
         dev-libs/soprano[>=2.9.3][virtuoso]
         kde/kdelibs:${SLOT}[>=4.9.4]
+        baloo-migrator? (
+            kde/baloo:${SLOT}
+            kde/kfilemetadata:${SLOT}
+        )
         epub? ( app-text/ebook-tools )
         exif? ( graphics/exiv2[>=0.21] )
         ffmpeg? ( media/ffmpeg[>=1.0] )
@@ -34,21 +38,9 @@ DEPENDENCIES="
         taglib? ( media-libs/taglib )
 "
 
-if ever at_least 4.13.2 ; then
-    DEPENDENCIES+="
-        build+run:
-            baloo-migrator? (
-                kde/baloo:${SLOT}
-                kde/kfilemetadata:${SLOT}
-            )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-        'baloo-migrator Baloo'
-        'baloo-migrator KFileMetaData'
-    )
-fi
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    'baloo-migrator Baloo'
+    'baloo-migrator KFileMetaData'
     EPub
     'exif Exiv2'
     FFmpeg

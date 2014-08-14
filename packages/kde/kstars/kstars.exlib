@@ -12,26 +12,15 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        dev-libs/qjson
         kde/kdelibs:${SLOT}[>=4.7.0]
+        sci-libs/eigen:3
         sys-libs/zlib
         x11-dri/mesa
         x11-libs/qt:4[opengl]
     run:
         xplanet? ( x11-apps/xplanet )
 "
-
-if ever at_least 4.12.95 ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/qjson
-            sci-libs/eigen:3
-    "
-else
-    DEPENDENCIES+="
-        build+run:
-            sci-libs/eigen:2[>=2.0.3]
-    "
-fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Package Unwritten, http://www.astrometry.net
