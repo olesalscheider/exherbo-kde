@@ -1,0 +1,47 @@
+# Copyright 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked commit: f6ff99b87bf6e8c4e8cbb242e9385f118a2c2ccf
+
+require kde.org [ kde_major_version=5 ]
+
+SUMMARY="KDE volume control program"
+HOMEPAGE="
+    http://www.kde.org/
+    http://multimedia.kde.org/
+"
+
+LICENCES="GPL-2 LGPL-2.1 FDL-1.2  BSD-3 [[ note = [ cmake scripts ] ]]"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    canberra [[ description = [ Enable sound event support using via libcanberra ] ]]
+    pulseaudio"
+
+DEPENDENCIES="
+    build+run:
+        kde-frameworks/kconfig:5
+        kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kdelibs4support:5
+        kde-frameworks/kglobalaccel:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kiconthemes:5
+        kde-frameworks/kinit:5
+        media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
+        sys-sound/alsa-lib
+        x11-libs/qtbase:5
+        pulseaudio? (
+            dev-libs/glib:2
+            media-sound/pulseaudio[>=0.9.16]
+        )
+"
+
+# master can still be built against KDE4, but that is boring, isn't it?
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DKMIX_KF5_BUILD=1 )
+
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
+    Canberra
+    PulseAudio
+    'pulseaudio GLIB2'
+)
+
