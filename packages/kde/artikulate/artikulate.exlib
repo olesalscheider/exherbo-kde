@@ -16,7 +16,6 @@ DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}[>=4.11.1]
         media-libs/phonon[qt4(+)]
-        media-libs/qt-gstreamer[<1.0][-qt5]
         x11-libs/qt:4[sql]
     test:
         x11-libs/qt:4[opengl]
@@ -24,7 +23,18 @@ DEPENDENCIES="
 
 RESTRICT="-test"
 
-# Unpackaged, couldn't quickly find any tarballs, included in Qt5
-# Could be used for another recording backend besides QtGstreamer
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_QtMobility:BOOL=TRUE )
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            media-libs/qt-gstreamer[>=1.1.90][-qt5]
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            media-libs/qt-gstreamer[<1.0][-qt5]
+    "
+    # Unpackaged, couldn't quickly find any tarballs, included in Qt5
+    # Could be used for another recording backend besides QtGstreamer
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_QtMobility:BOOL=TRUE )
+fi
 
