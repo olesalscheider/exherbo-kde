@@ -18,20 +18,26 @@ LICENCES="GPL-2 LGPL-2.1 FDL-1.2"
 
 MY_IM_PROTOCOLS+="
     gadu       [[ description = [ Enable Kopete Gadu-Gadu protocol ] ]]
-    googletalk [[ description = [ Voice calls over the Google Talk protocol ]
-                  requires = [ im_protocols: xmpp ]  ]]
     groupwise  [[ description = [ Enable Novell GroupWise Messenger protocol ] ]]
     meanwhile  [[ description = [ Enable Sametime protocol ] ]]
     yahoo      [[ description = [ Add support for the Yahoo messenger protocol ] ]]
     wlm        [[ description = [ Add support for the Windows Live Messenger protocol ] ]]
     xmpp       [[ description = [ Enable Kopete Jabber protocol ] ]]
 "
-# disabled by umstream
-#    jingle     [[ description = [ Voice calls over Jabber ]
-#                  requires = [ im_protocols: xmpp ] ]]
-# requires jingle, so also disable it
-#    ilbc       [[ description = [ iLBC codec support for voice calls over Jabber ]
-#                  requires = [ im_protocols: jingle ] ]]
+if ever at_least 4.14.0 ; then
+    MY_IM_PROTOCOLS+="
+        jingle     [[ description = [ Voice calls over Jabber including Google Talk ]
+                      requires = [ im_protocols: xmpp ] ]]
+        ilbc       [[ description = [ iLBC codec support for voice calls over Jabber ]
+                      requires = [ im_protocols: jingle ] ]]
+    "
+else
+    MY_IM_PROTOCOLS+="
+        googletalk [[ description = [ Voice calls over the Google Talk protocol ]
+                      requires = [ im_protocols: xmpp ]  ]]
+    "
+fi
+
 MY_KOPETE_PLUGINS+="
     history2     [[ description = [ New SQLite based history plugin ] ]]
     nowlistening [[ description = [ Displays the song you currently listen to in your status ] ]]
@@ -74,14 +80,6 @@ DEPENDENCIES="
         im_protocols:xmpp? (
             app-crypt/qca:2[>=2.0.0][qt4(+)]
             net-dns/libidn
-            im_protocols:googletalk? (
-                dev-libs/expat
-                dev-libs/jsoncpp
-                dev-libs/openssl
-                media-libs/mediastreamer[>=2.3.0]
-                net-libs/libsrtp
-                net-libs/ortp[>=0.13]
-            )
         )
         im_protocols:yahoo? ( media-libs/jasper )
         kopete_plugins:history2? (
@@ -104,9 +102,38 @@ DEPENDENCIES="
                                note = [ qca-ossl plugin ] ]]
         )
 "
-# build+run: im_protocols:jingle? ( net-libs/ortp[>=0.13] sys-sound/alsa-lib )
-# run:       im_protocols:jingle? ( media-libs/speex )
-# run:       im_protocols:ilbc? ( media-plugins/msilbc ) requires im_protocols:jingle
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            im_protocols:jingle? (
+                dev-libs/expat
+                dev-libs/jsoncpp
+                media-libs/mediastreamer[>=2.3.0]
+                net-libs/libsrtp[>1.4.4]
+                net-libs/ortp[>=0.13]
+                sys-sound/alsa-lib
+                virtual/libssl
+            )
+        run:
+            im_protocols:ilbc? ( media-plugins/msilbc )
+            im_protocols:jingle? ( media-libs/speex )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            im_protocols:xmpp? (
+                im_protocols:googletalk? (
+                    dev-libs/expat
+                    dev-libs/jsoncpp
+                    media-libs/mediastreamer[>=2.3.0]
+                    net-libs/libsrtp
+                    net-libs/ortp[>=0.13]
+                    virtual/libssl
+                )
+            )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xmms=OFF )
 
@@ -123,16 +150,46 @@ kopete_src_configure() {
         cmakeparams+=( -DWITH_${p}:BOOL=TRUE )
     done
 
-     if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
-        cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
+    if ever at_least 4.14.0 ; then
+        if option im_protocols:jingle || option kopete_plugins:wlm_voice; then
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
+        fi
+
+        if option im_protocols:jingle || kopete_plugins:wlm_voice; then
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
+        fi
+
+        cmakeparams+=(
+            $(cmake_with im_protocols:jingle libjingle)
+            $(cmake_with im_protocols:jingle Alsa)
+            $(cmake_with im_protocols:jingle Expat)
+            $(cmake_with im_protocols:jingle OpenSSL)
+        )
     else
-        cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
-    fi
-    # option im_protocols:jingle || ...
-    if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
-        cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
-    else
-        cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
+        if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_Mediastreamer:BOOL=FALSE )
+        fi
+
+        if option im_protocols:googletalk || option kopete_plugins:wlm_voice; then
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=TRUE )
+        else
+            cmakeparams+=( -DWITH_LiboRTP:BOOL=FALSE )
+        fi
+
+        # "Disable jingle support because it is not working and libiris does not support it"
+        cmakeparams+=(
+            -DWITH_JINGLE=OFF
+            -DWITH_Alsa=OFF
+            $(cmake_with im_protocols:GOOGLETALK) \
+            $(cmake_with im_protocols:googletalk Expat) \
+            $(cmake_with im_protocols:googletalk OpenSSL) \
+        )
     fi
 
     if option kopete_plugins:history2 || option kopete_plugins:statistics; then
@@ -141,12 +198,6 @@ kopete_src_configure() {
         cmakeparams+=( -DWITH_Sqlite=OFF )
     fi
 
-    # "Disable jingle support because it is not working and libiris does not support it"
-    cmakeparams+=(
-        -DWITH_JINGLE=OFF
-        -DWITH_Alsa=OFF
-        -DWITH_Speex=OFF
-    )
 
      ecmake \
         $(kde4_shared_cmake_params) \
@@ -154,9 +205,6 @@ kopete_src_configure() {
         "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
         $(cmake_with im_protocols:gadu) \
         $(cmake_with im_protocols:gadu Libgadu) \
-        $(cmake_with im_protocols:GOOGLETALK) \
-        $(cmake_with im_protocols:googletalk Expat) \
-        $(cmake_with im_protocols:googletalk SSL) \
         $(cmake_with im_protocols:groupwise) \
         $(cmake_with im_protocols:meanwhile) \
         $(cmake_with im_protocols:meanwhile GLIB2) \
@@ -176,6 +224,5 @@ kopete_src_configure() {
         $(cmake_with kopete_plugins:wlm_voice WLM_MEDIASTREAMER)
         #$(cmake_with im_protocols:JINGLE) \
         #$(cmake_with im_protocols:jingle Alsa) \
-        #$(cmake_with im_protocols:jingle Speex) \
 }
 
