@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_prepare src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: Various image format plugins"
 DESCRIPTION="Supports MNG, TGA, TIFF and WBMP".
 
@@ -18,7 +20,7 @@ DEPENDENCIES="
         webp? ( media-libs/libwebp )
 "
 
-src_prepare() {
+qtimageformats_src_prepare() {
     default
 
     option jpeg2000 || edo sed -e '/jp2/d' \
@@ -27,13 +29,13 @@ src_prepare() {
         -i src/plugins/imageformats/imageformats.pro
 }
 
-src_compile() {
+qtimageformats_src_compile() {
     default
 
     option doc && emake docs
 }
 
-src_install() {
+qtimageformats_src_install() {
     default
 
     if option doc ; then

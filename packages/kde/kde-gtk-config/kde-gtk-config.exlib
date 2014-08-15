@@ -12,6 +12,8 @@ else
     DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 fi
 
+export_exlib_phases src_prepare
+
 HOMEPAGE="https://projects.kde.org/projects/extragear/base/kde-gtk-config/"
 
 SUMMARY="GTK2 and GTK3 Configurator for KDE."
@@ -61,7 +63,7 @@ fi
 
 BUGS_TO="kimrhh@exherbo.org"
 
-src_prepare() {
+kde-gtk-config_src_prepare() {
     cmake_src_prepare
 
     # remove unnecessary find_package call, gone with kdelibs4

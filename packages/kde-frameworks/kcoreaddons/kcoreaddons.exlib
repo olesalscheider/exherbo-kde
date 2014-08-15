@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ] frameworks [ translations='qt' ]
 
+export_exlib_phases src_prepare src_test
+
 SUMMARY="Addons to QtCore"
 DESCRIPTION="
 They perform various tasks such as manipulating mime types, autosaving files,
@@ -21,7 +23,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( FAM )
 
-src_prepare() {
+kcoreaddons_src_prepare() {
     frameworks_src_prepare
 
     # TODO: Fix the test
@@ -29,7 +31,7 @@ src_prepare() {
             -i autotests/CMakeLists.txt
 }
 
-src_test() {
+kcoreaddons_src_test() {
     esandbox allow_net 'unix:/tmp/fam-paludisbuild/fam-*'
     default
     esandbox disallow_net 'unix:/tmp/fam-paludisbuild/fam-*'

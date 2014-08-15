@@ -8,6 +8,8 @@ MY_PNV=${MY_PN}-${PV}
 
 require launchpad [ pn=${MY_PN} branch=trunk suffix=tar.bz2 ] cmake [ api=2 ]
 
+export_exlib_phases src_prepare src_configure src_compile src_install
+
 SUMMARY="Stand-alone library providing a way to import and export QMenu instances using the DBusMenu protocol"
 
 LICENCES="LGPL-2.1"
@@ -36,7 +38,7 @@ DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-optionaltests.patch )
 
 # Tests require X to run
 
-src_prepare() {
+dbusmenu-qt_src_prepare() {
     edo cd "${CMAKE_SOURCE}"
 
     # Install doxygen docs to ${PNVR}/html instead of ${PN}
@@ -46,7 +48,7 @@ src_prepare() {
     default
 }
 
-src_configure() {
+dbusmenu-qt_src_configure() {
     if option qt4; then
         edo mkdir "${WORKBASE}/qt4-build"
         edo pushd "${WORKBASE}/qt4-build"
@@ -61,7 +63,7 @@ src_configure() {
     fi
 }
 
-src_compile() {
+dbusmenu-qt_src_compile() {
     if option qt4; then
         edo pushd "${WORKBASE}/qt4-build"
         emake
@@ -72,7 +74,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+dbusmenu-qt_src_install() {
     if option qt4; then
         edo pushd "${WORKBASE}/qt4-build"
         emake -j1 DESTDIR="${IMAGE}" install

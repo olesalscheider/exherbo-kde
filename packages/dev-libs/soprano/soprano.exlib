@@ -10,6 +10,8 @@ fi
 
 require sourceforge cmake [ api=2 out_of_source=false ]
 
+export_exlib_phases src_install
+
 SUMMARY="Soprano is a library which provides a nice Qt interface to RDF storage solutions"
 DESCRIPTION="
 Soprano (formerly known as QRDF) is a library which provides a highly usable
@@ -72,7 +74,7 @@ if ever is_scm; then
     CMAKE_SRC_CONFIGURE_OPTIONS+=( 'qt5 QT5_BUILD' )
 fi
 
-src_install() {
+soprano_src_install() {
     cmake_src_install
 
     if option doc ; then

@@ -6,6 +6,8 @@ MY_PNV=${MY_USER}-${PV}
 
 require github [[ user=${MY_USER} tag=v${PV} ]] qmake
 
+export_exlib_phases src_configure src_install
+
 SUMMARY="QupZilla is modern web browser based on WebKit core and Qt Framework"
 HOMEPAGE="http://www.qupzilla.com"
 
@@ -43,7 +45,7 @@ DEPENDENCIES="
 WORK="${WORKBASE}"/${PNV}
 EQMAKE_SOURCES=( ${MY_USER}.pro )
 
-src_configure() {
+qupzilla_src_configure() {
     option kde && export KDE_INTEGRATION="true" || export KDE_INTEGRATION="false"
     option gnome && export GNOME_INTEGRATION="true" || export GNOME_INTEGRATION="false"
 
@@ -56,7 +58,7 @@ src_configure() {
     fi
 }
 
-src_install() {
+qupzilla_src_install() {
     default
 
     if ! option bash-completion; then

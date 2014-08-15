@@ -3,6 +3,8 @@
 
 require cmake [ api=2 cmake_minimum_version="2.8.9" ]
 
+export_exlib_phases src_prepare src_configure src_compile src_install
+
 SUMMARY="C++ bindings for GStreamer with a Qt-style API"
 HOMEPAGE="http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"
 
@@ -54,23 +56,23 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DQTGSTREAMER_TESTS:BOOL=TRUE
 )
 
-src_prepare() {
+qt-gstreamer_src_prepare() {
     default
     # disable failing test, https://bugzilla.gnome.org/show_bug.cgi?id=710370
     edo sed -i -e "/^qgst_test(discoverertest)/d" "${CMAKE_SOURCE}"/tests/auto/CMakeLists.txt
 }
 
-src_configure() {
+qt-gstreamer_src_configure() {
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DQT_VERSION=$(option qt5 && echo 5 || echo 4) )
     cmake_src_configure
 }
 
-src_compile() {
+qt-gstreamer_src_compile() {
     default
     option doc && emake doc
 }
 
-src_install() {
+qt-gstreamer_src_install() {
     default
     option doc && dodoc -r doc
 }

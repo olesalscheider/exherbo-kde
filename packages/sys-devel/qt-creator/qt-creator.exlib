@@ -9,6 +9,8 @@
 
 require qmake
 
+export_exlib_phases src_prepare src_configure src_compile src_install
+
 if ever at_least 3.0.0 ; then
     MYPNV=${PN}-opensource-src-${PV}
 else
@@ -73,7 +75,7 @@ EQMAKE_PARAMS=(
 )
 DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_ROOT="${IMAGE}"/usr/ )
 
-src_prepare() {
+qt-creator_src_prepare() {
     default
     if ever at_least 3.1.2 ; then
         # Unbundle qbs
@@ -81,7 +83,7 @@ src_prepare() {
     fi
 }
 
-src_configure() {
+qt-creator_src_configure() {
     if ever at_least 3.0.0 ; then
         eqmake 5
     else
@@ -89,12 +91,12 @@ src_configure() {
     fi
 }
 
-src_compile() {
+qt-creator_src_compile() {
     default
     emake docs
 }
 
-src_install(){
+qt-creator_src_install(){
     default
     dosym /usr/bin/qtcreator /usr/bin/qt-creator
 

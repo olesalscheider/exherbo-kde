@@ -4,6 +4,8 @@
 
 require telepathy-kde [ telepathy_qt_ver_min=0.9.2.1 kde_ver_min=4.8.0 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Re-used KDE Telepathy Parts"
 
 LICENCES="LGPL-2.1"
@@ -28,13 +30,13 @@ BUGS_TO="mixi@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'contact-aggregation KPeople' )
 
-src_compile() {
+ktp-common-internals_src_compile() {
     default
 
     option doc && emake apidox
 }
 
-src_install() {
+ktp-common-internals_src_install() {
     default
 
     option doc && dodoc -r KTp/docs/html/*

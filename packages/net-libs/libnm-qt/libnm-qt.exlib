@@ -3,6 +3,8 @@
 
 require cmake [ api=2 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt-only wrapper for NetworkManager API"
 HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
@@ -27,13 +29,13 @@ BUGS_TO="mixi@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( '!modem-manager DISABLE_MODEMMANAGERQT' )
 
-src_compile() {
+libnm-qt_src_compile() {
     default
 
     option doc && emake apidox
 }
 
-src_install() {
+libnm-qt_src_install() {
     cmake_src_install
 
     if option doc ; then

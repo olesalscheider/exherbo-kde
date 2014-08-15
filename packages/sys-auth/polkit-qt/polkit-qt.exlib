@@ -17,6 +17,8 @@ fi
 
 require cmake [ api=2 cmake_minimum_version=2.8.11 ]
 
+export_exlib_phases src_configure src_compile src_install
+
 SUMMARY="A library that allows developer to access PolicyKit-1 API with a nice Qt-style API"
 HOMEPAGE="https://projects.kde.org/projects/kdesupport/${MY_PN}"
 
@@ -45,7 +47,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DBUILD_TEST:BOOL=TRUE
 )
 
-src_configure() {
+polkit-qt_src_configure() {
     if option qt4; then
         edo mkdir "${WORKBASE}"/qt4-build
         edo pushd "${WORKBASE}"/qt4-build
@@ -60,7 +62,7 @@ src_configure() {
     fi
 }
 
-src_compile() {
+polkit-qt_src_compile() {
     if option qt4; then
         edo pushd "${WORKBASE}"/qt4-build
         emake
@@ -73,7 +75,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+polkit-qt_src_install() {
     if option qt4; then
         edo pushd "${WORKBASE}"/qt4-build
         emake -j1 DESTDIR="${IMAGE}" install

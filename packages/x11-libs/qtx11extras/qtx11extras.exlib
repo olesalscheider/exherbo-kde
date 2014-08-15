@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: Qt X11 Extras"
 DESCRIPTION="Qt X11 Extras enables the Qt programmer to write applications for
 the Linux/X11 platform."
@@ -14,13 +16,13 @@ DEPENDENCIES="
         doc? ( x11-libs/qttools:${SLOT} )
 "
 
-src_compile() {
+qtx11extras_src_compile() {
     default
 
     option doc && emake docs
 }
 
-src_install() {
+qtx11extras_src_install() {
     default
 
     if option doc ; then

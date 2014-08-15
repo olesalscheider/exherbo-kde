@@ -14,6 +14,8 @@ esac
 require kde [ api=2 debug=false ] \
         l10n [ api=2 langs="$(exparam langs)" base_uri="$(exparam base_uri)" suffix=tar.xz ]
 
+export_exlib_phases src_prepare
+
 SUMMARY="Calligra localisation package"
 HOMEPAGE="http://www.calligra.org/"
 LICENCES="FDL-1.2 GPL-2"
@@ -25,7 +27,7 @@ DEPENDENCIES="
 "
 
 # override cmake_src_prepare
-src_prepare() {
+calligra-l10n_src_prepare() {
     default
 }
 

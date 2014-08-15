@@ -16,6 +16,8 @@ api=2
 require kde.org [ git=false ] \
            l10n [ api=${api} base_uri="$(exparam base_uri)" langs="$(exparam langs)" ]
 
+export_exlib_phases src_prepare
+
 SUMMARY="KDE localisation package"
 LICENCES="GPL-2"
 SLOT="4"
@@ -47,7 +49,7 @@ DEPENDENCIES="
 "
 
 # override cmake_src_prepare
-src_prepare() {
+kde-l10n_src_prepare() {
     default
 }
 

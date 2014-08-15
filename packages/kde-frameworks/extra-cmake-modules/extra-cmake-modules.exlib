@@ -11,6 +11,8 @@ fi
 
 require cmake [ api=2 ]
 
+export_exlib_phases src_install
+
 SUMMARY="Extra modules and scripts for CMake"
 HOMEPAGE="http://projects.kde.org/projects/kdesupport/${PN}"
 
@@ -32,7 +34,7 @@ CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_QTHELP_DOCS:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_TESTS=( '-DBUILD_TESTING:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE' )
 
-src_install() {
+extra-cmake-modules_src_install() {
     default
 
     hereenvd 45kf5 <<EOF

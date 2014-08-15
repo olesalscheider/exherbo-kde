@@ -4,6 +4,8 @@
 
 require kde.org
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Central services like file indexing, file system monitoring, query, storage, and corresponding client libraries"
 
 LICENCES="GPL-2 LGPL-2.1"
@@ -55,7 +57,7 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     Taglib
 )
 
-src_compile() {
+nepomuk-core_src_compile() {
     default
 
     if option doc ; then
@@ -63,7 +65,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+nepomuk-core_src_install() {
     cmake_src_install
 
     if option doc ; then

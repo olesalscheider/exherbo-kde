@@ -6,6 +6,8 @@
 
 require kde [ api=2 ]
 
+export_exlib_phases src_configure src_install
+
 SUMMARY="Collection of office applications for the K Desktop Environment"
 DESCRIPTION="
 Office productivity:
@@ -202,7 +204,7 @@ RESTRICT="test"
 
 # FIXME: Is the apidox custom target useful now?
 
-src_configure() {
+calligra_src_configure() {
     local p cmakeparams=(
         $(kde4_shared_cmake_params)
         -DCREATIVEONLY:BOOL=FALSE # Preset of applications, we select them separately, thus disable
@@ -276,7 +278,7 @@ src_configure() {
     ecmake "${cmakeparams[@]}"
 }
 
-src_install() {
+calligra_src_install() {
     cmake_src_install
 
     # FIXME should be fixed properly upstream

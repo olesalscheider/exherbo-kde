@@ -3,6 +3,8 @@
 
 require github [ tag=v${PV} ] cmake [ api=2 ]
 
+export_exlib_phases src_prepare
+
 SUMMARY="SDDM is a modern display manager based on Qt using technologies like QtQuick"
 DESCRIPTION="
 SDDM is extremely themeable. We put no restrictions on the user interface design,
@@ -36,7 +38,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS=( -DUSE_QT5=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( JOURNALD )
 
-src_prepare() {
+sddm_src_prepare() {
     default
 
     # Don't set PrivateTmp in the service file

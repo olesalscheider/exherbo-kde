@@ -5,6 +5,8 @@
 
 require kde.org python [ blacklist='3' with_opt=true ]
 
+export_exlib_phases src_configure src_compile src_install
+
 SUMMARY="Easily create interactive desktop widgets"
 HOMEPAGE="http://utils.kde.org/projects/${PN}/"
 
@@ -29,7 +31,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_QImageBlitz:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'python PythonLibs' )
 
-src_configure() {
+superkaramba_src_configure() {
     if option python ; then
         easy-multibuild_run_phase
     else
@@ -44,7 +46,7 @@ configure_one_multibuild() {
 }
 
 
-src_compile() {
+superkaramba_src_compile() {
     if option python ; then
         easy-multibuild_run_phase
     else
@@ -52,7 +54,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+superkaramba_src_install() {
     if option python ; then
         easy-multibuild_run_phase
     else

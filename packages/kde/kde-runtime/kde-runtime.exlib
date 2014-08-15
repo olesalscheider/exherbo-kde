@@ -4,6 +4,8 @@
 
 require kde.org
 
+export_exlib_phases src_install
+
 SUMMARY="Plugins and applications necessary for the running of KDE applications"
 DESCRIPTION="
 activitymanager: Plasmoid to manage Plasma desktop activities
@@ -155,7 +157,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     SLP
 )
 
-src_install() {
+kde-runtime_src_install() {
     kde.org_src_install
 
     local f d

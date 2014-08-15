@@ -3,6 +3,8 @@
 
 require kde.org freedesktop-desktop gtk-icon-cache
 
+export_exlib_phases pkg_postinst pkg_postrm
+
 SUMMARY="KDE Partition Manager"
 DESCRIPTION="
 KDE Partition Manager is a utility program to help you manage the disk devices,
@@ -38,12 +40,12 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_UDISKS2:BOOL=TRUE
 )
 
-pkg_postinst() {
+partitionmanager_pkg_postinst() {
     freedesktop-desktop_pkg_postinst
     gtk-icon-cache_pkg_postinst
 }
 
-pkg_postrm() {
+partitionmanager_pkg_postrm() {
     freedesktop-desktop_pkg_postrm
     gtk-icon-cache_pkg_postrm
 }

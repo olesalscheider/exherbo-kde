@@ -3,6 +3,8 @@
 
 require sourceforge [ project=virtuoso suffix=tar.gz ]
 
+export_exlib_phases src_install
+
 SUMMARY="A high-performance object-relational SQL database"
 DESCRIPTION="
 Virtuoso is a scalable cross-platform server that combines SQL/RDF/XML
@@ -59,7 +61,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --without-jdk{2,3,4,4_1}
 )
 
-src_install() {
+virtuoso-opensource_src_install() {
     default
 
     edo rmdir "${IMAGE}"/usr/share/virtuoso/{vad/,}

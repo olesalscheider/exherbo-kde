@@ -7,6 +7,8 @@
 
 require kde.org
 
+export_exlib_phases src_configure
+
 SUMMARY="Multi-protocol instant messaging client with various plugins for extra functionality"
 DESCRIPTION="It supports AIM, ICQ, Windows Live Messenger, Yahoo, Jabber, Gadu-Gadu,
 Novell GroupWise Messenger, and more. It is designed to be a flexible and extensible
@@ -108,7 +110,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_Xmms=OFF )
 
-src_configure() {
+kopete_src_configure() {
     # Kopete plugins with no extra dependencies
     my_kopete_plugins=(
         addbookmarks autoreplace contactnotes cryptography highlight history latex

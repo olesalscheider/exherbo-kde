@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ]
 
+export_exlib_phases src_install
+
 SUMMARY="Plugin based UI runtime used to write primary user interfaces"
 DESCRIPTION="
 The plasma framework is made by a library component and a runtime component:
@@ -67,7 +69,7 @@ RESTRICT="test"
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_COVERAGE:BOOL=FALSE )
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples BUILD_EXAMPLES' )
 
-src_install() {
+plasma-framework_src_install() {
     cmake_src_install
     option ruby || edo rm -r "${IMAGE}"/usr/share/plasma/plasma_scriptengine_ruby
 }

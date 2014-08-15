@@ -4,6 +4,8 @@
 
 require python kde.org systemd-service
 
+export_exlib_phases src_prepare src_configure src_install pkg_postinst
+
 SUMMARY="The interface and basic tools for the KDE workspace"
 DESCRIPTION="
 appmenu: Application menu inside the window decoration
@@ -195,7 +197,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     Wayland
 )
 
-src_prepare() {
+kde-workspace_src_prepare() {
     edo cd "${CMAKE_SOURCE}"
     default
 
@@ -216,7 +218,7 @@ src_prepare() {
     fi
 }
 
-src_configure() {
+kde-workspace_src_configure() {
     if option opengles; then
         CMAKE_SRC_CONFIGURE_PARAMS+=( -DKWIN_BUILD_WITH_OPENGLES=TRUE )
     fi
@@ -273,7 +275,7 @@ src_configure() {
     kde_src_configure
 }
 
-src_install() {
+kde-workspace_src_install() {
     GENKDMCONF_FLAGS="--no-old --no-backup" kde.org_src_install
 
     keepdir /usr/share/config/kdm/sessions
@@ -306,7 +308,7 @@ src_install() {
     install_systemd_files
 }
 
-pkg_postinst() {
+kde-workspace_pkg_postinst() {
     [[ -d ${ROOT}/var/lib/kdm ]] || edo mkdir "${ROOT}"/var/lib/kdm
     [[ -e ${ROOT}/var/log/kdm.log ]] || edo touch "${ROOT}"/var/log/kdm.log
     edo chown -R kdm:kdm "${ROOT}"/var/{lib/kdm,log/kdm.log}

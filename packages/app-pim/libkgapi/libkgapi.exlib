@@ -11,6 +11,8 @@ else
     DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 fi
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="An Akonadi Resource for accessing Google services, like Google Calendar and Google Contacts"
 HOMEPAGE="https://projects.kde.org/projects/extragear/libs/${PN}"
 
@@ -36,7 +38,7 @@ CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples KGAPI_BUILD_EXAMPLES' )
 # needed to build kdepim-runtime[=4.10.x][google]
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DKGAPI_DISABLE_DEPRECATED:BOOL=FALSE )
 
-src_compile() {
+libkgapi_src_compile() {
     default
 
     if option doc ; then
@@ -44,7 +46,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+libkgapi_src_install() {
     default
 
     if option examples ; then

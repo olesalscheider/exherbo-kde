@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ]
 
+export_exlib_phases src_install
+
 SUMMARY="A framework for searching and managing metadata"
 
 LICENCES="GPL-2 LGPL-2.1"
@@ -56,7 +58,7 @@ RESTRICT="test"
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBALOO_LIBRARIES_ONLY:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
 
-src_install() {
+baloo_src_install() {
     cmake_src_install
     # baloo.png collides with baloo:4
     edo rm -r "${IMAGE}"/usr/share/icons

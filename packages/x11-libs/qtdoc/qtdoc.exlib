@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: Qt Documentation"
 
 MYOPTIONS=""
@@ -12,11 +14,11 @@ DEPENDENCIES="
         x11-libs/qttools:${SLOT}[>=${PV}]
 "
 
-src_compile() {
+qtdoc_src_compile() {
     emake docs
 }
 
-src_install() {
+qtdoc_src_install() {
     dodoc doc/qtdoc.qch
 }
 

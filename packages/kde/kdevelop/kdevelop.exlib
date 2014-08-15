@@ -3,6 +3,8 @@
 
 require kde.org [ upstream_release_notes=false ] test-dbus-daemon
 
+export_exlib_phases src_prepare
+
 if ! ever at_least scm; then
     PLATFORM_PV="$(( $(ever major)-3 )).$(ever range 2-)"
 else
@@ -55,7 +57,7 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     "okteta LibKasten"
 )
 
-src_prepare() {
+kdevelop_src_prepare() {
     edo pushd "${CMAKE_SOURCE}"
     default
 

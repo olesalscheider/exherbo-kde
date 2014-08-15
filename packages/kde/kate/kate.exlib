@@ -4,6 +4,8 @@
 
 require kde.org python [ blacklist='2.6 3.1 3.2' with_opt=true ]
 
+export_exlib_phases src_configure src_compile src_install
+
 SUMMARY="Advanced editor component which is used in numerous KDE applications"
 
 LICENCES=" BSD-2 [[ note = [ cmake scripts ] ]] LGPL-2"
@@ -34,7 +36,7 @@ CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DBUILD_project:BOOL=TRUE
 )
 
-src_configure() {
+kate_src_configure() {
     if option python ; then
         easy-multibuild_run_phase
     else
@@ -48,7 +50,7 @@ configure_one_multibuild() {
     kde_src_configure
 }
 
-src_compile() {
+kate_src_compile() {
     if option python ; then
         easy-multibuild_run_phase
     else
@@ -56,7 +58,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+kate_src_install() {
     if option python ; then
         easy-multibuild_run_phase
     else

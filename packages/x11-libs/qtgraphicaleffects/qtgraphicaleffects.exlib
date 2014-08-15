@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: Qt Graphical Effects"
 DESCRIPTION="This module provides a set of QML types for adding visually impressive and
 configurable effects to user interfaces. Effects are visual items that can be added
@@ -18,13 +20,13 @@ DEPENDENCIES="
         x11-libs/qtxmlpatterns:${SLOT}[>=${PV}]
 "
 
-src_compile() {
+qtgraphicaleffects_src_compile() {
     default
 
     option doc && emake docs
 }
 
-src_install() {
+qtgraphicaleffects_src_install() {
     default
 
     if option doc ; then

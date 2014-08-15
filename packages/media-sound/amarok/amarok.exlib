@@ -8,6 +8,8 @@ fi
 
 require kde [ api=2 ]
 
+export_exlib_phases pkg_setup src_prepare
+
 SUMMARY="Amarok - the audio player for KDE"
 DESCRIPTION="
 There are many media players around these days, true. What's missing from most
@@ -123,11 +125,11 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'playdar QJSON'
 )
 
-pkg_setup() {
+amarok_pkg_setup() {
     export DISPLAY= DBUS_SESSION_BUS_ADDRESS=
 }
 
-src_prepare() {
+amarok_src_prepare() {
     cmake_src_prepare
     # Has been removed upstream, delete it here instead of using a huge patch.
     ever is_scm || edo rm -r "${CMAKE_SOURCE}"/src/scripts/free_music_charts_service

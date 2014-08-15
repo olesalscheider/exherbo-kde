@@ -3,6 +3,8 @@
 
 require kde [ api=2 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Metacontact aggregation library"
 HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
 DOWNLOADS="mirror://kde/unstable/${PN}/${PV}/src/${PNV}.tar.bz2"
@@ -25,7 +27,7 @@ BUGS_TO="heirecka@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DENABLE_EXAMPLES:BOOL=OFF )
 
-src_compile() {
+libkpeople_src_compile() {
     default
 
     if option doc ; then
@@ -33,7 +35,7 @@ src_compile() {
     fi
 }
 
-src_install() {
+libkpeople_src_install() {
     default
 
     if option doc ; then

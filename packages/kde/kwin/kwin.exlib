@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ] toolchain-funcs
 
+export_exlib_phases pkg_pretend
+
 SUMMARY="An easy to use, but flexible, composited Window Manager"
 
 LICENCES="FDL-1.2 GPL-2"
@@ -100,7 +102,7 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'wayland XKB'
 )
 
-pkg_pretend() {
+kwin_pkg_pretend() {
     if ! ever at_least 4.8 $(gcc-version) ; then
         eerror "sys-devel/gcc[>=4.8] is required to build kde/kwin."
         eerror "You can use 'eclectic gcc' to change the active compiler."

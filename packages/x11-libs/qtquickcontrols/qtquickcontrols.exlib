@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: A set of controls for Qt Quick"
 DESCRIPTION="The Qt Quick Controls module provides a set of controls that can
 be used to build complete interfaces in Qt Quick."
@@ -16,13 +18,13 @@ DEPENDENCIES="
         x11-libs/qtdeclarative:${SLOT}[>=${PV}]
 "
 
-src_compile() {
+qtquickcontrols_src_compile() {
     default
 
     option doc && emake docs
 }
 
-src_install() {
+qtquickcontrols_src_install() {
     default
 
     if option doc ; then

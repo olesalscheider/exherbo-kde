@@ -3,6 +3,8 @@
 
 require qt qmake [ slot=5 ]
 
+export_exlib_phases src_compile src_install
+
 SUMMARY="Qt Cross-platform application framework: QtSvg"
 DESCRIPTION="Scalable Vector Graphics (SVG) is an XML-based language for describing
 two-dimensional vector graphics. Qt provides classes for rendering and displaying
@@ -15,13 +17,13 @@ DEPENDENCIES="
         doc? ( x11-libs/qttools:${SLOT} )
 "
 
-src_compile() {
+qtsvg_src_compile() {
     default
 
     option doc && emake docs
 }
 
-src_install() {
+qtsvg_src_install() {
     default
 
     if option doc ; then
