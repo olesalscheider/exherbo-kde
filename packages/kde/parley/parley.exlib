@@ -22,6 +22,8 @@ DEPENDENCIES="
         )
 "
 
+RESTRICT="-test"
+
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'html-export LibXml2'
     'html-export LibXslt'
