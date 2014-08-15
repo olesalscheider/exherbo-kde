@@ -19,7 +19,7 @@ DEPENDENCIES="
         kde/smokeqt:${SLOT}[>=4.7.4]
         server-pim/akonadi[-qt5]
         x11-libs/qt:4[dbus]
-        okular? ( kde/okular:${SLOT}[>=4.7.4] )
+        okular? ( kde/okular:${SLOT}[>=4.7.4&<5] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
