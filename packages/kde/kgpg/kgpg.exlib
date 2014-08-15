@@ -24,3 +24,10 @@ DEPENDENCIES="
         app-crypt/gnupg
 "
 
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build:
+            app-crypt/gpgme [[ note = [ only headers are used ] ]]
+    "
+fi
+
