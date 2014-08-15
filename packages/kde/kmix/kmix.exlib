@@ -19,11 +19,20 @@ DEPENDENCIES="
         media-libs/phonon[qt4(+)]
         sys-sound/alsa-lib
         x11-libs/qt:4[phonon]
-        pulseaudio? (
-            dev-libs/glib:2
-            media-sound/pulseaudio[>=0.9.12]
-        )
+        pulseaudio? ( dev-libs/glib:2 )
 "
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            pulseaudio? ( media-sound/pulseaudio[>=0.9.16] )
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            pulseaudio? ( media-sound/pulseaudio[>=0.9.12] )
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     PulseAudio
