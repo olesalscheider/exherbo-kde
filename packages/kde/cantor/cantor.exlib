@@ -12,6 +12,7 @@ MYOPTIONS="
     R         [[ description = [ Build the R backend ] ]]
     ( analitza qalculate R ) [[ number-selected = at-least-one ]]
 "
+ever at_least 4.14.0 && MYOPTIONS+=" lua [[ description = [ Build the lua scripting backend ] ]]"
 
 # FIXME: Find out what a module is used for and provide a usable description
 # cantor needs one of these backends to be usable:
@@ -34,6 +35,14 @@ DEPENDENCIES="
         sci-apps/octave
         sci-apps/sage
 "
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            lua? ( dev-lang/LuaJIT )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'lua LuaJIT' )
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITH_libspectre:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
