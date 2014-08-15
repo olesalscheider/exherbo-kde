@@ -9,6 +9,8 @@ LICENCES="GPL-2 FDL-1.2 BSD-3"
 MYOPTIONS="
     xplanet [[ description = [ Renders images of all major planets and most satellites ] ]]
 "
+ever at_least 4.14.0 && \
+    MYOPTIONS+=" python [[ description = [ Python bindings used for updating supernovae data ] ]]"
 
 DEPENDENCIES="
     build+run:
@@ -21,6 +23,14 @@ DEPENDENCIES="
     run:
         xplanet? ( x11-apps/xplanet )
 "
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            python? ( kde/pykde4:${SLOT} )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'python PyKDE4' )
+fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Package Unwritten, http://www.astrometry.net
