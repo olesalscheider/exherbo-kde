@@ -16,9 +16,6 @@ MYOPTIONS="
 "
 
 DEPENDENCIES="
-    build:
-        3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
-
     build+run:
         kde/kdelibs:${SLOT}[>=4.7.0]
         x11-libs/qt:4[opengl]
@@ -34,6 +31,19 @@ DEPENDENCIES="
         x11-misc/chemical-mime-data [[ description = [ Needed to open CML molecules from the
                 file manager ] ]]
 "
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build:
+            3dviewer? ( sci-libs/eigen:3[>=3.0.0] )
+    "
+else
+    DEPENDENCIES+="
+        build:
+            3dviewer? ( sci-libs/eigen:2[>=2.0.3] )
+
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     '3dviewer Avogadro'
