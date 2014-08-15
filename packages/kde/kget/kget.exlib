@@ -22,7 +22,6 @@ DEPENDENCIES="
         app-text/shared-desktop-ontologies[>=0.4]
         dev-libs/boost
         dev-libs/soprano
-        kde/kde-baseapps:${SLOT}[<5] [[ note = [ libkonq ] ]]
         kde/kde-workspace:${SLOT}    [[ note = [ allow shutdown after download ] ]]
         kde/kdelibs:${SLOT}
         kde/nepomuk-core:${SLOT}
@@ -34,6 +33,14 @@ DEPENDENCIES="
             x11-libs/qt:4[sql]
         )
 "
+
+if ! ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde/kde-baseapps:${SLOT}[<5] [[ note = [ libkonq ] ]]
+    "
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DWITH_LibMms:BOOL=TRUE
     -DWITH_NepomukCore:BOOL=TRUE
