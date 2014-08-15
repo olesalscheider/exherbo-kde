@@ -18,5 +18,13 @@ DEPENDENCIES="
         x11-libs/qt:4[opengl]
         console-interface? ( sys-libs/readline )
 "
-CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'console-interface Readline' )
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            sys-libs/ncurses
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'console-interface Curses' )
+fi
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'console-interface Readline' )
 
