@@ -10,14 +10,22 @@ SUMMARY="Translates DocBook XML files using gettext po files"
 LICENCES="GPL-2 FDL-1.2
     BSD-3 [[ note = [ cmake scripts ] ]]"
 
-MYOPTIONS="tools [[ description = [ Build the po2xml and swappo tools ] ]]"
+MYOPTIONS=""
+ever at_least 4.14.0 || MYOPTIONS+="tools [[ description = [ Build the po2xml and swappo tools ] ]]"
 
 DEPENDENCIES="
     build+run:
         kde/kdelibs:${SLOT}
         sys-devel/gettext
-        tools? ( dev-java/antlr[=2*] )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tools Antlr2' )
+RESTRICT="-test"
+
+if ! ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            tools? ( dev-java/antlr[=2*] )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'tools Antlr2' )
+fi
 
