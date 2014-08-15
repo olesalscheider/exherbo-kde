@@ -29,7 +29,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2 [[ note = [ NSPluginviewer ] ]]
         kde/baloo:${SLOT}
-        kde/baloo-widgets:${SLOT}
+        kde/baloo-widgets:${SLOT}[<5]
         kde/kactivities:${SLOT}[>=4.9.90] [[ note = [ activities integration in dolphin ] ]]
         kde/kdelibs:${SLOT}[>=4.10.60]
         kde/kfilemetadata:${SLOT}
@@ -48,6 +48,13 @@ DEPENDENCIES="
     run:
         kde/kde-runtime:${SLOT} [[ note = [ kdesu for kdepasswd ] ]]
 "
+
+if ever at_least 4.13.97 ; then
+    DEPENDENCIES+="
+        run:
+            sys-apps/accountsservice [[ note = kcm_useraccount ]]
+    "
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'tidy LibTidy'
