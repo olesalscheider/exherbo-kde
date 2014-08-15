@@ -25,7 +25,14 @@ DEPENDENCIES="
         x11-libs/libXtst
         telepathy? ( net-im/telepathy-qt[>=0.9][qt4(+)] )
 "
-# TODO: see if the bundled libvncserver could be unbundled
+
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build+run:
+            telepathy? ( net-im/ktp-common-internals )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'telepathy KTp' )
+fi
 
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'telepathy TelepathyQt4'
