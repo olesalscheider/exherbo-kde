@@ -2,7 +2,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: f6ff99b87bf6e8c4e8cbb242e9385f118a2c2ccf
+# last checked commit: ed31b6ef54f006ab6e4642722851e68f14300633
 
 require kde.org [ kde_major_version=5 ]
 
@@ -20,13 +20,18 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        kde-frameworks/kcmutils:5
         kde-frameworks/kconfig:5
         kde-frameworks/kconfigwidgets:5
+        kde-frameworks/kdbusaddons:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kglobalaccel:5
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
         kde-frameworks/kinit:5
+        kde-frameworks/kio:5
+        kde-frameworks/kxmlgui:5
+        kde-frameworks/solid:5
         media-libs/libcanberra [[ note = [ Automagic dep for kmix sound feedback ] ]]
         sys-sound/alsa-lib
         x11-libs/qtbase:5
