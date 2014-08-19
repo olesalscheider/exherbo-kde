@@ -1,0 +1,9 @@
+# Copyright 2011 Timo Gurr <tgurr@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked commit: c70f999e4a1a1a447b9f67e831d5a5d86ee7dde9
+
+require libkexiv2
+
+PLATFORMS="~amd64 ~x86"
+

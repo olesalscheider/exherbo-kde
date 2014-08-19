@@ -40,11 +40,10 @@ if ever is_scm; then
                 ;;
             filelight|kde-baseapps|kde-runtime|kdepimlibs|konsole| \
             konversation|kscreen|libkscreen)
-                if ever at_least 4.95.0 ; then
-                    SCM_BRANCH="frameworks"
-                else
-                    SCM_BRANCH="master"
-                fi
+                SCM_BRANCH="frameworks"
+                ;;
+            libkexiv2)
+                SCM_BRANCH="framework"
                 ;;
             *)
                 SCM_BRANCH="master"
