@@ -38,8 +38,8 @@ if ever is_scm; then
             kde-workspace)
                 SCM_BRANCH="KDE/4.11"
                 ;;
-            filelight|kde-baseapps|kde-runtime|kdepimlibs|konsole| \
-            konversation|kscreen|libkscreen|okular)
+            baloo-widgets|filelight|kde-baseapps|kde-runtime|kdepimlibs| \
+            konsole|konversation|kscreen|libkscreen|okular)
                 SCM_BRANCH="frameworks"
                 ;;
             libkexiv2)

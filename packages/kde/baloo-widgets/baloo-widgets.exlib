@@ -1,7 +1,11 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org
+if ever at_least scm ; then
+    require kde.org [ kde_major_version=5 ]
+else
+    require kde.org
+fi
 
 SUMMARY="Widgets for Baloo"
 
@@ -11,10 +15,25 @@ LICENCES="
 "
 MYOPTIONS=""
 
-DEPENDENCIES="
-    build+run:
-        kde/baloo:${SLOT}
-        kde/kdelibs:${SLOT}[>=4.10.0]
-        kde/kfilemetadata:${SLOT}
-"
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/baloo:5
+            kde-frameworks/kconfig:5
+            kde-frameworks/kcompletion:5
+            kde-frameworks/kcoreaddons:5
+            kde-frameworks/kfilemetadata:5
+            kde-frameworks/ki18n:5
+            kde-frameworks/kio:5
+            kde-frameworks/kservice:5
+            kde-frameworks/kwidgetsaddons:5
+    "
+else
+    DEPENDENCIES="
+        build+run:
+            kde/baloo:${SLOT}
+            kde/kdelibs:${SLOT}[>=4.10.0]
+            kde/kfilemetadata:${SLOT}
+    "
+fi
 

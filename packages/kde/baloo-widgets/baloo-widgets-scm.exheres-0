@@ -1,0 +1,9 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# last checked commit: 2ecd544e8bd532b2a1599dca8bfad725a0be3c32
+
+require baloo-widgets
+
+PLATFORMS="~amd64 ~x86"
+
