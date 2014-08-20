@@ -1,0 +1,319 @@
+Upstream: yes
+
+From 6e90e9f2f884ab20b64e4039c318302ed1140656 Mon Sep 17 00:00:00 2001
+From: David Faure <faure@kde.org>
+Date: Sun, 10 Aug 2014 22:23:04 +0200
+Subject: [PATCH] KIO: add public API isClipboardDataCut/setClipboardDataCut.
+
+This replaces the various copies of the code dealing with that in KIO,
+and will replace the original code in libkonq's KonqMimeData (which will
+then be removed).
+
+Unittest moved from libkonq and ported to non-deprecated KF5 API.
+
+REVIEW: 119699
+---
+ autotests/CMakeLists.txt                           |  1 +
+ autotests/fileundomanagertest.cpp                  |  2 +-
+ autotests/pastetest.cpp                            | 74 ++++++++++++++++++++++
+ .../{http/httpheadertokenizetest.h => pastetest.h} | 18 +++---
+ src/filewidgets/kfilepreviewgenerator.cpp          | 24 +------
+ src/widgets/paste.cpp                              | 24 ++++---
+ src/widgets/paste.h                                | 16 +++++
+ 7 files changed, 119 insertions(+), 40 deletions(-)
+ create mode 100644 autotests/pastetest.cpp
+ copy autotests/{http/httpheadertokenizetest.h => pastetest.h} (71%)
+
+diff --git a/autotests/CMakeLists.txt b/autotests/CMakeLists.txt
+index 4d845cc..b66451c 100644
+--- a/autotests/CMakeLists.txt
++++ b/autotests/CMakeLists.txt
+@@ -52,6 +52,7 @@ ecm_add_tests(
+  kurlcompletiontest.cpp
+  kurlrequestertest.cpp
+  jobguitest.cpp
++ pastetest.cpp
+  NAME_PREFIX "kiowidgets-"
+  LINK_LIBRARIES KF5::KIOCore KF5::KIOWidgets Qt5::Test
+ )
+diff --git a/autotests/fileundomanagertest.cpp b/autotests/fileundomanagertest.cpp
+index 12d9013..c1f253b 100644
+--- a/autotests/fileundomanagertest.cpp
++++ b/autotests/fileundomanagertest.cpp
+@@ -568,7 +568,7 @@ void FileUndoManagerTest::testPasteClipboardUndo()
+     const QList<QUrl> urls(sourceList());
+     QMimeData *mimeData = new QMimeData();
+     mimeData->setUrls(urls);
+-    mimeData->setData(QLatin1String("application/x-kde-cutselection"), "1");
++    KIO::setClipboardDataCut(mimeData, true);
+     QClipboard *clipboard = QApplication::clipboard();
+     clipboard->setMimeData(mimeData);
+ 
+diff --git a/autotests/pastetest.cpp b/autotests/pastetest.cpp
+new file mode 100644
+index 0000000..a634b1d
+--- /dev/null
++++ b/autotests/pastetest.cpp
+@@ -0,0 +1,74 @@
++/* This file is part of KDE
++    Copyright (c) 2005-2006 David Faure <faure@kde.org>
++
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License as published by the Free Software Foundation; either
++    version 2 of the License, or (at your option) any later version.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
++    Boston, MA 02110-1301, USA.
++*/
++
++#include <qtest.h>
++
++#include <QUrl>
++#include <QMimeData>
++#include <kurlmimedata.h>
++#include <kio/paste.h>
++#include "pastetest.h"
++
++QTEST_MAIN(KIOPasteTest)
++
++void KIOPasteTest::testPopulate()
++{
++    QMimeData* mimeData = new QMimeData;
++
++    // Those URLs don't have to exist.
++    QUrl mediaURL("media:/hda1/tmp/Mat%C3%A9riel");
++    QUrl localURL("file:///tmp/Mat%C3%A9riel");
++    QList<QUrl> kdeURLs; kdeURLs << mediaURL;
++    QList<QUrl> mostLocalURLs; mostLocalURLs << localURL;
++
++    KUrlMimeData::setUrls(kdeURLs, mostLocalURLs, mimeData);
++
++    QVERIFY(mimeData->hasUrls());
++    const QList<QUrl> lst = KUrlMimeData::urlsFromMimeData(mimeData);
++    QCOMPARE(lst.count(), 1);
++    QCOMPARE(lst[0].url(), mediaURL.url());
++
++    const bool isCut = KIO::isClipboardDataCut(mimeData);
++    QVERIFY(!isCut);
++
++    delete mimeData;
++}
++
++void KIOPasteTest::testCut()
++{
++    QMimeData* mimeData = new QMimeData;
++
++    QUrl localURL1("file:///tmp/Mat%C3%A9riel");
++    QUrl localURL2("file:///tmp");
++    QList<QUrl> localURLs; localURLs << localURL1 << localURL2;
++
++    KUrlMimeData::setUrls(QList<QUrl>(), localURLs, mimeData);
++    KIO::setClipboardDataCut(mimeData, true);
++
++    QVERIFY(mimeData->hasUrls());
++    const QList<QUrl> lst = KUrlMimeData::urlsFromMimeData(mimeData);
++    QCOMPARE(lst.count(), 2);
++    QCOMPARE(lst[0].url(), localURL1.url());
++    QCOMPARE(lst[1].url(), localURL2.url());
++
++    const bool isCut = KIO::isClipboardDataCut(mimeData);
++    QVERIFY(isCut);
++
++    delete mimeData;
++}
+diff --git a/autotests/http/httpheadertokenizetest.h b/autotests/pastetest.h
+similarity index 71%
+copy from autotests/http/httpheadertokenizetest.h
+copy to autotests/pastetest.h
+index e8690da..f9d7b3c 100644
+--- a/autotests/http/httpheadertokenizetest.h
++++ b/autotests/pastetest.h
+@@ -1,5 +1,5 @@
+-/* This file is part of the KDE libraries
+-    Copyright (c) 2008 Andreas Hartmetz <ahartmetz@gmail.com>
++/* This file is part of KDE Frameworks
++    Copyright (c) 2005-2006 David Faure <faure@kde.org>
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Library General Public
+@@ -17,17 +17,17 @@
+     Boston, MA 02110-1301, USA.
+ */
+ 
+-#ifndef HTTPHEADERTOKENIZETEST_H
+-#define HTTPHEADERTOKENIZETEST_H
++#ifndef KIOPASTETEST_H
++#define KIOPASTETEST_H
+ 
+-#include <QtCore/QObject>
++#include <QObject>
+ 
+-class HeaderTokenizeTest : public QObject
++class KIOPasteTest : public QObject
+ {
+     Q_OBJECT
+ private Q_SLOTS:
+-    void testMessyHeader();
+-    void testRedirectHeader();
++    void testPopulate();
++    void testCut();
+ };
+ 
+-#endif //HTTPHEADERTOKENIZETEST_H
++#endif
+diff --git a/src/filewidgets/kfilepreviewgenerator.cpp b/src/filewidgets/kfilepreviewgenerator.cpp
+index b14b1d5..bf963b7 100644
+--- a/src/filewidgets/kfilepreviewgenerator.cpp
++++ b/src/filewidgets/kfilepreviewgenerator.cpp
+@@ -26,6 +26,7 @@
+ #include <kfileitem.h>
+ #include <kiconeffect.h>
+ #include <kio/previewjob.h>
++#include <kio/paste.h>
+ #include <kdirlister.h>
+ #include <kdirmodel.h>
+ #include <kiconloader.h>
+@@ -287,12 +288,6 @@ public:
+     void orderItems(KFileItemList &items);
+ 
+     /**
+-     * Returns true, if \a mimeData represents a selection that has
+-     * been cut.
+-     */
+-    bool decodeIsCutSelection(const QMimeData *mimeData);
+-
+-    /**
+      * Helper method for KFilePreviewGenerator::updateIcons(). Adds
+      * recursively all items from the model to the list \a list.
+      */
+@@ -905,7 +900,7 @@ bool KFilePreviewGenerator::Private::isCutItem(const KFileItem &item) const
+ void KFilePreviewGenerator::Private::applyCutItemEffect(const KFileItemList &items)
+ {
+     const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+-    m_hasCutSelection = mimeData && decodeIsCutSelection(mimeData);
++    m_hasCutSelection = mimeData && KIO::isClipboardDataCut(mimeData);
+     if (!m_hasCutSelection) {
+         return;
+     }
+@@ -1032,7 +1027,7 @@ void KFilePreviewGenerator::Private::createPreviews(const KFileItemList &items)
+     }
+ 
+     const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+-    m_hasCutSelection = decodeIsCutSelection(mimeData);
++    m_hasCutSelection = mimeData && KIO::isClipboardDataCut(mimeData);
+ 
+     // PreviewJob internally caches items always with the size of
+     // 128 x 128 pixels or 256 x 256 pixels. A downscaling is done
+@@ -1135,19 +1130,6 @@ void KFilePreviewGenerator::Private::orderItems(KFileItemList &items)
+     }
+ }
+ 
+-bool KFilePreviewGenerator::Private::decodeIsCutSelection(const QMimeData *mimeData)
+-{
+-    if (!mimeData) {
+-        return false;
+-    }
+-    const QByteArray data = mimeData->data("application/x-kde-cutselection");
+-    if (data.isEmpty()) {
+-        return false;
+-    } else {
+-        return data.at(0) == QLatin1Char('1');
+-    }
+-}
+-
+ void KFilePreviewGenerator::Private::addItemsToList(const QModelIndex &index, KFileItemList &list)
+ {
+     KDirModel *dirModel = m_dirModel.data();
+diff --git a/src/widgets/paste.cpp b/src/widgets/paste.cpp
+index b2a84b0..cd66d61 100644
+--- a/src/widgets/paste.cpp
++++ b/src/widgets/paste.cpp
+@@ -39,12 +39,6 @@
+ #include <qinputdialog.h>
+ #include <QDebug>
+ 
+-static bool decodeIsCutSelection(const QMimeData *mimeData)
+-{
+-    const QByteArray data = mimeData->data("application/x-kde-cutselection");
+-    return data.isEmpty() ? false : data.at(0) == '1';
+-}
+-
+ // This could be made a public method, if there's a need for pasting only urls
+ // and not random data.
+ /**
+@@ -62,7 +56,7 @@ static KIO::Job *pasteClipboardUrls(const QMimeData *mimeData, const QUrl &destD
+ {
+     const QList<QUrl> urls = KUrlMimeData::urlsFromMimeData(mimeData, KUrlMimeData::PreferLocalUrls);
+     if (!urls.isEmpty()) {
+-        const bool move = decodeIsCutSelection(mimeData);
++        const bool move = KIO::isClipboardDataCut(mimeData);
+         KIO::Job *job = 0;
+         if (move) {
+             job = KIO::move(urls, destDir, flags);
+@@ -187,10 +181,10 @@ static QStringList extractFormats(const QMimeData *mimeData)
+     QStringList formats;
+     const QStringList allFormats = mimeData->formats();
+     Q_FOREACH (const QString &format, allFormats) {
+-        if (format == QLatin1String("application/x-qiconlist")) { // see QIconDrag
++        if (format == QLatin1String("application/x-qiconlist")) { // Q3IconView and kde4's libkonq
+             continue;
+         }
+-        if (format == QLatin1String("application/x-kde-cutselection")) { // see KonqDrag
++        if (format == QLatin1String("application/x-kde-cutselection")) { // see isClipboardDataCut
+             continue;
+         }
+         if (format == QLatin1String("application/x-kde-suggestedfilename")) {
+@@ -305,3 +299,15 @@ KIOWIDGETS_EXPORT KIO::Job *KIO::pasteMimeData(const QMimeData *mimeData, const
+ {
+     return pasteMimeDataImpl(mimeData, destUrl, dialogText, widget, false /*not clipboard*/);
+ }
++
++KIOWIDGETS_EXPORT void KIO::setClipboardDataCut(QMimeData* mimeData, bool cut)
++{
++    const QByteArray cutSelectionData = cut ? "1" : "0";
++    mimeData->setData("application/x-kde-cutselection", cutSelectionData);
++}
++
++KIOWIDGETS_EXPORT bool KIO::isClipboardDataCut(const QMimeData *mimeData)
++{
++    const QByteArray a = mimeData->data("application/x-kde-cutselection");
++    return (!a.isEmpty() && a.at(0) == '1');
++}
+diff --git a/src/widgets/paste.h b/src/widgets/paste.h
+index 085d047..a05991f 100644
+--- a/src/widgets/paste.h
++++ b/src/widgets/paste.h
+@@ -77,6 +77,22 @@ KIOWIDGETS_EXPORT bool canPasteMimeData(const QMimeData *data);
+  * isn't possible right now.
+  */
+ KIOWIDGETS_EXPORT QString pasteActionText();
++
++/**
++ * Add the information whether the files were cut, into the mimedata.
++ * @param mimeData pointer to the mimeData object to be populated. Must not be null.
++ * @param cut if true, the user selected "cut" (saved as application/x-kde-cutselection in the mimedata).
++ * @since 5.2
++ */
++KIOWIDGETS_EXPORT void setClipboardDataCut(QMimeData* mimeData, bool cut);
++
++/**
++ * Returns true if the URLs in @p mimeData were cut by the user.
++ * This should be called when pasting, to choose between moving and copying.
++ * @since 5.2
++ */
++KIOWIDGETS_EXPORT bool isClipboardDataCut(const QMimeData *mimeData);
++
+ }
+ 
+ #endif
+-- 
+2.1.0
+
