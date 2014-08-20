@@ -1,0 +1,48 @@
+# Copyright 2011,2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'kdegraphics.exlib', which is:
+#     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
+
+# last checked commit: 461aa87eb72d98d998390ceed092b4721e7d864b
+
+require kde.org [ kde_major_version=5 ]
+
+SUMMARY="Image viewer for KDE "
+HOMEPAGE="http://gwenview.sourceforge.net/"
+
+LICENCES="FDL-1.2 GPL-2"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+#"kipi [[ description = [ Provides various image manipulation and export features via KDE Image Plugin Interface (KIPI) ] ]]"
+
+DEPENDENCIES="
+    build+run:
+        graphics/exiv2[>=0.19]
+        media-libs/jpeg
+        media-libs/lcms2
+        media-libs/libpng:=
+        kde/kde-baseapps:4[>=scm]
+        kde-frameworks/baloo:5
+        kde-frameworks/kactivities:5
+        kde-frameworks/kdelibs4support:5
+        kde-frameworks/ki18n:5
+        kde-frameworks/kitemmodels:5
+        media-libs/phonon[qt5]
+        x11-libs/libX11
+        x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qtsvg:5[>=5.2.0]
+
+"
+#        kde/libkdcraw:${SLOT}[>=4.12.2]
+#        kipi? ( graphics/digikam )
+
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/0001-CMakeLists.txt-search-properly-for-dependencies.patch
+)
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # Disable until there is a KF5 version
+    -DCMAKE_DISABLE_FIND_PACKAGE_Kdcraw:BOOL=TRUE
+    -DGWENVIEW_SEMANTICINFO_BACKEND_BALOO:BOOL=TRUE
+)
+#CMAKE_SRC_CONFIGURE_OPTION_WITHS=( 'Kipi' )
+
