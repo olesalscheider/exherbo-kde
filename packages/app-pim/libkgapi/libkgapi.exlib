@@ -8,7 +8,7 @@ if ever is_scm; then
     SCM_REPOSITORY="git://anongit.kde.org/libkgapi"
     require scm-git
 else
-    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.bz2"
 fi
 
 export_exlib_phases src_compile src_install
@@ -27,16 +27,14 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         dev-libs/qjson
-        kde/kdelibs:4[>=4.6.0]
-        kde/kdepimlibs:4[>=4.5.63]
+        kde/kdelibs:4[>=4.12.0]
+        kde/kdepimlibs:4[>=4.13.80]
         x11-libs/qt:4[>=4.7.0][webkit]
 "
 
 BUGS_TO="kde@exherbo.org"
 
 CMAKE_SRC_CONFIGURE_OPTIONS+=( 'examples KGAPI_BUILD_EXAMPLES' )
-# needed to build kdepim-runtime[=4.10.x][google]
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DKGAPI_DISABLE_DEPRECATED:BOOL=FALSE )
 
 libkgapi_src_compile() {
     default
