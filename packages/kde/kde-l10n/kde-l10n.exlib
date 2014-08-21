@@ -9,7 +9,12 @@ case "$(ever range 3)" in
 esac
 
 myexparam langs
-myexparam base_uri="mirror://kde/${stability}/${PV}/src/${PN}"
+# Mirrors don't seem to sync, so use URL below until this is fixed.
+if ever at_least 4.14.0 ; then
+    myexparam base_uri="http://download.kde.org/stable/${PV}/src/${PN}"
+else
+    myexparam base_uri="mirror://kde/${stability}/${PV}/src/${PN}"
+fi
 
 api=2
 
