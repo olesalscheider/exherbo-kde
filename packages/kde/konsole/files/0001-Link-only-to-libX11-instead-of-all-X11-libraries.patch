@@ -1,0 +1,27 @@
+See: https://git.reviewboard.kde.org/r/119908/
+
+From 63f434cdfda68a50adc50999738c1d69a2160621 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <berniyh@exherbo.org>
+Date: Fri, 22 Aug 2014 22:27:21 +0200
+Subject: [PATCH] Link only to libX11 instead of all X11 libraries.
+
+---
+ src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 551a148..195bae8 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -130,7 +130,7 @@ set(konsoleprivate_SRCS ${sessionadaptors_SRCS}
+                         WindowSystemInfo.cpp
+                         ${CMAKE_CURRENT_BINARY_DIR}/org.kde.konsole.Window.xml
+                         ${CMAKE_CURRENT_BINARY_DIR}/org.kde.konsole.Session.xml)
+-set(konsole_LIBS ${X11_LIBRARIES}
++set(konsole_LIBS ${X11_X11_LIB}
+                  KF5::XmlGui
+                  Qt5::PrintSupport
+                  Qt5::Xml
+-- 
+2.1.0
+
