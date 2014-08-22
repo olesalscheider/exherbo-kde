@@ -1,6 +1,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# Checked id: de1248ba70f0e0ab51cc58a591f39398cc36345f
+
 require kde.org [ kde_major_version='5' ]
 
 SUMMARY="Qt5-based oxygen style"
@@ -40,9 +42,5 @@ fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'X X11'
-)
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-XCB-is-searched-for-in-the-top-level-cmake-file.patch
 )
 

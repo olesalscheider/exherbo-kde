@@ -15,3 +15,7 @@ MYOPTIONS="
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-XCB-is-searched-for-in-the-top-level-cmake-file.patch
+)
+
