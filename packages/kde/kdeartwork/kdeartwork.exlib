@@ -16,10 +16,6 @@ MYOPTIONS="
 "
 
 DEPENDENCIES="
-    build:
-        xscreensaver? (
-            sci-libs/eigen:2 [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
-        )
     build+run:
         kde/kde-workspace:${SLOT}[>=4.11.0][-kf5-coinstall(-)]
         kde/kdelibs:${SLOT}[>=4.7.0]
@@ -32,10 +28,27 @@ DEPENDENCIES="
         xscreensaver? ( x11-apps/xscreensaver )
 "
 
+if ever at_least 4.14.0 ; then
+    DEPENDENCIES+="
+        build:
+            xscreensaver? (
+                sci-libs/eigen:3 [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'xscreensaver Eigen3' )
+else
+    DEPENDENCIES+="
+        build:
+            xscreensaver? (
+                sci-libs/eigen:2 [[ note = [ Optional, always enabled in Exherbo since this is a build-time header-only dependency. ] ]]
+            )
+    "
+    CMAKE_SRC_CONFIGURE_OPTION_WITHS+=( 'xscreensaver Eigen2' )
+fi
+
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DWITH_OpenGL:BOOL=TRUE )
 CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'autorotate Kexiv2'
     'xscreensaver Xscreensaver'
-    'xscreensaver Eigen2'
 )
 
