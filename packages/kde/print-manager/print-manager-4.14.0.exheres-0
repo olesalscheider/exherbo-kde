@@ -5,3 +5,7 @@ require print-manager
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/864153745c2593fd7e6c31fe425f347bd83846fe.patch
+)
+
