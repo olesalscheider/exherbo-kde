@@ -1,9 +1,9 @@
 From: Daniel Nicoletti <dantti12@gmail.com>
-Date: Mon, 25 Aug 2014 13:31:05 +0000
-Subject: Adjust CUPS_VERSION_MAJOR to build for CUPS version greater than 1 (needed now that CUPS 2.0b1 is out)
-X-Git-Url: http://quickgit.kde.org/?p=print-manager.git&a=commitdiff&h=864153745c2593fd7e6c31fe425f347bd83846fe
+Date: Mon, 25 Aug 2014 20:04:18 +0000
+Subject: Fix ifdef's logic to still match 1.6 onwards and 1.6 backwards
+X-Git-Url: http://quickgit.kde.org/?p=print-manager.git&a=commitdiff&h=731085d7720e7128ab102ef80383d1bfaea27661
 ---
-Adjust CUPS_VERSION_MAJOR to build for CUPS version greater than 1 (needed now that CUPS 2.0b1 is out)
+Fix ifdef's logic to still match 1.6 onwards and 1.6 backwards
 BUG:338543
 ---
 
@@ -14,13 +14,13 @@ BUG:338543
          response = request.sendIppRequest();
      } while (retry("/", operation));
  
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#if !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
      if (response && ippGetStatusCode(response) == IPP_OK) {
  #else
      if (response && response->request.status.status_code == IPP_OK) {
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#endif // !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
          ipp_attribute_t *attr;
          if (subscriptionId >= 0) {
              // Request was ok, just return the current subscription
@@ -28,8 +28,8 @@ BUG:338543
              kWarning() << "No notify-subscription-id in response!";
              ret = -1;
          } else {
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#if !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
              ret = ippGetInteger(attr, 0);
          }
      } else if (subscriptionId >= 0 && response && ippGetStatusCode(response) == IPP_NOT_FOUND) {
@@ -37,8 +37,8 @@ BUG:338543
          kDebug() << "Subscription not found";
          // When the subscription is not found try to get a new one
          return renewDBusSubscription(-1, leaseDuration, events);
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#endif // !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
      } else {
          kDebug() << "Request failed" << cupsLastError() << httpGetStatus(CUPS_HTTP_DEFAULT);
          // When the server stops/restarts we will have some error so ignore it
@@ -46,8 +46,8 @@ BUG:338543
      ipp_attribute_t *attr;
      ReturnArguments ret;
  
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#if !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
      QVariantHash destAttributes;
      for (attr = ippFirstAttribute(response); attr != NULL; attr = ippNextAttribute(response)) {
          // We hit an attribute sepparator
@@ -55,8 +55,8 @@ BUG:338543
              break;
          }
      }
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#endif // !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
  
      return ret;
  }
@@ -64,8 +64,8 @@ BUG:338543
  QVariant KCupsConnection::ippAttrToVariant(ipp_attribute_t *attr)
  {
      QVariant ret;
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#if !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
      switch (ippGetValueTag(attr)) {
      case IPP_TAG_INTEGER:
      case IPP_TAG_ENUM:
@@ -73,8 +73,8 @@ BUG:338543
              ret = values;
          }
      }
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR >= 6
++#endif // !(CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6)
      return ret;
  }
  
@@ -85,8 +85,8 @@ BUG:338543
  
  bool KCupsServer::showSharedPrinters() const
  {
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      return m_arguments.value(CUPS_SERVER_REMOTE_PRINTERS).toBool();
  #else
      return false;
@@ -94,13 +94,13 @@ BUG:338543
  
  void KCupsServer::setShowSharedPrinters(bool show)
  {
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      m_arguments[CUPS_SERVER_REMOTE_PRINTERS] = show ? QLatin1String("1") : QLatin1String("0");
  #else
      Q_UNUSED(show)
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
  }
  
  bool KCupsServer::sharePrinters() const
@@ -111,13 +111,13 @@ BUG:338543
      QMenu *systemMenu = new QMenu(this);
      connect(systemMenu, SIGNAL(aboutToShow()), this, SLOT(getServerSettings()));
      connect(systemMenu, SIGNAL(triggered(QAction*)), this, SLOT(systemPreferencesTriggered()));
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      m_showSharedPrinters = systemMenu->addAction(i18nc("@action:intoolbar","Show printers shared by other systems"));
      m_showSharedPrinters->setCheckable(true);
      systemMenu->addSeparator();
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      m_shareConnectedPrinters = systemMenu->addAction(i18nc("@action:intoolbar","Share printers connected to this system"));
      m_shareConnectedPrinters->setCheckable(true);
      m_allowPrintringFromInternet = systemMenu->addAction(i18nc("@action:intoolbar","Allow printing from the Internet"));
@@ -125,11 +125,11 @@ BUG:338543
      // we can safely ignore the error since it DOES bring the server settings
      bool error = request->hasError() && request->error() != IPP_NOT_FOUND;
  
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      m_showSharedPrinters->setEnabled(!error);
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      m_shareConnectedPrinters->setEnabled(!error);
      m_allowRemoteAdmin->setEnabled(!error);
      m_allowUsersCancelAnyJob->setEnabled(!error);
@@ -137,11 +137,11 @@ BUG:338543
      } else {
          KCupsServer server = request->serverSettings();
  
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
          m_showSharedPrinters->setChecked(server.showSharedPrinters());
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
          m_shareConnectedPrinters->setChecked(server.sharePrinters());
          m_allowPrintringFromInternet->setChecked(server.allowPrintingFromInternet());
          m_allowRemoteAdmin->setChecked(server.allowRemoteAdmin());
@@ -149,11 +149,11 @@ BUG:338543
  void PrintKCM::systemPreferencesTriggered()
  {
      KCupsServer server;
--#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#if CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      server.setShowSharedPrinters(m_showSharedPrinters->isChecked());
--#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
-+#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
+-#endif // CUPS_VERSION_MAJOR >= 1 && CUPS_VERSION_MINOR < 6
++#endif // CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 6
      server.setSharePrinters(m_shareConnectedPrinters->isChecked());
      server.setAllowPrintingFromInternet(m_allowPrintringFromInternet->isChecked());
      server.setAllowRemoteAdmin(m_allowRemoteAdmin->isChecked());
