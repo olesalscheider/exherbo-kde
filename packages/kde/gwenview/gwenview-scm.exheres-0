@@ -36,9 +36,6 @@ DEPENDENCIES="
 #        kde/libkdcraw:${SLOT}[>=4.12.2]
 #        kipi? ( graphics/digikam )
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/0001-CMakeLists.txt-search-properly-for-dependencies.patch
-)
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     # Disable until there is a KF5 version
     -DCMAKE_DISABLE_FIND_PACKAGE_Kdcraw:BOOL=TRUE
