@@ -18,8 +18,22 @@ DEPENDENCIES="
 "
 # #add_subdirectory(code) in windec/CMakeLists.txt
 #        kde/kwin:${SLOT}
-#        kde-frameworks/kconfigwidgets:5
 #        x11-libs/qtdeclarative:5[>=5.2.0]
 #        x11-libs/qttools:5[>=5.2.0]
-#        x11-libs/qtx11extras:5[>=5.2.0]
+
+if ever at_least scm ; then
+    DEPENDENCIES+="
+        build:
+            virtual/pkg-config
+        build+run:
+            kde-frameworks/frameworkintegration:5 [[ note = [ provides KF5Style ] ]]
+            kde-frameworks/kcompletion:5
+            kde-frameworks/kconfigwidgets:5
+            kde-frameworks/kguiaddons:5
+            kde-frameworks/ki18n:5
+            kde-frameworks/kwindowsystem:5
+            x11-libs/libxcb
+            x11-libs/qtx11extras:5[>=5.2.0]
+    "
+fi
 
