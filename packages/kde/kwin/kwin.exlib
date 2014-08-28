@@ -38,7 +38,6 @@ DEPENDENCIES="
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/plasma-framework:5
-        x11-dri/mesa
         x11-libs/libICE
         x11-libs/libSM
         x11-libs/libX11
@@ -72,10 +71,17 @@ DEPENDENCIES="
 # 7 of 9 tests require a running X server
 RESTRICT="test"
 
-if ever at_least 5.0.90; then
+if ever at_least 5.0.95; then
     DEPENDENCIES+="
         build+run:
             dev-libs/libepoxy
+        run:
+            x11-dri/mesa
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            x11-dri/mesa
     "
 fi
 
