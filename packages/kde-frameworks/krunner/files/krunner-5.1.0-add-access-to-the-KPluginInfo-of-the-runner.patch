@@ -1,0 +1,59 @@
+Upstream: yes
+
+From 7eece2db8560bad8d8b46bf927c98d602ef9922b Mon Sep 17 00:00:00 2001
+From: Marco Martin <notmart@gmail.com>
+Date: Tue, 5 Aug 2014 16:53:13 +0200
+Subject: [PATCH] add access to the KPluginInfo of the runner
+
+coherent with applets and dataengines, add a metadata() function
+to access the plugininfo of the runner
+needed by the kcm
+REVIEW:119602
+---
+ src/abstractrunner.cpp | 5 +++++
+ src/abstractrunner.h   | 6 ++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/src/abstractrunner.cpp b/src/abstractrunner.cpp
+index 38b9177..4da0394 100644
+--- a/src/abstractrunner.cpp
++++ b/src/abstractrunner.cpp
+@@ -314,6 +314,11 @@ QString AbstractRunner::description() const
+     return objectName();
+ }
+ 
++KPluginInfo AbstractRunner::metadata() const
++{
++    return d->runnerDescription;
++}
++
+ Package AbstractRunner::package() const
+ {
+     return d->package ? *d->package : Package();
+diff --git a/src/abstractrunner.h b/src/abstractrunner.h
+index 1de3fec..823f13f 100644
+--- a/src/abstractrunner.h
++++ b/src/abstractrunner.h
+@@ -27,6 +27,7 @@
+ 
+ #include <kconfiggroup.h>
+ #include <kservice.h>
++#include <kplugininfo.h>
+ 
+ #include "krunner_export.h"
+ #include "querymatch.h"
+@@ -233,6 +234,11 @@ class KRUNNER_EXPORT AbstractRunner : public QObject
+         QString description() const;
+ 
+         /**
++         * @return the plugin info for this runner
++         */
++        KPluginInfo metadata() const;
++
++        /**
+          * @return the icon for this Runner
+          */
+         QIcon icon() const;
+-- 
+2.1.0
+
