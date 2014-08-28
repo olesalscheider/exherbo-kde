@@ -232,7 +232,7 @@ kde-workspace_src_configure() {
             ksmserver ksplash ksysguard
             ksystraycmd ktouchpadenabler kwin kwrited
             module plasma powerdevil python qguiplatformplugin_kde
-            screenlocker systemsettings
+            screenlocker solid-actions-kcm systemsettings
         )
         for part in ${parts[@]}; do
             CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_${part}=FALSE )
