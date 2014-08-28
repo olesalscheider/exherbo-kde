@@ -24,3 +24,10 @@ DEPENDENCIES="
         kde-frameworks/baloo:5 [[ note = [ Baloo provides a runner which is used via krunner ] ]]
 "
 
+if ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kservice:5
+    "
+fi
+
