@@ -38,6 +38,7 @@ if ever at_least scm ; then
             kde-frameworks/kconfigwidgets:5
             kde-frameworks/kdelibs4support:5
             kde-frameworks/kemoticons:5
+            kde-frameworks/kglobalaccel:5
             kde-frameworks/ki18n:5
             kde-frameworks/kidletime:5
             kde-frameworks/kio:5
