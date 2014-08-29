@@ -28,7 +28,7 @@ DEPENDENCIES="
         taglib? ( media-libs/taglib )
 "
 
-if ! ever at_least scm ; then
+if ! ever at_least 5.0.95 ; then
     DEPENDENCIES+="
         build+run:
             kde-frameworks/kservice:5[>=5.0.0]
