@@ -8,7 +8,11 @@ export_exlib_phases src_install
 SUMMARY="A framework for searching and managing metadata"
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS="pim"
+MYOPTIONS="
+    only-libraries
+        [[ description = [ Build only libraries without binaries or kioslaves, enable this if you want to use baloo:4 ] ]]
+    pim
+"
 
 KF5_MIN_VER=5.0.0
 
@@ -39,6 +43,11 @@ DEPENDENCIES="
             description = [ kde/kde-runtime<4.12.80 and baloo collide ]
             resolution = uninstall-blocked-after
         ]]
+        !kde/baloo:4[only-libraries=] [[
+            description = [ kde-frameworks/baloo:4 and kde/baloo:4 install the same
+                            binaries, so you can only install them for one package ]
+            resolution = manual
+        ]]
 "
 
 if ! ever is_scm ; then
@@ -55,8 +64,10 @@ fi
 # 4 of 12 tests are currently failing
 RESTRICT="test"
 
-CMAKE_SRC_CONFIGURE_PARAMS+=( -DBALOO_LIBRARIES_ONLY:BOOL=TRUE )
-CMAKE_SRC_CONFIGURE_OPTIONS=( 'pim KDEPIM_SUPPORT_BUILD' )
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    'only-libraries BALOO_LIBRARIES_ONLY'
+    'pim KDEPIM_SUPPORT_BUILD'
+)
 
 baloo_src_install() {
     cmake_src_install
