@@ -3,7 +3,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 71ac8fda167c348f02428c7428cac46a1018f93c
+# last checked commit: 59a9822de1473258e9f153f9f967bcd09e487bfa
 
 require kde.org [ kde_major_version=5 ]
 
@@ -70,6 +70,13 @@ DEPENDENCIES="
 #                app-text/tidy-html5
 #            )
 #        )
+
+if ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/khtml:5
+    "
+fi
 
 # 11 of 11 tests need a running X server.
 RESTRICT="test"

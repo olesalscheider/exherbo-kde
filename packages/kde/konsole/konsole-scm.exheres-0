@@ -2,6 +2,8 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 5fd1276b8d024a5a2670ff60753c9760a2ff7ca7
+
 require kde.org [ kde_major_version='5' ]
 
 SUMMARY="KDE's terminal emulator"
