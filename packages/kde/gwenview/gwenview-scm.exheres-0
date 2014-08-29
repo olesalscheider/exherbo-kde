@@ -3,7 +3,7 @@
 # Based in part upon 'kdegraphics.exlib', which is:
 #     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
 
-# last checked commit: 461aa87eb72d98d998390ceed092b4721e7d864b
+# last checked commit: c27cb425ed32f17ed1ffdd3a68de1eabb8d2cd73
 
 require kde.org [ kde_major_version=5 ]
 

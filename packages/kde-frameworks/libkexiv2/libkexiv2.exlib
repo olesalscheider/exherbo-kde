@@ -14,8 +14,8 @@ DEPENDENCIES="
         virtual/pkg-config
     build+run:
         graphics/exiv2[>=0.21]
-        kde-frameworks/kdelibs4support:5[>=5.0.0]
-        kde-frameworks/khtml:5[>=5.0.0]
+        kde-frameworks/kdelibs4support:5[>=5.1.0]
+        kde-frameworks/khtml:5[>=5.1.0]
         x11-libs/qtbase:5[>=5.2.0]
 "
 
