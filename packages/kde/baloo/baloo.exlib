@@ -6,7 +6,9 @@ require kde.org
 SUMMARY="A framework for searching and managing metadata"
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS=""
+MYOPTIONS="only-libraries
+    [[ description = [ Build only libraries without binaries or kioslaves, enable this if you want to use baloo:5 ] ]]
+"
 
 DEPENDENCIES="
     build+run:
@@ -18,6 +20,11 @@ DEPENDENCIES="
         !kde/kde-runtime[<4.12.80] [[
             description = [ kde/kde-runtime<4.12.80 and baloo collide ]
             resolution = uninstall-blocked-after
+        ]]
+        !kde-frameworks/baloo:5[only-libraries=] [[
+            description = [ kde/baloo:4 and kde-frameworks/baloo:5 install the same
+                            binaries, so you can only install them for one package ]
+            resolution = manual
         ]]
 "
 
@@ -34,4 +41,6 @@ else
             server-pim/akonadi[>=1.12.1][-qt5]
     "
 fi
+
+CMAKE_SRC_CONFIGURE_OPTIONS+=( 'only-libraries BALOO_LIBRARIES_ONLY' )
 
