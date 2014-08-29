@@ -54,6 +54,7 @@ MYOPTIONS+="
     msworks        [[ description = [ Support for Microsoft Works files in Words ] requires = [ kde_parts: words ] ]]
     mysql          [[ description = [ Support for MySQL databases in Kexi ] ]]
     openexr        [[ description = [ Support for the OpenEXR file format, a high precision format for use in computer imaging applications ] ]]
+    okular         [[ description = [ Build plugin for Okular supporting ODP and MS PPT/PPT documents ] ]]
     pdf            [[ description = [ Support for PDF (Portable Document Format) files in Karbon and Krita ] ]]
     postgresql     [[ description = [ Support for PostgreSQL databases in Kexi ] ]]
     raw            [[ description = [ Support for the RAW filter in Krita ] ]]
@@ -68,11 +69,12 @@ MYOPTIONS+="
 
     jpeg2000? ( ( pdf kde_parts: krita ) [[ number-selected = at-least-one ]] )
 
-    kde_parts: author [[ requires = [ kde_parts: words ] ]]
-    kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]]
+    ( kde_parts: author [[ requires = [ kde_parts: words ] ]]
+      kde_parts: ( ${MY_KDE_PARTS} ) [[ number-selected = at-least-one ]] )
 
-    pdf? ( ( karbon krita ) [[ number-selected = at-least-one ]] )
-    wordperfect? ( ( karbon words ) [[ number-selected = at-least-one ]] )
+    okular [[ requires = [ kde_parts: stage ] ]]
+    pdf? ( ( kde_parts: karbon krita ) [[ number-selected = at-least-one ]] )
+    wordperfect? ( ( kde_parts: karbon words ) [[ number-selected = at-least-one ]] )
 "
 
 DEPENDENCIES+="
@@ -155,8 +157,8 @@ DEPENDENCIES+="
             solver? ( sci-libs/gsl[>=1.7] )
         )
         kde_parts:stage? (
-            kde/okular:4 [[ note = [ Required to build the OpenDocument Presenter plugin ] ]]
             apple-keynote? ( office-libs/libetonyek )
+            okular? ( kde/okular:4[<4.95.0] )
         )
         kde_parts:words? (
             (
@@ -235,6 +237,7 @@ calligra_src_configure() {
         $(cmake_with Marble)
         $(cmake_with msworks LibWps)
         $(cmake_with MySQL)
+        $(cmake_with Okular)
         $(cmake_with OpenEXR)
         $(cmake_with pdf Poppler)
         $(cmake_with PostgreSQL)
