@@ -50,6 +50,14 @@ DEPENDENCIES="
         ]]
 "
 
+if ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kfilemetadata:5[>=${PV}]
+            x11-libs/qtdeclarative:5
+    "
+fi
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
