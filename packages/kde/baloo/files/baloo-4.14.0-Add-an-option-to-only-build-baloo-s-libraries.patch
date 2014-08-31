@@ -1,6 +1,6 @@
 Upstream: cherry-picked from master
 
-From 154c16dc80edf5e0ee459ad18442c43fc0a2ed1b Mon Sep 17 00:00:00 2001
+From d2ff4fb90092419c270cbf9fd27fa3cbbd5c7b1b Mon Sep 17 00:00:00 2001
 From: Heiko Becker <heirecka@exherbo.org>
 Date: Wed, 6 Aug 2014 16:40:45 +0200
 Subject: [PATCH] Add an option to only build baloo's libraries
@@ -16,9 +16,9 @@ Conflicts:
 	src/file/CMakeLists.txt
 ---
  CMakeLists.txt          |   2 +
- src/CMakeLists.txt      |  10 ++--
+ src/CMakeLists.txt      |   8 ++--
  src/file/CMakeLists.txt | 118 ++++++++++++++++++++++++------------------------
- 3 files changed, 68 insertions(+), 62 deletions(-)
+ 3 files changed, 67 insertions(+), 61 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 0ba999a..99206e6 100644
@@ -34,7 +34,7 @@ index 0ba999a..99206e6 100644
  include(KDE4Defaults)
  
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 3312553..904bf40 100644
+index 3312553..df241ea 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -2,7 +2,9 @@ add_subdirectory(core)
@@ -44,13 +44,12 @@ index 3312553..904bf40 100644
 -add_subdirectory(kioslaves)
 -add_subdirectory(tools)
 -add_subdirectory(runner)
--add_subdirectory(queryparser)
 +if (NOT BALOO_LIBRARIES_ONLY)
 +    add_subdirectory(kioslaves)
 +    add_subdirectory(tools)
 +    add_subdirectory(runner)
-+    add_subdirectory(queryparser)
 +endif ()
+ add_subdirectory(queryparser)
 diff --git a/src/file/CMakeLists.txt b/src/file/CMakeLists.txt
 index 49a34dd..8f93038 100644
 --- a/src/file/CMakeLists.txt
