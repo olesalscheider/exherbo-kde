@@ -70,7 +70,7 @@ DEPENDENCIES+="
 if ever at_least 4.14.0 ; then
     DEPENDENCIES+="
         build+run:
-            kde/baloo[>=4.14.0]
+            kde/baloo[>=4.14.0][-only-libraries]
             kde/kdelibs:${SLOT}[>=4.13.0]
             server-pim/akonadi[>=1.12.90][-qt5]
             googledrive? ( app-pim/libkgapi[>=2.2.0] )
@@ -79,7 +79,7 @@ if ever at_least 4.14.0 ; then
 else
     DEPENDENCIES+="
         build+run:
-            kde/baloo[>=4.13.0]
+            kde/baloo[>=4.13.0][-only-libraries]
             kde/kdelibs:${SLOT}[>=4.12.0]
             server-pim/akonadi[>=1.12.1][-qt5]
             googledrive? ( app-pim/libkgapi[>=2.1.0] )
