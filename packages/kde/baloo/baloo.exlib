@@ -26,6 +26,8 @@ DEPENDENCIES="
                             binaries, so you can only install them for one package ]
             resolution = manual
         ]]
+    run:
+        x11-libs/qt:4[sqlite]
 "
 
 if ever at_least 4.14.0 ; then
