@@ -48,6 +48,8 @@ DEPENDENCIES="
                             binaries, so you can only install them for one package ]
             resolution = manual
         ]]
+    run:
+        x11-libs/qtbase:5[sqlite]
 "
 
 if ever at_least 5.0.95 ; then
