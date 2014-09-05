@@ -112,6 +112,13 @@ DEPENDENCIES="
 # 1 one of 1 test needs a running X Server
 RESTRICT="test"
 
+if ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/plasma-framework:5[>=5.2.0]
+    "
+fi
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
