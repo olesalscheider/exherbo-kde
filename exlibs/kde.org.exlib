@@ -39,7 +39,7 @@ if ever is_scm; then
                 SCM_BRANCH="KDE/4.11"
                 ;;
             ark|baloo-widgets|filelight|kde-baseapps|kde-runtime|kdepimlibs| \
-            konsole|konversation|kscreen|libkscreen|okular)
+            konsole|konversation|kscreen|libkscreen|okular|rekonq)
                 SCM_BRANCH="frameworks"
                 ;;
             libkexiv2)
