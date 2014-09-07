@@ -1,14 +1,14 @@
 # Copyright 2009 Ingmar Vanhassel
-# Copyright 2011 Bernd Steinhauser
+# Copyright 2011, 2014 Bernd Steinhauser
 # Distributed under the terms of the GNU General Public License v2
 
-if ever is_scm ; then
-    DOWNLOADS=""
-    SCM_REPOSITORY="git://anongit.kde.org/${PN}.git"
-    require scm-git
-fi
+require sourceforge
 
-require kde [ api=2 ] sourceforge
+if ever is_scm ; then
+    require kde.org [ kde_major_version=5 ]
+else
+    require kde.org
+fi
 
 export_exlib_phases src_prepare
 
@@ -38,13 +38,37 @@ DEPENDENCIES="
     build:
         dev-lang/perl:*
         sys-devel/gettext [[ note = [ Used to build the documentation ] ]]
-    build+run:
-        kde/kdelibs:4[>=4.2.0]
-        x11-libs/qt:4[dbus]
-        x11-misc/shared-mime-info
     recommendation:
         app-text/texlive-core [[ description = [ Needed to produce dvi/pdf from (La)TeX sources ] ]]
 "
+
+if ever 2.9.60; then
+    DEPENDENCIES+="
+        build:
+            kde-frameworks/kdoctools:5
+        build+run:
+            kde-frameworks/kconfig:5
+            kde-frameworks/kdelibs4support:5
+            kde-frameworks/kguiaddons:5
+            kde-frameworks/khtml:5
+            kde-frameworks/ki18n:5
+            kde-frameworks/kinit:5
+            kde-frameworks/kio:5
+            kde-frameworks/kjobwidgets:5
+            kde-frameworks/kparts:5
+            kde-frameworks/ktexteditor:5
+            kde-frameworks/kwindowsystem:5
+            kde-frameworks/kxmlgui:5
+            x11-libs/qtbase:5
+    "
+else
+    DEPENDENCIES="
+        build+run:
+            kde/kdelibs:4[>=4.2.0]
+            x11-libs/qt:4[dbus]
+            x11-misc/shared-mime-info
+    "
+fi
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( kile-remote-control.txt )
 
