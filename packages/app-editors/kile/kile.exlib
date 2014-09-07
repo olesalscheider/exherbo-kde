@@ -42,7 +42,7 @@ DEPENDENCIES="
         app-text/texlive-core [[ description = [ Needed to produce dvi/pdf from (La)TeX sources ] ]]
 "
 
-if ever 2.9.60; then
+if ever at_least 2.9.60; then
     DEPENDENCIES+="
         build:
             kde-frameworks/kdoctools:5
