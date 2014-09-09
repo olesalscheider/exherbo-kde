@@ -5,7 +5,3 @@ require plasma-framework
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-add-version-cmake-file-for-PlasmaQuick.patch
-)
-
