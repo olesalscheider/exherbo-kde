@@ -31,6 +31,7 @@ DEPENDENCIES="
         kde-frameworks/kparts:5[>=${KF5_MIN_VER}]
         kde-frameworks/sonnet:5[>=${KF5_MIN_VER}]
         x11-libs/qtscript:5[>=5.2.0]
+        x11-libs/qtxmlpatterns:5[>=5.2.0]
 "
 
 # 30 of 51 tests need a running X server (5.0.0)
