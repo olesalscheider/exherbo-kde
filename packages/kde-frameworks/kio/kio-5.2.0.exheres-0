@@ -15,7 +15,3 @@ MYOPTIONS="
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-KIO-add-public-API-isClipboardDataCut-setClipboardDa.patch
-)
-

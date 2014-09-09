@@ -57,8 +57,8 @@ DEPENDENCIES="
     post:
         kde-frameworks/kded:5 [[ note = [ calls org.kde.kded5 via dbus ] ]]
 "
-# Currently (5.0.0) commented out
-#        dev-libs/openssl
+# Currently (5.2.0) commented out
+#        virtual/libssl
 
 # Many tests need a running X server and a few are currently broken (5.0.0)
 RESTRICT="test"
