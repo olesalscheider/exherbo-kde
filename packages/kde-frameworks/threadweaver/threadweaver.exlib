@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ]
 
+export_exlib_phases src_prepare
+
 SUMMARY="High-level multithreading framework"
 DESCRIPTION="
 ThreadWeaver is a helper for multithreaded programming.  It uses a job-based
@@ -17,4 +19,11 @@ LICENCES="LGPL-2.1"
 MYOPTIONS=""
 
 DEPENDENCIES=""
+
+threadweaver_src_prepare() {
+    default
+    # Don't build examples
+    edo sed -e "/^add_subdirectory(examples)/d" \
+            -i "${CMAKE_SOURCE}"/CMakeLists.txt
+}
 
