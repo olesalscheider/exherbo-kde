@@ -24,7 +24,6 @@ DEPENDENCIES="
         kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
         sys-devel/gettext
     build+run:
-        dev-libs/openssl
         kde-frameworks/kauth:5[>=${KF5_MIN_VER}]
         kde-frameworks/kbookmarks:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
@@ -50,6 +49,7 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
+        virtual/libssl
         x11-libs/libX11
         x11-libs/libSM
         x11-libs/qtsvg:5[>=5.2.0]
