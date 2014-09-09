@@ -16,15 +16,13 @@ DEPENDENCIES="
     build:
         openexr? ( virtual/pkg-config )
     build+run:
-        jpeg2000? ( media-libs/jasper )
         openexr? ( media-libs/openexr )
 "
 
-CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-    'jpeg2000 Jasper'
-    OpenEXR
-)
-
 # Disables pictest which needs a running X server
 DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/${PN}-Disable-pictest.patch )
+
+# QtImageFormats >= 5.3 ships a JPEG-2000 plugin, so use that if necessary
+CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_Jasper:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( OpenEXR )
 
