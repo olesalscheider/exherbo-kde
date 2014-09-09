@@ -1,9 +1,7 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require extra-cmake-modules
 
 PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/rb119588.patch )
 

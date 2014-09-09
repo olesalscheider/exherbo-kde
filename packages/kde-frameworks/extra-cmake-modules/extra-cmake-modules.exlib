@@ -7,6 +7,7 @@ if ever at_least scm ; then
     DOWNLOADS=""
 else
     DOWNLOADS="mirror://kde/stable/frameworks/5.$(ever range 2-3)/${PNV}.tar.xz"
+    UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-5.$(ever range 2-3).php"
 fi
 
 require cmake [ api=2 ]

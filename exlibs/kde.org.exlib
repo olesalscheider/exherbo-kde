@@ -67,7 +67,7 @@ fi
 HOMEPAGE="${HOMEPAGE:-"http://www.kde.org/"}"
 if [[ ${CATEGORY} == "kde-frameworks" ]] ; then
     SLOT="5"
-    KF5_MIN_VER="5.1.0"
+    KF5_MIN_VER="5.2.0"
 else
     SLOT="4"
 fi
@@ -106,7 +106,7 @@ if exparam -b upstream_release_notes ; then
             if [[ ${RELEASE_BUNDLE} == plasma ]] ; then
                 UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/plasma-${PV}.php"
             else
-                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-${PV%.0}.php"
+                UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-${PV}.php"
             fi
             ;;
         4.*|5.*)  [[ -z ${UPSTREAM_RELEASE_NOTES} ]] && die "Set UPSTREAM_RELEASE_NOTES for ${PV}" ;;
