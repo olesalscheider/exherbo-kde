@@ -7,6 +7,7 @@ export_exlib_phases src_compile src_install
 
 SUMMARY="Qt Cross-platform application framework: Qt Documentation"
 
+LICENCES+=" GPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
