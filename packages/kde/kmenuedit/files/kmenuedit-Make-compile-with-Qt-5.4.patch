@@ -1,0 +1,37 @@
+Upstream: yes, taken from master
+
+From 0627f44ceb0172ab9d2dd37a6b96f54704d561df Mon Sep 17 00:00:00 2001
+From: Kevin Funk <kfunk@kde.org>
+Date: Fri, 1 Aug 2014 18:56:26 +0200
+Subject: [PATCH] Make compile with Qt 5.4
+
+BUG: 337933
+---
+ treeview.cpp | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/treeview.cpp b/treeview.cpp
+index 5b16039..99165ca 100644
+--- a/treeview.cpp
++++ b/treeview.cpp
+@@ -372,13 +372,15 @@ void TreeView::readMenuFolderInfo(MenuFolderInfo *folderInfo, KServiceGroup::Ptr
+     {
+         if (e->isType(KST_KServiceGroup))
+         {
++            const KServiceGroup::Ptr serviceGroup(static_cast<KServiceGroup*>(e.data()));
+             MenuFolderInfo *subFolderInfo = new MenuFolderInfo();
+-            readMenuFolderInfo(subFolderInfo, KServiceGroup::Ptr(e), folderInfo->fullId);
++            readMenuFolderInfo(subFolderInfo, serviceGroup, folderInfo->fullId);
+             folderInfo->add(subFolderInfo, true);
+         }
+         else if (e->isType(KST_KService))
+         {
+-            folderInfo->add(new MenuEntryInfo(KService::Ptr(e)), true);
++            const KService::Ptr service(static_cast<KService*>(e.data()));
++            folderInfo->add(new MenuEntryInfo(service), true);
+         }
+         else if (e->isType(KST_KServiceSeparator))
+         {
+-- 
+2.1.0
+
