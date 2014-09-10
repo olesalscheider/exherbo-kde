@@ -9,6 +9,7 @@ require qt qmake [ slot=5 ] \
 
 SUMMARY="Qt Cross-platform application framework: QtWebkit"
 
+LICENCES+=" GPL-2"
 MYOPTIONS="
     media [[ description = [ HTML5 video/audio support via gstreamer ] ]]
     multibuild_c: 32 64
@@ -47,6 +48,15 @@ DEPENDENCIES="
             media-plugins/gst-plugins-base:1.0[>=0.10]
         )
 "
+
+# TODO: Decide before 5.4.0 final if we want this optional, but it's rather
+# small and sounds useful. (heirecka)
+if ever at_least 5.4.0-alpha ; then
+    DEPENDENCIES+="
+        build+run:
+            x11-libs/qtwebchannel:${SLOT}[>=${PV}]
+    "
+fi
 
 EQMAKE_SOURCES=( WebKit.pro )
 
