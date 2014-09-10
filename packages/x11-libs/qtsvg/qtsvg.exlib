@@ -10,10 +10,12 @@ DESCRIPTION="Scalable Vector Graphics (SVG) is an XML-based language for describ
 two-dimensional vector graphics. Qt provides classes for rendering and displaying
 SVG drawings in widgets and on other paint devices."
 
+LICENCES+=" GPL-2"
 MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
+        sys-libs/zlib
         doc? ( x11-libs/qttools:${SLOT} )
 "
 
