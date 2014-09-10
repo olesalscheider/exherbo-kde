@@ -1,0 +1,40 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake [ slot=5 ]
+
+export_exlib_phases src_compile src_install
+
+SUMMARY="Qt Cross-platform application framework: QtWebChannel module"
+DESCRIPTION="
+It offers Qt applications a seamless way to publish `QObjects` for interaction
+with HTML/JavaScript clients. These clients can either be inside local Qt
+`WebView`s or any other, potentially remote, client which supports JavaScript,
+as long as a communication channel such as WebSocket is available."
+
+LICENCES+=" GPL-2"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( x11-libs/qttools:${SLOT} )
+    build+run:
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
+"
+
+qtwebchannel_src_compile() {
+    default
+
+    option doc && emake docs
+}
+
+qtwebchannel_src_install() {
+    default
+
+    if option doc ; then
+        dodoc doc/${PN}.qch
+        docinto html
+        dodoc -r doc/${PN}
+    fi
+}
+
