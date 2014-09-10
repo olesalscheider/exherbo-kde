@@ -18,5 +18,6 @@ PLATFORMS="~amd64 ~x86"
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-Missing-fclose-Resource-leaking.patch
     "${FILES}"/${PNV}-Rename-libkworkspace-for-coinstallability-with-kde-w.patch
+    "${FILES}"/${PN}-Fix-build-in-Qt-5.4.patch
 )
 
