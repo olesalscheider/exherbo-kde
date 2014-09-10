@@ -10,10 +10,12 @@ DESCRIPTION="Qt Multimedia is an essential module that provides a rich set of QM
 and C++ classes to handle multimedia content. It also provides necessary APIs to access
 the camera and radio functionality."
 
+LICENCES+=" GPL-2"
 MYOPTIONS="
     alsa doc openal pulseaudio
-    multibuild_c: 32 64
+    ( multibuild_c: 32 64 )
 "
+ever at_least 5.4.0-alpha && MYOPTIONS+=" v4l"
 
 DEPENDENCIES="
     build:
@@ -34,10 +36,20 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio[multibuild_c:*(-)?] )
 "
 
+if ever at_least 5.4.0-alpha ; then
+    DEPENDENCIES+="
+        build:
+            v4l? ( sys-kernel/linux-headers )
+    "
+fi
+
 qtmultimedia_src_configure()  {
     # TODO: figure out a way to disalbe these things sanely
     option openal || edo sed -e "/openal/d" -i qtmultimedia.pro
     option pulseaudio || edo sed -e "/pulseaudio/d" -i qtmultimedia.pro
+    if ever at_least 5.4.0-alpha ; then
+        option v4l || edo sed -e "/qtCompileTest(linux_v4l)/d" -i qtmultimedia.pro
+    fi
 
     easy-multibuild_src_configure
 }
