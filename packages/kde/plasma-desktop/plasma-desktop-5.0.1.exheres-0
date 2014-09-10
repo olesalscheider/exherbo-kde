@@ -17,5 +17,6 @@ PLATFORMS="~amd64"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-Fix-header-include-to-match-plasma-workspace-change.patch
+    "${FILES}"/${PN}-Fix-build-in-Qt-5.4.patch
 )
 
