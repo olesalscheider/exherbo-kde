@@ -5,6 +5,7 @@ require qt qmake [ slot=5 ] easy-multibuild
 
 SUMMARY="Qt Cross-platform application framework: QtQuick1"
 
+LICENCES+=" GPL-2"
 MYOPTIONS="
     doc
     multibuild_c: 32 64
