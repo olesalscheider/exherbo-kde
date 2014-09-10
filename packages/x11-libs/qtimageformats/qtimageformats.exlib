@@ -8,6 +8,7 @@ export_exlib_phases src_prepare src_compile src_install
 SUMMARY="Qt Cross-platform application framework: Various image format plugins"
 DESCRIPTION="Supports MNG, TGA, TIFF and WBMP".
 
+LICENCES+=" GPL-2"
 MYOPTIONS="doc jpeg2000 webp"
 
 DEPENDENCIES="
