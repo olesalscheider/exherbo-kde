@@ -5,6 +5,7 @@ require qt qmake [ slot=5 ]
 
 SUMMARY="Qt Cross-platform application framework: Translation files"
 
+LICENCES+=" GPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
