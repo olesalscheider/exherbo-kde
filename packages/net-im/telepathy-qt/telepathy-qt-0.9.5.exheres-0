@@ -31,9 +31,9 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         dev-libs/libxml2:2.0[>=2.7.7-r1]
-        media-libs/gstreamer:0.10[>=0.10.30]
-        net-im/farstream:0.1[>=0.1.0]
-        net-im/telepathy-farstream[>=0.4.0]
+        media-libs/gstreamer:1.0
+        net-im/farstream:0.2[>=0.2.0]
+        net-im/telepathy-farstream[>=0.6.0]
         net-im/telepathy-glib[>=0.18.0] [[ note = [ tests and farstream ] ]]
         sys-apps/dbus
         qt4? ( x11-libs/qt:4[>=4.6.0][dbus][X(+)] )
@@ -50,9 +50,9 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DENABLE_FARSTREAM:BOOL=TRUE
     -DENABLE_EXAMPLES:BOOL=FALSE
-    -DENABLE_EXPERIMENTAL_SERVICE_SUPPORT:BOOL=FALSE
+    -DENABLE_FARSTREAM:BOOL=TRUE
+    -DENABLE_SERVICE_SUPPORT:BOOL=TRUE
 )
 
 src_configure() {
@@ -85,6 +85,7 @@ src_compile() {
     if option qt5; then
         edo pushd "${WORKBASE}/"qt5-build
         emake
+        edo popd
     fi
 }
 
