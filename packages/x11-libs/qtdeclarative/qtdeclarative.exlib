@@ -14,6 +14,7 @@ all the basic elements necessary for creating user interfaces with QML. It provi
 includes types for creating and animating visual components, receiving user input, creating data
 models and views and delayed object instantiation."
 
+LICENCES+=" GPL-2"
 MYOPTIONS="
     doc
     multibuild_c: 32 64"
