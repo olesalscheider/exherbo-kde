@@ -10,6 +10,7 @@ DESCRIPTION="This module provides a set of QML types for adding visually impress
 configurable effects to user interfaces. Effects are visual items that can be added
 to Qt Quick user interface as UI components."
 
+LICENCES+=" GPL-2"
 MYOPTIONS="doc"
 
 DEPENDENCIES="
