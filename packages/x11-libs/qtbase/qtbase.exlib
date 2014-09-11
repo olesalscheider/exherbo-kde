@@ -218,7 +218,7 @@ configure_one_multibuild() {
         -no-nis
         -no-rpath
         -no-separate-debug-info
-        $(echo "-no-use-gold-linker") # let eclectic ld choose this
+        $(ever at_least 5.4.0-alpha && echo "-no-use-gold-linker") # let eclectic ld choose this
         -openssl-linked
         -pch
         -reduce-relocations
