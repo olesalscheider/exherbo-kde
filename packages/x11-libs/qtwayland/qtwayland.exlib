@@ -1,0 +1,40 @@
+# Copyright 2014 Jorge Aparicio
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require qt qmake [ slot=5 ]
+
+export_exlib_phases src_configure
+
+SUMMARY="Wayland plugin for Qt"
+HOMEPAGE="http://qt-project.org/wiki/${PN}"
+
+MYOPTIONS="
+    qtcompositor [[ description = [
+        Enables the creation of Wayland compositors using Qt and QtQuick
+    ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        dev-libs/glib:2
+        sys-libs/wayland[>=1.2.0]
+        x11-dri/mesa
+        x11-libs/libX11
+        x11-libs/libXcomposite
+        x11-libs/libxkbcommon[>=0.2.0]
+        qtcompositor? ( x11-libs/qtdeclarative:5 )
+"
+
+qtwayland_src_configure() {
+    if option qtcompositor; then
+        EQMAKE_PARAMS+=(
+            CONFIG+=wayland-compositor
+        )
+    fi
+
+    qmake_src_configure
+}
+
