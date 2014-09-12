@@ -3,7 +3,7 @@
 # Based in part upon 'kdegraphics.exlib', which is:
 #     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
 
-# last checked commit: bd728f8bac82acd916108b8c5ae80aa4801588d5
+# last checked commit: be56157c2a2683759905117ecd4f9d9a5de5fa03
 
 require kde.org [ kde_major_version=5 ]
 
@@ -26,7 +26,7 @@ DEPENDENCIES="
         kde-frameworks/kactivities:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/ki18n:5
-        kde-frameworks/kio:5[>=scm]
+        kde-frameworks/kio:5[>=5.2.0]
         kde-frameworks/kitemmodels:5
         media-libs/phonon[qt5]
         x11-libs/libX11
