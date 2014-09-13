@@ -147,12 +147,7 @@ case ${PV} in
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/plasma/5.0.1/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
         # Mirrors don't seem to sync, so use URL below until this is fixed.
-        if ever at_least 4.14.0 ; then
-            DOWNLOADS="http://download.kde.org/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"
-        else
-            DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}"
-        fi
-        ;;
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
 
 if ! exparam -b no_qt_dependency ; then
