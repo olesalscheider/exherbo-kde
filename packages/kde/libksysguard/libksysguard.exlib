@@ -31,6 +31,13 @@ DEPENDENCIES="
 # 4 of 4 tests need a running X server
 RESTRICT="test"
 
+if ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kauth:5
+    "
+fi
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
