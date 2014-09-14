@@ -2,7 +2,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 0027a604b8e33b36994aaecc89a9dd4acd9c3334
+# last checked commit: 0e32816f8b7326be4db1ccacf4117e49495a6106
 
 require kde.org [ kde_major_version='5' ]
 
@@ -47,6 +47,5 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PN}-Disable-tests-that-need-a-running-X-server.patch
-    "${FILES}"/0001-Link-only-to-libX11-instead-of-all-X11-libraries.patch
 )
 
