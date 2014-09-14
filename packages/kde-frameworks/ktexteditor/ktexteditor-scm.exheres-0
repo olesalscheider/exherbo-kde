@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: f9d33a959dd03cd4f335532942e910119b44c8d6
+# last checked commit: 11507d0a233e9c99f10c0bb77b0c4af0c2295aa9
 
 require ktexteditor
 
