@@ -3,7 +3,7 @@
 # Based in part upon 'kdegraphics.exlib', which is:
 #     Copyright 2008 Bernd Steinhauser and 2008-2011 Bo Ørsted Andresen
 
-# last checked commit: 4298b6ebd5a23712d4c282c7f45ae4df2487a1a7
+# last checked commit: d98b4d920037422fe052ffa2633349d41fdbe02e
 
 require kde.org [ kde_major_version=5 ]
 
@@ -60,14 +60,12 @@ DEPENDENCIES="
         postscript? ( app-text/libspectre[>=0.2] )
         tiff? ( media-libs/tiff )
 "
-#        kde/qimageblitz[qt4(+)]
 #        encrypted? ( app-crypt/qca:2[>=2.0.0][qt5(-)] )
 #        mobipocket? ( kde/mobipocket:${SLOT}[>=4.11.80] )
 
 # 9 of 11 tests need a running X server, 1 fails otherwise
 RESTRICT="test"
 
-#    -DWITH_QImageBlitz:BOOL=TRUE
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DCMAKE_DISABLE_FIND_PACKAGE_ActiveApp:BOOL=TRUE
     -DCMAKE_DISABLE_FIND_PACKAGE_QMobipocket:BOOL=TRUE
