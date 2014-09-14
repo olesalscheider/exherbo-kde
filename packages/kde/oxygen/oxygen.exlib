@@ -28,6 +28,10 @@ DEPENDENCIES="
         !kde/kde-workspace[-kf5-coinstall]
 "
 
+if ever at_least 5.0.95 ; then
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DOXYGEN_USE_KDE4:BOOL=FALSE )
+fi
+
 if ! ever is_scm ; then
     DEPENDENCIES+="
         build+run:
