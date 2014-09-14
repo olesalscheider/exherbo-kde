@@ -2,7 +2,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ]
+require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ]
 
 SUMMARY="Plasma applet for managing network connections"
 HOMEPAGE="https://projects.kde.org/projects/playground/network/${PN}"
@@ -17,8 +17,8 @@ MYOPTIONS="
    openconnect [[ description = [ Support Cisco's AnyConnect SSL VPN ] ]]
    ( linguas:
         ar bg bs ca ca@valencia cs da de el en_GB eo es et fa fi fr ga gl hr
-        hu ia is it ja km lt lv mai mr ms nb nds nl nn pa pl pt pt_BR ro ru sk
-        sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv th tr ug uk zh_CN
+        hu ia is it ja km ko lt lv mai mr ms nb nds nl nn pa pl pt pt_BR ro ru
+        sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv th tr ug uk zh_CN
         zh_TW
     )
 "
