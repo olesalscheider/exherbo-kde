@@ -18,7 +18,7 @@ MYOPTIONS=""
 if ever at_least scm ; then
     DEPENDENCIES+="
         build+run:
-            kde-frameworks/baloo:5[-only-libraries]
+            kde-frameworks/baloo:5[>=5.0.95][-only-libraries]
             kde-frameworks/kconfig:5
             kde-frameworks/kcompletion:5
             kde-frameworks/kcoreaddons:5
