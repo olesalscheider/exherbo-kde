@@ -27,13 +27,11 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         app-arch/libarchive[>=2.8.0]
-        app-arch/xz
-        sys-libs/zlib
 "
 
 RESTRICT="-test"
 
-if ever at_least scm ; then
+if ever at_least 4.8.80 ; then
     KF5_MIN_VER=5.0.0
     DEPENDENCIES+="
         build+run:
@@ -49,8 +47,10 @@ if ever at_least scm ; then
 else
     DEPENDENCIES+="
         build+run:
+            app-arch/xz
             kde/kde-baseapps:${SLOT}[>=${PV}&<5] [[ note = [ konqueror ark_extract_here plugin, needs libkonq ] ]]
             kde/kdelibs:${SLOT}[>=4.7.0]
+            sys-libs/zlib
         suggestion:
             app-arch/p7zip [[ description = [ Support packing and unpacking .7z files in ark ] ]]
             app-arch/unrar [[ description = [ Support unpacking .rar files in ark ] ]]
