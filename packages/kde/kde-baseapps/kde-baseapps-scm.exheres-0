@@ -3,7 +3,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: d578c0d702003c9a70b75eb1d7b3359a320f0cf3
+# last checked commit: 7651cdccb204d6a4ae7157695bf4c925701a18c5
 
 require kde.org [ kde_major_version=5 ]
 
@@ -45,7 +45,7 @@ DEPENDENCIES="
         kde-frameworks/khtml:5
         kde-frameworks/ki18n:5
         kde-frameworks/kinit:5
-        kde-frameworks/kio:5[>=5.2.0]
+        kde-frameworks/kio:5[>=5.3.0]
         kde-frameworks/knewstuff:5
         kde-frameworks/kparts:5
         kde-frameworks/kservice:5
