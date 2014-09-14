@@ -3,7 +3,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 471b2687c05dd6aa277394b352e88c97c55074b1
+# last checked commit: d578c0d702003c9a70b75eb1d7b3359a320f0cf3
 
 require kde.org [ kde_major_version=5 ]
 
@@ -57,7 +57,7 @@ DEPENDENCIES="
         x11-libs/libXrender
         x11-libs/qtbase:5[>=5.2.0]
         semantic-desktop? (
-            kde-frameworks/baloo:5
+            kde-frameworks/baloo:5[>=5.0.95]
             kde-frameworks/kfilemetadata:5
             kde/baloo-widgets:4[>=scm]
         )
