@@ -1,6 +1,8 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: c71bc0c16481255785e5352840ec9c652e07ef98
+
 require libnm-qt
 
 PLATFORMS="~amd64"
