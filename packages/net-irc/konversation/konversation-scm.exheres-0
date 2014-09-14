@@ -1,7 +1,7 @@
 # Copyright 2008-2009 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 0d96a7fef9a3100f66c2c1b871d34486945b739e
+# last checked commit: 797515740ef0746c0e967711747093d74f1d0588
 
 require konversation
 
