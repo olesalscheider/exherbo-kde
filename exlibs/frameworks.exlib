@@ -17,7 +17,7 @@ myexparam -b debug=true
 #          Those usually include
 #          ki18n_install
 #          in CMakeLists.txt
-myexparam translations=
+myexparam translations=none
 exparam -v translation_type translations
 
 exparam -b debug &&
@@ -39,12 +39,6 @@ if ! ever is_scm ; then
         DEPENDENCIES+="
             build:
                 kde-frameworks/ki18n [[ note = [ ki18n_install() from KF5I18NMacros.cmake ] ]]
-                sys-devel/gettext
-        "
-    elif [[ -n ${LINGUAS} ]] ; then
-        # Plasma 5
-        DEPENDENCIES+="
-            build:
                 sys-devel/gettext
         "
     fi
@@ -81,14 +75,10 @@ frameworks_src_prepare() {
                     edo rm -r "${CMAKE_SOURCE}"/po/${lingua}
                 fi
             done
-        elif [[ -n ${LINGUAS} ]] ; then
-            edo echo "Removing unselected translations..."
-            for lingua in $(ls "${CMAKE_SOURCE}"/po) ; do
-                if ! has ${lingua} ${LINGUAS} ; then
-                    edo sed -e "/^add_subdirectory(${lingua})/d" \
-                            -i "${CMAKE_SOURCE}"/po/CMakeLists.txt
-                fi
-            done
+        elif [[ ${translation_type} == none ]] ; then
+            :
+        else
+            die "translation ${translation_type} is unsupported"
         fi
     fi
 
