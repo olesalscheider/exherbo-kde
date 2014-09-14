@@ -11,6 +11,8 @@ LICENCES="GPL-2"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     run:
         net-wireless/ModemManager[>=1.2]
 "

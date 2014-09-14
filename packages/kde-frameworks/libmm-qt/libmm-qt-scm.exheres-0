@@ -1,6 +1,8 @@
 # Copyright 2011 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: a9320e6e503a359ae1aa6db992be06b8f998c43f
+
 require libmm-qt
 
 PLATFORMS="~amd64"
