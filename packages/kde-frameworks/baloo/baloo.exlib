@@ -30,14 +30,12 @@ DEPENDENCIES="
         kde-frameworks/kidletime:5[>=${KF5_MIN_VER}]
         kde-frameworks/kio:5[>=${KF5_MIN_VER}]
         kde-frameworks/krunner:5[>=${KF5_MIN_VER}]
-        kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
         kde-frameworks/solid:5[>=${KF5_MIN_VER}]
         x11-libs/qtbase:5[sql]
         pim? (
             kde/kdepimlibs:${SLOT}[>=4.95.0]
             kde-frameworks/kdelibs4support:5[>=${KF5_MIN_VER}]
             kde-frameworks/kitemmodels:5[>=${KF5_MIN_VER}]
-            server-pim/akonadi[>=1.70.41][qt5(-)]
         )
         !kde/kde-runtime[<4.12.80] [[
             description = [ kde/kde-runtime<4.12.80 and baloo collide ]
@@ -55,8 +53,18 @@ DEPENDENCIES="
 if ever at_least 5.0.95 ; then
     DEPENDENCIES+="
         build+run:
+            kde-frameworks/kdbusaddons:5[>=${KF5_MIN_VER}]
             kde-frameworks/kfilemetadata:5[>=${PV}]
             x11-libs/qtdeclarative:5
+            pim? ( server-pim/akonadi[>=5.0.40][qt5(-)] )
+        run:
+            kde-frameworks/kded:5
+    "
+else
+    DEPENDENCIES+="
+        build+run:
+            kde-frameworks/kservice:5[>=${KF5_MIN_VER}]
+            pim? ( server-pim/akonadi[>=1.70.41][qt5(-)] )
     "
 fi
 
