@@ -23,6 +23,8 @@ MYOPTIONS=""
 
 if ever at_least scm ; then
     DEPENDENCIES="
+        build:
+            kde-frameworks/kdoctools:5
         build+run:
             kde-frameworks/kcoreaddons:5
             kde-frameworks/kio:5

@@ -1,12 +1,9 @@
 # Copyright 2011 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+# last checked commit: 18b830e24f50423545cf7291ac995e907911c2bc
+
 require filelight
 
 PLATFORMS="~amd64 ~x86"
-
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PN}-SummaryWidget-use-QUrl-instead-of-KUrl.patch
-    "${FILES}"/${PN}-Part-use-correct-slots-for-QStatusbar.patch
-)
 
