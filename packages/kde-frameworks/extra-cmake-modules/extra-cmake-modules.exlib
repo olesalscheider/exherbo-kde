@@ -6,7 +6,7 @@ if ever at_least scm ; then
     require scm-git
     DOWNLOADS=""
 else
-    DOWNLOADS="mirror://kde/stable/frameworks/5.$(ever range 2-3)/${PNV}.tar.xz"
+    DOWNLOADS="mirror://kde/stable/frameworks/5.$(ever range 2).0/${PNV}.tar.xz"
     UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/kde-frameworks-5.$(ever range 2-3).php"
 fi
 
