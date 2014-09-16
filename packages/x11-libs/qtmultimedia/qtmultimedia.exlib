@@ -1,4 +1,4 @@
-# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require qt qmake [ slot=5 ] easy-multibuild
@@ -12,10 +12,9 @@ the camera and radio functionality."
 
 LICENCES+=" GPL-2"
 MYOPTIONS="
-    alsa doc openal pulseaudio
+    alsa doc openal pulseaudio v4l
     ( multibuild_c: 32 64 )
 "
-ever at_least 5.4.0-alpha && MYOPTIONS+=" v4l"
 
 DEPENDENCIES="
     build:
@@ -34,22 +33,14 @@ DEPENDENCIES="
         x11-libs/qtxmlpatterns:${SLOT}[>=${PV}][multibuild_c:*(-)?]
         openal? ( media-libs/openal[multibuild_c:*(-)?] )
         pulseaudio? ( media-sound/pulseaudio[multibuild_c:*(-)?] )
+        v4l? ( sys-kernel/linux-headers )
 "
-
-if ever at_least 5.4.0-alpha ; then
-    DEPENDENCIES+="
-        build:
-            v4l? ( sys-kernel/linux-headers )
-    "
-fi
 
 qtmultimedia_src_configure()  {
     # TODO: figure out a way to disalbe these things sanely
     option openal || edo sed -e "/openal/d" -i qtmultimedia.pro
     option pulseaudio || edo sed -e "/pulseaudio/d" -i qtmultimedia.pro
-    if ever at_least 5.4.0-alpha ; then
-        option v4l || edo sed -e "/qtCompileTest(linux_v4l)/d" -i qtmultimedia.pro
-    fi
+    option v4l || edo sed -e "/qtCompileTest(linux_v4l)/d" -i qtmultimedia.pro
 
     easy-multibuild_src_configure
 }
