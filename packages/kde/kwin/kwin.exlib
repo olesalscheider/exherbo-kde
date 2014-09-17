@@ -76,6 +76,7 @@ if ever at_least 5.0.95; then
     DEPENDENCIES+="
         build+run:
             dev-libs/libepoxy
+            kde-frameworks/kwindowsystem:5[>=5.2.0]
         run:
             x11-dri/mesa
     "
