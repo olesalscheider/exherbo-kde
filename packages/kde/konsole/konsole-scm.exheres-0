@@ -39,6 +39,7 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5
         kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
+        x11-libs/libX11 [[ note = [ Gives Konsole better keyboard support ] ]]
         x11-libs/qtscript:5[>=5.2.0]
 "
 # if (FALSE) # there is no libkonq for Qt5 yet
