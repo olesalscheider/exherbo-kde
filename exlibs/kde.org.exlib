@@ -100,7 +100,7 @@ if exparam -b upstream_release_notes ; then
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/${PV%.0}/" ;;
         4.@(3|4|5|6|7|8|9|10|11|12|13|14).@(1|2|3|4|5|6|7|8|9|10|11))
             UPSTREAM_RELEASE_NOTES="http://kde.org/announcements/announce-${PV}.php" ;;
-        4.@(2|3|4|5|9|10|11|12|13).@(6|7|8|9)*)
+        4.@(2|3|4|5|9|10|11|12|13).@(6|7|8|9|12)*)
             UPSTREAM_RELEASE_NOTES="http://www.kde.org/announcements/" ;;
         5.@(0|1|2|3|4).*)
             if [[ ${RELEASE_BUNDLE} == plasma ]] ; then
