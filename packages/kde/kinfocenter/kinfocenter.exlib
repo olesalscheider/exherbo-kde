@@ -30,7 +30,6 @@ DEPENDENCIES="
         kde-frameworks/ki18n:5
         kde-frameworks/kiconthemes:5
         kde-frameworks/kio:5
-        kde-frameworks/kwindowsystem:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/plasma-framework:5
         kde-frameworks/solid:5
@@ -47,6 +46,12 @@ DEPENDENCIES="
         !kde/kde-runtime[-kf5-coinstall]
         !kde/kde-workspace[-kf5-coinstall]
 "
+
+if ! ever at_least 5.0.95 ; then
+    DEPENDENCIES+="
+        kde-frameworks/kwindowsystem:5
+    "
+fi
 
 if ! ever is_scm ; then
     DEPENDENCIES+="
