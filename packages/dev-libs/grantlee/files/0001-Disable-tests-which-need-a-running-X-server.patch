@@ -1,0 +1,30 @@
+Upstream: not upstreamable
+
+From 2d84f12694dd5d25ef5a6836df572fd6ca8ba6c7 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sun, 21 Sep 2014 14:34:37 +0200
+Subject: [PATCH] Disable tests which need a running X server
+
+---
+ textdocument/tests/CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/textdocument/tests/CMakeLists.txt b/textdocument/tests/CMakeLists.txt
+index 763449c..16f8e6f 100644
+--- a/textdocument/tests/CMakeLists.txt
++++ b/textdocument/tests/CMakeLists.txt
+@@ -26,7 +26,7 @@ macro(GRANTLEE_TEXTDOCUMENT_UNIT_TESTS)
+   endforeach(_testname)
+ endmacro(GRANTLEE_TEXTDOCUMENT_UNIT_TESTS)
+ 
+-grantlee_textdocument_unit_tests(
+-  htmlbuildertest
+-  plainmarkupbuildertest
+-)
++#grantlee_textdocument_unit_tests(
++#  htmlbuildertest
++#  plainmarkupbuildertest
++#)
+-- 
+2.1.1
+
