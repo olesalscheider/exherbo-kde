@@ -1,0 +1,29 @@
+Upstream: no
+Reason: The examples fail to install, do not build them for now
+
+From 506e5a0f1363a5fc2a663d23227f842fe5c09dcc Mon Sep 17 00:00:00 2001
+From: Niels Ole Salscheider <niels_ole@salscheider-online.de>
+Date: Fri, 26 Sep 2014 23:35:48 +0200
+Subject: [PATCH] The examples fail to install
+
+---
+ Source/QtWebKit.pro | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/Source/QtWebKit.pro b/Source/QtWebKit.pro
+index 0bd5595..d95f0b2 100644
+--- a/Source/QtWebKit.pro
++++ b/Source/QtWebKit.pro
+@@ -30,9 +30,4 @@ haveQt(5):contains(DEFINES, HAVE_QTQUICK=1): SUBDIRS += declarative
+         tests.file = tests.pri
+         SUBDIRS += tests
+     }
+-
+-    examples.file = WebKit/qt/examples/examples.pro
+-    examples.CONFIG += no_default_target
+-    examples.makefile = Makefile
+-    SUBDIRS += examples
+ }
+-- 
+2.1.0
+

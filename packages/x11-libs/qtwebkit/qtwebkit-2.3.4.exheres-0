@@ -1,0 +1,68 @@
+# Copyright 2014 Niels Ole Salscheider <niels_ole@salscheider-online.de>
+# Copyright 2013-2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'qt-4.exlib', which is:
+#     Copyright 2008-2010 Bo Ørsted Andresen <zlin@exherbo.org>
+#     Copyright 2008-2009, 2010 Ingmar Vanhassel
+
+require qt qmake [ slot=4 ] \
+        easy-multibuild [ multiunpack=true work= ]
+
+SUMMARY="Qt Cross-platform application framework: QtWebkit"
+
+MYOPTIONS="
+    media [[ description = [ HTML5 video/audio support via gstreamer ] ]]
+    multibuild_c: 32 64
+"
+
+DOWNLOADS="mirror://kde/stable/${PN}-$(ever range 1-2)/${PV}/src/${PNV}.tar.gz"
+
+SLOT="4"
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-The-examples-fail-to-install.patch )
+
+# parallel builds are broken
+DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
+
+DEPENDENCIES="
+    build:
+        dev-lang/perl:*
+        dev-lang/python:*
+        dev-lang/ruby:*
+        dev-util/gperf
+        sys-devel/bison
+        sys-devel/flex
+        virtual/pkg-config
+    build+run:
+        dev-db/sqlite:3[multibuild_c:*(-)?]
+        dev-libs/glib:2[multibuild_c:*(-)?]
+        dev-libs/libxml2:2.0[multibuild_c:*(-)?]
+        dev-libs/libxslt[multibuild_c:*(-)?]
+        media-libs/freetype:2[multibuild_c:*(-)?]
+        media-libs/fontconfig[multibuild_c:*(-)?]
+        media-libs/jpeg[multibuild_c:*(-)?]
+        media-libs/libpng:=[multibuild_c:*(-)?]
+        media-libs/libwebp[multibuild_c:*(-)?]
+        sys-apps/systemd[multibuild_c:*(-)?]
+        sys-libs/zlib[multibuild_c:*(-)?]
+        x11-dri/mesa[multibuild_c:*(-)?]
+        x11-libs/libX11[multibuild_c:*(-)?]
+        x11-libs/libXcomposite[multibuild_c:*(-)?]
+        x11-libs/libXext[multibuild_c:*(-)?]
+        x11-libs/libXrender[multibuild_c:*(-)?]
+        x11-libs/qt:4[multibuild_c:*(-)?][-webkit(-)]
+        media? (
+            media-libs/gstreamer:1.0[>=0.10]
+            media-plugins/gst-plugins-base:1.0[>=0.10]
+        )
+"
+
+EQMAKE_SOURCES=( WebKit.pro )
+
+configure_one_multibuild() {
+    export QTDIR="/usr/${LIBDIR}"
+    export QMAKEPATH="${WORKBASE}/${MULTIBUILD_CLASS}/${MULTIBUILD_TARGET}"/Tools/qmake
+    eqmake $(option media || echo DEFINES+=ENABLE_VIDEO=0)
+}
+
