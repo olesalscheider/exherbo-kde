@@ -12,5 +12,7 @@ DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PN}-0001-Add-multilib-arch-switch-to-fix-qconfig.h-headers-fo.patch
     "${FILES}"/${PNV}-Don-t-crash-on-broken-GIF-images.patch
     "${FILES}"/${PN}-systemtrayicon-plugin-system.patch
+    "${FILES}"/${PN}-4.8.6-libreoffice-glib-honor-ExcludeSocketNotifiers-flag.patch
+    "${FILES}"/${PN}-4.8.6-libreoffice-l-qclipboard_fix_recursive.patch
 )
 
