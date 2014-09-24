@@ -4,23 +4,25 @@
 
 require cmake [ api=2 cmake_minimum_version=2.8.11 ]
 
-SUMMARY="A plugin based String Template system written using the Qt framework"
+SUMMARY="Plugin based String Template system written using the Qt framework"
 HOMEPAGE="http://www.${PN}.org"
 DOWNLOADS="http://downloads.${PN}.org/${PNV}.tar.gz"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="doc
-    qt5 [[ description =  [ Build against Qt5 (considered experimental) ] ]]"
+MYOPTIONS="
+    doc
+    qt5 [[ description =  [ Build against Qt5 (considered experimental) ] ]]
+"
 
 DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen[dot] )
     build+run:
         qt5? (
-            x11-libs/qtbase:5[>=5.3.0]
-            x11-libs/qtscript:5[>=5.3.0]
+            x11-libs/qtbase:5[>=5.2.0]
+            x11-libs/qtscript:5[>=5.2.0]
         )
        !qt5? ( x11-libs/qt:4[>=4.5.0][X(+)] )
     test:
