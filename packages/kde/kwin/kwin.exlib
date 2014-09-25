@@ -9,8 +9,8 @@ export_exlib_phases pkg_pretend
 SUMMARY="An easy to use, but flexible, composited Window Manager"
 
 LICENCES="BSD-3 [[ note = [ cmake scripts ] ]] FDL-1.2 GPL-2"
-MYOPTIONS="activities
-    opengles [[ description = [ Use the OpenGLES backend originally targeted at mobile devices, disables the OpenGL backend ] ]]
+MYOPTIONS="
+    opengles   [[ description = [ Use the OpenGLES backend originally targeted at mobile devices, disables the OpenGL backend ] ]]
     wayland"
 
 if ever at_least 5.0.95 ; then
@@ -24,6 +24,7 @@ DEPENDENCIES="
         kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
         virtual/pkg-config
     build+run:
+        kde-frameworks/kactivities:5[>=${KF5_MIN_VER}]
         kde-frameworks/kauth:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcmutils:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
@@ -59,7 +60,6 @@ DEPENDENCIES="
         x11-utils/xcb-util-image
         x11-utils/xcb-util-keysyms
         x11-utils/xcb-util-wm[>=0.4] [[ note = [ tests, some enums, could be optional ] ]]
-        activities? ( kde-frameworks/kactivities:5[>=${KF5_MIN_VER}] )
         opengles? ( x11-libs/qtbase:5[opengles] )
         wayland? (
             sys-libs/wayland[>=1.2]
@@ -106,12 +106,12 @@ fi
 
 CMAKE_SRC_CONFIGURE_PARAMS+=(
     -DKDE_DISTRIBUTION_TEXT:STRING="Exherbo"
+    -DKWIN_BUILD_ACTIVITIES:BOOL=TRUE
     -DKWIN_BUILD_COVERAGE:BOOL=FALSE
     -DKWIN_BUILD_KAPPMENU:BOOL=FALSE
     -DKWIN_BUILD_PLASMA_ACTIVE:BOOL=FALSE
 )
 
-CMAKE_SRC_CONFIGURE_OPTIONS+=( 'activities KWIN_BUILD_ACTIVITIES' )
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     Wayland
     'wayland XKB'
