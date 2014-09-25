@@ -11,7 +11,7 @@ separate application, but the information center organizes all of these
 programs into a convenient location."
 
 LICENCES="FDL-1.2 GPL-2"
-MYOPTIONS="X
+MYOPTIONS="
     ieee1394
     opengles [[ description = [ Use the OpenGLES backend originally targeted at mobile devices, disables the OpenGL backend ] ]]
     wayland"
@@ -36,7 +36,7 @@ DEPENDENCIES="
         sys-apps/pciutils
         x11-dri/glu
         x11-dri/mesa
-        X? ( x11-libs/libX11 )
+        x11-libs/libX11
         ieee1394? ( media-libs/libraw1394 )
         opengles? ( x11-libs/qtbase:5[opengles] )
         wayland? (
@@ -64,7 +64,6 @@ if ! ever is_scm ; then
 fi
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-    'X X11'
     'ieee1394 RAW1394'
     OpenGLES
     Wayland
