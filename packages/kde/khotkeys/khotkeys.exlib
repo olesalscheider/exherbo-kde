@@ -6,7 +6,7 @@ require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ]
 SUMMARY="Bind actions to triggers and conditions"
 
 LICENCES="GPL-2 LGPL-2.1"
-MYOPTIONS="X"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
@@ -20,11 +20,9 @@ DEPENDENCIES="
         kde-frameworks/ktextwidgets:5
         kde-frameworks/kxmlgui:5
         kde-frameworks/plasma-framework:5
-        X? (
-            x11-libs/libX11
-            x11-libs/libXtst
-            x11-libs/qtx11extras:5[>=5.3.0]
-        )
+        x11-libs/libX11
+        x11-libs/libXtst
+        x11-libs/qtx11extras:5[>=5.3.0]
         !kde/kde-workspace[-kf5-coinstall]
 "
 
@@ -37,8 +35,4 @@ if ! ever is_scm ; then
             ]]
     "
 fi
-
-CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
-    'X X11'
-)
 
