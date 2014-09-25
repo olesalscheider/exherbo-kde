@@ -6,7 +6,7 @@ require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ]
 SUMMARY="Plasma libraries and utilities"
 
 LICENCES="FDL-1.2 GPL-2 LGPL-2.1"
-MYOPTIONS="X
+MYOPTIONS="
     gps         [[ description = [ GPS support for geolocation ] ]]
     barcodes    [[ description = [ Create mobile barcodes from clipboard data via prison ] ]]
     qalculate   [[ description = [ Support advanced features of the calculator runner ] ]]"
@@ -63,23 +63,21 @@ DEPENDENCIES="
         sys-libs/pam
         sys-libs/zlib
         x11-libs/dbusmenu-qt[qt5]
+        x11-libs/libICE
+        x11-libs/libSM
+        x11-libs/libX11
+        x11-libs/libXau
+        x11-libs/libXcomposite
+        x11-libs/libXcursor
+        x11-libs/libXfixes
+        x11-libs/libXrender
+        x11-libs/libxcb
         x11-libs/qtbase:5[>=5.3.0][sql] [[ note = [ runners/bookmarks ] ]]
         x11-libs/qtdeclarative:5[>=5.3.0]
         x11-libs/qtscript:5[>=5.3.0]
         x11-libs/qtwebkit:5[>=5.3.0]
-        X? (
-            x11-libs/libICE
-            x11-libs/libSM
-            x11-libs/libX11
-            x11-libs/libXau
-            x11-libs/libxcb
-            x11-libs/libXcomposite
-            x11-libs/libXcursor
-            x11-libs/libXfixes
-            x11-libs/libXrender
-            x11-libs/qtx11extras:5[>=5.3.0]
-            x11-utils/xcb-util-keysyms
-        )
+        x11-libs/qtx11extras:5[>=5.3.0]
+        x11-utils/xcb-util-keysyms
         gps? ( dev-libs/gpsd )
         barcodes? ( kde/prison[>=1.1.0_p20140529][qt5(-)] )
         qalculate? (
@@ -93,16 +91,14 @@ DEPENDENCIES="
         kde/milou:${SLOT}          [[ note = [ Needed for krunner ] ]]
         kde-frameworks/kded:5
         kde-frameworks/kinit:5
+        x11-apps/iceauth
+        x11-apps/xmessage      [[ note = [ startkde ] ]]
+        x11-apps/xprop
+        x11-apps/xrdb          [[ note = [ startkde ] ]]
+        x11-apps/xset
+        x11-apps/xsetroot
         x11-libs/qtquickcontrols:5
         x11-libs/qttools:5         [[ note = [ startkde needs qtpaths, qdbus ] ]]
-        X? (
-            x11-apps/iceauth
-            x11-apps/xmessage      [[ note = [ startkde ] ]]
-            x11-apps/xprop
-            x11-apps/xrdb          [[ note = [ startkde ] ]]
-            x11-apps/xset
-            x11-apps/xsetroot
-        )
     post:
         kde/plasma-desktop         [[ note = [ kapplymousetheme used in startkde ] ]]
     recommendation:
@@ -133,6 +129,7 @@ CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'gps libgps'
     'barcodes Prison'
     Qalculate
-    'X X11'
 )
+# We might bring the X option back sometime, but right now disabling it is broken.
+#    'X X11'
 
