@@ -1,0 +1,14 @@
+# Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require breeze
+
+MYOPTIONS="
+    ( linguas:
+        ca cs da de en_GB es hu ja ko nb nds nl pl pt pt_BR ru sk sl sr
+        sr@ijekavian sr@ijekavianlatin sr@latin sv uk zh_TW
+    )
+"
+
+PLATFORMS="~amd64 ~x86"
+

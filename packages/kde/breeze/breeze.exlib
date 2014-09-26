@@ -1,12 +1,16 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ kde_major_version='5' ]
+require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ]
+
+export_exlib_phases src_configure src_compile src_install
 
 SUMMARY="Artwork, styles and assets for the Breeze style for the Plasma Desktop"
 
 LICENCES="GPL-2"
 MYOPTIONS=""
+ever at_least 5.0.95 && \
+    MYOPTIONS=" kde4 [[ description = [ Also build the Breeze decoration for KDE4 apps ] ]]"
 
 DEPENDENCIES="
     build+run:
@@ -21,7 +25,7 @@ DEPENDENCIES="
 #        x11-libs/qtdeclarative:5[>=5.2.0]
 #        x11-libs/qttools:5[>=5.2.0]
 
-if ever at_least scm ; then
+if ever at_least 5.0.95 ; then
     DEPENDENCIES+="
         build:
             virtual/pkg-config
@@ -34,7 +38,49 @@ if ever at_least scm ; then
             kde-frameworks/kwindowsystem:5
             x11-libs/libxcb
             x11-libs/qtx11extras:5[>=5.2.0]
+            kde4? (
+                kde/kdelibs:4
+                x11-libs/libX11
+                x11-libs/qt:4[dbus]
+            )
     "
     CMAKE_SRC_CONFIGURE_PARAMS+=( -DUSE_KDE4:BOOL=FALSE )
 fi
+
+breeze_src_configure() {
+    cmake_src_configure
+
+    if ever at_least 5.0.95 ; then
+        if option kde4 ; then
+            edo mkdir "${WORKBASE}"/kde4-build
+            edo pushd "${WORKBASE}"/kde4-build
+            ecmake -DUSE_KDE4:BOOL=TRUE
+            edo popd
+        fi
+    fi
+}
+
+breeze_src_compile() {
+    default
+
+    if ever at_least 5.0.95 ; then
+        if option kde4 ; then
+            edo pushd "${WORKBASE}"/kde4-build
+            emake
+            edo popd
+        fi
+    fi
+}
+
+breeze_src_install() {
+    kde.org_src_install
+
+    if ever at_least 5.0.95 ; then
+        if option kde4 ; then
+            edo pushd "${WORKBASE}"/kde4-build
+            emake -j1 DESTDIR="${IMAGE}" install
+            edo popd
+        fi
+    fi
+}
 
