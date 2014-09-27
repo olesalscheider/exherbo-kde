@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# Last checked commit: 78de9d53be69be2fdf4a2cf8234f7ca167a0e980
+# Last checked commit: e5a1b0075aa4212678390b3162b2adc623cce541
 
 require kio-extras
 
