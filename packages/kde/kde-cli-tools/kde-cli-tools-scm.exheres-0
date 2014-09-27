@@ -1,7 +1,7 @@
 # Copyright 2014 Bernd Steinhauser <berniyh@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 07d70cf343f1b98a079d9c846cf24e9bf4ce340c
+# last checked commit: d615bac6ff2a9a3fa67de75cba3dbaa05e744b33
 
 require kde-cli-tools
 
