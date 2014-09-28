@@ -3,11 +3,15 @@
 
 require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ]
 
+export_exlib_phases src_configure src_compile src_install
+
 SUMMARY="Qt5-based oxygen style"
 
 LICENCES="GPL-2 LGPL-2.1 LGPL-3"
 MYOPTIONS=""
 ever at_least 5.0.95 && MYOPTIONS+="X"
+# Doesn't work yet because some missing parts from kde-workspace[kf5coinstall]
+#    kde4 [[ description = [ Also build the oxygen decoration for KDE4 apps ] ]]"
 
 DEPENDENCIES="
     build+run:
@@ -33,7 +37,12 @@ if ever at_least 5.0.95 ; then
                 x11-libs/qtx11extras:5[>=5.3.0]
             )
     "
-    CMAKE_SRC_CONFIGURE_PARAMS+=( -DOXYGEN_USE_KDE4:BOOL=FALSE )
+    #        kde4? (
+    #            kde/kdelibs:4
+    #            kde/kde-workspace:4[>=4.9.80]
+    #        )
+
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DUSE_KDE4:BOOL=FALSE )
     CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'X X11' )
 else
     DEPENDENCIES+="
@@ -53,4 +62,37 @@ if ! ever is_scm ; then
             ]]
     "
 fi
+
+
+oxygen_src_configure() {
+
+    cmake_src_configure
+
+    #if ever at_least 5.0.95 && option kde4 ; then
+    #    edo mkdir "${WORKBASE}"/kde4-build
+    #    edo pushd "${WORKBASE}"/kde4-build
+    #    ecmake "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" -DUSE_KDE4:BOOL=TRUE
+    #    edo popd
+    #fi
+}
+
+oxygen_src_compile() {
+    default
+
+    #if ever at_least 5.0.95 && option kde4 ; then
+    #    edo pushd "${WORKBASE}"/kde4-build
+    #    emake
+    #    edo popd
+    #fi
+}
+
+oxygen_src_install() {
+    kde.org_src_install
+
+    #if ever at_least 5.0.95 && option kde4 ; then
+    #    edo pushd "${WORKBASE}"/kde4-build
+    #    emake -j1 DESTDIR="${IMAGE}" install
+    #    edo popd
+    #fi
+}
 
