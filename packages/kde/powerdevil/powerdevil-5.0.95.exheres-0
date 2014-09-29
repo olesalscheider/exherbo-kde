@@ -1,0 +1,17 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require powerdevil
+
+MYOPTIONS="
+    ( linguas:
+        ar as be@latin bg bn bn_IN bs ca ca@valencia cs da de el en_GB eo es et
+        eu fi fr fy ga gl gu he hi hr hsb hu ia id is it ja kk km ko ku lt lv
+        mai ml mr ms nb nds nl nn or pa pl pt pt_BR ro ru si sk sl sq sr
+        sr@ijekavian sr@ijekavianlatin sr@latin sv te tg th tr ug uk wa zh_CN
+        zh_TW
+    )
+"
+
+PLATFORMS="~amd64"
+
