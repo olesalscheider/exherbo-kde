@@ -1,0 +1,16 @@
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require kdeplasma-addons
+
+MYOPTIONS="
+    ( linguas:
+        ar ast be bg bs ca ca@valencia cs csb da de el en_GB eo es et eu fi fr
+        ga gl he hi hne hr hu is it ja kk km ko ku lt nb nds nl nn pa pl pt
+        pt_BR ro ru sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv th
+        tr ug uk vi wa zh_CN zh_TW
+    )
+"
+
+PLATFORMS="~amd64 ~x86"
+

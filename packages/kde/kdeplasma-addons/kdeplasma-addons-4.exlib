@@ -1,0 +1,83 @@
+# Copyright 2008, 2009, 2010, 2011, 2012 Ingmar Vanhassel <ingmar@exherbo.org>
+# Copyright 2010-2011 Bo Ørsted Andresen
+# Distributed under the terms of the GNU General Public License v2
+
+require kde.org
+
+SUMMARY="Addons for plasma"
+DESCRIPTION="
+KDE Plasmoids module is a collection of additional Plasma data engines and widgets (applets).
+"
+
+LICENCES="GPL-2 BSD-2"
+MY_KDE_PARTS="kdeobservatory microblog"
+MYOPTIONS+="
+    kimpanel  [[ description = [ Build kimpanel: multibyte input widget ] ]]
+    marble    [[ description = [ Needed for a desktop globe wallpaper for Plasma ] ]]
+    qalculate [[ description = [ Build qalculate applet ] ]]
+    kde_parts: ${MY_KDE_PARTS}
+"
+
+DEPENDENCIES+="
+    build:
+        dev-lang/python:*
+        sci-libs/eigen:2[>=2.0.3]
+    build+run:
+        dev-libs/attica:0[>=0.1.1]
+        dev-libs/boost
+        dev-libs/qjson [[ note = [ dataengines/microblog, runners/youtube ] ]]
+        kde/kde-workspace:${SLOT}[-kf5-coinstall(-)]
+        kde/kdelibs:${SLOT}[>=4.7.0]
+        kde/kdepimlibs:${SLOT}
+        kde/libkexiv2:${SLOT} [[ note = [ Automatic rotation of the frame applet ] ]]
+        kde/qimageblitz[>=0.0.4][-qt5(-)]
+        media-libs/phonon[qt4(+)]
+        x11-dri/mesa
+        x11-libs/dbusmenu-qt[qt4(+)]
+        x11-libs/libX11
+        x11-libs/libXrender
+        x11-libs/qt:4[opengl][webkit]
+        x11-misc/shared-mime-info[>=0.18]
+        kde_parts:kdeobservatory? ( x11-libs/qwt )
+        kde_parts:microblog? (
+            app-crypt/qca:2[qt4(+)] [[ note = [ dataengines/microblog/ ] ]]
+            sys-auth/qoauth
+        )
+        kimpanel? (
+            dev-libs/glib:2
+            inputmethods/ibus[>=1.4.2]
+        )
+        marble? ( kde/marble:${SLOT} )
+        qalculate? (
+            sci-libs/cln
+            sci-libs/libqalculate
+        )
+"
+
+CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
+    Marble
+    Qalculate
+    'kde_parts:microblog QtOAuth'
+    'kde_parts:microblog QCA2'
+)
+CMAKE_SRC_CONFIGURE_PARAMS+=(
+    # We need to hardcode KDE4Workspace_DIR because switching from kde-4.6 to
+    # kde-4.7, the uninstall of kdebase-workspace is sometimes after the
+    # kdeplasma-addons' installation. In that case kdeplasma-addons will pick up
+    # the wrong dir ( to be more specific it will pick up
+    # /usr/${LIBDIR}/cmake/KDE4Workspace-4.6.5/ )
+    -DKDE4Workspace_DIR:STRING=/usr/${LIBDIR}/cmake/KDE4Workspace/
+    -DWITH_DBusMenuQt:BOOL=TRUE
+    -DWITH_KDE4Workspace:BOOL=TRUE
+    -DWITH_KdepimLibs:BOOL=TRUE
+    -DWITH_Kexiv2:BOOL=TRUE
+    -DWITH_LibAttica:BOOL=TRUE
+    -DWITH_Nepomuk:BOOL=ON
+    -DWITH_OpenGL:BOOL=TRUE
+    # Hard disable the scim backend, since scim upstream is dead, prefer the newer ibus backend if
+    # kimpanel has been activated
+    -DBUILD_scim=Off
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS+=( 'kimpanel ibus' )
+
