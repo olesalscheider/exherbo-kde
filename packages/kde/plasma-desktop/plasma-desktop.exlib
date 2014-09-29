@@ -104,6 +104,7 @@ if ever at_least 5.0.95 ; then
                 resolution = upgrade-blocked-before
             ]]
     "
+    CMAKE_SRC_CONFIGURE_PARAMS+=( -DCMAKE_DISABLE_FIND_PACKAGE_PackageKitQt5:BOOL=TRUE )
 fi
 
 if ! ever is_scm ; then
