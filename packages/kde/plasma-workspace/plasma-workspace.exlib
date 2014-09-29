@@ -13,16 +13,20 @@ MYOPTIONS="
 # Commented out at the moment
 #MYOPTIONS="pim [[ description = [ Build certain Plasma DataEngines (Akonadi, Calendar) ] ]]"
 
-KF5_MIN_VER=5.0.0
+if ever at_least 5.0.95 ; then
+    KF5_MIN_VER=5.2.0
+else
+    KF5_MIN_VER=5.0.0
+fi
 
 DEPENDENCIES="
     build:
-        kde-frameworks/kdoctools:5
+        kde-frameworks/kdoctools:5[>=${KF5_MIN_VER}]
         virtual/pkg-config
     build+run:
         kde/kwin:${SLOT}
         kde/libksysguard:${SLOT}
-        kde-frameworks/baloo:5[>=${KF5_MIN_VER}]
+        kde-frameworks/baloo:5[>=${PV}]
         kde-frameworks/kactivities:5[>=${KF5_MIN_VER}]
         kde-frameworks/kbookmarks:5[>=${KF5_MIN_VER}]
         kde-frameworks/kcompletion:5[>=${KF5_MIN_VER}]
@@ -56,7 +60,7 @@ DEPENDENCIES="
         kde-frameworks/kwidgetsaddons:5[>=${KF5_MIN_VER}]
         kde-frameworks/kwindowsystem:5[>=${KF5_MIN_VER}]
         kde-frameworks/kxmlgui:5[>=${KF5_MIN_VER}]
-        kde-frameworks/libkscreen:5[>=${KF5_MIN_VER}]
+        kde-frameworks/libkscreen:5[>=${PV}]
         kde-frameworks/plasma-framework:5[>=${KF5_MIN_VER}]
         kde-frameworks/solid:5[>=${KF5_MIN_VER}]
         media-libs/phonon[>=4.6.60][qt5]
@@ -107,13 +111,6 @@ DEPENDENCIES="
 
 # 1 one of 1 test needs a running X Server
 RESTRICT="test"
-
-if ever at_least 5.0.95 ; then
-    DEPENDENCIES+="
-        build+run:
-            kde-frameworks/plasma-framework:5[>=5.2.0]
-    "
-fi
 
 if ! ever is_scm ; then
     DEPENDENCIES+="
