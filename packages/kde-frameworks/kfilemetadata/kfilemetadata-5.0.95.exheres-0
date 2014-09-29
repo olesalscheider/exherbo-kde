@@ -1,8 +1,6 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 24c27ee910d6749f9deb27fb4a4e229ab19a8a0c
-
 require kfilemetadata
 
 PLATFORMS="~amd64"
