@@ -1,7 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 5bcfe3c75495a5996202e05cd50ccf915aa409f3
+# last checked commit: 84caf5f197af75695f5a058296315eeae4f9c521
 
 require baloo
 
