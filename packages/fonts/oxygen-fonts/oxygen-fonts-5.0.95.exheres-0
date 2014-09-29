@@ -1,0 +1,32 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+FONT=${PN}
+
+require xfont cmake [ api=2 ]
+
+SUMMARY="Oxygen font family"
+DESCRIPTION="
+A desktop/gui font family for integrated use with the KDE desktop. The basic
+concept for Oxygen Font was to design a clear, legible, sans serif, that
+would be rendered with Freetype on Linux-based devices. In addition a bold
+weight, plus regular and bold italics, and a monospace version will be made."
+
+HOMEPAGE="https://projects.kde.org/projects/playground/artwork/${PN}"
+DOWNLOADS="mirror://kde/unstable/plasma/${PV}/${PNV}.tar.xz"
+
+LICENCES="GPL-3-font-exception OFL-1.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        kde-frameworks/extra-cmake-modules[>=0.0.11]
+        media-gfx/fontforge[>=20140101]
+"
+
+BUGS_TO="heirecka@exherbo.org"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DOXYGEN_FONT_INSTALL_DIR=/usr/share/fonts/X11/${PN} )
+
