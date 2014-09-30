@@ -31,7 +31,7 @@ DEPENDENCIES="
 
 RESTRICT="-test"
 
-if ever at_least 4.8.80 ; then
+if ever at_least 4.80.0 ; then
     KF5_MIN_VER=5.0.0
     DEPENDENCIES+="
         build+run:
