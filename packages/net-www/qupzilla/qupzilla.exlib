@@ -19,7 +19,6 @@ MYOPTIONS="
     kde [[ description = [ Support for storing passwords in kwallet, currently only if !qt5 ] ]]
     qt5 [[ description = [ Build for Qt5 instead of Qt4 ] ]]
     zsh-completion
-    kde [[ requires = -qt5 ]]
 "
 
 # There is NO_X11, so in principle, it would be possible to build qupzilla without support for X11, but as qt5 links to libX11 currently, there is no point in doing so.
@@ -30,14 +29,17 @@ DEPENDENCIES="
         dev-libs/openssl
         x11-libs/libX11
         gnome? ( gnome-desktop/gnome-keyring )
-        kde? ( kde/kdelibs )
         qt5? (
             app-spell/hunspell
             x11-libs/qtbase:5 [[ note = [ gui-private, network, printsupport, sql, widgets ] ]]
             x11-libs/qtscript:5 [[ note = [ script ] ]]
             x11-libs/qtwebkit:5 [[ note = [ webkitwidgets ] ]]
+            kde? ( kde-frameworks/kwallet:5 )
         )
-        !qt5? ( x11-libs/qt:4[>=4.7.0][dbus][sql][webkit] )
+        !qt5? (
+            x11-libs/qt:4[>=4.7.0][dbus][sql][webkit]
+            kde? ( kde/kdelibs )
+        )
     run:
         kde/oxygen-icons [[ note = [ Used in preferences ] ]]
 "
