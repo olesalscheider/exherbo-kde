@@ -145,8 +145,9 @@ case ${PV} in
         ;;
     5.0.9@(|1|2|3)) # Will become frameworks, released with Plasma 5 in the meantime
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/plasma/5.0.2/${KDEMODULE}-${PV}.tar.xz"}" ;;
+    5.0.95)
+        DOWNLOADS="${DOWNLOADS:-"mirror://kde/unstable/plasma/${PV}/${KDEMODULE}-${PV}.tar.xz"}" ;;
     *)  # Stable releases
-        # Mirrors don't seem to sync, so use URL below until this is fixed.
         DOWNLOADS="${DOWNLOADS:-"mirror://kde/stable/${PV}/src/${KDEMODULE}-${PV}.tar.xz"}" ;;
 esac
 
