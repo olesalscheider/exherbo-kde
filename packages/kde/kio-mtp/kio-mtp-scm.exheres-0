@@ -1,7 +1,24 @@
 # Copyright 2012-2014 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require kio-mtp
+require kde.org [ kde_major_version=5 ]
+
+SUMMARY="Provides KIO Access to MTP devices using the mtp:/ protocol"
+DESCRIPTION="
+This KIO slave enables KDE applications to access files stored on devices
+that provide access to them via the MTP protocol.
+"
 
 PLATFORMS="~amd64"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+
+DEPENDENCIES+="
+    build+run:
+        kde-frameworks/ki18n:5
+        kde-frameworks/kio:5
+        kde-frameworks/solid:5
+        media-libs/libmtp[>=1.1.3]
+"
 
