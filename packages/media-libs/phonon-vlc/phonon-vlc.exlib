@@ -31,7 +31,7 @@ DEPENDENCIES="
     build:
         kde/automoc4[>=0.9.86]
     build+run:
-        media/vlc[>=2.0.1][dbus]
+        media/vlc[>=2.0.1][dbus(+)]
         media-libs/phonon[>=4.7.0][qt4?][qt5?]
         qt4? (  x11-libs/qt:4[>=4.4.0][dbus][phonon] )
         qt5? ( x11-libs/qtbase:5 )
