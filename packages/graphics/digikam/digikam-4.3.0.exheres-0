@@ -14,7 +14,7 @@ BUGS_TO="kde@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="doc gphoto2 nepomuk
+MYOPTIONS="baloo doc gphoto2
 kipi_plugins:
     acquireimages      [[ description = [ A tool to acquire images using flat scanner. ] ]]
     expoblending       [[ description = [ A tool to create pseudo HDR image with a stack of bracketed images. ] ]]
@@ -48,7 +48,7 @@ DEPENDENCIES="
         media-libs/liblqr:1[>=0.4.1] [[ description = [ For Liquid Rescale tool ] ]]
         media-libs/libpgf[>=6.11.24]
         media-libs/libpng:=[>=1.2.7]
-        media-libs/opencv[>=2.4.6] [[ note = [ For Libkface and some tests ] ]]
+        media-libs/opencv[>=2.4.9] [[ note = [ For Libkface and some tests ] ]]
         media-libs/tiff[>=3.8.2] [[ note = [ Can work with >=3.6.x but >=3.8.2 recommended ] ]]
         sci-libs/eigen:3
         virtual/mysql
@@ -60,6 +60,7 @@ DEPENDENCIES="
             description = [ ${PNV} includes kipi-plugins ]
             resolution = uninstall-blocked-after
         ]]
+        baloo? ( kde/baloo[>=4.12] )
         doc? ( app-doc/doxygen )
         gphoto2? (
             media-libs/libgphoto2[>=2.4.0]
@@ -75,11 +76,6 @@ DEPENDENCIES="
         kipi_plugins:videoslideshow? (
             media-gfx/ImageMagick[>=5.5.4]
             media-libs/qt-gstreamer[-qt5]
-        )
-        nepomuk? (
-            app-text/shared-desktop-ontologies[>=0.6.50]
-            dev-libs/soprano
-            kde/kde-runtime[>=4.7]
         )
     run:
         media-gfx/enblend-enfuse[>=3.0]
@@ -97,7 +93,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     # Experimental support, disable for the time being
     -DENABLE_LCMS2:BOOL=FALSE
 
-    # Liquid rescale image editor tool and lens correction tool, they're either on, or uses internal copies
+    # Liquid rescale image editor tool and lens correction tool, they are either on, or uses internal copies
     -DWITH_LensFun:BOOL=TRUE
     -DWITH_Lqr-1:BOOL=TRUE
     -DWITH_Sqlite2:BOOL=FALSE
@@ -112,12 +108,10 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS=(
     'kipi_plugins:ipodexport Ipod'
     'kipi_plugins:videoslideshow QtGStreamer'
     'kipi_plugins:videoslideshow ImageMagick'
-    'nepomuk NepomukCore'
-    'nepomuk SharedDesktopOntologies'
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
-    'nepomuk NEPOMUKSUPPORT'
+    'baloo ENABLE_BALOOSUPPORT'
 )
 
 src_compile() {
