@@ -14,7 +14,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost[>=1.49.0] [[ note = [ rocs can be compiled with boost[>=1.43], but 1.49.0
                 is necessary for DOT file support ] ]]
-        dev-libs/grantlee
+        dev-libs/grantlee[-qt5(-)]
         kde/kdelibs:${SLOT}[>=4.8.0]
         x11-libs/qt:4[webkit]
     run:

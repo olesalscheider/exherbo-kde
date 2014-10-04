@@ -48,7 +48,7 @@ DEPENDENCIES+="
     build+run:
         app-crypt/gpgme
         dev-libs/boost[>=1.34.0] [[ note = [ required by kleopatra ] ]]
-        dev-libs/grantlee[>=0.3.0] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
+        dev-libs/grantlee[>=0.3.0][-qt5(-)] [[ note = [ Templating and theming for KAddressbook and KJots ] ]]
         dev-libs/libgpg-error
         dev-libs/qjson
         kde/kde-runtime:${SLOT}[>=${PV}]
