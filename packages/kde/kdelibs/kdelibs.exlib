@@ -77,7 +77,7 @@ DEPENDENCIES="
             media-libs/ilmbase
             media-libs/openexr
         )
-        policykit? ( sys-auth/polkit-qt:1[>=0.99.0] )
+        policykit? ( sys-auth/polkit-qt:1[>=0.99.0][qt4(+)] )
         spell? (
             app-spell/aspell
             app-spell/enchant
@@ -92,6 +92,8 @@ DEPENDENCIES="
         policykit? (
             sys-auth/polkit-kde-agent[>=0.99.0] [[ description = [ KDE authentication GUI for PolicyKit ] ]]
         )
+    test:
+        dev-libs/grantlee[>=0.1.0][-qt5(-)]
 "
 
 # FIXME: solid has an optional runtime dependency upon media-player-info: macro_log_feature(MEDIAPLAYERINFO_PATH "media-player-info"
@@ -136,18 +138,9 @@ CMAKE_SRC_CONFIGURE_OPTION_WITHS+=(
     'spell ENCHANT'
     'upnp HUpnp'
 )
-
-#FIXME: grantlee only needed for tests, which we do not run
-if ever is_scm ; then
-    DEPENDENCIES+="
-        build+run:
-            dev-libs/grantlee[>=0.1.0]
-        recommendation:
-            policykit? (
-                sys-auth/polkit-kde-agent[~scm]     [[ description = [ KDE authentication GUI for PolicyKit ] ]]
-            )
-    "
-fi
+CMAKE_SRC_CONFIGURE_TESTS+=(
+    '-DCMAKE_DISABLE_FIND_PACKAGE_Grantlee=FALSE -DCMAKE_DISABLE_FIND_PACKAGE_Grantlee=TRUE'
+)
 
 MYOPTIONS+="
     x86_cpu_features: mmx sse sse2
