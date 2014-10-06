@@ -22,6 +22,8 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( FAM )
+# Needed for migrating settings from ~/.kde4 to ~/.config
+CMAKE_SRC_CONFIGURE_PARAMS+=( -D_KDE4_DEFAULT_HOME_POSTFIX=4 )
 
 kcoreaddons_src_prepare() {
     frameworks_src_prepare
