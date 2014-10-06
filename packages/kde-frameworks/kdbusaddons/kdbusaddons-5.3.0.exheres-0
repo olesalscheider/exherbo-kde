@@ -5,9 +5,9 @@ require kdbusaddons
 
 MYOPTIONS="
     ( linguas:
-        ar ca cs de en_GB es fi fr gl hu ia it ko nb nds nl nn pa pl pt pt_BR
-        ro ru se sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv uk zh_TW
-        zh_CN
+        ar ca cs da de en_GB es fi fr gl hu ia it ja ko lt nb nds nl nn pa pl
+        pt pt_BR ro ru se sk sl sr sr@ijekavian sr@ijekavianlatin sr@latin sv
+        uk zh_TW zh_CN
     )
 "
 
