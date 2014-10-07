@@ -1,0 +1,27 @@
+Upstream: yes
+
+From 6428f0d5775227b753ebc8af31600554306c60de Mon Sep 17 00:00:00 2001
+From: Jonathan Riddell <jr@jriddell.org>
+Date: Tue, 7 Oct 2014 10:11:55 +0100
+Subject: [PATCH] don't install documentation file with binaries
+
+README is a documentation file and overlaps with other files, don't install
+it along with the binary files
+---
+ src/imports/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/imports/CMakeLists.txt b/src/imports/CMakeLists.txt
+index 56f3f29..85a05ab 100644
+--- a/src/imports/CMakeLists.txt
++++ b/src/imports/CMakeLists.txt
+@@ -40,5 +40,5 @@ target_link_libraries (
+ ## install
+ 
+ install (TARGETS kactivitiesextensionplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/activities)
+-install (FILES qmldir README DESTINATION ${QML_INSTALL_DIR}/org/kde/activities)
++install (FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/activities)
+ 
+-- 
+2.1.2
+
