@@ -3,6 +3,8 @@
 
 require kde.org [ kde_major_version='5' ] frameworks [ translations='ki18n' ] test-dbus-daemon
 
+export_exlib_phases src_install
+
 SUMMARY="Plugin framework for desktop services"
 DESCRIPTION="
 KService provides a plugin framework for handling desktop services. Services can
@@ -26,4 +28,11 @@ DEPENDENCIES="
 
 # Tries to run kded5 (5.0.0)
 RESTRICT=test
+
+kservice_src_install() {
+    kde.org_src_install
+
+    # TODO: solve collision with xdg/menus/applications.menu from kdelibs:4 differently
+    edo rm -r "${IMAGE}"/etc
+}
 
