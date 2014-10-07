@@ -1,9 +1,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require qt qmake [ slot=5 ]
-
-export_exlib_phases src_compile src_install
+require qt qmake [ slot=5 ] easy-multibuild
 
 SUMMARY="Qt Cross-platform application framework: QtWebChannel module"
 DESCRIPTION="
@@ -13,22 +11,28 @@ with HTML/JavaScript clients. These clients can either be inside local Qt
 as long as a communication channel such as WebSocket is available."
 
 LICENCES+=" GPL-2"
-MYOPTIONS="doc"
+MYOPTIONS="doc
+    multibuild_c: 32 64"
 
 DEPENDENCIES="
     build:
         doc? ( x11-libs/qttools:${SLOT} )
     build+run:
-        x11-libs/qtdeclarative:${SLOT}[>=${PV}]
+        x11-libs/qtdeclarative:${SLOT}[>=${PV}][multibuild_c:*(-)?]
 "
 
-qtwebchannel_src_compile() {
+configure_one_multibuild() {
+    EQMAKE_SOURCES=( ../../${PN}-$(ever is_scm || echo "opensource-src-")${PV}/${PN}.pro )
+    eqmake
+}
+
+compile_one_multibuild() {
     default
 
     option doc && emake docs
 }
 
-qtwebchannel_src_install() {
+install_one_multibuild() {
     default
 
     if option doc ; then
@@ -36,5 +40,8 @@ qtwebchannel_src_install() {
         docinto html
         dodoc -r doc/${PN}
     fi
+
+    # remove references to build dir
+    edo sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" "${IMAGE}"/usr/${LIBDIR}/libQt5*.prl
 }
 
