@@ -54,7 +54,7 @@ DEPENDENCIES="
 if ever at_least 5.4.0-alpha ; then
     DEPENDENCIES+="
         build+run:
-            x11-libs/qtwebchannel:${SLOT}[>=${PV}]
+            x11-libs/qtwebchannel:${SLOT}[>=${PV}][multibuild_c:*(-)?]
     "
 fi
 
