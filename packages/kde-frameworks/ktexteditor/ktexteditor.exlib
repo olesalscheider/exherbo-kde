@@ -16,12 +16,13 @@ suitable for everything from a simple embedded text-file editor to an advanced I
 "
 
 LICENCES="LGPL-2.1"
-MYOPTIONS=""
-ever at_least 5.3.0 && MYOPTIONS="git [[ description = [ Add extra functionality when editing files in git repos ] ]]"
+MYOPTIONS="git [[ description = [ Add extra functionality when editing files in git repos ] ]]"
 
 DEPENDENCIES="
     build:
         dev-lang/perl:*
+        kde-frameworks/kservice:5[>=${KF5_MIN_VER}] [[ note = [ kservice_desktop_to_json macro ] ]]
+        git? ( virtual/pkg-config )
     build+run:
         kde-frameworks/karchive:5[>=${KF5_MIN_VER}]
         kde-frameworks/kconfig:5[>=${KF5_MIN_VER}]
@@ -33,20 +34,12 @@ DEPENDENCIES="
         kde-frameworks/sonnet:5[>=${KF5_MIN_VER}]
         x11-libs/qtscript:5[>=5.2.0]
         x11-libs/qtxmlpatterns:5[>=5.2.0]
+        git? ( dev-scm/libgit2[>=0.20.0] )
 "
-
-if ever at_least 5.3.0 ; then
-    DEPENDENCIES+="
-        build:
-            git? ( virtual/pkg-config )
-        build+run:
-            git? ( dev-scm/libgit2[>=0.20.0] )
-    "
-    CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'git GIT2' )
-fi
 
 # 30 of 51 tests need a running X server (5.0.0)
 RESTRICT="test"
 
 CMAKE_SRC_CONFIGURE_PARAMS+=( -DBUILD_VIMODE:BOOL=TRUE )
+CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=( 'git GIT2' )
 
