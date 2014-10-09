@@ -5,3 +5,7 @@ require gwenview
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/b2c1fede35da0c1d10048427d77eb3a299ad4b57.patch
+)
+
