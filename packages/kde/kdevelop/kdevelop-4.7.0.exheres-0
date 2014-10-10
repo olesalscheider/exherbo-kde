@@ -7,7 +7,7 @@ PLATFORMS="~amd64 ~x86"
 
 DOWNLOADS="mirror://kde/stable/${PN}/${PV}/src/${PNV}.tar.xz"
 
-UPSTREAM_RELEASE_NOTES="http://www.kdevelop.org/46/kdevelop-460-final-released"
+UPSTREAM_RELEASE_NOTES="http://www.kdevelop.org/news/kdevelop-470-released"
 
 DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PNV}-Disable-tests-which-need-X.patch

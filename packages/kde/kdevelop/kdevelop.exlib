@@ -1,7 +1,7 @@
 # Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
 # Distributed under the terms of the GNU General Public License v2
 
-require kde.org [ upstream_release_notes=false ] test-dbus-daemon
+require kde.org [ cmake_minimum_version=2.8.9 upstream_release_notes=false ] test-dbus-daemon
 
 export_exlib_phases src_prepare
 
