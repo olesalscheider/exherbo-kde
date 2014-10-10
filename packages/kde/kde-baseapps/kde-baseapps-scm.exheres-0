@@ -3,7 +3,7 @@
 # Copyright 2014 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: 7651cdccb204d6a4ae7157695bf4c925701a18c5
+# last checked commit: 3cbccf606c5acb106d52c6173c51554fda803049
 
 require kde.org [ kde_major_version=5 ]
 
@@ -40,6 +40,7 @@ DEPENDENCIES="
         kde-frameworks/kconfigwidgets:5
         kde-frameworks/kcoreaddons:5
         kde-frameworks/kdbusaddons:5
+        kde-frameworks/kded:5
         kde-frameworks/kdelibs4support:5
         kde-frameworks/kdesu:5
         kde-frameworks/khtml:5
@@ -82,6 +83,8 @@ RESTRICT="test"
 #CMAKE_SRC_CONFIGURE_PARAMS+=(
 #    -DWITH_GLIB2:BOOL=TRUE
 #)
+
+DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-kdepasswd-Fix-build.patch )
 
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'semantic-desktop KF5Baloo'
