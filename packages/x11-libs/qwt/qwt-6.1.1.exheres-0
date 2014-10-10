@@ -29,7 +29,7 @@ QWT_INSTALL_HEADERS   = /usr/include/qwt6
 QWT_INSTALL_LIBS      = /usr/${LIBDIR}
 QWT_INSTALL_PLUGINS   = /usr/${LIBDIR}/qt4/plugins/designer
 QWT_INSTALL_FEATURES  = /usr/${LIBDIR}/qt4/features
-QWT_CONFIG += QwtDll QwtPlot QwtWidgets QwtSvg QwtMathML QwtDesigner
+QWT_CONFIG += QwtDll QwtPlot QwtWidgets QwtSvg QwtMathML QwtDesigner QwtPkgConfig
 QWT_VERSION = ${PV}
 EOF
 }
