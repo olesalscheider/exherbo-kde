@@ -27,6 +27,7 @@ myexparam -b git=true
 myexparam kde_major_version=4
 myexparam -b no_qt_dependency=false
 myexparam -b upstream_release_notes=true
+myexparam cmake_minimum_version=
 
 if ever is_scm; then
     if exparam -b git ; then
@@ -59,7 +60,12 @@ fi
 if [[ $(exparam kde_major_version) == 5 ]] ; then
     require frameworks
 else
-    require kde [ api=2 ]
+    if [[ $(exparam cmake_minimum_version) == "" ]] ; then
+        require kde [ api=2 ]
+    else
+        require kde [ api=2 cmake_minimum_version=$(exparam cmake_minimum_version) ]
+    fi
+
     # TODO Tests load ${PN} libraries from / so tests are restricted until that is fixed.
     RESTRICT=test
 fi
