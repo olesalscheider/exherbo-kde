@@ -36,7 +36,8 @@ DEPENDENCIES+="
         x11-libs/dbusmenu-qt[qt4(+)]
         x11-libs/libX11
         x11-libs/libXrender
-        x11-libs/qt:4[opengl][webkit]
+        x11-libs/qt:4[opengl]
+        virtual/qtwebkit:4
         x11-misc/shared-mime-info[>=0.18]
         kde_parts:kdeobservatory? ( x11-libs/qwt )
         kde_parts:microblog? (
