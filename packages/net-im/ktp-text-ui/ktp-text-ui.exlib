@@ -11,7 +11,7 @@ MYOPTIONS=""
 
 DEPENDENCIES+="
     build+run:
-        x11-libs/qt:4[webkit]
+        virtual/qtwebkit:4
 "
 
 DEPENDENCIES+="
