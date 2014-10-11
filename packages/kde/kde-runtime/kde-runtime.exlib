@@ -80,7 +80,8 @@ DEPENDENCIES="
         sys-devel/gdb [[ description = [ DrKonqi ] ]]
         x11-libs/libxcb
         x11-libs/libXcursor [[ note = [ thumbnail kioslave ] ]]
-        x11-libs/qt:4[phonon][webkit]
+        x11-libs/qt:4[phonon]
+        virtual/qtwebkit:4
         x11-misc/shared-mime-info[>=0.40]
         !kf5-coinstall? ( dev-libs/attica:0[>=0.1.4] )
         alsa? ( sys-sound/alsa-lib[>=1.0.14a] )
