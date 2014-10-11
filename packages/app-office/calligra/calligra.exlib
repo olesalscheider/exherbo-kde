@@ -109,7 +109,7 @@ DEPENDENCIES+="
             x11-libs/qt:4[>=4.7.0]
         )
         kde_parts:braindump? (
-            x11-libs/qt:4[webkit] [[ note = [ The webshape plugin makes use of this, dep is automagic ] ]]
+            virtual/qtwebkit:4 [[ note = [ The webshape plugin makes use of this, dep is automagic ] ]]
         )
         kde_parts:flow? (
             visio? (
@@ -131,7 +131,8 @@ DEPENDENCIES+="
         kde_parts:kexi? (
             dev-db/sqlite:3[>=3.6.16] [[ note = [ 3.7.15 (3.8.2 for 2.8.0) is recommended ] ]]
             dev-libs/icu
-            x11-libs/qt:4[qt3support][webkit] [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
+            x11-libs/qt:4[qt3support]
+            virtual/qtwebkit:4 [[ note = [ Used by kexi/plugins/forms/widgets/webbrowser, could be made optional ] ]]
             freetds? ( dev-db/freetds )
             mdb? ( dev-libs/glib:2 )
             mysql? ( virtual/mysql )
