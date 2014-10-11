@@ -29,7 +29,8 @@ DEPENDENCIES="
         kde/kdelibs:4[>=4.9.4]
         kde/kdepimlibs:4[>=4.7.0]
         media-libs/phonon[>=4.3.80][qt4(+)]
-        x11-libs/qt:4[>=4.7.0][webkit]
+        x11-libs/qt:4[>=4.7.0]
+        virtual/qtwebkit:4
 "
 
 BUGS_TO="petrinic@gmail.com"
