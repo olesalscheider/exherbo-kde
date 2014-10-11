@@ -63,8 +63,9 @@ DEPENDENCIES="
         x11-libs/libXScrnSaver
         x11-libs/libXt
         x11-libs/libXtst
-        x11-libs/qt:4[>=4.8.0][opengl][phonon][webkit]
-            [[ note = [ plasma and kdewebkit need webkit, opengl is needed by plasma ] ]]
+        x11-libs/qt:4[>=4.8.0][opengl][phonon]
+            [[ note = [ plasma needs opengl ] ]]
+        virtual/qtwebkit:4 [[ note = [ plasma and kdewebkit need webkit ] ]]
         x11-misc/shared-mime-info[>=0.60]
         acl? (
             sys-apps/acl
