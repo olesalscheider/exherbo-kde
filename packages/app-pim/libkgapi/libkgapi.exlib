@@ -29,7 +29,8 @@ DEPENDENCIES="
         dev-libs/qjson
         kde/kdelibs:4[>=4.12.0]
         kde/kdepimlibs:4[>=4.13.80]
-        x11-libs/qt:4[>=4.7.0][webkit]
+        x11-libs/qt:4[>=4.7.0]
+        virtual/qtwebkit:4
 "
 
 BUGS_TO="kde@exherbo.org"
