@@ -15,6 +15,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/soprano
         kde/kdelibs:${SLOT}[>=4.8.3]
-        x11-libs/qt:4[>=4.6.0][webkit]
+        x11-libs/qt:4[>=4.6.0]
+        virtual/qtwebkit:4
 "
 
