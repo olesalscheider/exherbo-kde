@@ -84,8 +84,6 @@ RESTRICT="test"
 #    -DWITH_GLIB2:BOOL=TRUE
 #)
 
-DEFAULT_SRC_PREPARE_PATCHES+=( "${FILES}"/0001-kdepasswd-Fix-build.patch )
-
 CMAKE_SRC_CONFIGURE_OPTION_DISABLE_FINDS+=(
     'semantic-desktop KF5Baloo'
     'semantic-desktop KF5BalooWidgets'
