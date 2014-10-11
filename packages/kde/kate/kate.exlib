@@ -21,7 +21,7 @@ DEPENDENCIES="
             dev-python/PyQt4[>=4.3.1][python_abis:*(-)?]
             dev-python/sip[>=4.7.1][python_abis:*(-)?]
             kde/pykde4:4[python_abis:*(-)?]
-            x11-libs/qt:4[webkit]
+            virtual/qtwebkit:4
         )
 "
 
