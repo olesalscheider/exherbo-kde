@@ -33,8 +33,8 @@ DEPENDENCIES="
         media-libs/phonon[qt4(+)] [[ note = [ Could be made optional, used to play MPD HTTP output ] ]]
         media-libs/taglib[>=1.6]
         media-plugins/taglib-extras[>=1.0] [[ note = [ Could be made optional, but I don't see the point ] ]]
-        x11-libs/qt:4[webkit] [[ note = [ webkit can be made optional but it only makes sense if kde
-            support is made optional as well (which is possible), since kdelibs depends on qt[webkit] ] ]]
+        virtual/qtwebkit:4 [[ note = [ webkit can be made optional but it only makes sense if kde
+            support is made optional as well (which is possible), since kdelibs depends on virtual/qtwebkit ] ]]
         mtp? ( media-libs/libmtp )
         replaygain? (
             media/ffmpeg
