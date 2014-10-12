@@ -20,7 +20,8 @@ DEPENDENCIES="
         media-libs/phonon[qt4(+)]
         x11-dri/glu
         x11-dri/mesa
-        x11-libs/qt:4[opengl][webkit]
+        x11-libs/qt:4[opengl]
+        virtual/qtwebkit:4
     run:
         kde/kde-baseapps:${SLOT}[>=${PV}] [[ note = [ for fonts:/ ioslave ] ]]
 "
