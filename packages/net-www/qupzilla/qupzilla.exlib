@@ -37,7 +37,8 @@ DEPENDENCIES="
             kde? ( kde-frameworks/kwallet:5 )
         )
         !qt5? (
-            x11-libs/qt:4[>=4.7.0][dbus][sql][webkit]
+            x11-libs/qt:4[>=4.7.0][dbus][sql]
+            virtual/qtwebkit:4
             kde? ( kde/kdelibs )
         )
     run:
