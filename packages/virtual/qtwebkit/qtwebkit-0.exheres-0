@@ -1,0 +1,25 @@
+# Copyright 2014 Niels Ole Salscheider <niels_ole@salscheider-online.de>
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="A virtual for qtwebkit:4"
+HOMEPAGE=""
+DOWNLOADS=""
+
+SLOT="4"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    multibuild_c: 32 64
+    ( providers:
+        qtwebkit
+        qt
+    ) [[
+        *description = [ qtwebkit provider ]
+        number-selected = exactly-one
+    ]]
+"
+
+DEPENDENCIES="
+    providers:qtwebkit? ( x11-libs/qtwebkit:4[multibuild_c:*(-)?] )
+    providers:qt? ( x11-libs/qt:4[webkit][multibuild_c:*(-)?] )
+"
+
