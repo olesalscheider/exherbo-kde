@@ -26,7 +26,8 @@ DEPENDENCIES="
     build+run:
         sys-fs/fuseiso
         media-libs/phonon[qt4(+)]
-        x11-libs/qt:4[dbus][phonon][webkit]
+        x11-libs/qt:4[dbus][phonon]
+        virtual/qtwebkit:4
 "
 
 BUGS_TO="alip@exherbo.org"
