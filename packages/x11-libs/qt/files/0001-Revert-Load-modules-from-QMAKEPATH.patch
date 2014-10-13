@@ -1,0 +1,42 @@
+Upstream: https://codereview.qt-project.org/#/c/96952/
+Reason: This fixes building qt[-webkit] when qt[webkit] is installed
+
+From 4cba239ec7a0a7dadc763bc329758cbb5a2fc293 Mon Sep 17 00:00:00 2001
+From: Niels Ole Salscheider <niels_ole@salscheider-online.de>
+Date: Mon, 13 Oct 2014 23:30:46 +0200
+Subject: [PATCH] Revert "Load modules from QMAKEPATH"
+
+This reverts commit 210726453ff3ca0f16f036683e17097e1b62d458.
+
+qmake_mkspec_paths() from qmake/project.cpp adds the mkspecs in a subdirectory
+of QLibraryInfo::DataPath. This directory is therefore part of the list
+returned for QMAKEPATH. If we include this directory here, we will pick up
+files from an existing Qt installation.
+
+Task-number: QTBUG-36943
+Task-number: QTBUG-19635
+Change-Id: Ib6f9b90618471f2168d4f6d7f60f5bbb01d4f8fc
+---
+ mkspecs/features/qt_config.prf | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/mkspecs/features/qt_config.prf b/mkspecs/features/qt_config.prf
+index e059b7e..e631b63 100644
+--- a/mkspecs/features/qt_config.prf
++++ b/mkspecs/features/qt_config.prf
+@@ -17,11 +17,7 @@ isEmpty(QMAKE_QT_CONFIG)|!exists($$QMAKE_QT_CONFIG) {
+    debug(1, "Cannot load qconfig.pri!")
+ } else {
+    debug(1, "Loaded .qconfig.pri from ($$QMAKE_QT_CONFIG)")
+-   for(dir, $$list($$unique($$list($$dirname(QMAKE_QT_CONFIG) \
+-                                   $$split($$list($$[QMAKE_MKSPECS]), $$DIRLIST_SEPARATOR))))) {
+-      debug(1, "Loading modules from $${dir}")
+-      for(mod, $$list($$files($$dir/modules/qt_*.pri))):include($$mod)
+-   }
++   for(mod, $$list($$files($$dirname(QMAKE_QT_CONFIG)/modules/qt_*.pri))):include($$mod)
+ }
+ 
+ load(qt_functions)
+-- 
+2.1.2
+

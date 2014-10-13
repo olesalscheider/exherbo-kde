@@ -14,5 +14,6 @@ DEFAULT_SRC_PREPARE_PATCHES+=(
     "${FILES}"/${PN}-systemtrayicon-plugin-system.patch
     "${FILES}"/${PN}-4.8.6-libreoffice-glib-honor-ExcludeSocketNotifiers-flag.patch
     "${FILES}"/${PN}-4.8.6-libreoffice-l-qclipboard_fix_recursive.patch
+    "${FILES}"/0001-Revert-Load-modules-from-QMAKEPATH.patch
 )
 
