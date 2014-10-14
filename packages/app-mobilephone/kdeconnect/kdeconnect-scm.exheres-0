@@ -1,7 +1,7 @@
 # Copyright 2013 Friedrich Kröner <friedrich@mailstation.de>
 # Distributed under the terms of the GNU General Public License v2
 
-# last checked commit: ea5d9c8ecaba083803bf6e89e99c97cc2d704fe0
+# last checked commit: b66849088a5135d4b28808da475bc85685405180
 
 SCM_REPOSITORY="git://anongit.kde.org/${PN}-kde.git"
 
