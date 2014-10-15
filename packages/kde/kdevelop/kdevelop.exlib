@@ -30,7 +30,8 @@ DEPENDENCIES="
         kde/kde-workspace:${SLOT}[-kf5-coinstall(-)]
         kde/kdelibs:${SLOT}[>=4.7.0]
         kde/kdevplatform:${SLOT}[>=${PLATFORM_PV}]
-        x11-libs/qt:4[>=4.5.2][webkit]
+        x11-libs/qt:4[>=4.5.2]
+        virtual/qtwebkit:4
         x11-misc/shared-mime-info
         okteta? (
             kde/okteta:${SLOT}
